@@ -12,7 +12,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -26,6 +30,27 @@ public class ModelManagerTest {
         modelManager.getFilteredPersonList().remove(0);
     }
 
+    @Test
+    public void removeTag() throws IllegalValueException, PersonNotFoundException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        // Removing a tag that does not exist in an address book does not change address book
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        
+        modelManager.removeTag(new Tag("xx"));
+        assertTrue(modelManager.equals(modelManagerCopy));
+        
+        //Removing a tag from an address book changes it
+        ObservableList<Tag> tags = modelManager.getAddressBook().getTagList();
+        ObservableList<Tag> tagsWithoutFriends = tags.filtered(x -> !x.tagName.equals("friends"));
+        modelManager.removeTag(new Tag("friends"));
+        assertFalse(modelManager.getAddressBook().getTagList().contains(new Tag("friends")));
+        assertTrue(modelManager.getAddressBook().getTagList().size() == tagsWithoutFriends.size());
+
+    }
+    
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
