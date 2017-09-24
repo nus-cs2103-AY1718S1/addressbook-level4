@@ -128,7 +128,7 @@ public class AddCommandTest {
         public void removeTag(Tag tag) {
             fail("This method should not be called.");
         }
-        
+
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");

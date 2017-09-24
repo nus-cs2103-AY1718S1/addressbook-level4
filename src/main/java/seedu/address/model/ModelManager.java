@@ -112,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.setTags(newTags);
 
-        indicateAddressBookChanged(); 
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================

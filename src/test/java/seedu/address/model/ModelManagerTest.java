@@ -38,10 +38,10 @@ public class ModelManagerTest {
         // Removing a tag that does not exist in an address book does not change address book
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
-        
+
         modelManager.removeTag(new Tag("xx"));
         assertTrue(modelManager.equals(modelManagerCopy));
-        
+
         //Removing a tag from an address book changes it
         ObservableList<Tag> tags = modelManager.getAddressBook().getTagList();
         ObservableList<Tag> tagsWithoutFriends = tags.filtered(x -> !x.tagName.equals("friends"));
@@ -50,7 +50,7 @@ public class ModelManagerTest {
         assertTrue(modelManager.getAddressBook().getTagList().size() == tagsWithoutFriends.size());
 
     }
-    
+
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
