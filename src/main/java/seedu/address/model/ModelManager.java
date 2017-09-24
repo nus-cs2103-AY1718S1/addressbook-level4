@@ -94,17 +94,21 @@ public class ModelManager extends ComponentManager implements Model {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
             
             Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = newPerson.getTags().stream()
-                                                  .filter(x -> !x.tagName.equals(tag.tagName))
-                                                  .collect(Collectors.toSet());
+            Set<Tag> newTags = newPerson.getTags()
+                                        .stream()
+                                        .filter(x -> !x.tagName.equals(tag.tagName))
+                                        .collect(Collectors.toSet());
+            
             newPerson.setTags(newTags);
             
             addressBook.updatePerson(oldPerson, newPerson);
         }
         
-        Set<Tag> newTags = addressBook.getTagList().stream()
-                                                   .filter(x -> !x.tagName.equals(tag.tagName))
-                                                   .collect(Collectors.toSet());
+        Set<Tag> newTags = addressBook.getTagList()
+                                      .stream()
+                                      .filter(x -> !x.tagName.equals(tag.tagName))
+                                      .collect(Collectors.toSet());
+        
         addressBook.setTags(newTags);
         
         indicateAddressBookChanged();
