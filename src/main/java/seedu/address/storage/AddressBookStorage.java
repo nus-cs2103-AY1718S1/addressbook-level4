@@ -35,7 +35,7 @@ public interface AddressBookStorage {
      * @throws IOException if there was any problem writing to the file.
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-    
+
     /**
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
