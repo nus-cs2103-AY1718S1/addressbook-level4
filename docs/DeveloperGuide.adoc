@@ -732,6 +732,67 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
+
+|`* * *` |teacher |add new location for a module in timetable |I can plan my teaching schedule
+
+|`* * *` |teacher |delete an existing module in a particular timeslot |I can make changes to the timeslot
+
+|`* * *` |teacher |delete an existing module in a particular location |I can make changes to the timeslot
+
+|`* * *` |teacher |update an existing module timeslot |I can change the current timeslot to an updated one
+
+|`* * *` |teacher |update an existing module location |I can change the current location to an updated one
+
+|`* * *` |student |check location and time slot of different modules |I can make my study plan
+
+|`* * *` |admin |add new module into the system |I can allow the teachers and students to access this new module
+
+|`* * *` |admin |add new teachers into the system |I can allow new teachers to access the software
+
+|`* * *` |teacher |list all the locations |I know all the locations I can choose from
+
+|`* * *` |admin |list the existing modules |I can view how many and what module do i have in the system
+
+|`* * *` |admin |update the detail of the existing module |I can make changes to the module without having to delete the module and recreate it
+
+|`* * *` |teacher |view the help file  |I know all the available functions
+
+|`* * *` |teacher |view available slots at a specified location |I can determine if i should schedule my lecture there
+
+|`* * *` |student |view all modules taught by a lecturer |I can make my study plan
+
+|`* * *` |admin |delete teachers from the system |I can take away the access right of the teachers who are no longer working for the school
+
+|`* * *` |admin |update the detail of the teachers |I can make changes of the detail of the teachers without having to delete and recreate them
+
+|`* * *` |admin |view the commands/function i can use in this software |I no need to memorise the function in this software and can review them conviencely whenever i want
+
+|`* * *` |teacher |login with my username/password |I can gain access to the product
+
+|`* * *` |teacher |register with username/password |I can gain access to the personalised timetable
+
+|`* *` |teacher/student |export the timetable to various files (pdf, excel, png, jpeg) |I can print the timetable
+
+|`* *` |teacher/student |report bugs to developers | developer can solve the bug and improve the product
+
+|`* *` |teacher/student |bookmark a particular module |I can have easy access to the particular module
+
+|`* *` |admin |list a particular lecturer |I no need to search manually in the list of teachers
+
+|`* *` |admin |generate comprehensive reports of the current semester detail |I can save time from making this report myself
+
+|`* *` |admin |view the history of commands |so I no need to go through the list to know what I have added so far
+
+|`* *` |teacher |undo the previous command |I can revert to the previous state
+
+|`* *` |teacher |redo the previously undo-ed command |I can revert to the previous state
+
+|`* *` |teacher |show history of commands |I know what my previous commands were
+
+|`* *` |teacher |back up my file |I can retrieve back data
+
 |=======================================================================
 
 {More to be added}
