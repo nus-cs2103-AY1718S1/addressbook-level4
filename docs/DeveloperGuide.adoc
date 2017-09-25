@@ -769,6 +769,23 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: History
+
+*MSS*
+
+1.  User requests to list history of commands
+2.  AddressBook shows a list of history of commands
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
