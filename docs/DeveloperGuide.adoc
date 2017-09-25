@@ -769,6 +769,23 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: Undo command
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook undo previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Unable to find previous command
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
