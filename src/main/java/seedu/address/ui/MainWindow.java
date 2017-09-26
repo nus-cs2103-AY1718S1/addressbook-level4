@@ -36,7 +36,9 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Region> {
 
     private static final String SORT_NAME = "sort name";
-    private static final String SORT_COMMAND = "sort";
+    private static final String SORT_COMMAND_WORD = "sort";
+    private static final String FIND_COMMAND_WORD = "find";
+    private static final String List_COMMAND_WORD = "list";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
@@ -108,9 +110,9 @@ public class MainWindow extends UiPart<Region> {
         searchField.setOnKeyReleased(e -> {
             try {
                 if (searchField.getText().isEmpty()) {
-                    logic.execute("list");
+                    logic.execute(List_COMMAND_WORD);
                 }
-                logic.execute("find " + searchField.getText());
+                logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
             } catch (CommandException e1) {
                 e1.printStackTrace();
             } catch (ParseException e1) {
@@ -128,7 +130,7 @@ public class MainWindow extends UiPart<Region> {
         logic.execute(SORT_NAME);
         comboBox.setOnAction(e -> {
             try {
-                logic.execute(SORT_COMMAND + " " + comboBox.getValue().toString());
+                logic.execute(SORT_COMMAND_WORD + " " + comboBox.getValue().toString());
             } catch (CommandException e1) {
                 e1.printStackTrace();
             } catch (ParseException e1) {

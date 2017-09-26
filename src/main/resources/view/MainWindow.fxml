@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -27,33 +27,33 @@
     </Menu>
   </MenuBar>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
 
   <StackPane fx:id="resultDisplayPlaceholder" maxHeight="155.0" minHeight="97.0" prefHeight="100.0" prefWidth="690.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
    <StackPane prefHeight="42.0" prefWidth="690.0" styleClass="pane-with-border">
       <children>
-         <Label style="-fx-font-size: 17; -fx-text-fill: white;" text="Sort By:" StackPane.alignment="CENTER_RIGHT">
+         <Label style="-fx-font-size: 17; -fx-text-fill: white;" text="Sort By:" StackPane.alignment="CENTER_LEFT">
             <StackPane.margin>
-               <Insets right="90.0" />
+               <Insets left="5.0" />
             </StackPane.margin>
          </Label>
-         <ComboBox fx:id="comboBox" prefHeight="17.0" prefWidth="74.0" StackPane.alignment="CENTER_RIGHT">
+         <ComboBox fx:id="comboBox" prefHeight="17.0" prefWidth="74.0" StackPane.alignment="CENTER_LEFT">
             <StackPane.margin>
-               <Insets right="10.0" />
+               <Insets left="70.0" />
             </StackPane.margin>
          </ComboBox>
-         <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="188.0" promptText="Search person ..." style="-fx-background-color: dimgrey;" styleClass="pane-with-border" StackPane.alignment="CENTER_LEFT">
+         <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="188.0" promptText="Search person ..." style="-fx-background-color: dimgrey;" styleClass="pane-with-border" StackPane.alignment="CENTER_LEFT">
             <StackPane.margin>
-               <Insets left="15.0" />
+               <Insets left="150.0" />
             </StackPane.margin>
          </TextField>
       </children>
@@ -62,14 +62,14 @@
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+    <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
   </SplitPane>
