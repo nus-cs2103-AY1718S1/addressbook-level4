@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -40,12 +43,24 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Random random = new Random();
+
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+    }
+
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+                tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+        }
+
+        return tagColors.get(tagValue);
     }
 
     /**
@@ -59,12 +74,17 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+           Label tagLabel = new Label(tag.tagName);
+           tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+           tags.getChildren().add(tagLabel);
+        });
+        
     }
 
     @Override
