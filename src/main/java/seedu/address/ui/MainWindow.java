@@ -111,8 +111,9 @@ public class MainWindow extends UiPart<Region> {
             try {
                 if (searchField.getText().isEmpty()) {
                     logic.execute(List_COMMAND_WORD);
+                } else {
+                    logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
                 }
-                logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
             } catch (CommandException e1) {
                 e1.printStackTrace();
             } catch (ParseException e1) {
