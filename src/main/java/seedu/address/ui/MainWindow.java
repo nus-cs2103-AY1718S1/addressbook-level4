@@ -35,6 +35,8 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
+    private static final String SORT_NAME = "sort name";
+    private static final String SORT_COMMAND = "sort";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
@@ -101,7 +103,6 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Initializes the search field.
-     *
      */
     private void initSearchField() {
         searchField.setOnKeyReleased(e -> {
@@ -124,10 +125,10 @@ public class MainWindow extends UiPart<Region> {
     private void initSortBox() throws CommandException, ParseException {
         comboBox.getItems().addAll("Name", "Phone", "Email", "Address");
         comboBox.getSelectionModel().select(0);
-        logic.execute("sort name");
+        logic.execute(SORT_NAME);
         comboBox.setOnAction(e -> {
             try {
-                logic.execute("sort " + comboBox.getValue().toString());
+                logic.execute(SORT_COMMAND + " " + comboBox.getValue().toString());
             } catch (CommandException e1) {
                 e1.printStackTrace();
             } catch (ParseException e1) {
