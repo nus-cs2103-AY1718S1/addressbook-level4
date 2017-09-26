@@ -93,7 +93,7 @@ public class MainWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
         initSortBox();
-        initSearchField(logic);
+        initSearchField();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -102,9 +102,8 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Initializes the search field.
      *
-     * @param logic
      */
-    private void initSearchField(Logic logic) {
+    private void initSearchField() {
         searchField.setOnKeyReleased(e -> {
             try {
                 if (searchField.getText().isEmpty()) {
