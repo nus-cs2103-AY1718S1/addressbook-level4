@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -43,6 +45,12 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final ObservableList<String> options = FXCollections.observableArrayList(
+            "Name",
+            "Phone",
+            "Email",
+            "Address"
+    );
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -126,7 +134,7 @@ public class MainWindow extends UiPart<Region> {
      * Initializes the sort box.
      */
     private void initSortBox() throws CommandException, ParseException {
-        comboBox.getItems().addAll("Name", "Phone", "Email", "Address");
+        comboBox.getItems().addAll(options);
         comboBox.getSelectionModel().select(0);
         logic.execute(SORT_NAME);
         comboBox.setOnAction(e -> {
