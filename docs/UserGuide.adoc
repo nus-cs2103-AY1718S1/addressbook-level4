@@ -72,6 +72,22 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorts the list : `sort`
+
+Sorts the list based on given keyword +
+Format: `sort KEYWORD`
+
+****
+* Sorts the list based on their name, phone, email, or address.
+* The keyword is case-insensitive.
+****
+
+Examples:
+* `sort name` +
+Sorts the list in alphabetical order of their name.
+* `sort phone` +
+Sorts the list in numerical order of their phone.
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
