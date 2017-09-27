@@ -117,7 +117,7 @@ public class MainWindow extends UiPart<Region> {
     private void initSearchField() {
         searchField.setOnKeyReleased(e -> {
             try {
-                if (searchField.getText().isEmpty()) {
+                if (searchField.getText().trim().isEmpty()) {
                     logic.execute(List_COMMAND_WORD);
                 } else {
                     logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
