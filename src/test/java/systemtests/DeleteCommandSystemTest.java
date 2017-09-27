@@ -32,7 +32,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORDVAR_2 + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        String command = "     " + DeleteCommand.COMMAND_WORDVAR_2 + "      " + INDEX_FIRST_PERSON.getOneBased()
+                + "       ";
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -103,10 +104,12 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORDVAR_2.toUpperCase() + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORDVAR_2.toUpperCase() + " abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORDVAR_1.toUpperCase() + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORDVAR_1.toUpperCase() + " 1 abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         assertCommandFailure("Del", MESSAGE_UNKNOWN_COMMAND);
 
@@ -137,7 +140,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
 
         assertCommandSuccess(
-                DeleteCommand.COMMAND_WORDVAR_1 + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+                DeleteCommand.COMMAND_WORDVAR_1 + " " + toDelete.getOneBased(), expectedModel,
+                expectedResultMessage);
     }
 
     /**
