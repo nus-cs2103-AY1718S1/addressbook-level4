@@ -43,8 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static String[] colors = { "red", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
