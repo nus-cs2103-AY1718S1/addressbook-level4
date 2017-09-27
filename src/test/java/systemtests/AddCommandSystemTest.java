@@ -63,7 +63,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * -> added
          */
         ReadOnlyPerson toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORDVAR_1.toUpperCase() + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
+        String command = "   " + AddCommand.COMMAND_WORDVAR_1.toUpperCase() + "  " + NAME_DESC_AMY + "  "
+                + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 

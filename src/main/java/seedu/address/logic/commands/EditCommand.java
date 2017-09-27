@@ -34,7 +34,9 @@ public class EditCommand extends UndoableCommand {
     public static final String COMMAND_WORDVAR_1 = "edit";
     public static final String COMMAND_WORDVAR_2 = "e";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1 + " OR " + COMMAND_WORDVAR_2
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1 +
+            " OR "
+            + COMMAND_WORDVAR_2
             + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values. Command is case-insensitive. \n"

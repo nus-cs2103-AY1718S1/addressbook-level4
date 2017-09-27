@@ -150,6 +150,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        assertCommandFailure("Fin", MESSAGE_UNKNOWN_COMMAND);
+
     }
 
     /**

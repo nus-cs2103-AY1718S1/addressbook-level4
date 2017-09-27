@@ -17,7 +17,9 @@ public class SelectCommand extends Command {
     public static final String COMMAND_WORDVAR_1 = "select";
     public static final String COMMAND_WORDVAR_2 = "s";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1 + " OR " + COMMAND_WORDVAR_2
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
             + ": Selects the person identified by the index number used in the last person listing."
             + "Command is case-insensitive. \n"
             + "Parameters: INDEX (must be a positive integer)\n"

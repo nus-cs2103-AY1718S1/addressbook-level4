@@ -11,7 +11,9 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORDVAR_1 = "find";
     public static final String COMMAND_WORDVAR_2 = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1 + " OR " + COMMAND_WORDVAR_2
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
             + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers."
             + " Command is case-insensitive. \n"
