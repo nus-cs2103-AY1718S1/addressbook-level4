@@ -19,8 +19,8 @@ public class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "
             + "d"
-            + ": Deletes the person identified by the index number used in the last person listing." +
-            " Command is case-insensitive. \n"
+            + ": Deletes the person identified by the index number used in the last person listing."
+            + " Command is case-insensitive. \n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example 1: " + COMMAND_WORDVAR_1 + " 1"
             + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " 2";
