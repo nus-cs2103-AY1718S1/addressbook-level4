@@ -20,7 +20,9 @@ public class AddCommand extends UndoableCommand {
     public static final String COMMAND_WORDVAR_1 = "add";
     public static final String COMMAND_WORDVAR_2 = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1 + " OR " + COMMAND_WORDVAR_2 +
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2 +
             ": Adds a person to the address book. Command is case-insensitive. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "

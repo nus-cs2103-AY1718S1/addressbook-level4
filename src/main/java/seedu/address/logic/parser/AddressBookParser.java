@@ -46,27 +46,35 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        if (commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_2)) {
+        if (commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_2)) {
             return new AddCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_2)) {
             return new EditCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_2)) {
             return new SelectCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
             return new DeleteCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_2)) {
             return new ClearCommand();
-        } else if (commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_2)) {
             return new FindCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_2)) {
             return new ListCommand();
 
-        } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {
             return new HistoryCommand();
 
         } else if (commandWord.equalsIgnoreCase(ExitCommand.COMMAND_WORD)) {
@@ -75,10 +83,12 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(HelpCommand.COMMAND_WORD)) {
             return new HelpCommand();
 
-        } else if (commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_2)) {
             return new UndoCommand();
 
-        } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_1) || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
+        } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
             return new RedoCommand();
 
         } else {
