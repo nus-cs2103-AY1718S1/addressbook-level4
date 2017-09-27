@@ -95,7 +95,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
+        command = EditCommand.COMMAND_WORDVAR_2.toUpperCase() + " " + index.getOneBased() + " "
+                + PREFIX_TAG.getPrefix();
         editedPerson = new PersonBuilder(personToEdit).withTags().build();
         assertCommandSuccess(command, index, editedPerson);
 

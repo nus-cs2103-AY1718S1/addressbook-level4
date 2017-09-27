@@ -129,12 +129,14 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         // invalid address
-        assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_2 + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_1 + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND,
+                Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddCommand.COMMAND_WORDVAR_2 + INVALID_NAME_DESC + PHONE_DESC_BOB
