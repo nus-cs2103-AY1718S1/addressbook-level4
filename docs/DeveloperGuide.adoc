@@ -742,14 +742,65 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add module to timeslot
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add module timeslot.
+2. AddressBook adds module shows “successfully added” message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User enter wrong command format.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. The module code, class type, time-slot or location is not available.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Update module in a particular timeslot
+
+*MSS*
+
+1. User requests to list modules.
+2. AddressBook shows a list of modules.
+3. User requests to update a specific module in the list.
+4. AddressBook updates the module.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The module code, class type, time-slot or location is not available.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Delete module by module/timeslot/location
+
+*MSS*
+
+1. User requests to list module by module/timeslot/location.
+2. AddressBook shows a list of module/timeslot/location.
+3. User requests to delete a specific item (module/timeslot/location) on the list
+4. AddressBook deletes the item
 +
 Use case ends.
 
@@ -765,7 +816,7 @@ Use case ends.
 [none]
 ** 3a1. AddressBook shows an error message.
 +
-Use case resumes at step 2.
+Use case resumes at step 3.
 
 {More to be added}
 
