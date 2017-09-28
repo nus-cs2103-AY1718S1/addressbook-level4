@@ -814,9 +814,12 @@ Use case ends.
 Use case ends.
 
 *Extensions*
+
+[none]
 * 2a. The list is empty.
 +
 Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
