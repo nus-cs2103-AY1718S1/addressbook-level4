@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +22,8 @@ public class DeleteCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) [OTHER INDICES]\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    //public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted all person(s)!";
 
     private final ArrayList<Index> targetIndices;
 
@@ -54,7 +54,8 @@ public class DeleteCommand extends UndoableCommand {
             }
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        //return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
     }
 
     @Override
