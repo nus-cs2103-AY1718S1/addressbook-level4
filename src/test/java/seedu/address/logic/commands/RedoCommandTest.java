@@ -24,14 +24,18 @@ public class RedoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
-    ArrayList<Index> indices = new ArrayList<>();
-
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private DeleteCommand deleteCommandOne;
+    private DeleteCommand deleteCommandTwo;
 
     @Before
     public void setUp() {
+        ArrayList<Index> indices = new ArrayList<>();
+        indices.add(INDEX_FIRST_PERSON);
+
+        deleteCommandOne = new DeleteCommand(indices);
+        deleteCommandTwo = new DeleteCommand(indices);
+
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
