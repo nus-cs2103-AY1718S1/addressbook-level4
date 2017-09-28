@@ -37,10 +37,23 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
+
         /* Case: delete the last person in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
         assertCommandSuccess(lastPersonIndex);
+
+        /* Case: undo deleting the last person in the list -> last person restored */
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+
+        /* Case: mixed case command word -> deleted */
+        //assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+        Model modelAfterDeletingLast = getModel();
+        ReadOnlyPerson removedPerson = removePerson(modelAfterDeletingLast, lastPersonIndex);
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, removedPerson);
+        assertCommandSuccess("DelEtE 6", modelAfterDeletingLast, expectedResultMessage);
 
         /* Case: undo deleting the last person in the list -> last person restored */
         command = UndoCommand.COMMAND_WORD;
@@ -108,8 +121,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
