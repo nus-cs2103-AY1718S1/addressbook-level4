@@ -772,9 +772,9 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to add persons without further infomation
+1.  User requests to add persons without further details
 2.  AddressBook prompts user to input <info> of person to add
-3.  User inputs <info> as requested.
+3.  User inputs <info> as requested
 4.  AddressBook prompts (step 2 - 3) for the following information until all required information (r) has been filled:
     1. name of person (r)
     2. phone number (r)
@@ -782,14 +782,14 @@ Use case resumes at step 2.
     4. address (r)
     5. tags
     6. birthday
-5.  AddressBook adds person.
+5.  AddressBook adds person
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 5a. AddressBook shows error message if same person found.
+* 5a. AddressBook shows error message if same person found
 +
 Use case ends.
 
@@ -801,9 +801,9 @@ Use case ends.
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
 3.  User requests to upload image of a specific person in the list
-4.  AddressBook prompts for location of image.
-5.  User inputs file path.
-6.  AddressBook updates image.
+4.  AddressBook prompts for location of image
+5.  User inputs file path
+6.  AddressBook updates image
 +
 Use case ends.
 
@@ -848,7 +848,7 @@ Use case ends.
 3.  User requests to select specific person
 4.  AddressBook prompts for which details to not encode
 5.  User inputs flags of details to not encode
-6.  AddressBook returns encoded string.
+6.  AddressBook returns encoded string
 +
 Use case ends.
 
@@ -874,8 +874,8 @@ Use case resumes at step 4.
 1.  User requests to decode person details
 2.  AddressBook shows decoded details
 3.  AddressBook prompts user on whether to save contact
-4.  User accepts save.
-5.  AddressBook saves decoded person's contact.
+4.  User accepts save
+5.  AddressBook saves decoded person's contact
 +
 Use case ends.
 
