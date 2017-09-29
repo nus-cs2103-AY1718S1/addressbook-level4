@@ -781,7 +781,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |to be notified of the most optimal path of completing my tasks based on travelling distance |
 
-|`* *` |user |add and remove events |keep track of events happening near me 
+|`* *` |user |add and remove events |keep track of events happening near me
 
 |`* *` |user |filter tasks according to location |be notified of tasks I have at a specific (contact) location
 
