@@ -831,6 +831,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Add a person to favourite list
 
 *MSS*
