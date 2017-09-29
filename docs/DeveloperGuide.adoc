@@ -844,8 +844,6 @@ Use case resumes at step 2.
 6.  AddressBook shows a list of favourite contacts
 7.  User requests to delete a specific person in the favourite list
 8.  AddressBook removes the person in the favourite list and shows a list of persons in favourite list 
-+
-Use case ends.
 
 *Extensions*
 
@@ -871,6 +869,31 @@ Use case resumes at step 7.
 * 8a. The list is empty.
 +
 Use case ends.
+
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person in the list
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The person already exists in the AddressBook.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. The user enters the wrong format into AddressBook.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
 
 {More to be added}
 
