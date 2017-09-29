@@ -833,6 +833,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Sort by name
 
 *MSS*
@@ -850,6 +851,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Find person by name
 
 *MSS*
