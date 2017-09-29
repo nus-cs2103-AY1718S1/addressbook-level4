@@ -974,6 +974,10 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should not take more than two seconds to complete a command.
+.  The system should be maintainable with proper documentation.
+.  The system should be usable by a novice who has never used an address book application before.
+.  Should log user out after 20 minutes of inactivity to protect privacy.
 
 {More to be added}
 
