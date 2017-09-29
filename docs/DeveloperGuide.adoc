@@ -731,6 +731,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |prevent the addition of duplicate contacts |maintain a unique list of contacts to prevent confusion
+
+|`* *` |user |have profile pictures for my contacts |easily identify them in a glance
+
+|`* *` |user |have a birthday field |receive birthday reminders
+
+|`* *` |user |be able to filter my contacts according to tags |have an overview of who is under which tag
+
+|`* *` |user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
+
+|`*` |user |be able to send an email to my contacts through the app |send an email without opening another window
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
