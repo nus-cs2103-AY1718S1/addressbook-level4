@@ -849,14 +849,14 @@ Use case ends.
 * 1a. The person already exists in the AddressBook.
 +
 [none]
-**1a1. AddressBook shows an error message.
+** 1a1. AddressBook shows an error message.
 +
 Use case resumes at step 1.
 
 *1b. The user enters the wrong format into AddressBook.
 +
 [none]
-**1b1. AddressBook shows an error message.
+** 1b1. AddressBook shows an error message.
 +
 Use case resumes at step 1.
 
