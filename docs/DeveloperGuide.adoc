@@ -852,6 +852,33 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person in the list
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The person already exists in the AddressBook.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. The user enters the wrong format into AddressBook.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
 === Use case: Find person by name
 
 *MSS*
