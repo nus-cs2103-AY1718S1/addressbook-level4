@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -729,9 +729,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* *` |user |create custom fields |store additional information for some contacts
+
+|`* *` |user |be able to bookmark contacts |access important contacts much faster
+
+|`* *` |user |have a password required log-in |have more privacy
+
+|`* *` |user |have a Help command that displays screenshots of positive examples |understand the commands more visually
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add emoticons to contact names |my addressbook looks nicer
+
+|`*` |user |be able to assign short nicknames to contacts |find them faster
 |=======================================================================
 
 {More to be added}
