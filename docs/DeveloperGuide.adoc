@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -729,9 +729,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |edit contacts |--
+
+|`* * *` |user with many social circles |add tags to my contacts |group them by how they are related to me
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |have wishlists |let my contacts can know what to buy me for my birthday without telling them
+
+|`* *` |user |receive an email notification when logging in from an unknown device |know when there are unintended logins to my account
+
+|`* *` |user |have wishlists |my friends can know what to buy me for my birthday without asking me
+
+|`* *` |user |have different appearance themes |have a more unique user experience that suits my preferences
+
+|`* *` |new user |have a guided installation/no installaion |easily start using it
+
+|`* *` |clumsy user |have automatic backups |not worry about accidentally deleting things
+
+|`* *` |user |sync with Facebook |easily import contacts
+
+|`* *` |lonely user |find users near me |hit them up
+
+|`* *` |user |have the ability to receive contacts from my friends |I don't have to key them in from scratch
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |randomly generate a contact |choose to chat up a random contact
+
+|`*` |user |find people by phone number |know whether to pick up a call
 |=======================================================================
 
 {More to be added}
