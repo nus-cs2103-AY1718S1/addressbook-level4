@@ -791,8 +791,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |be able to assign short nicknames to contacts |find them faster
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`*` |user |randomly generate a contact |choose to chat up a random contact
 
 |`*` |user |find people by phone number |know whether to pick up a call
