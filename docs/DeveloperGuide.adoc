@@ -979,8 +979,6 @@ Use case ends.
 .  The system should be usable by a novice who has never used an address book application before.
 .  Should log user out after 20 minutes of inactivity to protect privacy.
 
-{More to be added}
-
 [appendix]
 == Glossary
 
