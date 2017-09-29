@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.HashMap;
+import java.util.Random;
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -40,6 +43,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static String[] tagColorScheme = { "red", "green", "blue", "darksalmon", "black", "purple",
+                                                "darkorange", "maroon", "darkturquoise"};
+    private Random random = new Random();
+
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -63,8 +71,20 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    private String getTagColor(String tagName) {
+        if (!tagColors.containsKey(tagName)) {
+            tagColors.put(tagName, tagColorScheme[random.nextInt(tagColorScheme.length)]);
+        }
+
+        return tagColors.get(tagName);
+    }
+    
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color:" + getTagColor(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
