@@ -731,6 +731,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* *` |user |create custom fields |store additional information for some contacts
+
+|`* *` |user |be able to bookmark contacts |access important contacts much faster
+
+|`* *` |user |have a password required log-in |have more privacy
+
+|`* *` |user |have a Help command that displays screenshots of positive examples |understand the commands more visually
+
 |`* *` |user |have a user system |allow multiple users to use their own customised addressbook on the same program
 
 |`* *` |helpful user |have the ability to send contacts to my friends |ensure that they don't have to key it in from scratch
@@ -756,6 +764,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |be able to send an email to my contacts through the app |send an email without opening another window
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add emoticons to contact names |make my addressbook look nicer
+
+|`*` |user |be able to assign short nicknames to contacts |find them faster
 
 |`*` |user |print my contacts on paper in an neat format |pass hard copies to people
 |=======================================================================
