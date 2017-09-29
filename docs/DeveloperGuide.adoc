@@ -853,7 +853,7 @@ Use case ends.
 +
 Use case resumes at step 1.
 
-*1b. The user enters the wrong format into AddressBook.
+* 1b. The user enters the wrong format into AddressBook.
 +
 [none]
 ** 1b1. AddressBook shows an error message.
