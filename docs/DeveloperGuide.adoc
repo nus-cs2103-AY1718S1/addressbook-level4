@@ -742,7 +742,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: x1Delete person
+=== Use case: Delete person
 
 *MSS*
 
