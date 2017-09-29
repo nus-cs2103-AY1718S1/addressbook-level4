@@ -751,6 +751,44 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |filter contacts by distance from my reference location |see a list of contacts that are at a specific radial distance from me
+
+|`* *` |user |store my work and home addresses |use these addresses as destinations/sources of my journeys
+
+|`* *` |user |send and receive contact details to and from my friends |minimize the amount of data inputs
+
+|`* *` |user |specify the type contact details I send to friends |protect my privacy
+
+|`* *` |user |import profile pictures of contacts from their social media |upload profile pictures of contacts easily
+
+|`* *` |user |have the option of adding a birthday to a contact |store the addresses of my contacts
+
+|`* *` |user |be reminded of a person's birthday (if valid) |in case I forget the date
+
+|`* *` |user |view the birthdays of my contacts in sorted order |know whose birthday is coming up
+
+|`* *` |user |create telegram group chats of contacts tagged with the same tag |add contacts into a group chat easily
+
+|`* *` |user |share details with contacst with a specific tag |minimize chance of someone else seeing them by accident
+
+|`* *` |user |add and remove tasks |use addressbook as a task manager
+
+|`* *` |user |edit created tasks |change the details of task
+
+|`* *` |user |assign contacts and locations  to tasks |link my tasks with people and places
+
+|`* *` |user |assign an expiry date to tasks |tasks are deleted automatically
+
+|`* *` |user |to be notified of the most optimal path of completing my tasks based on travelling distance
+
+|`* *` |user |add and remove events |keep track of events happening near me
+
+|`* *` |user |filter tasks according to location |be notified of tasks I have at a specific (contact) location
+
+|`* *` |user |view daily tasks |keep track of daily tasks
+
+|`* *` |user |retrieve my exact location on my device |remember the current address and store my location
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
