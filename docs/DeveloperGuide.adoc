@@ -723,6 +723,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |user |to have the ability to create favourite lists |view my most important contacts
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -751,11 +753,51 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have the ability to receive contacts from my friends |not key them in from scratch
 
+|`* *` |user |create custom fields |store additional information for some contacts
+
+|`* *` |user |be able to bookmark contacts |access important contacts much faster
+
+|`* *` |user |have a password required log-in |have more privacy
+
+|`* *` |user |have a Help command that displays screenshots of positive examples |understand the commands more visually
+
+|`* *` |user |have a user system |allow multiple users to use their own customised addressbook on the same program
+
+|`* *` |helpful user |have the ability to send contacts to my friends |ensure that they don't have to key it in from scratch
+
+|`* *` |user |have 3rd party software(calendar) to draw information from the addressbook |
+
+|`* *` |user |view my last login time |ensure that no one else is using my account
+
+|`* *` |user |destroy my program & backups |wipe the system clean, before passing the program to someone
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |prevent the addition of duplicate contacts |maintain a unique list of contacts to prevent confusion
+
+|`* *` |user |have profile pictures for my contacts |easily identify them in a glance
+
+|`* *` |user |have a birthday field |receive birthday reminders
+
+|`* *` |user |be able to filter my contacts according to tags |have an overview of who is under which tag
+
+|`* *` |user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
+
+|`*` |user |be able to send an email to my contacts through the app |send an email without opening another window
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add emoticons to contact names |make my addressbook look nicer
+
+|`*` |user |be able to assign short nicknames to contacts |find them faster
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |randomly generate a contact |choose to chat up a random contact
 
 |`*` |user |find people by phone number |know whether to pick up a call
+
+|`*` |user |print my contacts on paper in an neat format |pass hard copies to people
 |=======================================================================
 
 {More to be added}
