@@ -1016,7 +1016,7 @@ Cons:
 
 Author: M Kenneally
 
-Pros: 
+Pros:
 
 * Simple to use
 * Search address function is brilliant - fast and intuitive
