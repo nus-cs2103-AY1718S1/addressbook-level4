@@ -723,7 +723,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |I want to have the ability to create favourite lists |view my most important contacts
+|`* * *` |user |to have the ability to create favourite lists |view my most important contacts
 
 |`* * *` |user |add a new person |
 
