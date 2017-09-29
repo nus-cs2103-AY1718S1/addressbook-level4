@@ -729,6 +729,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |add a new location |store important locations and establishments
+
+|`* * *` |user |filter contacts by tags |view specific contacts that are assigned with specific tags
+
+|`* * *` |user |add profile pictures to contacts |
+
+|`* * *` |user |have a default picture for contacts without profile pictures |know which contact does not have a profile picture
+
+|`* * *` |user |update the profile pictures of contacts |
+
+|`* * *` |user |input instructions into a chatbot interface |I do not need to remember the format of commands
+
+|`* * *` |user |back and forward button in the browser |traverse my browser history easily.
+
+|`* * *` |user |the browser to automatically search for the address of the selected person in Google Maps |
+
+|`* * *` |user who travels a lot |to know the shortest distance from one contact's address to another |
+
+|`* * *` |user |set a reference location |find the shortest distance from my reference location to a contact's location
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
