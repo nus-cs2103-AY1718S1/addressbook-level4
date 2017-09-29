@@ -723,6 +723,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |user |to have the ability to create favourite lists |view my most important contacts
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -737,6 +739,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have a Help command that displays screenshots of positive examples |understand the commands more visually
 
+|`* *` |user |have a user system |allow multiple users to use their own customised addressbook on the same program
+
+|`* *` |helpful user |have the ability to send contacts to my friends |ensure that they don't have to key it in from scratch
+
+|`* *` |user |have 3rd party software(calendar) to draw information from the addressbook |
+
+|`* *` |user |view my last login time |ensure that no one else is using my account
+
+|`* *` |user |destroy my program & backups |wipe the system clean, before passing the program to someone
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -744,6 +756,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |add emoticons to contact names |make my addressbook look nicer
 
 |`*` |user |be able to assign short nicknames to contacts |find them faster
+
+|`*` |user |print my contacts on paper in an neat format |pass hard copies to people
 |=======================================================================
 
 {More to be added}
