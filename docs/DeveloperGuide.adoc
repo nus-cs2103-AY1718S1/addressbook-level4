@@ -831,7 +831,38 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add tag to person
+
+*MSS*
+
+1.  User requests to add tag to a person
+2.  User keys in tag name
+3.  AddressBook adds the tag to the person
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit a person
+2.  AddressBook displays the current information of the person
+3.  User edits the information in person
+4.  AddressBook updates the information in person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User keys in invalid information into fields.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
