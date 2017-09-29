@@ -741,7 +741,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |user |add emoticons to contact names |my addressbook looks nicer
+|`*` |user |add emoticons to contact names |make my addressbook look nicer
 
 |`*` |user |be able to assign short nicknames to contacts |find them faster
 |=======================================================================
