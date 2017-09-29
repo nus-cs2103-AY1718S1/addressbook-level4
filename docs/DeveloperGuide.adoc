@@ -999,16 +999,59 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Address Book*
 
-Author: ...
+Author: Deleatha C Jones
 
 Pros:
 
-* ...
-* ...
+* Easy to use
+* Has all contact information fields
 
 Cons:
 
-* ...
-* ...
+* Can only enter one phone number
+
+*Address book - Placebook*
+
+Author: M Kenneally
+
+Pros: 
+
+* Simple to use
+* Search address function is brilliant - fast and intuitive
+* GPS location
+* Nice clean interface
+* No ads
+
+Cons:
+
+* Cannot import from Google contacts
+
+*Address Book and Contacts*
+
+Author: Jessica Ryans, Leslie Murray
+
+Pros:
+
+* It categorizes contacts into groups
+* Simple to use
+
+Cons:
+
+* Can't edit groups once formed
+* Does not have enough fields
+
+*Address Book*
+
+Authors: Becca Malard & Susan Starrett
+
+Pros:
+
+* Shows map of user location
+* Easy to use
+
+Cons:
+
+* Doesn't open all the time
+* Very slow
