@@ -791,6 +791,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |be able to assign short nicknames to contacts |find them faster
 
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |`*` |user |randomly generate a contact |choose to chat up a random contact
 
 |`*` |user |find people by phone number |know whether to pick up a call
@@ -830,6 +832,42 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+=== Use case: Sort by name
+
+*MSS*
+
+1. User requests to sort AddressBook by name of persons
+2. AddressBook sorts itself
+3. AddressBook shows a sorted list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook is empty.
++
+Use case ends.
+
+=== Use case: Find person by name
+
+*MSS*
+
+1. User requests to find persons by name
+2. AddressBook shows a list of corresponding persons with matching case insensitive full words
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. No matches found.
++
+[none]
+** 1a1. AddressBook shows 0 persons found.
++
+Use case ends.
 
 {More to be added}
 
