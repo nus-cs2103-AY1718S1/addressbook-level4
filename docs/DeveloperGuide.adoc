@@ -872,7 +872,7 @@ Use case ends.
 5.  User requests to list favourite contacts
 6.  AddressBook shows a list of favourite contacts
 7.  User requests to delete a specific person in the favourite list
-8.  AddressBook removes the person in the favourite list and shows a list of persons in favourite list 
+8.  AddressBook removes the person in the favourite list and shows a list of persons in favourite list
 
 *Extensions*
 
