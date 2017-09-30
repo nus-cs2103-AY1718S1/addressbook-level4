@@ -881,6 +881,78 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests show help guide
+2.  AddressBook shows help guide
++
+Use case ends.
+
+[discrete]
+=== Use case: list
+
+*MSS*
+
+1.  User requests to list all modules time-slots
+2.  AddressBook shows all modules time-slots
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: list [tag-name(module / location)]
+
+*MSS*
+
+1. User requests to list by tag-name
+2. AddressBook shows a list of information by tag-name
+3. User requests to view specific information of tag-name
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: login [userAccount]
+
+*MSS*
+
+1. User requests to login with a User Account
+2. AddressBook asks user to key in password
+3. User key in password
+4. AddressBook checks the password and show successful message
++
+Use case ends.
+
+*Extensions*
+
+* 4a. The account is not registered.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
