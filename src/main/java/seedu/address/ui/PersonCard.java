@@ -78,6 +78,10 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagName);
     }
 
+    /**
+     * Initializes and styles tags belonging to each person. Each unique tag has a unique color.
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
