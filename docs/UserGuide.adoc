@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T11-B2/main.git
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
