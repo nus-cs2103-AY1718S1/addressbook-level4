@@ -725,6 +725,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |frequent user |save contacts locally |don't have to load files each time I exit and re-open the application
+
+|`* * *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
+
+|`* * *` |heavy user |select a person by index |select the correct person by index if I have multiple person with same name
+
+|`* * *` |forgetful user |tag important person |find them easily based on tags
+
+|`* * *` |user |list out all persons in address book |select which person I want
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
@@ -746,6 +756,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |conservative user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |social user |connect to social media platforms |find contacts in case I forget who they are
+
+|`* *` |analytical user |view a history of commands I have entered |see what I have done when using the application
+
+|`* *` |clumsy user |undo any action that modifies the address book |not have to repeat commands if it was a mistake
+
+|`* *` |efficient user |redo a command |so that I can use the application quicker without retyping the command after undoing
+
+|`* *` |user |add new tags to a person |update the tags a person will have
+
+|`* *` |forgetful user |make notes for a person |remember important details about the person
+
+|`* *` |user |want to change the window size and font size |view the application with comfort and size
 
 |`* *` |hasty user |customise shortcuts for each command |use the the application at my own pace and comfort
 
