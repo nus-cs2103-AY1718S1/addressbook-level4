@@ -84,7 +84,6 @@ public class PersonCard extends UiPart<Region> {
            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
            tags.getChildren().add(tagLabel);
         });
-        
     }
 
     @Override
