@@ -351,3 +351,12 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#personPanel #name, #phone, #address, #email{
+    -fx-font-size: 30;
+    
+}
+
+#personPanel {
+    -fx-background-color: #b0bec5;
+}
