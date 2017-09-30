@@ -48,7 +48,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initTags(person);
+        initialiseTags(person);
         bindListeners(person);
     }
 
@@ -80,11 +80,11 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            initTags(person);
+            initialiseTags(person);
         });
     }
 
-    private void initTags(ReadOnlyPerson person) {
+    private void initialiseTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
