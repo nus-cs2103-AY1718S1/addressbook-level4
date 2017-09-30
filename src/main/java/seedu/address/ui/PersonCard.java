@@ -17,7 +17,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static double darkColorBase = 1.3;
     private Random random = new Random(System.currentTimeMillis());
     private static HashMap<String, String> tagToColor = new HashMap<String, String>();
 
@@ -55,14 +54,21 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private String generateRandomColor() {
+        // Factor to divide down the random color to better contrast white text
+        final double darkColorBase = 1.2;
 
         final int red = (int)Math.round((random.nextInt(256)) / darkColorBase);
         final int green = (int)Math.round((random.nextInt(256)) / darkColorBase);
         final int blue = (int)Math.round((random.nextInt(256)) / darkColorBase);
 
+        // Convert RBG to Hex String
         return String.format("#%02x%02x%02x", red, blue, green);
     }
 
+    /**
+     * Store initialized tag into HashMap to remember the colour already given
+     * so that subsequent occurence will use the same colour
+     */
     private String getTagColor(String tagName) {
         if (!tagToColor.containsKey(tagName)) {
             tagToColor.put(tagName, generateRandomColor());
