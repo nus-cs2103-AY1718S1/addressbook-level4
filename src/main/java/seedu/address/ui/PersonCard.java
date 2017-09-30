@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.awt.Color;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,7 +17,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    final Random mRandom = new Random(System.currentTimeMillis());
 
+    public Color generateRandomColor() {
+
+        final float red = (250+ mRandom.nextInt(256)) / 2f;
+        final float green = (250 + mRandom.nextInt(256)) / 2;
+        final float blue = (250 + mRandom.nextInt(256)) / 2;
+
+        return new Color (red, green, blue);
+    }
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
