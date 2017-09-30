@@ -38,7 +38,7 @@ public class DeleteCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for (int i=0;i<targetIndices.size();i++) {
+        for (int i = 0; i < targetIndices.size(); i++) {
             Index targetIndex = targetIndices.get(i);
 
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
