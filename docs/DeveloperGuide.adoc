@@ -795,8 +795,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
-
 [appendix]
 == Use Cases
 
@@ -829,6 +827,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Update module in a particular timeslot
 
 *MSS*
@@ -854,6 +853,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Delete module by module/timeslot/location
 
 *MSS*
