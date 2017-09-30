@@ -25,6 +25,9 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
+    private static String[] colors = { "red", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static HashMap<String, String> tagColors = new HashMap<>();
+    private static Random random = new Random();
 
     public final ReadOnlyPerson person;
 
@@ -43,10 +46,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private static String[] colors = { "red", "blue", "orange", "brown", "green", "pink", "black", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<>();
-    private static Random random = new Random();
-
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -57,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
-                tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
 
         return tagColors.get(tagValue);
@@ -78,11 +77,14 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Sets the color for each tag upon startup.
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
-           Label tagLabel = new Label(tag.tagName);
-           tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-           tags.getChildren().add(tagLabel);
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
         });
     }
 
