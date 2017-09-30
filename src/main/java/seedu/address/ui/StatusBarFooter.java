@@ -40,12 +40,15 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar showNumberOfContacts;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int numberOfContacts) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setNumberOfContacts(numberOfContacts);
         registerAsAnEventHandler(this);
     }
 
@@ -77,5 +80,10 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setNumberOfContacts(abce.data.getPersonList().size());
+    }
+
+    public void setNumberOfContacts(int numberOfContacts) {
+        showNumberOfContacts.setText(numberOfContacts + "person(s) total");
     }
 }

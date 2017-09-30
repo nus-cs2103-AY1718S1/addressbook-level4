@@ -11,9 +11,9 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
-  <StatusBar fx:id="syncStatus" styleClass="anchor-pane" />
-  <StatusBar fx:id="saveLocationStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="1" />
-   <StatusBar GridPane.columnIndex="2" />
+  <StatusBar fx:id="syncStatus" styleClass="anchor-pane" GridPane.columnIndex="1"/>
+  <StatusBar fx:id="saveLocationStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="2" />
+   <StatusBar fx:id="showNumberOfContacts" GridPane.columnIndex="0" />
    <rowConstraints>
       <RowConstraints />
    </rowConstraints>
