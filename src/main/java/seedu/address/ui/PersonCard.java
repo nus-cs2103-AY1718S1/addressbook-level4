@@ -20,7 +20,7 @@ public class PersonCard extends UiPart<Region> {
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static String[] tagColorScheme = { "red", "green", "blue", "darksalmon", "black", "purple",
                                                "darkorange", "maroon", "darkturquoise"};
-    private Random random = new Random();
+    private static Random random = new Random();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
