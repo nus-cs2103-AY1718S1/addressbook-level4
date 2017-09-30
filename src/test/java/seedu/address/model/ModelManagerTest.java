@@ -38,7 +38,8 @@ public class ModelManagerTest {
         modelManager.deleteTag(new Tag("friends"));
 
         // friend tag should be deleted -> returns false
-        assertFalse(addressBook.getPersonList().equals(new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build()));
+        AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
 
     @Test
