@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -17,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final Logger logger = LogsCenter.getLogger(PersonCard.class);
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static String[] tagColorScheme = { "red", "green", "blue", "darksalmon", "black", "purple",
                                                "darkorange", "maroon", "darkturquoise"};
@@ -49,6 +52,7 @@ public class PersonCard extends UiPart<Region> {
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
+        logger.finest("PersonCard for " + person.getName().toString() + " initialized");
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
@@ -88,6 +92,7 @@ public class PersonCard extends UiPart<Region> {
             tagLabel.setStyle("-fx-background-color:" + getTagColor(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
+        logger.finest("All tags for " + person.getName().toString() + " initialized");
     }
 
     @Override
