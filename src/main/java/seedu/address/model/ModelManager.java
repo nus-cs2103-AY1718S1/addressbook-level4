@@ -3,10 +3,12 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,6 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -95,7 +98,8 @@ public class ModelManager extends ComponentManager implements Model {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
             Person personClone = new Person(oldPerson);
-            Set<Tag> tagListToEdit = oldPerson.getTags();
+            ObjectProperty<UniqueTagList> oldTagList = oldPerson.tagProperty();
+            Set<Tag> tagListToEdit = oldTagList.get().toSet();
             tagListToEdit.remove(tag);
             personClone.setTags(tagListToEdit);
             addressBook.updatePerson(oldPerson, personClone);

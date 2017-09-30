@@ -12,7 +12,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -24,6 +27,18 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    // No existing command that calls deleteTag method. Testing will be done here for now.
+    @Test
+    public void deleteTag() throws PersonNotFoundException, IllegalValueException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.deleteTag(new Tag("friends"));
+
+        // friend tag should be deleted -> returns false
+        assertFalse(addressBook.getPersonList().equals(new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build()));
     }
 
     @Test
