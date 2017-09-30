@@ -19,8 +19,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
  */
 public class StatusBarFooter extends UiPart<Region> {
 
-    public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
-    public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String SYNC_STATUS_INITIAL = "  Not updated yet in this session";
+    public static final String SYNC_STATUS_UPDATED = "  Last Updated: %s";
 
     /**
      * Used to generate time stamps.
@@ -84,6 +84,6 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     public void setNumberOfContacts(int numberOfContacts) {
-        showNumberOfContacts.setText(numberOfContacts + "person(s) total");
+        showNumberOfContacts.setText("  " + numberOfContacts + "person(s) total");
     }
 }
