@@ -40,8 +40,10 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
 
         if (event.hasError) {
+            logger.finer("ResultDisplay style set to indicate error");
             setStyleToIndicateCommandFailure();
         } else {
+            logger.finer("ResultDisplay style set to default");
             setStyleToDefault();
         }
     }
