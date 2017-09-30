@@ -729,9 +729,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user with many persons in the address book |view list of people with a certain tag |identify different groups of contacts.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user with many persons in the address book |sort persons by any field |locate a person easily
+
+|`* * *` |experienced user |input commands using a shortened form |be more efficient when using the application
+
+|`* * *` |travelling user |load my contacts from file |use the app on all my devices
+
+|`* * *` |user |save the date of birth of my contacts |know when the birthdays of my contacts are
+
+|`* * *` |heavy user |delete multiple contacts at once |do it at one go and not multiple times
+
+|`* * *` |heavy user |find persons by any fields |find the person if I forget the name.
+
+|`* * *` |conservative user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |social user |connect to social media platforms |find contacts in case I forget who they are
+
+|`* *` |hasty user |customise shortcuts for each command |use the the application at my own pace and comfort
+
+|`* *` |colorblind user |have a colorblind mode for the application |use the application without difficulty
+
+|`*` |user |shit the UI around |use the application with the UI to my liking
 |=======================================================================
 
 {More to be added}
