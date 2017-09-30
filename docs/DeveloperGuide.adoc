@@ -729,12 +729,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |use shorter aliases for commands|enter commands quickly and not have to type in the full command
+
+|`* * *` |user |find people by their tags|view people under certain tags
+
+|`* * *` |user |have a responsive inbuilt browser with similar response times to external browsers|use the inbuilt browser smoothly
+
+|`* * *` |user |add tags cumulatively|edit tags conveniently
+
+|`* * *` |user |add a person with fewer parameters|add someone I don't know all the details of
+
+|`* * *` |user |edit contact details|modify contacts without having to delete the contact
+
+|`* * *` |user |view in-line help via the help command|view the help without having to navigate the user guide(which is not CLI friendly)
+
+|`* * *` |user |add contacts with multiple phone numbers|have contact entries with multiple phone numbers without the need for multiple entries
+
+|`* * *` |user |revert to a previous version of my AddressBook|restore from a backup if my contact data is accidentally lost
+
+|`* * *` |user |navigate the navigation using only my keyboard (using preset keybindings)|use the application solely with my keyboard, as with CLI-focused apps
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |have Google Contacts integration| view and modify my contacts on other platforms than my computer
+
+|`* *` |user |have a reminder system tag to names| remember my appointments with other people
+
+|`* *` |user |access a person's Facebook account via in the in-built browser|use Facebook features from the AddressBook
+
+|`* *` |user |find a subset of contacts using specified parameters|filter through my contacts
+
+|`* *` |user |click on the address to be shown its Google Maps result|easily navigate to my contact's location
+
+|`* *` |user |resize the dimensions of the command and output bar|customise the application to my desired layout
+
+|`* *` |user |upload pictures of my contacts|identify my contacts with similar names
+
+|`* *` |user |change the layout and enable/disable certain components e.g. the inbuilt browser|change the layout as desired and customise my AddressBook
+
+|`* *` |user |clear the screen to the default view|reset my AddressBook and start from a clean slate
+
+|`* *` |user |have a plugin manager to download and use plugins I want|only use resources I want to
+
+|`* *` |user |have a theme manager|change the colours to fit my desires
+
+|`* *` |user |modify private information|conveniently modify private information
+
+|`* *` |user |encrypt private information with a passphrase|secure my private information and hide it from others
+
+|`* *` |user |have a Favourites section where popular contacts are shown|access my frequently viewed contacts quickly
+
+|`* *` |user |have a settings manager/config file|customise the application and preferences
+
+|`* *` |user |send an email via the inbuilt browser by clicking on a contact's email|easily and quickly send an email to an existing contact
+
+|`* *` |user |have a Notes section to add notes that can be tagged and shared with people|jot down certain events and details
+
+|`* *` |user who is privacy focused |encrypt my contacts|hide and secure my contacts from others
+
+|`* *` |user |tab-complete my commands|quickly complete my commands and do inline searching for contacts
+
+|`* *` |user |add aliases for contacts|label my contacts with a different name
+
+|`* *` |user |use regex for find command|type less and perform a wider variety of searches
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |be able to sort the contacts|look for people easily
+
+|`*` |user |send a message to my contacts in the AddressBook|contact people directly from the application
+
+|`*` |user |use the application on my phone|access contact details directly on my phone
+
+|`*` |user |store/see the relationship between our contacts in a graph|see our mutual friends
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
