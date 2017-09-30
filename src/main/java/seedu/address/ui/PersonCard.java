@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,8 +9,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.HashMap;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -52,18 +52,23 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    /**
+     * Obtain tag colors
+     * @param tagValue is the String description of the tag
+     * @return the designated tag colors according to the tag description
+     */
     private static String obtainTagColors(String tagValue) {
 
         if (!tagColors.containsKey(tagValue)) {
-            switch(tagValue){
-                case "friends":
-                    tagColors.put(tagValue, availableColors[1]);
-                    break;
-                case "colleagues":
-                    tagColors.put(tagValue, availableColors[0]);
-                    break;
-                default:
-                    tagColors.put(tagValue, availableColors[2]);
+            switch(tagValue) {
+            case "friends":
+                tagColors.put(tagValue, availableColors[1]);
+                break;
+            case "colleagues":
+                tagColors.put(tagValue, availableColors[0]);
+                break;
+            default:
+                tagColors.put(tagValue, availableColors[2]);
             }
         }
         return tagColors.get(tagValue);
@@ -84,6 +89,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise the {@code person} tags
+     * @param person Person to be assigned tag colour.
+     */
     private void initialiseTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
