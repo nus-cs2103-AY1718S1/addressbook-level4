@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "red", "green", "grey" };
+    private static String[] availableColors = { "red", "green", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     /**
@@ -52,29 +52,20 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
-    private static String getColorForTag(String tagValue) {
+    private static String obtainTagColors(String tagValue) {
 
         if (!tagColors.containsKey(tagValue)) {
-
-            if(tagValue.equals("friends")) {
-
-                tagColors.put(tagValue, colors[1]);
+            switch(tagValue){
+                case "friends":
+                    tagColors.put(tagValue, availableColors[1]);
+                    break;
+                case "colleagues":
+                    tagColors.put(tagValue, availableColors[0]);
+                    break;
+                default:
+                    tagColors.put(tagValue, availableColors[2]);
             }
-
-            else if(tagValue.equals("colleagues")){
-
-                tagColors.put(tagValue, colors[0]);
-
-            }
-
-            else{
-
-                tagColors.put(tagValue, colors[2]);
-
-            }
-
         }
-
         return tagColors.get(tagValue);
     }
 
@@ -96,7 +87,7 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
     }
