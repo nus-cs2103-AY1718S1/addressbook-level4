@@ -2,31 +2,48 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-
-<VBox fx:id="personPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label fx:id="name" text="Name">
-         <font>
-            <Font name="Segoe UI" size="12.0" />
-         </font>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </Label>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" text="Phone" />
-      <Label fx:id="address" text="Address">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </Label>
-      <Label fx:id="email" text="Email" />
-   </children>
-   <padding>
-      <Insets bottom="5.0" left="10.0" right="5.0" />
-   </padding>
-</VBox>
+<SplitPane fx:id="personPanel" dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane fx:id="mainDetails">
+         <children>
+            <VBox>
+               <children>
+                  <Label fx:id="name" wrapText="true">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <FlowPane fx:id="tags">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding></FlowPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+    <AnchorPane>
+         <children>
+            <VBox>
+               <children>
+                  <Label fx:id="phone" wrapText="true">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <Label fx:id="address" wrapText="true">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <Label fx:id="email" wrapText="true">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding></Label>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>
