@@ -222,6 +222,18 @@ Format: `clear`
 Plays a random music track from a list of built in mp3 music from Address Book. +
 Format: `music`
 
+=== Adding aliases : `alias`
+
+Adds an alias to another command. +
+Format: `alias ALIAS COMMAND`
+
+Examples:
+
+* `alias show list` +
+`show` (performs the `list` command) +
+* `alias remove delete` +
+`remove 1` (performs the `delete 1` command) +
+
 === Exiting the program : `exit`
 
 Exits the program. +
