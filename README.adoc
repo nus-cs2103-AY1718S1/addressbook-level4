@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 https://travis-ci.org/CS2103T-W09B2/addressbook-level4[image:https://travis-ci.org/CS2103T-W09B2/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/jeffreygohkw/addressbook-level4-cpr77/branch/master[image:https://ci.appveyor.com/api/projects/status/i8c83v7pyxwwdfsl/branch/master?svg=true)][Build status]]
+https://ci.appveyor.com/project/jeffreygohkw/addressbook-level4-cpr77/branch/master[image:https://ci.appveyor.com/api/projects/status/i8c83v7pyxwwdfsl/branch/master?svg=true)][Build status]
 https://coveralls.io/github/CS2103T-W09B2/addressbook-level4[image:https://coveralls.io/repos/github/CS2103T-W09B2/addressbook-level4/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
