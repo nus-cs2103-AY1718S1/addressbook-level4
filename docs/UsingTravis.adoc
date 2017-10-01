@@ -66,7 +66,8 @@ Personal access tokens are like passwords so make sure you keep them secret! If 
 +
 [NOTE]
 We use a new user account to generate the token for team projects to prevent team members from gaining access to other team members' repos. +
-If you are the only one with write access to the repo, you can use your own account to generate the token.
+If you are the only one with write access to the repo, you can use your own account to generate the token. +
+Our GitHub Pages is built by a https://github.com/team2103bot[robot].
 +
 --
 * Add a description for the token. (e.g. `Travis CI - deploy docs to gh-pages`)
