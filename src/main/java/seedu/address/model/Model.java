@@ -37,6 +37,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Deletes given tag from AddressBook */
     void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
