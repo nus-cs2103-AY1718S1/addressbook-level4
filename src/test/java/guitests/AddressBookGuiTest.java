@@ -1,5 +1,6 @@
 package guitests;
 
+import guitests.guihandles.PersonPanelHandle;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.After;
@@ -79,16 +80,16 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
-    }
-
     protected StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
 
     protected ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
+    }
+    
+    protected PersonPanelHandle getPersonPanel() {
+        return mainWindowHandle.getPersonPanel();
     }
 
     /**
