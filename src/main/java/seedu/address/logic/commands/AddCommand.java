@@ -64,4 +64,8 @@ public class AddCommand extends UndoableCommand {
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
+
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

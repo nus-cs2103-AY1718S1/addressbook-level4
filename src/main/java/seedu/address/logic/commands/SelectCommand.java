@@ -49,4 +49,8 @@ public class SelectCommand extends Command {
                 || (other instanceof SelectCommand // instanceof handles nulls
                 && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
     }
+
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

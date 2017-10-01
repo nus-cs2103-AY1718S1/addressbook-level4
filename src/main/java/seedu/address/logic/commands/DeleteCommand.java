@@ -55,4 +55,8 @@ public class DeleteCommand extends UndoableCommand {
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
+
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }
