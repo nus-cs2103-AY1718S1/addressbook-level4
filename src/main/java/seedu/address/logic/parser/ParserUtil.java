@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.*;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -89,5 +90,34 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code Optional<String> command} and returns itself if it is a valid command, if {@code command} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseCommand(Optional<String> command) throws IllegalValueException {
+        requireNonNull(command);
+        if (command.isPresent()) {
+            switch (command.get()) {
+                case AddCommand.COMMAND_WORD:
+                case AliasCommand.COMMAND_WORD:
+                case EditCommand.COMMAND_WORD:
+                case SelectCommand.COMMAND_WORD:
+                case DeleteCommand.COMMAND_WORD:
+                case ClearCommand.COMMAND_WORD:
+                case FindCommand.COMMAND_WORD:
+                case ListCommand.COMMAND_WORD:
+                case HistoryCommand.COMMAND_WORD:
+                case ExitCommand.COMMAND_WORD:
+                case HelpCommand.COMMAND_WORD:
+                case UndoCommand.COMMAND_WORD:
+                case RedoCommand.COMMAND_WORD:
+                    return command;
+                default:
+                    return Optional.empty();
+            }
+        }
+        return Optional.empty();
     }
 }

@@ -217,6 +217,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Adding aliases : `alias`
+
+Adds an alias to another command. +
+Format: `alias ALIAS COMMAND`
+
+Examples:
+
+* `alias show list` +
+`show` (performs the `list` command) +
+* `alias remove delete` +
+`remove 1` (performs the `delete 1` command) +
+
 === Exiting the program : `exit`
 
 Exits the program. +

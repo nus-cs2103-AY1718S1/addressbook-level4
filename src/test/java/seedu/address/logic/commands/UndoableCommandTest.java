@@ -63,5 +63,9 @@ public class UndoableCommandTest {
             }
             return new CommandResult("");
         }
+
+        public String getCommandWord() {
+            return "";
+        }
     }
 }

@@ -35,4 +35,8 @@ public class HistoryCommand extends Command {
         requireNonNull(history);
         this.history = history;
     }
+
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

@@ -236,12 +236,20 @@ public class UndoRedoStackTest {
         public CommandResult execute() {
             return new CommandResult("");
         }
+
+        public String getCommandWord() {
+            return "";
+        }
     }
 
     class DummyUndoableCommand extends UndoableCommand {
         @Override
         public CommandResult executeUndoableCommand() {
             return new CommandResult("");
+        }
+
+        public String getCommandWord() {
+            return "";
         }
     }
 }
