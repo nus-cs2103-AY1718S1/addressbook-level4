@@ -800,6 +800,32 @@ Use case resumes at step 1.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Redo last successful undo
+
+*MSS*
+
+1. User requests to redo the last undo
+2. AddressBook confirms if user really wishes to redo last undo
+3. User confirms the redo
+4. AddressBook redoes the last undo
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the redo.
++
+Use case ends.
+
+* 4a. The last successful command is not `undo`.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
