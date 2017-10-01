@@ -136,7 +136,7 @@ Deletes the 2nd person in the address book.
 Deletes the 1st person in the results of the `find` command.
 * `list` +
 `del 1` +
-Deletse the 1st person in the address book.
+Deletes the 1st person in the address book.
 
 === Selecting a person : `select`
 
