@@ -347,24 +347,24 @@
      -fx-border-radius: 2;
      -fx-background-radius: 2;
      -fx-font-size: 11;
- }
+}
 
- #tags .friends {
+#tags .friends {
      -fx-background-color: red;
- }
+}
 
- #tags .colleagues {
+#tags .colleagues {
     -fx-background-color: green;
- }
+}
 
- #tags .family {
+#tags .family {
     -fx-text-fill: black;
     -fx-background-color: yellow;
- }
+}
 
- #tags .neighbours {
+#tags .neighbours {
      -fx-text-fill: black;
     -fx-background-color: #AED6F1;
- }
+}
 
 
