@@ -726,12 +726,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
+ 
+|`* * *` |user |delete multiple persons at once  |I do not have to go through the hassle of removing one at each time 
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+ 
+|`* * *` |user |select multiple person |I can perform the same command to multiple contacts at once
+
+|`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
+
+|`* *` |user |see a sorted list of my contacts |it will save time and energy on my end
+
+|`* *` |user |use shortcut to any command |it will be easier for me to find someone in my contact list
+
+|`* *` |user |rename existing tag |I can update my relationship with contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +780,35 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+=== Use case: Rename existing tag 
+#Pre-condition :The identitifed tag exist in Addressbook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename the tag 
+4. User keys in the new input
+5. AddressBook replace the name of the existing to the newer version 
+6. AddressBook prompt user to confirm the changes
+7.AddressBook shows a sucessful message regarding the replacement<br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+4a. The given tag is invalid
+
+> 4a1. AddressBook shows an error message <br>
+  Use case resumes at step 3
+
+6a. User disconfirm the changes
+
+> Use case ends
+
 {More to be added}
 
 [appendix]
@@ -775,6 +817,7 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Respond time should be less than 10s
 
 {More to be added}
 
