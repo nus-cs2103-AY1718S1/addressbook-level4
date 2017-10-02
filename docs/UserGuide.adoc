@@ -231,16 +231,24 @@ If address book data can be loaded successfully, backup address book data is sav
 === Loading the data
 
 If the data file does not exist or cannot be read:
-* Backup data file will be loaded, if available and readable. +
-* If backup data is unavailable:
-** You will be given a sample address book.
-* If backup data exists but cannot be read :
-** You will be given an empty address book.
+[none]
+* Backup data file will be loaded, if available and readable.
 +
-****
-* Tip:
-** To quickly revert address book data to the state of last use, simply delete addressbook.xml and rename addressbook.xml-backup.xml to addressbook.xml.
-****
+If backup data is unavailable:
++
+[none]
+** You will be given a sample address book.
++
+[none]
+* If backup data exists but cannot be read :
++
+[none]
+** You will be given an empty address book.
+
+[NOTE]
+====
+To quickly revert address book data to the state of last use, simply delete addressbook.xml and rename addressbook.xml-backup.xml to addressbook.xml.
+====
 
 == FAQ
 
