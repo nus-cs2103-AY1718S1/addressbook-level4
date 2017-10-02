@@ -729,9 +729,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |edit my friends' contact on Addressbook |
+
+|`* * *` |user |exit Addressbook |continue using other functions in my operating system
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |access my contacts' social media account through address book |
+
+|`* *` |user |remove a tag from my friends' contact information |
+
+|`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
+
+|`* *` |curious user |search my contacts' information online with google |
+
+|`* *` |careless user |undo my previous commands |retrieve important information that I have accidentally deleted earlier on
+
+|`* *` |indecisive user |redo my undone commands |recover the original state of my address book
+
+|`* *` |careful user |look through my past commands |trace back my actions
+
+|`*` |user with many tags in the address book |sort my contact list according to their tags |locate a person easily
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |forgetful user |include a photo next to my contacts' name |recognize my contacts' better if I forget their names
+
+|`*` |fancy user |set a background wallpaper to my address book | personalise and beautify my address book
+
+|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify my Addressbook
 |=======================================================================
 
 {More to be added}
