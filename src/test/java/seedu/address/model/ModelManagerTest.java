@@ -44,11 +44,8 @@ public class ModelManagerTest {
         assertTrue(modelManager.equals(modelManagerCopy));
 
         //Removing a tag from an address book changes it
-        ObservableList<Tag> tags = modelManager
-                                               .getAddressBook()
-                                               .getTagList();
-        ObservableList<Tag> tagsWithoutFriends = tags
-                                                     .filtered(x -> !x.tagName.equals("friends"));
+        ObservableList<Tag> tags = modelManager.getAddressBook().getTagList();
+        ObservableList<Tag> tagsWithoutFriends = tags.filtered(x -> !x.tagName.equals("friends"));
         modelManager.removeTag(new Tag("friends"));
         ReadOnlyAddressBook addressBookAfterTagRemoval = modelManager.getAddressBook();
         assertFalse(addressBookAfterTagRemoval.getTagList().contains(new Tag("friends")));
