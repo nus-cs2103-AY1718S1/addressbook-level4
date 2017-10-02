@@ -725,11 +725,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |sort the address boook alphabetically |locate my contacts easily 
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |delete a person |remove entries that I no longer need
+
+|`* *` |businessman |share my contact |easier for my client to contact me
+
+|`* *` |user |listed contacts to be arranged into several pages |easier for me to read
+
+|`* *` |user |autocomplete commands|type lengthy commands in full
+
+|`*` |user |merge my address book with another address book|add contacts in bulk
+
+|`*` |user that loves social media |search for my contact's facebook profile via phone number |connect with them on a deeper level
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -767,6 +779,74 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons unsorted
+3. User requests to sort persons in alphabetical order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is sorted.
++
+Use case ends.
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to share a person contact detail
+4.  AddressBook shows the person's contact detail and export the contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to search a person's contact on facebook
+4.  AddressBook shows the link to search result 
++
+Use case ends.
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to list by pages
+4.  AddressBook shows the list in pages
++
+Use case ends.
+
+*MSS*
+
+1.  User types a command halfway and press the autocomplete hotkey
+2.  AddressBook returns the command that is to be completed
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No command has been typed
++
+[none]
+** 3a1. AddressBook will not respond.
++
+Use case ends.
 {More to be added}
 
 [appendix]
