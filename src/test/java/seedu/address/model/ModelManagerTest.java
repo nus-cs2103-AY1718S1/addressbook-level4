@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
@@ -43,12 +44,21 @@ public class ModelManagerTest {
         assertTrue(modelManager.equals(modelManagerCopy));
 
         //Removing a tag from an address book changes it
-        ObservableList<Tag> tags = modelManager.getAddressBook().getTagList();
-        ObservableList<Tag> tagsWithoutFriends = tags.filtered(x -> !x.tagName.equals("friends"));
+        ObservableList<Tag> tags = modelManager
+                                               .getAddressBook()
+                                               .getTagList();
+        ObservableList<Tag> tagsWithoutFriends = tags
+                                                     .filtered(x -> !x.tagName.equals("friends"));
         modelManager.removeTag(new Tag("friends"));
-        assertFalse(modelManager.getAddressBook().getTagList().contains(new Tag("friends")));
+        ReadOnlyAddressBook addressBookAfterTagRemoval = modelManager.getAddressBook();
+        assertFalse(addressBookAfterTagRemoval.getTagList().contains(new Tag("friends")));
         assertTrue(modelManager.getAddressBook().getTagList().size() == tagsWithoutFriends.size());
 
+        //Making sure no person has the removed tag
+        ObservableList<ReadOnlyPerson> personListAfterTagRemoval = addressBookAfterTagRemoval.getPersonList();
+        for (ReadOnlyPerson person : personListAfterTagRemoval) {
+            assertFalse(person.getTags().contains(new Tag("friends")));
+        }
     }
 
     @Test
