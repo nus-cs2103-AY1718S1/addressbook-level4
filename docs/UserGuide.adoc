@@ -66,7 +66,7 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `a n/Nam p/90234 e/n@example.com a/abc t/me`
+* `a n/Nam p/12345678 e/n@example.com a/Nam street, block 8, #02-03 t/me`
 
 === Listing all persons : `list` (alias `ls`)
 
