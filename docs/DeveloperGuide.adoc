@@ -721,20 +721,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |add multiple phone numbers for a contact |easily find an alternate number to contact someone
+
+|`* * *` | user | undo/redo my last action | recover from mistakes
 
 |`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |use acronyms instead of the full command |use the app more efficiently
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |view all entries in alphabetical order |easily find the contact I'm looking for
+
+|`* * *` |user |store birthdays of my contacts |remember them
+
+|`* * *` |user |import contacts from Google Contacts/iCloud |populate the app without having to add manually
+
+|`* * *` |user |email a contact by clicking his/her email or shortcut |talk to people faster
+
+|`* * *` |user |view the home address of a contact in Google Maps |get directions quicker
+
+|`* * *` |experienced user |remove duplicate contacts |have a cleaner Address Book
+
+|`* * *` |user |view my favourite contacts immediately |save time by not having to find them
+
+|`* * *` |user |store my contacts' social media usernames |easily access their profiles
+
+|`* * *` |lazy user |access stored social media accounts of my contacts by clicking/shortcut |access their profiles quicker
+
+|`* * *` |user |list contacts by their initials [A...Z] to search for anyone with names starting with [A...Z] |find contacts even though I do not remember their exact names
+
+|`* * *` |sociable user |export a contact |share their details with other friends
+
+|`* *` |experienced user | view the history of commands in a chronological order | see what command I entered at the start
+
+|`* *` |new user | enter commands in a human-friendly manner | use the application in a more flexible manner
+
+|`* *` |security-conscious user | secure my application using a password | ensure that only I can access the data
+
+|`* *` |forgetful user | add reminders that appear during launch | remember my meetings with people
+
+|`* *` |experienced user | send emails to a selected group of contacts | contact them all at once
+
+|`* *` |experienced user | search by tags | easily find the person I'm looking for
+
+|`*` |security-conscious user | encrypt the application's data file | ensure that my contacts' data is safe
+
+|`*` | user | view my recent contacts | remember who I last contacted
+
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,7 +804,86 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Email multiple persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User selects persons to email
+4.  User enters keyboard shortcut to email
+5.  AddressBook opens user's mail application with persons' emails put into the "To:" field
++
+Use case ends.
+
+[discrete]
+=== Use case: Access social media profile of a person
+*MSS*
+
+1.  User searches for desired persons
+2.  AddressBook shows a list of persons
+3.  User requests to access social media profile of person
+4.  AddressBook opens user's default browser with the page of the desired person
++
+Use case ends.
+
+[discrete]
+=== Use case: Import contacts from iCloud/Google
+
+*MSS*
+
+1.  User requests to import a .CSV file
+2.  AddressBook shows user amount of newly added contacts
+3.  AddressBook shows updated contact list to the user
++
+Use case ends.
+
+[discrete]
+=== Use case: List contacts by initials
+
+*MSS*
+
+1.  User requests to list persons starting with an alphabet
+2.  AddressBook shows a list of persons
+
++
+Use case ends.
+
+[discrete]
+=== Use case: Export contact
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to export contact
+4.  AddressBook creates a vCard file in the application directory
++
+Use case ends.
+
+[discrete]
+=== Use case: Find contacts by tags
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User decides on which tag to search for
+4.  User requests to find persons using desired tag
+5.  AddressBook shows the list of persons whose tags match the user's tag
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove duplicate contacts
+
+*MSS*
+
+
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
