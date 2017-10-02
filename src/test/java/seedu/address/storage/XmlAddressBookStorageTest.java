@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -109,18 +110,19 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void backupAddressBook_notXmlFormat_exceptionThrown () throws Exception {
+    public void backupAddressBook_notXmlFormat_backupNotSaved () throws Exception {
         String filePath = testFolder.getRoot().getPath() + "NotXmlFormatAddressBook.xmm";
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         xmlAddressBookStorage.backupAddressBook();
+        assertEquals(Optional.empty(),xmlAddressBookStorage.readBackupAddressBook());
     }
 
     @Test
     public void getBestAvailableAddressBook_allInOrder_nonOptimal() throws Exception {
         AddressBook original = getTypicalAddressBook();
-        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xmm";
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         xmlAddressBookStorage.backupAddressBook();
