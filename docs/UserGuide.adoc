@@ -248,9 +248,9 @@ If the data file does not exist or cannot be read:
 
 [NOTE]
 ====
-To quickly revert address book data to the state of last use, simply:
-. Delete addressbook.xml.
-. Rename addressbook.xml-backup.xml to addressbook.xml.
+To quickly revert address book data to the state of last use, simply: +
+1. Delete addressbook.xml. +
+2. Rename addressbook.xml-backup.xml to addressbook.xml.
 ====
 
 == FAQ
