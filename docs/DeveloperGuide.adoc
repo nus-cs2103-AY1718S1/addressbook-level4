@@ -767,6 +767,146 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  AddressBook adds the person
+3.  User requests to list persons
+4.  AddressBook shows a list of person that includes the person that was added
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The format of add command is invalid
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+[discrete]
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find a person
+2.  AddressBook lists the person found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The AddressBook does not contain the person that the user request
++
+[none]
+** 2a1. AddressBook shows an empty list
++
+Use case ends.
+[none]
+* 3a. The format of find command is invalid
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+[discrete]
+
+[discrete]
+=== Use case: Adding tags to a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add tags to the person
+4.  AddressBook adds tags to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+
+[discrete]
+=== Use case: Undo previous command
+
+*MSS*
+
+1.  User deletes contact at index 1
+2.  User requests to show the list of contacts
+3.  AddressBook shows a list of people without the deleted contact
+3.  User requests to undo
+4.  AddressBook undo the deletion
+5.  User request to show the list of contacts
+6.  AddressBook shows a list of people with the previously deleted contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user undo without having made a command
++
+[none]
+** 2a.1 AddressBook shows an error message.
++
+Use case ends.
+
+
+[discrete]
+
+[discrete]
+=== Use case: Redoing the previously undone command
+
+*MSS*
+
+1.  User deletes contact at index 1
+2.  User requests to show the list of contacts
+3.  AddressBook shows a list of people without the deleted contact
+3.  User requests to undo
+4.  AddressBook undo the deletion
+5.  User request to show the list of contacts
+6.  AddressBook shows a list of people with the previously deleted contact
+7.  User request to redo previous undone delete command
+8.  User request to show the list of contacts
+9.  AddressBook shows the list of person without the delete contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user request redo without having made an undo command
++
+[none]
+** 2a.1 AddressBook shows an error message.
++
+Use case ends.
+
+
+[discrete]
+
 {More to be added}
 
 [appendix]
