@@ -841,15 +841,18 @@ Use case ends.
 As a user, I want to have a confirmation message before clearing/deleting contacts, so that I do not accidentally remove contacts.
 
 [discrete]
-=== Use case: Sort alphabetically
+=== Use Case: Clear AddressBook
 
 *MSS*
 
-Use Case: Clear AddressBook
 1. User enters 'clear' command
 2. AddressBook prompts 'Are you sure you want to clear AddressBook? yes/no'
 3. User enters 'yes'
 4. AddressBook clears all persons
++
+Use case ends.
+
+As a user, I want to be able to edit/delete multiple contacts at once, so that I can manage my contacts more efficiently
 
 [discrete]
 === Use case: Delete multiple persons
