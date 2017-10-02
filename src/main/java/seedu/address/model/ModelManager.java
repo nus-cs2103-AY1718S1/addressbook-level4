@@ -20,6 +20,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -93,7 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws DuplicatePersonException
      */
     @Override
-    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
             Person personClone = new Person(oldPerson);
@@ -103,6 +104,8 @@ public class ModelManager extends ComponentManager implements Model {
             personClone.setTags(tagListToEdit);
             addressBook.updatePerson(oldPerson, personClone);
         }
+        // remove from master tag list in AddressBook
+        addressBook.removeTag(tag);
     }
 
     //=========== Filtered Person List Accessors =============================================================

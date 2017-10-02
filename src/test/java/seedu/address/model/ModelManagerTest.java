@@ -16,6 +16,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -31,7 +32,7 @@ public class ModelManagerTest {
 
     // No existing command that calls deleteTag method. Testing will be done here for now.
     @Test
-    public void deleteTag() throws PersonNotFoundException, IllegalValueException {
+    public void deleteTag() throws PersonNotFoundException, IllegalValueException, TagNotFoundException {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
