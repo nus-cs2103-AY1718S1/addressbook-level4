@@ -858,6 +858,7 @@ As a user, I want to be able to edit/delete multiple contacts at once, so that I
 === Use case: Delete multiple persons
 
 *MSS*
+
 1. User enters 'delete many' command
 2. AddressBook shows a list of persons
 3. User requests to delete a set of people
