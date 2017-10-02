@@ -780,17 +780,17 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. Person already exists in AddressBook.
+* 1a. Person already exists in AddressBook.
 +
 [none]
-** 2a1. AddressBook shows an error message indicating person already exists.
+** 1a1. AddressBook shows an error message indicating person already exists .
 +
 Use case ends.
 
-* 2b. Person added is of invalid format.
+* 1b. Person added is of invalid format.
 +
 [none]
-** 2b1. AddressBook shows an error message indicating person entered is of invalid format.
+** 1b1. AddressBook shows an error message and display the help for add.
 +
 Use case ends.
 
