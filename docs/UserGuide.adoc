@@ -234,7 +234,8 @@ If the data file does not exist or cannot be read:
 [none]
 * Backup data file will be loaded, if available and readable.
 +
-If backup data is unavailable:
+[none]
+* If backup data is unavailable:
 +
 [none]
 ** You will be given a sample address book.
@@ -247,7 +248,9 @@ If backup data is unavailable:
 
 [NOTE]
 ====
-To quickly revert address book data to the state of last use, simply delete addressbook.xml and rename addressbook.xml-backup.xml to addressbook.xml.
+To quickly revert address book data to the state of last use, simply:
+. Delete addressbook.xml.
+. Rename addressbook.xml-backup.xml to addressbook.xml.
 ====
 
 == FAQ
