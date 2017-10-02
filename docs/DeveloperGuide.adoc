@@ -747,7 +747,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Use the arrow keys to call previous commands used |
 
-|`* * *` |User |Use the Address Book without worrying about saving it |
+|`* * *` |User |Use the Address Book without saving it |Avoid any loss of data in the case I forget to save
 
 |`* * *` |User |Exit the Address Book with a command |Exit without clicking the browser’s close button
 
