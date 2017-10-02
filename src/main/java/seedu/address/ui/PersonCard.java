@@ -65,13 +65,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> {
-                Label newLabel = new Label(tag.tagName);
-                if (availableColoredTags.contains(tag.tagName)) {
-                    newLabel.getStyleClass().add(tag.tagName);
-                }
-                tags.getChildren().add(newLabel);
-            });
+            initTags(person);
         });
     }
 
