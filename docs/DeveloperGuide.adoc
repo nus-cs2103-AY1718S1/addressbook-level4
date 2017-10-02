@@ -721,17 +721,78 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |New user |See usage instructions |Refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |New user |Know how to use the application without having to read the user guide |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |User with many contacts |Delete multiple contacts from the previous list starting from the bottom |Can remove multiple contacts at once
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |User |Add a new person |
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |User |Delete a person |Remove entries that I no longer need
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |User |Find a person by name |Locate details of persons without having to go through the entire list
+
+|`* * *` |User |List all persons in the Address Book |See all of my contacts
+
+|`* * *` |User |Find all contacts with a given keyword |Identify all of the contacts with that name
+
+|`* * *` |User |Select a person from the previous command that brings up a numbered list |
+
+|`* * *` |User |Add a tag to my contact |Identify the contact based on the tagged relationship
+
+|`* * *` |User |Undo my previous command |Restore the Address Book to its previous state before the command
+
+|`* * *` |User |Undo an undo |Restore the Address Book to its previous state before the undo
+
+|`* * *` |User |Use the arrow keys to call previous commands used |
+
+|`* * *` |User |Use the Address Book without worrying about saving it |
+
+|`* * *` |User |Exit the Address Book with a command |Exit without clicking the browser’s close button
+
+|`* * *` |User |Use single-letter short forms of commands |Type less per command
+
+|`* * *` |User |Delete contacts by tags |Delete the whole group at once
+
+|`* * *` |User |Change the colour of the contact tag |Easily identify the tags
+
+|`* * *` |User |Change the font size and type |Customize the font to my preference
+
+|`* * *` |User |Easily navigate through the user guide |Easily access information I need from the user guide
+
+|`* *` |User |Hide link:#private-contact-detail[private contact details] by default |Minimize chance of someone else seeing them by accident
+
+|`* *` |User |List all contacts based on number of searches |See who I searched the most
+
+|`* *` |User |List all contacts based on most recent search |See all contacts I searched recently
+
+|`* *` |User |Access all features with keyboard keys |Use the application using only the keyboard
+
+|`* *` |User |Download information from another Address Book |Remove the need to manually input contacts
+
+|`* *` |User |Save the birthdays of my contacts |Eliminate the need to remember my contact’s birthday
+
+|`* *` |User |Be reminded of any upcoming birthdays without inputting any commands |Be constantly reminded about any upcoming birthdays without consciously doing so
+
+|`* *` |User |List all contact’s birthdays with reference from today’s date |See all upcoming birthdays
+
+|`* *` |User |Assign a profile photo for each contact |Remember how they look like
+
+|`* *` |User |Enter the information of my contacts in a separate window |Use the add command without typing in a long sentence
+
+|`* *` |User |Create a few personalized lists of contacts |Add specific people to these separate lists
+
+|`* *` |User |Set appointments reminders with contacts |Remember when to meet my contact
+
+|`*` |User with many persons in the address book |Sort persons by name |Locate a person easily
+
+|`*` |User |Select from multiple UI themes |Change my UI's colour scheme
+
+|`*` |User |Easily edit my UI colour scheme |Change my UI colour scheme to the colour I like
+
+|`*` |User |Add my contact on FaceBook through the Address Book |Use it with greater convenience
+
 |=======================================================================
 
 {More to be added}
