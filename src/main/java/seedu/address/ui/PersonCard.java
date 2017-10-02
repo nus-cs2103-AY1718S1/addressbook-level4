@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static String[] DEFAULT_COLORED_TAGS = {"friends", "colleagues", "family", "neighbours"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -43,7 +44,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private static String[] DEFAULT_COLORED_TAGS = {"friends", "colleagues", "family", "neighbours"};
     private ArrayList<String> availableColoredTags = new ArrayList<> (Arrays.asList(DEFAULT_COLORED_TAGS));
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -75,6 +75,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialises tags for each person and adds corresponding style classes to each tag
+     * so that each tag can have different properties (e.g. color) depending on the tag name.
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label newLabel = new Label(tag.tagName);
