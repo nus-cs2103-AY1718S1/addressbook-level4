@@ -726,11 +726,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
- 
-|`* * *` |user |delete multiple persons at once  |I do not have to go through the hassle of removing one at each time 
+
+|`* * *` |user |delete multiple persons at once  |I do not have to go through the hassle of removing one at each time
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
- 
+
 |`* * *` |user |select multiple person |I can perform the same command to multiple contacts at once
 
 |`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
