@@ -771,6 +771,7 @@ Use case resumes at step 2.
 === Use case: Add person
 
 *MSS*
+
 1.  User requests to add person.
 2.  AddressBook adds the person and shows success message.
 +
@@ -782,7 +783,14 @@ Use case ends.
 * 2a. Person already exists in AddressBook.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. AddressBook shows an error message indicating person already exists.
++
+Use case ends.
+
+* 2b. Person added is of invalid format.
++
+[none]
+** 2b1. AddressBook shows an error message indicating person entered is of invalid format.
 +
 Use case ends.
 
