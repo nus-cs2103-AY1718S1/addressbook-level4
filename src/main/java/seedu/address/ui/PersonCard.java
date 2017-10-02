@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.Arrays;
+import java.util.ArrayList;
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -40,6 +43,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private String[] DEFAULT_COLORED_TAGS = {"friends", "colleagues", "family", "neighbours"};
+    private ArrayList<String> availableColoredTags = new ArrayList<> (Arrays.asList(DEFAULT_COLORED_TAGS));
+
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -59,12 +65,24 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            person.getTags().forEach(tag -> {
+                Label newLabel = new Label(tag.tagName);
+                if (availableColoredTags.contains(tag.tagName)) {
+                    newLabel.getStyleClass().add(tag.tagName);
+                }
+                tags.getChildren().add(newLabel);
+            });
         });
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label newLabel = new Label(tag.tagName);
+            if (availableColoredTags.contains(tag.tagName)) {
+                newLabel.getStyleClass().add(tag.tagName);
+            }
+            tags.getChildren().add(newLabel);
+        });
     }
 
     @Override
