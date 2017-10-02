@@ -226,9 +226,21 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually. +
-Backup address book data is saved upon starting the program using the data that was loaded. +
-In the event of missing or corrupted data file, the backup file is loaded. +
-To quickly revert address book data to the state of last use, simply delete addressbook.xml and rename addressbook.xml-backup.xml to addressbook.xml.
+If address book data can be loaded successfully, backup address book data is saved upon starting the program.
+
+=== Loading the data
+
+If the data file does not exist or cannot be read:
+* Backup data file will be loaded, if available and readable. +
+* If backup data is unavailable:
+** You will be given a sample address book.
+* If backup data exists but cannot be read :
+** You will be given an empty address book.
++
+****
+* Tip:
+** To quickly revert address book data to the state of last use, simply delete addressbook.xml and rename addressbook.xml-backup.xml to addressbook.xml.
+****
 
 == FAQ
 

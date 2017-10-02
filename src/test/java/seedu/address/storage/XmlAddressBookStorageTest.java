@@ -116,7 +116,7 @@ public class XmlAddressBookStorageTest {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         xmlAddressBookStorage.backupAddressBook();
-        assertEquals(Optional.empty(),xmlAddressBookStorage.readBackupAddressBook());
+        assertEquals(Optional.empty(), xmlAddressBookStorage.readBackupAddressBook());
     }
 
     @Test
