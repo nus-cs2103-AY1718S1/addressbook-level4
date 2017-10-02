@@ -729,7 +729,59 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |add a contact picture for my contacts |identify them more easily
+
+|`* * *` |user |categorise my contacts into groups |view my contacts by relevant groups
+
+|`* * *` |user |export and send my own contact information |share my own contact information with my friends more easily
+
+|`* * *` |user |add birthdays to my contacts |remember them easily
+
+|`* * *` |user with many contacts |filter my contacts by tags/groups etc. |find relevant contacts more easily
+
+|`* * *` |user who adds contacts temporarily (for events etc.) |delete all contacts with a given tag |remove contacts associated to a category that is no longer relevant to me
+
+|`* * *` |user with many contacts |sort my contacts alphabetically |find them more easily
+
+|`* * *` |user |favourite a contact |contact the person easily
+
+|`* * *` |user |export/import contacts |share them with other users
+
+|`* * *` |user with many contacts |sort my contacts according to most recently contacted |reach the people that I want to recontact easily
+
+|`* * *` |user |have a confirmation message before clearing/deleting contacts |prevent accidentally removing contacts
+
+|`* * *` |user |edit/delete multiple contacts at once |manage my contacts more efficiently
+
+|`* * *` |user |add nicknames for my contacts |search for/recognise them using their nickname
+
+|`* * *` |user |add multiple fields for my contacts |store multiple pieces of contact information for each person
+
+|`* * *` |user |add social media accounts for my contacts |remember them
+
+|`* * *` |user |integrate my contacts with social media such as Facebook |see their latest updates alongside the contact information.
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |non-technical user |use the addressbook without having to use the command line |learn how to use easily
+
+|`* *` |user |sort my contacts according to the frequency contacted |find my more important contacts easily
+
+|`* *` |user who is more of a visual learner |change the look of my Address Book between a list view and a thumbnail view |see larger contact photos
+
+|`* *` |user who dislikes people |blacklist or block contacts |not be contacted by them
+
+|`* *` |user |synchronise my contacts to the cloud |have the same set of contacts on multiple devices
+
+|`* *` |user |synchronise my contacts to the cloud |have the same set of contacts on multiple devices
+
+|`*` |salesperson |scan a namecard and have the contact automatically be added |add contacts more easily
+
+|`*` |user with sensitive data |protect my contacts with a password |prevent other people from snooping into my contacts
+
+|`*` |organisation admin |restrict access rights of users/user groups |manage their permissions easily
+
+|`*` |professional |share a group of contacts to a new team member |let the new team member can have all the team member's contacts easily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
