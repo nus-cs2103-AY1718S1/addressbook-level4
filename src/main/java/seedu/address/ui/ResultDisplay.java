@@ -38,6 +38,8 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         if (event.isInvalid) {
             setStyleToIndicateCommandFailure();
+        } else {
+            setStyleToDefault();
         }
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
@@ -54,5 +56,13 @@ public class ResultDisplay extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Sets the result display style to use the default style.
+     */
+    private void setStyleToDefault() {
+        
+        resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 }
