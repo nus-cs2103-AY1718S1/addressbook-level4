@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.Arrays;
+import java.util.ArrayList;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,9 +10,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -43,7 +43,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    private String[] DEFAULT_COLORED_TAGS = {"friends", "colleagues", "family", "neighbours"};
+    private static String[] DEFAULT_COLORED_TAGS = {"friends", "colleagues", "family", "neighbours"};
     private ArrayList<String> availableColoredTags = new ArrayList<> (Arrays.asList(DEFAULT_COLORED_TAGS));
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
