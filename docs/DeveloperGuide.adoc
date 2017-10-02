@@ -780,16 +780,15 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-
-=== Use case: Rename existing tag 
+=== Use case: Rename existing tag
 #Pre-condition :The identitifed tag exist in Addressbook
 **MSS**
 
 1. User requests to list persons
 2. AddressBook shows a list of persons
-3. User requests to rename the tag 
+3. User requests to rename the tag
 4. User keys in the new input
-5. AddressBook replace the name of the existing to the newer version 
+5. AddressBook replace the name of the existing to the newer version
 6. AddressBook prompt user to confirm the changes
 7.AddressBook shows a sucessful message regarding the replacement<br>
 Use case ends.
