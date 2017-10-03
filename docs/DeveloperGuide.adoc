@@ -907,6 +907,9 @@ Use case ends.
 .  Should work on both 32-bit and 64-bit environment.
 .  The cost of this application should not be more than 10,000 dollars.
 .  Should protect users' privacy.
+.  Font size should be suitable for all people from 6 to 70 year old.
+.  Should not tolerate data loss
+.  Should be usable to a novice who has never used such type of application before
 {More to be added}
 
 [appendix]
