@@ -721,17 +721,64 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to sort my contacts both by their first name or last name |
 
-|`* * *` |user |add a new person |
+|`* * *` |user |have a "comment" section for each contact |record personal/miscellaneous information about the person
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |export all saved contacts and print out  |refer to when I can't use the software
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add and create tags and add them to contacts |quickly find related personnels when needs be
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |add and create tags and add them to contacts |quickly find related personnels when needs be
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |be able to edit the contact details |update when my contacts change their particulars
+
+|`* * *` |user |have the option to favourite some contacts |retrieve the information of contacts that I will frequently access
+
+|`* * *` |user |able to search my contacts by tags |know my relationship with the contact
+
+|`* * *` |user |add a person's details |use the saved details to contact him/her
+
+|`* * *` |new user |use the graphical interface |easily perform operations
+
+|`* * *` |new user |see tutorial bubbles the first time I use the software |familiarise myself with the features
+
+|`* * *` |forgetful user |use only a small part of a person's details to find his or her contacts|
+
+|`* * *` |forgetful user |attach an image to a contact |remember his name / face later
+
+|`* * *` |salesperson |be able to store the birthday of my customers |remember their birthday
+
+|`* * *` |tutor with many new students each semester |be able add multiple students |update my address book quickly each new semester
+
+|`* * *` |salesperson |be able to email my contacts |update them with the latest products information
+
+|`* *` |user |export my address book to a readable file format (e.g. CSV, Excel spreadsheet)|share the address book contacts with other people
+
+|`* *` |user |link contacts with URLs |easily access their social media profiles
+
+|`* *` |user / businessman |able to create "events" where I set the time/location/content and invite contacts to attend the event |
+
+|`* *` |user |open a sending mail window by clicking on a contact's address |email him / her faster
+
+|`* *` |user |quickly exports a group of contacts into .vcf |load them onto my smartphone
+
+|`* *` |user |have different themes for the address book |use one that suits my preference
+
+|`* *` |main tutor with many assistant tutors |merge the different address book of my assistant tutors |have all the students contact
+
+|`* *` |tutor |keep track of my student's grades as a part of their contact information (maybe the information should be tucked in a relatively "hidden" section)|
+
+|`* *` |tutor |have an option to blast emails to a group of contacts |disseminate informations quickly
+
+|`* *` |tutor or a businessperson |have an option to quickly generate a visual timetable |easily refer to to make new appointment / tutorial slots
+
+|`* *` |tutor of many students |see a notification when I try to add an already occupied time slot |my timetable won't clash
+
+|`* *` |tutor / businessman |have an option to set an alarm before a meeting / tutorial slot |won't forget
+
+|`* *` |salesperson |receive notification of my contacts' birthday |remember to send them well wishes
+
 |=======================================================================
 
 {More to be added}
