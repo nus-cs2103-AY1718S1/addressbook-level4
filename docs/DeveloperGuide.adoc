@@ -783,6 +783,39 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Update person
+
+*MSS*
+
+1.  User find target person by his name.
+2.  AddressBook shows the result of find command.
+3.  User types new information for the target person.
+4.  AddressBook updates the information and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The target person cannot be found.
++
+Use case ends.
+
+* 3a. User types invalid information
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. New information is the same as original.
++
+[none]
+** 3b1. AddressBook shows an unnecessary update message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
