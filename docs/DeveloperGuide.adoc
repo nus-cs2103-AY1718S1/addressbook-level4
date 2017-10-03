@@ -743,6 +743,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
 
+|`* * *` |user |undo decision  |revert changes in case of mistake
+
 |`* * *` |lazy user |have auto complete when I type  |type less word
 
 |`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
@@ -767,6 +769,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |forgettable user |stick some important people on the top|locate them quickly
 
+|`* *` |user |create events and assign contacts |keep track of who is involved in events
+
+|`* *` |user |export contact details |share with others or transfer to other device
+
+|`* *` |user |create filter using multiple tags |make a specific search using tags
+
 |`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -780,6 +788,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |clean AddressBook  |save time from deleting people one by one
 
 |`*` |user |drag person card |reorder the list easily
+
+|`*` |user |select font style |more comfortable to read
 |=======================================================================
 
 {More to be added}
