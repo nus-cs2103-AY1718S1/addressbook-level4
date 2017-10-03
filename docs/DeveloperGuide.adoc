@@ -721,20 +721,62 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |find person by name |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |redo my last undo if that was a mistake |
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |undo my last action if I made a mistake |
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |new user |view help |learn to use the program
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |add a person |
+
+|`* * *` |user |delete a person |
+
+|`* * *` |user |edit a person | update my contacts
+
+|`* * *` |user |view my contact information |
+
+|`* * *` |user |clear my addressbook |
+
+|`* * *` |user |add more than one contact number for a person |
+
+|`* * *` |user |find contacts by addresses |find who live around a specific area
+
+|`* * *` |user |set password to my addressbook |my addressbook will be secure
+
+|`* * *` |user |see tags in different colors |easily identify which persons has the same tags
+
+|`* * *` |user with many persons in addressbook |sort my contacts by name |easily view my contacts
+
+|`* * *` |user with many persons in addressbook |find user based on tags |find group of contacts easily
+
+|`* * *` |user |add birthdays to my contacts |remember their birthdays
+
+|`* * *` |user |find users by birthday |know whose birthday is on that month
+
+|`* * *` |user |export my contacts |port it to another addressbook app
+
+|`* * *` |user |import my contacts from other addressbook |see my contacts from another addressbook app
+
+|`* *` |user |associate contacts with social platform |
+
+|`* *` |user |autocomplete |be more productive
+
+|`* *` |user |find a person without typing his exact name |
+
+|`* *` |user |back up my addressbook on the cloud |
+
+|`* *` |user |customize the theme of my addressbook |
+
+|`* *` |user |view the google map of the person's address |
+
+|`* *` |user |add events to a person and have a reminder show up when its due |
+
+|`* *` |user |attach photos to my contacts |remember their faces
+
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
