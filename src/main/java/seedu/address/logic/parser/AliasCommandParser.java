@@ -24,7 +24,13 @@ public class AliasCommandParser implements Parser<AliasCommand> {
     public AliasCommand parse(String arguments) throws ParseException {
         String[] args = arguments.trim().split("\\s+");
 
-        if (args.length != 2) {
+        boolean isDelete = false;
+
+        if (args.length == 3 && args[0].equals("-d") || args[0].equals("--delete")) {
+            // Delete alias
+            return new AliasCommand(args[1], isDelete);
+
+        } else if (args.length != 2) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         }
 
