@@ -767,7 +767,67 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find one or more person(s) in AddressBook
+2.  AddressBook shows a list of persons with the name(s) specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. 0 person found
++
+Use case ends.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User input command to add person
+2.  AddressBook adds the person
+3.  AddressBook displays message for successfully adding a person along with the person's details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input command wrongly.
++
+[none]
+** 3a1. AddressBook shows an invalid format message and displays the right format to user.
++
+Use case resumes at step 1.
+
+* 1b. User added a person already present in AddressBook.
++
+[none]
+** 3a1. AddressBook shows duplicate person error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List person(s) with specific tag
+
+*MSS*
+
+1.  User requests for a list of person(s) with a specified tag
+2.  AddressBook shows a list of person(s) with the tag specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. 0 person with such tag
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
