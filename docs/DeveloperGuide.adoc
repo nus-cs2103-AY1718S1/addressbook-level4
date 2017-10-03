@@ -781,6 +781,34 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[command]]
+Command(s)
+
+....
+Keywords that are used to do certain tasks. The list of commands for the application can be accessed by typing "help" in the application. All commands extend the "Command" class.
+....
+
+[[eventscenter]]
+Events Center
+
+....
+The events center is a module in the application that handles any user inputs or events that occur, reducing direct coupling between components
+....
+
+[[jdk]]
+Java Development Kit
+
+....
+The development kit that is required for developing the application (default location is "C:\Program Files\Java\jdkx.x.x_xxx", where the x's denote the version number)
+....
+
+[[json]]
+JavaScript Object Notation
+
+....
+An easy-to-read data storage format
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -788,11 +816,46 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
+[[parser]]
+Parser
+
+....
+Parsers are used to verify the format of commands used. e.g. Adding a contact while parsing given parameters such as email and tags.
+....
+
 [[private-contact-detail]]
 Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[tag]]
+Tag(s)
+
+....
+The label(s) attached to a contact for the purpose of identification or related groupings
+....
+
+[[travisci]]
+Travis Continuous Integration
+
+....
+Travis-CI is a build automation tool that helps developers understand if their application is working by building, testing and reporting on the build sequences the developer has configured 
+....
+
+[[ui]]
+User Interface
+
+....
+The user interface is a front-facing component and is what the user sees. It is used to show information, as well as get user input for different operations such as adding and deleting contacts
+....
+
+[[undoredostack]]
+Undo/redo stack mechanism
+
+....
+The application's state(s) that are stored on two stacks, which allow undo's and redo's, reverting the state of the application to before or after commands are run respectively
 ....
 
 [appendix]
