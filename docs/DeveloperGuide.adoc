@@ -742,14 +742,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete a person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list persons.
+2.  AddressBook shows a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  AddressBook deletes the person.
 +
 Use case ends.
 
@@ -766,6 +766,26 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add a person
+
+*MSS*
+
+1. User requests to add a person with the phone number and email address.
+2. AddressBook process the information and adds the person to the list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given information is in an invalid format.
++
+[none]
+** 2a1. AddressBook shows an error message and displays a sample input.
++
+Use case resumes at step 1.
 
 {More to be added}
 
