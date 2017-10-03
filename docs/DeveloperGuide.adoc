@@ -818,6 +818,28 @@ Use case ends.
 +
 Use case resumes at step 1.
 
+[discrete]
+=== Use case: Clear the AddressBook
+
+*MSS*
+
+1. User requests to clear the AddressBook.
+2. AddressBook deletes everything that has been stored.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit the application
+
+*MSS*
+
+1. User requests to exit AddressBook.
+2. AddressBook shuts down.
++
+Use case ends.
+
+
+
 {More to be added}
 
 [appendix]
