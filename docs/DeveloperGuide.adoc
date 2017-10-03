@@ -772,7 +772,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-{More to be added test}
+{More to be added}
 
 [appendix]
 == Use Cases
