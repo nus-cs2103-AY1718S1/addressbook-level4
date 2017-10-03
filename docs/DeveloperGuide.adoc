@@ -812,8 +812,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |share events online for people to see |people can join me
 |=======================================================================
 
-{More to be added}
-
 [appendix]
 == Use Cases
 
@@ -861,8 +859,6 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
 
 [appendix]
 == Glossary
@@ -965,7 +961,7 @@ index
 A running number used to label the contacts, often inserted after a command to serve as contact selection
 ....
 
-[[recycle list]]
+[[recycle-list]]
 recycle list
 
 ....
