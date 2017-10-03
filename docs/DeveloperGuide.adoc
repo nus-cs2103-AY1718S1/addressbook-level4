@@ -93,7 +93,7 @@ When you are ready to start coding,
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_link:#architecture-diagram[Architecture Diagram]_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -809,6 +809,13 @@ Sequence Diagram
 
 ....
 A diagram that shows how objects operate with one another and in what order.
+....
+
+[[architecture-diagram]]
+Architecture Diagram
+
+....
+A diagram that defines the structure, behavior, and views of a system.
 ....
 
 [appendix]
