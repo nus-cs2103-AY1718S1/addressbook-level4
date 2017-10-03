@@ -721,17 +721,51 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
+|`* * *` | user | add a new person |
+|`* * *` | user | delete a person | remove entries that I no longer need
+|`* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+|`* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+|`*` | user with many persons in the address book | sort persons by name | locate a person easily
+|`*` | clumsy user | undo a command | correct a mistake that was previously executed
+|`* *` |user | redo the command | correct the mistake of undoing too many commands
+|`* *` | user | view the history of commands | check what I have done in the past
+|`* * *` | user | edit a person | change details of a person easily
+|`* *` | user | import persons | share with other users and migrate from other systems
+|`* *` | user | export persons | share with other users and migrate from other systems
+|`* * *` | user | tag a person | store some notes about certain people
+|`* * *` | user | categorize persons | easily organize contacts and later on find wrt group
+|`* *` | user with many persons in the address book | apply filter: category, tag, name | easily view and process only certain group
+|`*` | user with many persons in the address book | list categories with statistics | see how my contacts are grouped
+|`* *` | user | use password to get access to my contacts | protect my data
+|`* *` | user | clear the address book | start anew
+|`* *` | user | see suggestions while typing | type commands faster
+|`* *` | impatient user | get the previously entered commands into the input field | type commands faster
+|`* * *` | user with many persons in the address book | find all the persons that satisfy part of the name (eg. Jo*) | search without remembering all the details
+|`* * *` | user | get closest result if my input doesn't match any name | I get results even if I misspell
+|`* * *` | user | add a picture to a person | recall easily who the person is
+|`* *` | new user | use a tutorial | learn the features of the app quickly
+|`* *` | user | remove/categorize/tag all the persons selected by a filter | process multiple contacts quickly
+|`* * *` | user | add a social media link to a person | get more info about a person in one place (in the App)
+|`* *` | impatient user | use hotkeys | navigate faster
+|`* * *` | user | be warned before execution of a hazardous command | prevent from disastrous mistakes
+|`* * *` | user | change the theme of the GUI (dark/bright) | prevent eye strain or simply customize
+|`* *` | user | add new fields to all the persons | customize the App
+|`* * *` | user | validate persons details when adding
+|`* * *` | user | input more than 1 phone number | can store home + office + mobile numbers easily
+|`* * *` | user | search for people via different fields (address, phone number etc.) | easily view people of same area of residence
+|`* * *` | user | allow mass deletion | easy cleanup
+|`* * *` | user | have a favourites tag that is always easily accessible | easily access most frequent contacts
+|`* *` | user | sort by frequency of access | easily access most frequent contacts
+|`* *` | forgetful user | have a reminder which reminds me to call someone at certain times | call my contacts if needed
+|`* *` | busy user | save appointment with people in my addressbook and send them a message about the appointment | set up appointment with my contacts easily
+|`* *` | stealthy users | have hidden contacts which can only be shown upon typing a secret phrase | hide my other girlfriends from my girlfriend
+|`* *` | stealthy users | delete all hidden contacts after the passphrase is entered wrongly 5 times | noone can excess my hidden contacts
+|`* * *` | forgetful user | show my phone number | so that I can give it to my friend when they ask
+|`* *` | user | send my contact to people in my address book | so that I can give it to my friend when they ask
+|`* *` | user | type names in either case | it can auto-capitalise the first letter of all names
 
-|`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
 {More to be added}
