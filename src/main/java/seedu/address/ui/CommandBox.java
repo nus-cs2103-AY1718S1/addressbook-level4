@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.FileReader;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -11,9 +13,16 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.SpeechToText;
+import seedu.address.logic.TextToSpeech;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+import javax.speech.Central;
+import javax.speech.EngineModeDesc;
+import javax.speech.recognition.Recognizer;
+import javax.speech.recognition.RuleGrammar;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -26,9 +35,10 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private Recognizer speecher;
 
     @FXML
-    private TextField commandTextField;
+    public TextField commandTextField;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -36,6 +46,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+
+
     }
 
     /**
@@ -100,7 +112,38 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+
         try {
+            if(speecher!=null){
+                speecher.pause();
+            }
+            speecher = Central.createRecognizer(
+                    new EngineModeDesc(Locale.ENGLISH));
+
+            // Start up the recognizer
+            speecher.allocate();
+
+            // Load the grammar from a file, and enable it
+            //FileReader reader = new FileReader("voicegrammer/dictionary.grammar");
+            FileReader reader = new FileReader("voicegrammer/my_grammar.grammar");
+            RuleGrammar gram = speecher.loadJSGF(reader);
+            gram.setEnabled(true);
+
+
+            // Add the listener to get results
+            speecher.addResultListener(new SpeechToText(commandTextField));
+
+            // Commit the grammar
+            speecher.commitChanges();
+            speecher.requestFocus();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        try {
+            //Text to Speech when pressed Enter
+            TextToSpeech myWindow = new TextToSpeech(commandTextField.getText());
+
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();

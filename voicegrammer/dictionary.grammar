@@ -1,0 +1,6 @@
+#JSGF V1.0;
+
+grammar com.sarf.talkingjava.example;
+
+public <dictionary> = find contacts;
+public <backspace> = delete;
