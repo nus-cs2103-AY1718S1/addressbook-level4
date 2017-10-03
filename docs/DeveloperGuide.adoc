@@ -794,7 +794,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: History 
+=== Use case: History
 
 *Guarantees: Displays list of commands entered by user*
 
