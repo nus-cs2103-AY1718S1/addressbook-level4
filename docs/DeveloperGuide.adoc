@@ -769,15 +769,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |sort the list  |locate a person easily
 
-|`*` |user |hide private details  |minimise the chance of someone else seeing them by accident
+|`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
 
-|`*` |user |find a person by name |save time from browsing through the entire list
+|`* *` |user |find a person by name |save time from browsing through the entire list
 
 |`*` |user |clean AddressBook  |save time from deleting people one by one
 
-|`*` |forgettable user |stick some important people on the top|locate them quickly
+|`* *` |forgettable user |stick some important people on the top|locate them quickly
 
-|`*` |lazy user |have auto complete when I type  |type less word
+|`* * *` |lazy user |have auto complete when I type  |type less word
 
 |`*` |user |drag person card |reorder the list easily
 |=======================================================================
@@ -849,19 +849,18 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Add a tag to a person
-
+=== Use case: Add a person
 *MSS*
 
-1. User requests to list persons
-2. AddressBook shows a list of persons
-3. User requests to give a tag to a specific person in the list
-4. AddressBook adds the tag to the person
+1. User enters values for a new person.
+2. AddressBook add the new person into the database.
 +
 Use case ends.
 
 *Extensions*
-
+2a. There is already this person
++
+Use case ends.
 [none]
 * 2a. The list is empty.
 +
