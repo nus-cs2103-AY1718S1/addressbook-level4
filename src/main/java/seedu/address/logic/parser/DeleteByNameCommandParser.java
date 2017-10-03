@@ -20,7 +20,7 @@ public class DeleteByNameCommandParser implements Parser<DeleteByNameCommand> {
      */
     public DeleteByNameCommand parse(String args) throws ParseException {
         try {
-            String name = ParserUtil.parseName(args);
+            String name = ParserUtil.parseNameString(args);
             return new DeleteByNameCommand(name);
         } catch (IllegalValueException ive) {
             throw new ParseException(

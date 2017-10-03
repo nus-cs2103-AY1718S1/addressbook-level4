@@ -48,7 +48,7 @@ public class ParserUtil {
      * trimmed.
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static String parseName(String oneBasedName) throws IllegalValueException {
+    public static String parseNameString(String oneBasedName) throws IllegalValueException {
         String trimmedName = oneBasedName.trim();
         return trimmedName;
     }
