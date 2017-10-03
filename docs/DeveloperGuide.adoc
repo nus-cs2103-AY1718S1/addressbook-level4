@@ -731,7 +731,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
 
-|`* * *` |As a user |add a person with some information blank |add him even if I do not know some details (e.g his address)
+|`* * *` |As a user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
@@ -844,6 +844,13 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[blank-information]]
+Blank information
+
+....
+An information field with null value. It may happen when a user add a person and does not know some information
 ....
 
 [appendix]
