@@ -1,8 +1,9 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
 
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -12,11 +13,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
-/*
+/**
  * Panel that displays the additional details of a Person
  */
 public class PersonPanel extends UiPart<Region> {
-    
+
     private static final String FXML = "PersonPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -32,13 +33,12 @@ public class PersonPanel extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
-    
-    public PersonPanel(){
+    public PersonPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
     }
-    
-    /*
+
+    /**
      * Updates person details showcased on the panel
      */
     private void loadPersonDetails(ReadOnlyPerson person) {
@@ -50,11 +50,9 @@ public class PersonPanel extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
-
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
     }
-
 }

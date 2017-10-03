@@ -5,12 +5,12 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.stream.Collectors;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.PersonPanelHandle;
-
-import java.util.stream.Collectors;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -18,26 +18,22 @@ public class PersonPanelTest extends GuiUnitTest {
 
     private PersonPanel personPanel;
     private PersonPanelHandle personPanelHandle;
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
-    
+
     @Before
     public void setUp() {
         guiRobot.interact(() -> personPanel = new PersonPanel());
         uiPartRule.setUiPart(personPanel);
         personPanelHandle = new PersonPanelHandle(personPanel.getRoot());
     }
-
     @Test
     public void display() throws Exception {
         //select ALICE
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));
         assertPersonIsDisplayed(ALICE, personPanelHandle);
-        
         //select BOB
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
         assertPersonIsDisplayed(BOB, personPanelHandle);
     }
-
     /**
      * Asserts that {@code personPanelHandle} displays the details of {@code expectedPerson} correctly
      */
@@ -53,13 +49,12 @@ public class PersonPanelTest extends GuiUnitTest {
         assertTagsAreDisplayed(expectedPerson, personPanelHandle);
     }
 
-    /**
+    /*
      * Asserts that {@code personPanelHandle} displays the tags of {@code expectedPerson} correctly
      */
+
     private void assertTagsAreDisplayed(ReadOnlyPerson expectedPerson, PersonPanelHandle personPanelHandle) {
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 personPanelHandle.getTags());
     }
-    
-   
 }

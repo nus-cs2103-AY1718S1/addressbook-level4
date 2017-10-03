@@ -32,7 +32,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getPersonPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
-        
+
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();

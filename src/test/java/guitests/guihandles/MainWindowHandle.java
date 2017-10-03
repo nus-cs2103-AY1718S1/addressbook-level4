@@ -44,9 +44,8 @@ public class MainWindowHandle extends StageHandle {
     public MainMenuHandle getMainMenu() {
         return mainMenu;
     }
-    
+
     public PersonPanelHandle getPersonPanel() {
         return personPanel;
     }
-
 }
