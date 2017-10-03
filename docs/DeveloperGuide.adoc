@@ -727,9 +727,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |clear my address book |refresh it quickly
+
+|`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
+
+|`* * *` |As a user |add a person with some information blank |add him even if I do not know some details (e.g his address)
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
+
+|`* *` |frequent user |change the font and background colour |use address book comfortably
+
+|`* *` |frequent user |use non-case sensitive command |type command easily
+
+|`* *` | user with many friends |add multiple people at one time| save my time for adding
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
