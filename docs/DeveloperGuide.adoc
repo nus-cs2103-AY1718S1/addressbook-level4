@@ -779,6 +779,8 @@ Use case resumes at step 2.
 Use case ends.
 
 *Extensions*
+
+[none]
 * 1a. The format of parameters entered are invalid.
 +
 [none]
