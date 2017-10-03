@@ -33,6 +33,7 @@ public class AddressBookParser {
 
     /**
      * Parses user input into command for execution.
+     * Logic editted: User can type abbreviated and case-insensitive commands. Comment to check travis test.
      *
      * @param userInput full user input string
      * @return the command based on the user input
