@@ -231,8 +231,11 @@ Examples:
 
 * `alias show list` +
 `show` (performs the `list` command) +
-* `alias remove delete` +
-`remove 1` (performs the `delete 1` command) +
+* `alias` +
+Lists all your previously defined aliases.
+* `alias -d show` +
+`show` +
+The `show` command fails as there is no longer such a command.
 
 === Exiting the program : `exit`
 
