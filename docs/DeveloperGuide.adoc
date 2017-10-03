@@ -858,6 +858,23 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: add a tag to a person
+
+*MSS*
+
+1. User enters values for a new person
+2. AddressBook add the new person into the database
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is already this person
++
+Use case ends.
+
+
 {More to be added}
 
 
