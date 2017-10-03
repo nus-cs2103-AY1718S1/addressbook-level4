@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+public class PersonCard extends UiPart<Region> implements CSSStyle{
 
     private static final String FXML = "PersonListCard.fxml";
 
@@ -26,12 +26,9 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    private static final String STYLEBACKGROUNDCOLOR = "-fx-background-color: ";
-
     public final ReadOnlyPerson person;
-    private static String [] colors = {"red", "blue", "green", "magenta", "yellow", "cyan", "white"};
+
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
-    private static Random random = new Random();
 
     @FXML
     private HBox cardPane;
@@ -74,7 +71,7 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle(STYLEBACKGROUNDCOLOR + getColorForTag(tag.tagName));
+            tagLabel.setStyle(CSSStyle.STYLEBACKGROUNDCOLOR + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
     }
@@ -99,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static String getColorForTag(String tagValue) {
         if(!tagColors.containsKey(tagValue)){
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+            tagColors.put(tagValue, CSSStyle.getInstance().getRandomHexColor());
         }
 
         return tagColors.get(tagValue);
