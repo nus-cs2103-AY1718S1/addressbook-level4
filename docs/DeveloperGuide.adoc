@@ -741,6 +741,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+
+[discrete]
+=== Use case: Add a person
+
+*MSS*
+
+1. User requests to add a person with the phone number and email address.
+2. AddressBook processes the information and adds the person to the list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given information is in an invalid format.
++
+[none]
+** 2a1. AddressBook shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
 [discrete]
 === Use case: Delete a person
 
@@ -766,26 +787,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-[discrete]
-=== Use case: Add a person
-
-*MSS*
-
-1. User requests to add a person with the phone number and email address.
-2. AddressBook processes the information and adds the person to the list.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The given information is in an invalid format.
-+
-[none]
-** 2a1. AddressBook shows an error message and displays a sample input.
-+
-Use case resumes at step 1.
 
 [discrete]
 === Use case: Edit a person
@@ -819,26 +820,6 @@ Use case ends.
 Use case resumes at step 1.
 
 [discrete]
-=== Use case: Clear the AddressBook
-
-*MSS*
-
-1. User requests to clear the AddressBook.
-2. AddressBook deletes everything that has been stored.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Exit the application
-
-*MSS*
-
-1. User requests to exit AddressBook.
-2. AddressBook shuts down.
-+
-Use case ends.
-
-[discrete]
 === Use case: Find a person
 
 *MSS*
@@ -859,32 +840,30 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Get help
+=== Use case: Select a person
 
 *MSS*
 
-1. User requests to get help with using AddressBook.
-2. AddressBook opens the user guide.
-+
-Use case ends.
-
-[discrete]
-=== Use case: View previous commands
-
-*MSS*
-
-1. User requests to view previous commands entered.
-2. AddressBook returns a list of commands entered from the most recent to the earliest.
+1. User requests to select a person with a certain index number.
+2. AddressBook selects the person with that index number in the current list order.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. No command was given.
+* 2a. The index is smaller than 1.
 +
 [none]
-** 2a1. AddressBook displays a message.
+** 2a1. AddressBook displays an error message and prompts a sample input format.
++
+Use case ends.
+
+[none]
+* 2a. The index is out of bound.
++
+[none]
+** 2a1. AddressBook displays an error message.
 +
 Use case ends.
 
@@ -957,35 +936,54 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Select a person
+=== Use case: View previous commands
 
 *MSS*
 
-1. User requests to select a person with a certain index number.
-2. AddressBook selects the person with that index number in the current list order.
+1. User requests to view previous commands entered.
+2. AddressBook returns a list of commands entered from the most recent to the earliest.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The index is smaller than 1.
+* 2a. No command was given.
 +
 [none]
-** 2a1. AddressBook displays an error message and prompts a sample input format.
+** 2a1. AddressBook displays a message.
 +
 Use case ends.
 
-[none]
-* 2a. The index is out of bound.
-+
-[none]
-** 2a1. AddressBook displays an error message.
+[discrete]
+=== Use case: Clear the AddressBook
+
+*MSS*
+
+1. User requests to clear the AddressBook.
+2. AddressBook deletes everything that has been stored.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Get help
 
-{More to be added}
+*MSS*
+
+1. User requests to get help with using AddressBook.
+2. AddressBook opens the user guide.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit the application
+
+*MSS*
+
+1. User requests to exit AddressBook.
+2. AddressBook shuts down.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
