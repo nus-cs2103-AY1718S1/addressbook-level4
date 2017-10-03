@@ -741,6 +741,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list contacts |view who are my contacts
 
+|`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
+
+|`* * *` |lazy user |have auto complete when I type  |type less word
+
 |`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
@@ -759,6 +763,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |find a person by name |save time from browsing through the entire list
+
+|`* *` |forgettable user |stick some important people on the top|locate them quickly
+
 |`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -769,15 +777,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |sort the list  |locate a person easily
 
-|`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
-
-|`* *` |user |find a person by name |save time from browsing through the entire list
-
 |`*` |user |clean AddressBook  |save time from deleting people one by one
-
-|`* *` |forgettable user |stick some important people on the top|locate them quickly
-
-|`* * *` |lazy user |have auto complete when I type  |type less word
 
 |`*` |user |drag person card |reorder the list easily
 |=======================================================================
