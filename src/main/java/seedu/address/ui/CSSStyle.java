@@ -36,4 +36,13 @@ public class CSSStyle {
         return String.format(HEXCOLOR, hexString);
     }
 
+    /**
+     *
+     * @param color either color in String "red,blue,etc.." or hexadecimal color
+     * @return String to indicate background color
+     */
+    public static String getBackgroundStyle(String color){
+        return CSSStyle.STYLEBACKGROUNDCOLOR + color;
+    }
+
 }
