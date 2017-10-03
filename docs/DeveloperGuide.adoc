@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -793,6 +793,53 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[oop]]
+OOP
+
+....
+Object-oriented programming (OOP) is a programming language model organized around 
+objects rather than "actions" and data rather than logic.
+....
+
+[[ide]]
+IDE
+
+....
+An integrated development environment (IDE) is a software application that provides 
+comprehensive facilities to computer programmers for software development
+....
+
+[[api]]
+API
+
+....
+An Application Programming Interface (API) specifies the interface through which 
+other programs can interact with a software component. It is a contract between the
+component and its clients.
+....
+
+[[ci]]
+CI
+
+....
+Continuous Integration (CI) is an extreme application of build automation in 
+which integration, building, and testing happens automatically after each code change
+....
+
+[[index]]
+Index
+
+....
+The specific numbering position of each contact (eg. 1 = 1st, 2 = 2nd , 3 = 3rd etc)
+....
+
+[[help-window]]
+Help window
+
+....
+A web-based window displaying the user-guide within the application
 ....
 
 [appendix]
