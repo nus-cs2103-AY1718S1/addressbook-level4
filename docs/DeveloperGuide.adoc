@@ -723,6 +723,24 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |user |have a CLI prompt that can exhibit the required information to add an individual  |avoid inputting the wrong information
+
+|`* * *` |user |store multiple phone numbers and email addresses for any contact |store extra communication information of my contact
+
+|`* * *` |user |access Facebook, LinkedIn and Google |search and add my contacts on respective websites
+
+|`* * *` |user |have a confirmation request of the details inputted before adding an individual|make changes to any errors inputted
+
+|`* * *` |user |have a confirmation request & warning message upon using the clear command |avoid accidentally clearing my address book
+
+|`* * *` |user |find contacts based on part of their names |
+
+|`* * *` |user |sort my contacts in an alphabetical order |view my overall contact list alphabetically
+
+|`* * *` |user |find users based on any of their details (i.e. phone or tag) |find the person more easily
+
+|`* * *` |user |have a filter system to find contacts first by name, and then any additional relevant information(tags or email addresses) |search for a person more accurately in the case of multiple people with similar names.
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -730,8 +748,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
 {More to be added}
