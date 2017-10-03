@@ -723,11 +723,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |key data into my app
+
+|`* * *` |user |edit an existing person |change details that are no longer pertinent
+
+|`* * *` |user |have a list of intelligent autocomplete options displayed when I make a command|type commands quicker and easier
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
