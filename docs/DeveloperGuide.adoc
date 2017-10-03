@@ -780,6 +780,7 @@ Use case resumes at step 2.
 .  Should have IntelliJ IDE installed in computer.
 .  Should have at least 2GB of ram in computer in order for the application to run smoothly.
 .  Requirement of at least 3rd Generation i3 processor to operate the application.
+.  This is a test
 
 {More to be added}
 
