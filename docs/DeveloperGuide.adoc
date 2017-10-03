@@ -743,6 +743,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
 
+|`* * *` |user |undo decision  |revert changes in case of mistake
+
 |`* * *` |lazy user |have auto complete when I type  |type less word
 
 |`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
@@ -767,6 +769,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |forgettable user |stick some important people on the top|locate them quickly
 
+|`* *` |user |create events and assign contacts |keep track of who is involved in events
+
+|`* *` |user |export contact details |share with others or transfer to other device
+
+|`* *` |user |create filter using multiple tags |make a specific search using tags
+
 |`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -780,6 +788,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |clean AddressBook  |save time from deleting people one by one
 
 |`*` |user |drag person card |reorder the list easily
+
+|`*` |user |select font style |more comfortable to read
 |=======================================================================
 
 {More to be added}
@@ -890,6 +900,25 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: show help window
+
+*MSS*
+
+1. User enters "help" for the help command
+2. AddressBook displays the help window
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User presses F1 on the keyboard
++
+Use case resumes at step 2.
+
+* 1b. User clicks on help icon
++
+User case resumes at step 2.
 
 {More to be added}
 
@@ -910,6 +939,8 @@ Use case ends.
 .  Font size should be suitable for all people from 6 to 70 year old.
 .  Should not tolerate data loss
 .  Should be usable to a novice who has never used such type of application before
+.  Should startup within 7 seconds
+.  Background color should be appropriate to not discomfort users' eyes.
 {More to be added}
 
 [appendix]
