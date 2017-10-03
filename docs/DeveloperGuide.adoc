@@ -128,7 +128,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _link:#sequence-diagram[Sequence Diagram]_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
@@ -179,7 +179,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the link:#sequence-diagram[Sequence Diagram] for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
@@ -282,7 +282,7 @@ image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following link:#sequence-diagram[sequence diagram] shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
@@ -803,6 +803,13 @@ Activity Diagram
 A flowchart to represent the flow from one activity to another activity
 ....
 
+
+[[sequence-diagram]]
+Sequence Diagram
+
+....
+A diagram that shows how objects operate with one another and in what order.
+....
 
 [appendix]
 == Product Survey
