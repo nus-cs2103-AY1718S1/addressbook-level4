@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +13,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.*;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -114,6 +116,24 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    @Override
+    public void updateTag(Tag oldTag, Tag newTag) throws PersonNotFoundException, DuplicatePersonException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson tempPerson = addressBook.getPersonList().get(i);
+            Person finalPerson = new Person(tempPerson);
+
+            Set<Tag> PersonTags = finalPerson.getTags();
+            if(PersonTags.contains(oldTag)) {
+                PersonTags.remove(oldTag);
+                PersonTags.add(newTag);
+
+                finalPerson.setTags(PersonTags);
+            }
+            addressBook.updatePerson(tempPerson, finalPerson);
+            
+        }
     }
 
 }
