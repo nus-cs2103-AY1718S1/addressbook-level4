@@ -799,7 +799,7 @@ A contact detail that is not meant to be shared with others
 OOP
 
 ....
-Object-oriented programming (OOP) is a programming language model organized around 
+Object-oriented programming (OOP) is a programming language model organized around
 objects rather than "actions" and data rather than logic.
 ....
 
@@ -807,7 +807,7 @@ objects rather than "actions" and data rather than logic.
 IDE
 
 ....
-An integrated development environment (IDE) is a software application that provides 
+An integrated development environment (IDE) is a software application that provides
 comprehensive facilities to computer programmers for software development
 ....
 
@@ -815,7 +815,7 @@ comprehensive facilities to computer programmers for software development
 API
 
 ....
-An Application Programming Interface (API) specifies the interface through which 
+An Application Programming Interface (API) specifies the interface through which
 other programs can interact with a software component. It is a contract between the
 component and its clients.
 ....
@@ -824,7 +824,7 @@ component and its clients.
 CI
 
 ....
-Continuous Integration (CI) is an extreme application of build automation in 
+Continuous Integration (CI) is an extreme application of build automation in
 which integration, building, and testing happens automatically after each code change
 ....
 
