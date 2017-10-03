@@ -92,18 +92,22 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons in address book: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons in the address book. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
+* Only the name and tags are searched.
+* The name is searched fuzzily.
+* The tags is searched exactly.
+* The search will only select distinct persons. e.g. `han solo han solo` will only return `han solo`
+* The search is case insensitive for names. e.g. `hans` will match `Hans`
+* The search is case sensitive for tags. e.g. only `School` will match `School`
 * The search is fuzzy for name words of 4 or more characters. e.g `Hnas` will match `Hans`
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched when less than 4 characters. e.g. `hans` will not match `Han` but `han` will match `Han`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The order of the keywords does not matter. e.g. `Hans school Bo` will match `Bo Hans` and others with the `school` tag
 ****
 
 Examples:

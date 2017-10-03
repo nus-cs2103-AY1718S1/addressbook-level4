@@ -23,7 +23,9 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-    boolean isNameCloseToAnyKeyword(List<String> keywords);
+    boolean isNameCloseToAnyKeyword(List<String> keyWords);
+    boolean isTagSetJointKeywordSet(List<String> keyWords);
+    boolean isSearchKeyWordsMatchAnyData(List<String> keyWords);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

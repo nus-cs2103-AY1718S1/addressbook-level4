@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -149,6 +150,25 @@ public class Person implements ReadOnlyPerson {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns whether any of a person's tags exist in the search parameters.
+     * @param keyWords set of case-sensitive keywords to be matched against
+     *                 search parameters
+     * @return {@code false} if the sets are disjoint,
+     * {@code true} otherwise.
+     */
+    @Override
+    public boolean isTagSetJointKeywordSet(List<String> keyWords) {
+        return !Collections.disjoint(keyWords,
+                getTags().stream().map(tag -> tag.tagName).collect(Collectors.toSet()));
+    }
+
+    @Override
+    public boolean isSearchKeyWordsMatchAnyData(List<String> keyWords) {
+        return isNameCloseToAnyKeyword(keyWords)
+                || isTagSetJointKeywordSet(keyWords);
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {

@@ -15,7 +15,7 @@ public class PersonDataContainsKeywordsPredicate implements Predicate<ReadOnlyPe
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return person.isNameCloseToAnyKeyword(keywords);
+        return person.isSearchKeyWordsMatchAnyData(keywords);
     }
 
     @Override
