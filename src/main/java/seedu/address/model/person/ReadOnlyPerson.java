@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -22,6 +23,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    boolean isNameCloseToAnyKeyword(List<String> keywords);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
