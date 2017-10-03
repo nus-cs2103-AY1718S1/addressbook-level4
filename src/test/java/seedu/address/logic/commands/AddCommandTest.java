@@ -135,7 +135,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
         @Override
-        public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException{
+        public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
             fail("This method should not be called.");
         }
     }
