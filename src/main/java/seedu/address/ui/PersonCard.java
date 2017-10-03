@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.*;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +15,13 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey", "purple" ,
+                                        "gold", "crimson", "navy", "darkBlue", "mediumBlue", "darkGreen", "teal", "darkCyan",
+                                        "deepSkyBlue", "lime", "springGreen", "midnightBlue", "forestGreen", "seaGreen", "royalBlue",
+                                        "indigo", "darkOliveGreen" };
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Random random = new Random();
+    private static int[] usedColors = new int[colors.length];
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -48,6 +56,32 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    private static String getColorForTag(String tagValue) {
+        int colorCode;
+        boolean usedUpAllColors = true;
+        for(int i = 0; i < colors.length; i++) {
+            if(usedColors[i] == 0) {
+                usedUpAllColors = false;
+                break;
+            }
+        }
+        if(usedUpAllColors) {
+            for(int j = 0; j < colors.length; j++) {
+                usedColors[j] = 0;
+            }
+        }
+
+        if (!tagColors.containsKey(tagValue)) {
+            do {
+                colorCode = random.nextInt(colors.length);
+            }while(usedColors[colorCode] == 1);
+            usedColors[colorCode] = 1;
+            tagColors.put(tagValue, colors[colorCode]);
+        }
+
+        return tagColors.get(tagValue);
+    }
+
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -59,12 +93,18 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        //person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
