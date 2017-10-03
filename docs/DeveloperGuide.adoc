@@ -900,6 +900,25 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: show help window
+
+*MSS*
+
+1. User enters "help" for the help command
+2. AddressBook displays the help window
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User presses F1 on the keyboard
++
+Use case resumes at step 2.
+
+* 1b. User clicks on help icon
++
+User case resumes at step 2.
 
 {More to be added}
 
