@@ -838,6 +838,7 @@ A contact detail that is not meant to be shared with others
 ....
 
 [[gradle]]
+Gradle
 
 ....
 Gradle is an open source build automation system that automates the creation of a software build.
