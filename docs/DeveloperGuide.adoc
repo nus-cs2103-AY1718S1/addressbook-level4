@@ -739,7 +739,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |use shortcut to any command |it will be easier for me to find someone in my contact list
 
+|`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
+
 |`* *` |user |rename existing tag |I can update my relationship with contact
+
+|`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -781,7 +785,7 @@ Use case ends.
 Use case resumes at step 2.
 
 === Use case: Rename existing tag
-#Pre-condition :The identitifed tag exist in Addressbook
+#Pre-condition :The identitifed tag exists in Addressbook
 **MSS**
 
 1. User requests to list persons
@@ -790,7 +794,7 @@ Use case resumes at step 2.
 4. User keys in the new input
 5. AddressBook replace the name of the existing to the newer version
 6. AddressBook prompt user to confirm the changes
-7.AddressBook shows a sucessful message regarding the replacement<br>
+7. AddressBook shows a sucessful message regarding the replacement
 Use case ends.
 
 **Extensions**
