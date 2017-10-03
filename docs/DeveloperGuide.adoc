@@ -939,7 +939,7 @@ User case resumes at step 2.
 .  Font size should be suitable for all people from 6 to 70 year old.
 .  Should not tolerate data loss
 .  Should be usable to a novice who has never used such type of application before
-.  Should be able to work on both Windows and Mac computers.
+.  Should startup within 7 seconds
 .  Background color should be appropriate to not discomfort users' eyes.
 {More to be added}
 
