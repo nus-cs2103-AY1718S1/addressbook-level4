@@ -775,6 +775,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Internet connection is required to maximise the functionality of the AddressBook Application. Such as accessing features in BrowserPanel.
+.  Should have at least 100MB of space in HardDiskDrive in order for application to install.
+.  Should have IntelliJ IDE installed in computer.
+.  Should have at least 2GB of ram in computer in order for the application to run smoothly.
+.  Requirement of at least 3rd Generation i3 processor to operate the application.
 
 {More to be added}
 
