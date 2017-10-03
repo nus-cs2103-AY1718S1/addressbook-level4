@@ -48,6 +48,22 @@ public class AliasCommandTest {
     }
 
     @Test
+    public void execute_alias_listSuccess() throws Exception {
+        aliasCommand.execute();
+
+        Command aliasListCommand = new AliasCommand();
+        aliasListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        assertCommandSuccess(
+                aliasListCommand,
+                model,
+                String.format(AliasCommand.MESSAGE_LIST_SUCCESS,
+                        String.format("%1$s=%2$s\n", LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD)),
+                model
+        );
+    }
+
+    @Test
     public void execute_alias_deleteSuccess() throws Exception {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
