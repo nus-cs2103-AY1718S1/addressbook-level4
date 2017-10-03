@@ -59,11 +59,11 @@ public class PersonCard extends UiPart<Region> {
      */
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
-            if (tagValue.equalsIgnoreCase("colleagues") ||
-                    tagValue.equalsIgnoreCase("colleague")) {
+            if (tagValue.equalsIgnoreCase("colleagues")
+                    || tagValue.equalsIgnoreCase("colleague")) {
                 tagColors.put(tagValue, "red");
-            } else if (tagValue.equalsIgnoreCase("friends") ||
-                    tagValue.equalsIgnoreCase("friend")) {
+            } else if (tagValue.equalsIgnoreCase("friends")
+                    || tagValue.equalsIgnoreCase("friend")) {
                 tagColors.put(tagValue, "grey");
             } else { // Randomly assign colors from randomColors String array
                 tagColors.put(tagValue, randomColors[random.nextInt(randomColors.length)]);
