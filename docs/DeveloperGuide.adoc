@@ -719,20 +719,60 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
-|=======================================================================
+
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |backup and restore my contacts |recover my contacts in case of unexpected incidents
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |filter my contacts by multiple criteria |search for specific contacts more easily
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |have autocorrection for my misspelt words |my contact details will be properly spelt
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |add multiple phone numbers to a person |know different ways of contacting one person
+
+|`* * *` |user |search for people who are using address book |make more friends
+
+|`* * *` |user |sort the address book alphabetically |locate my contacts easily
+
+|`* * *` |user |load more than 100,000 persons at one time |load all my schoolmates in NUS
+
+|`* * *` |user |sort friends by tags |search friends by group
+
+|`* *` |user |delete multiple users simultaneously|perform bookeeping more easily
+
+|`* *` |user |view different contacts in different font color |identify different groups easily
+
+|`* *` |user |delete a person |remove entries that I no longer need
+
+|`* *` |businessman |share my contact |easier for my client to contact me
+
+|`* *` |user |listed contacts to be arranged into several pages |easier for me to read
+
+|`* *` |user |autocomplete commands|type lengthy commands in full
+
+|`* *` |user |record the appointments with friends and be notified y address book |be reminded to attend the appointments
+
+|`* *` |user |voice out the commands rather than typing |be more efficient at adding contacts
+
+|`* *` |user |check my most frequently contacted list of people |add them to my favourite list, or located them more easily
+
+|`*` |user |merge my address book with another address book|add contacts in bulk
+
+|`*` |user that loves social media |search for my contact's facebook profile via phone number |connect with them on a deeper level
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+
+|`*` |user |access address boook through slack |access address book quickly and conveniently
+
+|`*` |user |add emoji as special tags to the contact cards |have an interesting address book contacts
+
+|`*` |user with non-english as their native speaking language |add non-english names of friends |have localization for the language
+
+|`*` |user |change the colour theme |make my address book more personalised
+
+|`*` |user |display avatars for each contact|recall who a particular person is
+
+|`*` |user |change the font size and font family of my contacts' records|have a more aesthetically pleasing addressbook interface.
 
 {More to be added}
 
@@ -742,14 +782,113 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Backup and restore contacts
+
+*MSS*
+
+1.  User requests to backup contacts to a particular location.
+2.  AddressBook makes a copy of the existing contacts database to the specified location.
+3.  User requests to restore contacts from a particular location on the local disk.
+4.  AddressBook makes a backup of the current database and overrides the existing file with
+the user's backup.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The backup file cannot be read during restoration.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+* 3a. The specified location cannot be written to during backup.
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+=== Use case: Add multiple phone numbers
 
 *MSS*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+3.  User requests to add multiple phone numbers to a specific person in the list
+4.  AddressBook add multiple phone numbers of the person
+
+*Extensions*
+
+* 3a. The number added is already existed.
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Search contacts by multiple criteria
+
+*MSS*
+
+1.  User requests to list contacts by specifying substrings of name and/or address.
+2.  AddressBook displays the matching contacts in the GUI interface (if any).
+
+*Extensions*
+
+2a. The list is empty
++
+Use case ends
+
+=== Use case: Sort persons names in alphabetical order
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons unsorted
+3. User requests to sort persons in alphabetical order
+
+*Extensions*
+
+[none]
+* 2a. The list is sorted.
++
+Use case ends.
+
+[discrete]
+=== Use case: Autocorrect misspelt words
+
+*MSS*
+
+1.  User inputs a misspelt word
+2.  AddressBook identifies and autocorrects the word
+
+[discrete]
+=== Use case: Sort person by tag
+
+*MSS*
+
+1. User requests to sort persons with a specific tag
+2. AddressBook shows a list of persons with the same tag
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The list is empty
++
+Use case ends.
+
+* 1b. The tag is not recognizable
++
+Use case ends.
+
+[discrete]
+=== Use case: Search for people who are using address book
+
+*MSS*
+
+1.  User requests to search for people who are using address book
+2.  AddressBook shows a list of matching persons (if any)
 +
 Use case ends.
 
@@ -760,12 +899,146 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+[discrete]
+=== Use case: Delete many contacts simultaneously
+
+*MSS*
+
+1.  User requests to delete contacts with a certain tag
+2.  AddressBook deletes the contacts with the stated tag and reports the entries
+that have been deleted (if any).
++
+Use case ends.
+
+[discrete]
+=== Use case: Load more than 100,000 persons at one time
+
+*MSS*
+
+1.  User requests to list more than 100,000 persons at one time
+2.  AddressBook shows a list of matching persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Check most frequently contacted list of persons
+
+*MSS*
+
+1.  User requests to list most frequently contacted persons
+2.  AddressBook shows a list of matching persons
+3.  User requests to add the list to his/her favourite list
+4.  AddressBook add the list to the favourite list
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add appointment
+
+*MSS*
+
+1. User inputs the appointment
+2. Address book shows the message that the appointment is recorded
+3. Address book pushes the notification the day before the appointment
+
+*Extensions*
+
+* 1a. The input date is invalid
+** 1a1. Address book requests user to input a valid date
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Change colour theme
+
+*MSS*
+
+1.  User requests to change colour theme of the address book
+2.  AddressBook shows a list of colours available
+3.  User requests to change the theme to a specific colour
+4.  AddressBook changes the address book to the specified colour theme
+
+[discrete]
+=== Use case: Share contact by index
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to share a person contact detail by specifying an index
+4.  AddressBook shows the person's contact detail and export the contact
+
+* 3a. The given index is invalid
 +
 [none]
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Search contact on Facebook
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to search a person's contact on facebook
+4.  AddressBook shows the link to search result
++
+Use case ends.
+
+*Extensions*
+
+3a. The person is not on Facebook
++
+Use cas eends.
+
+[discrete]
+=== Use case: Show contacts by pages
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to list by pages
+4.  AddressBook shows the list in pages
++
+Use case ends.
+
+*Extensions*
+
+2a. The list is empty
++Use case ends.
+
+[discrete]
+=== Use case: Auto-complete user input
+
+*MSS*
+
+1.  User types a command halfway and press the autocomplete hotkey
+2.  AddressBook returns the command that is to be completed
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No command has been typed
++
+[none]
+** 3a1. AddressBook will not respond.
++
+Use case ends.
 
 {More to be added}
 
@@ -774,7 +1047,17 @@ Use case resumes at step 2.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be compatible with Mac and Windows users
+.  Should be able to handle unicode (UTF-8) text
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should be backward compatible with data produced by earlier versions of the system.
+.  The system should work on both 32-bit and 64-bit environments.
+.  Should return the list of persons in the storage within 1 second when users sort persons by tag.
+.  System should be able to recover itself after a power shutdown.
+.  Should display sepcific error messages if the system fails react to user.
+.  Should be able to give suggestions to user on how to handle an error messages.
+.  This product should be free for the public.
+.  Should be easy for user to remember the commands.
 
 {More to be added}
 
@@ -793,6 +1076,21 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[Substring]]
+Substring
+
+....
+A string containing one or more consecutive characters of
+a longer string. E.g. ppl is a substring of apple but ae is not.
+....
+
+[[error-message]]
+Error Message
+
+....
+A message displayed on a monitor screen or printout indicating that an incorrect instruction has been given or that there is an error resulting from faulty software or hardware.
 ....
 
 [appendix]
