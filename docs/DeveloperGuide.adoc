@@ -741,6 +741,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list contacts |view who are my contacts
 
+|`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
+
+|`* * *` |lazy user |have auto complete when I type  |type less word
+
 |`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
@@ -759,11 +763,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |find a person by name |save time from browsing through the entire list
+
+|`* *` |forgettable user |stick some important people on the top|locate them quickly
+
 |`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |add pictures to contacts |remember who they are through pictures
+
+|`*` |user |alter whether information is private  |make information open to everyone whenever I want
+
+|`*` |user |sort the list  |locate a person easily
+
+|`*` |user |clean AddressBook  |save time from deleting people one by one
+
+|`*` |user |drag person card |reorder the list easily
 |=======================================================================
 
 {More to be added}
@@ -833,19 +849,18 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Add a tag to a person
-
+=== Use case: Add a person
 *MSS*
 
-1. User requests to list persons
-2. AddressBook shows a list of persons
-3. User requests to give a tag to a specific person in the list
-4. AddressBook adds the tag to the person
+1. User enters values for a new person.
+2. AddressBook add the new person into the database.
 +
 Use case ends.
 
 *Extensions*
-
+2a. There is already this person
++
+Use case ends.
 [none]
 * 2a. The list is empty.
 +
@@ -857,6 +872,23 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+=== Use case: add a tag to a person
+
+*MSS*
+
+1. User enters values for a new person
+2. AddressBook add the new person into the database
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is already this person
++
+Use case ends.
+
 
 {More to be added}
 
@@ -874,6 +906,9 @@ Use case resumes at step 2.
 .  Should work on both 32-bit and 64-bit environment.
 .  The cost of this application should not be more than 10,000 dollars.
 .  Should protect users' privacy.
+.  Font size should be suitable for all people from 6 to 70 year old.
+.  Should not tolerate data loss
+.  Should be usable to a novice who has never used such type of application before
 {More to be added}
 
 [appendix]
