@@ -749,6 +749,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |careful user |look through my past commands |trace back my actions
 
+|`* *` |bored user |select a person with a certain index number |contact a random person in my contacts I tried
+
+|`* *` |lazy user |select a contact from my address book to call |I do not need to use other phone functions to call
+
 |`*` |user with many tags in the address book |sort my contact list according to their tags |locate a person easily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
