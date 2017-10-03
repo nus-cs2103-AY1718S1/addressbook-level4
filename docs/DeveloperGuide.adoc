@@ -910,7 +910,6 @@ Use case ends.
 Use case resumes at step 2.
 
 
-
 {More to be added}
 
 [appendix]
