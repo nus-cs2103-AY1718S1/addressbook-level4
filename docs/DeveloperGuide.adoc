@@ -735,6 +735,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |get help information |know where is wrong whe I get errors
+
+|`* * *` |user |update contact's information |correct or add their information
+
+|`* * *` |user |list contacts |view who are my contacts
+
 |`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
@@ -743,11 +749,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` | user with many friends |add multiple people at one time| save my time for adding
 
+|`* *` |user |sort contacts |view my list easily
+
+|`* *` |user |tag my contacts |remember who they are through tags
+
+|`* *` |careful user |log in with my id and password |keep my privacy
+
+|`* *` |elder user |adjust font size |see more clearly
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add pictures to contacts |remember who they are through pictures
 |=======================================================================
 
 {More to be added}
@@ -816,7 +832,34 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Add a tag to a person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to give a tag to a specific person in the list
+4. AddressBook adds the tag to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
+
 
 [appendix]
 == Non Functional Requirements
@@ -827,6 +870,10 @@ Use case ends.
 .  Should be able to give feedback message within 2 seconds for every command.
 .  Should be able to use without connecting to Internet.
 .  Should be able to use without programming knowledge background.
+.  The size of this application should not be larger than 10GB.
+.  Should work on both 32-bit and 64-bit environment.
+.  The cost of this application should not be more than 10,000 dollars.
+.  Should protect users' privacy.
 {More to be added}
 
 [appendix]
@@ -851,6 +898,13 @@ Blank information
 
 ....
 An information field with null value. It may happen when a user add a person and does not know some information
+....
+
+[[gradle]]
+Gradle
+
+....
+Gradle is an open source build automation system that automates the creation of a software build.
 ....
 
 [appendix]
