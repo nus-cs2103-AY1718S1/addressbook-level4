@@ -974,8 +974,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  A user should be able to accomplish all tasks using the GUI, without using the command line.
+.  Startup time should be under 3 seconds.
+.  A user without technical experience should be able to perform most functions using the GUI without much assistance or having to
+read the user guide.
 
 [appendix]
 == Glossary
@@ -1025,16 +1027,34 @@ A label attached to each contact for the purpose of identification and categoriz
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts*
 
-Author: ...
+Author: Apple
 
 Pros:
 
-* ...
-* ...
+* Intuitive user interface, that makes it easy to add, find and modify contacts.
+* Extensive number of relevant fields for contacts.
+* Cloud integration allows contacts to be shared across multiple devices.
 
 Cons:
 
-* ...
-* ...
+* Limited additional functionality besides storing/finding contact information. Use case
+is thus limited.
+* No way to sort or filter contacts, other than alphabetically.
+* Does not work with all link:#mainstream-os[mainstream-os]. Only works with iOS and OS-X.
+
+*Google Contacts*
+
+Author: Google
+
+Pros:
+
+* Intuitive user interface, that makes it easy to add, find and modify contacts.
+* Labels allow contacts relevant to a specific tag to be found easily.
+* Cloud integration allows contacts to be shared across multiple devices.
+
+Cons:
+
+* Limited additional functionality besides storing/finding contact information. Use case
+is thus limited.
