@@ -140,13 +140,13 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-        
+
         /* Case: find tag FRIENDS of persons in address book -> 5 persons found */
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName.toUpperCase();
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-        
+
         /* Case: find tag frie of persons in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName.substring(0, 4);
         ModelHelper.setFilteredList(expectedModel);
