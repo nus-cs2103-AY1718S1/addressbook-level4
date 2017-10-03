@@ -739,7 +739,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all link:#use-case[use cases] below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -816,6 +816,14 @@ Architecture Diagram
 
 ....
 A diagram that defines the structure, behavior, and views of a system.
+....
+
+
+[[use-case]]
+Use Case
+
+....
+a list of actions or event steps typically defining the interactions between a role and a system to achieve a goal.
 ....
 
 [appendix]
