@@ -87,11 +87,8 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Method is implemented in Model interface
      * Functionality of method is exposed only in ModelManager
-     * Loops through Address Book to update the tags of person
-     * Addressbook is then updated with updated tags of person
-     * @param tags
-     * @throws DuplicatePersonException
-     * @throws PersonNotFoundException
+     * Loops through Address Book to update the tags
+     * Address Book is then updated with updated tags of person
      */
     @Override
     public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
@@ -101,8 +98,8 @@ public class ModelManager extends ComponentManager implements Model {
                 updatedTags.remove(tags);
                 editedPerson.setTags(updatedTags);
                 addressBook.updatePerson(target, editedPerson);
-            }
         }
+    }
 
     //=========== Filtered Person List Accessors =============================================================
 
