@@ -3,10 +3,8 @@ package seedu.address.logic.commands;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -36,11 +34,16 @@ public class DeleteByNameCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         ReadOnlyPerson personToDelete = null;
+
         for (int i = 0; i < lastShownList.size(); i++) {
-            personToDelete = lastShownList.get(i);
-            if (personToDelete.getName().toString().equals(targetName)) {
+            if (lastShownList.get(i).getName().toString().equals(targetName)) {
+                personToDelete = lastShownList.get(i);
                 break;
             }
+        }
+
+        if (personToDelete == null) {
+            throw new CommandException(Messages.MESSAGE_UNFOUND_PERSON_NAME);
         }
 
         try {
