@@ -743,11 +743,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |elder user |adjust font size |see more clearly
 
-|`*` |user |add pictures to contacts |remember who they are through pictures
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add pictures to contacts |remember who they are through pictures
 |=======================================================================
 
 {More to be added}
