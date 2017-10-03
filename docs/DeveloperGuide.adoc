@@ -764,6 +764,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |add pictures to contacts |remember who they are through pictures
+
+|`*` |user |alter whether information is private  |make information open to everyone whenever I want
+
+|`*` |user |sort the list  |locate a person easily
+
+|`*` |user |hide private details  |minimise the chance of someone else seeing them by accident
+
+|`*` |user |find a person by name |save time from browsing through the entire list
+
+|`*` |user |clean AddressBook  |save time from deleting people one by one
+
+|`*` |forgettable user |stick some important people on the top|locate them quickly
+
+|`*` |lazy user |have auto complete when I type  |type less word
+
+|`*` |user |drag person card |reorder the list easily
 |=======================================================================
 
 {More to be added}
