@@ -873,6 +873,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: add a tag to a person
 
 *MSS*
