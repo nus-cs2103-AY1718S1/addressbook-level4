@@ -727,6 +727,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |clear my address book |refresh it quickly
+
+|`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
+
+|`* * *` |As a user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* * *` |user |get help information |know where is wrong whe I get errors
@@ -734,6 +740,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |update contact's information |correct or add their information
 
 |`* * *` |user |list contacts |view who are my contacts
+
+|`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
+
+|`* *` |frequent user |change the font and background colour |use address book comfortably
+
+|`* *` |frequent user |use non-case sensitive command |type command easily
+
+|`* *` | user with many friends |add multiple people at one time| save my time for adding
 
 |`* *` |user |sort contacts |view my list easily
 
@@ -744,6 +758,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |elder user |adjust font size |see more clearly
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` | frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
@@ -784,6 +800,39 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+=== Use case: Update person
+
+*MSS*
+
+1.  User find target person by his name.
+2.  AddressBook shows the result of find command.
+3.  User types new information for the target person.
+4.  AddressBook updates the information and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The target person cannot be found.
++
+Use case ends.
+
+* 3a. User types invalid information
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. New information is the same as original.
++
+[none]
+** 3b1. AddressBook shows an unnecessary update message.
++
+Use case ends.
+
+[discrete]
 === Use case: Add a tag to a person
 
 *MSS*
@@ -809,16 +858,23 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+{More to be added}
+
+
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to give feedback message within 2 seconds for every command.
+.  Should be able to use without connecting to Internet.
+.  Should be able to use without programming knowledge background.
 .  The size of this application should not be larger than 10GB.
 .  Should work on both 32-bit and 64-bit environment.
 .  The cost of this application should not be more than 10,000 dollars.
 .  Should protect users' privacy.
+{More to be added}
 
 [appendix]
 == Glossary
@@ -835,6 +891,13 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[blank-information]]
+Blank information
+
+....
+An information field with null value. It may happen when a user add a person and does not know some information
 ....
 
 [[gradle]]
