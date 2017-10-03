@@ -914,6 +914,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Startup time should be less than 3s.
+.  Should be usable by a novice who has never used a command prompt before
+.  Data should be encrypted when application is not running
 
 {More to be added}
 
