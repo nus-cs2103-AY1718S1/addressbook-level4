@@ -778,7 +778,7 @@ Use case resumes at step 2.
 
 *MSS*
 
-1. User requests to list person 
+1. User requests to list person
 2. Rolodex shows a list of persons
 3. User requests to store note for a specific person in the list
 4. Rolodex adds note to the person
