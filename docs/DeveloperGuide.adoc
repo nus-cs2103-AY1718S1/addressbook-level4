@@ -948,7 +948,7 @@ As a user, I want to be able to add multiple fields for my contacts, so that I c
 3. User selects a specific person
 4. AddressBook prompts for field to add
 5. User enters 'p/12345678'
-4. AddressBook adds another phone number "12345678" to the contact alan
+6. AddressBook adds another phone number "12345678" to the contact alan
 +
 Use case ends.
 
