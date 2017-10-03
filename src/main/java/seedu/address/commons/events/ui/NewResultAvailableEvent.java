@@ -12,7 +12,7 @@ public class NewResultAvailableEvent extends BaseEvent {
 
     public NewResultAvailableEvent(String message, boolean isError) {
         this.message = message;
-        this.isError= isError;
+        this.isError = isError;
     }
 
     @Override
