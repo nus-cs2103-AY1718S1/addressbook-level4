@@ -60,7 +60,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
     }
-    
+
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath.concat("backup.fxml"));
     }
