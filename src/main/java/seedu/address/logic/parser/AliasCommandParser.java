@@ -24,24 +24,26 @@ public class AliasCommandParser implements Parser<AliasCommand> {
     public AliasCommand parse(String arguments) throws ParseException {
         String[] args = arguments.trim().split("\\s+");
 
-        boolean isDelete = false;
-
-        if (args.length == 3 && args[0].equals("-d") || args[0].equals("--delete")) {
-            // Delete alias
-            return new AliasCommand(args[1], isDelete);
-
-        } else if (args.length != 2) {
+        switch(args.length) {
+        case 1:
+            if (args[0].equals("")) {
+                return new AliasCommand();
+            }
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
+        case 2:
+            if (args[0].equals("-d") || args[0].equals("--delete")) {
+                return new AliasCommand(args[1], true);
+            }
+            String alias = args[0];
+            try {
+                ParserUtil.parseCommand(Optional.ofNullable(args[1])).ifPresent(cmd -> this.command = cmd);
+            } catch (IllegalValueException ive) {
+                throw new ParseException(ive.getMessage(), ive);
+            }
+            return new AliasCommand(alias, command);
+        default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
         }
-
-        String alias = args[0];
-        try {
-            ParserUtil.parseCommand(Optional.ofNullable(args[1])).ifPresent(cmd -> this.command = cmd);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        return new AliasCommand(alias, command);
     }
 
 }

@@ -35,14 +35,14 @@ public class AliasCommandTest {
     }
 
     @Test
-    public void execute_alias_success() throws Exception {
+    public void execute_alias_addSuccess() throws Exception {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addAlias(LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD);
 
         assertCommandSuccess(
                 aliasCommand,
                 model,
-                String.format(AliasCommand.MESSAGE_SUCCESS, LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD),
+                String.format(AliasCommand.MESSAGE_ADD_SUCCESS, LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD),
                 expectedModel
         );
     }

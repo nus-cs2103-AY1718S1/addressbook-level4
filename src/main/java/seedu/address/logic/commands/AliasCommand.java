@@ -1,13 +1,16 @@
 package seedu.address.logic.commands;
 
+import java.util.Map;
+
 /**
  * Creates an alias for other commands.
  */
 public class AliasCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "alias";
-    public static final String MESSAGE_SUCCESS = "The alias \"%1$s\" now points to \"%2$s\".";
+    public static final String MESSAGE_ADD_SUCCESS = "The alias \"%1$s\" now points to \"%2$s\".";
     public static final String MESSAGE_DELETE_SUCCESS = "Deleted alias \"%1$s\".";
+    public static final String MESSAGE_LIST_SUCCESS = "Aliases:\n%1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates or deletes an alias for other commands."
             + "Parameters: [--delete|-d] COMMAND [OLD_COMMAND]\n"
@@ -17,6 +20,12 @@ public class AliasCommand extends UndoableCommand {
     private final String alias;
     private final String command;
     private final Boolean isDelete;
+
+    public AliasCommand() {
+        this.alias = null;
+        this.command = null;
+        this.isDelete = false;
+    }
 
     public AliasCommand(String alias, String command) {
         this.alias = alias;
@@ -35,9 +44,18 @@ public class AliasCommand extends UndoableCommand {
         if (isDelete) {
             model.deleteAlias(alias);
             return new CommandResult(String.format(MESSAGE_DELETE_SUCCESS, alias));
-        } else {
+        } else if (command != null) {
             model.addAlias(alias, command);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, alias, command));
+            return new CommandResult(String.format(MESSAGE_ADD_SUCCESS, alias, command));
+        } else {
+            StringBuilder output = new StringBuilder();
+
+            Map<String, String> aliases = model.getAliases();
+            for (String alias : aliases.keySet()) {
+                String command = aliases.get(alias);
+                output.append(String.format("%1$s=%2$s\n", alias, command));
+            }
+            return new CommandResult(String.format(MESSAGE_LIST_SUCCESS, output));
         }
     }
 
