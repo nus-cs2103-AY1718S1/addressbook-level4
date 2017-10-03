@@ -767,7 +767,77 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1. User inputs text to console to add person.
+2. Address Book acknowledges and adds person to the list.
+3. Address Book is updated with a latest list of persons.
++
+Use case ends.
+
+*Extensions*
+* 1a. The format of parameters entered are invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit a specific person in the list.
+2.  AddressBook updates itself.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+Use case ends.
+* 1b. The arguments for edit command are invalid
++
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a specific person in the list
+4.  AddressBook selects the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 
 [appendix]
 == Non Functional Requirements
