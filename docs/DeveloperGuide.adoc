@@ -767,6 +767,79 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Select person
+
+*Precondition: Person in question should be saved with 'add' in addressbook*
+
+*Guarantees: Person in question will be displayed with all fields visible*
+
+*MSS*
+
+1.  User requests to 'find' a specific person by name
+2.  AddressBook shows a list of persons with name entered
+3.  User selects the index of specific person
+4.  AddressBook shows full contact details of person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: History 
+
+*Guarantees: Displays list of commands entered by user*
+
+*MSS*
+
+1.  User requests to see command history
+2.  AddressBook lists the commands entered in reverse order
+3.  User views previous commands
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help window
+
+*Guarantees: Displays instructions for command entered by user*
+
+*MSS*
+
+1.  User enters 'help' command
+2.  AddressBook shows the instructions of the command entered
+3.  User views help window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command was previously entered
++
+Use case ends.
+
+* 3a. User chooses to copy help example text
++
+[none]
+** 3a1. User switches back to main window and pastes the command
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
