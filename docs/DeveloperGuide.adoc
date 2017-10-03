@@ -299,7 +299,7 @@ Commands that are not undoable are not added into the `undoStack`. For example, 
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following link:#activity-diagram[activity diagram]summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
@@ -794,6 +794,15 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
+
+[[activity-diagram]]
+Activity Diagram
+
+....
+A flowchart to represent the flow from one activity to another activity
+....
+
 
 [appendix]
 == Product Survey
