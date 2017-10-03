@@ -795,6 +795,104 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[add]]
+add
+
+....
+A command that adds a person to the address book
+....
+
+[[edit]]
+edit
+
+....
+A command that updates the contact details of a person
+....
+
+[[delete]]
+delete
+
+....
+A command that removes a person from the address book list
+....
+
+[[exit]]
+exit
+
+....
+A command that closes the address book application
+....
+
+[[list]]
+list
+
+....
+A command that lists all contacts in the address book
+....
+
+[[find]]
+find
+
+....
+A command that searches for a person by name
+....
+
+[[undo]]
+undo
+
+....
+A command that reverses changes made to the contacts list
+....
+
+[[redo]]
+redo
+
+....
+A command that changes address book’s state to before its last ‘Undo’ command
+....
+
+[[clear]]
+clear
+
+....
+A command that deletes all contacts
+....
+
+[[help]]
+help
+
+....
+A command that launches the help window
+....
+
+[[tags]]
+tags
+
+....
+An attribute which can be assigned to a contact
+....
+
+[[index]]
+index
+
+....
+A running number used to label the contacts, often inserted after a command to serve as contact selection
+....
+
+[[recycle list]]
+recycle list
+
+....
+A list of deleted contacts
+....
+
+[[AddressBook.xml]]
+AddressBook.xml
+
+....
+The file that the contact list is stored to, located in the ‘data’ folder
+....
+
 [appendix]
 == Product Survey
 
