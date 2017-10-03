@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+grammar com.sarf.talkingjava.example;
+
+public <updateprofile> = go settings;
+public <deleteprofile> = delete profile;
+public <personalize> = personalise;
+public <camera> = capture image;
+public <musicon> = play music;
+public <musicoff>= stop music;
+public <siri> = hey mic;
+public <i> = i;
+public <a> = a;
+public <go> = go;
