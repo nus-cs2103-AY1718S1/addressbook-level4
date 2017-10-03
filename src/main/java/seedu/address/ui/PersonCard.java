@@ -77,7 +77,7 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
-    private void initTags(ReadOnlyPerson person){
+    private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
