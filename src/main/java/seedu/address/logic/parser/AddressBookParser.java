@@ -49,24 +49,30 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        case AddCommand.SHORTHAND_COMMAND_WORD:
+                return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.SHORTHAND_COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.SHORTHAND_COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+        case ClearCommand.SHORTHAND_COMMAND_WORD:
+                return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.SHORTHAND_COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.SHORTHAND_COMMAND_WORD:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
@@ -79,9 +85,11 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.SHORTHAND_COMMAND_WORD:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.SHORTHAND_COMMAND_WORD:
             return new RedoCommand();
 
         default:
