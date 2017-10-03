@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> implements CSSStyle{
+public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
