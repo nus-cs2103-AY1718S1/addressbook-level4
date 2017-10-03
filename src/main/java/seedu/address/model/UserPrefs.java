@@ -11,6 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
@@ -33,9 +34,13 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
+
+
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
+
+
 
     public String getAddressBookName() {
         return addressBookName;
@@ -71,6 +76,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
+
         sb.append("\nAddressBook name : " + addressBookName);
         return sb.toString();
     }
