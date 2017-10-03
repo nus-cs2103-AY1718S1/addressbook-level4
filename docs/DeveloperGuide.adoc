@@ -781,6 +781,20 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[activity-diagram]]
+Activity Diagram
+
+....
+A flowchart to represent the flow from one activity to another activity
+....
+
+[[architecture-diagram]]
+Architecture Diagram
+
+....
+A diagram that defines the structure, behavior, and views of a system.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -796,28 +810,12 @@ A contact detail that is not meant to be shared with others
 ....
 
 
-[[activity-diagram]]
-Activity Diagram
-
-....
-A flowchart to represent the flow from one activity to another activity
-....
-
-
 [[sequence-diagram]]
 Sequence Diagram
 
 ....
 A diagram that shows how objects operate with one another and in what order.
 ....
-
-[[architecture-diagram]]
-Architecture Diagram
-
-....
-A diagram that defines the structure, behavior, and views of a system.
-....
-
 
 [[use-case]]
 Use Case
