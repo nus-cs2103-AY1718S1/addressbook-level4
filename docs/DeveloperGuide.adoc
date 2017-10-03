@@ -982,6 +982,20 @@ read the user guide.
 [appendix]
 == Glossary
 
+[[command-line-interface]]
+Command Line Interface (CLI)
+
+....
+User interacts with the address book by issuing commands on a specified line, receives a response and issues another command, and so forth.
+....
+
+[[graphical-user-interface]]
+Graphical User Interface (GUI)
+
+....
+User interacts with the address book through graphical icons and visual indicators.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -994,6 +1008,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[storage]]
+Storage
+
+....
+Saving of all contacts into a single file i.e. addressbook.xml into /data directory.
+....
+
+[[tags]]
+Tags
+
+....
+A label attached to each contact for the purpose of identification and categorization. Tagging will allow users to search for all address book contacts with the specified tag.
 ....
 
 [appendix]
