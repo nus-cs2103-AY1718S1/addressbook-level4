@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -723,15 +723,56 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |populate the App
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |import users from an Excel file |easily restore a backup or add new contacts in bulk
+
+|`* * *` |user |see a sorted contact list after sorting |save time from not needing to enter another list command
+
+|`* * *` |user |export all persons in the App out |create a backup of all existing persons in the App
+
+|`* * *`|user |add a person without filling all the fields |add even with missing information
+
+|`* * *`|user |tag my contacts |I can categorise my contacts into groups
+
+|`* * *`|user |edit my contacts |I can update my contacts details
+
+|`* * *`|group member |filter contact list by tags |see only my group mates
+
+|`* *`|user |copy listed emails into my clipboard |convenient when emailing to a batch of contacts
+
+|`* *`|user |add optional fields for contact details |add different means of communication with a particular contact
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |new user |have a simple walkthrough |quickly learn how the user interface works
+
+|`* *` |new user |have all the possible commands listed out on first start |I can learn how to use the application immediately
+
+|`* *` |user |be able to add remarks to my contacts |I can add a note if there is something important about the contact
+
+|`* *` |user |choose where to save my file |I can have control over where my files are stored
+
+|`* *` |user |be able to email my contacts |I send an email to my contacts easily
+
+|`* *` |user |add multiple address book |I can have a merge copy of my contacts from different platform
+
+|`* *` |user |add a display photo to an existing person |remember how a particular person looks like
+
+|`* *` |user with many persons in the address book |merge two persons into one |merge duplicated entries of the same person in the list
+
+|`* *` |user |add a new person in any order |so that I can have an easier time adding a person into the App without having to follow a fixed format
+
+|`* *` |user |have a built in browser |I can view my contacts on their linkedin, facebook or instagram profile
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |lazy user |want to have customizable shortcuts |execute commands easily
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +808,139 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Show walkthrough
+
+*MSS*
+
+1.  User requests to list commands.
+2.  AddressBook shows a list of commands and their input requirements.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export AddressBook
+
+*MSS*
+
+1.  User requests to create a backup
+2.  AddressBook writes existing persons in the AddressBook into a file determined by the user
+
+[none]
+* 2a. Destination file already exist.
++
+[none]
+** 2a1. AddressBook overwrites the existing file.
++
+Use case ends.
+
+[discrete]
+=== Use case: Copy emails from list to clipboard
+
+*MSS*
+
+1. User request to list persons
+2. AddressBook shows a list of persons
+3. User requests to copy all or selected person's email in the list
+4. Emails are copied to clipboard
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  AddressBook parses person's particulars into a fixed format
+3.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User enter person's particulars in different format than stored.
++
+[none]
+** 2a1. AddressBook parses person's particulars into a fixed format.
+** 2a2. AddressBook adds the person.
++
+Use case ends.
+
+* 2b. User enter person's particulars with missing fields.
++
+[none]
+** 2b1. AddressBook treats missing fields as empty strings.
+** 2b2. AddressBook parses person's particulars into a fixed format.
+** 2b3. AddressBook adds the person.
++
+Use case ends.
+
+[none]
+* 3a. User already exist.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit Person
+
+*MSS*
+
+1.  User requests to edit person
+2.  AddressBook parses person's particulars into a fixed format
+3.  AddressBook edit the person's particulars
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not exists.
+
+[none]
+* 2a. User enter person's particulars in different format than stored.
++
+[none]
+** 2a1. AddressBook parses person's particulars into a fixed format.
+** 2a2. AddressBook edit the person's particulars.
++
+Use case ends.
+
+* 2b. User enter person's particulars with missing fields.
++
+[none]
+** 2b1. AddressBook treats missing fields as empty strings.
+** 2b2. AddressBook parses person's particulars into a fixed format.
+** 2b3. AddressBook adds the person.
++
+Use case ends.
+
+[none]
+* 3a. User already exist.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +949,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with a passable understanding of technology and the English language should be able to operate the application without significant problems.
+.  Should favour DOS style commands over Unix-style commands.
+.  Should come with automated JUnit tests and source code for modifications and resolving of bugs.
+.  The data should be stored locally and be human editable.
+.  The data should be accurate.
+.  Should be able to work with the defualt email of mainstream-os.
 
 {More to be added}
 
