@@ -729,6 +729,44 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |the application to look simple and easy to use |easily understand how the application works.
+
+|`* * *` |user |input commands on a GUI |won't need to memorize the commands
+
+|`* * *` |user |delete people by their name |clear space for new contacts
+
+|`* * *` |user |find people by address and see them on a map |find people who live near me
+
+|`* * *` |user |be able to sort my contact based on most recent contact |immediately get the contact.
+
+|`* * *` |user |retrieve my past command history |review what I entered previously
+
+|`* * *` |user |undo my last command |enter in the correct command instead
+
+|`* * *` |user |clear the whole list of persons |pass this app to a new user
+
+|`* * *` |user |edit the details of a person |update any changes to the person.
+
+|`* *` |user |filter the list through details such as names |search for those contacts that I only need.
+
+|`* *` |user |easily send email or messages to the contact through the application |immediately send  messages.
+
+|`* *` |user |have contacts of relevant supplier |contact whichever services i want at the point of time.
+
+|`* *` |user |plan out the best path for each contact based on what i select |take advantage of the most efficient routes.
+
+|`* *` |user |have a map view of all my contacts based on their address | plan where to visit them.
+
+|`* *` |user |have an image associated to the contact details |know how my friends look like.
+
+|`* *` |user |import my phone contacts to the addressbook easily |save time in adding them again.
+
+|`* *` |user |update my group friends of an upcoming event or activities |be informed of the activities.
+
+|`* *` |user |have my information secured |be assured that my contact information are safe on cloud storage
+
+|`* *` |user |upload images to different contacts |so that i can easily identify them
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
