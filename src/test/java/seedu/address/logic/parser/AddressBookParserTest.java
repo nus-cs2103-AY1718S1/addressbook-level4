@@ -49,7 +49,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_add_alias() throws Exception {
+    public void parseCommand_addAlias() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(person));
         assertEquals(new AddCommand(person), command);
@@ -62,7 +62,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_clear_alias() throws Exception {
+    public void parseCommand_clearAlias() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
@@ -75,7 +75,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_delete_alias() throws Exception {
+    public void parseCommand_deleteAlias() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
@@ -91,7 +91,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_edit_alias() throws Exception {
+    public void parseCommand_editAlias() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
@@ -106,7 +106,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_exit_alias() throws Exception {
+    public void parseCommand_exitAlias() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS + " 3") instanceof ExitCommand);
     }
@@ -120,7 +120,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_find_alias() throws Exception {
+    public void parseCommand_findAlias() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
@@ -147,7 +147,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_history_alias() throws Exception {
+    public void parseCommand_historyAlias() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS + " 3") instanceof HistoryCommand);
     }
@@ -159,7 +159,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_list_alias() throws Exception {
+    public void parseCommand_listAlias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
@@ -172,7 +172,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_select_alias() throws Exception {
+    public void parseCommand_selectAlias() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
