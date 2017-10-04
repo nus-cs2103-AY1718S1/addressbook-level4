@@ -9,6 +9,7 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 import java.util.function.Predicate;
 
+
 /**
  * The API of the Model component.
  */
