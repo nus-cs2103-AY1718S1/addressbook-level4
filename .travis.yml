@@ -7,6 +7,8 @@ script: >-
     ./config/travis/run-checks.sh &&
     travis_retry ./gradlew clean checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor
 
+    "! git grep ' $' -- \\*.rb \\*.js \\*.other-file-types | grep -v -e 'FILE_TO_IGNORE' -e 'OTHER_FILE_TO_IGNORE"
+
 deploy:
   skip_cleanup: true
   provider: script
