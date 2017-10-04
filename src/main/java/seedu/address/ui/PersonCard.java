@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import javafx.beans.binding.Bindings;
@@ -22,6 +23,11 @@ public class PersonCard extends UiPart<Region> {
     private static final int RGB_BOUND = 16777216;
 
     public final ReadOnlyPerson person;
+
+    /**
+     * Stores the colors for all existing tags here so that the same tag always has the same color
+     */
+    private HashMap<String, String> tagColors = new HashMap<>();
 
     // Random number generator (non-secure purpose)
     private Random randomGenerator = new Random();
@@ -76,18 +82,25 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
-            Label newTagLabel = new Label(tag.tagName);
-            newTagLabel.setStyle(String.format("-fx-background-color: #%s", getRandomColorValue()));
+            String tagName = tag.tagName;
+            Label newTagLabel = new Label(tagName);
+            newTagLabel.setStyle(String.format("-fx-background-color: #%s", getRandomColorValue(tagName)));
             tags.getChildren().add(newTagLabel);
         });
     }
 
     /**
-     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random.
+     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random. It will
+     * use the same color if a tag with the same name already exists.
+     *
      * @return a 6-character string representation of the hexadecimal RGB value.
      */
-    private String getRandomColorValue() {
-        return Integer.toHexString(randomGenerator.nextInt(RGB_BOUND));
+    private String getRandomColorValue(String tagName) {
+        if (!tagColors.containsKey(tagName)) {
+            tagColors.put(tagName, Integer.toHexString(randomGenerator.nextInt(RGB_BOUND)));
+        }
+
+        return tagColors.get(tagName);
     }
 
     @Override
