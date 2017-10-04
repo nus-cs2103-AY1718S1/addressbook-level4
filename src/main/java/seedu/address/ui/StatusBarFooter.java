@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
-import java.time.Clock;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -70,7 +70,7 @@ public class StatusBarFooter extends UiPart<Region> {
         return clock;
     }
 
-    private void setTimingToBar(Date date){
+    private void setTimingToBar(Date date) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("E, y-M-d 'at' h:m:s a z");
         this.dateTime.setText(dateFormatter.format(date));
     }
