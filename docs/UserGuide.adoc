@@ -44,6 +44,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
+* Command can be substituted with shorthand alias.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -52,10 +53,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+Shorthand Alias: `hp`
 Format: `help`
 
 === Adding a person: `add`
 
+Shorthand Alias: `a`
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -66,14 +69,17 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 
 === Listing all persons : `list`
 
+Shorthand Alias: `l`
 Shows a list of all persons in the address book. +
 Format: `list`
 
 === Editing a person : `edit`
 
+Shorthand Alias: `e`
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -91,9 +97,12 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `e 3 n/Carl Cooper` +
+Edits the name of the 3rd person to be `Carl Cooper`.
 
 === Locating persons by name: `find`
 
+Shorthand Alias: `f`
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -111,9 +120,12 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `f watson` +
+Returns `John Watson`
 
 === Deleting a person : `delete`
 
+Shorthand Alias: `d`
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
@@ -131,9 +143,13 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`d 4` +
+Deletes the 4th person in the address book.
 
 === Selecting a person : `select`
 
+Shorthand Alias: `s`
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -151,9 +167,13 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+* `list` +
+`s 7` +
+Selects the 7th person in the address book.
 
 === Listing entered commands : `history`
 
+Shorthand Alias: `hx`
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
@@ -165,6 +185,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
+Shorthand Alias: `u`
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
@@ -186,11 +207,12 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
+`u` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
 
+Shorthand Alias: `r`
 Reverses the most recent `undo` command. +
 Format: `redo`
 
@@ -208,17 +230,19 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`r` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
 === Clearing all entries : `clear`
 
+Shorthand Alias: `c`
 Clears all entries from the address book. +
 Format: `clear`
 
 === Exiting the program : `exit`
 
+Shorthand Alias: `q`
 Exits the program. +
 Format: `exit`
 
