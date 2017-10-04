@@ -804,11 +804,11 @@ Author: Apple Inc.
 
 Pros:
 
-* Display of information is neat, well-structured, visually pleasing
+* Display of information is neat, well-organised, visually pleasing
 * Supports automatic groupings of contacts (e.g. same surname)
 * Supports import and export of contacts in popular file formats
 
 Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
-* No support for WhatsApp groups
+* Cannot integrate contacts from user's active WhatsApp groups
