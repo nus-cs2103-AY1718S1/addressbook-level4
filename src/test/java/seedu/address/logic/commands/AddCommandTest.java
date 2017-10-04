@@ -26,6 +26,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
+import seedu.address.model.tag.Tag;
+
 public class AddCommandTest {
 
     @Rule
@@ -122,6 +124,9 @@ public class AddCommandTest {
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void deleteTag(Tag tag) throws DuplicatePersonException { }
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
