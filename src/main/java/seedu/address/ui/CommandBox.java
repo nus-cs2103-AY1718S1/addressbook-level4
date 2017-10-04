@@ -37,7 +37,6 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
     }
-
     /**
      * Handles the key press event, {@code keyEvent}.
      */
@@ -59,7 +58,6 @@ public class CommandBox extends UiPart<Region> {
             // let JavaFx handle the keypress
         }
     }
-
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
