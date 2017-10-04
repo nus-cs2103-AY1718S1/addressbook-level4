@@ -60,7 +60,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         // after address book is updated
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()), 6);
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()), 0);
     }
 
     /**
@@ -68,8 +68,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
      * sync status matches that of {@code expectedSyncStatus}.
      */
     private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus, int people) {
-        String expectedTotalPeople = people + PERSONS;
-
+        String expectedTotalPeople = String.valueOf(people) + PERSONS;
         assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
         assertEquals(expectedTotalPeople, statusBarFooterHandle.getTotalPersons());
