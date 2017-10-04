@@ -1,9 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 import static java.util.Objects.requireNonNull;
@@ -24,7 +21,7 @@ public class RemoveTagCommand extends UndoableCommand {
     private final String toRemove;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an RemoveTagCommand to add the specified {@code ReadOnlyPerson}
      */
     public RemoveTagCommand (String tag) {
         toRemove = tag.trim();
