@@ -30,12 +30,19 @@ public class ResultDisplay extends UiPart<Region> {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
+
     }
 
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
+        if (event.isError) {
+            resultDisplay.setStyle("-fx-text-fill:" + "red");
+        } else {
+            resultDisplay.setStyle("-fx-text-fill:" + "white");
+        }
+
     }
 
 }
