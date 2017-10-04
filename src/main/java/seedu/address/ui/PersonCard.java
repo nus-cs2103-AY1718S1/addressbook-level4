@@ -18,8 +18,8 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
-    private static String[] colors = {"red", "blue", "black", "grey", "pink", "cyan", "teal", "brown", "green", "orange",
-                                    "purple"};
+    private static String[] colors = {"red", "blue", "black", "grey", "pink", "cyan", "teal", "brown", "green",
+                                        "orange", "purple"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 
@@ -80,7 +80,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private static String getColorForTag(String tag) {
-        if (!tagColors.containsKey(tag)){
+        if (!tagColors.containsKey(tag)) {
             tagColors.put(tag, colors[random.nextInt(colors.length)]);
         }
 
