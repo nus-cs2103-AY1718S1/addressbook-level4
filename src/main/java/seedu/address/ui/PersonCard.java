@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,8 +14,17 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
     private static final String FXML = "PersonListCard.fxml";
+
+    /**
+     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.
+     */
+    private static final int RGB_BOUND = 16777216;
+
+    public final ReadOnlyPerson person;
+
+    // Random number generator (non-secure purpose)
+    private Random randomGenerator = new Random();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -22,9 +33,6 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    public final ReadOnlyPerson person;
-
     @FXML
     private HBox cardPane;
     @FXML
@@ -63,8 +71,23 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initializes all the tags of a person displayed in different random colors.
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label newTagLabel = new Label(tag.tagName);
+            newTagLabel.setStyle(String.format("-fx-background-color: #%s", getRandomColorValue()));
+            tags.getChildren().add(newTagLabel);
+        });
+    }
+
+    /**
+     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random.
+     * @return a 6-character string representation of the hexadecimal RGB value.
+     */
+    private String getRandomColorValue() {
+        return Integer.toHexString(randomGenerator.nextInt(RGB_BOUND));
     }
 
     @Override
