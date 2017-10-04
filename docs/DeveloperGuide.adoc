@@ -751,6 +751,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 +
 Use case ends.
 
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person with the person’s name, phone number and email address
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User did not give enough details
++
+Use case ends.
+
 *Extensions*
 
 [none]
