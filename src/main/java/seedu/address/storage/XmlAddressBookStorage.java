@@ -61,19 +61,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         saveAddressBook(addressBook, filePath);
     }
 
-    @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        String backupAddressBookFilePath = createBackupAddressBookFilePath(filePath);
-        saveAddressBook(addressBook, backupAddressBookFilePath);
-    }
-
-    @Override
-    public String createBackupAddressBookFilePath(String addressBookFilePath) {
-        String nameOfFile = addressBookFilePath.split("[.]")[0];
-        String nameOfBackupFile = nameOfFile + "-backup.xml";
-        return nameOfBackupFile;
-    }
-
     /**
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
      * @param filePath location of the data. Cannot be null
@@ -87,4 +74,16 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String backupAddressBookFilePath = createBackupAddressBookFilePath(filePath);
+        saveAddressBook(addressBook, backupAddressBookFilePath);
+    }
+
+    @Override
+    public String createBackupAddressBookFilePath(String addressBookFilePath) {
+        String nameOfFile = addressBookFilePath.split("[.]")[0];
+        String nameOfBackupFile = nameOfFile + "-backup.xml";
+        return nameOfBackupFile;
+    }
 }
