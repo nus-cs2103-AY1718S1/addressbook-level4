@@ -25,12 +25,13 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     /**
-     * Stores the colors for all existing tags here so that the same tag always has the same color
+     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
+     * {@code HashMap} has to be declared as a class variable.
      */
-    private HashMap<String, String> tagColors = new HashMap<>();
+    private static HashMap<String, String> tagColors = new HashMap<>();
 
     // Random number generator (non-secure purpose)
-    private Random randomGenerator = new Random();
+    private static final Random randomGenerator = new Random();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
