@@ -52,7 +52,7 @@ public class StringUtil {
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word, has to be at least two characters long
      */
-    public static boolean containsPartOfWord(String sentence, String word){
+    public static boolean containsPartOfWord(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
         String preppedWord = word.trim();
@@ -62,7 +62,7 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
-        if (preppedWord.length()>=2) {
+        if (preppedWord.length() >=2 ) {
             for (String wordInSentence : wordsInPreppedSentence) {
                 if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
                         && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
