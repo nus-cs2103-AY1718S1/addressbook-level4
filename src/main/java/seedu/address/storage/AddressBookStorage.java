@@ -47,11 +47,4 @@ public interface AddressBookStorage {
      * @throws IOException if there was any problem writing to the file.
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-
-    /**
-     * Creates file path of the backup data file.
-     * @param addressBookFilePath cannot be null.
-     * @return file path for backup address book.
-     */
-    String createBackupAddressBookFilePath(String addressBookFilePath);
 }

@@ -80,8 +80,12 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         saveAddressBook(addressBook, backupAddressBookFilePath);
     }
 
-    @Override
-    public String createBackupAddressBookFilePath(String addressBookFilePath) {
+    /**
+     * Creates file path of the backup data file.
+     * @param addressBookFilePath cannot be null.
+     * @return file path for backup address book.
+     */
+    private String createBackupAddressBookFilePath(String addressBookFilePath) {
         String nameOfFile = addressBookFilePath.split("[.]")[0];
         String nameOfBackupFile = nameOfFile + "-backup.xml";
         return nameOfBackupFile;
