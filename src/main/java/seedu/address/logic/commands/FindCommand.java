@@ -8,7 +8,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindCommand extends Command {
 
-    public static final String[] COMMAND_WORDS = {"find","f","look","lookup"};
+    public static final String[] COMMAND_WORDS = {"find", "f", "look", "lookup"};
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)

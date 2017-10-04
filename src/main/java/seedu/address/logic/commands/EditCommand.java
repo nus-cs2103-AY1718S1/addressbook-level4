@@ -31,7 +31,7 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommand extends UndoableCommand {
 
-    public static final String[] COMMAND_WORDS = {"edit","e","change","ed"};
+    public static final String[] COMMAND_WORDS = {"edit", "e", "change", "ed"};
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)

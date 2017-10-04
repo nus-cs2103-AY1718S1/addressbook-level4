@@ -44,12 +44,12 @@ public abstract class Command {
     /**
      * @return concatenated form of the array of command words to allow easier printing for the help command
      */
-    public static String concatenateCommandWords(String [] command_words) {
+    public static String concatenateCommandWords(String[] commandWords) {
         String finalWord = new String();
-        for (int i=0; i<command_words.length-1; i++) {
-            finalWord += command_words[i] + " -OR- ";
+        for (int i = 0; i < commandWords.length - 1; i++) {
+            finalWord += commandWords[i] + " -OR- ";
         }
-        finalWord += command_words[command_words.length-1];
+        finalWord += commandWords[commandWords.length - 1];
         return finalWord;
     }
 
