@@ -798,16 +798,19 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts^TM^*
 
-Author: ...
+_(renamed from *Address Book* since  Mac OS X 10.8)_
+
+Author: Apple Inc.
 
 Pros:
 
-* ...
-* ...
+* Able to import contacts from other softwares/websites, like Facebook, LinkedIn, Google+, etc.
+* Able to send an email, start a call or text someone directly in the application thanks to integration with other applications.
+* Able to organize contacts into different groups.
 
 Cons:
 
-* ...
-* ...
+* Data is not stored in a human editable text file (advanced users cannot manipulate the data manually).
+* Only works on Mac OS, no corresponding version on Windows and Linux.
