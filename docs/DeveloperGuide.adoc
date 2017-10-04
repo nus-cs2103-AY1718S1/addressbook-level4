@@ -815,6 +815,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to test with a test case more than 1000 persons and more than 1000 commands.
+.  Should be able to use easily by new users by reading the User Guide.
+.  The data shown on the GUI should have a default font size greater than 12 so that it is visible enough.
+.  The efficiency to perform most of the commands, e.g. AddCommand, DeleteCommand and FindCommand should be at least O(n) time.
+.  The application should be put under maintenance every month.
+.  The default background colour of the GUI should not be too garish or too shiny.However, the users can change the background.
+.  Should not be easily hacked, e.g. data corruption, data access by other.
+.  Should be able to change the font type and size easily.
+.  Changes of the address book should be saved in a log file.
 
 {More to be added}
 
