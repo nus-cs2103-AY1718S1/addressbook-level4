@@ -732,6 +732,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *` |user |use abbreviation when typing commands |type commands faster
+
+|`*` |advanced user |amend the storage file manually |import and export data easily
+
+|`* *` |user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
 |=======================================================================
 
 {More to be added}
