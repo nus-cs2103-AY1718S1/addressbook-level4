@@ -14,6 +14,6 @@ public class PersonComparator implements Comparator<Person>{
             return 1;
         if( o2 == null )
             return -1;
-        return o1.getName().toString().compareTo( o2.getName().toString() );
+        return o1.getName().compareTo( o2.getName());
     }
 }

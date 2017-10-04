@@ -24,7 +24,7 @@ public class SortCommand extends Command {
         //sort method calls goes here
         switch (sortType){
             case "name":
-                //insert sort method call here
+                model.sort(sortType);//insert sort method call here
                 break;
 
             case "phone":

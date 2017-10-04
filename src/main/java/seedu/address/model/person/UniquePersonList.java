@@ -1,9 +1,12 @@
 package seedu.address.model.person;
 
+import seedu.address.model.util.PersonComparator;
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Comparator;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -118,5 +121,18 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    public void sort(String sortType) {
+
+        switch(sortType){
+            case "name":
+            break;
+        }//for future sort types
+
+        Comparator<Person> sortie = new PersonComparator();
+
+        FXCollections.sort(internalList, sortie);
+
     }
 }
