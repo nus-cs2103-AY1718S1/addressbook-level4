@@ -773,6 +773,58 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Undo Command
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook shows previous command to be undone.
+3.  User confirms to undo command.
+4.  AddressBook undo command.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no previous command.
++
+Use case ends.
+
+* 3a. The previous command is undoable.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort list
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows list of persons.
+3.  User request to sort the list by a certain parameter.
+4.  AddressBook shows sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The parameter given is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
