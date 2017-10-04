@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -725,13 +725,55 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |frequent user |save contacts locally |don't have to load files each time I exit and re-open the application
+
+|`* * *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
+
+|`* * *` |heavy user |select a person by index |select the correct person by index if I have multiple person with same name
+
+|`* * *` |forgetful user |tag important person |find them easily based on tags
+
+|`* * *` |user |list out all persons in address book |select which person I want
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user with many persons in the address book |view list of people with a certain tag |identify different groups of contacts.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user with many persons in the address book |sort persons by any field |locate a person easily
+
+|`* * *` |experienced user |input commands using a shortened form |be more efficient when using the application
+
+|`* * *` |travelling user |load my contacts from file |use the app on all my devices
+
+|`* * *` |user |save the date of birth of my contacts |know when the birthdays of my contacts are
+
+|`* * *` |heavy user |delete multiple contacts at once |do it at one go and not multiple times
+
+|`* * *` |heavy user |find persons by any fields |find the person if I forget the name.
+
+|`* * *` |conservative user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |social user |connect to social media platforms |find contacts in case I forget who they are
+
+|`* *` |analytical user |view a history of commands I have entered |see what I have done when using the application
+
+|`* *` |clumsy user |undo any action that modifies the address book |not have to repeat commands if it was a mistake
+
+|`* *` |efficient user |redo a command |so that I can use the application quicker without retyping the command after undoing
+
+|`* *` |user |add new tags to a person |update the tags a person will have
+
+|`* *` |forgetful user |make notes for a person |remember important details about the person
+
+|`* *` |user |want to change the window size and font size |view the application with comfort and size
+
+|`* *` |hasty user |customise shortcuts for each command |use the the application at my own pace and comfort
+
+|`* *` |colorblind user |have a colorblind mode for the application |use the application without difficulty
+
+|`*` |user |shift the UI around |use the application with the UI to my liking
 |=======================================================================
 
 {More to be added}
@@ -766,6 +808,79 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Select person
+
+*Precondition: Person in question should be saved with 'add' in addressbook*
+
+*Guarantees: Person in question will be displayed with all fields visible*
+
+*MSS*
+
+1.  User requests to 'find' a specific person by name
+2.  AddressBook shows a list of persons with name entered
+3.  User selects the index of specific person
+4.  AddressBook shows full contact details of person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: History
+
+*Guarantees: Displays list of commands entered by user*
+
+*MSS*
+
+1.  User requests to see command history
+2.  AddressBook lists the commands entered in reverse order
+3.  User views previous commands
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help window
+
+*Guarantees: Displays instructions for command entered by user*
+
+*MSS*
+
+1.  User enters 'help' command
+2.  AddressBook shows the instructions of the command entered
+3.  User views help window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command was previously entered
++
+Use case ends.
+
+* 3a. User chooses to copy help example text
++
+[none]
+** 3a1. User switches back to main window and pastes the command
++
+Use case ends.
 
 [discrete]
 === Use case: Find person
@@ -829,6 +944,8 @@ Use case ends.
 +
 Use case ends.
 
+{More to be added}
+
 [appendix]
 == Non Functional Requirements
 
@@ -853,6 +970,53 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[oop]]
+OOP
+
+....
+Object-oriented programming (OOP) is a programming language model organized around
+objects rather than "actions" and data rather than logic.
+....
+
+[[ide]]
+IDE
+
+....
+An integrated development environment (IDE) is a software application that provides
+comprehensive facilities to computer programmers for software development
+....
+
+[[api]]
+API
+
+....
+An Application Programming Interface (API) specifies the interface through which
+other programs can interact with a software component. It is a contract between the
+component and its clients.
+....
+
+[[ci]]
+CI
+
+....
+Continuous Integration (CI) is an extreme application of build automation in
+which integration, building, and testing happens automatically after each code change
+....
+
+[[index]]
+Index
+
+....
+The specific numbering position of each contact (eg. 1 = 1st, 2 = 2nd , 3 = 3rd etc)
+....
+
+[[help-window]]
+Help window
+
+....
+A web-based window displaying the user-guide within the application
 ....
 
 [appendix]
