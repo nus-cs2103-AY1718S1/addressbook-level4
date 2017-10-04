@@ -692,13 +692,44 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |edit person information |update details and fix mistakes
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |undo a command’s effect |fix user mistakes
+
+|`* * *` |user |redo a command’s effect after undoing |reapply the effect of the command if it was not a mistake
+
+|`* * *`|user |assign multiple phone numbers and emails to the same person |store both personal and work contact numbers of a person
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *`|general user | put persons into groups |manage different social circles
+
+|`* *`|general user | rearrange the order of addressbook entries |have preferred entries on top when using “list” command
+
+|`* *`|general user |get help from within the software |will not have to memorise commands
+
+|`* *`|general user |search for person on social media |find more information on person
+
+|`* *` |user |view typed command history |locate mistakes in typed commands
+
+|`* *` |user |clear typed command history |keep the command list relevant ??
+
+|`* *`| user | shorthand commands | to speed up use of addressbook
+
+|`* *`| user | autocomplete commands | to speed up use of addressbook
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`| |set expiry date to a person |no need to delete useless contacts periodically
+
+|`*` |user |change the tag color |easily recognise tags
+
+|`*` |user |search for a person in the address book on Google |find more information on person
+
 |=======================================================================
 
 {More to be added}
