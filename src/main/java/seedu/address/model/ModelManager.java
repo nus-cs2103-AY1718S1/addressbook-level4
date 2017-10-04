@@ -19,17 +19,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-//import java.util.Set;
-//import java.util.function.Predicate;
-//import java.util.logging.Logger;
-//
-//import static java.util.Objects.requireNonNull;
-//import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
-//import java.util.Set;
-//import java.util.function.Predicate;
-//import java.util.logging.Logger;
-
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
