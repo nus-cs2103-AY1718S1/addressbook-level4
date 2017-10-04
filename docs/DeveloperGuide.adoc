@@ -729,7 +729,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |edit contact's details |update contact's details without creating a new contact
+|`* * *` |user |edit person's details |update person's details without creating a new contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -747,9 +747,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide specific contacts |minimize chance of someone else finding out about the existence of the contact
 
-|`* *` |user |search contacts using other fields |easily find intended contact without knowing the name
+|`* *` |user |search person using other fields |easily find intended contact without knowing the name
 
-|`* *` |user |delete contact using other fields such as name |delete contact without knowing the index number
+|`* *` |user |delete person using other fields such as name |delete contact without knowing the index number
 
 |`* *` |user |undo/redo amendments made to the address book |immediately revert to previous version if mistakes are made
 
@@ -955,6 +955,74 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person's details
+
+*MSS*
+
+1.  User requests to list person
+2.  AddressBook shows a list of person
+3.  User requests to edit a field, followed by new field details
+4.  AddressBook edits specified contact's details
+5.  AddressBook shows amended contact's details
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given field is invalid.
++
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete person using other fields such as name
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to delete persons, by name, in the list
+4.  AddressBook shows message for successful deletion
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given field is invalid.
++
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Search contacts with partial inputs
+
+*MSS*
+
+1.  User requests to list persons with partial inputs
+2.  AddressBook shows a list of persons with fields containing given input
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
 
 {More to be added}
 
