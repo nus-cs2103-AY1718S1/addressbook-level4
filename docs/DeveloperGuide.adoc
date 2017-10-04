@@ -892,6 +892,22 @@ Use case ends.
 [appendix]
 == Glossary
 
+[[cli]]
+CLI
+
+....
+A command line interface (CLI) is a user interface in which the user responds to visual prompt by typing commands on a
+specified line, and solely relies on textual input and output
+....
+
+[[gui]]
+GUI
+
+....
+A graphical user interface (GUI) is a human-computer interface that allows users to interact with the computer
+visually, by windows, icons and buttons, to make the program easy to use
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -904,6 +920,13 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[ui]]
+UI
+
+....
+A user interface (UI) is a platform which a user interacts with an application
 ....
 
 [appendix]
