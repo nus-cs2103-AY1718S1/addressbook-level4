@@ -54,10 +54,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` (alias `a`)
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -66,11 +66,12 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Nam p/12345678 e/n@example.com a/Nam street, block 8, #02-03 t/me`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` (alias `ls`)
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` or `ls`
 
 === Editing a person : `edit`
 
@@ -92,10 +93,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` (alias `f`)
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -111,11 +112,13 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `f Nam` +
+Returns `Nam`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` (alias `del`)
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` or `del INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -131,6 +134,9 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`del 1` +
+Deletes the 1st person in the address book.
 
 === Selecting a person : `select`
 
@@ -155,7 +161,7 @@ Selects the 1st person in the results of the `find` command.
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` or `h`
 
 [NOTE]
 ====
@@ -212,15 +218,15 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` (alias `clr`)
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` or `clr`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` (alias `q`)
 
 Exits the program. +
-Format: `exit`
+Format: `exit` or `q`
 
 === Saving the data
 
@@ -234,19 +240,19 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` (`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Clear* : `clear` (`clr`)
+* *Delete* : `delete INDEX` (`del INDEX`)+
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` (`f KEYWORD [MORE_KEYWORDS]`) +
 e.g. `find James Jake`
-* *List* : `list`
+* *List* : `list` (`ls`)
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
+* *History* : `history` (`h`)
 * *Undo* : `undo`
 * *Redo* : `redo`
