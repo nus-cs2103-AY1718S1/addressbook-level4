@@ -1110,12 +1110,12 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be 
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
    able to accomplish most of the tasks faster using commands than using the mouse.
 .  System should be able to respond in 0.5s.
 .  Project V2.0 should be an incremental improvement of the given addressbook-level 4 application
 .  The software should work without requiring an installer.
-.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases 
+.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
    is not allowed.
 .  Should have a minimum of font size 12 in all window sizes for visibility.
 .  Project code should follow link:#oop[OOP].
@@ -1203,7 +1203,7 @@ Pull Request(PR) is an online submission of committed changes on GitHub
 XML
 
 ....
-XML is a metalanguage which allows users to define their own customized markup languages,especially in order to display 
+XML is a metalanguage which allows users to define their own customized markup languages,especially in order to display
 documents on the Internet
 ....
 
