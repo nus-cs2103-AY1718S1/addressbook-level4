@@ -22,7 +22,8 @@ public class PersonCard extends UiPart<Region> {
      */
     private static final int RGB_BOUND = 16777216;
 
-    public final ReadOnlyPerson person;
+    // Random number generator (non-secure purpose)
+    private static final Random randomGenerator = new Random();
 
     /**
      * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
@@ -30,8 +31,8 @@ public class PersonCard extends UiPart<Region> {
      */
     private static HashMap<String, String> tagColors = new HashMap<>();
 
-    // Random number generator (non-secure purpose)
-    private static final Random randomGenerator = new Random();
+    // Keep a list of all persons.
+    public final ReadOnlyPerson person;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
