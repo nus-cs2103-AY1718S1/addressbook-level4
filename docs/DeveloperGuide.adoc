@@ -727,13 +727,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |delete multiple persons at once  |I do not have to go through the hassle of removing one at each time
+|`* * *` |user |delete multiple persons at once  |avoid going through the hassle of removing one at each time
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |select multiple person |I can perform the same command to multiple contacts at once
+|`* * *` |user |select multiple person |perform the same command to multiple contacts at once
 
 |`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
+
+|`* * *` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
+
+|`* * *` |user |get suggestions on the tags I have used |be consistent with the tags I use
 
 |`* *` |user |see a sorted list of my contacts |it will save time and energy on my end
 
@@ -741,13 +745,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
 
-|`* *` |user |rename existing tag |I can update my relationship with contact
+|`* *` |user |rename existing tag |update my relationship with contact
 
 |`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |be able to link my addressbook to my google calendar |set events and reminders related to my contacts
+
+|`* *` |user |create a timeline with a contact |record and store activities with them
+
+|`* *` |user |see my contacts' social media profile pictures |identify them more easily
+
+|`* *` |user |write down remarks for a contact |record specific information about the contact
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |choose the colour for my contact's tag |differentiate contact's with different tags just by looking at them
+
+|`*` |user |sort persons by birthday |view whose birthdays are in the upcoming months
+
+|`*` |user |key in a contact's birthday and be reminded about it when the time comes |wish him/her happy birthday
+
+|`*` |user |be prompted to confirm my input whenever I add a person |avoid adding a person with the wrong details
 
 |=======================================================================
 
@@ -778,6 +798,33 @@ Use case ends.
 Use case ends.
 
 * 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add remark
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a specific person in the list
+4.  AddressBook deletes the person
+5.  AddressBook adds remark to contact
+6.  AddressBook shows successful message regarding adding of remark
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index or format is invalid.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
