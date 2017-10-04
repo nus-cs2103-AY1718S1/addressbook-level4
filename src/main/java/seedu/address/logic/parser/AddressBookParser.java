@@ -26,6 +26,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+    private enum COMMAND_TYPE {
+        ADD,CLEAR,DEL,EDIT,EXIT,FIND,HELP,HISTORY,LIST,REDO,UNDO,SELECT,NONE
+    }
+
     /**
      * Used for initial separation of command word and args.
      */
@@ -46,47 +50,97 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        COMMAND_TYPE commandType = getCommandType(commandWord);
+
+        switch (commandType) {
+
+        case ADD:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case EDIT:
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
+        case SELECT:
             return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case DEL:
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
+        case CLEAR:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        case FIND:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case LIST:
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD:
+        case HISTORY:
             return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD:
+        case EXIT:
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        case HELP:
             return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
+        case UNDO:
             return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD:
+        case REDO:
             return new RedoCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
+
+    /**
+     * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
+     * @param commandWord
+     * @return enumerated value for the switch statement to process
+     */
+
+    private COMMAND_TYPE getCommandType(String commandWord) {
+        for (String word : AddCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.ADD;
+        for (String word : ClearCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.CLEAR;
+        for (String word : DeleteCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.DEL;
+        for (String word : EditCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.EDIT;
+        for (String word : ExitCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.EXIT;
+        for (String word : FindCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.FIND;
+        for (String word : HelpCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.HELP;
+        for (String word : HistoryCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.HISTORY;
+        for (String word : ListCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.LIST;
+        for (String word : RedoCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.REDO;
+        for (String word : SelectCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.SELECT;
+        for (String word : UndoCommand.COMMAND_WORDS)
+            if(commandWord.contentEquals(word))
+                return COMMAND_TYPE.UNDO;
+        return COMMAND_TYPE.NONE;
+    }
+
 
 }

@@ -40,4 +40,18 @@ public abstract class Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
     }
+
+    /**
+     * @return concatenated form of the array of command words to allow easier printing for the help command
+     */
+    public static String concatenateCommandWords(String [] command_words) {
+        String finalWord = new String();
+        for (int i=0; i<command_words.length-1; i++) {
+            finalWord += command_words[i] + " -OR- ";
+        }
+        finalWord += command_words[command_words.length-1];
+        return finalWord;
+    }
+
+
 }
