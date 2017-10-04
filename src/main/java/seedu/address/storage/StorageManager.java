@@ -31,8 +31,8 @@ public class StorageManager extends ComponentManager implements Storage {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
-        this.backupAddressbook = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath()+BACKUP_ROUTE_TAIL);
-
+        this.backupAddressbook = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath()
+                + BACKUP_ROUTE_TAIL);
     }
 
     // ================ UserPrefs methods ==============================
@@ -81,18 +81,17 @@ public class StorageManager extends ComponentManager implements Storage {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
     }
 
-    private void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        String backupPath = addressBookStorage.getAddressBookFilePath() + BACKUP_ROUTE_TAIL;
-        logger.fine("Backing up data to: " + backupPath);
-        saveAddressBook(addressBook, backupPath);
-    }
-
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    private void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String backupPath = backupAddressbook.getAddressBookFilePath();
+        logger.fine("Backing up data to: " + backupPath);
+        saveAddressBook(addressBook, backupPath);
+    }
 
     @Override
     @Subscribe
