@@ -867,13 +867,6 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  A user should be able to search for and locate a contact within 5 seconds.
-.  Contact list data should not be corrupted even in the event of the application being forcefully terminated while processing.
-.  A user should not be able to accidentally clear their contact list.
-.  A user's contact list data should not be viewable to anyone else who is not authorised.
-.  A user should be able to import or export contacts in batches via files.
-.  The GUI should complement the command line by providing a clean and easy to read interface.
-.  Should be able to install plug-ins that allow integration with calenders and/or social media profiles.
 
 {More to be added}
 
