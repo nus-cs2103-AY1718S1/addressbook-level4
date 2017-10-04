@@ -946,6 +946,9 @@ Use case resumes at step 2.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should work when not connected to the internet even if some functions are disabled
 .  Commands should be intuitive, concise and easy to remember so that the user does not have to refer to help repeatedly.
+.  Text size should be sufficiently large
+.  Should not cause crashes when invalid commands are entered
+.  A user should only be able to enter a certain amount of words into the command line
 
 {More to be added}
 
