@@ -745,7 +745,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`* ` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if i need it
+|`*` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if i need it
 |=======================================================================
 
 {More to be added}
