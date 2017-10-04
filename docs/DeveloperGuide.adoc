@@ -837,6 +837,125 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete tag
+
+*MSS*
+
+1.  User requests to delete tag
+2.  AddressBook shows a list of tags
+3.  User requests to delete a specific tag in the list
+4.  AddressBook deletes the tag from every person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit contact details
+
+*MSS*
+
+1.  User requests to edit contact
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific index in the list with required tags on new information
+4.  AddressBook confirms that user wishes to change data
+5.  User confirms the change
+6.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide fields for new data.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user does not change any field.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Restore backup
+
+*MSS*
+
+1.  User requests to restore backup
+2.  AddressBook shows a list of backups available
+3.  User selects index of specific backup in the list
+4.  AddressBook confirms that user wishes to restore backup and will lose current data
+5.  User confirms the change
+6.  AddressBook restores to backup specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+
 {More to be added}
 
 [appendix]
