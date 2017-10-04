@@ -31,20 +31,27 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORDVAR_1 = "edit";
+    public static final String COMMAND_WORDVAR_2 = "e";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
+            + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
+            + "Existing values will be overwritten by the input values. Command is case-insensitive. \n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example 1: " + COMMAND_WORDVAR_1 + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "johndoe@example.com \n"
+            + " Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " 2 "
+            + PREFIX_ADDRESS + "93857659 "
+            + PREFIX_EMAIL + "yosuke@example.com \n";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
