@@ -1110,13 +1110,15 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  System should be able to respond in 0.5s
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse.
+.  System should be able to respond in 0.5s.
 .  Project V2.0 should be an incremental improvement of the given addressbook-level 4 application
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  The software should work without requiring an installer.
-.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases is not allowed.
-.  Should have a minimum of font size 12 in all window sizes for visibility
+.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
+   is not allowed.
+.  Should have a minimum of font size 12 in all window sizes for visibility.
+.  Project code should follow link:#oop[OOP].
 
 {More to be added}
 
@@ -1141,33 +1143,39 @@ A contact detail that is not meant to be shared with others
 OOP
 
 ....
-Object-oriented programming (OOP) is a programming language model organized around
-objects rather than "actions" and data rather than logic.
+Object-oriented programming (OOP) is a programming language model organized around objects rather than "actions" and
+data rather than logic
 ....
 
 [[ide]]
 IDE
 
 ....
-An integrated development environment (IDE) is a software application that provides
-comprehensive facilities to computer programmers for software development
+An integrated development environment (IDE) is a software application that provides comprehensive facilities to computer
+programmers for software development
 ....
 
 [[api]]
 API
 
 ....
-An Application Programming Interface (API) specifies the interface through which
-other programs can interact with a software component. It is a contract between the
-component and its clients.
+An Application Programming Interface (API) specifies the interface through which other programs can interact with a
+software component
 ....
 
 [[ci]]
 CI
 
 ....
-Continuous Integration (CI) is an extreme application of build automation in
-which integration, building, and testing happens automatically after each code change
+Continuous Integration (CI) is an extreme application of build automation in which integration, building, and testing
+happens automatically after each code change
+....
+
+[[jdk]]
+JDK
+
+....
+The Java Development Kit (JDK) is a software development environment used for developing Java applications and applets
 ....
 
 [[index]]
@@ -1182,6 +1190,61 @@ Help window
 
 ....
 A web-based window displaying the user-guide within the application
+....
+
+[[pr]]
+PR
+
+....
+Pull Request(PR) is an online submission of committed changes on GitHub
+....
+
+[[xml]]
+XML
+
+....
+XML is a metalanguage which allows users to define their own customized markup languages,especially in order to display
+documents on the Internet
+....
+
+[[jar]]
+JAR
+
+....
+A JAR (Java ARchive) is a package file format typically used to aggregate many Java class files and associated metadata
+and resources (text, images, etc.) into one file for distribution
+....
+
+[[ui]]
+UI
+
+....
+User Interface(UI) is the window displayed to the user when interacting with the application
+....
+
+[[gui]]
+GUI
+
+....
+The graphical user interface (GUI) is a type of user interface that allows users to interact with electronic devices
+through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed
+command labels or text navigation
+....
+
+[[mss]]
+MSS
+
+....
+The Main Success Scenario (MSS) describes the most straightforward interaction for a given use case, which assumes that
+nothing goes wrong
+....
+
+[[asciidoc]]
+asciidoc
+
+....
+asciidoc is a markup language, which is a system for annotating a document in a way that is syntactically
+distinguishable from the text
 ....
 
 [appendix]
