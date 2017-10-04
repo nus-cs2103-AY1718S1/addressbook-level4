@@ -731,7 +731,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |add in contacts even information are partly lack |administrate contact with only part of information known
+
+|`* *` |user |import existing addressBook to the software |administrate previous information without having to re-enter them
+
+|`* *` |forgetful user |look up for contacts in partial name or initials | view of list of contacts with eligible information
+
+|`* *` |careless user |receive a list of proposed contacts if keyword with similarity does not match |still find the corresponding contact even small spelling mistakes are made
+
+|`*` |user |store and keep track of the contact that are most frequently looked up for |fast access to the frequently visited contacts
+
+|`*` |user |add a contact as "star" contact |administrate VIP people in the address book
+
+|`*` |user |amend contact information |all information can be updated
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |clean up all contacts immediately |fast construct a new list of contacts
+
+|`*` |social user|generate and scan QR code for adding contacts |add in contacts quickly
 |=======================================================================
 
 {More to be added}
