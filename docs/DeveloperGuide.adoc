@@ -743,7 +743,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` | user with many persons in the address book | apply filter: category, tag, name | easily view and process only certain group
 |`* *` | user | redo the command | correct the mistake of undoing too many commands
 |`* *` | user | view the history of commands | check what I have done in the past
-|`* *` | user | hide private contact details by default | minimize chance of someone else seeing them by accident
 |`* *` | user | import persons | share with other users and migrate from other systems
 |`* *` | user | export persons | share with other users and migrate from other systems
 |`* *` | user | use password to get access to my contacts | protect my data
@@ -835,7 +834,7 @@ A contact detail that is not meant to be shared with others
 Hidden Contact
 
 ....
-Contacts that require secondary password protection
+Contacts that cannot be foiund using the find feature.
 ....
 
 [[hazardous-command]]
