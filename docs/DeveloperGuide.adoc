@@ -721,17 +721,76 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |request for a help guide |know more about the address book and use it with less difficulty
+
+|`* * *` |user |list and view all my contacts |
+
+|`* * *` |user |edit a person's information |constantly update or correct a contact's information
+
+|`* * *` |user |select a person by index |use the information provided to search on Google
+
+|`* * *` |user |view the history of the commands inputted |
+
+|`* * *` |user |undo the commands that were inputted |revert unnecessary or unwanted changes
+
+|`* * *` |user |redo the commands that is undone |revert changes that were undone
+
+|`* * *` |user |clear entries in my addressbook |
+
+|`* * *` |user |exit the program |
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |have a CLI prompt that can exhibit the required information to add an individual  |avoid inputting the wrong information
+
+|`* * *` |user |store multiple phone numbers and email addresses for any contact |store extra communication information of my contact
+
+|`* * *` |user |access Facebook, LinkedIn and Google |search and add my contacts on respective websites
+
+|`* * *` |user |have a confirmation request of the details inputted before adding an individual|make changes to any errors inputted
+
+|`* * *` |user |have a confirmation request & warning message upon using the clear command |avoid accidentally clearing my address book
+
+|`* * *` |user |find contacts based on part of their names |
+
+|`* * *` |user |find users based on any of their details (i.e. phone or tag) |find the person more easily
+
+|`* * *` |user |have a filter system to find contacts first by name, and then any additional relevant information(tags or email addresses) |search for a person more accurately in the case of multiple people with similar names.
+
+|`* * *` |user |sort my contacts in an alphabetical order |view my overall contact list alphabetically
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |have directions to the contact's address with Google Maps from current location |
+
+|`* *` |user |choose various colour themes for the address book |view the address book in my favourite visuals
+
+|`* *` |user |add some important people to a favourites list |access my favourite contacts easily
+
+|`* *` |user |see my most viewed contacts on a "speed check" tab |search quickly for contacts that i often search for based on the number of times i searched for them
+
+|`* *` |user |sort the list of contacts based on their details |view contacts based on my preferable detail i am wishing to search for
+
+|`* *` |user |save my contacts list in a portable format |keep a soft copy of it and be able to retrieve if i lost my original contact list or want to access it in another computer
+
+|`* *` |user |add organisations/groups |search for individuals based on their organization groups
+
+|`* *` |user |store internet links to their organization website, github, instagram or facebook |more information on my contacts
+
+|`* *` |user |have the option to add a picture of an individual |recognize contacts by their facial features.
+
+|`* *` |user |get reminders |know if i am attending an event with another contact, or if it is the contact's birthday
+
+|`* *` |user |be able to create appointments with my contacts |be notified of my upcoming meetings
+
+|`* *` |user |add birthday information to my contact in the address book |
+
 |=======================================================================
 
 {More to be added}
@@ -775,6 +834,13 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to work for 32-bit and 64-bit systems.
+.  Should be able to respond within a second.
+.  Should be able to be used by any individual who has not used an address book before.
+.  The source code should be open source.
+.  Should maintain application every month.
+.  Should be able to retrieve, save and use on another computer.
+.  A user should be able to back up and restore all contacts if application breakdown.
 
 {More to be added}
 
