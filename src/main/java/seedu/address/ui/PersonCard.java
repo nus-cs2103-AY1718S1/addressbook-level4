@@ -71,6 +71,11 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialises the tags with a randomised color.
+     *
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label label = new Label(tag.tagName);
@@ -79,6 +84,12 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Randomises a color name into a HashMap of color names.
+     *
+     * @param tag
+     * @return name of the color
+     */
     private static String getColorForTag(String tag) {
         if (!tagColors.containsKey(tag)) {
             tagColors.put(tag, colors[random.nextInt(colors.length)]);
