@@ -752,6 +752,28 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |add profile pictures to contacts |recognize the contact by their face
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`**` |user | have a password protected system| protect personal data when not using
+
+|`*` |user | check contact’s facebook profile| remember who that friend is
+
+|`**` |user | know what error he made during use| avoid making similar mistakes
+
+|`*` |user | be able to copy/send emails with a click| send emails to the contacts efficiently
+
+|`*` |user who has a lot of contacts | add an existing contact list | avoid having to key in each contact one by one
+
+|`*` |user | be able to customise background colour| have the background colour I am comfortable with
+
+|`*` |user who is colorblind| be able to customise text colour| be able to see the text
+
+|`**` |user who is farsighted| be able to customise font size| be able to see the text clearly
+
+|`*` |user| sort certain persons by where they stay| know where is a convenient meetup location
+
+|`*` |user| save birthdays| retrieve more information about the person later
+
+
 |=======================================================================
 
 {More to be added}
@@ -845,6 +867,75 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add a password
+
+*MSS*
+
+1.  User requests to enable password
+2.  AddressBook confirms the request, yes or no
+3.  User enters password
+4.  AddressBook requests for password again to confirm
+5.  User enters password again
+6.  AddressBook sets up password and stores data in a .xml file
+7.  User needs to type in password every time at start before user can use any commands, other than help
++
+Use case ends.
+
+*Extensions*
+
+* 2a. User type no, instead of yes.
++
+Use case ends.
+
+* 3a. Password entered is invalid.
++
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. Confirmation password does not match password entered before.
++
+** 4a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 7a. User type wrong password
++
+** 7a1. AddressBook reveals first and last letter of password.
++
+** 7a2. User has forgotten the password
++
+** 7a3. AddressBook prompts user to check the .xml that stores the password
++
+Use case resumes at step 7.
+
+[discrete]
+=== Use case: Sort certain persons by their address
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to only show certain persons, by index, in the list
+4.  AddressBook shows restricted list
+5.  User requests to sort persons by address
+6.  AddressBook shows a list of persons sorted by address
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -855,6 +946,9 @@ Use case resumes at step 2.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should work when not connected to the internet even if some functions are disabled
 .  Commands should be intuitive, concise and easy to remember so that the user does not have to refer to help repeatedly.
+.  Text size should be sufficiently large
+.  Should not cause crashes when invalid commands are entered
+.  A user should only be able to enter a certain amount of words into the command line
 
 {More to be added}
 
@@ -873,6 +967,12 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[command-line]]
+
+....
+The text bar where user types in when AddressBook is opened up
 ....
 
 [appendix]
