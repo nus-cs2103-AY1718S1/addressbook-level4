@@ -163,7 +163,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void deleteTag(Tag t) {
-        tags.delete(t);
+        tags.remove(t);
     }
 
     /**
