@@ -727,9 +727,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |view the history of commands |check my previous commands
+
+|`* * *` |user |undo the previous command |revert my changes
+
+|`* * *` |user |edit the particulars of a person |i can update or make amendments to the particulars of any contact
+
+|`* * *` |user |add multiple Tags to a person |i can filter and search for contacts with a particular keyword in their tagNames
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |new user |view the list of all commands available |i can understand the functions of each command
+
+|`* *` |forgetful user |add multiple Tags to each contact |in case i forget the person's name, his or her contact can still be found through keywords in their Tags
+
+|`* *` |frequent user |save School Email Address(sub-email) to a contact |i can access the person's school email if required
+
+|`* *` |frequent user |create groups for contacts according to the keywords in their Tags |i can view all the contacts of each group with one search
+
+|`*` |user that is bad at recalling people by their name|insert(or link) a picture of the person |i can double check that i retrieved the correct contact and also help me to recall how the person looks like
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
