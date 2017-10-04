@@ -743,12 +743,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*`|HR manager|add person with LinkedIn or Facebook profile|save time from typing person’s details manually
 
 |=======================================================================
-
-[appendix]
-== Use Cases
-
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
-
 [appendix]
 == Use Cases
 
