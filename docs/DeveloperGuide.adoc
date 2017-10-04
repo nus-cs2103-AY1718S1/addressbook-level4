@@ -900,7 +900,7 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Retrieve the correct persons the user searches using specific keywords
-.  Should back up the database to more than one location 
+.  Should back up the database to more than one location
 .  Extract only relevant user information when adding a person from the web
 .  Use an link:#open-standard[open standard] to store the user data to allow for editing outside of the address book and easy debugging
 .  Should autosave to the address book database regularly to avoid lost work if the computer crashes
