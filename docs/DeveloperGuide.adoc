@@ -991,7 +991,7 @@ Use case ends.
 [discrete]
 === Use case: Sort Contacts by Tag
 
-*Precondition: Some contacts in user's AddressBook memory has to already have tags under their contact details. Tags could be dates, association/organisation names etc.
+*Precondition: Some contacts in user's AddressBook memory has to already have tags under their contact details. Tags could be dates, association/organisation names etc.*
 
 *MSS*
 
@@ -1004,6 +1004,7 @@ Use case ends.
 === Use case: Delete Multiple Contacts at Once
 
 *MSS*
+
 1.  User requests to delete multiple contacts with command: del >1
 2.  AddressBook prompts user to enter multiple names to delete: del name1 name2 .. etc.
 3.  Or user can choose to select names from AddressBook GUI to delete
@@ -1053,7 +1054,7 @@ Use case ends
 Use case resumes at step 1.
 
 [discrete]
-===Use case: Editing a person's details
+=== Use case: Editing a person's details
 
 *MSS*
 
@@ -1061,7 +1062,7 @@ Use case resumes at step 1.
 2. AddressBook adds new person into List.
 3. User requests to edit a person.
 4. User provides index of person to be edited to AddressBook,
-5. AdrressBook returns person's details for user to edit.
+5. AddressBook returns person's details for user to edit.
 6. AddressBook stores new details under person.
 +
 Use case ends.
@@ -1090,7 +1091,7 @@ Use case resumes at step 1.
 Use case resumes at step 4.
 
 [discrete]
-===Use case: Load contacts from saved file.
+=== Use case: Load contacts from saved file.
 
 *MSS*
 
