@@ -783,8 +783,6 @@ Use case resumes at step 2.
 .  The GUI should complement the command line by providing a clean and easy to read interface.
 .  Should be able to install plug-ins that allow integration with calenders and/or social media profiles.
 
-{More to be added}
-
 [appendix]
 == Glossary
 
