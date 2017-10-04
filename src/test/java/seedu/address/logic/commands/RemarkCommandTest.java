@@ -11,6 +11,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Remark;
 
 public class RemarkCommandTest {
 
@@ -22,7 +23,7 @@ public class RemarkCommandTest {
 
 
     private RemarkCommand prepareCommand(Index index, String remark){
-        RemarkCommand remarkCommand = new RemarkCommand(index,remark);
+        RemarkCommand remarkCommand = new RemarkCommand(index,new Remark(remark));
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }

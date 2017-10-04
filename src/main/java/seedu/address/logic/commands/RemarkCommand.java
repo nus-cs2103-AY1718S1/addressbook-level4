@@ -7,6 +7,7 @@ import com.sun.org.apache.regexp.internal.RE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Remark;
 
 public class RemarkCommand extends UndoableCommand {
 
@@ -23,9 +24,9 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d Remark %2$s";
 
     private final Index index;
-    private final String remark;
+    private final Remark remark;
 
-    public RemarkCommand(Index index, String remark){
+    public RemarkCommand(Index index, Remark remark){
         requireNonNull(index);
         requireNonNull(remark);
 
