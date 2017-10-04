@@ -823,10 +823,10 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. There is no previous undone command to redo
+* 2a. There is no previous undone command to redo
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 2a1. AddressBook shows an error message.
 +
 Use case ends.
 
