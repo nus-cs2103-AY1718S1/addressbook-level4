@@ -773,7 +773,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |colorblind user |have a colorblind mode for the application |use the application without difficulty
 
-|`*` |user |shit the UI around |use the application with the UI to my liking
+|`*` |user |shift the UI around |use the application with the UI to my liking
 |=======================================================================
 
 {More to be added}
