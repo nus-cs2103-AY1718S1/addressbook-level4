@@ -20,6 +20,7 @@ public class PersonCard extends UiPart<Region> {
     private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+    public final ReadOnlyPerson person;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -28,15 +29,6 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    private static String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-
-        return tagColors.get(tagValue);
-    }
-    public final ReadOnlyPerson person;
 
     @FXML
     private HBox cardPane;
@@ -60,6 +52,13 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
     }
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+        }
+
+        return tagColors.get(tagValue);
+    }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -76,6 +75,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     *
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
