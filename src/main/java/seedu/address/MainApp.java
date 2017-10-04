@@ -67,6 +67,7 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        storage.backupAddressBook(model.getAddressBook());
 
         logic = new LogicManager(model);
 
