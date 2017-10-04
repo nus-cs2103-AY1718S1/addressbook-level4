@@ -738,6 +738,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *` |user |use abbreviation when typing commands |type commands faster
+
+|`*` |advanced user |amend the storage file manually |import and export data easily
+
+|`* *` |user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
 |=======================================================================
 
 {More to be added}
@@ -772,6 +778,25 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Clear AddressBook
+
+*MSS*
+
+1.  User requests to clear AddressBook
+2.  AddressBook prompts the user for confirmation
+3.  User confirms the deletion
+4.  AddressBook clear the AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
++
+Use case ends.
 
 [discrete]
 === Use case: Editing a person's details
@@ -917,6 +942,7 @@ Use case resumes at step 2.
 .  Startup time should be less than 3s.
 .  Should be usable by a novice who has never used a command prompt before
 .  Data should be encrypted when application is not running
+.  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
 
 {More to be added}
 
