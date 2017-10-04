@@ -706,7 +706,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *`|general user | put persons into groups |manage different social circles
+|`* *`|user | put persons into groups |manage different social circles
+
+|`* *`|user | view number of edits to the address book during the session | recognize if a mistake has been made during the session
 
 |`* *`|general user | rearrange the order of addressbook entries |have preferred entries on top when using “list” command
 
@@ -722,17 +724,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *`| user | autocomplete commands | to speed up use of addressbook
 
+|`* *`| any user |login to the correct account |view only the commands available to that account’s permissions
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*`| |set expiry date to a person |no need to delete useless contacts periodically
+|`*`|System admin|set expiry date to a person |no need to delete useless contacts periodically
 
 |`*` |user |change the tag color |easily recognise tags
 
 |`*` |user |search for a person in the address book on Google |find more information on person
 
-|=======================================================================
+|`*`|HR manager |add multiple persons by importing CSV file|save time
 
-{More to be added}
+|`*`|HR manager |add person from social media account |save time
+
+|`*`|System admin|backup data to the cloud|recover data in case local file is corrupted or lost
+
+|`*`|HR manager|add person with LinkedIn or Facebook profile|save time from typing person’s details manually
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -782,7 +792,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+
 
 [appendix]
 == Non Functional Requirements
