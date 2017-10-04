@@ -20,7 +20,6 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 public class ResultDisplay extends UiPart<Region> {
 
     private static final String ERROR_STYLE_CLASS = "error";
-    
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
 
@@ -40,7 +39,7 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
         
-        if (event.isError){
+        if (event.isError) {
             setStyleToIndicateCommandFailure();
         } else {
             setStyleToDefault();
@@ -63,7 +62,6 @@ public class ResultDisplay extends UiPart<Region> {
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }
-        
         styleClass.add(ERROR_STYLE_CLASS);
     }
 }
