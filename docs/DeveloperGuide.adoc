@@ -729,6 +729,44 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |the application to look simple and easy to use |easily understand how the application works.
+
+|`* * *` |user |input commands on a GUI |won't need to memorize the commands
+
+|`* * *` |user |delete people by their name |clear space for new contacts
+
+|`* * *` |user |find people by address and see them on a map |find people who live near me
+
+|`* * *` |user |be able to sort my contact based on most recent contact |immediately get the contact.
+
+|`* * *` |user |retrieve my past command history |review what I entered previously
+
+|`* * *` |user |undo my last command |enter in the correct command instead
+
+|`* * *` |user |clear the whole list of persons |pass this app to a new user
+
+|`* * *` |user |edit the details of a person |update any changes to the person.
+
+|`* *` |user |filter the list through details such as names |search for those contacts that I only need.
+
+|`* *` |user |easily send email or messages to the contact through the application |immediately send  messages.
+
+|`* *` |user |have contacts of relevant supplier |contact whichever services i want at the point of time.
+
+|`* *` |user |plan out the best path for each contact based on what i select |take advantage of the most efficient routes.
+
+|`* *` |user |have a map view of all my contacts based on their address | plan where to visit them.
+
+|`* *` |user |have an image associated to the contact details |know how my friends look like.
+
+|`* *` |user |import my phone contacts to the addressbook easily |save time in adding them again.
+
+|`* *` |user |update my group friends of an upcoming event or activities |be informed of the activities.
+
+|`* *` |user |have my information secured |be assured that my contact information are safe on cloud storage
+
+|`* *` |user |upload images to different contacts |so that i can easily identify them
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -767,6 +805,148 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given command is invalid.
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. The given person is a duplicate.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook edits the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given changes are a duplicate of an existing person.
++
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given command is invalid.
++
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Redo command
+
+*MSS*
+
+1.  User requests to redo command
+2.  AddressBook redoes the command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no command to redo.
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Undo command
+
+*MSS*
+
+1.  User requests to undo command
+2.  AddressBook undoes the command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no command to undo.
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a specific person in the list
+4.  AddressBook selects the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Finds person
+
+*MSS*
+
+1.  User requests to find person by name
+2.  AddressBook finds the person
+3.  AddressBook displays the list of person(s) with the keywords
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The given command is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
 {More to be added}
 
 [appendix]
@@ -775,6 +955,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Internet connection is required to maximise the functionality of the AddressBook Application. Such as accessing features in BrowserPanel.
+.  Should have at least 100MB of space in HardDiskDrive in order for application to install.
+.  Should have IntelliJ IDE installed in computer.
+.  Should have at least 2GB of ram in computer in order for the application to run smoothly.
+.  Requirement of at least 3rd Generation i3 processor to operate the application.
+.  This is a test
 
 {More to be added}
 
