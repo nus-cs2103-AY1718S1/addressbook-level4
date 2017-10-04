@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,13 +10,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
+
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-
+    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static HashMap<String, String> tagColors = new HashMap<>();
+    private static int colorIndex = 0;
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -63,10 +69,34 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialize FlowPane tags with tagName and tagColor
+     *
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            initializeColorForTag(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorFromTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
+    /**
+     * Sets color for each unique tag
+     * Round-robin assignment from first color to last color
+     */
+    private void initializeColorForTag(String tagName){
+        if (!tagColors.containsKey(tagName)) {
+            tagColors.put(tagName, colors[colorIndex]);
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+
+    }
+
+    private String getColorFromTag(String tagName){
+        return tagColors.get(tagName);
+    }
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
