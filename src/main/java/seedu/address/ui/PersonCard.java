@@ -18,6 +18,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+
+    /**
+     * An enum that contains the different tag colours.
+     */
     private enum Colours {
         red, orange, yellow, green, blue, purple, grey
     }
@@ -83,6 +87,9 @@ public class PersonCard extends UiPart<Region> {
 
     }
 
+    /**
+     * Initialise every contact's tag with its randomly assigned colours
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(
             tag -> {
