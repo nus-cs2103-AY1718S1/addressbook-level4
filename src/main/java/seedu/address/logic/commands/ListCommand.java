@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
@@ -11,6 +12,11 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + "Parameters: \n"
+            + "Example: " + COMMAND_WORD + "\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + "friends";
 
     @Override
     public CommandResult execute() {
