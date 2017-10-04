@@ -162,6 +162,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    public void deleteTag(Tag t) {
+        tags.delete(t);
+    }
+
+    /**
+     * Removes {@code toRemove} from this {@code AddressBook}.
+     *
+     */
+    public void removeTagFromAll(Tag toRemove) {
+        for (Person p : persons) {
+            p.removeTag(toRemove);
+        }
+        this.deleteTag(toRemove);
+    }
+
     //// util methods
 
     @Override
