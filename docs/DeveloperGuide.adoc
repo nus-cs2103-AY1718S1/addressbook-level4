@@ -751,7 +751,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |have Google Contacts integration| view and modify my contacts on other platforms than my computer
+|`* *` |user |have Google Contacts integration link:#google-contacts-api[Google Contacts API]| view and modify my contacts on other platforms than my computer
 
 |`* *` |user |have a reminder system tag to names| remember my appointments with other people
 
@@ -1045,6 +1045,12 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[google-contacts-api]]
+Google Contacts API
+
+....
+An API provided by Google for client applications to perform basic CRUD functions on a user's contacts.
+....
 [appendix]
 == Product Survey
 
