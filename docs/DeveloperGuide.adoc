@@ -752,6 +752,28 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |add profile pictures to contacts |recognize the contact by their face
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`**` |user | have a password protected system| protect personal data when not using
+
+|`*` |user | check contact’s facebook profile| remember who that friend is
+
+|`**` |user | know what error I made during use| avoid making similar mistakes
+
+|`*` |user | be able to copy/send emails with a click| send emails to the contacts efficiently
+
+|`*` |user who has a lot of contacts | add an existing contact list | avoid having to key in each contact one by one
+
+|`*` |user | be able to customise background colour| have the background colour I am comfortable with
+
+|`*` |user who is colorblind| be able to customise text colour| be able to see the text
+
+|`**` |user who is farsighted| be able to customise font size| be able to see the text clearly
+
+|`*` |user| sort certain persons by where they stay| know where is a convenient meetup location
+
+|`*` |user| save birthdays| retrieve more information about the person later
+
+
 |=======================================================================
 
 {More to be added}
