@@ -797,7 +797,7 @@ Use case ends.
 
 *Extensions*
 
-[none]
+-[none]
 * 2a. The list is empty.
 +
 Use case ends.
@@ -916,14 +916,14 @@ Use case ends.
 * 1a. User input command wrongly.
 +
 [none]
-** 3a1. AddressBook shows an invalid format message and displays the right format to user.
+** 1a1. AddressBook shows an invalid format message and displays the right format to user.
 +
 Use case resumes at step 1.
 
 * 1b. User added a person already present in AddressBook.
 +
 [none]
-** 3a1. AddressBook shows duplicate person error message.
+** 1b1. AddressBook shows duplicate person error message.
 +
 Use case resumes at step 1.
 
@@ -941,6 +941,89 @@ Use case ends.
 
 [none]
 * 2a. 0 person with such tag
++
+Use case ends.
+
+[discrete]
+=== Use case: Hide Selected Contacts
+
+*MSS*
+
+1.  User requests to a contact with the command: hide
+2.  With hide, AddressBook does not show hidden contacts
+3.  Hidden contacts will not show even when search command is invoked
+4.  User can check what he has hidden with: check hidden
+5.  User can undo hidden contacts with command: unhide
+6.  AddressBook displays message for successfully hiding contact(s) from view.
++
+Use Case ends.
+
+*Extensions*
+
+[none]
+* 1a. User can hide 1 contact with the command: hide name1
++
+Use case ends.
+
+[none]
+* 1b. User can hide multiple contacts with the command: hide >1
++
+[none]
+** 1b1. User can proceed to enter command: hide name1 name2
++
+Use case ends.
+
+[none]
+* 1c. User can hide contacts under a certain tag: hide exampleTagName
++
+Use case ends.
+
+[none]
+* 3a. AddressBook will show contacts that user has hidden in chronological order (reverse from present)
++
+Use case ends.
+
+[none]
+* 4a. User can undo hiding, similar to extension steps 1a, 1b, 1c, with command: unhide
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort Contacts by Tag
+
+*Precondition: Some contacts in user's AddressBook memory has to already have tags under their contact details. Tags could be dates, association/organisation names etc.
+
+*MSS*
+
+1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
+2.  AddressBook displays contacts that have the respective tag(s) under their contact details as initially edited by user.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete Multiple Contacts at Once
+
+*MSS*
+1.  User requests to delete multiple contacts with command: del >1
+2.  AddressBook prompts user to enter multiple names to delete: del name1 name2 .. etc.
+3.  Or user can choose to select names from AddressBook GUI to delete
+4.  AddressBook displays message for successfully removing contact(s) from memory.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. If there is no such contact or if user inputs the spelling of the name incorrectly
++
+[none]
+** 2a1. AddressBook will check which name is non-existent (due to incorrect spelling or actually non-existent)
++
+[none]
+** 2a2. AddressBook will prompt user to check accuracy of that particular contact name and re-enter if necessary.
++
+[none]
+** 2a3. If not, enter null.
 +
 Use case ends.
 
