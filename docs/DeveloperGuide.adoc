@@ -731,6 +731,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |add more than 1 phone number to a contact |contact the person on mobile, home, office, etc. numbers
+
+|`* *` |user |add more than 1 address to a contact |see home, office, etc. addresses of the contact
+
+|`* *` |user |add more than 1 email to a contact |add all the emails the person is using
+
+|`* *` |user |be able to favourite contacts |easily access my favourite people's information
+
+|`* *` |user |be able to create groups for contacts to join |find a group of related contacts quickly
+
+|`* *` |user |add a description for a contact |record non-contact-related information about a person
+
+|`* *` |user |hide specific contacts |minimize chance of someone else finding out about the existence of the contact
+
+|`*` |user |give nicknames to specific contacts |find them by their nickname
+
+|`*` |user |have the option to be given a confirmation prompt before deleting a contact |prevent myself from deleting the wrong contact by mistake
+
+|`*` |user |add profile pictures to contacts |recognize the contact by their face
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
@@ -767,6 +787,64 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to favourite a specific person in the list
+4.  AddressBook sets the person as a favourite contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person to a group
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a specific person in the list to a specific group
+4.  AddressBook adds the person into the group
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. The given group is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +853,8 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work when not connected to the internet even if some functions are disabled
+.  Commands should be intuitive, concise and easy to remember so that the user does not have to refer to help repeatedly.
 
 {More to be added}
 
