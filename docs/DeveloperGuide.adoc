@@ -773,6 +773,25 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Clear AddressBook
+
+*MSS*
+
+1.  User requests to clear AddressBook
+2.  AddressBook prompts the user for confirmation
+3.  User confirms the deletion
+4.  AddressBook clear the AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
++
+Use case ends.
+
+
 {More to be added}
 
 [appendix]
