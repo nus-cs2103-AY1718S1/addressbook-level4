@@ -729,6 +729,30 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user with many people in the address book |list all people in address book |see whose contacts the address book already has
+
+|`* * *` |user |clear all people in the address book |remove all contacts conveniently
+
+|`* * *` |user |list the command history |view all commands already entered
+
+|`* * *` |user |undo previous command |amend any mistakes
+
+|`* * *` |user |redo the previously undone command |amend any mistakes
+
+|`* * *` |user |edit a person's information |update changes to their particulars
+
+|`* * *` |user with many people in the address book |make relation links between contacts |link up contacts that have connections with each other
+
+|`* * *` |user with many people in the address book |sort contacts by different fields in alphabetical order |arrange them according to the fields
+
+|`* * *` |user with many people in the address book |sort contacts to my preference |arrange them according to their importance / significance
+
+|`* * *` |user |find users based on tags |locate different groups easily
+
+|`* * *` |user |rename an existing tag |update a tag which is no longer suitable to describe the people who have them
+
+|`* * *` |user |run the executable file of the address book |access the application conveniently
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
