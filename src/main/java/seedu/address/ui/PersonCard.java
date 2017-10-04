@@ -17,8 +17,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private Random random = new Random(System.currentTimeMillis());
     private static HashMap<String, String> tagToColor = new HashMap<String, String>();
+    private Random random = new Random(System.currentTimeMillis());
+
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -53,13 +54,17 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
 
+    /**
+     * Generate random colour with slight dark tint
+     * and return it as hexadecimal String
+     */
     private String generateRandomColor() {
         // Factor to divide down the random color to better contrast white text
         final double darkColorBase = 1.2;
 
-        final int red = (int)Math.round((random.nextInt(256)) / darkColorBase);
-        final int green = (int)Math.round((random.nextInt(256)) / darkColorBase);
-        final int blue = (int)Math.round((random.nextInt(256)) / darkColorBase);
+        final int red = (int) Math.round((random.nextInt(256)) / darkColorBase);
+        final int green = (int) Math.round((random.nextInt(256)) / darkColorBase);
+        final int blue = (int) Math.round((random.nextInt(256)) / darkColorBase);
 
         // Convert RBG to Hex String
         return String.format("#%02x%02x%02x", red, blue, green);
@@ -92,6 +97,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Retrieve all tags from a person and initialize them
+     * with a unique tag colour
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label uniqueTagLabel = new Label(tag.tagName);
