@@ -767,6 +767,51 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+*Sorting*
+
+1. Input 'sort <type>', replace <type> with fields (mentioned in step 2) to sort by
+* a. 'name' to sort alphabetically by name
+* b. 'email' to sort alphabetically by email handle
+* c. 'phone' to sort by phone number
+2. AddressBook displays sorted list of persons according to specified field
+
+Use case ends.
+
+*Pin*
+
+1. User finds a specific person
+2. AddressBook displays the person's details
+3. User selects 'pin' option
+4. AddressBook will now display chosen person at top of list
+
+Use case ends.
+
+*Listing by [tag]*
+
+1. User inputs 'list [tag]' where [tag] is any user-specified tag
+2. AddressBook filters out all persons without [tag]
+3. AddressBook shows a list of all persons with [tag]
+
+Use case ends.
+
+*Exporting AddressBook data*
+
+1. User inputs 'export'
+2. AddressBook prompts User to select a location on terminal to save the data file
+3. User selects location
+4. A data file is generated in User-specified location
+
+Use case ends.
+
+*Importing AddressBook data*
+
+1. User inputs 'import [location]', where [location] is the location of the data file
+* example: C:/User/Documents/myAddressBook
+2. AddressBook prompts for user confirmation (overwriting data)
+3. AddressBook overwrites current data with new imported data
+
+Use case ends.
+
 {More to be added}
 
 [appendix]
