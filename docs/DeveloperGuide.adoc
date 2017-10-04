@@ -843,7 +843,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to delete tag
-2.  AddressBook shows a list of persons
+2.  AddressBook shows a list of tags
 3.  User requests to delete a specific tag in the list
 4.  AddressBook deletes the tag from every person in the address book
 +
