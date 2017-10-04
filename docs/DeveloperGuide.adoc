@@ -723,15 +723,55 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a person |record name, phone number, email and address
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person |discard unwanted contacts
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by middle or last name |accurately locate details of persons without having to go through the entire list
+
+|`* * *` |user |click buttons to work in the app |use the app more conveniently
+
+|`* * *` |user |add custom fields |store special info about a person
+
+|`* * *` |user |list contacts in alphabetical order |locate persons more easily
+
+|`* * *` |user |edit fields |use the app more easily
+
+|`* * *` |user |add multiple instances of the same field e.g. multiple phone numbers |do not have to store additional email, phone, etc in a fresh contact
+
+|`* * *` |user |add tags to fields |to differentiate characteristics of fields e.g. phone for work, address for business, etc
+
+|`* * *` |user |back up the addressbook (save as...) |know where to look when addressbook is accidentally deleted
+
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |have aesthetically pleasing UI |
+
+|`* *` |user |find a person by a custom search criterion |help recognize a person without knowledge of name
+
+|`* *` |teacher |list individual fields e.g. phone number |mass message students
+
+|`* *` |user |display favorite contacts on top of all contacts |easily reach favorite people
+
+|`* *` |user |alternate English and Chinese in a custom field |accommodate to the Chinese population
+
+|`* *` |user |see the details of a person in an organised manner |use the app more easily
+
+|`* *` |user |list contacts according to custom groups |easily reach a certain group of contacts
+
+|`*` |user |add/delete/find information in (O logN) time |fast information retrieval
+
+|`*` |user |add picture as a field |see my contacts' faces
+
+|`*` |user |share my addressbook with others |others can have my list of contacts
+
+|`*` |user |search with ambiguous criteria |allow for more margin of error with searches
+
+|`*` |user |display frequency of contact information retrieval |know which contacts I visit more frequently
 |=======================================================================
 
 {More to be added}
