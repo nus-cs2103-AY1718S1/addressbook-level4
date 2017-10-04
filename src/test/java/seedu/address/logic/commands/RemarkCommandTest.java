@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.RemarkCommand.NOT_IMPLEMENTED_YET;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -18,12 +18,11 @@ public class RemarkCommandTest {
 
     @Test
     public void execute() throws Exception {
-        assertCommandFailure(prepareCommand(), model, NOT_IMPLEMENTED_YET);
     }
 
 
-    private RemarkCommand prepareCommand(){
-        RemarkCommand remarkCommand = new RemarkCommand();
+    private RemarkCommand prepareCommand(Index index, String remark){
+        RemarkCommand remarkCommand = new RemarkCommand(index,remark);
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }
