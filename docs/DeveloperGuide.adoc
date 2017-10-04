@@ -805,7 +805,8 @@ Use case ends.
 
 *MSS*
 
-1.  AddressBook clears the list of person
+1.  User request to clear AddressBook
+2.  AddressBook clears the list of person
 +
 Use case ends.
 
@@ -814,7 +815,8 @@ Use case ends.
 
 *MSS*
 
-1.  AddressBook redo the previous undone command
+1.  User request to redo previous undone command
+2.  AddressBook redo the previous undone command
 +
 Use case ends.
 
