@@ -854,12 +854,13 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User deletes contact at index 1
-2.  User requests to show the list of contacts
-3.  AddressBook shows a list of people without the deleted contact
-3.  User requests to undo
-4.  AddressBook undo the deletion
-5.  User request to show the list of contacts
-6.  AddressBook shows a list of people with the previously deleted contact
+2.  AddressBook deletes contact at index 1
+3.  User requests to show the list of contacts
+4.  AddressBook shows a list of people without the deleted contact
+5.  User requests to undo
+6.  AddressBook undo the deletion
+7.  User request to show the list of contacts
+8.  AddressBook shows a list of people with the previously deleted contact
 +
 Use case ends.
 
@@ -881,16 +882,18 @@ Use case ends.
 
 *MSS*
 
-1.  User deletes contact at index 1
-2.  User requests to show the list of contacts
-3.  AddressBook shows a list of people without the deleted contact
-3.  User requests to undo
-4.  AddressBook undo the deletion
-5.  User request to show the list of contacts
-6.  AddressBook shows a list of people with the previously deleted contact
-7.  User request to redo previous undone delete command
-8.  User request to show the list of contacts
-9.  AddressBook shows the list of person without the delete contact
+1.  User requests to delete contact at index 1
+2.  AddressBook deletes contact at index 1
+3.  User requests to show the list of contacts
+4.  AddressBook shows a list of people without the deleted contact
+5.  User requests to undo
+6.  AddressBook undo the deletion
+7.  User request to show the list of contacts
+8.  AddressBook shows a list of people with the previously deleted contact
+9.  User request to redo previous undone delete command
+10. Address book redoes previous undone delete command
+11. User request to show the list of contacts
+12. AddressBook shows the list of person without the deleted contact
 +
 Use case ends.
 
