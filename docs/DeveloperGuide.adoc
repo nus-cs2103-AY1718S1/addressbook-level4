@@ -1000,7 +1000,7 @@ User interacts with the address book through graphical icons and visual indicato
 Mainstream OS
 
 ....
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, macOS
 ....
 
 [[private-contact-detail]]
