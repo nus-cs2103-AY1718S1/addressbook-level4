@@ -1032,11 +1032,17 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Should work when not connected to the internet even if some functions are disabled
+.  Should work when not connected to the internet even if some functions are disabled.
 .  Commands should be intuitive, concise and easy to remember so that the user does not have to refer to help repeatedly.
-.  Text size should be sufficiently large
-.  Should not cause crashes when invalid commands are entered
-.  A user should only be able to enter a certain amount of words into the command line
+.  Text size should be sufficiently large.
+.  Should not cause crashes when invalid commands are entered.
+.  A user should only be able to enter a certain amount of words into the command line.
+.  Should respond fast (~2 seconds) to any commands.
+.  Should include user-friendly instructions.
+.  Should have a feature to transfer contacts from one account to another.
+
+
+
 
 {More to be added}
 
@@ -1061,6 +1067,12 @@ A contact detail that is not meant to be shared with others
 
 ....
 The text bar where user types in when AddressBook is opened up
+....
+
+[[fields]]
+
+....
+The different component of contact's details.
 ....
 
 [appendix]
