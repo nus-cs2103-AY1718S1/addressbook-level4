@@ -812,3 +812,20 @@ Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
 * Cannot integrate contacts from user's active WhatsApp groups
+
+
+*iTunes*
+
+Author: Apple Inc.
+
+Pros:
+
+* Users can browse by album instead of a plain song list
+* Similar to browsing contacts by group instead of by individual
+* Supports automatic retrieval of missing songs if user's local album is incomplete ("Show Complete Album")
+* Analogous to automatic addition of unknown contacts from a user's active WhatsApp groups
+
+Cons:
+
+* Lacks command-line (or keyboard-only) interface for power users
+* Animations are unnecessarily slow
