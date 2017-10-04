@@ -825,6 +825,63 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Find contact's birthday
+
+*MSS*
+
+1.  User searches for specific person.
+2.  AddressBook shows the person for the user.
+3.  User checks person's birthday.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The searched person is not in the AddressBook.
++
+[none]
+** 2a1. Steps 1-2 are repeated as long as the person is not found.
++
+Use case resumes from step 3.
+
+=== Use case: List people with a specific tag
+
+*MSS*
+
+1.  User specifies the tag she wants to be searched.
+2.  The AddressBook shows the contacts with the searched tag.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person types the tag incorrectly and no contacts are found.
++
+[none]
+** 2a1. Steps 1-2 are repeated as long as the tag is typed incorrectly.
++
+Use case ends.
+
+=== Use case: Sort contacts by name
+
+*MSS*
+
+1.  User lists all the contacts.
+2.  AddressBook shows the contacts in the order they were added to the AddressBook.
+3.  User sorts the contacts.
+4.  AddressBook lists all the contacts sorted by the their name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no contacts.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
