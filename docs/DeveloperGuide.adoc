@@ -1027,6 +1027,81 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Redo/Undo previous command
+
+*MSS*
+
+1. User starts AddressBook.
+2. User request to deletes the wrong person from List.
+3. AddressBook removes person.
+4. User request to undo his action.
+5. AddressBook reverses the delete command.
+6. User decides to delete person again, redo action
+7. AddressBook reapplies delete command.
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. User requests person that is not inside the AddressBook.
++
+[none]
+** 2a1. AddressBook displays error message.
++
+Use case resumes at step 1.
+
+[discrete]
+===Use case: Editing a person's details
+
+*MSS*
+
+1. User requests to add a person into AddressBook.
+2. AddressBook adds new person into List.
+3. User requests to edit a person.
+4. User provides index of person to be edited to AddressBook,
+5. AdrressBook returns person's details for user to edit.
+6. AddressBook stores new details under person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input command wrongly.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+* 1b. User added a person already present in AddressBook.
++
+[none]
+** 1b1. AddressBook shows duplicate person error message.
++
+Use case resumes at step 1.
+
+* 4a. User provided index that is larger than size of last updated list.
++
+[none]
+** 4a1. AddressBook shows undoable command error message.
++
+Use case resumes at step 4.
+
+[discrete]
+===Use case: Load contacts from saved file.
+
+*MSS*
+
+1. User has a file of contacts from AddressBook.
+2. User opens AddressBook on a different device.
+3. User loads file of contacts onto new device.
+4. AddressBooks updates list.
+5. User has a List of persons from previous AddressBook.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -1035,6 +1110,12 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  System should be able to respond in 0.5s
+.  Project V2.0 should be an incremental improvement of the given addressbook-level 4 application
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The software should work without requiring an installer.
+.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases is not allowed.
+.  Should have a minimum of font size 12 in all window sizes for visibility
 
 {More to be added}
 
