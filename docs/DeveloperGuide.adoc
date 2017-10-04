@@ -783,6 +783,51 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: clear
+
+*MSS*
+
+1.  AddressBook clears the list of person
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  AddressBook redo the previous undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no previous undone command to redo
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
