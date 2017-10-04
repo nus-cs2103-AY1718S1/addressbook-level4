@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -809,6 +809,79 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Select person
+
+*Precondition: Person in question should be saved with 'add' in addressbook*
+
+*Guarantees: Person in question will be displayed with all fields visible*
+
+*MSS*
+
+1.  User requests to 'find' a specific person by name
+2.  AddressBook shows a list of persons with name entered
+3.  User selects the index of specific person
+4.  AddressBook shows full contact details of person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: History
+
+*Guarantees: Displays list of commands entered by user*
+
+*MSS*
+
+1.  User requests to see command history
+2.  AddressBook lists the commands entered in reverse order
+3.  User views previous commands
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help window
+
+*Guarantees: Displays instructions for command entered by user*
+
+*MSS*
+
+1.  User enters 'help' command
+2.  AddressBook shows the instructions of the command entered
+3.  User views help window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command was previously entered
++
+Use case ends.
+
+* 3a. User chooses to copy help example text
++
+[none]
+** 3a1. User switches back to main window and pastes the command
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -835,6 +908,53 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[oop]]
+OOP
+
+....
+Object-oriented programming (OOP) is a programming language model organized around
+objects rather than "actions" and data rather than logic.
+....
+
+[[ide]]
+IDE
+
+....
+An integrated development environment (IDE) is a software application that provides
+comprehensive facilities to computer programmers for software development
+....
+
+[[api]]
+API
+
+....
+An Application Programming Interface (API) specifies the interface through which
+other programs can interact with a software component. It is a contract between the
+component and its clients.
+....
+
+[[ci]]
+CI
+
+....
+Continuous Integration (CI) is an extreme application of build automation in
+which integration, building, and testing happens automatically after each code change
+....
+
+[[index]]
+Index
+
+....
+The specific numbering position of each contact (eg. 1 = 1st, 2 = 2nd , 3 = 3rd etc)
+....
+
+[[help-window]]
+Help window
+
+....
+A web-based window displaying the user-guide within the application
 ....
 
 [appendix]
