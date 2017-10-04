@@ -780,7 +780,7 @@ Use case resumes at step 2.
 .  Should be able to be used by any individual who has not used an address book before.
 .  The source code should be open source.
 .  Should maintain application every month.
-.  Should be able to retrieved, saved and used on another computer.
+.  Should be able to retrieve, save and use on another computer.
 .  A user should be able to back up and restore all contacts if application breakdown.
 
 {More to be added}
