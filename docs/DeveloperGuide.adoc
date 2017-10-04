@@ -721,20 +721,64 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+| `* * *` | Customer manager using the app for the first time | see usage instructions | refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+| `* * *` | Customer manager | add a new customer | Store their data in my database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+| `* * *` | Customer manager | delete a customer | remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+| `* * *` | Customer manager | find a customer by name | locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+| `* * *` | Customer manager | Sort customers by name | Locate customers easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+| `* * *` | Customer Manager | Sort customers by tag | Group my customers according to specific criteria, like &#39;paid&#39;, &#39;new&#39; etc
+
+| `* * *` | Clumsy customer manager | Receive a warning when I might potentially make a grave mistake, ie. delete a wrong contact | I am less likely to make mistakes
+
+| `* * *` | Customer manager who values security | Login securely | Keep my customer&#39;s data secure
+
+| `* * *` | Customer Manager | List all my customers | Get a List of all my customers
+
+| `* * *` | Customer Manager | Sort customers by tag | Group my customers according to specific criteria, like &#39;paid&#39;, &#39;new&#39; etc
+
+| `* * *` | Customer manager | Edit information | Update my customers&#39; information when they have changes.
+
+| `* * *` | Customer manager who cannot  remember commands correctly | Have an &#39;auto-complete&#39; feature while typing commands | Be more efficient and reduce the time required to recall the whole command
+
+| `* * *` | Customer manager with customers with multiple emails, addresses and phone numbers. | Add all of their details | Contact them easily in case they don&#39;t respond via one of their usual contact details.
+| `* * *` | Forgetful customer manager | List all tags | I can identify which tags I have, and possibly any near duplicates like &#39;frequent&#39; and &#39;frequent customer&#39;
+
+| `* *` | Customer manager who prioritizes convenience | Be able to access my most frequently / recent searched customers easily | Save time
+
+| `* *` | Customer manager who needs to send letters out | View their addresses on a map | Look-up their address easily
+
+| `* *` | Customer manager | Have alert for customers&#39; birthdays | We (the business) can celebrate with the customer or send out a greeting.
+
+| `* *` | Clumsy customer manager | Undo my command   | Undo my mistake
+
+| `* *` | Customer manager | Clear my address book | Start a new address book again
+
+| `* *` | Customer manager | Profile pictures for my contacts | Verify the identity of the customer
+
+| `* *` | Customer manager | Get customers&#39; bank accounts number | Transfer them money quickly, or check if they transferred us money
+
+
+| `* *` | Customer manager using the app for the first time | Import existing customers from an existing csv file | Do not have to go through the trouble of importing my customer details one by one
+
+| `* *`  | Customer manager | Merge duplicate contacts | Don&#39;t have to change each user manually
+
+| `* *` | Customer manager | Send mass email to my customers | Contact customers quickly and efficiently
+
+| `* *` | Customer manager | View the number of people I have in my application | So that I can keep track of the number of customers I have
+
+| `*` | Customer manager | Have alert for anniversaries | We (the business) can celebrate with the customer or send out a greeting
+
+| `*` | Customer manager | Know when a customer signed up / joined us | Know their join date
+
+| `*` | Customer manager who likes nice designs | Have multiple themes | Personalise the application to my liking
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -742,41 +786,102 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete customer
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-+
-Use case ends.
+1. Customer Manager requests to list all customers.
+2. Cync shows a list of customers.
+3. Customer Manager requests to delete a specific customer in the list.
+4. Cync prompts confirmation of deleting customer.
+5. Cync deletes the customer.
+6. Cync notifies user that deletion is successful.
+7. Use case ends.
 
 *Extensions*
 
-[none]
 * 2a. The list is empty.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
+- 3a1.Cync shows an error message.
 +
-[none]
-** 3a1. AddressBook shows an error message.
+Use case resumes at step 2
+
+* 4a. Deletion not successful
+- 4a1. Cync shows an error messages
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. Customer Manager requests to edit person
+2. Cync lists out the current details of the person
+3. Customer Manager requests to edit specific fields with new data
+4. Cync updates the details
 +
-Use case resumes at step 2.
+Use case ends
 
-{More to be added}
+*Extensions*
 
-[appendix]
+* 2a. Customer does not exist.
++
+Use case ends.
+
+[discrete]
+=== Use case: Auto-complete commands
+
+*MSS*
+
+1. Customer Manager keys in partial command
+2. Cync lists out predicted commands on a drop down bar
+3. Customers can select which command he wants
+
+*Extensions*
+
+* 2a. no predicted command
++
+No drop-down bar
+
+[discrete]
+=== Use case: Search customers by tags
+
+*MSS*
+
+1. Customer Manager enters command to search by tag, ie. search [tagName]
+2. Cync lists out all the customers who contain the tag tagName and the number of customers with tag
+
+*Extensions*
+
+* 2a. No one in the Cync has that tag
++
+Cync informs the customer manager that none of the customers have that tag
+
+
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+* Should work on any mainstream OS as long as it has Java 1.8.0_60 or higher installed.
 
-{More to be added}
+* Should be able to hold up to 1000 customers without noticeable sluggishness in performance for typical usage.
+
+* An user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+* Application should respond within 2 seconds.
+
+* Application should show a loading spinner while CYNC is loading.
+
+* Application should automatically backup the customers’ information in the case that the user loses his/her data.
+
+* Application should be aesthetically clean so that user does not feel overwhelmed.
+
+* Application’s design should be easy on the eyes
+
+* Application should be open source so that other developers can contribute
+
+* Application should be free for users, but also incorporate a way to monetize as a way to monetize.
+
 
 [appendix]
 == Glossary
@@ -788,26 +893,48 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
-[[private-contact-detail]]
-Private contact detail
+[[customer-manager]]
+Customer Manager
 
 ....
-A contact detail that is not meant to be shared with others
+A person working at a small business that uses CYNC
+....
+
+[[notification-prompt]]
+Notification prompt
+
+....
+A window popup that confirms that the user wants to perform the next action
+....
+
+[[auto-complete]]
+Auto-complete
+
+....
+A dropdown toolbar that suggests words that the user may be typing as they type
 ....
 
 [appendix]
 == Product Survey
 
-*Product Name*
+*Microsoft Outlook Customer Manager*
 
-Author: ...
+Author: Microsoft
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Tracking of customer requests | Manages customers’ requests individually
+| Clean interface | Pay-to-use software
+| An overview of To-dos on main page |
+|=======================================================================
 
-Pros:
+*Salesforce CRM*
 
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+Author: Salesforce
+[width="59%",cols="50%,<50%",options="header",]
+|=======================================================================
+| Pros | Cons
+| Sales management | Tons of features, easy to overwhelm client
+| Marketing automation | Not free, additional cost for businesses
+| Partner relationship management |
+|=======================================================================
