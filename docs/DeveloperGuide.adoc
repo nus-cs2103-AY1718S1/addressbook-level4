@@ -775,6 +775,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to work for 32-bit and 64-bit systems.
+.  Should be able to respond within a second.
+.  Should be able to be used by any individual who has not used an address book before.
+.  The source code should be open source.
 
 {More to be added}
 
