@@ -767,7 +767,99 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person.
+2.  AddressBook adds the person and shows success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Person already exists in AddressBook.
++
+[none]
+** 1a1. AddressBook shows an error message indicating person already exists .
++
+Use case ends.
+
+* 1b. Person added is of invalid format.
++
+[none]
+** 1b1. AddressBook shows an error message and display the help for add.
++
+Use case ends.
+
+[discrete]
+=== Use case: Import persons
+
+*MSS*
+
+1. User import persons from an external csv file.
+2. AddressBook iteratively adds the persons from the external csv and shows success message for each.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. File uploaded is of invalid format
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. A particular person is of invalid format.
++
+[none]
+** 2a1. AddressBook skips that person.
++
+Use case resumes at step 2.
++
+[none]
+* 2b. A particular person already exists in AddressBook.
++
+[none]
+** 2b1. AddressBook skips that person.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Save appointment
+
+*MSS*
+
+1. User adds an appointment to a contact through specifying the index.
+2. AddressBook sends an email to that contact.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The contact index doesn't exists.
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 1b. The appointment date or format is invalid.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. The email address is not correct and the email can't be delivered.
++
+[none]
+** 2a1. AddressBook notifies the user.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
