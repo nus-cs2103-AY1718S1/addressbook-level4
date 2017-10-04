@@ -969,6 +969,12 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[command-line]]
+
+....
+The text bar where user types in when AddressBook is opened up
+....
+
 [appendix]
 == Product Survey
 
