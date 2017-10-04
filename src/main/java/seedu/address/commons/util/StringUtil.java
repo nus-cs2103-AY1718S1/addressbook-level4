@@ -62,7 +62,7 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
-        if (preppedWord.length() >=2 ) {
+        if (preppedWord.length() >= 2) {
             for (String wordInSentence : wordsInPreppedSentence) {
                 if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
                         && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
