@@ -729,9 +729,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add relationships between people |show that two persons know each other
 
-|`* *` |user |add named relationships between people |show that two persons know each other via a specific method
+|`* *` |user |add link:#named-relationship[named relationships] between people |show that two persons know each other via a specific method
 
-|`* *` |user |add confidence estimates to a person's attributes |differentiate between verified and unverified pieces of information
+|`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
 
 |`* *` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
 
@@ -745,7 +745,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see the network of relationships between people |visulaise connections and groups in the network
 
-|`* *` |user |display relationships only above a certain confidence value |find a more confident way to know a person
+|`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
 
 4+| Find operations
 
@@ -765,7 +765,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |update a person's details |update a person's details without having to create a new contact
 
-|`* *` |user |update the confidence estimate on a person's attributes |update confidence in pieces of information
+|`* *` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
 
 |`* *` |user |change the colour of the network |personalise my address book
 
@@ -779,7 +779,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |cautious user |clear my history |hide my previous commands from later users
 
-|`* *` |user |remove confidence estimates from a person's attributes |remove unneeded confidence estimates
+|`* *` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
 
 4+| Other operations
 
@@ -797,7 +797,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have the program autocorrect my commands |input information correctly
 
-|`* *` |advanced user |type shorter command aliases |do operations faster
+|`* *` |advanced user |type shorter link:#command-alias[command aliases] |do operations faster
 |=======================================================================
 
 {More to be added}
