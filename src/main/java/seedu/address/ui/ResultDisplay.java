@@ -38,7 +38,7 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
-        
+
         if (event.isError) {
             setStyleToIndicateCommandFailure();
         } else {
@@ -58,7 +58,7 @@ public class ResultDisplay extends UiPart<Region> {
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = resultDisplay.getStyleClass();
-        
+
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }
