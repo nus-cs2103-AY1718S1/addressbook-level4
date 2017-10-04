@@ -87,7 +87,7 @@ public class PersonCard extends UiPart<Region> {
      * Sets color for each unique tag
      * Round-robin assignment from first color to last color
      */
-    private void initializeColorForTag(String tagName){
+    private void initializeColorForTag(String tagName) {
         if (!tagColors.containsKey(tagName)) {
             tagColors.put(tagName, colors[colorIndex]);
             colorIndex = (colorIndex + 1) % colors.length;
@@ -95,10 +95,10 @@ public class PersonCard extends UiPart<Region> {
 
     }
 
-    private String getColorFromTag(String tagName){
+    private String getColorFromTag(String tagName) {
         return tagColors.get(tagName);
     }
-    
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
