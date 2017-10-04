@@ -916,14 +916,14 @@ Use case ends.
 * 1a. User input command wrongly.
 +
 [none]
-** 1a1. AddressBook shows an invalid format message and displays the right format to user.
+** 3a1. AddressBook shows an invalid format message and displays the right format to user.
 +
 Use case resumes at step 1.
 
 * 1b. User added a person already present in AddressBook.
 +
 [none]
-** 1b1. AddressBook shows duplicate person error message.
+** 3a1. AddressBook shows duplicate person error message.
 +
 Use case resumes at step 1.
 
