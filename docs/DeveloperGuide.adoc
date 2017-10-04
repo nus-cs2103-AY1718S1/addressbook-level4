@@ -884,7 +884,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: add a tag to a person
+=== Use case: Add a tag to a person
 
 *MSS*
 
@@ -901,7 +901,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: show help window
+=== Use case: Show help window
 
 *MSS*
 
