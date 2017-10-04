@@ -1041,6 +1041,76 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[API]]
+Application Programming Interface
+
+....
+A specific method prescribed by a computer operating system or by an application program by which a programmer writing an application program can make requests of the operating system or another application.
+....
+
+[bug]
+Bug
+
+....
+A coding error in a computer program.
+....
+
+[[help-system]]
+Help System
+
+....
+A documentation component of a software program that explains the features of the program and helps the user understand its capabilities.
+....
+
+[[information-architecture]]
+Information Architecture
+
+....
+The set of ideas about how all information in a given context should be treated philosophically and, in a general way, how it should be organized; this is expressed in an information architecture document.
+....
+
+[[IDE]]
+Integrated Development Environment
+
+....
+A programming environment that has been packaged as an application program, typically consisting of a code editor, a compiler, a debugger, and a GUI builder.
+....
+
+[[KISS Principle]]
+Keep It Simple, Stupid
+
+....
+The principle that people want products that are easy to learn and use, and that companies realize time and cost benefits by producing such products.
+....
+
+[[OOP]]
+Object-Oriented Programming
+
+....
+A programming model organized around objects rather than actions and data rather than logic, based on the idea that what we really care about are the objects we want to manipulate, rather than the logic required to manipulate them.
+....
+
+[[SDK]]
+Software Development Kit
+
+....
+A set of programs used by a computer programmer to write application programs.
+....
+
+[[user-acceptance-testing]]
+User Acceptance Testing
+
+....
+A phase of software development in which the software is tested in the "real world" by the intended audience.
+....
+
+[[user-interface]]
+User Interface
+
+....
+Everything designed into an information device with which a human being may interact -- including display screen, keyboard, mouse, light pen, the appearance of a desktop, illuminated characters, help messages, and how an application program or a Web site invites interaction and responds to it.
+....
+
 [appendix]
 == Product Survey
 
