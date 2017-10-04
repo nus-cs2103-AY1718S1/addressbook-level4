@@ -18,7 +18,6 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static HashMap<String, String> tagToColor = new HashMap<String, String>();
-    private Random random = new Random(System.currentTimeMillis());
 
 
     /**
@@ -30,6 +29,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private Random random = new Random(System.currentTimeMillis());
 
     @FXML
     private HBox cardPane;
