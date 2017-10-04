@@ -217,6 +217,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Play background music : `music`
+
+Plays a random music track from a list of built in mp3 music from Address Book. +
+Format: `music`
+
 === Exiting the program : `exit`
 
 Exits the program. +
