@@ -822,6 +822,7 @@ Use case ends.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Respond time should be less than 10s
 .  Should be able to automatically create a backup file for the contacts data stored
+.  The project is expected to adhere to a schedule that delivers a feature set every week
 
 {More to be added}
 
