@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -820,6 +820,14 @@ Use case resumes at step 2.
 
 [appendix]
 == Glossary
+
+.  Address Book: The specific book that the user is using the application on.
+.  Format: The way in which command is entered.
+.  History: Commands entered previously.
+.  UI: Short for user interface.
+.  Undo: Restores the application to the state prior to the current state.
+.  GUI: Short for graphical user interface. A user interface that allows users to interact with electronic devices through graphical icons and visual indicators.
+.  Redo: Reverses the undo process.
 
 [[mainstream-os]]
 Mainstream OS
