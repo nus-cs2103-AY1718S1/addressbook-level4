@@ -82,7 +82,19 @@ public class StatusBarFooter extends UiPart<Region> {
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
 
+    /**
+     * Display the total number of people in the address book
+     * @param totalPeople
+     * @ return a string of the displayed text
+     */
+    public static String getTotalPeopleText(int totalPeople) {
+        String displayText = totalPeople + " person(s) in addressBook";
+
+        return displayText;
+    }
+
     public void setTotalPeople(int totalPeople) {
-        this.totalPeople.setText(totalPeople + " person(s) in addressBook");
+
+        this.totalPeople.setText(getTotalPeopleText(totalPeople));
     }
 }
