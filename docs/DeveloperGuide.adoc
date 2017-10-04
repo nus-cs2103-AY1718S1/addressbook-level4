@@ -729,12 +729,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |use shorter aliases for commands|enter commands quickly and not have to type in the full command
+
+|`* * *` |user |find people by their tags|view people under certain tags
+
+|`* * *` |user |have a responsive inbuilt browser with similar response times to external browsers|use the inbuilt browser smoothly
+
+|`* * *` |user |add tags cumulatively|edit tags conveniently
+
+|`* * *` |user |add a person with fewer parameters|add someone I don't know all the details of
+
+|`* * *` |user |edit contact details|modify contacts without having to delete the contact
+
+|`* * *` |user |view in-line help via the help command|view the help without having to navigate the user guide(which is not CLI friendly)
+
+|`* * *` |user |add contacts with multiple phone numbers|have contact entries with multiple phone numbers without the need for multiple entries
+
+|`* * *` |user |revert to a previous version of my AddressBook|restore from a backup if my contact data is accidentally lost
+
+|`* * *` |user |navigate the navigation using only my keyboard (using preset keybindings)|use the application solely with my keyboard, as with CLI-focused apps
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |have Google Contacts integration| view and modify my contacts on other platforms than my computer
+
+|`* *` |user |have a reminder system tag to names| remember my appointments with other people
+
+|`* *` |user |access a person's Facebook account via in the in-built browser|use Facebook features from the AddressBook
+
+|`* *` |user |find a subset of contacts using specified parameters|filter through my contacts
+
+|`* *` |user |click on the address to be shown its Google Maps result|easily navigate to my contact's location
+
+|`* *` |user |resize the dimensions of the command and output bar|customise the application to my desired layout
+
+|`* *` |user |upload pictures of my contacts|identify my contacts with similar names
+
+|`* *` |user |change the layout and enable/disable certain components e.g. the inbuilt browser|change the layout as desired and customise my AddressBook
+
+|`* *` |user |clear the screen to the default view|reset my AddressBook and start from a clean slate
+
+|`* *` |user |have a plugin manager to download and use plugins I want|only use resources I want to
+
+|`* *` |user |have a theme manager|change the colours to fit my desires
+
+|`* *` |user |modify private information|conveniently modify private information
+
+|`* *` |user |encrypt private information with a passphrase|secure my private information and hide it from others
+
+|`* *` |user |have a Favourites section where popular contacts are shown|access my frequently viewed contacts quickly
+
+|`* *` |user |have a settings manager/config file|customise the application and preferences
+
+|`* *` |user |send an email via the inbuilt browser by clicking on a contact's email|easily and quickly send an email to an existing contact
+
+|`* *` |user |have a Notes section to add notes that can be tagged and shared with people|jot down certain events and details
+
+|`* *` |user who is privacy focused |encrypt my contacts|hide and secure my contacts from others
+
+|`* *` |user |tab-complete my commands|quickly complete my commands and do inline searching for contacts
+
+|`* *` |user |add aliases for contacts|label my contacts with a different name
+
+|`* *` |user |use regex for find command|type less and perform a wider variety of searches
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |be able to sort the contacts|look for people easily
+
+|`*` |user |send a message to my contacts in the AddressBook|contact people directly from the application
+
+|`*` |user |use the application on my phone|access contact details directly on my phone
+
+|`*` |user |store/see the relationship between our contacts in a graph|see our mutual friends
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,6 +837,185 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete tag
+
+*MSS*
+
+1.  User requests to delete tag
+2.  AddressBook shows a list of tags
+3.  User requests to delete a specific tag in the list
+4.  AddressBook deletes the tag from every person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit contact details
+
+*MSS*
+
+1.  User requests to edit contact
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific index in the list with required tags on new information
+4.  AddressBook confirms that user wishes to change data
+5.  User confirms the change
+6.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide fields for new data.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user does not change any field.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Restore backup
+
+*MSS*
+
+1.  User requests to restore backup
+2.  AddressBook shows a list of backups available
+3.  User selects index of specific backup in the list
+4.  AddressBook confirms that user wishes to restore backup and will lose current data
+5.  User confirms the change
+6.  AddressBook restores to backup specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+
+[discrete]
+=== Use case: upload pictures
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to upload a picture in a directory for a specific person in the list
+4.  AddressBook saves the picture for the person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The specified picture is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: add remark to a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a person in the list
+4.  AddressBook adds remark to the person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +1024,7 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to respond to a command within 500ms.
 .  Should adhere to the Java coding standard.
 .  Data should only be accessible to the user himself.
 .  Should be able to handle all possible exceptions.
