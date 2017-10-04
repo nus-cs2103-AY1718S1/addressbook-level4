@@ -787,6 +787,64 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to favourite a specific person in the list
+4.  AddressBook sets the person as a favourite contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person to a group
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a specific person in the list to a specific group
+4.  AddressBook adds the person into the group
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. The given group is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
