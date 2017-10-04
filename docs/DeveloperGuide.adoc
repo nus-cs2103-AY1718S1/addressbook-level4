@@ -749,6 +749,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+[appendix]
+== Use Cases
+
+(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
 [discrete]
 === Use case: Delete person
 
@@ -758,23 +763,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 2.  AddressBook shows a list of persons
 3.  User requests to delete a specific person in the list
 4.  AddressBook deletes the person
-+
-Use case ends.
-
-[discrete]
-=== Use case: Add person
-
-*MSS*
-
-1.  User requests to add person with the person’s name, phone number and email address
-2.  AddressBook adds the person
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. User did not give enough details
 +
 Use case ends.
 
@@ -793,6 +781,123 @@ Use case ends.
 Use case resumes at step 2.
 
 
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person with the person’s name, phone number and email address
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User did not give enough details
++
+AddressBook displays an error message
++
+Use case ends.
+
+
+[discrete]
+=== Use case: View command history
+
+*MSS*
+
+1.  User requests to view command history
+2.  AddressBook displays the command history in reverse chronological order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook displays an empty list
++
+Use case ends.
+
+
+[discrete]
+=== Use case: find a person in the address book
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User inputs the name of the person
+4.  AddressBook returns the people with a similar name and their details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook displays an empty list
++
+Use case ends.
+
+* 4a. No person is found
++
+[none]
+** 3a1. AddressBook shows an empty list
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list with new details
+4. AddressBook updates the person’s details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook displays an empty list
++
+Use case ends.
+
+[none]
+* 3a. User did not give enough details
++
+** 4a1. AddressBook displays an error message
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Add a person from their social media account
+
+*MSS*
+
+1.  User requests to add a Facebook or Linkedin URL
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Given URL is broken
++
+** 2a1. AddressBook displays an error message.
++
+Use case ends.
+
+[none]
+* 1b. Given URL is from Facebook
++ 
+** 2a1. AddressBook asks the user to input missing details.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
