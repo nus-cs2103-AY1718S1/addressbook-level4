@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import com.sun.org.apache.bcel.internal.generic.DUP;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -126,11 +125,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Tag tag)
-            throws DuplicatePersonException {
+        public void deleteTag(Tag tag) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
-
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
