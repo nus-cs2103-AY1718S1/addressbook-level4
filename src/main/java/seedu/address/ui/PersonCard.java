@@ -19,7 +19,7 @@ public class PersonCard extends UiPart<Region> {
     private enum Colours {
         red, orange, yellow, green, blue, purple, grey
     }
-    private String [] colours =
+
     private static HashMap<String, String> tagColourSet = new HashMap<String, String>();
     private static Random random = new Random();
 
