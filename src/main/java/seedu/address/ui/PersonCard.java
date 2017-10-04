@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,7 +16,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "DARKRED", "FORESTGREEN", "BLUE", "ORANGE", "BROWN", "LIMEGREEN", "PINK", "DARKGREY", "BLACK" };
+    private static String[] colors = { "DARKRED", "FORESTGREEN", "BLUE", "ORANGE", "BROWN",
+            "LIMEGREEN", "PINK", "DARKGREY", "BLACK" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Integer colourNum = 0;
 
@@ -62,8 +64,7 @@ public class PersonCard extends UiPart<Region> {
 
         if (!tagColors.containsKey(tagValue) && colourNum < colors.length) {
             tagColors.put(tagValue, colors[colourNum++]);
-        }
-        else if(tagColors.size() >= colors.length){
+        } else if (tagColors.size() >= colors.length) {
             tagColors.put(tagValue, "grey");
         }
         return tagColors.get(tagValue);
@@ -84,6 +85,11 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Get the tags from a person and assign a colour to each tag
+     * before add the tag as a children (on scenebuilder) of the person on the app list
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
