@@ -727,11 +727,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |add a person without including all details |add someone into the address book without having to include all particulars
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book having multiple contact number |store multiple contact numbers per person |keep track of all their numbers easily
+
+|`*` |user with colour blindness |use the colour blind option |view items with colour code properly
 |=======================================================================
 
 {More to be added}
