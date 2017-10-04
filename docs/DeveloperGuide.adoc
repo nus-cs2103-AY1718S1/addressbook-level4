@@ -729,6 +729,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |edit contact's details |update contact's details without creating a new contact
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |add more than 1 phone number to a contact |contact the person on mobile, home, office, etc. numbers
@@ -745,6 +747,20 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide specific contacts |minimize chance of someone else finding out about the existence of the contact
 
+|`* *` |user |search contacts using other fields |easily find intended contact without knowing the name
+
+|`* *` |user |delete contact using other fields such as name |delete contact without knowing the index number
+
+|`* *` |user |undo/redo amendments made to the address book |immediately revert to previous version if mistakes are made
+
+|`* *` |user |clear temporary storage upon exit |reduce memory used
+
+|`* *` |user |keep a temporary storage of deleted contacts |restore deleted contacts if intended
+
+|`* *` |user |list all contacts |get an overview of contacts
+
+|`* *` |user |search contacts with partial inputs |find contact whose exact field details are not known
+
 |`*` |user |give nicknames to specific contacts |find them by their nickname
 
 |`*` |user |have the option to be given a confirmation prompt before deleting a contact |prevent myself from deleting the wrong contact by mistake
@@ -752,6 +768,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |add profile pictures to contacts |recognize the contact by their face
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |view recent contacts added/searched |keep a log of the operations done in the address book
+
+|`*` |user |sync contact details with social media |receive notification if contact details are not updated
 
 |`**` |user | have a password protected system| protect personal data when not using
 
