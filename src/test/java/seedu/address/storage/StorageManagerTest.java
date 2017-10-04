@@ -76,7 +76,8 @@ public class StorageManagerTest {
          */
         AddressBook original = getTypicalAddressBook();
         storageManager.backupAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook(storageManager.getAddressBookFilePath() + "-backup.xml").get();
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook(storageManager.getAddressBookFilePath() +
+                "-backup.xml").get();
         assertEquals(original, new AddressBook(retrieved));
     }
 
