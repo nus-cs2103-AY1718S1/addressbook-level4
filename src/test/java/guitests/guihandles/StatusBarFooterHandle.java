@@ -39,7 +39,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     /**
      * Returns the text of 'total number of people' in contacts of the status bar
      */
-    public String getTotalPeople(){
+    public String getTotalPeople() {
         return totalPeople.getText();
     }
 
