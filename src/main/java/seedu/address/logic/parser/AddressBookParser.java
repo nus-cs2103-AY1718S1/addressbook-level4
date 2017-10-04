@@ -51,7 +51,7 @@ public class AddressBookParser {
 
         case AddCommand.COMMAND_WORD:
         case AddCommand.SHORTHAND_COMMAND_WORD:
-                return new AddCommandParser().parse(arguments);
+            return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
@@ -66,7 +66,7 @@ public class AddressBookParser {
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.SHORTHAND_COMMAND_WORD:
-                return new ClearCommand();
+            return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.SHORTHAND_COMMAND_WORD:

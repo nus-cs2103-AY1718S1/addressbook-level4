@@ -133,7 +133,7 @@ public class Person implements ReadOnlyPerson {
         return remarks.get();
     }
 
-    public void setRemarks(Remark remark){
+    public void setRemarks(Remark remark) {
         this.remarks.set(remark);
     }
 

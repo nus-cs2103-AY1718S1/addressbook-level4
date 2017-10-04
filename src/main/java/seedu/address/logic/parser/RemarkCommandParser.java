@@ -9,6 +9,9 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Remark;
 
+/**
+ * Parser for the remark command
+ */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
 
 
@@ -19,7 +22,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 
         try {
             index = ParserUtil.parseIndex(argumentMultimap.getPreamble());
-        } catch (IllegalValueException e){
+        } catch (IllegalValueException e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
         }
 

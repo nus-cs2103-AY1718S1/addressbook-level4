@@ -2,8 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
+/**
+ * Represents a Remark for a Person in the address book
+ */
 public class Remark {
 
     public static final String MESSAGE_REMARK_CONSTRAINTS =

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -15,15 +14,15 @@ import seedu.address.model.person.Remark;
 
 public class RemarkCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(),new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute() throws Exception {
     }
 
 
-    private RemarkCommand prepareCommand(Index index, String remark){
-        RemarkCommand remarkCommand = new RemarkCommand(index,new Remark(remark));
+    private RemarkCommand prepareCommand(Index index, String remark) {
+        RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }
