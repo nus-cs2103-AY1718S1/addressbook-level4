@@ -504,14 +504,14 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified link:tag[tag] will be removed from everyone in the address book.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the link:tag[tag] removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the link:tag[tags].
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `link:tag[tag]` from each person.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -521,7 +521,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different link:tag[tags] inside person cards. For example, `friends` link:tag[tags] can be all in grey, and `colleagues` link:tag[tags] can be all in red.
 +
 **Before**
 +
@@ -767,6 +767,81 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User request to add person by specifying their name, phone, home address and email address.
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Person already exists in address book.
++
+Use case ends.
+
+* 2b. Input is invalid.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. User requests to edit person by giving person's name and new parameter(s)
+2. AddressBook shows confirm message.
+3. User confirms to edit the Person.
+4. AddressBook edits the Person's given parameter(s).
+5. AddressBook shows the edited person entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No person in the user's AddressBook matches the given person (invalid input).
++
+[none]
+** 2a1. AddressBook shows error message.
++
+Use case ends.
+
+[none]
+* 2b. The given person does not have the stated parameter(s) (invalid input).
++
+[none]
+** 2b1. AddressBook shows error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export Address Book
+
+*MSS*
+
+1.	User requests to export Address Book
+2.	AddressBook prompts for export location
+3.	User requests a certain location on their computer
+4.	AddressBook exports the address Book to the specified location
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given location is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -793,6 +868,19 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[tag]]
+Tag
+
+....
+A 'tag' is a temporary label that can be used as a casual, mental-note for users to quickly remember who the contact is. For instance, a tag can include detailed relationships ('BFF') or short description about that person ('cool professor').
+....
+
+[[Group]]
+Group
+....
+A 'Group' is a broad category that users can categorize their contacts into. For instance, these can include school names ('NUS') or relationships ('work').
 ....
 
 [appendix]
