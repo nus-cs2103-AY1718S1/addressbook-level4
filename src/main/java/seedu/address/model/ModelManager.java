@@ -84,6 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
     public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
         ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
         for (ReadOnlyPerson oldPerson : persons) {
