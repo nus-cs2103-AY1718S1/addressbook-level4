@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.Collection;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -18,6 +20,10 @@ public class ListCommand extends Command {
             + "Example: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + "friends";
 
+    public ListCommand() {;}
+    
+    public ListCommand(Collection<String> enteredTag) {}
+    
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
