@@ -43,7 +43,13 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar saveLocationStatus;
     @FXML
     private StatusBar totalPersons;
-
+    
+    public StatusBarFooter(String saveLocation) {
+        super(FXML);
+        setSyncStatus(SYNC_STATUS_INITIAL);
+        setSaveLocation("./" + saveLocation);
+        registerAsAnEventHandler(this);
+    }
 
     public StatusBarFooter(String saveLocation, int totalPersons) {
         super(FXML);
