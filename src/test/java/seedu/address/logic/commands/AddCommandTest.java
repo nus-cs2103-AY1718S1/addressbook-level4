@@ -24,8 +24,7 @@ import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 
-public class
-AddCommandTest {
+public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -96,11 +95,6 @@ AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void deleteTag(Tag target) throws TagNotFoundException {
-
-        }
-
-        @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
@@ -119,6 +113,11 @@ AddCommandTest {
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag target) throws TagNotFoundException {
+
         }
 
         @Override
