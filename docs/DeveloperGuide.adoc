@@ -888,7 +888,7 @@ Use case ends.
 
 [none]
 * 1b. Given URL is from Facebook
-+ 
++
 ** 2a1. AddressBook asks the user to input missing details.
 +
 Use case resumes at step 2.
