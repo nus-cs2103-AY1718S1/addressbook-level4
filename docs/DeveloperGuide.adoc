@@ -826,6 +826,110 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Sort list
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to sort list
+4.  AddressBook sorts the list of persons
+5.  AddressBook shows sorted list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 5a. The list is empty.
++
+Use case ends.
+
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find person with keyword (name or first few characters of name)
+2.  AddressBook shows a list of persons with keyword
++
+Use case ends.
+
+*Extensions*
+
+[none]
+
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  User types in details of person to add
+3.  AddressBook shows details of person to add
+4.  AddressBook requests confirmation to add person
+5.  User confirms adding of person
+6.  AddressBook adds person to list of persons
+7.  AddressBook shows updated list of persons with added person
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Details are invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 5a. User denies adding of person.
++
+[none]
+** 5a1. AddressBook requests details to edit
+** 5a2. User types in new, edited details
++
+Use case resumes at step 3.
+
+=== Use case: Undo command
+
+*MSS*
+
+1.  User uses add, delete, edit or clear command
+2.  User requests undo of command
+3.  AddressBook returns to the state before the command
+4.  AddressBook shows updated state
++
+Use case ends.
+
+*Extensions*
+
+* 2a. No more commands to undo.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
