@@ -1014,11 +1014,18 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[[wishlist]]
-Wishlist
+[[critical]]
+Critical
 
 ....
-A list of desirables wanted or needed by a contact for his or her birthday
+Requiring immediate attention
+....
+
+[[blacklist]]
+Blacklist
+
+....
+A list of people who are banned from borrowing
 ....
 
 [[bookmark]]
