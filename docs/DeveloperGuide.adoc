@@ -826,9 +826,10 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should work in systems with at least 20MB of storage space.
-.  Should be user-friendly so that someone who has never used it before will easily be able to understand how it works.
-.  Have internet connection to make use of the search engines.
-.  A user with adequate proficiency in English to understand the help information and user guide.
+.  Should work in systems with internet connection.
+.  A user with sufficient proficiency in English to understand addressbook commands and instructions.
+.  Should be able to hold up to 100 tags per person.
+.  The system should respond within five seconds.
 
 {More to be added}
 
