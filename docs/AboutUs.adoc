@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== Damith
+=== Damith C. Rajapakse
 image::damithc.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]]
 
@@ -28,7 +28,7 @@ Responsibilities: Storage
 
 '''
 
-=== Jelena Neo
+=== Jelena Neo Hui Ling
 image::jelneo.jpg[width="150", align="left"]
 {empty}[http://github.com/jelneo[github]] [<<johndoe#, portfolio>>]
 
@@ -46,7 +46,7 @@ Responsibilities: Logic
 
 '''
 
-=== Lawrence Koh
+=== Lawrence Koh Yong Hong
 image::lawwman.jpg[width="150", align="left"]
 {empty}[http://github.com/lawwman[github]] [<<johndoe#, portfolio>>]
 
