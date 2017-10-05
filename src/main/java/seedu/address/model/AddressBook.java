@@ -62,8 +62,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTag(Tag tag) {
         Iterator it = persons.iterator();
         while (it.hasNext()) {
-
-            ((Person) it.next()).removeTag(tag);
+            (
+                    (Person) it.next()).removeTag(tag);
         }
     }
 
