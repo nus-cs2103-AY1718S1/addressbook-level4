@@ -729,7 +729,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |search for the user based on certain keywords|find contacts more easily.
+
+|`* * *` |user |know how to use the commands  |to get familiar with the app.
+
+|`* *` |user |double-confirm delete command and clear command|avoid doing anything wrong accidentally.
+
+|`* *` |user |view last command faster, just like in UNIX command line. Press the upward arrow view the command I typed in last time.|avoid typing the command again.
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |change the background colour and text colour |satisfy personal needs.
+
+|`* *` |user |have a backup file and a backup command |store the data to avoid accidental data loss.
+
+|`* *` |user with many persons in the address book |get the person who was searched by the user for the most times |easy to get the info of frequent contacts.
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
