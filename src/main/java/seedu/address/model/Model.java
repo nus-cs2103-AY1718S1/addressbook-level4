@@ -37,10 +37,11 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Removes the given tag from all persons in the list */
+     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
-
-    void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
