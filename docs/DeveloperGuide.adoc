@@ -721,17 +721,85 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+4+| Create operations
 
 |`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add tags to a person |categorise the people I know
+
+|`* * *` |user |add relationships between people |show that two persons know each other
+
+|`* *` |user |add link:#named-relationship[named relationships] between people |show that two persons know each other via a specific method
+
+|`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
+
+|`* *` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
+
+|`* *` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
+
+4+| Read operations
+
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |see the people a person is related to |find people related to a person
+
+|`* * *` |user |see the history of commands I have typed |keep track of what I have done to my address book
+
+|`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
+
+|`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
+
+4+| Find operations
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by address |locate people who are physically close to each other
+
+|`* * *` |user |find a person by tag |locate people who are in the same category
+
+|`* *` |user |find a person by email |locate people who may share the same emails / domains (working for same company)
+
+|`* *` |user |find shortest relationship distance between two people |find the most efficient way to know a person
+
+4+| Update operations
+
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |update a person's details |update a person's details without having to create a new contact
+
+|`* *` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
+
+|`* *` |user |change the colour of the network |personalise my address book
+
+4+| Delete operations
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |delete relationships between people |remove relationships between people that are incorrect
+
+|`* * *` |user |delete all persons |reset my address book easily
+
+|`* * *` |cautious user |clear my history |hide my previous commands from later users
+
+|`* *` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
+
+4+| Other operations
+
+|`* * *` |careless user | undo the last command that I made | revert any mistakes
+
+|`* * *` |careless user | redo the last command that I made | undo my 'undo'
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in the address book |hide details by default, and only show full details when I select a particular contact |have a less-cluttered address book
+
+|`* *` |user |set a password for my address book |keep my address book private
+
+|`* *` |user |share my address book with other people |
+
+|`* *` |user |have the program autocorrect my commands |input information correctly
+
+|`* *` |advanced user |type shorter link:#command-alias[command aliases] |do operations faster
 |=======================================================================
 
 {More to be added}
@@ -781,11 +849,32 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[command-alias]]
+Command alias
+
+....
+Shorthand form of a command
+....
+
+[[confidence-estimate]]
+Confidence estimate
+
+....
+A percentage that represents how confident the user is in a particular attribute being accurate
+....
+
 [[mainstream-os]]
 Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+
+[[named-relationship]]
+Named relationship
+
+....
+A relationship between two people with a specific status (eg. lecturer-student)
 ....
 
 [[private-contact-detail]]
