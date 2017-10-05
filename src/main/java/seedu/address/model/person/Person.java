@@ -139,7 +139,7 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-    
+
     /*
     * removes all Tag of that str
      */
