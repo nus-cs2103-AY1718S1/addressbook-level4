@@ -54,3 +54,39 @@ Role: Developer +
 Responsibilities: UI
 
 '''
+
+=== Khoo Wei Ping
+image::weiping.jpeg[width="150", align="left"]
+{empty}[http://github.com/khooroko[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Storage
+
+'''
+
+=== Jelena Neo
+image::jelena.jpg[width="150", align="left"]
+{empty}[http://github.com/jelneo[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: UI
+
+'''
+
+=== Jaivignesh Venugopal
+image::vignesh.jpg[width="150", align="left"]
+{empty}[http://github.com/jaivigneshvenugopal[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Logic
+
+'''
+
+=== Lawrence Koh
+image::lawrence.jpg[width="150", align="left"]
+{empty}[http://github.com/lawwman[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Model
+
+'''
