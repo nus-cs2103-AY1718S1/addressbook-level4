@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,10 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
 
 
 /**
@@ -19,6 +20,7 @@ import java.util.Random;
  */
 public class PersonCard extends UiPart<Region> {
 
+    public final ReadOnlyPerson person;
     private static final String FXML = "PersonListCard.fxml";
 
     /**
@@ -29,7 +31,7 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final ReadOnlyPerson person;
+
 
     //tagColor matches a specific tag with a color
     private static HashMap<String, String> tagColor = new HashMap<String, String>();
