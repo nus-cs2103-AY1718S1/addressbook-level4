@@ -727,11 +727,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |add a person without including all details |add someone into the address book without having to include all particulars
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book having multiple contact number |store multiple contact numbers per person |keep track of all their numbers easily
+
+|`*` |user with colour blindness |use the colour blind option |view items with colour code properly
 
 |`*` |user |sort persons by tags|locate a group of people that belongs to the same category
 
@@ -771,6 +777,16 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Undo Command
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook shows previous command to be undone.
+3.  User confirms to undo command.
+4.  AddressBook undo command.
+
 === Use case: Clear all
 
 *MSS*
@@ -785,6 +801,43 @@ Use case ends.
 *Extensions*
 
 [none]
+* 2a. There is no previous command.
++
+Use case ends.
+
+* 3a. The previous command is undoable.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort list
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows list of persons.
+3.  User request to sort the list by a certain parameter.
+4.  AddressBook shows sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The parameter given is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 * 3a. User cancels the action.
 
 Use case ends.
@@ -797,6 +850,11 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  English should be the only language in the application.
+.  Application should not take more than 50mb of storage.
+.  A new user should be able to use the app with ease after 3 days of using it.
+.  AddressBook should continue to work offline or online.
+.  Should not use more than 100MB of link:#RAM[RAM].
 .  Should be able to work offline
 .  Should be free to download
 
@@ -817,6 +875,13 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[RAM]]
+RAM
+
+....
+Random Access Memory
 ....
 
 [appendix]
