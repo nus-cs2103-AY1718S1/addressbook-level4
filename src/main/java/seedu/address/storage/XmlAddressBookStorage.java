@@ -67,6 +67,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(getBackupAddressBookFilePath());
+    }
+
+    @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
     }
