@@ -29,7 +29,7 @@ public class AddressBookParser {
     /**
      * Enumerator list to define the types of commands.
      */
-    private enum COMMAND_TYPE {
+    private enum CommandType {
         ADD, CLEAR, DEL, EDIT, EXIT, FIND, HELP, HISTORY, LIST, REDO, UNDO, SELECT, NONE
     }
 
@@ -54,9 +54,9 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        COMMAND_TYPE commandType = getCommandType(commandWord);
+        CommandType CommandType = getCommandType(commandWord);
 
-        switch (commandType) {
+        switch (CommandType) {
 
         case ADD:
             return new AddCommandParser().parse(arguments);
@@ -105,68 +105,68 @@ public class AddressBookParser {
      * @return enumerated value for the switch statement to process
      */
 
-    private COMMAND_TYPE getCommandType(String commandWord) {
+    private CommandType getCommandType(String commandWord) {
         for (String word : AddCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.ADD;
+                return CommandType.ADD;
             }
         }
         for (String word : ClearCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.CLEAR;
+                return CommandType.CLEAR;
             }
         }
         for (String word : DeleteCommand.COMMAND_WORDS) {
-            if(commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.DEL;
+            if (commandWord.contentEquals(word)) {
+                return CommandType.DEL;
             }
         }
         for (String word : EditCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.EDIT;
+                return CommandType.EDIT;
             }
         }
         for (String word : ExitCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.EXIT;
+                return CommandType.EXIT;
             }
         }
         for (String word : FindCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.FIND;
+                return CommandType.FIND;
             }
         }
         for (String word : HelpCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.HELP;
+                return CommandType.HELP;
             }
         }
         for (String word : HistoryCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.HISTORY;
+                return CommandType.HISTORY;
             }
         }
         for (String word : ListCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.LIST;
+                return CommandType.LIST;
             }
         }
         for (String word : RedoCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.REDO;
+                return CommandType.REDO;
             }
         }
         for (String word : SelectCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.SELECT;
+                return CommandType.SELECT;
             }
         }
         for (String word : UndoCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
-                return COMMAND_TYPE.UNDO;
+                return CommandType.UNDO;
             }
         }
-        return COMMAND_TYPE.NONE;
+        return CommandType.NONE;
     }
 
 
