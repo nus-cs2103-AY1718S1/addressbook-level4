@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CommandInputChangedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -35,6 +37,10 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+
+        // posts a CommandInputChangedEvent whenever there is a change to the text of the command box.
+        commandTextField.textProperty().addListener((observable, oldInput, newInput) ->
+                EventsCenter.getInstance().post(new CommandInputChangedEvent(newInput)));
         historySnapshot = logic.getHistorySnapshot();
     }
 
