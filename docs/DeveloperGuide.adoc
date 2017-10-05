@@ -732,6 +732,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |undo/redo changes up to a reasonable number of steps in one go |So that multiple mistakes can be rectified easily.
+
+|`* * *` |new user |I can input the details of one contact in any order |so that I do not need memorize and follow the exact order
+
+|`* * *` |user |I can choose to find a contact with any details recorded in the AddressBook |so there are more ways to utilize the address book.
+
+|`* * *` |frequent user |I can sort people according to the frequency of interaction |so that I can find close friends easily
+
+|`* *` |power user |I can add tags to multiple people at the same time |so that creating a new grouping is much less time consuming
+
+|`*` |power user |I can customize abbreviation for people's names |so that searching for them is faster
+
+|`*` |power user |I can change my addressbook theme/color scheme |so that I can enjoy using the address book more.
+
+|`* *` |frequent user |I can 'favourite' a contact |so that these contacts will be on the top of my list on my UI
+
+|`* *` |user |I can click on an email and it opens up an email box |so i can directly send an email directly to the person
+
+|`* *` |user |I can choose to list contacts starting with a certain alphabet |
 |=======================================================================
 
 {More to be added}
