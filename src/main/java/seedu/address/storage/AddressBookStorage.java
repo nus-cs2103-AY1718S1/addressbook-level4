@@ -41,4 +41,7 @@ public interface AddressBookStorage {
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
+
+    void backupStorageBook(ReadOnlyAddressBook addressBook) throws IOException;
+
 }
