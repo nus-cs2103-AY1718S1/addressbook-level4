@@ -1,11 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
-
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,6 +7,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 
 
 /**
@@ -35,8 +34,7 @@ public class PersonCard extends UiPart<Region> {
     //tagColor matches a specific tag with a color
     private static HashMap<String, String> tagColor = new HashMap<String, String>();
     private static ArrayList<String> colors = new ArrayList<String>(
-            Arrays.asList("red", "blue", "orange", "brown", "green", "pink", "black", "grey" )
-    );
+            Arrays.asList("red", "blue", "orange", "brown", "green", "pink", "black", "grey"));
     private static Random random = new Random();
 
 
@@ -79,7 +77,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //following method gets the color related to a specified tag
-    private static String getColorForTag(String tag){
+    private static String getColorForTag(String tag) {
         if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
             String chosenColor = colors.get(random.nextInt(colors.size()));
             tagColor.put(tag, chosenColor); //put the tag and color in
