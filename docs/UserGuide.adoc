@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -250,3 +250,19 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+// tag::commandaliases[]
+=== Alternative Command Aliases
+
+* *Add* `add` or `a` 
+* *Clear* : `clear` or `c`
+* *Delete* : `delete` or `d`
+* *Edit* : `edit` or `e`
+* *Find* : `find` or `f`
+* *List* : `list` or `l`
+* *Help* : `help` or `h`
+* *Select* : `select` or `s`
+* *History* : `history` or `his`
+* *Undo* : `undo` or `u`
+* *Redo* : `redo` or `r`
+// end::commandaliases[]
