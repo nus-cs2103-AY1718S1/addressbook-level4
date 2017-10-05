@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -794,6 +794,7 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
 
 [appendix]
 == Product Survey
