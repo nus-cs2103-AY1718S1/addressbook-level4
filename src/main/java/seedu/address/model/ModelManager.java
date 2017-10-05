@@ -116,4 +116,8 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    public void deleteTag(String str) {
+        addressBook.removeTag(str);
+    }
+
 }
