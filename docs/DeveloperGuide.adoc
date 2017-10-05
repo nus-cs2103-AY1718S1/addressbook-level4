@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -721,39 +721,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |New User |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |User |add a new person |Add my details into the hotel's address book.
+|`* * *` |user |add a new person |
 
-|`* * *` |Member |log in with credentials |Access member functions that the public user should not be able to use.
+|`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |Member |edit my own entry |Edit or update my own information when required.
+|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |Manager |list active residents|find persons who are currently staying in the hotel.
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* * *` |Manager |delete a person |remove entries that I no longer need.
-
-|`* * *` |Manager |find a person by name |locate details of persons without having to go through the entire list
-
-|`* * *` |Manager |edit an entry | to change or update information about a person when required.
-
-|`* * *` |Manager |log in with credentials |to access functions that the public user should not be able to use.
-
-|`* * *` |Manager |access a person's history |to look for information on existing or previous stays with the hotel.
-
-|`* *` |Manager |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`* *` |Manager |list residents on a certain date|find persons who were staying at the hotel on that particular date.
-
-|`* *` |Member |make payment via the app |ease the payment process by not having to queue at reception.
-
-|`* *` |Member |make hotel bookings|ease the booking process
-
-|`* *` |User |sign up for membership|Gain member access to the app and their exclusive functions.
-
-|`* *` |User |provide anonymous feedback|let the hotel know about my experience with the app or hotel services.
-
-|`*` |User with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
 {More to be added}
