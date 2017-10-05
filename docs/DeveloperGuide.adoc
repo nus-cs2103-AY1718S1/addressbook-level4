@@ -729,6 +729,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* *` |user with many people in the address book |delete people in address book by tags |remove people of the same group
+
+|`* *` |user with many people in the address book |change the view mode of GUI |display different number of contacts per page
+
+|`* *` |user |change font size, colours, etc |customize the layout according to preference
+
+|`* *` |original user |set password for access |enhance the security of Address Book
+
+|`* *` |user |view [private contact details](#private-contact-detail) |view details of hidden contacts
+
+|`* *` |user with many people in the address book |sort people by birthday |check for upcoming birthdays
+
+|`* *` |user |highlight contacts |place it at the top
+
+|`* *` |user |displays the most searched contacts |display the most searched contacts
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -769,6 +785,117 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: List all the persons
+
+*MSS*
+
+1.  User requests to list all the persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Make relation links with contacts
+
+*MSS*
+
+1.  User requests for name of person to be linked, the name of person with the link, and the relation between both person
+2.   AddressBook displays the details of the person with the link.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 1b. The given name(s) is invalid
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort person by name
+
+*MSS*
+
+1.  User requests to sort person by name
+2.  AddressBook sorts all the contacts
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort person by fields in alphabetical order
+
+*MSS*
+
+1.  User requests to sort persons by field
+2.  AddressBook requests user for the field
+3.  User requests to sort persons by a specified field
+4.  AddressBook shows a list of persons by the fields in alphabetical order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given field is invalid
++
+Use case resumes at step 2.
+
+* 4a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort person to user preference
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to list contacts in new order of preference
+4.  AddressBook shows a list of persons by user preference
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index(es) is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given index(es) is repetitive.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 [appendix]
 == Non Functional Requirements
 
@@ -793,6 +920,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[speech recognition]]
+Speech recognition
+
+....
+Recognition and translation of spoken language into text
+....
+
+[[GUI]]
+GUI
+
+....
+Graphical user interface : Allows users to interact with electronic devices through visual indicators
 ....
 
 [appendix]
