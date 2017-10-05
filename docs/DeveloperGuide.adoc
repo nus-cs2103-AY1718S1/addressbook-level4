@@ -781,6 +781,9 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+Tag
+--> A short phrase to describe your contact
+
 [[mainstream-os]]
 Mainstream OS
 
