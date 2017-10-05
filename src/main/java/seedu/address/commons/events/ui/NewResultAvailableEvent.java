@@ -15,8 +15,6 @@ public class NewResultAvailableEvent extends BaseEvent {
         this.isInvalid = isInvalid;
     }
 
-    
-    
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
