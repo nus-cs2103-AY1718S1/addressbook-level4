@@ -789,7 +789,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+== Use case: Delete person
 
 *MSS*
 
@@ -814,7 +814,55 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+== Use case: Sort person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to sort contacts by name
+4. AddressBook sorts contacts by name
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+== Use case: Help
+
+*MSS*
+
+1. User requests help
+2. AddressBook opens a new help window
++
+Use case ends.
+
+[discrete]
+== Use case: Edit person
+
+*MSS*
+
+1. User requests to edit person
+2. User types in new particulars
+3. AddressBook edits contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -825,7 +873,6 @@ Use case resumes at step 2.
 .  The program should be able to start up within 5 seconds.
 .  The program should be able to respond to any queries within 1 second.
 
-{More to be added}
 
 [appendix]
 == Glossary
