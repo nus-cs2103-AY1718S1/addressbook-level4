@@ -826,6 +826,8 @@ Use case resumes at step 2.
 ** 3b1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+=======
+
 
 [appendix]
 == Non Functional Requirements
@@ -833,6 +835,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should have support for UTF-8 chracters
+.  Should have an intuitive UI such that a new user can become familiarized with the application easily 
+.  Should have an attractive UI so that potential users will be more inclined to try out this application
+.  Should be responsive to viewports of different sizes
+
 
 {More to be added}
 
