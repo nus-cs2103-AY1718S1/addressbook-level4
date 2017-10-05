@@ -6,8 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -68,14 +66,14 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            if( Integer.parseInt(id.getText().replace(". " , "")) % 2 == 0 ) {
-                tagLabel.setStyle("-fx-background-color: deepskyblue;" +
-                        " -fx-font-size: 15px;" +
-                        " -fx-text-fill: black");
+            if (Integer.parseInt(id.getText().replace(". " , "")) % 2 == 0) {
+                tagLabel.setStyle("-fx-background-color: deepskyblue;"
+                        + " -fx-font-size: 15px;"
+                        + " -fx-text-fill: black");
             } else {
-                tagLabel.setStyle("-fx-background-color: lightgreen;" +
-                        " -fx-font-size: 15px;" +
-                        " -fx-text-fill: red");
+                tagLabel.setStyle("-fx-background-color: lightgreen;"
+                        + " -fx-font-size: 15px;"
+                        + " -fx-text-fill: red");
             }
             tags.getChildren().add(tagLabel);
         });
