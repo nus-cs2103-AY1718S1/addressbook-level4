@@ -19,44 +19,8 @@ Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
-
 === Khoo Wei Ping
-image::weiping.jpeg[width="150", align="left"]
+image::khooroko.jpeg[width="150", align="left"]
 {empty}[http://github.com/khooroko[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -65,7 +29,7 @@ Responsibilities: Storage
 '''
 
 === Jelena Neo
-image::jelena.jpg[width="150", align="left"]
+image::jelneo.jpg[width="150", align="left"]
 {empty}[http://github.com/jelneo[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -74,7 +38,7 @@ Responsibilities: UI
 '''
 
 === Jaivignesh Venugopal
-image::vignesh.jpg[width="150", align="left"]
+image::jaivigneshvenugopal.jpg[width="150", align="left"]
 {empty}[http://github.com/jaivigneshvenugopal[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -83,7 +47,7 @@ Responsibilities: Logic
 '''
 
 === Lawrence Koh
-image::lawrence.jpg[width="150", align="left"]
+image::lawwman.jpg[width="150", align="left"]
 {empty}[http://github.com/lawwman[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
