@@ -783,6 +783,79 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1.  User request to clear AddressBook
+2.  AddressBook clears the list of person
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User request to redo previous undone command
+2.  AddressBook redo the previous undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no previous undone command to redo
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Schedule meeting with person
+
+*MSS*
+
+1.  User requests to find person with name keywords
+2.  AddressBook shows a list of persons with keywords
+3.  User requests to add schedule of a specific person in the list
+4.  AddressBook shows lists of meetings
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 [appendix]
 == Non Functional Requirements
 
