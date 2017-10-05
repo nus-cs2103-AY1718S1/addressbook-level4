@@ -893,7 +893,6 @@ Use case resumes at step 2.
 .  Should return accurate search results for duplicate contacts by at least 70%.
 .  Should have a backup storage file to store data in case of data loss from main file.
 .  The project is expected to adhere to a schedule that delivers at least one feature every week.
-.  
 
 [appendix]
 == Glossary
