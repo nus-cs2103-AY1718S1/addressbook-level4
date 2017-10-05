@@ -805,8 +805,6 @@ Use case ends.
 Use case resumes at step 2.
 
 === Use case: Add remark
-
-
 *MSS*
 
 1.  User requests to list persons
