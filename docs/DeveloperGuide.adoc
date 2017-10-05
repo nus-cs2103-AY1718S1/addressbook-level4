@@ -850,16 +850,18 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+Handy Address Book
 
-Author: ...
+Author: Doctor Java
 
 Pros:
 
-* ...
-* ...
+* Functions Well
+* Custom Categories
+* Import/Export Contacts
+* Label Printing
+* Google Contacts Sync
 
 Cons:
 
-* ...
-* ...
+* Costly
