@@ -732,6 +732,66 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |new user |see suggested commands as I type them |easily remember what to write without referring to the help sheet
+
+|`* * *` |user |edit information about a contact without retyping everything |save time and work
+
+|`* * *` |user |add or delete multiple users in one go |I can save time by not repeating commands
+
+|`* * *` |user |list contacts in alphabetical order |find a contact by the first letter of their name
+
+|`* * *` |user |use case-insensitive commands |type or retype commands in a specific case
+
+|`* * *` |user |add contacts while leaving one or more fields blank, except for the name |save contacts without having to know every detail
+
+|`* * *` |user |search my contacts by name, number, tag or address |find people more easily
+
+|`* * *` |user |conduct the search quickly and efficiently |save time
+
+|`* *` |advanced user |shorten commands |work efficiently
+
+|`* *` |user |send selected contacts with others |share them without others having to type it in
+
+|`* *` |user using a public computer |set a password to lock my stored data |be free of security related worries
+
+|`*` |user |see mutual contacts |find out who knows who
+
+|`* *` |user |merge multiple duplicate contacts simultaneously |save time and have a clean addressbook
+
+|`* *` |user |locate my contacts if their location services are enabled and they are nearby |meet up with more people
+
+|`* *` |user |link my addressbook contacts to their social media accounts |keep updated on their latest posts from a single platform
+
+|`* *` |user |have addressbook update my contacts automatically when they change them |have their latest information without updating it manually
+
+|`* *` |user |have photographs attached to my contacts |recognize them easily
+
+|`* *` |user |have common and emergency contacts preloaded in the addressbook |access them without adding them myself
+
+|`* *` |user |store multiple phone numbers or emails for the same contact |avoid making duplicate contacts with slightly different information
+
+|`*` |user |have nicknames associated with each contact while searching |recognize them better
+
+|`* *` |OTG user |access addressbook on multiple platforms and sync my data |have my contacts close at hand from anywhere
+
+|`* * *` |user |tag multiple people using the same tag |save time
+
+|`* *` |user |use tags to send mass emails or texts to people |save time sending them individually
+
+|`* * *` |user |see my most frequently contacted people at the top of the list |contact them quickly
+
+|`* *` |user |add tasks |manage my schedule
+
+|`* *` |user |edit tasks |keep up to date with changes
+
+|`* *` |user |delete tasks |remove entries I no longer need
+
+|`* *` |user |archive completed tasks |have a record of tasks I have finished
+
+|`* *` |unsure user |add tasks with or without deadlines |manage my schedule without knowing every detail
+
+|`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
 |=======================================================================
 
 {More to be added}
