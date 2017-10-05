@@ -735,7 +735,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many social circles |add tags to my contacts |group them by how they are related to me
 
-|`* *` |user |have wishlists |let my contacts can know what to buy me for my birthday without telling them
+|`* *` |user |have link:#wishlist[wishlist] |let my contacts can know what to buy me for my birthday without telling them
 
 |`* *` |user |receive an email notification when logging in from an unknown device |know when there are unintended logins to my account
 
@@ -753,7 +753,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |create custom fields |store additional information for some contacts
 
-|`* *` |user |be able to bookmark contacts |access important contacts much faster
+|`* *` |user |be able to link:#bookmark[bookmark] contacts |access important contacts much faster
 
 |`* *` |user |have a password required log-in |have more privacy
 
@@ -993,6 +993,21 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
+[[wishlist]]
+Wishlist
+
+....
+A list of desirables wanted or needed by a contact for his or her birthday
+....
+
+[[bookmark]]
+Bookmark
+
+....
+An action that enables certain contacts to be displayed on application start-up
+....
+
 
 [appendix]
 == Product Survey
