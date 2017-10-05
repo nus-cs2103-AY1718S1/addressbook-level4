@@ -11,6 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
+
 === Phua Han Siang
 image::hansiang.jpg[width="150", align="left"]
 {empty}[http://hansphua.com[homepage]] [https://github.com/hansiang93[github]] [https://www.linkedin.com/in/phsiang/[linkedin]] [<<hansiang#, portfolio>>]
@@ -21,11 +22,11 @@ Responsibilities: Project
 '''
 
 === Joshua Ng
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+image::damithc.jpg[width="150", align="left"]
+{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Project Advisor
+Responsibilities: 
 
 '''
 
