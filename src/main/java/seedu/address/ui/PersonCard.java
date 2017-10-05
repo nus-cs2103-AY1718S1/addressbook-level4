@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,8 +15,24 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
     private static final String FXML = "PersonListCard.fxml";
+
+    /**
+     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.
+     */
+    private static final int RGB_BOUND = 16777216;
+
+    // Random number generator (non-secure purpose)
+    private static final Random randomGenerator = new Random();
+
+    /**
+     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
+     * {@code HashMap} has to be declared as a class variable.
+     */
+    private static HashMap<String, String> tagColors = new HashMap<>();
+
+    // Keep a list of all persons.
+    public final ReadOnlyPerson person;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -22,9 +41,6 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    public final ReadOnlyPerson person;
-
     @FXML
     private HBox cardPane;
     @FXML
@@ -59,12 +75,34 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Initializes all the tags of a person displayed in different random colors.
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            String tagName = tag.tagName;
+            Label newTagLabel = new Label(tagName);
+            newTagLabel.setStyle(String.format("-fx-background-color: #%s", getRandomColorValue(tagName)));
+            tags.getChildren().add(newTagLabel);
+        });
+    }
+
+    /**
+     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random. It will
+     * use the same color if a tag with the same name already exists.
+     *
+     * @return a 6-character string representation of the hexadecimal RGB value.
+     */
+    private String getRandomColorValue(String tagName) {
+        if (!tagColors.containsKey(tagName)) {
+            tagColors.put(tagName, Integer.toHexString(randomGenerator.nextInt(RGB_BOUND)));
+        }
+
+        return tagColors.get(tagName);
     }
 
     @Override
