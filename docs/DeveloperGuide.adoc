@@ -850,6 +850,41 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[API]]
+API
+
+....
+Application programming interface (API) is a set of subroutine definitions, protocols, and tools for building application software.
+....
+
+[[JUnit]]
+JUnit
+
+....
+JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks.
+....
+
+[[Gradle]]
+Gradle
+
+....
+Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL).
+....
+
+[[Shorthand Commands]]
+Shorthand Commands
+
+....
+Shortcut keys that help to provide an easier and usually quicker method of navigating and executing commands in computer software programs.
+....
+
+[[Travis_CI]]
+Travis_CI
+
+....
+Travis_CI is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub.
+....
+
 [appendix]
 == Product Survey
 
