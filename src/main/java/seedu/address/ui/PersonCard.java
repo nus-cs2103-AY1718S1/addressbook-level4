@@ -63,6 +63,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initializes the tags with text values and alternating colours between each index
+     * in the list
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
