@@ -83,7 +83,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    @Override
+
     public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
         addressBook.removeTag(tagGettingRemoved);
     }

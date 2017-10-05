@@ -46,11 +46,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-
-    /**
-     * Remove a tag from the master tag list and the persons in addressbook
-     * @throws TagNotFoundException if (@code tagGettingRemoved) is not found in master list
-     */
-    void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException;
-
 }
