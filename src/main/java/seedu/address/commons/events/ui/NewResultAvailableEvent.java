@@ -19,5 +19,4 @@ public class NewResultAvailableEvent extends BaseEvent {
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }
