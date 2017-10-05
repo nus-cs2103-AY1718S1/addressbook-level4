@@ -3,18 +3,24 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -79,6 +85,27 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    /**
+     * Deletes a specified tag from every person in the AddressBook
+     * @param tag
+     * @throws PersonNotFoundException
+     * @throws DuplicatePersonException
+     */
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            Person personClone = new Person(oldPerson);
+            ObjectProperty<UniqueTagList> oldTagList = oldPerson.tagProperty();
+            Set<Tag> tagListToEdit = oldTagList.get().toSet();
+            tagListToEdit.remove(tag);
+            personClone.setTags(tagListToEdit);
+            addressBook.updatePerson(oldPerson, personClone);
+        }
+        // remove from master tag list in AddressBook
+        addressBook.removeTag(tag);
     }
 
     //=========== Filtered Person List Accessors =============================================================
