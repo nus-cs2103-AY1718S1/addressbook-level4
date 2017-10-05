@@ -795,63 +795,63 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[[API]]
+[[api]]
 API
 
 ....
 An application program interface (API) is code that allows two software programs to communicate with each other. The API defines the correct way for a developer to write a program that requests services from an operating system (OS) or other application. APIs are implemented by function calls composed of verbs and nouns. The required syntax is described in the documentation of the application being called.
 ....
 
-[[JavaFX]]
+[[javaFX]]
 JavaFX
 
 ....
 JavaFX is a software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices. JavaFX is intended to replace Swing as the standard GUI library for Java SE, but both will be included for the foreseeable future.
 ....
 
-[[Gradle]]
+[[gradle]]
 Gradle
 
 ....
 Gradle is a flexible general purpose build tool
 ....
 
-[[TravisCI]]
+[[travisCI]]
 TravisCI
 
 ....
 Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub. Travis CI automatically detects when a commit has been made and pushed to a GitHub repository that is using Travis CI, and each time this happens, it will try to build the project and run tests. This includes commits to all branches, not just to the master branch.
 ....
 
-[[GUI]]
+[[Gui]]
 GUI
 
 ....
 A graphical user interface (GUI) is a human-computer interface (i.e., a way for humans to interact with computers) that uses windows, icons and menus and which can be manipulated by a mouse (and often to a limited extent by a keyboard as well).
 ....
 
-[[UI]]
+[[ui]]
 UI
 
 ....
 The user interface (UI), in the industrial design field of human–computer interaction, is the space where interactions between humans and machines occur.
 ....
 
-[[Activity diagram]]
+[[activity-diagram]]
 Activity diagram
 
 ....
 Activity diagram is basically a flowchart to represent the flow from one activity to another activity.
 ....
 
-[[Class diagram]]
+[[class-diagram]]
 Class diagram
 
 ....
 In software engineering, a class diagram in the Unified Modeling Language (UML) is a type of static structure diagram that describes the structure of a system by showing the system's classes, their attributes, operations (or methods), and the relationships among objects.
 ....
 
-[[Sequence diagram]]
+[[sequence-diagram]]
 Sequence diagram
 
 ....
