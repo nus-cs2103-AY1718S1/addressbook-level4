@@ -54,7 +54,7 @@ public class AddressBookParser {
                 return new AddCommandParser().parse(arguments);
 
             case EditCommand.COMMAND_WORD:
-            case EditComand.COMMAND_ALIAS:
+            case EditCommand.COMMAND_ALIAS:
                 return new EditCommandParser().parse(arguments);
 
             case SelectCommand.COMMAND_WORD:
@@ -85,7 +85,6 @@ public class AddressBookParser {
                 return new ExitCommand();
 
             case HelpCommand.COMMAND_WORD:
-            case HelpCommand.COMMAND_ALIAS:
                 return new HelpCommand();
 
             case UndoCommand.COMMAND_WORD:
