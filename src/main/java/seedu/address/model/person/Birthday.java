@@ -11,10 +11,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthday should be in the format dd/mm/yyyy, if you don't know person's birthday, leave it as 00/00/0000";
+            "Person birthday should be in the format dd/mm/yyyy, default is 00/00/0000";
 
 
-    public static final String BIRTHDAY_VALIDATION_REGEX = "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
+    public static final String BIRTHDAY_VALIDATION_REGEX =
+            "^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$";
 
     public final String value;
 
