@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
+
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +14,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -114,6 +118,24 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        int totalSize = addressBook.getPersonList().size();
+
+        for (int i = 0; i < totalSize; i++) {
+            ReadOnlyPerson toDelete = addressBook.getPersonList().get(i);
+            Person toUpdate = new Person(toDelete);
+
+            Set<Tag> newTags = toUpdate.getTags();
+            newTags.remove(tag);
+            toUpdate.setTags(newTags);
+
+            addressBook.updatePerson(toDelete, toUpdate);
+
+
+        }
     }
 
 }
