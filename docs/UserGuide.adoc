@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Codii - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T17-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
