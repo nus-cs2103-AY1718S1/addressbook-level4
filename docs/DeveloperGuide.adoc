@@ -733,6 +733,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
 
+|`* *` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
+
 |`* *` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
 
 4+| Read operations
