@@ -31,9 +31,11 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommand extends UndoableCommand {
 
+    public static final String[] COMMAND_WORDS = {"edit", "e", "change", "ed"};
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
+            + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
