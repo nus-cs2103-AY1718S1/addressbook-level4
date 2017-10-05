@@ -59,5 +59,5 @@ public class ResultDisplay extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
 }
+

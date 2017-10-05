@@ -50,7 +50,6 @@ public class AddressBookParser {
 
             case AddCommand.COMMAND_WORD:
             case AddCommand.COMMAND_ALIAS:
-
                 return new AddCommandParser().parse(arguments);
 
             case EditCommand.COMMAND_WORD:
