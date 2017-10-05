@@ -763,7 +763,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |record the birthdays of my contacts |know when to celebrate their birthdays
 
-|`*` |user |receive a notification on my contacts' birthdays |know when they are and celebrate them
+|`*` |user |receive a notification on my contacts birthdays |know when they are and celebrate them
 
 |`*` |user |add chinese names |record my chinese friends with no english names
 
@@ -777,7 +777,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user who likes variety |change the font colour based on my mood |feel better while using the address book
 
-|`*` |user who is concerned about security |use a login system |secure my contacts' information
+|`*` |user who is concerned about security |use a login system |secure my contacts information
 
 |`*` |user with bad memory |receive a hint for correct commands when I type something similar that is incorrect |remove the hassle of memorising commands
 
@@ -790,8 +790,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |ultra-book user |adjust the application to my viewport |scale it down to the size of my laptop screen
 
 |`*` |user with many friends |see their birthdays collated and displayed in a calendar |know when to prepare for their birthdays
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
 {More to be added}
