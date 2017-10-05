@@ -911,7 +911,7 @@ Gradle
 Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL).
 ....
 
-[[Shorthand Commands]]
+[[Shorthand-Commands]]
 Shorthand Commands
 
 ....
