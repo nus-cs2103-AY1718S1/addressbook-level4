@@ -4,7 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -26,7 +26,7 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     @FXML
-    private HBox cardPane;
+    private GridPane cardPane;
     @FXML
     private Label name;
     @FXML

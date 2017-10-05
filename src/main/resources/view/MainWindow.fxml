@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -23,33 +24,27 @@
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
   </MenuBar>
-
-  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
-
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
-
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-    </VBox>
-
-    <StackPane fx:id="panelPlaceholder" prefWidth="340">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-    </StackPane>
-  </SplitPane>
-
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+   <VBox fx:id="details" VBox.vgrow="ALWAYS">
+      <children>
+        <StackPane fx:id="commandBoxPlaceholder" prefHeight="125.0" VBox.vgrow="NEVER" />
+        <StackPane fx:id="resultDisplayPlaceholder" prefHeight="200.0" VBox.vgrow="NEVER" />
+         <GridPane fx:id="gridPane" alignment="CENTER" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" />
+               <ColumnConstraints hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+             <VBox fx:id="personList" prefWidth="340.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+             </VBox>
+             <StackPane fx:id="panelPlaceholder" alignment="TOP_RIGHT" prefWidth="340.0" GridPane.rowIndex="1" />
+            </children>
+         </GridPane>
+        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+      </children>
+   </VBox>
 </VBox>
