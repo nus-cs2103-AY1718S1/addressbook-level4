@@ -97,12 +97,11 @@ public class StorageManager extends ComponentManager implements Storage {
         saveAddressBook(addressBook, getBackupStorageFilePath());
     }
 
-    private String getBackupStorageFilePath() {
-        int storageFolderNameStartIndex = 0;
-        int storageFolderNameEndIndex = 5;
-
-        return addressBookStorage.getAddressBookFilePath()
-                .substring(storageFolderNameStartIndex, storageFolderNameEndIndex) + "backup.xml";
+    /**
+     * @return filepath to AddressBook backup file.
+     */
+    public String getBackupStorageFilePath() {
+        return addressBookStorage.getAddressBookFilePath() + "-backup.xml";
     }
 
 
