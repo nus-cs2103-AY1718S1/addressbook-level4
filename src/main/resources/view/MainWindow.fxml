@@ -55,3 +55,4 @@
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
    <PasswordField text="Type your password here" />
 </VBox>
+
