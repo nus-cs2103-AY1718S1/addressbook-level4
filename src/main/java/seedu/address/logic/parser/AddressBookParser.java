@@ -2,9 +2,12 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import java.util.logging.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -30,6 +33,7 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
      * Parses user input into command for execution.
@@ -50,50 +54,62 @@ public class AddressBookParser {
 
         case AddCommand.COMMAND_WORD:
             case AddCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             case EditCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
             case SelectCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             case DeleteCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             case ClearCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
             case FindCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             case ListCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
             case HistoryCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
             case ExitCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
             case HelpCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
             case UndoCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
             case RedoCommand.COMMAND_ALIAS:
+                logger.info("*" + commandWord + "*");
             return new RedoCommand();
 
         default:
