@@ -729,9 +729,29 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by phone number or email |locate details of person without knowing their name
+
+|`* * *` |user |add a multiple phone numbers to a person |
+
+|`* * *` |user |add a multiple email addresss to a person |
+
+|`* * *` |user |see the Social Media links of a contact in the browser |see the latest updates of the person
+
+|`* * *` |user |add todo tasks to the front page of the app |see a list of tasks to do
+
+|`* *` |user |share my default contact with another person |friend does not need to enter the entire add command manually
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user with many persons in the address book |list persons as favourites |see most important contacts at a glance
+
+|`* *` |user |assign a todo task to a contact |remember a task that is associated to a person
+
+|`* *` |user |filter todo list by contacts |see the list of actions to take associated to the person
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book |create custom lists of persons |see a group of pre-defined persons
 |=======================================================================
 
 {More to be added}
