@@ -51,13 +51,14 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * Generate an RGB color then convert to HEX style based on sum of tag's ASCII code. Will regenerate color if sum of
-     * RBG is above 700, indicating it is too white (unreadable).
+     * RGB is above 700, indicating it is too white (unreadable).
      * This is done so that strings of same value will have persistent colour.
      */
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
-            int multiplier = 10;
-            int asciiSum = tagValue.chars().sum() * multiplier;
+            int multiplier = 1;
+            int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
+
             int colorRed = asciiSum % 256;
             int colorGreen = (asciiSum/2) % 256;
             int colorBlue = (asciiSum/3) % 256;
