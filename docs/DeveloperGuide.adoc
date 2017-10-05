@@ -817,6 +817,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Create a contact
 
 *MSS*
@@ -834,6 +835,7 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
 === Use case: Edit/Update a specific contact
 
 *MSS*
@@ -845,15 +847,15 @@ Use case ends.
 
 *EXTENSIONS*
 
-*2a. The given input is invalid
+* 2a. The given input is invalid
 +
 ** 2a1. Addressbook shows an error message for such situation
 +
 Use case ends.
 
-*3a. The list contains no matching contact for the user to edit
+* 3a. The list contains no matching contact for the user to edit
 +
-**3a1. Addressbook shows an error message for such situation
+** 3a1. Addressbook shows an error message for such situation
 +
 Use case ends.
 
