@@ -57,7 +57,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes tag from all Persons in the AddressBook {@code tag}
+     * Removes tag from all persons in the AddressBook {@code tag}
      */
     public void removeTag(Tag tag) {
         Iterator it = persons.iterator();
