@@ -20,7 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
-    public final ReadOnlyPerson person;
+
     private static final String FXML = "PersonListCard.fxml";
 
     /**
@@ -34,11 +34,12 @@ public class PersonCard extends UiPart<Region> {
 
 
     //tagColor matches a specific tag with a color
-    private static HashMap<String, String> tagColor = new HashMap<String, String>();
     private static ArrayList<String> colors = new ArrayList<String>(
             Arrays.asList("red", "blue", "orange", "brown", "green", "pink", "black", "grey"));
+    private static HashMap<String, String> tagColor = new HashMap<String, String>();
     private static Random random = new Random();
 
+    public final ReadOnlyPerson person;
 
     @FXML
     private HBox cardPane;
