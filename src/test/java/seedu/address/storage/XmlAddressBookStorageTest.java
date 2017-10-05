@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -18,6 +19,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 
 public class XmlAddressBookStorageTest {
@@ -62,22 +64,27 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
+    public void readAndSaveAndBackupAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         AddressBook original = getTypicalAddressBook();
+        AddressBook backup = original;
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+        xmlAddressBookStorage.backupAddressBook(backup);
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertEquals(backup, original);
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+        xmlAddressBookStorage.backupAddressBook(original);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertEquals(backup, original);
 
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
