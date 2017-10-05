@@ -4,53 +4,53 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+Codii was developed by the team https://github.com/CS2103AUG2017-T17-B1[CS2103AUG2017 T17-B1] and was adapted
+ from AddressBook - Level 4, which was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
+=== Damith C. Rajapakse
 image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Lecturer
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Khoo Wei Ping
+image::khooroko.jpeg[width="150", align="left"]
+{empty}[http://github.com/khooroko[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Storage
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Jelena Neo Hui Ling
+image::jelneo.jpg[width="150", align="left"]
+{empty}[http://github.com/jelneo[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
+
+'''
+
+=== Jaivignesh Venugopal
+image::jaivigneshvenugopal.jpg[width="150", align="left"]
+{empty}[http://github.com/jaivigneshvenugopal[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Logic
+
+'''
+
+=== Lawrence Koh Yong Hong
+image::lawwman.jpg[width="150", align="left"]
+{empty}[http://github.com/lawwman[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Model
 
 '''
