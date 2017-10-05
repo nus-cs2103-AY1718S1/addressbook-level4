@@ -817,6 +817,48 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Create a contact
+
+*MSS*
+
+1. User inputs the command with the correct keywords
+2. AddressBook confirms the addition by showing the confirmation message
++
+Use case ends.
+
+*EXTENSIONS*
+
+* 2a. The given input is invalid (Wrong format, etc)
++
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit/Update a specific contact
+
+*MSS*
+
+1. User requests to edit a contact and inputs the command with correct keywords
+2. AddressBook updates the task with new details and displays a confirmation of the operation on the screen
++
+Use case ends.
+
+*EXTENSIONS*
+
+* 2a. The given input is invalid
++
+** 2a1. Addressbook shows an error message for such situation
++
+Use case ends.
+
+* 3a. The list contains no matching contact for the user to edit
++
+** 3a1. Addressbook shows an error message for such situation
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -871,7 +913,7 @@ Gradle
 Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL).
 ....
 
-[[Shorthand Commands]]
+[[Shorthand-Commands]]
 Shorthand Commands
 
 ....
