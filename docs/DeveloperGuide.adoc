@@ -731,6 +731,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* * *` |user |edit my addressBook |make changes to the addressBook
+
+|`* * *` |user |view my contact list in alphabetical order |scroll through the list easily
+
+|`* * *` |user |find persons by birthday month |find who is having birthdays
+
+|`* * *` |user |add a color for person cards | give different colors to different person
+
+|`* * *` |user |pin contacts at the top |find my favourite contacts more easily
+
+|`* *` |user |have confirmation before deleting a person |ensure that I am deleting the correct person
+
+| `* *` |user |delete persons that contain a certain tag |delete a group with convenience
+
+|`*` |user |be able to add and view money lent to my friends |keep track of money lending
+
+|`*` |user |open one help UI at any time |limit the number of windows opened
+
+|`*` |user |see the time |keep track of the time
+
+|`*` |user |apply different themes |customise it according to my preference
+
+
+
+
+
+
+
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
