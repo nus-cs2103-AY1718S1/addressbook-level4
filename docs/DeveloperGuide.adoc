@@ -850,7 +850,7 @@ Use case ends.
 
 4a. The given tag is invalid
 
-> 4a1. AddressBook shows an error message 
+> 4a1. AddressBook shows an error message
   Use case resumes at step 3
 
 5a. User disconfirm the changes
