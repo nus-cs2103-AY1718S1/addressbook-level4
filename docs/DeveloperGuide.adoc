@@ -769,12 +769,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |displays the most searched contacts |display the most searched contacts
 
-
-
 |`* *` |user |tag multiple people at the same time |quickly tag all people who share the similarities conveniently
 
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` | user | update data to server | access it from any device
+
+|`*` | user | add photos to contacts in GUI | recognize the contacts easily
+
+|`*` | user | add speech recognition | make it a hands-free device
+
+|`*` | user | display contacts address on map | access their location
+
+|`*` | user | import data file from another device | access from different devices
+
+|`*` | user | export data file to another format | transfer to different devices
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -1012,6 +1021,43 @@ Use case resumes at step 2.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find contacts by tags
+
+*MSS*
+
+1.  User requests to find all the tags
+2.  AddressBook shows a list of tags
+3.  User requests to list persons with specified tag
+4.  AddressBook shows a list of persons with the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no tags.
++
+Use case ends.
+
+* 3a. The given tag is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Running Executable file
+
+*MSS*
+
+1.  User runs the executable file
+2.  AddressBook runs the software
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
