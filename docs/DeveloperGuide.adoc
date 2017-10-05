@@ -742,6 +742,33 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Add person 
+
+*MSS*
+
+1.  User requests to add a new person
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person is already in the address book 
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 2b. The command format is invalid
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
 === Use case: Delete person
 
 *MSS*
@@ -767,7 +794,38 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit person 
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook edits the person's contact details given by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The command format is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
