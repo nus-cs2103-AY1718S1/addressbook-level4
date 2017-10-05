@@ -947,6 +947,40 @@ Use case ends.
 [appendix]
 == Glossary
 
+[[address-book]]
+Address Book
+
+....
+Collection of all persons data used by application
+....
+
+[[person]]
+Person
+
+....
+Represents a particular collection of data associated with one entry in the address book.
+....
+
+[[command]]
+Command
+....
+An action executed by the application on the address book.
+....
+
+[[keyword]]
+Keyword
+
+....
+Specifier used to query data, (ie. part of name, phone number, address).
+....
+
+[[Tag]]
+Tag
+
+....
+A custom specifier to categorize contacts by similarity, (ie. 'friends', 'family', 'colleagues').
+....
+
 [[mainstream-os]]
 Mainstream OS
 
