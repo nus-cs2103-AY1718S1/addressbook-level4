@@ -91,6 +91,7 @@ public class PersonCard extends UiPart<Region> {
         return tagColor.get(tag);
     }
 
+    //initialise the tag with the colors and the tag name
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
