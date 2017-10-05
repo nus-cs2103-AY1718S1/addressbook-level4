@@ -739,7 +739,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add or delete multiple users in one go |I can save time by not repeating commands
 
-|`* * *` |user |list contacts in alphabetical order |find a contact by the first letter of their name
+|`* * *` |user |tag people using any tag |organize my contacts and add other pertinent information about them
 
 |`* * *` |user |use case-insensitive commands |type or retype commands in a specific case
 
@@ -751,7 +751,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |advanced user |shorten commands |work efficiently
 
-|`* *` |user |send selected contacts with others |share them without others having to type it in
+|`* *` |user |send selected contacts to others |share them without others having to type it in
 
 |`* *` |user using a public computer |set a password to lock my stored data |be free of security related worries
 
@@ -773,7 +773,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |have nicknames associated with each contact while searching |recognize them better
 
-|`* *` |OTG user |access addressbook on multiple platforms and sync my data |have my contacts close at hand from anywhere
+|`* *` |OTG user |access addressbook on multiple platforms and synchronize my data |have my contacts close at hand from anywhere
 
 |`* * *` |user |tag multiple people using the same tag |save time
 
@@ -793,8 +793,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -827,7 +825,63 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+=== Use case: Merge duplicate contacts
+
+*MSS*
+
+1. User requests to list duplicate contacts
+2. Addressbook displays a list of contacts with the exact same information
+3. User selects duplicate contacts to merge using index.
+4. Addressbook merges contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 2a. The list contains contacts with the same information but with some duplicate fields, some missing and others extra.
++
+[none]
+** 2a1. User selects contacts to merge.
++
+Use case resumes at step 4.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use Case: Tag multiple people with the same tag
+
+1. User requests to list people.
+2. Addressbook lists all contacts.
+3. User requests to tag multiple with one tag using their index.
+4. Addressbook adds tags to all specified contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use Case: 
 
 [appendix]
 == Non Functional Requirements
@@ -835,8 +889,6 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
 
 [appendix]
 == Glossary
