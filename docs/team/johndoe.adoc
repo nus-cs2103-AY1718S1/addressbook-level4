@@ -1,4 +1,4 @@
-= Joshua Ng - Project Portfolio
+= John Doe - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
@@ -6,14 +6,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-//*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added:
+=== Enhancement Added: Undo/Redo
 
 ==== External behavior
 
 ---
+#Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Extract#
 
 ---
 
@@ -24,17 +28,22 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 ==== Implementation
 
 ---
-//#Start of Extract [from: Developer Guide]#
-//
-//include::../DeveloperGuide.adoc[tag=undoredo]
-//
-//#End of Extract#
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+#End of Extract#
 
 ---
 
 === Enhancement Proposed: Add command `remark`
 
+{Explain similar to the Undo/Redo feature above.}
+
 === Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
 == Project: PowerPointLabs
 
