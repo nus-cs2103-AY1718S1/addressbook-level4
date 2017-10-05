@@ -1066,14 +1066,14 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[[right click menu]]
+[[right-click-menu]]
 Right click menu
 
 ....
 A drop down menu that contains various commands
 ....
 
-[[common commands]]
+[[common-commands]]
 Common commands
 
 ....
