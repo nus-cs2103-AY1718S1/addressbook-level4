@@ -85,7 +85,7 @@ public class UniqueTagList implements Iterable<Tag> {
      * @return the index of the tag in the list
      * @throws IllegalValueException
      */
-    public int contains(String tagName) throws IllegalValueException{
+    public int contains(String tagName) throws IllegalValueException {
         requireNonNull(tagName);
         Tag temp = new Tag(tagName);
         for (int i = 0; i < internalList.size(); i++) {
