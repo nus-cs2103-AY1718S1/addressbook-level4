@@ -741,9 +741,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |remove contact |keep the contact list concise
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |lazy user |launch commands by keying in shortcuts |save time
 
-|`* *` |lazy user |launch commands by keying in shortcuts |save time
+|`* * *` |user |change the color theme/background image of the product |have a nice visual experience
+
+|`* * *` |user |have a separate prompt for add users |choose to not remember the full command
+
+|`* * *` |user |have a separate prompt for edit users |choose not to remember the full command
+
+|`* * *` |organise user |have different classification for tag to multiple contacts |have a finer classification by event
+
+|`* * *` |user |sort contacts by chronological order (most recently added) |keep track of my records
+
+|`* * *` |user |trace back the commands I entered before |enter commands more conveniently
+
+|`* * *` |user |type in intuitive commands(add, insert, put) |choose not to remember specific commands
+
+|`* * *` |user |delete multiple user by index |perform batch deletion
+
+|`* * *` |user |delete users by name |choose not to search for the contact’s index before deletion
+
+|`* * *` |user |edit user by inputting name |choose not to search for the contact’s index before editing
+
+|`* * *` |worried user |export my contact list to a backup file (separate from data/addressbook.xml) |restore my contact list in case corruption happens
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |power user |launch a shell version of the product |operate without the clutter
 
@@ -751,39 +773,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see my contact’s address on google map |know which area do they resides in visually and know how far is it from my current location
 
-|`* *` |worried user |export my contact list to a backup file (separate from data/addressbook.xml) |restore my contact list in case corruption happens
-
-|`* *` |user |change the color theme/background image of the product |have a nice visual experience
-
 |`* *` |power user |exclude words in my searches |filter my search result
 
 |`* *` |user |copy contact details to clipboard | have quick access to contact details in plaintext
 
-|`* *` |user |have a separate prompt for add users |choose to not remember the full command
-
 |`* *` |user |store social media information for contacts |keep track
-
-|`* *` |organise user |have different classification for tag to multiple contacts |have a finer classification by event
-
-|`* *` |user |sort contacts by chronological order (most recently added) |keep track of my records
 
 |`* *` |user |find out the route from one contact’s address to my home address |know the way to my contact’s home
 
 |`* *` |user |synchronize contact information with all devices |choose not to update one by one
 
-|`* *` |user |have a separate prompt for edit users |choose not to remember the full command
-
-|`* *` |user |trace back the commands I entered before |enter commands more conveniently
-
 |`* *` |forgetful user |input events based on natural language |add in events easily
-
-|`* *` |user |type in intuitive commands(add, insert, put) |choose not to remember specific commands
-
-|`* *` |user |delete multiple user by index |perform batch deletion
-
-|`* *` |user |delete users by name |choose not to search for the contact’s index before deletion
-
-|`* *` |user |edit user by inputting name |choose not to search for the contact’s index before editing
 
 |`* *` |careless user |specify number of times to undo/redo with in input parameter |save time
 
