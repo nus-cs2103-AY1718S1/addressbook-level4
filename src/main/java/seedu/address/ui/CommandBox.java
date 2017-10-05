@@ -14,6 +14,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.trie.Trie;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -26,6 +27,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private static Trie commandTrie;
 
     @FXML
     private TextField commandTextField;
@@ -33,6 +35,7 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        commandTrie = logic.getCommandTrie();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -54,6 +57,10 @@ public class CommandBox extends UiPart<Region> {
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case TAB:
+            keyEvent.consume();
+            handleAutoComplete();
             break;
         default:
             // let JavaFx handle the keypress
@@ -84,6 +91,23 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.next());
+    }
+
+    /**
+     * Handles the Tab button pressed event.
+     */
+    private void handleAutoComplete() {
+        String input = commandTextField.getText();
+        String command = commandTrie.attemptAutoComplete(input);
+
+        if (input.equals(command)){
+            setStyleToIndicateCommandFailure();
+            logger.info("Autocomplete failed with input: " + input);
+        } else {
+            commandTextField.setText(command);
+            logger.info("Autocomplete successful with input: " + input + " to " + command);
+        }
+
     }
 
     /**
