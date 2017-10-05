@@ -19,6 +19,7 @@ import seedu.address.model.UserPrefs;
  */
 public class StorageManager extends ComponentManager implements Storage {
 
+    private static final String BACKUP_FILE_PREFIX = "addr_backup_";
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
@@ -75,6 +76,13 @@ public class StorageManager extends ComponentManager implements Storage {
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String backupFilePath = BACKUP_FILE_PREFIX + addressBookStorage.getAddressBookFilePath() + ".xml";
+        logger.fine("Attempting to write to data file: " + backupFilePath);
+        saveAddressBook(addressBook, backupFilePath);
     }
 
 

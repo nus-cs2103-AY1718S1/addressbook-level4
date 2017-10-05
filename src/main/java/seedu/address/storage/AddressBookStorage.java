@@ -44,6 +44,6 @@ public interface AddressBookStorage {
     /**
      * Backs up the current state of addressbook to local storage
      */
-    void backupAddressBook(ReadOnlyAddressBook addressBook);
+    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
 }
