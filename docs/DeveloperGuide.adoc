@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103T-T09-B1/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -729,6 +729,30 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user with many people in the address book |list all people in address book |see whose contacts the address book already has
+
+|`* * *` |user |clear all people in the address book |remove all contacts conveniently
+
+|`* * *` |user |list the command history |view all commands already entered
+
+|`* * *` |user |undo previous command |amend any mistakes
+
+|`* * *` |user |redo the previously undone command |amend any mistakes
+
+|`* * *` |user |edit a person's information |update changes to their particulars
+
+|`* * *` |user with many people in the address book |make relation links between contacts |link up contacts that have connections with each other
+
+|`* * *` |user with many people in the address book |sort contacts by different fields in alphabetical order |arrange them according to the fields
+
+|`* * *` |user with many people in the address book |sort contacts to my preference |arrange them according to their importance / significance
+
+|`* * *` |user |find users based on tags |locate different groups easily
+
+|`* * *` |user |rename an existing tag |update a tag which is no longer suitable to describe the people who have them
+
+|`* * *` |user |run the executable file of the address book |access the application conveniently
+
 |`* *` |user with many people in the address book |delete people in address book by tags |remove people of the same group
 
 |`* *` |user with many people in the address book |change the view mode of GUI |display different number of contacts per page
@@ -744,6 +768,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |highlight contacts |place it at the top
 
 |`* *` |user |displays the most searched contacts |display the most searched contacts
+
+
+
+|`* *` |user |tag multiple people at the same time |quickly tag all people who share the similarities conveniently
+
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -783,7 +812,95 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook update the person’s contact details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. New contact’s details provided by user are invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Renaming of an existing tag
+
+**MSS**
+
+1.  User requests to list all existing tags
+2.  AddressBook shows a list of existing tags
+3.  User requests to rename an existing tag
+4.  AddressBook prompts the confirmation of request
+5.  User confirms the request
+6.  AddressBook renames the existing tag <br>
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Tag not found.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User says no
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Tag multiple people concurrently
+
+**MSS**
+
+1.  User requests to list all people
+2.  AddressBook shows a list of people
+3.  User requests to tag multiple people
+4.  AddressBook tags all specified people
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. One or more given indexes are invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: List all the persons
@@ -902,8 +1019,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should come with automated unit tests and open source code.
+.  Should be able to log errors and backup data when errors occur.
+.  Should be lightweight, can respond back to user within 2 seconds.
+.  Should be user-friendly, usable even by computer novices.
+.  Should be easy for maintenance.
 
 [appendix]
 == Glossary
