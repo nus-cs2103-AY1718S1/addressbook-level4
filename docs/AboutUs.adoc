@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Lin JiaChao
 image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/lincredibleJC] [<<johndoe#, portfolio>>]
 
 Role: Project Advisor
 
@@ -21,7 +21,7 @@ Role: Project Advisor
 
 === Lim Pei Yi, Celine
 image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/limcel] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities:
@@ -30,7 +30,7 @@ Responsibilities:
 
 === Lenald Ng Wai Jun
 image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/Lenaldnwj] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities:
@@ -39,7 +39,7 @@ Responsibilities:
 
 === Lim KangJie Jonathan
 image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/nahtanojmil] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Dev  +
