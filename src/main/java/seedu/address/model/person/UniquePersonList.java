@@ -119,4 +119,13 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    /*
+    * find search through list of persons and tags, remove tag
+     */
+    public void removeTag(String str) {
+        for (Person p : internalList) {
+            p.removeTag(str);
+        }
+    }
 }
