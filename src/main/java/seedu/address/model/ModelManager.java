@@ -118,5 +118,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void sort(String sortType){
         addressBook.sort(sortType);
+        indicateAddressBookChanged();
     }
 }
