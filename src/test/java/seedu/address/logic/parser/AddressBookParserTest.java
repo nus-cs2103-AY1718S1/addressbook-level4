@@ -145,7 +145,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_remark() throws Exception {
-        RemarkCommand remarkCommand = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD);
+        RemarkCommand remarkCommand = (RemarkCommand) parser.parseCommand(RemarkCommand.SAMPLE_COMMAND);
         assertTrue(remarkCommand instanceof  RemarkCommand);
     }
 }
