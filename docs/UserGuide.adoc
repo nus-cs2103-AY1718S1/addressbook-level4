@@ -152,6 +152,19 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Adding remarks: `remark`
+
+Edits the remark for a person specified in the INDEX
+
+Format: `remark INDEX r/[REMARK]`
+
+Examples:
+
+*`remark 1 r/Likes to drink coffee.`
+Edits the remark for the first person to `Likes to drink coffee.`
+*`remark 1 r/`
+Removes the remark for the first person.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -247,6 +260,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Remark* : `remark INDEX r/[INDEX]` +
+e.g. `remark 1 r/Likes coffee.`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

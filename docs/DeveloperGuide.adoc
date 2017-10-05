@@ -767,7 +767,207 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+
+=== Use case: Delete certain fields
+
+*MSS*
+
+1. User requests list of persons with particular name.
+2. AddressBook shows a list of persons.
+3. User requests to select specific contact.
+4. AddressBook selects contact.
+5. User requests to delete particular field(s).
+6. AddressBook clears the listed field(s).
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add persons in the specified format.
+2.  AddressBook adds person in the specified format to the list.
+3.  AddressBook acknowledges that the person has been added to the list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+*2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given field is blank.
++
+[none]
+
+** 5a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Creating contact with same name
+
+*Preconditions*
+1. AddressBook contains existing contact with the name to be duplicated.
+
+*Guarantees*
+1. User will be warned of the existing contact with the same name.
+
+*MSS*
+
+1. User adds contact with the duplicated name.
+2. AddressBook shows list of existing contacts of same name.
+3. AddressBook asks if user wants to continue, update existing contact, or end use case.
+4. User requests to continue.
+5. AddressBook creates new contact.
+
+* 1a. User does not follow the specified format required for input.
+* 1b. Person with same name is already in the list
+Error: AddressBook informs user that input is invalid.
+
+[discrete]
+=== Use case: List Contact
+
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+
+
+[discrete]
+=== Use case: Edit Contact
+
+
+*MSS*
+
+1.  User requests to edit person (index) and specific particular
+2.  AddressBook edits the contact particular and displays latest change
++
+Use case ends.
+
+*Extensions*
+
+[none]
+
+*3a. User requests to update existing contact.
+*3b. User selects from existing contact(s).
+*3c. AddressBook updates selected contact.
++
+Use case ends.
++
+**3b1. The given index is invalid.
++
+***3b11. AddressBook shows an error message.
++
+Use case resumes at step 3b.
+
+[discrete]
+=== Use case: Clear
+
+*Preconditions*
+1. AddressBook is not empty.
+
+*MSS*
+
+1. User requests to clear list.
+2. AddressBook clears list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit
+
+*MSS*
+
+1. User requests to exit the program.
+2. AddressBook closes the program.
++
+Use case ends.
+
+[discrete]
+=== Use case: History
+
+*MSS*
+
+1. User requests history of commands issued.
+2. AddressBook shows list of commands in reverse chronological order.
++
+Use case ends.
+* 1a. Person Index is invalid.
++
+AddressBook informs user that Person Index is invalid.
+
+* 1b. User requests to edit information in an invalid format
++
+Addressbook informs user that the format is invalid, providing the correct format.
+
+
+[discrete]
+=== Use case: Find Contact
+
+
+*MSS*
+
+
+ 1.  User requests to find person by entering part of contact name
+ 2.  AddressBook finds contact with keyword included in name, and displays latest change
+ +
+ Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Contact cannot be found
++
+AddressBook informs user that contact cannot be found
+
+[discrete]
+=== Use case: Select Contact
+
+
+*MSS*
+
+1.  User requests to see entire list of contacts
+2.  Based on list, user selects contact by providing contact index.
+3.  AddressBook selects contact with index given.
+
++ Use case ends.
+
+*Extensions*
+
+[none]
+*2a. The list is empty.
++
+Use case ends.
+
+* 1a. No contacts in list.
++
+AddressBook informs user that there are currently no contacts in the list.
+
+* 2a. User inputs invalid contact index.
++
+AddressBook informs user that the input is not a valid contact index.
 
 [appendix]
 == Non Functional Requirements
