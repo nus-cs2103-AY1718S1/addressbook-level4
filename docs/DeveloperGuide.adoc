@@ -727,11 +727,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |list out every contact's information at once |retrieve information of all my contacts
+
+|`* * *` |user |clear all contacts |have an empty addressbook
+
+|`* * *` |user |redo the previously undone command |retrieve the previous change
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |heavy user |use commands in short forms |input and execute my commands faster
+
+|`* * *` |heavy user |schedule meetings with the contacts |have a record and be reminded on when i am meeting them
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |lazy and forgetful user |filter contacts by certain fields with keywords |still filter and search with certain keywords of other field instead of name only
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if i need it
 |=======================================================================
 
 {More to be added}
