@@ -729,24 +729,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |search for the user based on certain keywords|find contacts more easily.
+|`* * *` |user |search for the user based on certain keywords|find contacts easily
 
-|`* * *` |user |know how to use the commands  |to get familiar with the app.
+|`* * *` |user |know how to use the commands  |to get familiar with the app
 
-|`* *` |user |double-confirm delete command and clear command|avoid doing anything wrong accidentally.
+|`* * *` |user with few contacts |sort my contacts by name |find my contacts easily by scrolling
 
-|`* *` |user |view last command faster, just like in UNIX command line. Press the upward arrow view the command I typed in last time.|avoid typing the command again.
+|`* * *` |user |save my contacts both online and offline |quit the project without fear of losing my contacts
+
+|`* * *` |user |exit the program |
+
+|`* * *` |user |list my contacts |see all my entries
+
+|`* * *` |user |edit my contacts |update any changes to my contacts
+
+|`* *` |user |double-confirm the delete command and clear command|avoid accidental commands
+
+|`* *` |user |view my command history |recall what changes I have made
+
+|`* *` |user |add a photo beside my contact |associate my contact using their photos
+
+|`* *` |user |export a contact |share the contact with someone
+
+|`* *` |user |find all contacts with a particular tag |locate all details of the group without having to go through the entire list
+
+|`* *` |experienced user |enter a command shortcut |save time
+
+|`* *` |user |open the program with a keyboard shortcut |save time
+
+|`* *` |new user |import my contacts from other existing contact lists |save time by not needing to manually add my contacts again
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |change the background colour and text colour |satisfy personal needs.
+|`* *` |user |have a backup file and a backup command |store the data to avoid accidental data loss
 
-|`* *` |user |have a backup file and a backup command |store the data to avoid accidental data loss.
+|`* *` |user |set up a login password |prevent someone else from looking at my contacts just by opening the application
 
-|`* *` |user with many persons in the address book |get the person who was searched by the user for the most times |easy to get the info of frequent contacts.
+|`* *` |user |see a network of my contacts' addresses on Google Maps |see where all my contacts live on a map
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |undo a command |remove any unwanted changes I might accidentally make
+
+|`* *` |user |redo an undone command |reapply the changes that I might accidentally undo
+
+|`* *` |user with many contacts |get the person who was searched by the user for the most times |get the info of frequent contacts easily
+
+|`*` |user |link my contacts to social media platforms |visit my friend's profile easily
+
+|`*` |user |customize the GUI |personalize its aesthetics to my liking
+
+|`*` |user with many contacts |sort persons by name |locate a person easily
 |=======================================================================
+
 
 {More to be added}
 
