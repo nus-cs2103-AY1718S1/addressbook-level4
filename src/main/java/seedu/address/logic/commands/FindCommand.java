@@ -8,12 +8,18 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindCommand extends Command {
 
-    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORDVAR_1 = "find";
+    public static final String COMMAND_WORDVAR_2 = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
+            + ": Finds all persons whose names contain any of "
+            + "the specified keywords (case-sensitive) and displays them as a list with index numbers."
+            + " Command is case-insensitive. \n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Example 1: " + COMMAND_WORDVAR_1 + " alice bob charlie \n"
+            + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " alice bob charlie \n";
 
     private final NameContainsKeywordsPredicate predicate;
 
