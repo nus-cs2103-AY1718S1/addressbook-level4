@@ -743,7 +743,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see the history of commands I have typed |keep track of what I have done to my address book
 
-|`* * *` |user |see the network of relationships between people |visulaise connections and groups in the network
+|`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
 
 |`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
 
@@ -789,7 +789,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user with many persons in the address book |hide details by default, and only show full details when I select a particular contactn |have a less-cluttered address book
+|`* *` |user with many persons in the address book |hide details by default, and only show full details when I select a particular contact |have a less-cluttered address book
 
 |`* *` |user |set a password for my address book |keep my address book private
 
