@@ -721,77 +721,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
 |`* * *` |New user |See usage instructions |Refer to instructions when I forget how to use the App
 
-|`* * *` |New user |Know how to use the application without having to read the user guide |
+|`* * *` |New user |Know how to use the application without having to read the User Guide
 
-|`* * *` |User with many contacts |Delete multiple contacts from the previous list starting from the bottom |Can remove multiple contacts at once
-
-|`* * *` |User |Add a new person |
+|`* * *` |User |Add a new person
 
 |`* * *` |User |Delete a person |Remove entries that I no longer need
 
 |`* * *` |User |Find a person by name |Locate details of persons without having to go through the entire list
 
-|`* * *` |User |List all persons in the Address Book |See all of my contacts
+|`* * *` |User |List all contacts in the Address Book |See all of my contacts’ information
 
 |`* * *` |User |Find all contacts with a given keyword |Identify all of the contacts with that name
 
-|`* * *` |User |Select a person from the previous command that brings up a numbered list |
+|`* * *` |User |Select a person from the previous command that brings up a numbered list
 
 |`* * *` |User |Add a tag to my contact |Identify the contact based on the tagged relationship
 
 |`* * *` |User |Undo my previous command |Restore the Address Book to its previous state before the command
 
-|`* * *` |User |Undo an undo |Restore the Address Book to its previous state before the undo
+|`* * *` |User |Redo an undo |Restore the Address Book to its previous state before the undo
 
-|`* * *` |User |Use the arrow keys to call previous commands used |
+|`* * *` |User |Use the arrow keys to call previous commands used
 
 |`* * *` |User |Use the Address Book without saving it |Avoid any loss of data in the case I forget to save
 
-|`* * *` |User |Exit the Address Book with a command |Exit without clicking the browser’s close button
+|`* * *` |User |Exit the Address Book with a command
+
+|`* * *` |User |List all contacts based on number of searches |See who I searched the most
 
 |`* * *` |User |Use single-letter short forms of commands |Type less per command
 
-|`* * *` |User |Delete contacts by tags |Delete the whole group at once
+|`* * *` |User |Easily navigate through the User Guide |Easily access information I need from the User Guide
 
-|`* * *` |User |Change the colour of the contact tag |Easily identify the tags
+|`* * *` |Doctor |List all patients with specific tags based on number of searches
 
-|`* * *` |User |Change the font size and type |Customize the font to my preference
+|`* * *` |Doctor |Delete contacts by tags |Delete the whole group at once
 
-|`* * *` |User |Easily navigate through the user guide |Easily access information I need from the user guide
+|`* * *` |Doctor |Change the colour of the contact tag |Easily identify the patients
 
-|`* *` |User |Hide link:#private-contact-detail[private contact details] by default |Minimize chance of someone else seeing them by accident
+|`* * *` |Doctor |Record the blood types of my patients |Easily access their information when required
 
-|`* *` |User |List all contacts based on number of searches |See who I searched the most
+|`* *` |User |Hide link:#private-contact-detail[private contact details] by default |minimize the chance of someone else seeing them by accident
 
 |`* *` |User |List all contacts based on most recent search |See all contacts I searched recently
 
-|`* *` |User |Access all features with keyboard keys |Use the application using only the keyboard
+|`* *` |User |Change the font size and type |Customize the font to my preference
 
-|`* *` |User |Download information from another Address Book |Remove the need to manually input contacts
+|`* *` |Doctor |Save the appointments of my patients |Eliminate the need to remember my patient’s appointments
 
-|`* *` |User |Save the birthdays of my contacts |Eliminate the need to remember my contact’s birthday
+|`* *` |Doctor |Be reminded of any upcoming appointments without inputting any commands |Be constantly reminded about any upcoming appointments without consciously doing so
 
-|`* *` |User |Be reminded of any upcoming birthdays without inputting any commands |Be constantly reminded about any upcoming birthdays without consciously doing so
+|`* *` |Doctor |List all patients’ appointments with reference from today’s date |See all upcoming appointments
 
-|`* *` |User |List all contact’s birthdays with reference from today’s date |See all upcoming birthdays
+|`* *` |Doctor |Create a few personalized lists of patients |Add specific patients to these separate lists
 
-|`* *` |User |Assign a profile photo for each contact |Remember how they look like
+|`*` |User with many persons in the Address Book |Sort persons by name |Locate a person easily
 
-|`* *` |User |Enter the information of my contacts in a separate window |Use the add command without typing in a long sentence
+|`*` |User |Access all features with keyboard keys |Use the application using only the keyboard
 
-|`* *` |User |Create a few personalized lists of contacts |Add specific people to these separate lists
-
-|`* *` |User |Set appointments reminders with contacts |Remember when to meet my contact
-
-|`*` |User with many persons in the address book |Sort persons by name |Locate a person easily
-
-|`*` |User |Select from multiple UI themes |Change my UI's colour scheme
+|`*` |User |Select from a pre-configured UI theme |Change my UI's colour scheme
 
 |`*` |User |Easily edit my UI colour scheme |Change my UI colour scheme to the colour I like
 
+|`*` |User |Download information from another Address Book |Remove the need to manually input contacts
+
 |`*` |User |Add my contact on FaceBook through the Address Book |Use it with greater convenience
+
+|`*` |User |Input commands in separate lines |Easily input my command
+
+|`*` |Doctor |Keep track of patients’ medical records |Refer to the contact's’ history
+
+|`*` |Doctor |Assign a profile photo for each contact |Remember how they look like
+
+|`*` |Doctor |Enter the information of my patients in a separate window |Use the add command without typing in a long sentence
 
 |=======================================================================
 
