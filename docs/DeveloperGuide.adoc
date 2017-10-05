@@ -772,16 +772,18 @@ Use case resumes at step 2.
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed
+.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse
 .  Should have support for UTF-8 chracters
-.  Should have an intuitive UI such that a new user can become familiarized with the application easily 
+.  Should have an intuitive UI such that a new user can become familiarized with the application easily
 .  Should have an attractive UI so that potential users will be more inclined to try out this application
 .  Should be responsive to viewports of different sizes
+.  Users should be able to use the application within 5 seconds of starting the application
+.  Users should be familiar with using all functions of the application within a day
+.  Should at most take 10 seconds for any method invoked by users to return results
+.  Should have similar performance for all UI themes and fonts picked
 
-
-{More to be added}
 
 [appendix]
 == Glossary
