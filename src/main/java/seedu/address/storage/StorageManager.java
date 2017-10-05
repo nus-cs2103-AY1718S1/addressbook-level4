@@ -11,7 +11,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -33,15 +32,15 @@ public class StorageManager extends ComponentManager implements Storage {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         try {
             addressBookOptional = addressBookStorage.readAddressBook();
-            if(addressBookOptional.isPresent()) {
+            if (addressBookOptional.isPresent()) {
                 backupAddressBook(addressBookOptional.get());
             }
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. " +
-                    "Backup of addressbook not available for this instance.");
+            logger.warning("Data file not in the correct format. "
+                    + "Backup of addressbook not available for this instance.");
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. " +
-                    "Backup of addressbook not available for this instance.");
+            logger.warning("Problem while reading from the file. "
+                    + "Backup of addressbook not available for this instance.");
         }
     }
 
