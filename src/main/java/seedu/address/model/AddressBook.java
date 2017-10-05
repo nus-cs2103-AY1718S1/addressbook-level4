@@ -4,11 +4,11 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.Iterator;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
@@ -56,10 +56,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    /**
+     * Removes tag from all Persons in the AddressBook {@code tag}
+     */
     public void removeTag(Tag tag) {
         Iterator it = persons.iterator();
-        while(it.hasNext()) {
-            ((Person)it.next()).removeTag(tag);
+        while (it.hasNext()) {
+            (
+                (Person) it.next()
+            ).removeTag(tag);
         }
     }
 
