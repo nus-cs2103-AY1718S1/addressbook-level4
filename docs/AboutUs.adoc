@@ -29,7 +29,7 @@ Responsibilities:
 '''
 
 === Lenald Ng Wai Jun
-image::yijinl.jpg[width="150", align="left"]
+image::Lenald.png[width="150", align="left"]
 {empty}[https://github.com/Lenaldnwj] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -43,14 +43,5 @@ image::m133225.jpg[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Dev  +
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
 
 '''
