@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F09-B4/addressbook-level4.git
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -729,7 +729,67 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |filter contacts by name, number, address, email or tag |find specific contacts easily
+
+|`* * *` |basic user |add display pictures to my contacts |easily identify people with the same name
+
+|`* * *` |basic user |call/email my contacts by clicking on them |save time in opening my email or phoning app
+
+|`* * *` |basic user |be able to change the theme of the app from dark to light |reduce the stress on my eyes
+
+|`* * *` |basic user |customise the background picture of the app |enhance my user experience since it looks nicer
+
+|`* *` |user |edit my tags more conveniently |not need to delete all the tags when editing somebody's tags
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |basic user |be able to put tags of different colours on my contacts |identify them more easily
+
+|`* *` |new user |add more icons to the app |make it look prettier
+
+|`* *` |new user |see several interactive text fields like a template when I use the add command |not need to memorise the command for adding people
+
+|`* *` |user who uses other address book apps |import/export my address book to other format |transfer address book data between applications easily
+
+|`* *` |user who often contacts people |add Speed dial or a favourites list |easily contact those that I am in frequent touch with
+
+|`* *` |user with bad vision |adjust the font size of the address book |see the contents easily
+
+|`* *` |user who has contacts with many tags |have each tag with their own associated colour |customise my contacts better for my own visibility
+
+|`*` |user |look at a prettier address book |enhance my user experience
+
+|`*` |user |find people near me using their addresses |contact them more conveniently
+
+|`*` |user |record the birthdays of my contacts |know when to celebrate their birthdays
+
+|`*` |user |receive a notification on my contacts birthdays |know when they are and celebrate them
+
+|`*` |user |add chinese names |record my chinese friends with no english names
+
+|`*` |basic user |open the address book maximised |focus on the address book itself
+
+|`*` |advanced user |use shorter versions of a command |speed up finding contacts
+
+|`*` |new user |enter a confirmation before executing any delete command |make sure I do not delete the wrong person
+
+|`*` |user who likes nice fonts |change the address book font to something like quicksand |make it look prettier
+
+|`*` |user who likes variety |change the font colour based on my mood |feel better while using the address book
+
+|`*` |user who is concerned about security |use a login system |secure my contacts information
+
+|`*` |user with bad memory |receive a hint for correct commands when I type something similar that is incorrect |remove the hassle of memorising commands
+
+|`*` |user who frequently needs to send mail |create a mailing list |send mail more conveniently
+
+|`*` |user who loves convenience |access edit and delete functions quickly |use the address book more efficiently and save time
+
+|`*` |user who is also a programmer |search using regular expression |search for contacts more precisely
+
+|`*` |ultra-book user |adjust the application to my viewport |scale it down to the size of my laptop screen
+
+|`*` |user with many friends |see their birthdays collated and displayed in a calendar |know when to prepare for their birthdays
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -832,16 +892,18 @@ Use case resumes at step 2.
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed
+.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse
 .  Should have support for UTF-8 chracters
 .  Should have an intuitive UI such that a new user can become familiarized with the application easily
 .  Should have an attractive UI so that potential users will be more inclined to try out this application
 .  Should be responsive to viewports of different sizes
+.  Users should be able to use the application within 5 seconds of starting the application
+.  Users should be familiar with using all functions of the application within a day
+.  Should at most take 10 seconds for any method invoked by users to return results
+.  Should have similar performance for all UI themes and fonts picked
 
-
-{More to be added}
 
 [appendix]
 == Glossary
