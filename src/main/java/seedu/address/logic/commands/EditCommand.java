@@ -51,6 +51,7 @@ public class EditCommand extends UndoableCommand {
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private final Address editAddress;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -62,6 +63,20 @@ public class EditCommand extends UndoableCommand {
 
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editAddress = null;
+    }
+
+    /**
+     * @param index of the address in the filtered address list to edit
+     * @param editAddress the new edited address
+     */
+    public EditCommand(Index index, Address editAddress) {
+        requireNonNull(index);
+        requireNonNull(editAddress);
+
+        this.index = index;
+        this.editPersonDescriptor = null;
+        this.editAddress = editAddress;
     }
 
     @Override
