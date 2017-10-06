@@ -57,7 +57,6 @@ public class ViewCommand extends Command {
             return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress()));
 
         } else {
-            System.out.println("Testing: " + PERSON.equals(PERSON));
             throw new CommandException("It is not implemented yet");
         }
 
