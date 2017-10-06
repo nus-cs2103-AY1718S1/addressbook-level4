@@ -86,28 +86,12 @@ public class UniqueTagList implements Iterable<Tag> {
      * @throws IllegalValueException
      */
 
-    public int contains(String tagName) throws IllegalValueException {
+    public int indexOfTagWithName(String tagName) throws IllegalValueException {
         requireNonNull(tagName);
         Tag temp = new Tag(tagName);
         for (int i = 0; i < internalList.size(); i++) {
             Tag t = internalList.get(i);
             if (t.equals(temp)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    /**
-     * @param toCheck
-     * @return the index of the tag in the list
-     */
-    public int containsTag(Tag toCheck) {
-        requireNonNull(toCheck);
-        for (int i = 0; i < internalList.size(); i++) {
-            Tag t = internalList.get(i);
-            if (t.equals(toCheck)) {
                 return i;
             }
         }
@@ -138,7 +122,7 @@ public class UniqueTagList implements Iterable<Tag> {
      */
     public Tag removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
         requireNonNull(tagGettingRemoved);
-        int tagIndexInList = contains(tagGettingRemoved);
+        int tagIndexInList = indexOfTagWithName(tagGettingRemoved);
         if (tagIndexInList == -1) {
             throw new TagNotFoundException("Tag is not found.");
         } else {
@@ -150,12 +134,9 @@ public class UniqueTagList implements Iterable<Tag> {
      * Remove a tag from the list.
      * @param tagGettingRemoved
      */
-    public void removeTag(Tag tagGettingRemoved) {
+    public boolean removeTag(Tag tagGettingRemoved) {
         requireNonNull(tagGettingRemoved);
-        int tagIndexInList = containsTag(tagGettingRemoved);
-        if (tagIndexInList != -1) {
-            internalList.remove(tagIndexInList);
-        }
+        return internalList.remove(tagGettingRemoved);
     }
 
     @Override

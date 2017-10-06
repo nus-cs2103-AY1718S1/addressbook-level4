@@ -123,15 +123,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Remove a tag from the person's tag list
-     * @param tagGettingRemoved
+     * Remove a tag from the person's tag list.
      */
-    public void removeTag(Tag tagGettingRemoved) {
-        Set<Tag> currentTags = getTags();
-        if (currentTags.contains(tagGettingRemoved)) {
-            currentTags.remove(tagGettingRemoved);
-            setTags(currentTags);
-        }
+    public boolean removeTag(Tag tagGettingRemoved) {
+        UniqueTagList tagsList = tags.get();
+        return tagsList.removeTag(tagGettingRemoved);
     }
 
     @Override
