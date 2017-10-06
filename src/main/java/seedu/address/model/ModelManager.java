@@ -26,10 +26,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    public static ListingUnit currentListingUnit;
+
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-
-    public static ListingUnit currentListingUnit;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,14 +45,16 @@ public class ModelManager extends ComponentManager implements Model {
         currentListingUnit = PERSON;
     }
 
-    public ModelManager() { this(new AddressBook(), new UserPrefs()); }
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
 
     @Override
     public HashSet<Address> getUniqueAdPersonSet() {
         HashSet<Address> set = new HashSet<>();
 
         ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
-        for(ReadOnlyPerson p : personLst) {
+        for (ReadOnlyPerson p : personLst) {
             if (!set.contains(p.getAddress())) {
                 set.add(p.getAddress());
             }

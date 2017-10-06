@@ -9,7 +9,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import static seedu.address.model.ListingUnit.PERSON;
 
 /**
  * The API of the Model component.

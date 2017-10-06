@@ -46,6 +46,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
     }
 
+    /**
+     * Parse the input arguments given the current listing unit is person.
+     */
     public EditCommand parseEditPerson(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
@@ -77,6 +80,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         return new EditCommand(index, editPersonDescriptor);
     }
 
+    /**
+     * Parse the input arguments given the current listing unit is address.
+     */
     public EditCommand parseEditAddress(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
