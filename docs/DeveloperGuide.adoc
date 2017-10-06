@@ -874,7 +874,7 @@ A contact detail that is not meant to be shared with others
 
 *Contacts^TM^*
 
-_(renamed from *Address Book* since  Mac OS X 10.8)_
+_(renamed from https://support.apple.com/en-us/HT201728[Address Book] since  Mac OS X 10.8)_
 
 Author: Apple Inc.
 
