@@ -4,10 +4,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 
 /**
  * A utility class for Person.
@@ -22,6 +24,13 @@ public class PersonUtil {
     }
 
     /**
+     * Returns an remark command string for remarking the {@code person}.
+     */
+    public static String getRemarkCommand(Remark remark) {
+        return PREFIX_REMARK + " " + remark.toString();
+    }
+
+    /**
      * Returns the part of command string for the given {@code person}'s details.
      */
     public static String getPersonDetails(ReadOnlyPerson person) {
@@ -30,6 +39,7 @@ public class PersonUtil {
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
+        sb.append(PREFIX_REMARK + person.getRemark().remark + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
