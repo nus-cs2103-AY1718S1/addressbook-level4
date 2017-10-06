@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -71,7 +70,7 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle(CSSStyle.getInstance().getBackgroundStyle(getColorForTag(tag.tagName)));
+            tagLabel.setStyle(UiStyle.getInstance().getBackgroundStyle(getColorForTag(tag.tagName)));
             tags.getChildren().add(tagLabel);
         });
     }
@@ -96,7 +95,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static String getColorForTag(String tagValue) {
         if(!tagColors.containsKey(tagValue)){
-            tagColors.put(tagValue, CSSStyle.getInstance().getRandomHexColor());
+            tagColors.put(tagValue, UiStyle.getInstance().getRandomHexColor());
         }
 
         return tagColors.get(tagValue);
