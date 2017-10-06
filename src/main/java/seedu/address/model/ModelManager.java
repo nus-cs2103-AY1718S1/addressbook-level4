@@ -92,7 +92,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             Set<Tag> newTags = new HashSet<>(newPerson.getTags());
             newTags.remove(tag);
-                      newPerson.setTags(newTags);
+            newPerson.setTags(newTags);
 
             addressBook.updatePerson(person, newPerson);
         }
