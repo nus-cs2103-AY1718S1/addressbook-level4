@@ -946,25 +946,32 @@ User case resumes at step 2.
 [appendix]
 == Glossary
 
-[[mainstream-os]]
-Mainstream OS
+[[api]]
+API
 
 ....
-Windows, Linux, Unix, OS-X
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
+An Application Programming Interface (API) specifies the interface through which other programs can interact with a software component. It is a contract between the component and its clients.
 ....
 
 [[blank-information]]
 Blank information
 
 ....
-An information field with null value. It may happen when a user add a person and does not know some information
+An information field with null value. It may happen when a user add a person and does not know some information.
+....
+
+[[build-automation]]
+Build automation
+
+....
+Build automation is the process of automating the creation of a software build and the associated processes.
+....
+
+[[ci]]
+CI
+
+....
+Continuous integration(CI) is an extreme application of build automation in which integration, building, and testing happens automatically after each code change.
 ....
 
 [[gradle]]
@@ -973,6 +980,35 @@ Gradle
 ....
 Gradle is an open source build automation system that automates the creation of a software build.
 ....
+
+[[logging]]
+Logging
+
+....
+Logging is the deliberate recording of certain information during a program execution for future reference. It can be useful for troubleshooting problems.
+....
+
+[[mainstream-os]]
+Mainstream OS
+
+....
+Windows, Linux, Unix, OS-X.
+....
+
+[[private-contact-detail]]
+Private contact detail
+
+....
+A contact detail that is not meant to be shared with others.
+....
+
+[[travis]]
+Travis
+
+....
+Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub.
+....
+
 
 [appendix]
 == Product Survey
