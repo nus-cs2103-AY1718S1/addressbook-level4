@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -120,8 +121,8 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    /*
-    * find search through list of persons and tags, remove tag
+    /**
+     * find search through list of persons and tags, remove tag
      */
     public void removeTag(String str) {
         for (Person p : internalList) {
