@@ -53,6 +53,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ListingUnit getCurrentListingUnit() {
+        return curentListingUnit;
+    }
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();

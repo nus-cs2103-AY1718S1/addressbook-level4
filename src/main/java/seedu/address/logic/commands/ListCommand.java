@@ -7,6 +7,8 @@ import seedu.address.model.person.UniqueAddressPredicate;
 
 import java.util.HashSet;
 
+import static seedu.address.model.ListingUnit.ADDRESS;
+import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
@@ -38,10 +40,12 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         if (hasAttribute()) {
+            model.resetListingUnit(ADDRESS);
             UniqueAddressPredicate predicate = new UniqueAddressPredicate(getUniqueAdPersonSet());
             model.updateFilteredPersonList(predicate);
             return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         } else {
+            model.resetListingUnit(PERSON);
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         }

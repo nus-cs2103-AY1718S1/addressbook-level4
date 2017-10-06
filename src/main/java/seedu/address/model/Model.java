@@ -14,8 +14,11 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
-    /** reset Listing unit in the panel with the new ListingUnit*/
+    /** Reset listing unit in the panel with the new ListingUnit*/
     void resetListingUnit(ListingUnit unit);
+
+    /** Get current Listing unit */
+    ListingUnit getCurrentListingUnit();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
