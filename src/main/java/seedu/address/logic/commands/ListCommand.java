@@ -33,7 +33,7 @@ public class ListCommand extends Command {
     public ListCommand() { this.attName = DEFAULT_LISTING_ELEMENT; };
 
     private boolean hasAttribute() {
-        return attName.equals(DEFAULT_LISTING_ELEMENT);
+        return !attName.equals(DEFAULT_LISTING_ELEMENT);
     }
 
     @Override
