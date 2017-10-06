@@ -786,29 +786,22 @@ Use case ends.
 +
 Use case ends.
 
-* 4a. There is no last command (i.e. the `undo` command is the first command)
+* 4a. The last command is undoable (i.e. a command that does not modify AddressBook's content)
 +
 [none]
 ** 4a1. AddressBook shows an error message.
 +
-Use case resumes at step 1.
-
-* 4b. The last command is also `undo`
-+
-[none]
-** 4b1. AddressBook shows an error message, and recommends useing `redo`.
-+
 Use case ends.
 
 [discrete]
-=== Use case: Redo last successful undo
+=== Use case: Redo most recently undone command
 
 *MSS*
 
-1. User requests to redo the last undo
-2. AddressBook confirms if user really wishes to redo last undo
+1. User requests a redo of the most recently undone command
+2. AddressBook confirms if user really wishes to redo
 3. User confirms the redo
-4. AddressBook redoes the last undo
+4. AddressBook redoes the last command
 +
 Use case ends.
 
@@ -819,7 +812,7 @@ Use case ends.
 +
 Use case ends.
 
-* 4a. The last successful command is not `undo`.
+* 4a. There are no `undo` commands executed previously
 +
 [none]
 ** 4a1. AddressBook shows an error message.
