@@ -787,6 +787,69 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1. User requests to find person by name
+2. AddressBook searches for person with the specified name and displays to user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The input name format is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. No person with the specified name found.
++
+Use case ends.
+
+* 2b. Multiple persons whose names contain the same keyword are found.
++
+[none]
+** 2b1. AddressBook displays an indexed list of all persons found with the keyword in their names.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add tag to an existing person
+
+*MSS*
+
+1. User request to find person
+2. User request to add a tag to the specified person
+3. AddressBook updates the tagList of the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Multiple persons are found.
++
+[none]
+** 1a1. AddressBook displays an indexed list of persons.
+** 1a2. User specifies index.
+** 1a3. AddressBook checks if the index is valid, if not AddressBook shows an error message and returns to step 1a2.
+** Use case resumes from step 2.
+
+* 2a. Format of tag provided by user is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
+** Use case resumes from step 2.
+
+* 3a. The new tag is the same as an existing tag.
++
+Use cse ends.
+
 {More to be added}
 
 [appendix]
