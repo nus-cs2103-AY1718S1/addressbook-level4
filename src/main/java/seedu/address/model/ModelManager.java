@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.PERSON;
 
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -26,6 +27,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    private ListingUnit curentListingUnit;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -37,10 +40,15 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        curentListingUnit = PERSON;
     }
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
+    }
+
+    public void resetListingUnit(ListingUnit unit) {
+        curentListingUnit = unit;
     }
 
     @Override
