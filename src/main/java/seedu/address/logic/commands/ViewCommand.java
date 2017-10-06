@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.ADDRESS;
+import static seedu.address.model.ListingUnit.PERSON;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -9,9 +12,6 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.person.FixedAddressPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.ShowSpecifiedPersonPredicate;
-
-import static seedu.address.model.ListingUnit.ADDRESS;
-import static seedu.address.model.ListingUnit.PERSON;
 
 /**
  * Views all persons with the selected listing unit from the address book.
@@ -51,7 +51,7 @@ public class ViewCommand extends Command {
             model.updateFilteredPersonList(predicate);
             return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView));
 
-        } else if (currentUnit.equals(ADDRESS)){
+        } else if (currentUnit.equals(ADDRESS)) {
             FixedAddressPredicate predicate = new FixedAddressPredicate(toView.getAddress());
             model.updateFilteredPersonList(predicate);
             return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress()));

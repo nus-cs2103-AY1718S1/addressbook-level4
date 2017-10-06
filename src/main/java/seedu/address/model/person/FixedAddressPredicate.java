@@ -14,11 +14,11 @@ public class FixedAddressPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-       if (person.getAddress().equals(fixedAddress)) {
-           return true;
-       } else {
-           return false;
-       }
+        if (person.getAddress().equals(fixedAddress)) {
+            return true;
+        } else {
+            return false;
+        } 
     }
 
     @Override
