@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -24,6 +27,8 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     @FXML
     private HBox cardPane;
@@ -64,7 +69,11 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle(CSSStyle.getInstance().getBackgroundStyle(getColorForTag(tag.tagName)));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
@@ -84,4 +93,13 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
+
+    private static String getColorForTag(String tagValue) {
+        if(!tagColors.containsKey(tagValue)){
+            tagColors.put(tagValue, CSSStyle.getInstance().getRandomHexColor());
+        }
+
+        return tagColors.get(tagValue);
+    }
+
 }
