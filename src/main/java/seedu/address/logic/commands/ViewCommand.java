@@ -8,8 +8,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
+import seedu.address.model.person.FixedAddressPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
 
 /**
@@ -25,7 +27,7 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s person founded";
+    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "persons founded with %1$s";
 
     private final Index targetIndex;
 
@@ -43,13 +45,17 @@ public class ViewCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (currentUnit.equals(PERSON)) {
-            ReadOnlyPerson personToView = lastShownList.get(targetIndex.getZeroBased());
-        } else {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        ReadOnlyPerson toView = lastShownList.get(targetIndex.getZeroBased());
 
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        if (currentUnit.equals(PERSON)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (currentUnit.equals(ADDRESS)){
+            FixedAddressPredicate predicate = new FixedAddressPredicate(toView.getAddress());
+            model.updateFilteredPersonList(predicate);
+            return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress()));
+        } else {
+            throw new CommandException("It is not implemented yet");
+        }
 
     }
 
