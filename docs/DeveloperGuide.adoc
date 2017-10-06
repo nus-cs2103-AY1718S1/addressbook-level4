@@ -745,7 +745,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |set the style and size of the font |customize to my preference
 
-|`* *` |user |have different input languages |input different languages to my contacts
+|`* *` |user |have different input languages |input different languages to my contacts.
 
 |`* *` |user |be able to open and close panels in UI |hide them when not needed.
 
