@@ -723,18 +723,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |key data into my app
+
+|`* * *` |user |edit an existing person |change details that are no longer pertinent
+
+|`* * *` |user |have a list of intelligent autocomplete options displayed when I make a command|type commands quicker and easier
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |delete a specific tag |remove tags that I no longer need
+
+|`* *`|user |store notes about a contact|remember things pertaining to the contact
+
+|`* *` |user |use abbreviation when typing commands |type commands faster
+
+|`* *` |user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book |delete a person using their name |remove a contact without having to find their index
+
+|`*` |advanced user |amend the storage file manually |import and export data easily
+
 |=======================================================================
 
-{More to be added}
+[discrete]
+=== Completed user stories
+|=======================================================================
+|As a ... |I want to ... |So that I can...
+|user with bad spelling |find a person using close words |find persons without having to remember the exact spelling
+|user |find a person using its associated tag |find a tagged group of persons easily
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -742,12 +765,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Find person
+
+*MSS*
+
+1. User requests to find persons containing a set of name words or tags
+2. Rolodex shows a list of persons with
+names close to or matching the specified query and
+tags matching the specified query
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The displayed list is empty
++
+Use case ends.
+
+[discrete]
 === Use case: Delete person
 
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Rolodex shows a list of persons
 3.  User requests to delete a specific person in the list
 4.  AddressBook deletes the person
 +
@@ -767,7 +809,205 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Store person note
+
+*MSS*
+
+1. User requests to list person
+2. Rolodex shows a list of persons
+3. User requests to store note for a specific person in the list
+4. Rolodex adds note to the person
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Rolodex shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. A note already exists at given index.
++
+[none]
+** 3b1. Rolodex requests for confirmation to overwrite note.
+** 3b2. User confirms overwrite.
+** 3b3. Rolodex overwrites existing note with new note.
+
+[discrete]
+=== Use case: Clear AddressBook
+
+*MSS*
+
+1.  User requests to clear AddressBook
+2.  AddressBook prompts the user for confirmation
+3.  User confirms the deletion
+4.  AddressBook clear the AddressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
++
+Use case ends.
+
+[discrete]
+=== Use case: Editing a person's details
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook edits the person with the new data
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+[none]
+* 2b. The list is too long.
++
+* 2b1. User requests to find a person
+* 2b2. AddressBook shows a filtered list of persons
++
+[none]
+** 2b2a. The filtered list is empty
++
+Use case resumes at step 2b1.
+* 2b3. User requests to edit a specific person in the list
+[none]
+** 2b3a. The given index is invalid.
++
+[none]
+*** 2b3a1. AddressBook shows an error message.
++
+Use case resumes at step 2b2.
+[none]
+** 2b3b. The given data is invalid.
++
+[none]
+*** 2b3b1. AddressBook shows an error message.
++
+Use case resumes at step 2b2.
+* 2b4. AddressBook edits the person with the new data
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Autocomplete commands
+
+*MSS*
+
+1.  User hits an alphabet key
+2.  AddressBook drops down a list of possible commands
+3.  User requests to select a specific command in the list
+4.  AddressBook appends the remainder of the command into the input box
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User continues to type.
++
+Use case resumes at step 2.
+[none]
+* 2b. AddressBook does not display any possible command
++
+Use case ends.
+
+[none]
+* 3a. User requests to execute the command.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete tag
+
+*MSS*
+
+1. User requests to delete tag
+2. Rolodex shows a list of tags
+3. User requests to delete a specific tag in the list
+4. Rolodex deletes the tag
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Rolodex shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Logging into the AddressBook with login credentials
+
+*MSS*
+
+1.  User opens the application
+2.  AddressBook shows a prompt for the login credentials
+3.  User requests to login with valid credentials
+4.  AddressBook initializes with the user's data
++
+Use case ends.
+
+*Extensions*
+
+* 2a. User does not have an account
+[none]
+** 2a1. User requests to create a new account
+[none]
+*** 2a1a. AddressBook creates a new account
++
+Use case resumes at step 2.
+[none]
+*** 2a1b. AddressBook failed to create a new account
++
+Use case resumes at step 2a.
+
+[none]
+* 2b. User forgot his login credentials
+[none]
+** 2b1. User requests to display the hint for help
+[none]
+*** 2b1a. User remembers the correct credentials
++
+Use case resumes at step 3
+[none]
+*** 2b1b. User cannot remember the correct credentials
+[none]
+**** 2b1ba. User calls support for help
++
+Use case ends.
+
+* 3a. The given login credentials is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +1015,16 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Every command should respond within two seconds.
+.  Features of the product should be added incrementally.
+.  Should be able to work offline.
+.  Should be free to download.
+.  Startup time should be less than 3s.
+.  Should be usable by a novice who has never used a command prompt before
+.  Data should be encrypted when application is not running
+.  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
 
-{More to be added}
+
 
 [appendix]
 == Glossary
