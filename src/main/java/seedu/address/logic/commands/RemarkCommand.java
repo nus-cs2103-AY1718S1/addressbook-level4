@@ -72,6 +72,11 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Generate success message based on the person edited
+     * @param personToEdit
+     * @return message whether remark is added or deleted
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
