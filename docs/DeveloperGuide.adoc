@@ -739,7 +739,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide details of a person |just see the name of the person
 
-|`* *` |user |sort contacts in UI by drag and drop |arrange them in the order I prefer
+|`* *` |user |sort contacts in UI by drag and drop |arrange them in the order of my preference
 
 |`* *` |user |choose different UI theme |customize to my preference
 
