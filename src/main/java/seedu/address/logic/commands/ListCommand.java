@@ -6,7 +6,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniqueAddressPredicate;
 
 import java.util.HashSet;
-import java.util.List;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -58,6 +57,5 @@ public class ListCommand extends Command {
             }
         }
         return set;
-
     }
 }
