@@ -820,6 +820,13 @@ Use case ends.
 +
 Use case ends.
 
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
++
+Use case ends.
+
 [discrete]
 === Use case: List all persons
 
@@ -871,10 +878,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-* 3a. User cancels the action.
-
-Use case ends.
 
 {More to be added}
 
