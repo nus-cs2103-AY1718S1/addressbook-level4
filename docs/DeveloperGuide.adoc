@@ -822,7 +822,6 @@ Use case ends.
 *Extensions*
 4a. There are no unused users beyond the time period user input
   Use case ends.
-  
 
 {More to be added}
 
