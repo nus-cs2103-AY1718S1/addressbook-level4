@@ -47,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    @Override
     public void resetListingUnit(ListingUnit unit) {
         curentListingUnit = unit;
     }
