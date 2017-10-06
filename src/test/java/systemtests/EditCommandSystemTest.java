@@ -26,9 +26,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-//import static seedu.address.testutil.TypicalPersons.AMY;
-//import static seedu.address.testutil.TypicalPersons.BOB;
-//import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -83,7 +83,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit a person with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        //assertCommandSuccess(command, index, BOB);
+        assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
@@ -101,7 +101,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered person list, edit index within bounds of address book and person list -> edited */
-        //showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
@@ -112,7 +112,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        //showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -129,7 +129,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new person's name
-        //assertCommandSuccess(command, index, AMY, index);
+        assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -175,10 +175,10 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a person with new values same as another person's values -> rejected */
-       // executeCommand(PersonUtil.getAddCommand(BOB));
-       // assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
+        executeCommand(PersonUtil.getAddCommand(BOB));
+        assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
-        //assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
+        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
@@ -208,7 +208,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
     private void assertCommandSuccess(String command, Index toEdit, ReadOnlyPerson editedPerson,
-            Index expectedSelectedCardIndex) {
+                                      Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
             expectedModel.updatePerson(
@@ -247,7 +247,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
+                                      Index expectedSelectedCardIndex) {
         executeCommand(command);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

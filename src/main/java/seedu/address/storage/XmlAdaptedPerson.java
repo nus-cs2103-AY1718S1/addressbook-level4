@@ -53,7 +53,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        remark=source.getRemark().value;
+        remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -74,7 +74,7 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-        final Remark remark=new Remark(this.remark);
+        final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, remark, tags);
     }
