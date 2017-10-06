@@ -14,18 +14,19 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
+/**
+ * Class for the autocomplete command function
+ * The class holds the trie for command words
+ */
 public class CommandTrie implements Trie {
-    /**
-     * Class for the autocomplete command function
-     * The class holds the trie for command words
-     */
+
     private Node root = null;
     private String[] commands = new String[] {
-            AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
-            EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
-            HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
-            RedoCommand.COMMAND_WORD, RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
-            UndoCommand.COMMAND_WORD
+        AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
+        EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
+        HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
+        RedoCommand.COMMAND_WORD, RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
+        UndoCommand.COMMAND_WORD
     };
 
     public CommandTrie () {
@@ -42,7 +43,7 @@ public class CommandTrie implements Trie {
         char[] inputArray = input.toLowerCase().toCharArray();
         StringBuilder output = new StringBuilder();
         Node temp = root;
-        int i=0;
+        int i = 0;
 
         while (temp.hasChild() || temp.hasNext()) {
             if (i < inputArray.length) {
@@ -65,22 +66,27 @@ public class CommandTrie implements Trie {
         return output.toString();
     }
 
+    /**
+     * Insert function for trie
+     * @param input
+     */
+
     public void insert (String input) {
         char[] inputArray = input.toCharArray();
 
-        if (root == null){
-            root = new Node( inputArray[0], null, null);
+        if (root == null) {
+            root = new Node (inputArray[0], null, null);
             Node temp = root;
-            for (int i=1; i<inputArray.length; i++){
+            for (int i = 1; i < inputArray.length; i++) {
                 temp.setChild(new Node(inputArray[i], null, null));
                 temp = temp.getChild();
             }
         } else {
             Node temp = root;
-            int i=0;
+            int i = 0;
             //Navigate to leaf of trie
             while (temp.hasNext()) {
-                if (temp.getKey() == inputArray[i]){
+                if (temp.getKey() == inputArray[i]) {
                     temp = temp.getChild();
                     i++;
                 } else {
@@ -88,11 +94,11 @@ public class CommandTrie implements Trie {
                 }
             }
 
-            for (; i<inputArray.length-1; ) {
+            for (; i < inputArray.length - 1; ) {
                 if (temp.getKey() == inputArray[i] && temp.hasChild()) {
                     //Navigate to existing child
                     i++;
-                    temp=temp.getChild();
+                    temp = temp.getChild();
                 } else if (temp.getKey() == inputArray[i] && !temp.hasChild()) {
                     //Add child
                     i++;

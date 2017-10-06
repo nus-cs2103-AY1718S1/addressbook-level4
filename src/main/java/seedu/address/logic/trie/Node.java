@@ -2,6 +2,9 @@ package seedu.address.logic.trie;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Class for node object
+ */
 public class Node {
 
     private Node next;

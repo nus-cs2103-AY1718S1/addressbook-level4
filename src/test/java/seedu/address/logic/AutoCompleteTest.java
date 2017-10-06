@@ -14,12 +14,12 @@ public class AutoCompleteTest {
     private Trie commandTrie;
 
     @Before
-    public void setup(){
+    public void setup() {
         commandTrie = new CommandTrie();
     }
 
     @Test
-    public void testAutoComplete(){
+    public void testAutoComplete() {
         assert commandTrie.attemptAutoComplete("a").equals("add");
         assert commandTrie.attemptAutoComplete("e").equals("e");
         assert commandTrie.attemptAutoComplete("ed").equals("edit");

@@ -23,11 +23,11 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static Trie commandTrie;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private static Trie commandTrie;
 
     @FXML
     private TextField commandTextField;
@@ -101,7 +101,7 @@ public class CommandBox extends UiPart<Region> {
         try {
             String command = commandTrie.attemptAutoComplete(input);
 
-            if (input.equals(command)){
+            if (input.equals(command)) {
                 setStyleToIndicateCommandFailure();
                 logger.info("Autocomplete failed with input: " + input);
             } else {
@@ -109,7 +109,7 @@ public class CommandBox extends UiPart<Region> {
                 commandTextField.positionCaret(command.length());
                 logger.info("Autocomplete successful with input: " + input + " to " + command);
             }
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             setStyleToIndicateCommandFailure();
             logger.info("Autocomplete failed with input: " + input);
         }
