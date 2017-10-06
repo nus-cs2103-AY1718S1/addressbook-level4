@@ -723,15 +723,54 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |delete a person through a button |delete a person more conveniently
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |have the list arranged alphabetically |search through the list as well
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |have simpler add command |do a quick add
+
+|`* * *` |user |have a address button |view the person's address on the browser
+
+|`* * *` |user |find a person through other details |find a person in many ways
+
+|`* * *` |user |import data from other addressbook |save the hassle to reenter contacts
+
+|`* * *` |user |list persons according to a specified tag |to list them as a group easily
+
+|`* *` |user |hide details of a person |just see the name of the person
+
+|`* *` |user |sort contacts in UI by drag and drop |arrange them in the order I prefer.
+
+|`* *` |user |choose different UI theme |customize to my preference
+
+|`* *` |user |set the style and size of the font |customize to my preference
+
+|`* *` |user |have different input languages |input different languages to my contacts
+
+|`* *` |user |be able to open and close panels in UI |hide them when not needed.
+
+|`* *` |user |have important/favorite persons at top of the list |access to their details faster
+
+|`* *` |user |to delete a group of people using tag |save time from deleting one by one
+
+|`* *` |user |to see the different commands in a UI panel |refer to the command format conveniently
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |be able to add photo to a contact |identify a person quicker and distinguish people with almost similar names
+
+|`*` |user |auto suggestion list for recently used command |save time from being repetitive
+
+|`*` |user |to change color of tag in UI |customize to my preference
+
+|`*` |user |to synchronized addressbook with other online sources |my addressbook is up to date.
+
+|`*` |user |to group contacts together|
+
+|`*` |user |to be able to choose which search engine to use |customize to my preference.
+
 |=======================================================================
 
 {More to be added}
