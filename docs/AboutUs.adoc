@@ -19,12 +19,12 @@ Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Leon Chow WenHao
+image::leonchowwenhao.png[width="150", align="left"]
+{empty}[https://github.com/LeonChowWenHao[github]] [<<leonchowwenhao#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Storage
 
 '''
 
