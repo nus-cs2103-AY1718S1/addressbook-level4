@@ -835,6 +835,69 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add a relationship between two persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to link two specific persons in the list
+4.  AddressBook links those two persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Either of the given indices is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add a named relationship between two persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add an relationship between two specific persons
+4.  AddressBook adds an relationship between those two persons
+5.  User requests to show a list of relationships
+6.  AddressBook shows a list of relationships
+7.  User requests to add a name to that relationship
+8.  AddressBook adds a name to that relationship
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Either of the given indices is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 7a. The index of relationship given to be added name on is invalid.
++
+[none]
+** 7a1. AddressBook shows an error message.
++
+Use case resumes at step 6.
+
 {More to be added}
 
 [appendix]
