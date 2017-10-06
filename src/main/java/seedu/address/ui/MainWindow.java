@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -37,10 +37,9 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String SORT_NAME = "sort name";
     private static final String SORT_COMMAND_WORD = "sort";
     private static final String FIND_COMMAND_WORD = "find";
-    private static final String List_COMMAND_WORD = "list";
+    private static final String LIST_COMMAND_WORD = "list";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
@@ -70,7 +69,7 @@ public class MainWindow extends UiPart<Region> {
     private TextField searchField;
 
     @FXML
-    private ComboBox comboBox;
+    private MenuButton sortMenu;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -118,7 +117,7 @@ public class MainWindow extends UiPart<Region> {
         searchField.setOnKeyReleased(e -> {
             try {
                 if (searchField.getText().trim().isEmpty()) {
-                    logic.execute(List_COMMAND_WORD);
+                    logic.execute(LIST_COMMAND_WORD);
                 } else {
                     logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
                 }
@@ -134,16 +133,41 @@ public class MainWindow extends UiPart<Region> {
      * Initializes the sort box.
      */
     private void initSortBox() throws CommandException, ParseException {
-        comboBox.getItems().addAll(options);
-        comboBox.getSelectionModel().select(0);
-        logic.execute(SORT_NAME);
-        comboBox.setOnAction(e -> {
+        MenuItem name = new MenuItem("Name");
+        MenuItem phone = new MenuItem("Phone");
+        MenuItem email = new MenuItem("Email");
+        MenuItem address = new MenuItem("Address");
+        sortMenu.getItems().addAll(name, phone, email, address);
+
+        name.setOnAction(e -> {
             try {
-                logic.execute(SORT_COMMAND_WORD + " " + comboBox.getValue().toString());
-            } catch (CommandException e1) {
-                e1.printStackTrace();
-            } catch (ParseException e1) {
-                e1.printStackTrace();
+                logic.execute(SORT_COMMAND_WORD + " " + name.getText());
+            } catch (CommandException | ParseException e1) {
+                logger.warning("Failed to sort name");
+            }
+        });
+
+        phone.setOnAction(e -> {
+            try {
+                logic.execute(SORT_COMMAND_WORD + " " + phone.getText());
+            } catch (CommandException | ParseException e1) {
+                logger.warning("Failed to sort phone");
+            }
+        });
+
+        email.setOnAction(e -> {
+            try {
+                logic.execute(SORT_COMMAND_WORD + " " + email.getText());
+            } catch (CommandException | ParseException e1) {
+                logger.warning("Failed to sort email");
+            }
+        });
+
+        address.setOnAction(e -> {
+            try {
+                logic.execute(SORT_COMMAND_WORD + " " + address.getText());
+            } catch (CommandException | ParseException e1) {
+                logger.warning("Failed to sort address");
             }
         });
     }

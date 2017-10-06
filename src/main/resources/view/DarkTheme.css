@@ -345,14 +345,6 @@
     -fx-font-size: 11;
 }
 
-#comboBox .list-cell {
-    -fx-text-fill: white;
-}
-
-#comboBox .list-view .list-cell {
-    -fx-text-fill: white;
-}
-
-#comboBox .cell {
-    -fx-background-color: dimgrey;
+#sortMenu .label {
+    -fx-text-fill: lightgray;
 }
