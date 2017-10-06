@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.testutil.StorageUtil.getNullStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,7 +90,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
         return command;
     }
 

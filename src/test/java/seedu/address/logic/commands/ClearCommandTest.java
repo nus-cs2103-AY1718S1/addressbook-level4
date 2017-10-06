@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.StorageUtil.getNullStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class ClearCommandTest {
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

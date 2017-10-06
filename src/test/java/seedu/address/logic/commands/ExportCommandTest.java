@@ -20,6 +20,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 
 public class ExportCommandTest {
@@ -28,6 +31,9 @@ public class ExportCommandTest {
 
     private AddressBook addressBook = getTypicalAddressBook();
     private Model model = new ModelManager(addressBook, new UserPrefs());
+    // we can use null as a file path as we will not be using the instance file path
+    private AddressBookStorage addressBookStorage = new XmlAddressBookStorage(null);
+    private Storage storage = new StorageManager(addressBookStorage, null);
 
     @Test
     public void execute_validFilePath_success() throws Exception {
@@ -42,8 +48,7 @@ public class ExportCommandTest {
         assertCommandSuccess(exportCommand, model, expectedMessage, expectedModel);
 
         // check that the written file is correct
-        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(validFilePath);
-        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook().get();
+        ReadOnlyAddressBook readBack = storage.readAddressBook(validFilePath).get();
         ReadOnlyAddressBook readBackAddressBook = new AddressBook(readBack);
         assertEquals(addressBook, readBackAddressBook);
     }
@@ -74,7 +79,7 @@ public class ExportCommandTest {
 
     private ExportCommand prepareCommand(String filePath) {
         ExportCommand exportCommand = new ExportCommand(filePath);
-        exportCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        exportCommand.setData(model, storage, new CommandHistory(), new UndoRedoStack());
         return exportCommand;
     }
 }
