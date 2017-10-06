@@ -90,17 +90,16 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
 
+            // to be implemented
+            Address editedAddress = null;
             for (ReadOnlyPerson p : personList) {
                 if (p.getAddress().equals(addressToEdit)) {
                     ReadOnlyPerson editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), editedAddress, p.getTags());
                 }
             }
             model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
-
-
-
         }
-
+        return null;
     }
 
     /**

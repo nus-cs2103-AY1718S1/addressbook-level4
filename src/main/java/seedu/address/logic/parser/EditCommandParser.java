@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -20,12 +22,15 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.Address;
 import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
  */
 public class EditCommandParser implements Parser<EditCommand> {
+
+    static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
@@ -36,7 +41,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         if (ModelManager.currentListingUnit.equals(ListingUnit.PERSON)) {
             return parseEditPerson(args);
-        } else (ModelManager.currentListingUnit.equals(ListingUnit.ADDRESS)) {
+        } else {
             return parseEditAddress(args);
         }
     }
@@ -74,7 +79,26 @@ public class EditCommandParser implements Parser<EditCommand> {
 
     public EditCommand parseEditAddress(String args) throws ParseException {
         requireNonNull(args);
-        
+        String trimmedArgs = args.trim();
+
+        Index index;
+        Matcher matcher = FIRST_INT_PATTERN.matcher(trimmedArgs);
+
+        try {
+            if (matcher.find()) {
+                index = ParserUtil.parseIndex(matcher.group(0));
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            }
+
+            String attributeName = trimmedArgs.substring(matcher.group(0).length()).trim();
+            Address editedAddress = new Address(attributeName);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
+        return new EditCommand(index, Address);
 
     }
 
