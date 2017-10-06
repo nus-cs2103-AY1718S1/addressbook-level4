@@ -1,17 +1,20 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -27,14 +30,21 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    public static ArrayList<String> commandKeywords;
+
     @FXML
     private TextField commandTextField;
+
+    @FXML
+    private TextField commandTextFieldKeyword;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        configInactiveKeyword();
+        configCommandKeywords();
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -44,21 +54,100 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            default:
+                // let JavaFx handle the keypress
+
         }
     }
+
+    /**
+     * Handles the key released event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleKeyReleased(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+            default:
+                // let JavaFx handle the keyreleased
+                listenCommandInputChanged();
+        }
+    }
+
+    /**
+     * Handles the Enter button pressed event.
+     */
+    private void listenCommandInputChanged(){
+        String allTextInput = commandTextField.getText();
+        String commandKeyword = allTextInput.split(" ")[0];
+        if(validCommandKeyword(commandKeyword)){
+            configActiveKeyword(commandKeyword);
+        }else{
+            configInactiveKeyword();
+        }
+    }
+
+    private boolean validCommandKeyword(String keyWord){
+        for(int i = 0; i < commandKeywords.size(); i++){
+            String commandKeyword = commandKeywords.get(i);
+            if(Pattern.matches(commandKeyword,keyWord)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void configInactiveKeyword(){
+        commandTextFieldKeyword.setVisible(false);
+        commandTextFieldKeyword.toBack();
+        commandTextFieldKeyword.clear();
+        commandTextFieldKeyword.setStyle("    -fx-background-color: transparent #383838 transparent #383838;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-border-color: #383838 #383838 #ffffff #383838;\n" +
+                "    -fx-border-insets: 0;\n" +
+                "    -fx-border-width: 1;\n" +
+                "    -fx-font-family: \"Segoe UI Light\";\n" +
+                "    -fx-font-size: 13pt;\n" +
+                "    -fx-text-fill: white;");
+    }
+
+    private void configActiveKeyword(String commandKeyword){
+        commandTextFieldKeyword.setVisible(true);
+        Text commandText = new Text(commandKeyword);
+        commandText.setFont(commandTextField.getFont());
+        final double width = commandText.getLayoutBounds().getWidth() + 17;
+        commandTextFieldKeyword.setText(commandKeyword);
+        commandTextFieldKeyword.setStyle(" -fx-control-inner-background: yellow;\n" +
+                "    -fx-font-size: 12pt;\n" +
+                "    -fx-text-fill: red;");
+        commandTextFieldKeyword.setPrefWidth(width);
+        commandTextFieldKeyword.toFront();
+    }
+
+    private void configCommandKeywords(){
+        commandKeywords = new ArrayList<String>();
+        commandKeywords.add(AddCommand.COMMAND_WORD);
+        commandKeywords.add(DeleteCommand.COMMAND_WORD);
+        commandKeywords.add(EditCommand.COMMAND_WORD);
+        commandKeywords.add(ExitCommand.COMMAND_WORD);
+        commandKeywords.add(FindCommand.COMMAND_WORD);
+        commandKeywords.add(HelpCommand.COMMAND_WORD);
+        commandKeywords.add(ListCommand.COMMAND_WORD);
+        commandKeywords.add(SelectCommand.COMMAND_WORD);
+        commandKeywords.add(ClearCommand.COMMAND_WORD);
+        commandKeywords.add(UndoCommand.COMMAND_WORD);
+        commandKeywords.add(RedoCommand.COMMAND_WORD);
+    }
+
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
