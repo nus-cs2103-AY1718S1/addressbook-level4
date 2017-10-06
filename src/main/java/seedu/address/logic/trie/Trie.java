@@ -7,5 +7,6 @@ package seedu.address.logic.trie;
 public interface Trie {
 
     String attemptAutoComplete (String input);
+    void insert (String input);
 
     }
