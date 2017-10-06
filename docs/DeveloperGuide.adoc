@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+ AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -881,6 +881,12 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The application only support in English.
+.  The application file size is limited to a max of 30MB.
+.  The system should be backward compatible with the data produced by earlier version of the system.
+.  System requirement: the application can work on window 10.1 or later and Mac OS 10.12 or later.
+.  The project development time should not be more than 6 weeks
+.  This addressbook application is open source.
 
 {More to be added}
 
