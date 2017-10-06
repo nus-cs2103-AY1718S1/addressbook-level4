@@ -29,7 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
-    private ListingUnit curentListingUnit;
+    public static ListingUnit currentListingUnit;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -42,11 +42,12 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        curentListingUnit = PERSON;
+        currentListingUnit = PERSON;
     }
 
     public ModelManager() { this(new AddressBook(), new UserPrefs()); }
 
+    @Override
     public HashSet<Address> getUniqueAdPersonSet() {
         HashSet<Address> set = new HashSet<>();
 
@@ -61,12 +62,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetListingUnit(ListingUnit unit) {
-        curentListingUnit = unit;
+        currentListingUnit = unit;
     }
 
     @Override
     public ListingUnit getCurrentListingUnit() {
-        return curentListingUnit;
+        return currentListingUnit;
     }
 
     @Override

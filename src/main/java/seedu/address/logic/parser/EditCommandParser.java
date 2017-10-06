@@ -18,6 +18,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.ModelManager;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,7 +32,16 @@ public class EditCommandParser implements Parser<EditCommand> {
      * and returns an EditCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public EditCommand parse(String args) throws ParseException {
+        if (ModelManager.currentListingUnit.equals(ListingUnit.PERSON)) {
+            return parseEditPerson(args);
+        } else (ModelManager.currentListingUnit.equals(ListingUnit.ADDRESS)) {
+            return parseEditAddress(args);
+        }
+    }
+
+    public EditCommand parseEditPerson(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
@@ -60,6 +71,13 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         return new EditCommand(index, editPersonDescriptor);
     }
+
+    public EditCommand parseEditAddress(String args) throws ParseException {
+        requireNonNull(args);
+        
+
+    }
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
