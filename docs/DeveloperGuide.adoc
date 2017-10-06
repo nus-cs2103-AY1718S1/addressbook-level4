@@ -767,7 +767,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |to synchronized addressbook with other online sources |my addressbook is up to date.
 
-|`*` |user |to group contacts together|
+|`*` |user |to group contacts together |view them as a group
 
 |`*` |user |to be able to choose which search engine to use |customize to my preference.
 
