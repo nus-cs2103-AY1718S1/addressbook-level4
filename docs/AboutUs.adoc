@@ -46,9 +46,9 @@ Responsibilities: Dev Ops + Threading
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Hou Denghao
+image::houdenghao.jpg[width="150", align="left"]
+{empty}[http://github.com/HouDenghao[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
