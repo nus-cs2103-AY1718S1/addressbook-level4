@@ -234,7 +234,6 @@ There is no need to back up the data manually. +
 The backup file is appended with `-backup.xml` and is stored in the same folder as the main storage file. +
 The data from the backup file has to be loaded manually by copying the contents of the backup file into your main storage file.
 
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
