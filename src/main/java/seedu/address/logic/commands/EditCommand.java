@@ -94,7 +94,7 @@ public class EditCommand extends UndoableCommand {
                     ReadOnlyPerson editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), editedAddress, p.getTags());
                 }
             }
-            model.updateFilteredPersonList(new UniqueAddressPredicate(model.get));
+            model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
 
 
 
