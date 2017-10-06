@@ -1,5 +1,12 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.XmlAddressBookStorage;
+
 /**
  * Exports existing contacts to external XML file
  */
@@ -12,6 +19,7 @@ public class ExportCommand extends Command {
             + "Example: " + COMMAND_WORD + " /Users/seedu/Documents";
 
     public static final String MESSAGE_EXPORT_CONTACTS_SUCCESS = "Contacts exported to: %1$s";
+    public static final String MESSAGE_EXPORT_CONTACTS_FAILURE = "Unable to export contacts to: %1$s";
 
     private final String exportFilePath;
 
@@ -20,9 +28,15 @@ public class ExportCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
-        // Does nothing for now
-        return null;
+    public CommandResult execute() throws CommandException {
+        ReadOnlyAddressBook readOnlyAddressBook = model.getAddressBook();
+        AddressBookStorage exportStorage = new XmlAddressBookStorage(exportFilePath);
+        try {
+            exportStorage.saveAddressBook(readOnlyAddressBook);
+        } catch (IOException ioe) {
+            throw new CommandException(String.format(MESSAGE_EXPORT_CONTACTS_FAILURE, exportFilePath));
+        }
+        return new CommandResult(String.format(MESSAGE_EXPORT_CONTACTS_SUCCESS, exportFilePath));
     }
 
     @Override
