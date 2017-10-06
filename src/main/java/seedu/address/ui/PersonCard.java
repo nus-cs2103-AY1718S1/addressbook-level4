@@ -10,6 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * An UI component that displays information of a {@code Person}.
+ */
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
@@ -55,18 +58,19 @@ public class PersonCard extends UiPart<Region> {
      * This is done so that strings of same value will have persistent colour.
      */
     private static String getColorForTag(String tagValue) {
+
         if (!tagColors.containsKey(tagValue)) {
             int multiplier = 1;
             int asciiSum = (tagValue.hashCode() > 1) ? tagValue.hashCode() : tagValue.hashCode() * -1;
 
             int colorRed = asciiSum % 256;
-            int colorGreen = (asciiSum/2) % 256;
-            int colorBlue = (asciiSum/3) % 256;
+            int colorGreen = (asciiSum / 2) % 256;
+            int colorBlue = (asciiSum / 3) % 256;
             while ((colorRed + colorGreen + colorBlue) > 700) {
                 asciiSum = (asciiSum / multiplier) * ++multiplier;
                 colorRed = asciiSum % 256;
-                colorGreen = (asciiSum/2) % 256;
-                colorBlue = (asciiSum/3) % 256;
+                colorGreen = (asciiSum / 2) % 256;
+                colorBlue = (asciiSum / 3) % 256;
             }
             String colorString = String.format("#%02x%02x%02x", colorRed, colorGreen, colorBlue);
             tagColors.put(tagValue, colorString);
@@ -90,6 +94,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialize respective person tag style {@code Person}
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
@@ -114,5 +121,6 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+
     }
 }
