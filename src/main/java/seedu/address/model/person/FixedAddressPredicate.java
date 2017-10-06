@@ -18,7 +18,7 @@ public class FixedAddressPredicate implements Predicate<ReadOnlyPerson> {
             return true;
         } else {
             return false;
-        } 
+        }
     }
 
     @Override
