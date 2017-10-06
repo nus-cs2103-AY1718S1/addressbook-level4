@@ -731,8 +731,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
@@ -753,6 +751,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
+[discrete]
+=== Completed user stories
+|=======================================================================
+|As a ... |I want to ... |So that I can...
+|user with bad spelling |find a person using close words |find persons without having to remember the exact spelling
+|user |find a person using its associated tag |find a tagged group of persons easily
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -760,12 +765,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Find person
+
+*MSS*
+
+1. User requests to find persons containing a set of name words or tags
+2. Rolodex shows a list of persons with
+names close to or matching the specified query and
+tags matching the specified query
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The displayed list is empty
++
+Use case ends.
+
+[discrete]
 === Use case: Delete person
 
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Rolodex shows a list of persons
 3.  User requests to delete a specific person in the list
 4.  AddressBook deletes the person
 +
@@ -935,6 +959,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Logging into the AddressBook with login credentials
 
 *MSS*
