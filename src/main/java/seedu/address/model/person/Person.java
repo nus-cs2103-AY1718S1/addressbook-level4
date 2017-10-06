@@ -1,14 +1,18 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.levenshteinDistance;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -17,6 +21,8 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {
+    private static final int FIND_NAME_GLOBAL_TOLERANCE = 4;
+    private static final int FIND_NAME_DISTANCE_TOLERANCE = 2;
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
@@ -109,6 +115,60 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
+    }
+
+    /**
+     * Returns whether a person's name contains some of the specified keywords,
+     * within a Levenshtein distance of {@link #FIND_NAME_DISTANCE_TOLERANCE},
+     * ONLY WHEN the name word contains a number of characters
+     * more than or equal to the global limit {@link #FIND_NAME_GLOBAL_TOLERANCE}.
+     *
+     * Otherwise, it returns the case-insensitive direct match for the particular
+     * name word and continues on to the next name word for a check.
+     *
+     * If no conditions are triggered, the method returns false.
+     *
+     * @param keyWords for searching
+     * @return {@code true} if the name matches or is close to any keyWord,
+     * {@code false} otherwise.
+     */
+    @Override
+    public boolean isNameCloseToAnyKeyword(List<String> keyWords) {
+        final List<String> wordsInName = getName().getWordsInName();
+        for (String nameWord : wordsInName) {
+            if (nameWord.length() >= FIND_NAME_GLOBAL_TOLERANCE) {
+                for (String keyWord : keyWords) {
+                    if (levenshteinDistance(nameWord, keyWord) <= FIND_NAME_DISTANCE_TOLERANCE) {
+                        return true;
+                    }
+                }
+            } else {
+                if (keyWords.stream()
+                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(getName().fullName, keyword))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether any of a person's tags exist in the search parameters.
+     * @param keyWords set of case-sensitive keywords to be matched against
+     *                 search parameters
+     * @return {@code false} if the sets are disjoint,
+     * {@code true} otherwise.
+     */
+    @Override
+    public boolean isTagSetJointKeywordSet(List<String> keyWords) {
+        return !Collections.disjoint(keyWords,
+                getTags().stream().map(tag -> tag.tagName).collect(Collectors.toSet()));
+    }
+
+    @Override
+    public boolean isSearchKeyWordsMatchAnyData(List<String> keyWords) {
+        return isNameCloseToAnyKeyword(keyWords)
+                || isTagSetJointKeywordSet(keyWords);
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
