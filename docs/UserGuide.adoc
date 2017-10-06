@@ -98,16 +98,16 @@ Finds persons in the address book. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* Only the name and tags are searched.
-* The name is searched fuzzily.
-* The tags is searched exactly.
-* The search will only select distinct persons. e.g. `han solo han solo` will only return `han solo`
-* The search is case insensitive for names. e.g. `hans` will match `Hans`
-* The search is case sensitive for tags. e.g. only `School` will match `School`
-* The search is fuzzy for name words of 4 or more characters. e.g `Hnas` will match `Hans`
-* Only full words will be matched when less than 4 characters. e.g. `hans` will not match `Han` but `han` will match `Han`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* The order of the keywords does not matter. e.g. `Hans school Bo` will match `Bo Hans` and others with the `school` tag
+* Only the [underline]#name# and [underline]#tags# are searched.
+* The [underline]#name# is searched _fuzzily_.
+* The [underline]#tags# is searched _exactly_.
+* The search will only find _distinct persons_. e.g. `han solo han solo` will only return `han solo`
+* The search is _case insensitive_ for [underline]#names#. e.g. `hans` will match `Hans`
+* The search is _case sensitive_ for [underline]#tags#. e.g. only `School` will match `School`
+* The search is _fuzzy_ for [underline]#name words# of 4 or more characters. e.g `Hnas` will match `Hans`
+* The search is _exact_ for [underline]#name words# of less than 4 characters. e.g. `hans` will not match `Han` but `han` will match `Han`
+* The search is an _OR_ search (i.e. Persons matching at least one keyword will be returned). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The [underline]#order of the keywords# _does not matter_. e.g. `Hans school Bo` will match `Bo Hans` and others with the `school` tag
 ****
 
 Examples:
@@ -116,6 +116,10 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find School` +
+Returns any person having tag `School`
+* `find School werk` +
+Returns any person having tag `School` or tag `werk`
 
 === Deleting a person : `delete`
 
