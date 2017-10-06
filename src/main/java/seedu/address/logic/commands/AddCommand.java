@@ -20,20 +20,27 @@ public class AddCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a"; // shorthand equivalent alias
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. \n"
+            + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example 1: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney \n"
+            + "Example 2: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "Mary Jane "
+            + PREFIX_PHONE + "87678977 "
+            + PREFIX_EMAIL + "maryj@example.com "
+            + PREFIX_ADDRESS + "170, Bugis Ave 3, #01-05 "
+            + PREFIX_TAG + "wife ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
