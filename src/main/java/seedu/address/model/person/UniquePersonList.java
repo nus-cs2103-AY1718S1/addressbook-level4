@@ -49,7 +49,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Sorts the list in alphabetical order.
+     * Sorts the list in order.
      */
     public void sort(String toSort) {
         switch (toSort) {

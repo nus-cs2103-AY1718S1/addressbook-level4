@@ -75,7 +75,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sorts the list in alphabetical order.
+     * Sorts the list.
      */
     public void sortList(String toSort) {
         persons.sort(toSort);

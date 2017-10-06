@@ -20,7 +20,7 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Sorts the AddressBook in alphabetical order. */
+    /** Sorts the AddressBook. */
     void sortList(String toSort);
 
     /** Deletes the given person. */

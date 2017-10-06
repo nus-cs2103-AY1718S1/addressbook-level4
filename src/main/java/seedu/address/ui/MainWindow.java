@@ -23,10 +23,12 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
@@ -141,7 +143,8 @@ public class MainWindow extends UiPart<Region> {
 
         name.setOnAction(e -> {
             try {
-                logic.execute(SORT_COMMAND_WORD + " " + name.getText());
+                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + name.getText());
+                raise(new NewResultAvailableEvent(result.feedbackToUser));
             } catch (CommandException | ParseException e1) {
                 logger.warning("Failed to sort name");
             }
@@ -149,7 +152,8 @@ public class MainWindow extends UiPart<Region> {
 
         phone.setOnAction(e -> {
             try {
-                logic.execute(SORT_COMMAND_WORD + " " + phone.getText());
+                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phone.getText());
+                raise(new NewResultAvailableEvent(result.feedbackToUser));
             } catch (CommandException | ParseException e1) {
                 logger.warning("Failed to sort phone");
             }
@@ -157,7 +161,8 @@ public class MainWindow extends UiPart<Region> {
 
         email.setOnAction(e -> {
             try {
-                logic.execute(SORT_COMMAND_WORD + " " + email.getText());
+                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + email.getText());
+                raise(new NewResultAvailableEvent(result.feedbackToUser));
             } catch (CommandException | ParseException e1) {
                 logger.warning("Failed to sort email");
             }
@@ -165,7 +170,8 @@ public class MainWindow extends UiPart<Region> {
 
         address.setOnAction(e -> {
             try {
-                logic.execute(SORT_COMMAND_WORD + " " + address.getText());
+                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + address.getText());
+                raise(new NewResultAvailableEvent(result.feedbackToUser));
             } catch (CommandException | ParseException e1) {
                 logger.warning("Failed to sort address");
             }

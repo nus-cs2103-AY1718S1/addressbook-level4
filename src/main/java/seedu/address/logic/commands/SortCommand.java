@@ -8,7 +8,7 @@ public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
 
-    public static final String MESSAGE_SUCCESS = "List has been sorted.";
+    public static final String MESSAGE_SUCCESS = "List has been sorted by %s.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list by name, phone, email or address \n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
@@ -24,6 +24,6 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() {
         model.sortList(toSort);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toSort));
     }
 }
