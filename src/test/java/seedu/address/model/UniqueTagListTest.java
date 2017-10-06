@@ -16,8 +16,4 @@ public class UniqueTagListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueTagList.asObservableList().remove(0);
     }
-
-    //TODO: test for: add tag, remove tag, for taglist; add tag, remove tag for person; add tag, remove tag for addressbook;
-    @Test
-    public void asObserableList_modifyList_
 }
