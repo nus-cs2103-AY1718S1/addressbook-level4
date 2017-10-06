@@ -10,7 +10,7 @@ public class UiStyle {
 
     private static UiStyle instance = null;
 
-    public static String STYLE_BACKGROUND_COLOR = "-fx-background-color: ";
+    private static String STYLE_BACKGROUND_COLOR = "-fx-background-color: ";
     private static String HEX_COLOR = "#%1$s";
     // Max hex color "FFFFFF" in integer
     private static int MAX_HEX_COLOR = 16777216;
@@ -35,11 +35,10 @@ public class UiStyle {
     }
 
     /**
-     *
      * @param color either color in String "red,blue,etc.." or hexadecimal color
      * @return String to indicate background color
      */
-    public static String getBackgroundStyle(String color){
+    public static String getBackgroundStyle(String color) {
         return UiStyle.STYLE_BACKGROUND_COLOR + color;
     }
 

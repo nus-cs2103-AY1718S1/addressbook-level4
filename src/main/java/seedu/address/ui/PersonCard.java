@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static HashMap<String, String> tagColors = new HashMap<>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -26,8 +27,6 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
-
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     @FXML
     private HBox cardPane;
@@ -67,6 +66,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise tag colors for person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
@@ -94,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private static String getColorForTag(String tagValue) {
-        if(!tagColors.containsKey(tagValue)){
+        if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, UiStyle.getInstance().getRandomHexColor());
         }
 
