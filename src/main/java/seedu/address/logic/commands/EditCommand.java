@@ -51,7 +51,7 @@ public class EditCommand extends UndoableCommand {
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
-    private final Address editAddress;
+    private final Address editedAddress;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -63,7 +63,7 @@ public class EditCommand extends UndoableCommand {
 
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
-        this.editAddress = null;
+        this.editedAddress = null;
     }
 
     /**
@@ -76,7 +76,7 @@ public class EditCommand extends UndoableCommand {
 
         this.index = index;
         this.editPersonDescriptor = null;
-        this.editAddress = editAddress;
+        this.editedAddress = editAddress;
     }
 
     @Override
@@ -105,11 +105,16 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
 
-            // to be implemented
-            Address editedAddress = null;
             for (ReadOnlyPerson p : personList) {
                 if (p.getAddress().equals(addressToEdit)) {
                     ReadOnlyPerson editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), editedAddress, p.getTags());
+                    try {
+                        model.updatePerson(p, editedPerson);
+                    } catch (DuplicatePersonException dpe) {
+                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
                 }
             }
             model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));

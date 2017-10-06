@@ -82,6 +82,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         String trimmedArgs = args.trim();
 
         Index index;
+        Address editedAddress;
         Matcher matcher = FIRST_INT_PATTERN.matcher(trimmedArgs);
 
         try {
@@ -92,13 +93,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             }
 
             String attributeName = trimmedArgs.substring(matcher.group(0).length()).trim();
-            Address editedAddress = new Address(attributeName);
+            editedAddress = new Address(attributeName);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        return new EditCommand(index, Address);
+        return new EditCommand(index, editedAddress);
     }
 
 
