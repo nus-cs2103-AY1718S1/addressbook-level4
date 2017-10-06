@@ -795,6 +795,54 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[GUI]]
+GUI
+
+...
+A graphical user interface that allows visual interaction with the computer
+...
+
+[[platform/resolution-specific-idiosyncrasies]
+Platform/Resolution specific idiosyncrasies
+
+...
+Peculiar software behaviour specific to the operating system
+...
+
+[[headless-mode]]
+Headless mode
+
+...
+A mode without requiring the use of a graphical user interface
+...
+
+[[Continuous-Integration]]
+Continuous Integration
+
+...
+Producing a clean build of the project frequently
+...
+
+[[throw-an-Exception]]
+Throw an Exception
+
+...
+A function indicates to a user that an exception has occurred depending on the input
+...
+
+[[Use-Cases]]
+Use Cases
+
+...
+The interactions that happen between the user and the application to achieve a specific end result
+...
+
+[[Non-functional-requirements]]
+Non Functional Requirements
+
+...
+A requirement that describes how a system works
+...
 [appendix]
 == Product Survey
 
