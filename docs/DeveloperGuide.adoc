@@ -739,7 +739,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide details of a person |just see the name of the person
 
-|`* *` |user |sort contacts in UI by drag and drop |arrange them in the order I prefer.
+|`* *` |user |sort contacts in UI by drag and drop |arrange them in the order of my preference
 
 |`* *` |user |choose different UI theme |customize to my preference
 
@@ -765,9 +765,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |to change color of tag in UI |customize to my preference
 
-|`*` |user |to synchronized addressbook with other online sources |my addressbook is up to date.
+|`*` |user |to synchronized addressbook with other online sources |my addressbook is up to date
 
-|`*` |user |to group contacts together|
+|`*` |user |to group contacts together |view them as a group
 
 |`*` |user |to be able to choose which search engine to use |customize to my preference.
 
