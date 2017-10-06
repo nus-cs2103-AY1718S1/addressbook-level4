@@ -794,12 +794,14 @@ Use case resumes at step 2.
 
 1. User requests to find person by name
 2. AddressBook searches for person with the specified name and displays to user
+
 +
 Use case ends.
 
 *Extensions*
 
 [none]
+
 * 1a. The input name format is invalid.
 +
 [none]
@@ -850,6 +852,7 @@ Use case ends.
 +
 Use cse ends.
 
+
 {More to be added}
 
 [appendix]
@@ -858,6 +861,7 @@ Use cse ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The addressbook will only work with english text.
 
 {More to be added}
 
