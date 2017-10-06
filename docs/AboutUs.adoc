@@ -28,7 +28,7 @@ Responsibilities: Storage
 '''
 
 === Hu Wanqing
-image::celiahuuuu.jpg[width="150", align="left"]
+image::celiahuuuu.png[width="150", align="left"]
 {empty}[http://github.com/celiahuuuu[github]] [<<HuWanqing#, portfolio>>]
 
 Role: Developer +
@@ -36,17 +36,17 @@ Responsibilities: Model
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<#, portfolio>>]
+=== Jiang Chunhui
+image::adoby7.png[width="150", align="left"]
+{empty}[https://github.com/Adoby7[github]] [<<JiangChunhui#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Logic
 
 '''
 
 === Hou Denghao
-image::houdenghao.jpg[width="150", align="left"]
+image::houdenghao.png[width="150", align="left"]
 {empty}[http://github.com/HouDenghao[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
