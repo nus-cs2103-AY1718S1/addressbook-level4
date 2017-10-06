@@ -17,6 +17,14 @@ public interface AddressBookStorage {
     String getAddressBookFilePath();
 
     /**
+     * Returns Backup AddressBook data as a {@link ReadOnlyAddressBook}.
+     *   Returns {@code Optional.empty()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException;
+
+    /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
