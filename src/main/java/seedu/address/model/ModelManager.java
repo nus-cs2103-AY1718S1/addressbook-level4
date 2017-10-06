@@ -26,8 +26,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    public static ListingUnit currentListingUnit;
-
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
@@ -42,7 +40,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        currentListingUnit = PERSON;
     }
 
     public ModelManager() {
@@ -60,16 +57,6 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
         return set;
-    }
-
-    @Override
-    public void resetListingUnit(ListingUnit unit) {
-        currentListingUnit = unit;
-    }
-
-    @Override
-    public ListingUnit getCurrentListingUnit() {
-        return currentListingUnit;
     }
 
     @Override

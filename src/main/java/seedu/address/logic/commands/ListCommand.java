@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.UniqueAddressPredicate;
-
 import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import seedu.address.model.person.UniqueAddressPredicate;
 
 /**
  * Lists all persons in the address book to the user.
@@ -24,9 +24,13 @@ public class ListCommand extends Command {
 
     private final String attName;
 
-    public ListCommand(String attributeName) { this.attName = attributeName; }
+    public ListCommand(String attributeName) {
+        this.attName = attributeName;
+    }
 
-    public ListCommand() { this.attName = DEFAULT_LISTING_ELEMENT; }
+    public ListCommand() {
+        this.attName = DEFAULT_LISTING_ELEMENT;
+    }
 
     private boolean hasAttribute() {
         return !attName.equals(DEFAULT_LISTING_ELEMENT);

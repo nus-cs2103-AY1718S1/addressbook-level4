@@ -17,14 +17,8 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
-    /** Get a hashset of all the Addresses */
+    /** Get a hash set of all the Addresses */
     HashSet<Address> getUniqueAdPersonSet();
-
-    /** Reset listing unit in the panel with the new ListingUnit*/
-    void resetListingUnit(ListingUnit unit);
-
-    /** Get current Listing unit */
-    ListingUnit getCurrentListingUnit();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
