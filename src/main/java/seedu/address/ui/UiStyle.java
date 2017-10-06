@@ -10,8 +10,8 @@ public class UiStyle {
 
     private static UiStyle instance = null;
 
-    private static String STYLE_BACKGROUND_COLOR = "-fx-background-color: ";
-    private static String HEX_COLOR = "#%1$s";
+    private static final String STYLE_BACKGROUND_COLOR = "-fx-background-color: ";
+    private static final String HEX_COLOR = "#%1$s";
     // Max hex color "FFFFFF" in integer
     private static int MAX_HEX_COLOR = 16777216;
 
