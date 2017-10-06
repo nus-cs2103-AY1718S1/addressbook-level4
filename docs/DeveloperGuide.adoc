@@ -786,15 +786,6 @@ Use case resumes at step 2.
 2.  AddressBook shows previous command to be undone.
 3.  User confirms to undo command.
 4.  AddressBook undo command.
-
-=== Use case: Clear all
-
-*MSS*
-
-1.  User request to clear AddressBook
-2.  AddressBook prompts user for confirmation
-3.  User confirm the deletion
-4.  AddressBook clear all contact in AdressBook
 +
 Use case ends.
 
@@ -810,6 +801,25 @@ Use case ends.
 [none]
 ** 3a1. AddressBook shows an error message.
 +
+Use case ends.
+
+[discrete]
+=== Use case: Clear all
+
+*MSS*
+
+1.  User request to clear AddressBook
+2.  AddressBook prompts user for confirmation
+3.  User confirm the deletion
+4.  AddressBook clear all contact in AdressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
+
 Use case ends.
 
 [discrete]
@@ -837,10 +847,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-* 3a. User cancels the action.
-
-Use case ends.
 
 {More to be added}
 
