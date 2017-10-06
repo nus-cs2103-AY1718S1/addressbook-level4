@@ -23,7 +23,7 @@ public class ListCommandParser implements Parser<ListCommand> {
             return new ListCommand();
         }
 
-        if (!args.equals(ATTRIBUTE_ADDRESS)) {
+        if (!trimmedArgs.equals(ATTRIBUTE_ADDRESS)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }

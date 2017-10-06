@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniqueAddressPredicate;
 
@@ -47,13 +48,13 @@ public class ListCommand extends Command {
         }
     }
 
-    private HashSet<ReadOnlyPerson> getUniqueAdPersonSet() {
-        HashSet<ReadOnlyPerson> set = new HashSet<>();
+    private HashSet<Address> getUniqueAdPersonSet() {
+        HashSet<Address> set = new HashSet<>();
 
         ObservableList<ReadOnlyPerson> personLst = model.getFilteredPersonList();
         for(ReadOnlyPerson p : personLst) {
-            if (!set.contains(p)) {
-                set.add(p);
+            if (!set.contains(p.getAddress())) {
+                set.add(p.getAddress());
             }
         }
         return set;
