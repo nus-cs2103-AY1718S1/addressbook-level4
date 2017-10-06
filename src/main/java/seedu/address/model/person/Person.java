@@ -140,8 +140,8 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
-    /*
-    * removes all Tag of that str
+    /**
+     * removes all Tag of that str
      */
     public void removeTag(String str) {
         Set<Tag> tagset = getTags();
