@@ -39,7 +39,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     @Override
     public EditCommand parse(String args) throws ParseException {
-        if (ModelManager.currentListingUnit.equals(ListingUnit.PERSON)) {
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.PERSON)) {
             return parseEditPerson(args);
         } else {
             return parseEditAddress(args);

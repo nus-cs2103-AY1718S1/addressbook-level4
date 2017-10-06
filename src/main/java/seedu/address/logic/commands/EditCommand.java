@@ -19,6 +19,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -93,7 +94,7 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (model.getCurrentListingUnit() == PERSON) {
+        if (ListingUnit.getCurrentListingUnit() == PERSON) {
             ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
             Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
             try {
@@ -106,7 +107,7 @@ public class EditCommand extends UndoableCommand {
 
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
-        } else if (model.getCurrentListingUnit() == ADDRESS) {
+        } else if (ListingUnit.getCurrentListingUnit() == ADDRESS) {
             Address addressToEdit = lastShownList.get(index.getZeroBased()).getAddress();
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
