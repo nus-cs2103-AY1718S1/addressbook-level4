@@ -2,14 +2,13 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.FixedAddressPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ShowSpecifiedPersonPredicate;
 
 import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
@@ -48,12 +47,17 @@ public class ViewCommand extends Command {
         ReadOnlyPerson toView = lastShownList.get(targetIndex.getZeroBased());
 
         if (currentUnit.equals(PERSON)) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            ShowSpecifiedPersonPredicate predicate = new ShowSpecifiedPersonPredicate(toView);
+            model.updateFilteredPersonList(predicate);
+            return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView));
+
         } else if (currentUnit.equals(ADDRESS)){
             FixedAddressPredicate predicate = new FixedAddressPredicate(toView.getAddress());
             model.updateFilteredPersonList(predicate);
             return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress()));
+
         } else {
+            System.out.println("Testing: " + PERSON.equals(PERSON));
             throw new CommandException("It is not implemented yet");
         }
 

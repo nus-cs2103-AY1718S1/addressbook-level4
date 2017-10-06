@@ -58,7 +58,7 @@ public class AddressBookParser {
             return new ListCommandParser().parse(arguments);
 
         case ViewCommand.COMMAND_WORD:
-            throw new ParseException("not implemented yet");
+            return new ViewCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
