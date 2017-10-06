@@ -13,7 +13,7 @@ public class UiStyle {
     private static final String STYLE_BACKGROUND_COLOR = "-fx-background-color: ";
     private static final String HEX_COLOR = "#%1$s";
     // Max hex color "FFFFFF" in integer
-    private static int MAX_HEX_COLOR = 16777216;
+    private static final int MAX_HEX_COLOR = 16777216;
 
 
     private static Random random = new Random();
