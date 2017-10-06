@@ -1,11 +1,8 @@
 package seedu.address.model.person;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Address} is unique in the given list.
@@ -13,8 +10,8 @@ import seedu.address.commons.util.StringUtil;
 public class UniqueAddressPredicate implements Predicate<ReadOnlyPerson> {
     private final HashSet<Address> uniqueAddressSet;
 
-    public UniqueAddressPredicate(HashSet<Address> AddressSet) {
-        this.uniqueAddressSet = AddressSet;
+    public UniqueAddressPredicate(HashSet<Address> addressSet) {
+        this.uniqueAddressSet = addressSet;
     }
 
     @Override

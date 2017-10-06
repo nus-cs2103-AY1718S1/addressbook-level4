@@ -1,11 +1,6 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniqueAddressPredicate;
-
-import java.util.HashSet;
 
 import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
@@ -31,7 +26,7 @@ public class ListCommand extends Command {
 
     public ListCommand(String attributeName) { this.attName = attributeName; }
 
-    public ListCommand() { this.attName = DEFAULT_LISTING_ELEMENT; };
+    public ListCommand() { this.attName = DEFAULT_LISTING_ELEMENT; }
 
     private boolean hasAttribute() {
         return !attName.equals(DEFAULT_LISTING_ELEMENT);
