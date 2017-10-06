@@ -728,6 +728,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` | user | edit a person | change details of a person easily
 |`* * *` | user | tag a person | store some notes about certain people
 |`* * *` | user | categorize persons | easily organize contacts and later on find wrt group
+|`* * *` | student | group contacts by module | have people from specific module at hand
 |`* * *` | user with many persons in the address book | find all the persons that satisfy part of the name (eg. Jo*) | search without remembering all the details
 |`* * *` | user | get closest result if my input doesn't match any name | I get results even if I misspell
 |`* * *` | user | add a picture to a person | recall easily who the person is
