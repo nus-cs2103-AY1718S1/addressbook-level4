@@ -118,6 +118,7 @@ public class EditCommand extends UndoableCommand {
                 }
             }
             model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
+            return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
         }
         return null;
     }
