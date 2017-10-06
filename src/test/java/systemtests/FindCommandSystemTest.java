@@ -37,12 +37,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: repeat previous find command where person list is displaying the persons we are finding
          * -> 2 persons found
          */
-        command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        command = FindCommand.COMMAND_WORD_ALT + " " + KEYWORD_MATCHING_MEIER;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
-        command = FindCommand.COMMAND_WORD + " Carl";
+        command = FindCommand.COMMAND_WORD_ABBREV + " Carl";
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -54,12 +54,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in address book, 2 keywords in reversed order -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson";
+        command = FindCommand.COMMAND_WORD_ALT + " Daniel Benson";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
+        command = FindCommand.COMMAND_WORD_ABBREV + " Daniel Benson Daniel";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -71,12 +71,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD;
+        command = UndoCommand.COMMAND_WORD_ABBREV;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD_ABBREV;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
@@ -95,7 +95,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find person in address book, keyword is substring of name -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " Mei";
+        command = FindCommand.COMMAND_WORD_ABBREV + " Mei";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -107,7 +107,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find person not in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " Mark";
+        command = FindCommand.COMMAND_WORD_ABBREV + " Mark";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -117,7 +117,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find address of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        command = FindCommand.COMMAND_WORD_ABBREV + " " + DANIEL.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -149,10 +149,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
-        /* Case: mixed case command word -> rejected */
-        command = "FiNd Meier";
-        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**

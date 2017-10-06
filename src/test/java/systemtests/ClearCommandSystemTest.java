@@ -39,7 +39,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
         selectPerson(Index.fromOneBased(1));
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        assertCommandSuccess(ClearCommand.COMMAND_WORD_ABBREV);
         assertSelectedCardDeselected();
 
         /* Case: filters the person list before clearing -> entire address book cleared */
@@ -49,11 +49,8 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: clear empty address book -> cleared */
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        assertCommandSuccess(ClearCommand.COMMAND_WORD_ABBREV);
         assertSelectedCardUnchanged();
-
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
