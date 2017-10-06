@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.ListingUnit.PERSON;
 
+import java.util.HashSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -43,8 +45,18 @@ public class ModelManager extends ComponentManager implements Model {
         curentListingUnit = PERSON;
     }
 
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+    public ModelManager() { this(new AddressBook(), new UserPrefs()); }
+
+    public HashSet<Address> getUniqueAdPersonSet() {
+        HashSet<Address> set = new HashSet<>();
+
+        ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
+        for(ReadOnlyPerson p : personLst) {
+            if (!set.contains(p.getAddress())) {
+                set.add(p.getAddress());
+            }
+        }
+        return set;
     }
 
     @Override

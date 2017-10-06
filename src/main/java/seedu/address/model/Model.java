@@ -1,8 +1,10 @@
 package seedu.address.model;
 
+import java.util.HashSet;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -13,6 +15,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** Get a hashset of all the Addresses */
+    HashSet<Address> getUniqueAdPersonSet();
 
     /** Reset listing unit in the panel with the new ListingUnit*/
     void resetListingUnit(ListingUnit unit);

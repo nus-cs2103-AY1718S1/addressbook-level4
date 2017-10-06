@@ -41,7 +41,7 @@ public class ListCommand extends Command {
     public CommandResult execute() {
         if (hasAttribute()) {
             model.resetListingUnit(ADDRESS);
-            UniqueAddressPredicate predicate = new UniqueAddressPredicate(getUniqueAdPersonSet());
+            UniqueAddressPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
             model.updateFilteredPersonList(predicate);
             return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         } else {
@@ -49,17 +49,5 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         }
-    }
-
-    private HashSet<Address> getUniqueAdPersonSet() {
-        HashSet<Address> set = new HashSet<>();
-
-        ObservableList<ReadOnlyPerson> personLst = model.getFilteredPersonList();
-        for(ReadOnlyPerson p : personLst) {
-            if (!set.contains(p.getAddress())) {
-                set.add(p.getAddress());
-            }
-        }
-        return set;
     }
 }
