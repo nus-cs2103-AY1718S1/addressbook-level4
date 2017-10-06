@@ -751,7 +751,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have important/favorite persons at top of the list |access to their details faster
 
-|`* *` |user |to delete a group of people using tag |save time from deleting one by one
+|`* *` |user |to delete a group of people using tag |save time from deleting one by one.
 
 |`* *` |user |to see the different commands in a UI panel |refer to the command format conveniently
 
