@@ -46,42 +46,55 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
+        switch (commandWord.toLowerCase()) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD_ABBREV:
             return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD_ABBREV:
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD_ABBREV:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD_ABBREV:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD_ABBREV:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD_ABBREV:
+        case FindCommand.COMMAND_WORD_ALT:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD_ABBREV:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_WORD_ABBREV:
+        case HistoryCommand.COMMAND_WORD_ALT:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD_ABBREV:
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD_ABBREV:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_WORD_ABBREV:
             return new RedoCommand();
 
         default:
