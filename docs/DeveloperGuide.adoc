@@ -731,7 +731,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`**` |user |know which contact I have not viewed for a specified period of time |delete those obsolete contacts
+
+|`**` |user |know the crash report so that when the addressbook crashes |restore backup
+
+|`**` |user |encrypt selected contacts |avoid people from seeing confidential contact
+
+|`**` |user |delete contacts by tag |remove them at one go
+
+|`**` |user | use autocomplete |save typing time
+
+|`*` |user |be able to export my addressbook information  |so that I can import it into another device.
+
+|`*` |user |have tag coloring |find the category of contacts I am looking for
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |add temporary contacts |don't have to add them permanently into my contact list.
+
+
 |=======================================================================
 
 {More to be added}
@@ -755,17 +773,55 @@ Use case ends.
 
 *Extensions*
 
-[none]
 * 2a. The list is empty.
-+
 Use case ends.
 
 * 3a. The given index is invalid.
-+
-[none]
+Use case resumes at step 2
+
 ** 3a1. AddressBook shows an error message.
 +
-Use case resumes at step 2.
+Use case ends
+
+
+== Use case: Backup storage files
+
+*MSS*
+
+1. User requests to backup file
+2. System requests for backup location
+3. User provides backup location
+4. System backups file and shows success message
+Use case ends.
+
+*Extensions*
+1a. System detects there is no new file to backup
+  1a1. System outputs message saying there is nothing new to backup
+  Use case ends.
+3a. System detects an invalid backup location
+  3a1. System asks for a new backup location
+  Steps 3 is repeated until a valid backup location is entered
+  Use cases resumes at step 4
+3b. System detects not enough storage on hard drive
+  3b1. System tells user not enough space on hard drive
+  Use case ends.
+
+
+
+==Use case: View and delete obsolete contacts
+
+*MSS*
+1. User requests to view unused contacts beyond a certain time (i.e. contacts not viewed for 3 years or more)
+2. System asks user to input the time period
+3. User input time period
+4. System generates a list of contacts not view for that period or longer
+5. User chooses which contact(s) to delete
+6. System deletes the contact(s)
+
+
+*Extensions*
+4a. There are no unused users beyond the time period user input
+  Use case ends.
 
 {More to be added}
 
@@ -775,6 +831,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Data files should be supported by previous version of address book (backward compatibility)
+.  Data files should be portable to another computer with the same process running
+.  Address book should backup every 30 days to aid disaster recovery
+.  Query in the address book should be executed promptly
+.  Address book should not take too much resources for other applications
+
 
 {More to be added}
 
