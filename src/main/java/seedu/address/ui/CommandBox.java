@@ -14,7 +14,18 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -30,7 +41,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
-    public static ArrayList<String> commandKeywords;
+    private ArrayList <String> commandKeywords;
 
     @FXML
     private TextField commandTextField;
@@ -54,20 +65,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
-                // As up and down buttons will alter the position of the caret,
-                // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
+        case UP:
+            // As up and down buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
 
-                navigateToPreviousInput();
-                break;
-            case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
-                break;
-            default:
-                // let JavaFx handle the keypress
-
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        default:
+            // let JavaFx handle the keypress
         }
     }
 
@@ -77,63 +87,79 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            default:
-                // let JavaFx handle the keyreleased
-                listenCommandInputChanged();
+        default:
+            listenCommandInputChanged();
         }
     }
 
     /**
      * Handles the Enter button pressed event.
      */
-    private void listenCommandInputChanged(){
+    private void listenCommandInputChanged() {
         String allTextInput = commandTextField.getText();
         String commandKeyword = allTextInput.split(" ")[0];
-        if(validCommandKeyword(commandKeyword)){
+        if (validCommandKeyword(commandKeyword)) {
             configActiveKeyword(commandKeyword);
-        }else{
+        } else {
             configInactiveKeyword();
         }
     }
 
-    private boolean validCommandKeyword(String keyWord){
-        for(int i = 0; i < commandKeywords.size(); i++){
+    /**
+     * Check if keyword is a valid command keyword
+     * @param keyWord
+     * @return
+     */
+    private boolean validCommandKeyword(String keyWord) {
+        for (int i = 0; i < commandKeywords.size(); i++) {
             String commandKeyword = commandKeywords.get(i);
-            if(Pattern.matches(commandKeyword,keyWord)){
+            if (Pattern.matches(commandKeyword, keyWord)) {
                 return true;
             }
         }
         return false;
     }
 
-    private void configInactiveKeyword(){
+
+    /**
+     * Configure words that are not command keyword
+     */
+    private void configInactiveKeyword() {
         commandTextFieldKeyword.setVisible(false);
         commandTextFieldKeyword.toBack();
         commandTextFieldKeyword.clear();
-        commandTextFieldKeyword.setStyle("    -fx-background-color: transparent #383838 transparent #383838;\n" +
-                "    -fx-background-insets: 0;\n" +
-                "    -fx-border-color: #383838 #383838 #ffffff #383838;\n" +
-                "    -fx-border-insets: 0;\n" +
-                "    -fx-border-width: 1;\n" +
-                "    -fx-font-family: \"Segoe UI Light\";\n" +
-                "    -fx-font-size: 13pt;\n" +
-                "    -fx-text-fill: white;");
+        commandTextFieldKeyword.setStyle("    -fx-background-color: transparent #383838 transparent #383838;\n"
+                + "    -fx-background-insets: 0;\n"
+                + "    -fx-border-color: #383838 #383838 #ffffff #383838;\n"
+                + "    -fx-border-insets: 0;\n"
+                + "    -fx-border-width: 1;\n"
+                + "    -fx-font-family: \"Segoe UI Light\";\n"
+                + "    -fx-font-size: 13pt;\n"
+                + "    -fx-text-fill: white;");
     }
 
-    private void configActiveKeyword(String commandKeyword){
+
+    /**
+     * Configure command keyword when appeared on Command Box
+     * @param commandKeyword
+     */
+    private void configActiveKeyword(String commandKeyword) {
         commandTextFieldKeyword.setVisible(true);
         Text commandText = new Text(commandKeyword);
         commandText.setFont(commandTextField.getFont());
         final double width = commandText.getLayoutBounds().getWidth() + 17;
         commandTextFieldKeyword.setText(commandKeyword);
-        commandTextFieldKeyword.setStyle(" -fx-control-inner-background: yellow;\n" +
-                "    -fx-font-size: 12pt;\n" +
-                "    -fx-text-fill: red;");
+        commandTextFieldKeyword.setStyle(" -fx-control-inner-background: yellow;\n"
+                + "    -fx-font-size: 12pt;\n"
+                + "    -fx-text-fill: red;");
         commandTextFieldKeyword.setPrefWidth(width);
         commandTextFieldKeyword.toFront();
     }
 
-    private void configCommandKeywords(){
+    /**
+     * Configure command keywords
+     */
+    private void configCommandKeywords() {
         commandKeywords = new ArrayList<String>();
         commandKeywords.add(AddCommand.COMMAND_WORD);
         commandKeywords.add(DeleteCommand.COMMAND_WORD);
