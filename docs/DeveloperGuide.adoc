@@ -749,7 +749,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |be able to open and close panels in UI |hide them when not needed.
 
-|`* *` |user |have important/favorite persons at top of the list |access to their details faster
+|`* *` |user |have important/favorite persons at top of the list |access to their details faster.
 
 |`* *` |user |to delete a group of people using tag |save time from deleting one by one.
 
