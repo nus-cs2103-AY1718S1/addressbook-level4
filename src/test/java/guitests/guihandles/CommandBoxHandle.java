@@ -25,7 +25,6 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
 
     /**
      * Enters the given command in the Command Box and presses enter.
-     *
      * @return true if the command succeeded, false otherwise.
      */
     public boolean run(String command) {

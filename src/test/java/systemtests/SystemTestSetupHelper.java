@@ -3,8 +3,9 @@ package systemtests;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
-import guitests.guihandles.MainWindowHandle;
 import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.MainWindowHandle;
 import seedu.address.TestApp;
 import seedu.address.model.ReadOnlyAddressBook;
 
@@ -14,18 +15,6 @@ import seedu.address.model.ReadOnlyAddressBook;
 public class SystemTestSetupHelper {
     private TestApp testApp;
     private MainWindowHandle mainWindowHandle;
-
-    /**
-     * Initializes the stage to be used by the tests.
-     */
-    public static void initializeStage() {
-        try {
-            FxToolkit.registerPrimaryStage();
-            FxToolkit.hideStage();
-        } catch (TimeoutException e) {
-            throw new AssertionError(e);
-        }
-    }
 
     /**
      * Sets up the {@code TestApp} and returns it.
@@ -38,6 +27,18 @@ public class SystemTestSetupHelper {
         }
 
         return testApp;
+    }
+
+    /**
+     * Initializes the stage to be used by the tests.
+     */
+    public static void initializeStage() {
+        try {
+            FxToolkit.registerPrimaryStage();
+            FxToolkit.hideStage();
+        } catch (TimeoutException e) {
+            throw new AssertionError(e);
+        }
     }
 
     /**
