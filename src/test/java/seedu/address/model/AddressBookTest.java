@@ -21,10 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final AddressBook addressBook = new AddressBook();
 
     @Test

@@ -55,7 +55,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -84,6 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Removes specified tag from all the persons in the address book.
+     *
      * @param tag Tag to be removed
      */
     public void removeTag(Tag tag) {

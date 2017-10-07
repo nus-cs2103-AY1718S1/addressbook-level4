@@ -38,7 +38,6 @@ import seedu.address.testutil.PersonUtil;
 public class AddressBookParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final AddressBookParser parser = new AddressBookParser();
 
     @Test

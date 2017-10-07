@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidDescription(String)}
  */
 public class Description {
-    public static final String MESSAGE_Description_CONSTRAINTS =
+    public static final String MESSAGE_DESCRIPTION_CONSTRAINTS =
             "Event Descriptions should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
@@ -18,20 +18,20 @@ public class Description {
      */
     public static final String DESCRIPTION_VALIDATION_REGEX = "[\\p{Alnum}]*";
 
-    public final String Description;
+    public final String description;
 
     /**
      * Validates given Description.
      *
      * @throws IllegalValueException if given Description string is invalid.
      */
-    public Description(String Description) throws IllegalValueException {
-        requireNonNull(Description);
-        String trimmedDescription = Description.trim();
+    public Description(String description) throws IllegalValueException {
+        requireNonNull(description);
+        String trimmedDescription = description.trim();
         if (!isValidDescription(trimmedDescription)) {
-            throw new IllegalValueException(MESSAGE_Description_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_DESCRIPTION_CONSTRAINTS);
         }
-        this.Description = trimmedDescription;
+        this.description = trimmedDescription;
     }
 
     /**
@@ -44,18 +44,18 @@ public class Description {
 
     @Override
     public String toString() {
-        return Description;
+        return description;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Description // instanceof handles nulls
-                && this.Description.equals(((Description) other).Description)); // state check
+                && this.description.equals(((Description) other).description)); // state check
     }
 
     @Override
     public int hashCode() {
-        return Description.hashCode();
+        return description.hashCode();
     }
 }
