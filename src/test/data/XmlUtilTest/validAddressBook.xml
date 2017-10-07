@@ -26,7 +26,7 @@
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
-        <remark isPrivate="false"></remark>
+        <remark isPrivate="false">Likes to eat</remark>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -54,7 +54,7 @@
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
-        <remark isPrivate="false"></remark>
+        <remark isPrivate="false">Smart friend</remark>
     </persons>
     <persons>
         <name>Martin Mueller</name>
