@@ -19,19 +19,19 @@ public class Remark {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return value;
     }
 
     @Override
-    public boolean equals(Object other){
-        return other == this //Short circuit if same object
-        || (other instanceof Remark) //instanceof handles nulls
-        && this.value.equals(((Remark) other).value); // State check
+    public boolean equals(Object other) {
+        return other == this    //Short circuit if same object
+            || (other instanceof Remark)     //instanceof handles nulls
+            && this.value.equals(((Remark) other).value);    // State check
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return value.hashCode();
     }
 }

@@ -133,7 +133,7 @@ public class RemarkCommandTest {
      * Returns an {@code RemarkCommand} with parameters {@code index} and {@code remark}
      */
 
-    private RemarkCommand prepareCommand(Index index, String remark){
+    private RemarkCommand prepareCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
