@@ -13,9 +13,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.FixedAddressPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.ShowSpecifiedPersonPredicate;
+import seedu.address.model.person.*;
 
 /**
  * Views all persons with the selected listing unit from the address book.
@@ -55,32 +53,28 @@ public class ViewCommand extends Command {
 
 
         switch (currentUnit) {
-            case PERSON:
-                predicate = new ShowSpecifiedPersonPredicate(toView);
-                model.updateFilteredPersonList(predicate);
-                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView);
 
             case ADDRESS:
                 predicate = new FixedAddressPredicate(toView.getAddress());
-                model.updateFilteredPersonList(predicate);
-                ListingUnit.setCurrentListingUnit(PERSON);
-                EventsCenter.getInstance().post(new ChangeListingUnitEvent(PERSON));
                 resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress());
 
             case EMAIL:
-                predicate = new FixedAddressPredicate(toView.getAddress());
-                model.updateFilteredPersonList(predicate);
-                ListingUnit.setCurrentListingUnit(PERSON);
-                EventsCenter.getInstance().post(new ChangeListingUnitEvent(PERSON));
+                predicate = new FixedEmailPredicate(toView.getEmail());
                 resultMessage = CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
 
             case PHONE:
-                predicate = new FixedAddressPredicate(toView.getAddress());
-                model.updateFilteredPersonList(predicate);
-                ListingUnit.setCurrentListingUnit(PERSON);
-                EventsCenter.getInstance().post(new ChangeListingUnitEvent(PERSON));
+                predicate = new FixedPhonePredicate(toView.getPhone());
                 resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getPhone());
+
+            default:
+                predicate = new ShowSpecifiedPersonPredicate(toView);
+                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView);
         }
+
+        model.updateFilteredPersonList(predicate);
+        ListingUnit.setCurrentListingUnit(PERSON);
+        EventsCenter.getInstance().post(new ChangeListingUnitEvent(PERSON));
+        return new CommandResult(resultMessage);
 
 
     }
