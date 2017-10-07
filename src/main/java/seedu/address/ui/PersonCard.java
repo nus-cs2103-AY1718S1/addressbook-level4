@@ -74,6 +74,12 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Gets a unique tag color from a set of pre-defined colors
+     * @param tagName the name of the tag
+     * @return a String that indicates the color
+     */
+
     private String getTagColor(String tagName) {
         if (!tagColors.containsKey(tagName)) {
             tagColors.put(tagName, tagColorScheme[random.nextInt(tagColorScheme.length)]);
