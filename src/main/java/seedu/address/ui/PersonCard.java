@@ -108,53 +108,53 @@ public class PersonCard extends UiPart<Region> {
 
     private void setFontSize(String userPref) {
         switch (userPref) {
-            case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
-                name.setStyle("-fx-font-size: x-small;");
-                id.setStyle("-fx-font-size: x-small;");
-                phone.setStyle("-fx-font-size: x-small;");
-                address.setStyle("-fx-font-size: x-small;");
-                email.setStyle("-fx-font-size: x-small;");
-                tags.setStyle("-fx-font-size: x-small;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+            name.setStyle("-fx-font-size: x-small;");
+            id.setStyle("-fx-font-size: x-small;");
+            phone.setStyle("-fx-font-size: x-small;");
+            address.setStyle("-fx-font-size: x-small;");
+            email.setStyle("-fx-font-size: x-small;");
+            tags.setStyle("-fx-font-size: x-small;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
-                name.setStyle("-fx-font-size: small;");
-                id.setStyle("-fx-font-size: small;");
-                phone.setStyle("-fx-font-size: small;");
-                address.setStyle("-fx-font-size: small;");
-                email.setStyle("-fx-font-size: small;");
-                tags.setStyle("-fx-font-size: small;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+            name.setStyle("-fx-font-size: small;");
+            id.setStyle("-fx-font-size: small;");
+            phone.setStyle("-fx-font-size: small;");
+            address.setStyle("-fx-font-size: small;");
+            email.setStyle("-fx-font-size: small;");
+            tags.setStyle("-fx-font-size: small;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
-                name.setStyle("-fx-font-size: normal;");
-                id.setStyle("-fx-font-size: normal;");
-                phone.setStyle("-fx-font-size: normal;");
-                address.setStyle("-fx-font-size: normal;");
-                email.setStyle("-fx-font-size: normal;");
-                tags.setStyle("-fx-font-size: normal;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+            name.setStyle("-fx-font-size: normal;");
+            id.setStyle("-fx-font-size: normal;");
+            phone.setStyle("-fx-font-size: normal;");
+            address.setStyle("-fx-font-size: normal;");
+            email.setStyle("-fx-font-size: normal;");
+            tags.setStyle("-fx-font-size: normal;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
-                name.setStyle("-fx-font-size: x-large;");
-                id.setStyle("-fx-font-size: x-large;");
-                phone.setStyle("-fx-font-size: x-large;");
-                address.setStyle("-fx-font-size: x-large;");
-                email.setStyle("-fx-font-size: x-large;");
-                tags.setStyle("-fx-font-size: x-large;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+            name.setStyle("-fx-font-size: x-large;");
+            id.setStyle("-fx-font-size: x-large;");
+            phone.setStyle("-fx-font-size: x-large;");
+            address.setStyle("-fx-font-size: x-large;");
+            email.setStyle("-fx-font-size: x-large;");
+            tags.setStyle("-fx-font-size: x-large;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
-                name.setStyle("-fx-font-size: xx-large;");
-                id.setStyle("-fx-font-size: xx-large;");
-                phone.setStyle("-fx-font-size: xx-large;");
-                address.setStyle("-fx-font-size: xx-large;");
-                email.setStyle("-fx-font-size: xx-large;");
-                tags.setStyle("-fx-font-size: xx-large;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+            name.setStyle("-fx-font-size: xx-large;");
+            id.setStyle("-fx-font-size: xx-large;");
+            phone.setStyle("-fx-font-size: xx-large;");
+            address.setStyle("-fx-font-size: xx-large;");
+            email.setStyle("-fx-font-size: xx-large;");
+            tags.setStyle("-fx-font-size: xx-large;");
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 

@@ -30,23 +30,23 @@ public class CustomiseCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         switch (fontSize.value) {
-            case FONT_SIZE_XSMALL:
-                return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".");
+        case FONT_SIZE_XSMALL:
+            return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".");
 
-            case FONT_SIZE_SMALL:
-                return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".");
+        case FONT_SIZE_SMALL:
+            return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".");
 
-            case FONT_SIZE_NORMAL:
-                return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".");
+        case FONT_SIZE_NORMAL:
+            return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".");
 
-            case FONT_SIZE_LARGE:
-                return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".");
+        case FONT_SIZE_LARGE:
+            return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".");
 
-            case FONT_SIZE_XLARGE:
-                return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".");
+        case FONT_SIZE_XLARGE:
+            return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".");
 
-            default:
-                break;
+        default:
+            break;
         }
         return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".");
     }

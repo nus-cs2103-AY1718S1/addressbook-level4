@@ -10,6 +10,10 @@ import seedu.address.logic.commands.CustomiseCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.font.FontSize;
 
+
+/**
+ * Parses input arguments and creates a new CustomiseCommand object
+ */
 public class CustomiseCommandParser implements Parser<CustomiseCommand> {
 
     /**

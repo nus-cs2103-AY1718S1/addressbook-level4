@@ -11,7 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class FontSize {
 
     public static final String MESSAGE_FONT_SIZE_CONSTRAINTS =
-            "Font size can only be either \"xsmall\", \"small\", \"normal\", \"large\",  or \"xlarge\" (case-sensitive).";
+            "Font size can only be either \"xsmall\", \"small\"," +
+                    " \"normal\", \"large\",  or \"xlarge\" (case-sensitive).";
     public static final String[] FONT_SIZE_VALIDATION = {"xsmall", "small", "normal", "large", "xlarge"};
     public final String value;
 

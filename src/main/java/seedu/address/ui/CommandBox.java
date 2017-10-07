@@ -9,8 +9,6 @@ import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 
 import java.util.logging.Logger;
 
-import javax.xml.bind.annotation.XmlType;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -136,28 +134,28 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setFontSize(String userPref) {
         switch (userPref) {
-            case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
-                commandTextField.setStyle("-fx-font-size: x-small;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+            commandTextField.setStyle("-fx-font-size: x-small;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
-                commandTextField.setStyle("-fx-font-size: small;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+            commandTextField.setStyle("-fx-font-size: small;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
-                commandTextField.setStyle("-fx-font-size: normal;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+            commandTextField.setStyle("-fx-font-size: normal;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
-                commandTextField.setStyle("-fx-font-size: x-large;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+            commandTextField.setStyle("-fx-font-size: x-large;");
+            break;
 
-            case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
-                commandTextField.setStyle("-fx-font-size: xx-large;");
-                break;
+        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+            commandTextField.setStyle("-fx-font-size: xx-large;");
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
