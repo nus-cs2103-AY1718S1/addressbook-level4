@@ -737,6 +737,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see the Social Media links of a contact in the browser |see the latest updates of the person
 
+|`* * *` |user |share contacts with other people |easily share contact information
+
+|`* * *` |user |have my own contact on the addressbook |see how my information is displayed
+
+|`* * *` |user |display contacts with either First or Last name first |
+
 |`* * *` |user |add todo tasks to the front page of the app |see a list of tasks to do
 
 |`* *` |user |share my default contact with another person |friend does not need to enter the entire add command manually
@@ -787,6 +793,64 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Batch-add person
+
+*MSS*
+
+1.  User requests to batch-add persons
+2.  AddressBook asks for a file or command to add
+3.  AddressBook adds all persons added
+4.  AddressBook lists all new persons added
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User requests to upload file
+[none]
+** 2a1. AddressBook requests .csv file location
+** 2a2. User uploads .csv file
++
+Use case resumes at step 3.
+
+* 2b. User requests to input command
++
+[none]
+** 2b1. User inputs multiple persons details
++
+Use case resumes at step 3.
+
+
+[discrete]
+=== Use case: Share Contact
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to share a specific person in the list
+4.  AddressBook generates add command for the person in a new window
+5.  User copies generated command
+6.  User closes window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -817,6 +881,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[contact-list]]
+Contact List
+
+....
+A list that displays contacts that were added to it, a contact can exist on multiple lists
+....
+
+[[contact-history]]
+Contact History
+
+....
+Past interactions made with the contact person (e.g. email on 01-10-2017, CS2103 Updates)
 ....
 
 [appendix]
