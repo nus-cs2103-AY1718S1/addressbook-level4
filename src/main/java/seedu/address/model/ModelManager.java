@@ -14,6 +14,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -53,6 +55,32 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyPerson p : personLst) {
             if (!set.contains(p.getAddress())) {
                 set.add(p.getAddress());
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public HashSet<Email> getUniqueEmailPersonSet() {
+        HashSet<Email> set = new HashSet<>();
+
+        ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
+        for (ReadOnlyPerson p : personLst) {
+            if (!set.contains(p.getEmail())) {
+                set.add(p.getEmail());
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public HashSet<Phone> getUniquePhonePersonSet() {
+        HashSet<Phone> set = new HashSet<>();
+
+        ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
+        for (ReadOnlyPerson p : personLst) {
+            if (!set.contains(p.getPhone())) {
+                set.add(p.getPhone());
             }
         }
         return set;
