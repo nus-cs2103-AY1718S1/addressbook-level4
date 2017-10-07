@@ -1,10 +1,10 @@
 package seedu.address.logic.parser;
 
+import java.util.Arrays;
+
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ContainsTagsPredicate;
-
-import java.util.Arrays;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 

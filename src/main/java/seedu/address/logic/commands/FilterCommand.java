@@ -14,8 +14,8 @@ public class FilterCommand extends Command {
 
     public static final String COMMAND_WORD = "filter";
     public static final String COMMAND_ALIAS = "ft";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters the current list with persons who are tagged with any of "
-            + "the specified tags (case-insensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters the current list with persons who are tagged"
+            + " with any of the specified tags (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: TAG [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " family friends colleagues";
 
@@ -28,8 +28,11 @@ public class FilterCommand extends Command {
     @Override
     public CommandResult execute() {
         Predicate<? super ReadOnlyPerson>  currentPredicate = model.getPersonListPredicate();
-        if (currentPredicate == null) model.updateFilteredPersonList(predicate);
-                                else model.updateFilteredPersonList(new InterceptionPredicate(currentPredicate, predicate));
+        if (currentPredicate == null) {
+            model.updateFilteredPersonList(predicate);
+        } else {
+            model.updateFilteredPersonList(new InterceptionPredicate(currentPredicate, predicate));
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
     }
