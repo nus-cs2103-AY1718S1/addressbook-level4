@@ -3,6 +3,7 @@ package seedu.address.commons.core;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.EventBus;
+
 import seedu.address.commons.events.BaseEvent;
 
 /**
