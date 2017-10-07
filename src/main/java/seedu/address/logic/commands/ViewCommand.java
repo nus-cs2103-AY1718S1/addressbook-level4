@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.ListingUnit.ADDRESS;
-import static seedu.address.model.ListingUnit.EMAIL;
 import static seedu.address.model.ListingUnit.PERSON;
 
 import java.util.List;
@@ -60,7 +58,7 @@ public class ViewCommand extends Command {
 
             case EMAIL:
                 predicate = new FixedEmailPredicate(toView.getEmail());
-                resultMessage = CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
+                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
 
             case PHONE:
                 predicate = new FixedPhonePredicate(toView.getPhone());

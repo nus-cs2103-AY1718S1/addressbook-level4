@@ -11,10 +11,13 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class ListCommandParser implements Parser<ListCommand> {
 
     private static final String ATTRIBUTE_ADDRESS = "address";
+    private static final String ATTRIBUTE_EMAIL = "email";
+    private static final String ATTRIBUTE_PHONE = "phone";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand
      * and returns an ListCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public ListCommand parse(String args) throws ParseException {
@@ -23,12 +26,17 @@ public class ListCommandParser implements Parser<ListCommand> {
             return new ListCommand();
         }
 
-        if (!trimmedArgs.equals(ATTRIBUTE_ADDRESS)) {
+        if (isValidAttribute(trimmedArgs)) {
+            return new ListCommand(trimmedArgs);
+        } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
 
-        return new ListCommand(trimmedArgs);
+    }
+
+    private boolean isValidAttribute(String args) {
+        return args.equals(ATTRIBUTE_ADDRESS) || args.equals(ATTRIBUTE_EMAIL) || args.equals(ATTRIBUTE_PHONE);
     }
 
 }
