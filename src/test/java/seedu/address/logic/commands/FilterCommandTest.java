@@ -81,6 +81,15 @@ public class FilterCommandTest {
         FilterCommand command = prepareCommand("friends owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+
+    @Test
+    public void execute_successiveCommands_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FilterCommand command1 = prepareCommand("owesMoney");
+        FilterCommand command2 = prepareCommand("friends");
+        assertSuccessiveCommandSuccess(command1, command2, expectedMessage, Arrays.asList(BENSON));
+    }
+
     /**
      * Parses {@code userInput} into a {@code FilterCommand}.
      */
@@ -100,6 +109,22 @@ public class FilterCommandTest {
     private void assertCommandSuccess(FilterCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+
+    /**
+     * Asserts that {@code command1, command2} are successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertSuccessiveCommandSuccess(FilterCommand command1, FilterCommand command2, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        command1.execute();
+        CommandResult commandResult = command2.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());

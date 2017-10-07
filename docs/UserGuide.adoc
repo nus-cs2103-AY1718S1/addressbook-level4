@@ -126,7 +126,7 @@ Returns `John Watson`
 === Locating persons by tags: `filter`
 
 Shorthand Alias: `ft`
-Finds persons who are tagged with any of the given tags. +
+Finds persons who are tagged with any of the given tags from the current list. +
 Format: `filter TAG [MORE_TAGS]`
 
 ****
@@ -135,6 +135,7 @@ Format: `filter TAG [MORE_TAGS]`
 * Only the tags are searched.
 * Only full words will be matched e.g. `friend` will not match `friends`
 * Persons matching at least one tag will be returned (i.e. `OR` search). e.g. `family friends` will return persons who are tagged with family or friends
+* The filter is done on the current list. Successive `filter` makes the list smaller and smaller
 ****
 
 Examples:
