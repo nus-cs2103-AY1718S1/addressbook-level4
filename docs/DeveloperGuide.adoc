@@ -753,7 +753,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |group my debtors by location |plan my visit schedules easily
 
-|`* *` |security-concerned debt collector |have a password protection to my account |have some security over confidential information
+|`* *` |security-concerned debt collector |have password protection to my account |have some security over confidential information
 
 |`* *` |efficient debt collector |have an automated journey scheduler |maximise my efficiency
 
@@ -787,7 +787,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |debt collector |randomly generate a contact from the cleared list(clients who have paid their debts) |choose to chat up a random contact to talk them into getting a loan
 
-|`*` |debt collector |use a file upload feature |upload signed documents to a specific client in the database
+|`*` |debt collector |use a file upload feature |upload signed documents to a specific client record in the database
 
 |`*` |debt collector |have a 'add-log' button attached to each client in the database |easily click it whenever I contact the client
 |=======================================================================
