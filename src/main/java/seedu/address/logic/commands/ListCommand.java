@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.model.ListingUnit.ADDRESS;
+import static seedu.address.model.ListingUnit.EMAIL;
 import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -8,6 +9,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.UniqueAddressPredicate;
+
+import javax.sql.rowset.Predicate;
 
 /**
  * Lists all persons in the address book to the user.
@@ -44,16 +47,21 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+
         switch (attName) {
 
             case ATTRIBUTE_ADDRESS:
                 ListingUnit.setCurrentListingUnit(ADDRESS);
-                UniqueAddressPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-                model.updateFilteredPersonList(predicate);
+                UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
+                model.updateFilteredPersonList(addressPredicate);
                 EventsCenter.getInstance().post(new ChangeListingUnitEvent());
                 return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
 
             case ATTRIBUTE_EMAIL:
+                ListingUnit.setCurrentListingUnit(EMAIL);
+                UniqueEmailPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
+                model.updateFilteredPersonList(predicate);
+                EventsCenter.getInstance().post(new ChangeListingUnitEvent());
 
             case ATTRIBUTE_PHONE:
 
