@@ -7,8 +7,6 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 
-import java.util.logging.Logger;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
@@ -17,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
