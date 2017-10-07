@@ -4,8 +4,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ContainsTagsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Filters the current list with persons who are tagged with any of the specified tags.
+ * Tag matching is case insensitive.
  */
 public class FilterCommand extends Command {
 
@@ -23,7 +23,7 @@ public class FilterCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
