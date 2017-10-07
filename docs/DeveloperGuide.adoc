@@ -836,6 +836,46 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+=== Use case: Edit a person's details
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit the details of a specific person in the list
+4. AddressBook updates details of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify field to edit.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. User updates valid field with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
 === Use case: Undo last undoable command
 
 *MSS*
