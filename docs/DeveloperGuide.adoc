@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -729,9 +729,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by phone number or email |locate details of person without knowing their name
+
+|`* * *` |user |add a multiple phone numbers to a person |
+
+|`* * *` |user |add a multiple email addresss to a person |
+
+|`* * *` |user |see the Social Media links of a contact in the browser |see the latest updates of the person
+
+|`* * *` |user |share contacts with other people |easily share contact information
+
+|`* * *` |user |have my own contact on the addressbook |see how my information is displayed
+
+|`* * *` |user |display contacts with either First or Last name first |
+
+|`* * *` |user |add todo tasks to the front page of the app |see a list of tasks to do
+
+|`* *` |user |share my default contact with another person |friend does not need to enter the entire add command manually
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user with many persons in the address book |list persons as favourites |see most important contacts at a glance
+
+|`* *` |user |assign a todo task to a contact |remember a task that is associated to a person
+
+|`* *` |user |filter todo list by contacts |see the list of actions to take associated to the person
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book |create custom lists of persons |see a group of pre-defined persons
 |=======================================================================
 
 {More to be added}
@@ -767,6 +793,64 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Batch-add person
+
+*MSS*
+
+1.  User requests to batch-add persons
+2.  AddressBook asks for a file or command to add
+3.  AddressBook adds all persons added
+4.  AddressBook lists all new persons added
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User requests to upload file
+[none]
+** 2a1. AddressBook requests .csv file location
+** 2a2. User uploads .csv file
++
+Use case resumes at step 3.
+
+* 2b. User requests to input command
++
+[none]
+** 2b1. User inputs multiple persons details
++
+Use case resumes at step 3.
+
+
+[discrete]
+=== Use case: Share Contact
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to share a specific person in the list
+4.  AddressBook generates add command for the person in a new window
+5.  User copies generated command
+6.  User closes window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +859,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user should open the application with the previous entries in a addressbook pre-loaded.
+.  Should not experience visible lag or delays above 0.5s when running any command within the addressbook.
+.  Should display a pleasing image when working in offline mode.
+.  Core functionality should not be affected by the connectivity of the computer.
 
 {More to be added}
 
@@ -793,6 +881,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[contact-list]]
+Contact List
+
+....
+A list that displays contacts that were added to it, a contact can exist on multiple lists
+....
+
+[[contact-history]]
+Contact History
+
+....
+Past interactions made with the contact person (e.g. email on 01-10-2017, CS2103 Updates)
 ....
 
 [appendix]
