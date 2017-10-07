@@ -60,7 +60,6 @@ public class PersonCard extends UiPart<Region> {
         if(!tagColors.containsKey(tagValue)){
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
-        
         return tagColors.get(tagValue);
     }
 
@@ -80,6 +79,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialize person's tag and add appropriate background color to it
+     * @param person name
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
