@@ -66,10 +66,10 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            if(tag.tagName.equals("colleagues")) {
+            if (tag.tagName.equals("colleagues")) {
                 tagLabel.setStyle("-fx-background-color: red;");
             }
-            else if(tag.tagName.equals("friends")) {
+            else if (tag.tagName.equals("friends")) {
                 tagLabel.setStyle("-fx-background-color: greenyellow;");
             } else {
                 tagLabel.setStyle("-fx-background-color: grey;");
