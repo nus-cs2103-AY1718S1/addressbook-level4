@@ -2,6 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ContainsTagsPredicate;
+import seedu.address.model.person.InterceptionPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+
+import java.util.function.Predicate;
 
 /**
  * Filters the current list with persons who are tagged with any of the specified tags.
@@ -24,7 +28,9 @@ public class FilterCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
+        Predicate<? super ReadOnlyPerson>  currentPredicate = model.getPersonListPredicate();
+        if (currentPredicate == null) model.updateFilteredPersonList(predicate);
+                                else model.updateFilteredPersonList(new InterceptionPredicate(currentPredicate, predicate));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 
     }
