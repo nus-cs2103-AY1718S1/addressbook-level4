@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
+/**
+ * Interception of two predicates that Test that a {@code ReadOnlyPerson} matches both predicates
+ */
 
 import java.util.function.Predicate;
 

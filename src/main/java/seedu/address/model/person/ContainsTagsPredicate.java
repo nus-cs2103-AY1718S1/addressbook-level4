@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the tagss given.
  */
 public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
