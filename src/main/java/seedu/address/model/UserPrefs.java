@@ -72,7 +72,6 @@ public class UserPrefs {
         sb.append("Gui Settings : ").append(guiSettings.toString());
         sb.append("\nLocal data file location : ").append(addressBookFilePath);
         sb.append("\nAddressBook name : ").append(addressBookName);
-        
         return sb.toString();
     }
 }
