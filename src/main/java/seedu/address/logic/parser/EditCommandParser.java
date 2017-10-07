@@ -42,7 +42,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.PERSON)) {
             return parseEditPerson(args);
         } else {
-            return parseEditAddress(args);
+            return parseEditAttribute(args);
         }
     }
 
@@ -81,14 +81,14 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
-     * Parse the input arguments given the current listing unit is address.
+     * Parse the input arguments of given new attribute value
      */
-    public EditCommand parseEditAddress(String args) throws ParseException {
+    public EditCommand parseEditAttribute(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
 
         Index index;
-        Address editedAddress;
+        String attributeValue;
         Matcher matcher = FIRST_INT_PATTERN.matcher(trimmedArgs);
 
         try {
@@ -98,14 +98,13 @@ public class EditCommandParser implements Parser<EditCommand> {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
             }
 
-            String attributeName = trimmedArgs.substring(matcher.group(0).length()).trim();
-            editedAddress = new Address(attributeName);
+            attributeValue = trimmedArgs.substring(matcher.group(0).length()).trim();
 
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        return new EditCommand(index, editedAddress);
+        return new EditCommand(index, attributeValue);
     }
 
 
