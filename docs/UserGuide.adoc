@@ -254,7 +254,7 @@ e.g.`select 2`
 // tag::commandaliases[]
 === Alternative Command Aliases
 
-* *Add* `add` or `a` 
+* *Add* `add` or `a`
 * *Clear* : `clear` or `c`
 * *Delete* : `delete` or `d`
 * *Edit* : `edit` or `e`
@@ -265,4 +265,5 @@ e.g.`select 2`
 * *History* : `history` or `his`
 * *Undo* : `undo` or `u`
 * *Redo* : `redo` or `r`
+
 // end::commandaliases[]

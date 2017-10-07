@@ -26,7 +26,7 @@ image::damithc.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
 Role: Project Advisor
-Responsibilities: 
+Responsibilities:
 
 '''
 
