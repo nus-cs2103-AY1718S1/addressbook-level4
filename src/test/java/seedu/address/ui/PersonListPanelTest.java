@@ -27,7 +27,7 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
+        InfoListPanel personListPanel = new InfoListPanel(TYPICAL_PERSONS);
         uiPartRule.setUiPart(personListPanel);
 
         personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
