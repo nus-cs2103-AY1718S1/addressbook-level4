@@ -9,6 +9,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.UniqueAddressPredicate;
+import seedu.address.model.person.UniqueEmailPredicate;
+import seedu.address.model.person.UniquePhonePredicate;
 
 import javax.sql.rowset.Predicate;
 
@@ -59,11 +61,15 @@ public class ListCommand extends Command {
 
             case ATTRIBUTE_EMAIL:
                 ListingUnit.setCurrentListingUnit(EMAIL);
-                UniqueEmailPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-                model.updateFilteredPersonList(predicate);
+                UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
+                model.updateFilteredPersonList(emailPredicate);
                 EventsCenter.getInstance().post(new ChangeListingUnitEvent());
 
             case ATTRIBUTE_PHONE:
+                ListingUnit.setCurrentListingUnit(EMAIL);
+                UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
+                model.updateFilteredPersonList(phonePredicate);
+                EventsCenter.getInstance().post(new ChangeListingUnitEvent());
 
             default:
                 ListingUnit.setCurrentListingUnit(PERSON);
