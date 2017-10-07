@@ -18,7 +18,7 @@ public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         for (Tag tag : person.getTags()) {
-            if (keywords.contains(tag.tagName)) {return true;}
+            if (keywords.contains(tag.tagName)) { return true; }
         }
         return false;
     }
