@@ -80,7 +80,6 @@ public class RemarkCommand extends UndoableCommand {
 
     /**
     * This method is used to generate success message
-    * @param ReadOnlyPerson to edit
     */
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
@@ -94,7 +93,7 @@ public class RemarkCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
-        if (other == this){
+        if (other == this) {
             return true;
         }
 
