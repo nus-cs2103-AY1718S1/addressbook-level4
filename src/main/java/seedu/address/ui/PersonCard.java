@@ -56,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
     private static String getColorForTag(String tagValue) {
-        if(!tagColors.containsKey(tagValue)){
+        if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
         return tagColors.get(tagValue);
