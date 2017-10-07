@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -17,8 +19,14 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
-    /** Get a hash set of all the Addresses */
+    /** Get a hash set of all the distinct Addresses */
     HashSet<Address> getUniqueAdPersonSet();
+
+    /** Get a hash set of all the distinct Emails */
+    HashSet<Email> getUniqueEmailPersonSet();
+
+    /** Get a hash set of all the distinct Phones */
+    HashSet<Phone> getUniquePhonePersonSet();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);

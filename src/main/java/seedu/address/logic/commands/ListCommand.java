@@ -18,12 +18,15 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all persons or all attributes(if specified) and "
             + "displays them as a list with index numbers.\n"
-            + "Parameters: ATTRIBUTE NAME\n"
+            + "Parameters: address/email/phone\n"
             + "Example: " + COMMAND_WORD + " address";
 
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
 
     public static final String DEFAULT_LISTING_ELEMENT = "Persons";
+    public static final String ATTRIBUTE_ADDRESS = "address";
+    public static final String ATTRIBUTE_EMAIL = "email";
+    public static final String ATTRIBUTE_PHONE = "phone";
 
     private final String attName;
 
@@ -41,16 +44,23 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (hasAttribute()) {
-            ListingUnit.setCurrentListingUnit(ADDRESS);
-            UniqueAddressPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-            model.updateFilteredPersonList(predicate);
-            EventsCenter.getInstance().post(new ChangeListingUnitEvent(ADDRESS));
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
-        } else {
-            ListingUnit.setCurrentListingUnit(PERSON);
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+        switch (attName) {
+
+            case ATTRIBUTE_ADDRESS:
+                ListingUnit.setCurrentListingUnit(ADDRESS);
+                UniqueAddressPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
+                model.updateFilteredPersonList(predicate);
+                EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+                return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+
+            case ATTRIBUTE_EMAIL:
+
+            case ATTRIBUTE_PHONE:
+
+            default:
+                ListingUnit.setCurrentListingUnit(PERSON);
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         }
     }
 }

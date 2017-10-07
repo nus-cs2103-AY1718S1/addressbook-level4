@@ -71,7 +71,7 @@ public class ViewCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
         ListingUnit.setCurrentListingUnit(PERSON);
-        EventsCenter.getInstance().post(new ChangeListingUnitEvent(PERSON));
+        EventsCenter.getInstance().post(new ChangeListingUnitEvent());
         return new CommandResult(resultMessage);
 
 

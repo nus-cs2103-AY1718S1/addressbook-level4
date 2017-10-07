@@ -10,10 +10,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ListCommandParser implements Parser<ListCommand> {
 
-    private static final String ATTRIBUTE_ADDRESS = "address";
-    private static final String ATTRIBUTE_EMAIL = "email";
-    private static final String ATTRIBUTE_PHONE = "phone";
-
     /**
      * Parses the given {@code String} of arguments in the context of the ListCommand
      * and returns an ListCommand object for execution.
@@ -36,7 +32,8 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
     private boolean isValidAttribute(String args) {
-        return args.equals(ATTRIBUTE_ADDRESS) || args.equals(ATTRIBUTE_EMAIL) || args.equals(ATTRIBUTE_PHONE);
+        return args.equals(ListCommand.ATTRIBUTE_ADDRESS) || args.equals(ListCommand.ATTRIBUTE_EMAIL)
+                || args.equals(ListCommand.ATTRIBUTE_PHONE);
     }
 
 }

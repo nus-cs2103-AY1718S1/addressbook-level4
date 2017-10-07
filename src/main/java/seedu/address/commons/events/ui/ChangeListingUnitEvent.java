@@ -8,12 +8,6 @@ import seedu.address.model.ListingUnit;
  */
 public class ChangeListingUnitEvent extends BaseEvent {
 
-    public final ListingUnit unit;
-
-    public ChangeListingUnitEvent(ListingUnit unit) {
-        this.unit = unit;
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
