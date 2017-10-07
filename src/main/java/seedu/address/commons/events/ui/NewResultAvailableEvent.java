@@ -18,7 +18,6 @@ public class NewResultAvailableEvent extends BaseEvent {
         else {
             unknownCommandEntered = false;
         }
-        
     }
 
     @Override
@@ -32,5 +31,4 @@ public class NewResultAvailableEvent extends BaseEvent {
     public boolean isUnknownCommandEntered() {
         return unknownCommandEntered;
     }
-
 }
