@@ -753,51 +753,37 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |group my debtors by location |plan my visit schedules easily
 
-|`* *` |debt collector |have a password protection to my account |have some security over confidential information
+|`* *` |security-concerned debt collector |have a password protection to my account |have some security over confidential information
 
-|`* *` |debt collector |have an automated journey scheduler |maximise my efficiency
+|`* *` |efficient debt collector |have an automated journey scheduler |maximise my efficiency
 
-|`* *` |user |receive an email notification when logging in from an unknown device |know when there are unintended logins to my account
+|`* *` |security-concerned debt collector |receive an email notification when logging in from an unknown device |know when there are unintended logins to my account
 
-|`* *` |user |have different appearance themes |have a more unique user experience that suits my preferences
+|`* *` |versatile user |have different appearance themes |have a more unique user experience that suits my preferences
 
 |`* *` |new user |have a guided installation/no installation |easily start using it
 
 |`* *` |clumsy user |have automatic backups |not worry about accidentally deleting things
 
-|`* *` |user |sync with Facebook |easily import contacts
+|`* *` |debt collector |have the ability to impose different periods of ban on my blacklisted clients |have clients automatically transferred out of that list after their ban
 
-|`* *` |lonely user |find users near me |hit them up
+|`* *` |debt collector |have the ability to perform validity checks on clients' personal information (HP,Email address) |verify that their data is genuine
 
-|`* *` |user |have the ability to receive contacts from my friends |not key them in from scratch
+|`* *` |meticulous debt collector |see my client's progress bar which indicates their debt & the time remaining to pay it off |have a better visual representation of data
 
-|`* *` |user |create custom fields |store additional information for some contacts
+|`* *` |new user |have a Help command that displays screenshots of positive examples |understand the commands more visually
 
-|`* *` |user |be able to link:#bookmark[bookmark] contacts |access important contacts much faster
+|`* *` |meticulous debt collector |have a feature that prevents duplicate contacts to be added |ensure that the system is not unnecessarily complex
 
-|`* *` |user |have a Help command that displays screenshots of positive examples |understand the commands more visually
+|`* *` |debt collector |have profile pictures for my clients |easily identify them in a glance
 
-|`* *` |user |have a user system |allow multiple users to use their own customised addressbook on the same program
+|`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |helpful user |have the ability to send contacts to my friends |ensure that they don't have to key it in from scratch
+|`* *` |security-concerned debt collector |have 2FA authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
-|`* *` |user |have 3rd party software(calendar) to draw information from the addressbook |
+|`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
-|`* *` |user |view my last login time |ensure that no one else is using my account
-
-|`* *` |user |destroy my program & backups |wipe the system clean, before passing the program to someone
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`* *` |user |prevent the addition of duplicate contacts |maintain a unique list of contacts to prevent confusion
-
-|`* *` |user |have profile pictures for my contacts |easily identify them in a glance
-
-|`* *` |user |have a birthday field |receive birthday reminders
-
-|`* *` |user |be able to filter my contacts according to tags |have an overview of who is under which tag
-
-|`* *` |user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
+|`*` |user |create custom fields |store additional information for some contacts
 
 |`*` |user |be able to send an email to my contacts through the app |send an email without opening another window
 
