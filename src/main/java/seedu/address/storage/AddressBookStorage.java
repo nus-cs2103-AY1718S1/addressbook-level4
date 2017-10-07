@@ -41,6 +41,18 @@ public interface AddressBookStorage {
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
+    /**
+     * Makes a local backup of the address book storage file.
+     */
     void backupAddressBook (ReadOnlyAddressBook addressBook) throws IOException;
 
+    /**
+     * Removes the extension part of a file name (the part after the last dot {@code .} in the given string).
+     *
+     * @param fileName is the file name with an extension.
+     * @return the file name without the extension part.
+     */
+    default String removeFileExtension(String fileName) {
+        return fileName.replaceFirst("[.][^.]+$", "");
+    }
 }
