@@ -11,7 +11,7 @@ import seedu.address.ui.PersonCard;
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
  */
 public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+    public static final String PERSON_LIST_VIEW_ID = "#infoListView";
 
     private Optional<PersonCard> lastRememberedSelectedPersonCard;
 
