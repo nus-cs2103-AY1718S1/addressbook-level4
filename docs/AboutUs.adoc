@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::damithc.jpg[width="150", align="left"]
 {empty}[https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer + Integration + Git Expert
+Role: Developer + Integration + Git Expert +
 Responsibilities: UI
 
 '''
@@ -23,7 +23,7 @@ Responsibilities: UI
 image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[Github]] [<<johndoe#, Portfolio>>]
 
-Role: Developer + Deliverables and Deadlines + Scheduling and Tracking
+Role: Developer + Deliverables and Deadlines + Scheduling and Tracking +
 Responsibilities: Logic
 
 '''
@@ -32,7 +32,7 @@ Responsibilities: Logic
 image::yijinl.jpg[width="150", align="left"]
 {empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
 
-Role: Developer + Testing + TheGuyWhoDoesAnythingAndEverythingOrAtLeastTriesTo:)
+Role: Developer + Testing + TheGuyWhoDoesAnythingAndEverythingOrAtLeastTriesTo +
 Responsibilities: Storage
 
 '''
@@ -41,7 +41,7 @@ Responsibilities: Storage
 image::m133225.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[Github]] [<<johndoe#, Portfolio>>]
 
-Role: Developer + Code Quality + UI Aesthetics Expert
+Role: Developer + Code Quality + UI Aesthetics Expert +
 Responsibilities: Model
 
 
