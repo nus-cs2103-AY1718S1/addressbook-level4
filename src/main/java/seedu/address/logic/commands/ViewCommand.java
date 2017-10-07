@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
 
 import java.util.List;
@@ -55,14 +56,17 @@ public class ViewCommand extends Command {
             case ADDRESS:
                 predicate = new FixedAddressPredicate(toView.getAddress());
                 resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress());
+                break;
 
             case EMAIL:
                 predicate = new FixedEmailPredicate(toView.getEmail());
                 resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
+                break;
 
             case PHONE:
                 predicate = new FixedPhonePredicate(toView.getPhone());
                 resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getPhone());
+                break;
 
             default:
                 predicate = new ShowSpecifiedPersonPredicate(toView);
