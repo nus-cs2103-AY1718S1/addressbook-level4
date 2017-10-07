@@ -85,17 +85,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Method is implemented in Model interface
-     * Functionality of method is exposed only in ModelManager
-     * Loops through Address Book to update the tags
-     * Address Book is then updated with updated tags of person
+     * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
+     *
+     * @param tag is the tag that will be removed.
      */
     @Override
-    public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
+    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
         for (ReadOnlyPerson target: addressBook.getPersonList()) {
             Person editedPerson = new Person(target);
             Set<Tag> updatedTags = editedPerson.getTags();
-            updatedTags.remove(tags);
+            updatedTags.remove(tag);
             editedPerson.setTags(updatedTags);
             addressBook.updatePerson(target, editedPerson);
         }
