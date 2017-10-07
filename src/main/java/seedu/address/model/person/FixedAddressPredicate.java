@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code address} matches the {@code fixedAddress}.
+ * Tests that a {@code ReadOnlyPerson}'s {@code address} matches the given address.
  */
 public class FixedAddressPredicate implements Predicate<ReadOnlyPerson> {
     private final Address fixedAddress;
