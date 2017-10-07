@@ -783,21 +783,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
-|`*` |user |create custom fields |store additional information for some contacts
+|`*` |debt collector |create custom fields |store additional information for some contacts
 
-|`*` |user |be able to send an email to my contacts through the app |send an email without opening another window
+|`*` |debt collector |randomly generate a contact from the cleared list(clients who have paid their debts) |choose to chat up a random contact to talk them into getting a loan
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |debt collector |use a file upload feature |upload signed documents to a specific client in the database
 
-|`*` |user |add emoticons to contact names |make my addressbook look nicer
-
-|`*` |user |be able to assign short nicknames to contacts |find them faster
-
-|`*` |user |randomly generate a contact |choose to chat up a random contact
-
-|`*` |user |find people by phone number |know whether to pick up a call
-
-|`*` |user |print my contacts on paper in an neat format |pass hard copies to people
+|`*` |debt collector |have a 'add-log' button attached to each client in the database |easily click it whenever I contact the client
 |=======================================================================
 
 [appendix]
