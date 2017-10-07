@@ -77,7 +77,7 @@ public class PersonCard extends UiPart<Region> {
             }
             tags.getChildren().add(tagLabel);
         });
-    }    
+    }
 
     @Override
     public boolean equals(Object other) {
