@@ -6,8 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.ListingUnit.ADDRESS;
-import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -17,10 +15,19 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniqueAddressPredicate;
+import seedu.address.model.person.UniqueEmailPredicate;
+import seedu.address.model.person.UniquePhonePredicate;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -47,14 +54,14 @@ public class EditCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_EDIT_ADDRESS_SUCCESS = "Edited Address: %1$s";
+    public static final String MESSAGE_EDIT_EMAIL_SUCCESS = "Edited Email: %1$s";
+    public static final String MESSAGE_EDIT_PHONE_SUCCESS = "Edited Phone: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
-    private final Address editedAddress;
-    private final Email editedEmail;
-    private final Phone editedPhone;
+    private final String attributeValue;
 
 
     /**
@@ -67,54 +74,20 @@ public class EditCommand extends UndoableCommand {
 
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
-        this.editedAddress = null;
-        this.editedEmail = null;
-        this.editedPhone = null;
+        attributeValue = null;
     }
 
     /**
      * @param index       of the address in the filtered address list to edit
-     * @param editAddress the new edited address
+     * @param attributeValue the new edited address
      */
-    public EditCommand(Index index, Address editAddress) {
+    public EditCommand(Index index, String attributeValue) {
         requireNonNull(index);
-        requireNonNull(editAddress);
+        requireNonNull(attributeValue);
 
         this.index = index;
         this.editPersonDescriptor = null;
-        this.editedAddress = editAddress;
-        this.editedEmail = null;
-        this.editedPhone = null;
-    }
-
-    /**
-     * @param index       of the email in the filtered email list to edit
-     * @param editEmail the new edited email
-     */
-    public EditCommand(Index index, Email editEmail) {
-        requireNonNull(index);
-        requireNonNull(editEmail);
-
-        this.index = index;
-        this.editPersonDescriptor = null;
-        this.editedAddress = null;
-        this.editedEmail = editEmail;
-        this.editedPhone = null;
-    }
-
-    /**
-     * @param index       of the phone in the filtered phone list to edit
-     * @param editPhone the new edited phone
-     */
-    public EditCommand(Index index, Phone editPhone) {
-        requireNonNull(index);
-        requireNonNull(editPhone);
-
-        this.index = index;
-        this.editPersonDescriptor = null;
-        this.editedAddress = null;
-        this.editedEmail = null;
-        this.editedPhone = editPhone;
+        this.attributeValue = attributeValue;
     }
 
     @Override
@@ -141,6 +114,9 @@ public class EditCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Edit the person with updated information.
+     */
     private CommandResult executeEditPerson(ReadOnlyPerson personToEdit) throws CommandException {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
         try {
@@ -155,67 +131,97 @@ public class EditCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
+    /**
+     * Edit the address, all persons with the edited address is updated with a new given address.
+     */
     private CommandResult executeEditAddress(Address addressToEdit) throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        Address editedAddress = null;
+        try {
+            editedAddress = new Address(attributeValue);
+            for (ReadOnlyPerson p : personList) {
+                if (p.getAddress().equals(addressToEdit)) {
+                    ReadOnlyPerson curEditedPerson = null;
+                    curEditedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+                            editedAddress, p.getTags());
 
-        for (ReadOnlyPerson p : personList) {
-            if (p.getAddress().equals(addressToEdit)) {
-                ReadOnlyPerson curEditedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
-                        editedAddress, p.getTags());
-                try {
-                    model.updatePerson(p, curEditedPerson);
-                } catch (DuplicatePersonException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("The target person cannot be missing");
+                    try {
+                        model.updatePerson(p, curEditedPerson);
+                    } catch (DuplicatePersonException dpe) {
+                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
                 }
             }
+            model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
+            return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
         }
-        model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
-        return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
     }
 
+    /**
+     * Edit the email, all persons with the edited email is updated with a new given email.
+     */
     private CommandResult executeEditEmail(Email emailToEdit) throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        Email editedEmail = null;
+        try {
+            editedEmail = new Email(attributeValue);
+            for (ReadOnlyPerson p : personList) {
+                if (p.getEmail().equals(emailToEdit)) {
+                    ReadOnlyPerson curEditedPerson = null;
+                    curEditedPerson = new Person(p.getName(), p.getPhone(), editedEmail,
+                            p.getAddress(), p.getTags());
 
-        for (ReadOnlyPerson p : personList) {
-            if (p.getEmail().equals(emailToEdit)) {
-                ReadOnlyPerson curEditedPerson = new Person(p.getName(), p.getPhone(), editedEmail,
-                        p.getAddress(), p.getTags());
-                try {
-                    model.updatePerson(p, curEditedPerson);
-                } catch (DuplicatePersonException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("The target person cannot be missing");
+                    try {
+                        model.updatePerson(p, curEditedPerson);
+                    } catch (DuplicatePersonException dpe) {
+                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
                 }
             }
+            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
+            return new CommandResult(String.format(MESSAGE_EDIT_EMAIL_SUCCESS, editedEmail));
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
         }
-        model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
-        return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
     }
 
+    /**
+     * Edit the phone, all persons with the edited phone is updated with a new given phone.
+     */
     private CommandResult executeEditPhone(Phone phoneToEdit) throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        Phone editedPhone = null;
+        try {
+            editedPhone = new Phone(attributeValue);
+            for (ReadOnlyPerson p : personList) {
+                if (p.getPhone().equals(phoneToEdit)) {
+                    ReadOnlyPerson curEditedPerson = null;
+                    curEditedPerson = new Person(p.getName(), editedPhone, p.getEmail(),
+                            p.getAddress(), p.getTags());
 
-        for (ReadOnlyPerson p : personList) {
-            if (p.getPhone().equals(phoneToEdit)) {
-                ReadOnlyPerson curEditedPerson = new Person(p.getName(), editedPhone, p.getEmail(),
-                        p.getAddress(), p.getTags());
-                try {
-                    model.updatePerson(p, curEditedPerson);
-                } catch (DuplicatePersonException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("The target person cannot be missing");
+                    try {
+                        model.updatePerson(p, curEditedPerson);
+                    } catch (DuplicatePersonException dpe) {
+                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
                 }
             }
+            model.updateFilteredPersonList(new UniquePhonePredicate(model.getUniquePhonePersonSet()));
+            return new CommandResult(String.format(MESSAGE_EDIT_PHONE_SUCCESS, editedPhone));
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
         }
-        model.updateFilteredPersonList(new UniquePhonePredicate(model.getUniquePhonePersonSet()));
-        return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
     }
 
     /**
