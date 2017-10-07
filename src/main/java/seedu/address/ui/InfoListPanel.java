@@ -18,31 +18,31 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of info.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class InfoListPanel extends UiPart<Region> {
+    private static final String FXML = "InfoListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(InfoListPanel.class);
 
     @FXML
-    private ListView<PersonCard> personListView;
+    private ListView<PersonCard> infoListView;
 
-    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+    public InfoListPanel(ObservableList<ReadOnlyPerson> infoList) {
         super(FXML);
-        setConnections(personList);
+        setConnections(infoList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    private void setConnections(ObservableList<ReadOnlyPerson> infoList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
-        personListView.setItems(mappedList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+                infoList, (person) -> new PersonCard(person, infoList.indexOf(person) + 1));
+        infoListView.setItems(mappedList);
+        infoListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        personListView.getSelectionModel().selectedItemProperty()
+        infoListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
@@ -56,8 +56,8 @@ public class PersonListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            personListView.scrollTo(index);
-            personListView.getSelectionModel().clearAndSelect(index);
+            infoListView.scrollTo(index);
+            infoListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
