@@ -98,7 +98,7 @@ public class AddressBookParser {
 
             case RemarkCommand.COMMAND_WORD:
             case RemarkCommand.COMMAND_ALIAS:
-                return new RemarkCommand();
+                return new RemarkCommandParser().parse(arguments);
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
