@@ -749,11 +749,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |have a list of debtors whose debts are overdue |
 
-|`* * *` |debt collector |have an automated interest calculator |have my debtors' debts updated automatically
+|`* * *` |debt collector |have an automated interest calculator |have my debtors' debts updated automatically every month
 
 |`* * *` |debt collector |group my debtors by location |plan my visit schedules easily
 
-|`* * *` |debt collector |have a password protection to my account |have some security over confidential information
+|`* *` |debt collector |have a password protection to my account |have some security over confidential information
 
 |`* *` |debt collector |have an automated journey scheduler |maximise my efficiency
 
@@ -761,7 +761,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have different appearance themes |have a more unique user experience that suits my preferences
 
-|`* *` |new user |have a guided installation/no installaion |easily start using it
+|`* *` |new user |have a guided installation/no installation |easily start using it
 
 |`* *` |clumsy user |have automatic backups |not worry about accidentally deleting things
 
@@ -774,8 +774,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |create custom fields |store additional information for some contacts
 
 |`* *` |user |be able to link:#bookmark[bookmark] contacts |access important contacts much faster
-
-|`* *` |user |have a password required log-in |have more privacy
 
 |`* *` |user |have a Help command that displays screenshots of positive examples |understand the commands more visually
 
@@ -816,8 +814,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |print my contacts on paper in an neat format |pass hard copies to people
 |=======================================================================
 
-{More to be added}
-
 [appendix]
 == Use Cases
 
@@ -854,9 +850,8 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to add tag to a person
-2.  User keys in tag name
-3.  AddressBook adds the tag to the person
+1.  User requests to add a new tag to a person
+2.  AddressBook adds the tag to the person
 +
 Use case ends.
 
@@ -866,8 +861,7 @@ Use case ends.
 *MSS*
 
 1. User requests to sort AddressBook by name of persons
-2. AddressBook sorts itself
-3. AddressBook shows a sorted list of persons
+2. AddressBook shows a sorted list of persons
 +
 Use case ends.
 
@@ -889,8 +883,6 @@ Use case ends.
 4.  AddressBook adds the person in the favourite list
 5.  User requests to list favourite contacts
 6.  AddressBook shows a list of favourite contacts
-7.  User requests to delete a specific person in the favourite list
-8.  AddressBook removes the person in the favourite list and shows a list of persons in favourite list
 
 *Extensions*
 
@@ -905,17 +897,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-* 7a. The given index is invalid.
-+
-[none]
-** 7a1. AddressBook shows an error message.
-+
-Use case resumes at step 7.
-
-* 8a. The list is empty.
-+
-Use case ends.
 
 [discrete]
 === Use case: Edit person
@@ -1039,59 +1020,55 @@ An action that enables certain contacts to be displayed on application start-up
 [appendix]
 == Product Survey
 
-*Address Book*
+.*Address Book*, reviewed by Deleatha C Jones
+|===
+|Pros |Cons
 
-Author: Deleatha C Jones
+|Easy to use
+|Can only enter one phone number
 
-Pros:
+|Has all contact information fields
+|
+|===
 
-* Easy to use
-* Has all contact information fields
+.*Address book - Placebook*, reviewed by M Kenneally
+|===
+|Pros |Cons
 
-Cons:
+|Simple to use
+|Cannot import from Google contacts
 
-* Can only enter one phone number
+|Search address function is brilliant - fast and intuitive
+|
 
-*Address book - Placebook*
+|GPS location
+|
 
-Author: M Kenneally
+|Nice clean interface
+|
 
-Pros:
+|No ads
+|
+|===
 
-* Simple to use
-* Search address function is brilliant - fast and intuitive
-* GPS location
-* Nice clean interface
-* No ads
+.*Address Book and Contacts*, reviewed by Jessica Ryans & Leslie Murray
+|===
+|Pros |Cons
 
-Cons:
+|Simple to use
+|Can't edit groups once formed
 
-* Cannot import from Google contacts
+|It categorizes contacts into groups
+|Does not have enough fields
+|===
 
-*Address Book and Contacts*
+.*Address Book*, reviewed by Becca Malard & Susan Starrett
+|===
+|Pros |Cons
 
-Author: Jessica Ryans, Leslie Murray
+|Shows map of user location
+|Doesn't open all the time
 
-Pros:
-
-* It categorizes contacts into groups
-* Simple to use
-
-Cons:
-
-* Can't edit groups once formed
-* Does not have enough fields
-
-*Address Book*
-
-Authors: Becca Malard & Susan Starrett
-
-Pros:
-
-* Shows map of user location
-* Easy to use
-
-Cons:
-
-* Doesn't open all the time
-* Very slow
+|Easy to use
+|Very slow
+|===
