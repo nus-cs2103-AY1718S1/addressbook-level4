@@ -85,8 +85,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    /**
+     * Creates a backup of the current data, if available.
+     */
     @Override
-    public void backupAddressBook() throws IOException {
+    public void backupAddressBook() {
         try {
             Optional<ReadOnlyAddressBook> addressBookOptional;
             ReadOnlyAddressBook initialData;
@@ -104,16 +107,21 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         }
     }
 
+    /**
+     * @return address book data, if available and readable, or backup address book data if it is not.
+     * If both are unavailable, a sample address book is returned. If backup address book is in the wrong format
+     * or is unreadable, an empty address book is returned.
+     */
     @Override
     public ReadOnlyAddressBook getBestAvailableAddressBook() {
         ReadOnlyAddressBook initialData = new AddressBook();
-        boolean dataFileIsOkay = false;
+        boolean isDataFileOkay = false;
         Optional<ReadOnlyAddressBook> addressBookOptional;
 
         try {
             addressBookOptional = readAddressBook();
             if (addressBookOptional.isPresent()) {
-                dataFileIsOkay = true;
+                isDataFileOkay = true;
             } else {
                 logger.info("Data file not found");
             }
@@ -124,7 +132,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.warning("Problem while reading from the file");
         }
 
-        if (!dataFileIsOkay) {
+        if (!isDataFileOkay) {
             try {
                 addressBookOptional = readBackupAddressBook();
                 if (addressBookOptional.isPresent()) {
