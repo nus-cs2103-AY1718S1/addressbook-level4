@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
+import java.util.function.Predicate;
+
 import seedu.address.model.person.ContainsTagsPredicate;
 import seedu.address.model.person.InterceptionPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.function.Predicate;
 
 /**
  * Filters the current list with persons who are tagged with any of the specified tags.
