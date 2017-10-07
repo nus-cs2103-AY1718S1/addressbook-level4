@@ -103,7 +103,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-    
+
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }

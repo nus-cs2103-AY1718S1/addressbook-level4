@@ -212,6 +212,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::remark[]
+=== Adding Remark to a person : `remark`
+
+Adds a remark to a person. +
+Format: 'remark INDEX [r/REMARK]'
+
+Examples:
+
+* `list` +
+`remark 1 r/Eats a lot` +
+Adds a 'remark' to the 1st person in the list. +
+
+A new remark added to the same person will overwrite the previous remark.
+// end::remark[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
