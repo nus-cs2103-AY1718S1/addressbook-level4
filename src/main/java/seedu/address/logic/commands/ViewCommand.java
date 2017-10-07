@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
 
 import java.util.List;
@@ -12,7 +11,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.*;
+import seedu.address.model.person.FixedAddressPredicate;
+import seedu.address.model.person.FixedEmailPredicate;
+import seedu.address.model.person.FixedPhonePredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ShowSpecifiedPersonPredicate;
+
 
 /**
  * Views all persons with the selected listing unit from the address book.
@@ -53,24 +57,24 @@ public class ViewCommand extends Command {
 
         switch (currentUnit) {
 
-            case ADDRESS:
-                predicate = new FixedAddressPredicate(toView.getAddress());
-                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress());
-                break;
+        case ADDRESS:
+            predicate = new FixedAddressPredicate(toView.getAddress());
+            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress());
+            break;
 
-            case EMAIL:
-                predicate = new FixedEmailPredicate(toView.getEmail());
-                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
-                break;
+        case EMAIL:
+            predicate = new FixedEmailPredicate(toView.getEmail());
+            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
+            break;
 
-            case PHONE:
-                predicate = new FixedPhonePredicate(toView.getPhone());
-                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getPhone());
-                break;
+        case PHONE:
+            predicate = new FixedPhonePredicate(toView.getPhone());
+            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getPhone());
+            break;
 
-            default:
-                predicate = new ShowSpecifiedPersonPredicate(toView);
-                resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView);
+        default:
+            predicate = new ShowSpecifiedPersonPredicate(toView);
+            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView);
         }
 
         model.updateFilteredPersonList(predicate);

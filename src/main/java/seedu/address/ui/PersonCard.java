@@ -9,7 +9,6 @@ import javafx.scene.layout.Region;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.List;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -52,17 +51,20 @@ public class PersonCard extends UiPart<Region> {
         ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
 
         switch (currentUnit) {
-            case ADDRESS:
-                switchToAddressCard();
-                break;
 
-            case EMAIL:
-                switchToEmailCard();
-                break;
+        case ADDRESS:
+            switchToAddressCard();
+            break;
 
-            case PHONE:
-                switchToPhoneCard();
-                break;
+        case EMAIL:
+            switchToEmailCard();
+            break;
+
+        case PHONE:
+            switchToPhoneCard();
+            break;
+
+        default:
         }
     }
 
@@ -86,6 +88,9 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    /**
+     * change the card state to hide irrelevant information and only show address
+     */
     private void switchToAddressCard() {
         name.setVisible(false);
         phone.setVisible(false);
@@ -94,6 +99,9 @@ public class PersonCard extends UiPart<Region> {
         address.setStyle("-fx-font: 20 arial;");
     }
 
+    /**
+     * change the card state to hide irrelevant information and only show phone
+     */
     private void switchToPhoneCard() {
         name.setVisible(false);
         address.setVisible(false);
@@ -102,6 +110,9 @@ public class PersonCard extends UiPart<Region> {
         phone.setStyle("-fx-font: 20 arial;");
     }
 
+    /**
+     * change the card state to hide irrelevant information and only show email
+     */
     private void switchToEmailCard() {
         name.setVisible(false);
         phone.setVisible(false);
