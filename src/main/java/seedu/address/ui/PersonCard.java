@@ -64,7 +64,6 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * 
      * Init person tags with colour
      */
     private void initTags(ReadOnlyPerson person) {
