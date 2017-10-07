@@ -20,7 +20,7 @@ Responsibilities: UI
 '''
 
 === Ernest Ong
-image::jeremylong.jpg[width="150", align="left"]
+image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[Github]] [<<johndoe#, Portfolio>>]
 
 Role: Developer + Deliverables and Deadlines + Scheduling and Tracking +
@@ -29,7 +29,7 @@ Responsibilities: Logic
 '''
 
 === Jeremy Long
-image::yijinl.jpg[width="150", align="left"]
+image::jeremylong.JPG[width="150", align="left"]
 {empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
 
 Role: Developer + Testing + TheGuyWhoDoesAnythingAndEverythingOrAtLeastTriesTo +
