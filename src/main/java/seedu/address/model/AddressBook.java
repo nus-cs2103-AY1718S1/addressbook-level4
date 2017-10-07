@@ -55,10 +55,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      * List overwrite operations
      *****************************************************/
 
+    /**
+     * Replaces all persons in this list with those in the argument person list.
+     */
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
 
+    /**
+     * Replaces all tags in this list with those in the argument tag list.
+     */
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }

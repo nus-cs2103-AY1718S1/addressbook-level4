@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -86,18 +87,25 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
+     * TODO: Further investigate potential problems with this method.
      *
      * @param tag is the tag that will be removed.
      */
     @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
+        // Checks whether each person has that specific tag.
         for (ReadOnlyPerson target: addressBook.getPersonList()) {
             Person person = new Person(target);
-            Set<Tag> updatedTags = person.getTags();
+            Set<Tag> updatedTags = new HashSet<>(person.getTags());
             updatedTags.remove(tag);
             person.setTags(updatedTags);
             addressBook.updatePerson(target, person);
         }
+
+        // Removes the tag from the master tag list in the overall address book.
+        Set<Tag> newTags = new HashSet<>(addressBook.getTagList());
+        newTags.remove(tag);
+        addressBook.setTags(newTags);
     }
 
     //=========== Filtered Person List Accessors =============================================================
