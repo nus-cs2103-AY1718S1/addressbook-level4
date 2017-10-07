@@ -35,7 +35,7 @@ Responsibilities: Project
 image::Zk_pic.jpg[width="150", align="left"]
 {empty}[http://github.com/zhoukai07[github]] [<<zhoukai#, portfolio>>]
 
-Role: Developer + 
+Role: Developer +
 Responsibilities: Project
 
 '''
