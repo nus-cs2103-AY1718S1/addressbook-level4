@@ -9,6 +9,8 @@ import javafx.scene.layout.Region;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.List;
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -47,8 +49,20 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
-        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.ADDRESS)) {
-            switchToAddressCard();
+        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
+
+        switch (currentUnit) {
+            case ADDRESS:
+                switchToAddressCard();
+                break;
+
+            case EMAIL:
+                switchToEmailCard();
+                break;
+
+            case PHONE:
+                switchToPhoneCard();
+                break;
         }
     }
 
@@ -78,6 +92,22 @@ public class PersonCard extends UiPart<Region> {
         email.setVisible(false);
         tags.setVisible(false);
         address.setStyle("-fx-font: 20 arial;");
+    }
+
+    private void switchToPhoneCard() {
+        name.setVisible(false);
+        address.setVisible(false);
+        email.setVisible(false);
+        tags.setVisible(false);
+        phone.setStyle("-fx-font: 20 arial;");
+    }
+
+    private void switchToEmailCard() {
+        name.setVisible(false);
+        phone.setVisible(false);
+        address.setVisible(false);
+        tags.setVisible(false);
+        email.setStyle("-fx-font: 20 arial;");
     }
 
     @Override
