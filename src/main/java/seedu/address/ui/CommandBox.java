@@ -1,13 +1,24 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
+
 import java.util.logging.Logger;
+
+import javax.xml.bind.annotation.XmlType;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -44,19 +55,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            default:
+                // let JavaFx handle the keypress
         }
     }
 
@@ -102,6 +113,8 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
+            EventsCenter.getInstance().post(new ChangeFontSizeEvent(commandResult.feedbackToUser.toString()));
+            setFontSize(commandResult.feedbackToUser);
             initHistory();
             historySnapshot.next();
             // process result of the command
@@ -115,6 +128,36 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
+     * Sets the command box style to user preferred font size.
+     */
+    private void setFontSize(String userPref) {
+        switch (userPref) {
+            case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+                commandTextField.setStyle("-fx-font-size: x-small;");
+                break;
+
+            case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+                commandTextField.setStyle("-fx-font-size: small;");
+                break;
+
+            case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+                commandTextField.setStyle("-fx-font-size: normal;");
+                break;
+
+            case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+                commandTextField.setStyle("-fx-font-size: x-large;");
+                break;
+
+            case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+                commandTextField.setStyle("-fx-font-size: xx-large;");
+                break;
+
+            default:
+                break;
         }
     }
 
