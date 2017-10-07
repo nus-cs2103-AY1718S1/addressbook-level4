@@ -27,6 +27,11 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void removeTag_successfullyRemoveOneTag() {
+
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();

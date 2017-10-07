@@ -92,16 +92,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
         for (ReadOnlyPerson target: addressBook.getPersonList()) {
-            Person editedPerson = new Person(target);
-            Set<Tag> updatedTags = editedPerson.getTags();
+            Person person = new Person(target);
+            Set<Tag> updatedTags = person.getTags();
             updatedTags.remove(tag);
-            editedPerson.setTags(updatedTags);
-            addressBook.updatePerson(target, editedPerson);
+            person.setTags(updatedTags);
+            addressBook.updatePerson(target, person);
         }
     }
 
     //=========== Filtered Person List Accessors =============================================================
-
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
