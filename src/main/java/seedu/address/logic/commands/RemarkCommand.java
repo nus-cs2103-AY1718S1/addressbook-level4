@@ -8,8 +8,7 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
+import seedu.address.logic.commands.exceptions.CommandException;\
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
@@ -78,7 +77,12 @@ public class RemarkCommand extends UndoableCommand {
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
-
+    
+    /**
+    * This method is used to generate success message
+    * @param ReadOnlyPerson to edit
+    */
+    
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
@@ -88,14 +92,14 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         // short circuit if same object
         if (other == this){
             return true;
         }
 
         //instanceOf handles nulls
-        if (!(other instanceof RemarkCommand)){
+        if (!(other instanceof RemarkCommand)) {
             return false;
         }
 
