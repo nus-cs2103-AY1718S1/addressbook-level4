@@ -32,12 +32,12 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void execute_sortListIsNotFiltered_showsSameSortList() {
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
+    public void execute_sortListIsFiltered_showsEverything() {
         showFirstPersonOnly(model);
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
