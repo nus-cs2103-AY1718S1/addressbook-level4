@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T17-B1/main
 
-By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
+By: `CS2103AUG2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -1020,6 +1020,7 @@ An action that enables certain contacts to be displayed on application start-up
 [appendix]
 == Product Survey
 
+[width="80%"]
 .*Address Book*, reviewed by Deleatha C Jones
 |===
 |Pros |Cons
@@ -1031,6 +1032,7 @@ An action that enables certain contacts to be displayed on application start-up
 |
 |===
 
+[width="80%"]
 .*Address book - Placebook*, reviewed by M Kenneally
 |===
 |Pros |Cons
@@ -1051,6 +1053,7 @@ An action that enables certain contacts to be displayed on application start-up
 |
 |===
 
+[width="80%"]
 .*Address Book and Contacts*, reviewed by Jessica Ryans & Leslie Murray
 |===
 |Pros |Cons
@@ -1062,6 +1065,7 @@ An action that enables certain contacts to be displayed on application start-up
 |Does not have enough fields
 |===
 
+[width="80%"]
 .*Address Book*, reviewed by Becca Malard & Susan Starrett
 |===
 |Pros |Cons
