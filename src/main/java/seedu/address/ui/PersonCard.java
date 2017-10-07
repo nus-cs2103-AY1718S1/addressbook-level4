@@ -27,7 +27,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -102,7 +101,6 @@ public class PersonCard extends UiPart<Region> {
 
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setFontSize(event.message);
     }
 
