@@ -37,7 +37,7 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if(event.isUnknownCommandEntered()) {//unknown command entered
+        if (event.isUnknownCommandEntered()) { //unknown command entered
             setStyleToIndicateCommandFailure();
         }
         else {

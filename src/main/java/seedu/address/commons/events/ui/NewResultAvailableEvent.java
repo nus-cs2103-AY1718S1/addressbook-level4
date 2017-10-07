@@ -12,7 +12,7 @@ public class NewResultAvailableEvent extends BaseEvent {
 
     public NewResultAvailableEvent(String message) {
         this.message = message;
-        if(message.equals("Unknown command")) {
+        if (message.equals("Unknown command")) {
             unknownCommandEntered = true;
         }
         else {
