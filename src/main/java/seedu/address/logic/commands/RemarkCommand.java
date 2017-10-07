@@ -26,11 +26,12 @@ public class RemarkCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "rm";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified by INDEX.\n"
+            + "Overwrites previous remark, if any.\n"
             + "Parameters: "
             + "INDEX "
             + PREFIX_REMARK + "[REMARK]\n"
             + "EXAMPLE: " + COMMAND_WORD + " 1 "
-            + PREFIX_REMARK + " likes dogs.";
+            + PREFIX_REMARK + "likes dogs.";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
