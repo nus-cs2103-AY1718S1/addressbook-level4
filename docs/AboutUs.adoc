@@ -22,11 +22,11 @@ Responsibilities: Project
 '''
 
 === Joshua Ng
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+image::joshua.jpg[width="150", align="left"]
+{empty}[https://github.com/bladerail[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
-Responsibilities: 
+Role: Team Member
+Responsibilities: Project
 
 '''
 
