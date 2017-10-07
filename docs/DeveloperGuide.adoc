@@ -733,9 +733,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |sort people by name |locate people easily
 
-|`* * *` |user |set a list of favourite people|
-
-|`* * *` |user |see a list of frequently accessed contacts|
+|`* * *` |user |set a list of favourite people|search for my favourites easily
 
 |`* * *` |user |get confirmation before I edit or delete contacts|
 
@@ -743,13 +741,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add multiple numbers to a contact |separate their mobile and home numbers
 
-|`* * *` |user |password protect my addressBook |protect my contacts' information
-
-|`* * *` |user |call/message directly from my address book |reach them easily
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |customise the look of the address book |
+|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes
+
+|`* *` |user |customise screensavers|personalise the addressBook
+
+|`* *` |user |customise the colour and wallpaper of the address book |personalise my addressBook
+
+|`* *` |first time user |prompt user to input name |personalise the addressBook
 
 |`* *` |user |back up my address book data online |I can access my address book data from other places
 
@@ -769,19 +769,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |a calendar to sync my events |can plan them more efficiently
 
-|`* *` |user |know which method of communication my contacts prefers |use their favourite form of communication
-
 |`* *` |user |see most recently accessed contacts |so that I can access them faster
+
+|`* *` |busy user |see a list of frequently accessed contacts|so that I locate them faster
+
+|`* *` |user |password protect my addressBook |protect my contacts' information
+
+|`* *` |forgetful user |see a history of my last used commands |
 
 |`*` |user |add profile pictures to contacts |find my friends easily
 
 |`*` |user |set the colour of the tags |can view the tags easily
 
-|`*` |user |see which contacts knows each other |can communicate with them better
-
 |`*` |user |use facial recognition |enhance security
 
-|`*` |forgetful user |see a history of my last used commands |
+|`*` |user |call/message directly from my address book |reach them easily
 |=======================================================================
 
 {More to be added}
