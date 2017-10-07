@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -24,22 +25,30 @@ public class InfoListPanel extends UiPart<Region> {
     private static final String FXML = "InfoListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(InfoListPanel.class);
 
+    private ObservableList<ReadOnlyPerson> infoList;
+
     @FXML
     private ListView<PersonCard> infoListView;
 
+
     public InfoListPanel(ObservableList<ReadOnlyPerson> infoList) {
         super(FXML);
+        this.infoList = infoList;
         setConnections(infoList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> infoList) {
+
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 infoList, (person) -> new PersonCard(person, infoList.indexOf(person) + 1));
+
         infoListView.setItems(mappedList);
         infoListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
+
     }
+
 
     private void setEventHandlerForSelectionChangeEvent() {
         infoListView.getSelectionModel().selectedItemProperty()
@@ -67,6 +76,12 @@ public class InfoListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    @Subscribe
+    private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setConnections(infoList);
+    }
+
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
@@ -84,5 +99,4 @@ public class InfoListPanel extends UiPart<Region> {
             }
         }
     }
-
 }

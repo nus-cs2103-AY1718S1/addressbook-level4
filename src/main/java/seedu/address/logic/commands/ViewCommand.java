@@ -5,8 +5,10 @@ import static seedu.address.model.ListingUnit.PERSON;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.FixedAddressPredicate;
@@ -54,6 +56,8 @@ public class ViewCommand extends Command {
         } else if (currentUnit.equals(ADDRESS)) {
             FixedAddressPredicate predicate = new FixedAddressPredicate(toView.getAddress());
             model.updateFilteredPersonList(predicate);
+            ListingUnit.setCurrentListingUnit(PERSON);
+            EventsCenter.getInstance().post(new ChangeListingUnitEvent(PERSON));
             return new CommandResult(String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress()));
 
         } else {

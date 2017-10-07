@@ -4,6 +4,8 @@ import static seedu.address.model.ListingUnit.ADDRESS;
 import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.UniqueAddressPredicate;
 
@@ -43,6 +45,7 @@ public class ListCommand extends Command {
             ListingUnit.setCurrentListingUnit(ADDRESS);
             UniqueAddressPredicate predicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
             model.updateFilteredPersonList(predicate);
+            EventsCenter.getInstance().post(new ChangeListingUnitEvent(ADDRESS));
             return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         } else {
             ListingUnit.setCurrentListingUnit(PERSON);

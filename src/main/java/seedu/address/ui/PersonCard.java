@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -46,6 +47,9 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.ADDRESS)) {
+            switchToAddressCard();
+        }
     }
 
     /**
@@ -63,8 +67,17 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    private void switchToAddressCard() {
+        name.setVisible(false);
+        phone.setVisible(false);
+        email.setVisible(false);
+        tags.setVisible(false);
+        address.setStyle("-fx-font: 20 arial;");
     }
 
     @Override
