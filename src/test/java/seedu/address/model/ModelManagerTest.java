@@ -1,10 +1,12 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 
@@ -12,7 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -24,6 +28,18 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    @Test
+    public void removeTag_successfullyRemoveTag() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ObservableList<Tag> tags = modelManager.getAddressBook().getTagList();
+        int originTagSize = tags.size();
+        modelManager.removeTag(tags.get(0));
+        int newTagSize = modelManager.getAddressBook().getTagList().size();
+        assertEquals(1, originTagSize - newTagSize);
     }
 
     @Test

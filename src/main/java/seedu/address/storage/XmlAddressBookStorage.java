@@ -74,8 +74,12 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    /**
+     * Makes a local backup of the addressBook storage file by appending the filename with {@code backup}.
+     */
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+        String newFilePath = removeFileExtension(filePath) + "-backup.xml";
+        saveAddressBook(addressBook, newFilePath);
     }
 }

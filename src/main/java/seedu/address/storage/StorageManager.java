@@ -89,9 +89,13 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    /**
+     * Makes a local backup of the addressBook storage file by appending the filename with {@code backup}.
+     */
     @Override
-    public void backupAddressBook (ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String oldFilePath = addressBookStorage.getAddressBookFilePath();
+        String newFilePath = removeFileExtension(oldFilePath) + "-backup.xml";
+        saveAddressBook(addressBook, newFilePath);
     }
-
 }

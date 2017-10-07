@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= BoNUS - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -723,7 +723,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | save my contacts in the App
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -731,10 +731,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |change the UI theme |customize my App
+|`*` |loyal user |send feedback to developers |help further improve this App
+|`*` |user |save my contacts on the cloud |sync between different devices
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -874,7 +875,7 @@ A contact detail that is not meant to be shared with others
 
 *Contacts^TM^*
 
-_(renamed from *Address Book* since  Mac OS X 10.8)_
+_(renamed from https://support.apple.com/en-us/HT201728[Address Book] since  Mac OS X 10.8)_
 
 Author: Apple Inc.
 

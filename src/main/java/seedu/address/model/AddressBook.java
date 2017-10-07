@@ -32,14 +32,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * among constructors.
      */
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -49,12 +51,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
 
-    //// list overwrite operations
+    /*****************************************************
+     * List overwrite operations
+     *****************************************************/
 
+    /**
+     * Replaces all persons in this list with those in the argument person list.
+     */
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
 
+    /**
+     * Replaces all tags in this list with those in the argument tag list.
+     */
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -74,7 +84,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
-    //// person-level operations
+    /*****************************************************
+     * Person-level operations
+     *****************************************************/
 
     /**
      * Adds a person to the address book.
@@ -156,13 +168,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    /*****************************************************
+     * Tag-level operations
+     *****************************************************/
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
-    //// util methods
+    /*****************************************************
+     * Util methods
+     *****************************************************/
 
     @Override
     public String toString() {

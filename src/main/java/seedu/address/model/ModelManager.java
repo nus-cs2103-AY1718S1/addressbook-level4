@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -85,24 +86,29 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Method is implemented in Model interface
-     * Functionality of method is exposed only in ModelManager
-     * Loops through Address Book to update the tags
-     * Address Book is then updated with updated tags of person
+     * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
+     * TODO: Further investigate potential problems with this method.
+     *
+     * @param tag is the tag that will be removed.
      */
     @Override
-    public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
+    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
+        // Checks whether each person has that specific tag.
         for (ReadOnlyPerson target: addressBook.getPersonList()) {
-            Person editedPerson = new Person(target);
-            Set<Tag> updatedTags = editedPerson.getTags();
-            updatedTags.remove(tags);
-            editedPerson.setTags(updatedTags);
-            addressBook.updatePerson(target, editedPerson);
+            Person person = new Person(target);
+            Set<Tag> updatedTags = new HashSet<>(person.getTags());
+            updatedTags.remove(tag);
+            person.setTags(updatedTags);
+            addressBook.updatePerson(target, person);
         }
+
+        // Removes the tag from the master tag list in the overall address book.
+        Set<Tag> newTags = new HashSet<>(addressBook.getTagList());
+        newTags.remove(tag);
+        addressBook.setTags(newTags);
     }
 
     //=========== Filtered Person List Accessors =============================================================
-
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
