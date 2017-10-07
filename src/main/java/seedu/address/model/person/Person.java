@@ -104,12 +104,12 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setRemark(Remark remark){
+    public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
 
     @Override
-    public ObjectProperty<Remark> remarkProperty(){
+    public ObjectProperty<Remark> remarkProperty() {
         return remark;
     }
 
