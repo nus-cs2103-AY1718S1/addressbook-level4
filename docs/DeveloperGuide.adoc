@@ -724,9 +724,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |New user |See usage instructions |Refer to instructions when I forget how to use the App
 
-|`* * *` |New user |Know how to use the application without having to read the User Guide
+|`* * *` |New user |Know how to use the application without having to read the User Guide|
 
-|`* * *` |User |Add a new person
+|`* * *` |User |Add a new person|
 
 |`* * *` |User |Delete a person |Remove entries that I no longer need
 
@@ -736,7 +736,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Find all contacts with a given keyword |Identify all of the contacts with that name
 
-|`* * *` |User |Select a person from the previous command that brings up a numbered list
+|`* * *` |User |Select a person from the previous command that brings up a numbered list|
 
 |`* * *` |User |Add a tag to my contact |Identify the contact based on the tagged relationship
 
@@ -744,11 +744,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Redo an undo |Restore the Address Book to its previous state before the undo
 
-|`* * *` |User |Use the arrow keys to call previous commands used
+|`* * *` |User |Use the arrow keys to call previous commands used|
 
 |`* * *` |User |Use the Address Book without saving it |Avoid any loss of data in the case I forget to save
 
-|`* * *` |User |Exit the Address Book with a command
+|`* * *` |User |Exit the Address Book with a command|
 
 |`* * *` |User |List all contacts based on number of searches |See who I searched the most
 
@@ -756,7 +756,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Easily navigate through the User Guide |Easily access information I need from the User Guide
 
-|`* * *` |Doctor |List all patients with specific tags based on number of searches
+|`* * *` |Doctor |List all patients with specific tags based on number of searches|
 
 |`* * *` |Doctor |Delete contacts by tags |Delete the whole group at once
 
