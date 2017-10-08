@@ -99,7 +99,7 @@ public class CommandBox extends UiPart<Region> {
      * @return
      */
     private boolean validCommandKeyword(String keyWord) {
-        if(keywordColorMap.containsKey(keyWord)){
+        if (keywordColorMap.containsKey(keyWord)) {
             return true;
         }
         return false;

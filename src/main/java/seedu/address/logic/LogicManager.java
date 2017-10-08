@@ -1,7 +1,5 @@
 package seedu.address.logic;
 
-import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -72,7 +70,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public HashMap<String, String> getCommandKeywordColorMap() {
-        HashMap<String,String> keywordColorMap = new HashMap<>();
+        HashMap<String, String> keywordColorMap = new HashMap<>();
         keywordColorMap.put(AddCommand.COMMAND_WORD, "#99CC33");
         keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#CCCCCC");
         keywordColorMap.put(EditCommand.COMMAND_WORD, "#FFFF66");

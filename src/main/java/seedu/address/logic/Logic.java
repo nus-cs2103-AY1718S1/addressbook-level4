@@ -1,5 +1,5 @@
 package seedu.address.logic;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import javafx.collections.ObservableList;
@@ -33,5 +33,5 @@ public interface Logic {
      * Returns the list of CommandKeyword and its corresponding color
      * @return
      */
-    HashMap<String,String> getCommandKeywordColorMap();
+    HashMap<String, String> getCommandKeywordColorMap();
 }
