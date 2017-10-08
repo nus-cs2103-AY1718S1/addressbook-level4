@@ -753,7 +753,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |frequent user |use non-case sensitive command |type command easily
 
-|`* *` | user with many friends |add multiple people at one time| save my time for adding
+|`* *` |user with many friends |add multiple people at one time| save my time for adding
 
 |`* *` |user |sort contacts |view my list easily
 
@@ -775,7 +775,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |create filter using multiple tags |make a specific search using tags
 
-|`*` | frequent user |listen some background music |address book happily
+|`*` |frequent user |listen some background music |address book happily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
