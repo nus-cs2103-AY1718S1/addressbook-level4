@@ -82,7 +82,7 @@ public class DeleteTagCommandTest {
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteTagCommand deleteFirstCommandCopy = new DeleteTagCommand(TAG_DESC_FRIEND);
+        DeleteTagCommand deleteFirstCommandCopy = prepareCommand("friend");
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
