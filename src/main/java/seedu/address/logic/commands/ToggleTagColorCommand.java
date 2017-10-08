@@ -29,9 +29,7 @@ public class ToggleTagColorCommand extends Command {
             GuiSettings.onTagColored();
         } else
             GuiSettings.offTagColored();
-
         logger.fine("Tag color set to " + (toSet? "on": "off"));
-        
         return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on": "off"));
     }
 }
