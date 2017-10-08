@@ -4,53 +4,44 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+MedNus was developed by the CS2103T AY17/18 T17-B2 team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
+=== Eric Loh
 image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
+Role: Developer + Integration + Git Expert +
+Responsibilities: UI
 
 '''
 
-=== John Roe
+=== Ernest Ong
 image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/lejolly[Github]] [<<johndoe#, Portfolio>>]
 
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
+Role: Developer + Deliverables and Deadlines + Scheduling and Tracking +
+Responsibilities: Logic
 
 '''
 
-=== Johnny Roe
+=== Jeremy Long
+image::jeremylong.JPG[width="150", align="left"]
+{empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
+
+Role: Developer + Testing + TheGuyWhoDoesAnythingAndEverythingOrAtLeastTriesTo +
+Responsibilities: Storage
+
+'''
+
+=== Khor Ru Shan
 image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/m133225[Github]] [<<johndoe#, Portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Developer + Code Quality + UI Aesthetics Expert +
+Responsibilities: Model
 
-'''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
