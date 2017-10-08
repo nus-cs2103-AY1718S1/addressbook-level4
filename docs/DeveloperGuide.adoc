@@ -737,7 +737,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |save multiple phone numbers to one contact |have multiple ways of contacting a contact
 
-|`* * *` |debt collector |indicate and update amount owed by a debtor |see how much a debtor owes
+|`* * *` |debt collector |indicate and update amount owed by a debtor when the debtor borrows or returns money |see how much a debtor owes
 
 |`* * *` |debt collector |sort my contacts by the amount owed |
 
