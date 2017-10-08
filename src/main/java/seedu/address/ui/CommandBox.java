@@ -1,8 +1,7 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,7 +29,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
-    private ArrayList <String> commandKeywords;
+    private HashMap<String, String> keywordColorMap;
 
     @FXML
     private TextField commandTextField;
@@ -44,7 +43,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         configInactiveKeyword();
-        commandKeywords = logic.getCommandKeywordList();
+        keywordColorMap = logic.getCommandKeywordColorMap();
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -100,11 +99,8 @@ public class CommandBox extends UiPart<Region> {
      * @return
      */
     private boolean validCommandKeyword(String keyWord) {
-        for (int i = 0; i < commandKeywords.size(); i++) {
-            String commandKeyword = commandKeywords.get(i);
-            if (Pattern.matches(commandKeyword, keyWord)) {
-                return true;
-            }
+        if(keywordColorMap.containsKey(keyWord)){
+            return true;
         }
         return false;
     }
@@ -117,7 +113,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextFieldKeyword.setVisible(false);
         commandTextFieldKeyword.toBack();
         commandTextFieldKeyword.clear();
-        commandTextFieldKeyword.setStyle("    -fx-background-color: transparent #383838 transparent #383838;\n"
+        commandTextFieldKeyword.setStyle("-fx-background-color: transparent #383838 transparent #383838;\n"
                 + "    -fx-background-insets: 0;\n"
                 + "    -fx-border-color: #383838 #383838 #ffffff #383838;\n"
                 + "    -fx-border-insets: 0;\n"
@@ -138,7 +134,8 @@ public class CommandBox extends UiPart<Region> {
         commandText.setFont(commandTextField.getFont());
         final double width = commandText.getLayoutBounds().getWidth() + 17;
         commandTextFieldKeyword.setText(commandKeyword);
-        commandTextFieldKeyword.setStyle(" -fx-control-inner-background: yellow;\n"
+        String color = keywordColorMap.get(commandKeyword);
+        commandTextFieldKeyword.setStyle(" -fx-control-inner-background: " + color + ";\n"
                 + "    -fx-font-size: 12pt;\n"
                 + "    -fx-text-fill: red;");
         commandTextFieldKeyword.setPrefWidth(width);

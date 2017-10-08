@@ -1,5 +1,6 @@
 package seedu.address.logic;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
@@ -28,5 +29,9 @@ public interface Logic {
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 
-    ArrayList<String> getCommandKeywordList();
+    /**
+     * Returns the list of CommandKeyword and its corresponding color
+     * @return
+     */
+    HashMap<String,String> getCommandKeywordColorMap();
 }

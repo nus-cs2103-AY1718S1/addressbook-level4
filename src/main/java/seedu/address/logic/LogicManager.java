@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -68,20 +69,21 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(history.getHistory());
     }
 
+
     @Override
-    public ArrayList<String> getCommandKeywordList() {
-        ArrayList<String> commandKeywords = new ArrayList<String>();
-        commandKeywords.add(AddCommand.COMMAND_WORD);
-        commandKeywords.add(DeleteCommand.COMMAND_WORD);
-        commandKeywords.add(EditCommand.COMMAND_WORD);
-        commandKeywords.add(ExitCommand.COMMAND_WORD);
-        commandKeywords.add(FindCommand.COMMAND_WORD);
-        commandKeywords.add(HelpCommand.COMMAND_WORD);
-        commandKeywords.add(ListCommand.COMMAND_WORD);
-        commandKeywords.add(SelectCommand.COMMAND_WORD);
-        commandKeywords.add(ClearCommand.COMMAND_WORD);
-        commandKeywords.add(UndoCommand.COMMAND_WORD);
-        commandKeywords.add(RedoCommand.COMMAND_WORD);
-        return commandKeywords;
+    public HashMap<String, String> getCommandKeywordColorMap() {
+        HashMap<String,String> keywordColorMap = new HashMap<>();
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "#99CC33");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#CCCCCC");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "#FFFF66");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "#0099FF");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "#CCCC33");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "#0099CC");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "#CCFF66");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "#99CCFF");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "#999999");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "#669999");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "#ABCDEF");
+        return keywordColorMap;
     }
 }
