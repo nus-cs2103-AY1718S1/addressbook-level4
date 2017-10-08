@@ -59,6 +59,6 @@ image::tianlan.jpg[width="150", align="left"]
 {empty} [https://github.com/angtianlannus[github]]
 
 Role: Developer +
-Responsibilities: Storage, SortCommand
+Responsibilities: Storage, SortCommand, part of documentation
 
 '''
