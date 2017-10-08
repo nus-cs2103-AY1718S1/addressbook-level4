@@ -154,6 +154,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    /**
+     * Remove tags that only in this deleted person
+     */
     public void separateMasterTagListWith(Set<Tag> tagsToRemove) {
         for (Tag tag : tagsToRemove) {
             tags.remove(tag);
@@ -162,6 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * A Javadoc method.
+     * Get the tags in the new-added person, but not in the list
      */
     public Set<Tag> extractNewTags(ReadOnlyPerson person) {
         Set<Tag> personTags = person.getTags();

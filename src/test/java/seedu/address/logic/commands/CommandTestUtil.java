@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -139,6 +138,9 @@ public class CommandTestUtil {
         }
     }
 
+    /**
+     * Modify target person's details to be editedPerson's
+     */
     public static void modifyPerson(Model model, ReadOnlyPerson targetPerson, ReadOnlyPerson editedPerson) {
         try {
             model.updatePerson(targetPerson, editedPerson);

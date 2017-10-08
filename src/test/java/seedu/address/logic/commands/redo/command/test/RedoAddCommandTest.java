@@ -1,12 +1,12 @@
-package seedu.address.logic.commands.RedoCommandTest;
+package seedu.address.logic.commands.redo.command.test;
 
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
+import static seedu.address.logic.commands.CommandTestUtil.addPerson;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.addPerson;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;

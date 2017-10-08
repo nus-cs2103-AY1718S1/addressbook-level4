@@ -155,7 +155,7 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
-     * A Javadoc type.
+     * Signals that a certain tag is not found in the list.
      */
     public static class TagNotFoundException extends IllegalArgumentException {
         protected TagNotFoundException() {
