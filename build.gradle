@@ -67,6 +67,7 @@ allprojects {
         compile "com.google.guava:guava:$guavaVersion"
         compile 'org.kordamp.ikonli:ikonli-javafx:2.0.0'
         compile 'org.kordamp.ikonli:ikonli-feather-pack:2.0.0'
+        compile fileTree(dir: 'externalLib', include: ['*.jar'])
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"

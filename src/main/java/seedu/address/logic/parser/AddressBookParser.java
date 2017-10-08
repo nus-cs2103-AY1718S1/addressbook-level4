@@ -77,6 +77,7 @@ public class AddressBookParser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
+            new TextToSpeechParser().parse("Showing help");
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
