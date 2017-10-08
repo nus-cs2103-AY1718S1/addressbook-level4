@@ -1002,10 +1002,10 @@ A visual representation that shows a user how far along he/she is in a process
 ....
 
 [[2FA]]
-2FA Authentication
+2FA
 
 ....
-An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also something that only, and only, that user has on them, i.e. a piece of information only they should know or have immediately to hand - such as a physical token
+An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
 .....
 
 [[log]]
@@ -1019,7 +1019,7 @@ An official record of events
 Cleared
 
 ....
-Refers to the clients that have paid off all their debts (in this context)
+Refers to clients that have paid off all their debts (in this context)
 ....
 
 [appendix]
