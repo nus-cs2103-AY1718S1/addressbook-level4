@@ -228,6 +228,17 @@ Clears all entries from the address book. +
 Format: `clear`
 Shorthand Format: `c`
 
+=== Toggle Tag Color Mode : `tagcolor`
+
+Changes tag color mode to on/off. +
+Format: `tagcolor On / tagcolor Off`
+
+[NOTE]
+====
+To see changes, scroll the contact list up and down.
+====
+
+
 === Exiting the program : `exit`
 
 Exits the program. +
