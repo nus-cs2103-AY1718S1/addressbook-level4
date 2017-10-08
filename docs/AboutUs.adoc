@@ -11,10 +11,10 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Eric Loh
-image::damithc.jpg[width="150", align="left"]
-{empty}[https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+image::ericloh.jpg[width="150", align="left"]
+{empty}[https://github.com/Ericloh[github]] [<<ericloh#, portfolio>>]
 
-Role: Developer + Integration + Git Expert +
+Role: Developer
 Responsibilities: UI
 
 '''
