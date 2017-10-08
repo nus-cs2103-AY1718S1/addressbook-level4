@@ -2,7 +2,11 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +14,13 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.*;
-import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.Arrays;
-import java.util.List;
+import seedu.address.model.AddressBook;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -43,7 +49,7 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_viewAllPerson_WithSpecifiedAddress() {
+    public void execute_viewAllPerson_withSpecifiedAddress() {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.ADDRESS);
 
@@ -52,7 +58,7 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_viewAllPerson_WithSpecifiedEmail() {
+    public void execute_viewAllPerson_withSpecifiedEmail() {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.EMAIL);
 
@@ -61,7 +67,7 @@ public class ViewCommandTest {
     }
 
     @Test
-    public void execute_viewAllPerson_WithSpecifiedPhone() {
+    public void execute_viewAllPerson_withSpecifiedPhone() {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.PHONE);
 

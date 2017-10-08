@@ -24,7 +24,7 @@ public class FixedEmailPredicateTest {
             firstEmail = new Email(VALID_EMAIL_AMY);
             secondEmail = new Email(VALID_EMAIL_BOB);
         } catch (IllegalValueException e) {
-            assert false : "The email shouldn't invalid";
+            assert false : "The email shouldn't be invalid";
         }
 
         FixedEmailPredicate firstPredicate = new FixedEmailPredicate(firstEmail);
@@ -55,7 +55,7 @@ public class FixedEmailPredicateTest {
             FixedEmailPredicate predicate = new FixedEmailPredicate(email);
             assertTrue(predicate.test(new PersonBuilder().build()));
         } catch (IllegalValueException e) {
-            assert false : "The email shouldn't invalid";
+            assert false : "The email shouldn't be invalid";
         }
 
     }
@@ -68,7 +68,7 @@ public class FixedEmailPredicateTest {
         try {
             email = new Email("alicee@gmail.com");
         } catch (IllegalValueException e) {
-            assert false : "The email shouldn't invalid";
+            assert false : "The email shouldn't be invalid";
         }
 
         FixedEmailPredicate predicate = new FixedEmailPredicate(email);

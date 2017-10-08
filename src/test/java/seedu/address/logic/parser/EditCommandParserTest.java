@@ -218,7 +218,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_EditAddress() {
+    public void parse_editAddress() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()  + " " + VALID_ADDRESS_AMY;
 
@@ -229,7 +229,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_EditEmail() {
+    public void parse_editEmail() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()  + " " + VALID_EMAIL_AMY;
 
@@ -240,7 +240,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_EditPhone() {
+    public void parse_editPhone() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()  + " " + VALID_PHONE_BOB;
 

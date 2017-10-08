@@ -4,11 +4,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.predicates.FixedPhonePredicate;
 import seedu.address.testutil.PersonBuilder;
 
@@ -24,7 +26,7 @@ public class FixedPhonePredicateTest {
             firstPhone = new Phone(VALID_PHONE_AMY);
             secondPhone = new Phone(VALID_PHONE_BOB);
         } catch (IllegalValueException e) {
-            assert false : "The phone shouldn't invalid";
+            assert false : "The phone shouldn't be be invalid";
         }
 
         FixedPhonePredicate firstPredicate = new FixedPhonePredicate(firstPhone);
@@ -50,28 +52,18 @@ public class FixedPhonePredicateTest {
     @Test
     public void test_isThePhoneGiven_returnsTrue() {
 
-        try {
-            Phone Phone = new Phone("85355255");
-            FixedPhonePredicate predicate = new FixedPhonePredicate(Phone);
-            assertTrue(predicate.test(new PersonBuilder().build()));
-        } catch (IllegalValueException e) {
-            assert false : "The phone shouldn't invalid";
-        }
+        ReadOnlyPerson person = new PersonBuilder().build();
+        Phone Phone = person.getPhone();
+        FixedPhonePredicate predicate = new FixedPhonePredicate(Phone);
+        assertTrue(predicate.test(person));
 
     }
 
     @Test
     public void test_isThePhoneGiven_returnsFalse() {
 
-        Phone phone = null;
-
-        try {
-            phone = new Phone("85355225");
-        } catch (IllegalValueException e) {
-            assert false : "The phone shouldn't invalid";
-        }
-
-        FixedPhonePredicate predicate = new FixedPhonePredicate(phone);
-        assertFalse(predicate.test(new PersonBuilder().build()));
+        ReadOnlyPerson person = new PersonBuilder().build();
+        FixedPhonePredicate predicate = new FixedPhonePredicate(ALICE.getPhone());
+        assertTrue(predicate.test(person));
     }
 }

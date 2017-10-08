@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.ListCommand;
 
 
@@ -28,12 +29,8 @@ public class ListCommandParserTest {
     }
 
     @Test
-    public void parse_List_returnsListCommand() {
-        assertParseSuccess(parser, " ", new ListCommand());
-    }
-
-    @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "list asda", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "list asda", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ListCommand.MESSAGE_USAGE));
     }
 }
