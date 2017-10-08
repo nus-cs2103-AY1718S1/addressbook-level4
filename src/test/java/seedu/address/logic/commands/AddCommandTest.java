@@ -166,6 +166,11 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public Set<Tag> extractNewTag(ReadOnlyPerson person) {
+            return null;
+        }
     }
 
     /**
