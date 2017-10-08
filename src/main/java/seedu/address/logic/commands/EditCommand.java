@@ -141,24 +141,21 @@ public class EditCommand extends UndoableCommand {
         try {
             editedAddress = new Address(attributeValue);
             for (ReadOnlyPerson p : personList) {
+
+                ReadOnlyPerson curEditedPerson;
                 if (p.getAddress().equals(addressToEdit)) {
-                    ReadOnlyPerson curEditedPerson = null;
                     curEditedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
                             editedAddress, p.getTags());
+                    model.updatePerson(p, curEditedPerson);
 
-                    try {
-                        model.updatePerson(p, curEditedPerson);
-                    } catch (DuplicatePersonException dpe) {
-                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                    } catch (PersonNotFoundException pnfe) {
-                        throw new AssertionError("The target person cannot be missing");
-                    }
                 }
             }
             model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
         } catch (IllegalValueException ive) {
             throw new CommandException(ive.getMessage());
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
         }
     }
 
@@ -172,24 +169,21 @@ public class EditCommand extends UndoableCommand {
         try {
             editedEmail = new Email(attributeValue);
             for (ReadOnlyPerson p : personList) {
+
+                ReadOnlyPerson curEditedPerson;
                 if (p.getEmail().equals(emailToEdit)) {
-                    ReadOnlyPerson curEditedPerson = null;
                     curEditedPerson = new Person(p.getName(), p.getPhone(), editedEmail,
                             p.getAddress(), p.getTags());
+                    model.updatePerson(p, curEditedPerson);
 
-                    try {
-                        model.updatePerson(p, curEditedPerson);
-                    } catch (DuplicatePersonException dpe) {
-                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                    } catch (PersonNotFoundException pnfe) {
-                        throw new AssertionError("The target person cannot be missing");
-                    }
                 }
             }
             model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_EMAIL_SUCCESS, editedEmail));
         } catch (IllegalValueException ive) {
             throw new CommandException(ive.getMessage());
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
         }
     }
 
@@ -203,25 +197,22 @@ public class EditCommand extends UndoableCommand {
         try {
             editedPhone = new Phone(attributeValue);
             for (ReadOnlyPerson p : personList) {
+
+                ReadOnlyPerson curEditedPerson;
                 if (p.getPhone().equals(phoneToEdit)) {
-                    ReadOnlyPerson curEditedPerson = null;
                     curEditedPerson = new Person(p.getName(), editedPhone, p.getEmail(),
                             p.getAddress(), p.getTags());
-
-                    try {
-                        model.updatePerson(p, curEditedPerson);
-                    } catch (DuplicatePersonException dpe) {
-                        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                    } catch (PersonNotFoundException pnfe) {
-                        throw new AssertionError("The target person cannot be missing");
-                    }
+                    model.updatePerson(p, curEditedPerson);
                 }
             }
             model.updateFilteredPersonList(new UniquePhonePredicate(model.getUniquePhonePersonSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_PHONE_SUCCESS, editedPhone));
         } catch (IllegalValueException ive) {
             throw new CommandException(ive.getMessage());
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
         }
+
     }
 
     /**
