@@ -43,7 +43,7 @@ public class FixedEmailPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different email -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -58,8 +58,8 @@ public class FixedEmailPredicateTest {
             assert false : "The email shouldn't invalid";
         }
 
-        FixedEmailPredicate secondPredicate = new FixedEmailPredicate(email);
-        assertTrue(secondPredicate.test(new PersonBuilder().build()));
+        FixedEmailPredicate predicate = new FixedEmailPredicate(email);
+        assertTrue(predicate.test(new PersonBuilder().build()));
 
     }
 
@@ -74,7 +74,7 @@ public class FixedEmailPredicateTest {
             assert false : "The email shouldn't invalid";
         }
 
-        FixedEmailPredicate secondPredicate = new FixedEmailPredicate(email);
-        assertFalse(secondPredicate.test(new PersonBuilder().build()));
+        FixedEmailPredicate predicate = new FixedEmailPredicate(email);
+        assertFalse(predicate.test(new PersonBuilder().build()));
     }
 }

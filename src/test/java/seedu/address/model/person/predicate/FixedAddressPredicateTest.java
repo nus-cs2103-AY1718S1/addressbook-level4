@@ -43,7 +43,7 @@ public class FixedAddressPredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different address -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -58,8 +58,8 @@ public class FixedAddressPredicateTest {
             assert false : "The address shouldn't invalid";
         }
 
-        FixedAddressPredicate secondPredicate = new FixedAddressPredicate(address);
-        assertTrue(secondPredicate.test(new PersonBuilder().build()));
+        FixedAddressPredicate predicate = new FixedAddressPredicate(address);
+        assertTrue(predicate.test(new PersonBuilder().build()));
 
     }
 
@@ -74,7 +74,7 @@ public class FixedAddressPredicateTest {
             assert false : "The address shouldn't invalid";
         }
 
-        FixedAddressPredicate secondPredicate = new FixedAddressPredicate(address);
-        assertFalse(secondPredicate.test(new PersonBuilder().build()));
+        FixedAddressPredicate predicate = new FixedAddressPredicate(address);
+        assertFalse(predicate.test(new PersonBuilder().build()));
     }
 }

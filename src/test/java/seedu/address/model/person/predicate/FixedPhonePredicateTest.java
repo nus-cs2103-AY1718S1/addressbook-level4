@@ -43,7 +43,7 @@ public class FixedPhonePredicateTest {
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
 
-        // different person -> returns false
+        // different phone -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
@@ -58,8 +58,8 @@ public class FixedPhonePredicateTest {
             assert false : "The phone shouldn't invalid";
         }
 
-        FixedPhonePredicate secondPredicate = new FixedPhonePredicate(Phone);
-        assertTrue(secondPredicate.test(new PersonBuilder().build()));
+        FixedPhonePredicate predicate = new FixedPhonePredicate(Phone);
+        assertTrue(predicate.test(new PersonBuilder().build()));
 
     }
 
@@ -74,7 +74,7 @@ public class FixedPhonePredicateTest {
             assert false : "The phone shouldn't invalid";
         }
 
-        FixedPhonePredicate secondPredicate = new FixedPhonePredicate(phone);
-        assertFalse(secondPredicate.test(new PersonBuilder().build()));
+        FixedPhonePredicate predicate = new FixedPhonePredicate(phone);
+        assertFalse(predicate.test(new PersonBuilder().build()));
     }
 }
