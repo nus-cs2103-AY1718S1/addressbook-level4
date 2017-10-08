@@ -29,7 +29,7 @@ Responsibilities: Model
 '''
 
 === Lenald Ng Wai Jun
-image::lenald.png[width="150", align="left"]
+image::lenaldnwj.png[width="150", align="left"]
 {empty}[https://github.com/Lenaldnwj] [<<Lenald#, portfolio>>]
 
 Role: Developer, Documentation, Code Quality, Integration +
