@@ -27,14 +27,14 @@ public class ClearCommand extends UndoableCommand {
     }
 
     @Override
-    protected void undo(){
+    protected void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
-    protected void redo(){
+    protected void redo() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
         model.resetData(new AddressBook());

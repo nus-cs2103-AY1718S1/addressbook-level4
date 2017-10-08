@@ -107,7 +107,7 @@ public class EditCommand extends UndoableCommand {
     }
 
     @Override
-    protected void undo(){
+    protected void undo() {
         try {
             model.updatePerson(editedPerson, personToEdit);
         } catch (DuplicatePersonException dpe) {
@@ -121,7 +121,7 @@ public class EditCommand extends UndoableCommand {
     }
 
     @Override
-    protected void redo(){
+    protected void redo() {
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {

@@ -65,6 +65,9 @@ public class UndoableCommandTest {
         }
 
         @Override
-        public void undo(){}
+        protected void undo() {}
+
+        @Override
+        protected void redo() {}
     }
 }

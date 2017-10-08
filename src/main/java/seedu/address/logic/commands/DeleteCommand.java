@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -61,13 +60,13 @@ public class DeleteCommand extends UndoableCommand {
     }
 
     @Override
-    protected void undo(){
+    protected void undo() {
         requireAllNonNull(model, personToDelete);
         model.addPerson(targetIndex.getZeroBased(), personToDelete);
     }
 
     @Override
-    protected void redo(){
+    protected void redo() {
         requireAllNonNull(model, personToDelete);
         try {
             model.deletePerson(personToDelete);

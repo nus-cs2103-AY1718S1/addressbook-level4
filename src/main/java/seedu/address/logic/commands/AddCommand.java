@@ -67,7 +67,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     @Override
-    protected void undo(){
+    protected void undo() {
         requireNonNull(model);
         try {
             model.deletePerson(toAdd);
@@ -79,7 +79,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     @Override
-    protected void redo(){
+    protected void redo() {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);

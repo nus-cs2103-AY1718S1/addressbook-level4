@@ -245,6 +245,9 @@ public class UndoRedoStackTest {
         }
 
         @Override
-        public void undo(){}
+        public void undo() {}
+
+        @Override
+        protected void redo() {}
     }
 }

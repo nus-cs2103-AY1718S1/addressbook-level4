@@ -102,6 +102,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addPerson(int position, ReadOnlyPerson person) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
