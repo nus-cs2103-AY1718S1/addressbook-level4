@@ -59,6 +59,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    public synchronized void sort(){
+//        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+//        indicateAddressBookChanged();
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
