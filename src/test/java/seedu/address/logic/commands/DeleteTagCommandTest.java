@@ -74,7 +74,7 @@ public class DeleteTagCommandTest {
     }
 
     @Test
-    public void equals() throws IllegalValueException {
+    public void equals() throws Exception {
         DeleteTagCommand deleteFirstCommand = prepareCommand("friend");
         DeleteTagCommand deleteSecondCommand = prepareCommand("husband");
 
