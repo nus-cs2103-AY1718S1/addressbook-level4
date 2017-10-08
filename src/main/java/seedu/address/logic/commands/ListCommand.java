@@ -6,14 +6,14 @@ import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.ListingUnit.PHONE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.predicates.UniqueAddressPredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
-
-import java.util.function.Predicate;
 
 
 /**

@@ -1,11 +1,10 @@
 package seedu.address.model.person.predicates;
 
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-
 import java.util.HashSet;
 import java.util.function.Predicate;
 
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone} is unique in the given list.

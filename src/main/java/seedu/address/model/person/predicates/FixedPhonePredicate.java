@@ -1,9 +1,9 @@
 package seedu.address.model.person.predicates;
 
+import java.util.function.Predicate;
+
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.function.Predicate;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone} matches the given phone.
