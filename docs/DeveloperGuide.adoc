@@ -987,18 +987,9 @@ Blacklist
 A list of people who are banned from borrowing
 ....
 
-[[bookmark]]
-Bookmark
-
-....
-An action that enables certain contacts to be displayed on application start-up
-....
-
-
 [appendix]
 == Product Survey
 
-[width="80%"]
 .*Address Book*, reviewed by Deleatha C Jones
 |===
 |Pros |Cons
@@ -1010,7 +1001,6 @@ An action that enables certain contacts to be displayed on application start-up
 |
 |===
 
-[width="80%"]
 .*Address book - Placebook*, reviewed by M Kenneally
 |===
 |Pros |Cons
@@ -1031,7 +1021,6 @@ An action that enables certain contacts to be displayed on application start-up
 |
 |===
 
-[width="80%"]
 .*Address Book and Contacts*, reviewed by Jessica Ryans & Leslie Murray
 |===
 |Pros |Cons
@@ -1043,7 +1032,6 @@ An action that enables certain contacts to be displayed on application start-up
 |Does not have enough fields
 |===
 
-[width="80%"]
 .*Address Book*, reviewed by Becca Malard & Susan Starrett
 |===
 |Pros |Cons
