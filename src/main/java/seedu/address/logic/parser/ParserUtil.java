@@ -90,4 +90,13 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses {@code String tag} into a {@code Tag}.
+     */
+    public static Tag parseTag(String tag) throws IllegalValueException {
+        requireNonNull(tag);
+        Tag parsedTag = new Tag(tag);
+        return parsedTag;
+    }
 }
