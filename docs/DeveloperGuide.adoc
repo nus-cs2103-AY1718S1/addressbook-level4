@@ -779,7 +779,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |security-concerned debt collector |have link:#2FA[2FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+|`* *` |security-concerned debt collector |have link:#2FA[two-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
@@ -1001,7 +1001,7 @@ Progress Bar
 A visual representation that shows a user how far along he/she is in a process
 ....
 
-[[2FA]]
+[[two-FA]]
 2FA
 
 ....
