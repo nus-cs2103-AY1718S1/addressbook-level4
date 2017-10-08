@@ -789,7 +789,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |debt collector |use a file upload feature |upload signed documents to a specific client record in the database
 
-|`*` |debt collector |have a 'add-log' button attached to each client in the database |easily click it whenever I contact the client
+|`*` |debt collector |have a 'add-log' button that generates specific date and time(at the instance of clicking the button) |fill up the call log sheet of a contact without manually typing the exact instance of time
 |=======================================================================
 
 [appendix]
