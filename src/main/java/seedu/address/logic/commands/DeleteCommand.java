@@ -75,4 +75,13 @@ public class DeleteCommand extends UndoableCommand {
                     + "it should not fail now");
         }
     }
+
+    /**
+     * Assign a typical person to delete
+     * Can only be used for JUnit test
+     * @param p the person used to test
+     */
+    public void assignPerson(ReadOnlyPerson p) {
+        personToDelete = p;
+    }
 }

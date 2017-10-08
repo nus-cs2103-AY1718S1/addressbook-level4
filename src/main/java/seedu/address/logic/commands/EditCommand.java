@@ -16,6 +16,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -50,9 +51,9 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
-    private Person editedPerson;
+    private Index index;
+    private EditPersonDescriptor editPersonDescriptor;
+    private ReadOnlyPerson editedPerson;
     private ReadOnlyPerson personToEdit;
 
     /**
@@ -67,6 +68,18 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    /**
+     * Assign original and edited persons directly
+     * Can only be used in test
+     * @param targetPerson Original person
+     * @param updatedPerson Edited person
+     */
+    public EditCommand (ReadOnlyPerson targetPerson, ReadOnlyPerson updatedPerson){
+        this.personToEdit = targetPerson;
+        this.editedPerson = updatedPerson;
+        index = Index.fromOneBased(1);
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -75,8 +88,10 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        if (personToEdit == null && editedPerson == null) {// Distinguish with JUnit tests
+            personToEdit = lastShownList.get(index.getZeroBased());
+            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
