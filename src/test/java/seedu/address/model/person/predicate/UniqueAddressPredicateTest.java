@@ -50,5 +50,4 @@ public class UniqueAddressPredicateTest {
         // Now it is not unique
         assertTrue(predicate.test(BENSON));
     }
-
 }
