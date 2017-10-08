@@ -5,7 +5,7 @@ package seedu.address.logic.commands;
  * Sorts all persons in the address book alphabetically for the user.
  */
 
-public class SortCommand extends UndoableCommand{
+public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
 

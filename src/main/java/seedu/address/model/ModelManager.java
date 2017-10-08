@@ -59,9 +59,8 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    @Override
     public synchronized void sort(){
-//        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-//        indicateAddressBookChanged();
     }
 
     @Override
