@@ -11,7 +11,7 @@ public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons with tag";
+    //public static final String MESSAGE_SUCCESS = "Listed all persons with specified tag";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters and shows list of persons with the specified tag.\n"
             + "Parameters: Existing tag\n"
             + "Example: " + COMMAND_WORD + " friends ";
@@ -25,8 +25,8 @@ public class TagCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override

@@ -3,7 +3,6 @@ package seedu.address.model.tag;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -19,7 +18,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> person.getTags().toString().contains(keyword));
     }
 
     @Override
