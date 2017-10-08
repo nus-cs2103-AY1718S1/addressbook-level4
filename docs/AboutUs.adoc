@@ -20,10 +20,10 @@ Responsibilities: UI
 '''
 
 === Ernest Ong
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[Github]] [<<johndoe#, Portfolio>>]
+image::ernestong.png[width="150", align="left"]
+{empty}[http://github.com/ErnestOYH[Github]] [<<ernestong#, Portfolio>>]
 
-Role: Developer + Deliverables and Deadlines + Scheduling and Tracking +
+Role: Developer
 Responsibilities: Logic
 
 '''
