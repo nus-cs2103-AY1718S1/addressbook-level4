@@ -246,8 +246,13 @@ public class EditCommand extends UndoableCommand {
 
         // state check
         EditCommand e = (EditCommand) other;
-        return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+        if (editPersonDescriptor != null && e.editPersonDescriptor != null) {
+            return index.equals(e.index)
+                    && editPersonDescriptor.equals(e.editPersonDescriptor);
+        } else {
+            return index.equals(e.index)
+                    && attributeValue.equals(e.attributeValue);
+        }
     }
 
     /**
