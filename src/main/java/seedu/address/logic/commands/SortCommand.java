@@ -4,7 +4,7 @@ package seedu.address.logic.commands;
 /**
  * Lists all persons in the address book to the user.
  */
-public class SortCommand extends Command {
+public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
 
@@ -22,7 +22,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult executeUndoableCommand() {
         model.sortList(toSort);
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSort));
     }

@@ -31,7 +31,7 @@ public class SortCommandParserTest {
         // leading and trailing whitespaces
         assertParseSuccess(parser, "   phone   ", new SortCommand("phone"));
 
-        // different cases
+        // upper and lower cases
         assertParseSuccess(parser, "pHoNe", new SortCommand("phone"));
 
         // sort for name
