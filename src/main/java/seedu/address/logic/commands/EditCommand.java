@@ -16,7 +16,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -55,6 +54,7 @@ public class EditCommand extends UndoableCommand {
     private EditPersonDescriptor editPersonDescriptor;
     private ReadOnlyPerson editedPerson;
     private ReadOnlyPerson personToEdit;
+    private Set<Tag> newTags;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -74,7 +74,7 @@ public class EditCommand extends UndoableCommand {
      * @param targetPerson Original person
      * @param updatedPerson Edited person
      */
-    public EditCommand (ReadOnlyPerson targetPerson, ReadOnlyPerson updatedPerson){
+    public EditCommand (ReadOnlyPerson targetPerson, ReadOnlyPerson updatedPerson) {
         this.personToEdit = targetPerson;
         this.editedPerson = updatedPerson;
         index = Index.fromOneBased(1);
@@ -88,12 +88,13 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (personToEdit == null && editedPerson == null) {// Distinguish with JUnit tests
+        if (personToEdit == null && editedPerson == null) { // Distinguish with JUnit tests
             personToEdit = lastShownList.get(index.getZeroBased());
             editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
         }
 
         try {
+            newTags = model.extractNewTag(editedPerson);
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -125,6 +126,7 @@ public class EditCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.updatePerson(editedPerson, personToEdit);
+            model.removeTags(newTags);
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");

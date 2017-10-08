@@ -154,6 +154,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    public void separateMasterTagListWith(Set<Tag> tagsToRemove) {
+        for (Tag tag : tagsToRemove) {
+            tags.remove(tag);
+        }
+    }
+
+    /**
+     * A Javadoc method.
+     */
+    public Set<Tag> extractNewTags(ReadOnlyPerson person) {
+        Set<Tag> personTags = person.getTags();
+        Set<Tag> newTags = new HashSet<Tag>();
+
+        for (Tag tag : personTags) {
+            if (!tags.contains(tag)) {
+                newTags.add(tag);
+            }
+        }
+
+        return newTags;
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -192,6 +214,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public boolean equals(Object other) {
+        boolean t1 = this.persons.equals(((AddressBook) other).persons);
+        boolean t2 = this.tags.equalsOrderInsensitive(((AddressBook) other).tags);
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)

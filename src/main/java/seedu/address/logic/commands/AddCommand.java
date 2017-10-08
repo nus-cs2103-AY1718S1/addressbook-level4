@@ -8,11 +8,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Set;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Adds a person to the address book.
@@ -40,6 +43,7 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person toAdd;
+    private Set<Tag> newTags;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
@@ -52,6 +56,7 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
+            newTags = model.extractNewTag(toAdd);
             model.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
@@ -72,6 +77,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.deletePerson(toAdd);
+            model.removeTags(newTags);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
