@@ -52,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
         HashSet<Address> set = new HashSet<>();
 
         ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         for (ReadOnlyPerson p : personLst) {
             if (!set.contains(p.getAddress())) {
                 set.add(p.getAddress());
@@ -65,6 +66,7 @@ public class ModelManager extends ComponentManager implements Model {
         HashSet<Email> set = new HashSet<>();
 
         ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         for (ReadOnlyPerson p : personLst) {
             if (!set.contains(p.getEmail())) {
                 set.add(p.getEmail());
@@ -78,6 +80,7 @@ public class ModelManager extends ComponentManager implements Model {
         HashSet<Phone> set = new HashSet<>();
 
         ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         for (ReadOnlyPerson p : personLst) {
             if (!set.contains(p.getPhone())) {
                 set.add(p.getPhone());
