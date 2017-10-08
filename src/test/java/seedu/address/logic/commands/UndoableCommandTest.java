@@ -63,5 +63,8 @@ public class UndoableCommandTest {
             }
             return new CommandResult("");
         }
+
+        @Override
+        public void undo(){}
     }
 }

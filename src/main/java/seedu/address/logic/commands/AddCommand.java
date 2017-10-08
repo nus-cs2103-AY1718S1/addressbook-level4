@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds a person to the address book.
@@ -63,5 +64,28 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
+    }
+
+    @Override
+    protected void undo(){
+        requireNonNull(model);
+        try {
+            model.deletePerson(toAdd);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
+        //model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    protected void redo(){
+        requireNonNull(model);
+        try {
+            model.addPerson(toAdd);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
     }
 }

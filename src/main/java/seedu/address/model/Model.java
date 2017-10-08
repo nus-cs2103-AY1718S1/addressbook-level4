@@ -27,6 +27,12 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
+     * Adds a person to the specific position in list.
+     * Only used to undo deletion
+     */
+    void addPerson(int position, ReadOnlyPerson person);
+
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to

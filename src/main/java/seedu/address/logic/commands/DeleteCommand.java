@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,6 +26,7 @@ public class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     private final Index targetIndex;
+    private ReadOnlyPerson personToDelete;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -38,7 +42,7 @@ public class DeleteCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
             model.deletePerson(personToDelete);
@@ -54,5 +58,22 @@ public class DeleteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+    }
+
+    @Override
+    protected void undo(){
+        requireAllNonNull(model, personToDelete);
+        model.addPerson(targetIndex.getZeroBased(), personToDelete);
+    }
+
+    @Override
+    protected void redo(){
+        requireAllNonNull(model, personToDelete);
+        try {
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
     }
 }

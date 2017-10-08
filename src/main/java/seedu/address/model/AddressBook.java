@@ -93,6 +93,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to the specific position in list.
+     * Only used to undo deletion
+     */
+    public void addPerson(int position, ReadOnlyPerson p) {
+        Person newPerson = new Person(p);
+        syncMasterTagListWith(newPerson);
+        persons.add(position, newPerson);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *

@@ -29,30 +29,16 @@ public abstract class UndoableCommand extends Command {
      * was executed and updates the filtered person list to
      * show all persons.
      */
-    protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
+    protected abstract void undo();
 
     /**
      * Executes the command and updates the filtered person
      * list to show all persons.
      */
-    protected final void redo() {
-        requireNonNull(model);
-        try {
-            executeUndoableCommand();
-        } catch (CommandException ce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
+    protected abstract void redo();
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
         return executeUndoableCommand();
     }
 }

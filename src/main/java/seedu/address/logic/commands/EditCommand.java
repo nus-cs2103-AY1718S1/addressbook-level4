@@ -52,6 +52,8 @@ public class EditCommand extends UndoableCommand {
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private Person editedPerson;
+    private ReadOnlyPerson personToEdit;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -73,8 +75,8 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -102,6 +104,34 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+    }
+
+    @Override
+    protected void undo(){
+        try {
+            model.updatePerson(editedPerson, personToEdit);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    protected void redo(){
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
