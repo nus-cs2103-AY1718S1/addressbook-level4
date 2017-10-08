@@ -11,11 +11,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.FixedAddressPredicate;
-import seedu.address.model.person.FixedEmailPredicate;
-import seedu.address.model.person.FixedPhonePredicate;
+import seedu.address.model.person.predicates.FixedAddressPredicate;
+import seedu.address.model.person.predicates.FixedEmailPredicate;
+import seedu.address.model.person.predicates.FixedPhonePredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.ShowSpecifiedPersonPredicate;
+import seedu.address.model.person.predicates.ShowSpecifiedPersonPredicate;
 
 
 /**

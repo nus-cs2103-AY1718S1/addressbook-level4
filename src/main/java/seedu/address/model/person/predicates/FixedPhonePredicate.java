@@ -1,4 +1,7 @@
-package seedu.address.model.person;
+package seedu.address.model.person.predicates;
+
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
 
 import java.util.function.Predicate;
 

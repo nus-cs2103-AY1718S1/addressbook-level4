@@ -1,4 +1,7 @@
-package seedu.address.model.person;
+package seedu.address.model.person.predicates;
+
+import seedu.address.model.person.Email;
+import seedu.address.model.person.ReadOnlyPerson;
 
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -7,7 +10,7 @@ import java.util.function.Predicate;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Email} is unique in the given list.
  */
-public class UniqueEmailPredicate implements Predicate<ReadOnlyPerson> {
+public class UniqueEmailPredicate implements UniqueAttributePredicate<ReadOnlyPerson> {
     private final HashSet<Email> uniqueEmailSet;
 
     public UniqueEmailPredicate(HashSet<Email> emailSet) {

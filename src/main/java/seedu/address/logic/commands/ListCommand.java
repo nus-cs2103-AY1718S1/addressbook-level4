@@ -9,9 +9,10 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.UniqueAddressPredicate;
-import seedu.address.model.person.UniqueEmailPredicate;
-import seedu.address.model.person.UniquePhonePredicate;
+import seedu.address.model.person.predicates.UniqueAddressPredicate;
+import seedu.address.model.person.predicates.UniqueAttributePredicate;
+import seedu.address.model.person.predicates.UniqueEmailPredicate;
+import seedu.address.model.person.predicates.UniquePhonePredicate;
 
 
 /**
@@ -55,28 +56,31 @@ public class ListCommand extends Command {
         case ATTRIBUTE_ADDRESS:
             ListingUnit.setCurrentListingUnit(ADDRESS);
             UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-            model.updateFilteredPersonList(addressPredicate);
-            EventsCenter.getInstance().post(new ChangeListingUnitEvent());
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+            return executeListByAttribute(addressPredicate);
 
         case ATTRIBUTE_EMAIL:
             ListingUnit.setCurrentListingUnit(EMAIL);
             UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
-            model.updateFilteredPersonList(emailPredicate);
-            EventsCenter.getInstance().post(new ChangeListingUnitEvent());
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+            return executeListByAttribute(emailPredicate);
 
         case ATTRIBUTE_PHONE:
             ListingUnit.setCurrentListingUnit(PHONE);
             UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
-            model.updateFilteredPersonList(phonePredicate);
-            EventsCenter.getInstance().post(new ChangeListingUnitEvent());
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+            return executeListByAttribute(phonePredicate);
 
         default:
             ListingUnit.setCurrentListingUnit(PERSON);
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
         }
+    }
+
+    /**
+     * execute the list command with different attributes.
+     */
+    private CommandResult executeListByAttribute(UniqueAttributePredicate predicate) {
+        model.updateFilteredPersonList(predicate);
+        EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+        return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
     }
 }
