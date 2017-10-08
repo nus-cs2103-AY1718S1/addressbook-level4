@@ -61,7 +61,6 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         /* Case: keyword is wrong -> rejected */
         assertCommandFailure("sort home address", MESSAGE_INVALID_SORT_COMMAND_FORMAT);
 
-
     }
 
     /**
