@@ -27,9 +27,10 @@ public class ToggleTagColorCommand extends Command {
     public CommandResult execute() throws CommandException {
         if (toSet) {
             GuiSettings.onTagColored();
-        } else
+        } else {
             GuiSettings.offTagColored();
-        logger.fine("Tag color set to " + (toSet? "on": "off"));
-        return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on": "off"));
+        }
+        logger.fine("Tag color set to " + (toSet ? "on" : "off"));
+        return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on" : "off"));
     }
 }
