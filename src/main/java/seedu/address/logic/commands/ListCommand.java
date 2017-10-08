@@ -6,6 +6,7 @@ import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.ListingUnit.PHONE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
@@ -83,5 +84,23 @@ public class ListCommand extends Command {
         model.updateFilteredPersonList(predicate);
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ListCommand)) {
+            return false;
+        }
+
+        if (other == this) {
+            return true;
+        }
+
+        ListCommand o = (ListCommand)other;
+        if (attName != null && o.attName != null) {
+            return attName.equals(o.attName);
+        }
+
+        return false;
     }
 }
