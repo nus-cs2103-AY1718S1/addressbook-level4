@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -71,6 +72,20 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addPersons(Collection<ReadOnlyPerson> persons) {
+        for (ReadOnlyPerson person : persons) {
+            try {
+                addressBook.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                logger.info("Person already in address book: " + person.toString());
+                continue;
+            }
+        }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
