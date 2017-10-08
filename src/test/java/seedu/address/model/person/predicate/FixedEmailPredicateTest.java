@@ -50,16 +50,13 @@ public class FixedEmailPredicateTest {
     @Test
     public void test_isTheEmailGiven_returnsTrue() {
 
-        Email email = null;
-
         try {
-            email = new Email("alice@gmail.com");
+            Email email = new Email("alice@gmail.com");
+            FixedEmailPredicate predicate = new FixedEmailPredicate(email);
+            assertTrue(predicate.test(new PersonBuilder().build()));
         } catch (IllegalValueException e) {
             assert false : "The email shouldn't invalid";
         }
-
-        FixedEmailPredicate predicate = new FixedEmailPredicate(email);
-        assertTrue(predicate.test(new PersonBuilder().build()));
 
     }
 

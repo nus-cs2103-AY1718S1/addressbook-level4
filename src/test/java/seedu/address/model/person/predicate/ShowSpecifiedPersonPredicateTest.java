@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
-
 import org.junit.Test;
 
 import seedu.address.model.person.predicates.ShowSpecifiedPersonPredicate;

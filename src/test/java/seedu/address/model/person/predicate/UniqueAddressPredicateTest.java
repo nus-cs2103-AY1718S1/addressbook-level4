@@ -6,7 +6,6 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-
 import org.junit.Test;
 
 import seedu.address.model.Model;

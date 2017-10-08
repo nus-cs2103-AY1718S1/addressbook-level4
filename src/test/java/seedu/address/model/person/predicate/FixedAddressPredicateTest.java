@@ -66,15 +66,12 @@ public class FixedAddressPredicateTest {
     @Test
     public void test_isTheAddressGiven_returnsFalse() {
 
-        Address address = null;
-
         try {
-            address = new Address("124, Jurong West Ave 6, #08-111");
+            Address address = new Address("124, Jurong West Ave 6, #08-111");
+            FixedAddressPredicate predicate = new FixedAddressPredicate(address);
+            assertFalse(predicate.test(new PersonBuilder().build()));
         } catch (IllegalValueException e) {
             assert false : "The address shouldn't invalid";
         }
-
-        FixedAddressPredicate predicate = new FixedAddressPredicate(address);
-        assertFalse(predicate.test(new PersonBuilder().build()));
     }
 }

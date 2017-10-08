@@ -50,16 +50,13 @@ public class FixedPhonePredicateTest {
     @Test
     public void test_isThePhoneGiven_returnsTrue() {
 
-        Phone Phone = null;
-
         try {
-            Phone = new Phone("85355255");
+            Phone Phone = new Phone("85355255");
+            FixedPhonePredicate predicate = new FixedPhonePredicate(Phone);
+            assertTrue(predicate.test(new PersonBuilder().build()));
         } catch (IllegalValueException e) {
             assert false : "The phone shouldn't invalid";
         }
-
-        FixedPhonePredicate predicate = new FixedPhonePredicate(Phone);
-        assertTrue(predicate.test(new PersonBuilder().build()));
 
     }
 

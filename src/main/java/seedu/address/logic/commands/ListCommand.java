@@ -6,7 +6,6 @@ import static seedu.address.model.ListingUnit.PERSON;
 import static seedu.address.model.ListingUnit.PHONE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
@@ -96,7 +95,7 @@ public class ListCommand extends Command {
             return true;
         }
 
-        ListCommand o = (ListCommand)other;
+        ListCommand o = (ListCommand) other;
         if (attName != null && o.attName != null) {
             return attName.equals(o.attName);
         }
