@@ -1,13 +1,9 @@
 package seedu.address.commons.core;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Observable;
+
 
 /**
  * A Serializable class that contains the GUI settings.

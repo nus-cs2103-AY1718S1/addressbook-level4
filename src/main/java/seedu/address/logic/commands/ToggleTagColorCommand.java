@@ -6,7 +6,6 @@ import seedu.address.commons.core.GuiSettings;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.ui.MainWindow;
 
 /**
  *  Changes tag color mode in address book
@@ -33,6 +32,6 @@ public class ToggleTagColorCommand extends Command {
 
         logger.fine("Tag color set to " + (toSet? "on": "off"));
         
-        return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on" : "off"));
+        return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on": "off"));
     }
 }

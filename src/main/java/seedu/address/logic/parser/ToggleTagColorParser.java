@@ -3,13 +3,17 @@ package seedu.address.logic.parser;
 import seedu.address.logic.commands.ToggleTagColorCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parse input for tagcolor command
+ */
 public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
 
     @Override
     public ToggleTagColorCommand parse(String userInput) throws ParseException {
             boolean isOn;
-            userInput = userInput.trim();
-        switch (userInput) {
+            String cleanUserInput;
+            cleanUserInput = userInput.trim();
+        switch (cleanUserInput) {
             case "on":
                 isOn = true;
                 break;

@@ -25,8 +25,6 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
-    private GuiSettings settings;
-
     @FXML
     private ListView<PersonCard> personListView;
 
