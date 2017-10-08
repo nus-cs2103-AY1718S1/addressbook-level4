@@ -721,7 +721,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget my way around the App
 
 |`* * *` |user |add a new person |
 
@@ -765,11 +765,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |clumsy user |have automatic backups |not worry about accidentally deleting things
 
-|`* *` |debt collector |have the ability to impose different periods of ban on my blacklisted clients |have clients automatically transferred out of that list after their ban
+|`* *` |debt collector |have the ability to impose different periods of link:#ban[ban] on my blacklisted clients |have clients automatically transferred out of that list after their ban
 
 |`* *` |debt collector |have the ability to perform validity checks on clients' personal information (HP,Email address) |verify that their data is genuine
 
-|`* *` |meticulous debt collector |see my client's progress bar which indicates their debt & the time remaining to pay it off |have a better visual representation of data
+|`* *` |meticulous debt collector |see my client's link:#progress-bar[progress-bar] which indicates their debt & the time remaining to pay it off |have a better visual representation of data
 
 |`* *` |new user |have a Help command that displays screenshots of positive examples |understand the commands more visually
 
@@ -779,17 +779,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |security-concerned debt collector |have 2FA authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+|`* *` |security-concerned debt collector |have link:#2FA[2FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
 |`*` |debt collector |create custom fields |store additional information for some contacts
 
-|`*` |debt collector |randomly generate a contact from the cleared list(clients who have paid their debts) |choose to chat up a random contact to talk them into getting a loan
+|`*` |debt collector |randomly generate a contact from the link:#cleared[cleared] list(clients who have paid their debts) |choose to chat up a random contact to talk them into getting a loan
 
 |`*` |debt collector |use a file upload feature |upload signed documents to a specific client record in the database
 
-|`*` |debt collector |have a 'add-log' button that generates specific date and time(at the instance of clicking the button) |fill up the call log sheet of a contact without manually typing the exact instance of time
+|`*` |debt collector |have a 'add-log' button that generates specific date and time(at the instance of clicking the button) |fill up the call link:#log[log] sheet of a contact without manually typing the exact instance of time
 |=======================================================================
 
 [appendix]
@@ -985,6 +985,41 @@ Blacklist
 
 ....
 A list of people who are banned from borrowing
+....
+
+[[ban]]
+Ban
+
+....
+A period of prohibition in which the person is not allowed to loan money
+....
+
+[[progress-bar]]
+Progress Bar
+
+....
+A visual representation that shows a user how far along he/she is in a process
+....
+
+[[2FA]]
+2FA Authentication
+
+....
+An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also something that only, and only, that user has on them, i.e. a piece of information only they should know or have immediately to hand - such as a physical token
+.....
+
+[[log]]
+Log
+
+....
+An official record of events
+....
+
+[[cleared]]
+Cleared
+
+....
+Refers to the clients that have paid off all their debts (in this context)
 ....
 
 [appendix]
