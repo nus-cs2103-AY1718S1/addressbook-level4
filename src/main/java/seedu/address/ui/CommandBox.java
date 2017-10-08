@@ -23,6 +23,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
+    private static final double MULTIPLIER_FACTOR = 1.25;
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -113,14 +114,6 @@ public class CommandBox extends UiPart<Region> {
         commandTextFieldKeyword.setVisible(false);
         commandTextFieldKeyword.toBack();
         commandTextFieldKeyword.clear();
-        commandTextFieldKeyword.setStyle("-fx-background-color: transparent #383838 transparent #383838;\n"
-                + "    -fx-background-insets: 0;\n"
-                + "    -fx-border-color: #383838 #383838 #ffffff #383838;\n"
-                + "    -fx-border-insets: 0;\n"
-                + "    -fx-border-width: 1;\n"
-                + "    -fx-font-family: \"Segoe UI Light\";\n"
-                + "    -fx-font-size: 13pt;\n"
-                + "    -fx-text-fill: white;");
     }
 
 
@@ -132,12 +125,11 @@ public class CommandBox extends UiPart<Region> {
         commandTextFieldKeyword.setVisible(true);
         Text commandText = new Text(commandKeyword);
         commandText.setFont(commandTextField.getFont());
-        final double width = commandText.getLayoutBounds().getWidth() + 17;
+        final double width = commandText.getLayoutBounds().getWidth() * MULTIPLIER_FACTOR;
         commandTextFieldKeyword.setText(commandKeyword);
         String color = keywordColorMap.get(commandKeyword);
-        commandTextFieldKeyword.setStyle(" -fx-control-inner-background: " + color + ";\n"
-                + "    -fx-font-size: 12pt;\n"
-                + "    -fx-text-fill: red;");
+        commandTextFieldKeyword.setStyle("-fx-background-color: " + color + ";\n"
+                + " -fx-text-fill: red;");
         commandTextFieldKeyword.setPrefWidth(width);
         commandTextFieldKeyword.toFront();
     }
