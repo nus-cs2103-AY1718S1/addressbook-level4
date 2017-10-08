@@ -14,6 +14,8 @@ import seedu.address.model.person.predicates.UniqueAttributePredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
 
+import java.util.function.Predicate;
+
 
 /**
  * Lists all persons in the address book to the user.
@@ -78,7 +80,7 @@ public class ListCommand extends Command {
     /**
      * execute the list command with different attributes.
      */
-    private CommandResult executeListByAttribute(UniqueAttributePredicate predicate) {
+    private CommandResult executeListByAttribute(Predicate predicate) {
         model.updateFilteredPersonList(predicate);
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, attName));

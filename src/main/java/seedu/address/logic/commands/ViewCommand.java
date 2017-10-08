@@ -31,7 +31,10 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "persons founded with %1$s";
+    public static final String MESSAGE_VIEW_ADDRESS_SUCCESS = "person(s) founded with address %1$s";
+    public static final String MESSAGE_VIEW_EMAIL_SUCCESS = "person(s) founded with email %1$s";
+    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "person founded with %1$s";
+    public static final String MESSAGE_VIEW_PHONE_SUCCESS = "person(s) founded phone number with %1$s";
 
     private final Index targetIndex;
 
@@ -59,17 +62,17 @@ public class ViewCommand extends Command {
 
         case ADDRESS:
             predicate = new FixedAddressPredicate(toView.getAddress());
-            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getAddress());
+            resultMessage = String.format(MESSAGE_VIEW_ADDRESS_SUCCESS, toView.getAddress());
             break;
 
         case EMAIL:
             predicate = new FixedEmailPredicate(toView.getEmail());
-            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getEmail());
+            resultMessage = String.format(MESSAGE_VIEW_EMAIL_SUCCESS, toView.getEmail());
             break;
 
         case PHONE:
             predicate = new FixedPhonePredicate(toView.getPhone());
-            resultMessage = String.format(MESSAGE_VIEW_PERSON_SUCCESS, toView.getPhone());
+            resultMessage = String.format(MESSAGE_VIEW_PHONE_SUCCESS, toView.getPhone());
             break;
 
         default:
@@ -81,8 +84,6 @@ public class ViewCommand extends Command {
         ListingUnit.setCurrentListingUnit(PERSON);
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
         return new CommandResult(resultMessage);
-
-
     }
 
     @Override

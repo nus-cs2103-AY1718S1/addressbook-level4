@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Email} is unique in the given list.
  */
-public class UniqueEmailPredicate implements UniqueAttributePredicate<ReadOnlyPerson> {
+public class UniqueEmailPredicate implements Predicate<ReadOnlyPerson> {
     private final HashSet<Email> uniqueEmailSet;
 
     public UniqueEmailPredicate(HashSet<Email> emailSet) {
