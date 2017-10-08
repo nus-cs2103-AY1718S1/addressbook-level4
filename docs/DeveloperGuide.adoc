@@ -911,6 +911,8 @@ Use case resumes at step 6.
    information using a password
 .  Quality requirements: Should be simple enough for a novice to utilise and navigate
 .  Privacy requirements: Data should only be read and modified by authorized party
+.  Maintenance requirements: Should be easily maintained by other programmers
+
 
 [appendix]
 == Glossary
