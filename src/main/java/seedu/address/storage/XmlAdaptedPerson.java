@@ -30,7 +30,7 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
-    @XmlElement
+    @XmlElement(required = true)
     private String birthdate;
 
     @XmlElement
