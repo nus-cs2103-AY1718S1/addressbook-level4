@@ -67,9 +67,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
-        //model.addPerson(toAdd);
-        //model.deletePerson(toAdd);
-
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
