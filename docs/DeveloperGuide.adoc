@@ -743,7 +743,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |have a list of people who have cleared their debts |refer to their recorded info when they require my services again
 
-|`* * *` |debt collector |have link:#critical[critical] lists |quickly view which debtors require immediate attention
+|`* * *` |debt collector |have link:#critical[critical] lists |quickly view which debtors I have to chase for repayment soon
 
 |`* * *` |debt collector |have a link:#blacklist[blacklist] |know who not to lend money to
 
@@ -977,7 +977,7 @@ A contact detail that is not meant to be shared with others
 Critical
 
 ....
-Requiring immediate attention
+Requiring immediate attention of debt collectors
 ....
 
 [[blacklist]]
