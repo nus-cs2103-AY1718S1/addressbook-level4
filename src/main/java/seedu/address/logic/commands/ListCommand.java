@@ -10,7 +10,6 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueAttributePredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
 

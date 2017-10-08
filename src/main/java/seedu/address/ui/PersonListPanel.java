@@ -21,19 +21,19 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Panel containing the list of info.
  */
-public class InfoListPanel extends UiPart<Region> {
-    private static final String FXML = "InfoListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(InfoListPanel.class);
+public class PersonListPanel extends UiPart<Region> {
+    private static final String FXML = "PersonListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
-    private ObservableList<ReadOnlyPerson> infoList;
+    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
-    private ListView<PersonCard> infoListView;
+    private ListView<PersonCard> personListView;
 
 
-    public InfoListPanel(ObservableList<ReadOnlyPerson> infoList) {
+    public PersonListPanel(ObservableList<ReadOnlyPerson> infoList) {
         super(FXML);
-        this.infoList = infoList;
+        this.personList = infoList;
         setConnections(infoList);
         registerAsAnEventHandler(this);
     }
@@ -43,15 +43,15 @@ public class InfoListPanel extends UiPart<Region> {
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 infoList, (person) -> new PersonCard(person, infoList.indexOf(person) + 1));
 
-        infoListView.setItems(mappedList);
-        infoListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setItems(mappedList);
+        personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
 
     }
 
 
     private void setEventHandlerForSelectionChangeEvent() {
-        infoListView.getSelectionModel().selectedItemProperty()
+        personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
@@ -65,8 +65,8 @@ public class InfoListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            infoListView.scrollTo(index);
-            infoListView.getSelectionModel().clearAndSelect(index);
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
@@ -79,7 +79,7 @@ public class InfoListPanel extends UiPart<Region> {
     @Subscribe
     private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(infoList);
+        setConnections(personList);
     }
 
     /**
