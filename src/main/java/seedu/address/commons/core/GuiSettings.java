@@ -1,8 +1,13 @@
 package seedu.address.commons.core;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Observable;
 
 /**
  * A Serializable class that contains the GUI settings.
@@ -11,6 +16,8 @@ public class GuiSettings implements Serializable {
 
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
+
+    private static boolean tagColored;
 
     private Double windowWidth;
     private Double windowHeight;
@@ -38,6 +45,18 @@ public class GuiSettings implements Serializable {
 
     public Point getWindowCoordinates() {
         return windowCoordinates;
+    }
+
+    public static boolean getTagColored() {
+        return tagColored;
+    }
+
+    public static void offTagColored() {
+        tagColored = false;
+    }
+
+    public static void onTagColored() {
+        tagColored = true;
     }
 
     @Override
