@@ -64,8 +64,9 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String)} except that the result box displays
-     * {@code expectedResultMessage} and the model related components equal to {@code expectedModel}.
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays the success message of executing sort command
+     * and the model related components equal to the current model.
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
