@@ -128,19 +128,20 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Alias: `d`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX [OTHER INDICES]`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the people at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* The indices indicated must be different from each other
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 1 2` +
+Deletes the 1st and 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
