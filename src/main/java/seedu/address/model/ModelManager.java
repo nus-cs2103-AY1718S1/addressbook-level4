@@ -20,7 +20,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
@@ -74,13 +73,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Deletes the tag from every person in the address book */
     public void deleteTag(Tag target) throws TagNotFoundException {
-        System.out.println("Step 2");
+
+        int tagsFound = 0;
         Iterator it = addressBook.getPersonList().iterator();
         while (it.hasNext()) {
             Person oldPerson = (Person) it.next();
             Person newPerson = new Person(oldPerson);
             Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-            newTags.remove(target);
+            if (newTags.contains(target)) {
+                newTags.remove(target);
+                tagsFound++;
+            }
             newPerson.setTags(newTags);
 
             try {
@@ -90,6 +93,10 @@ public class ModelManager extends ComponentManager implements Model {
             } catch (PersonNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (tagsFound == 0) {
+            throw new TagNotFoundException();
         }
 
         indicateAddressBookChanged();

@@ -1,9 +1,6 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -31,14 +28,12 @@ public class DeleteTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         Tag tagToDelete = targetTag;
-        System.out.println("Step 1");
+
         try {
             model.deleteTag(tagToDelete);
         } catch (TagNotFoundException tnfe) {
-            assert false : "The target tag cannot be missing";
+            throw new CommandException(MESSAGE_USAGE);
         }
-
-        System.out.println("Step 4");
 
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, tagToDelete));
     }
