@@ -4,8 +4,6 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -77,8 +75,8 @@ public class DeleteTagCommandTest {
 
     @Test
     public void equals() throws IllegalValueException {
-        DeleteTagCommand deleteFirstCommand = new DeleteTagCommand(TAG_DESC_FRIEND);
-        DeleteTagCommand deleteSecondCommand = new DeleteTagCommand(TAG_DESC_HUSBAND);
+        DeleteTagCommand deleteFirstCommand = prepareCommand("friend");
+        DeleteTagCommand deleteSecondCommand = prepareCommand("husband");
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
