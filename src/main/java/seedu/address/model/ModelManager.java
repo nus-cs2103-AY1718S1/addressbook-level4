@@ -3,6 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,10 +15,12 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
@@ -69,7 +74,24 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Deletes the tag from every person in the address book */
     public void deleteTag(Tag target) throws TagNotFoundException {
-        addressBook.removeTag(target);
+        System.out.println("Step 2");
+        Iterator it = addressBook.getPersonList().iterator();
+        while (it.hasNext()) {
+            Person oldPerson = (Person) it.next();
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+            newTags.remove(target);
+            newPerson.setTags(newTags);
+
+            try {
+                addressBook.updatePerson(oldPerson, newPerson);
+            } catch (DuplicatePersonException e) {
+                e.printStackTrace();
+            } catch (PersonNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
         indicateAddressBookChanged();
     }
 

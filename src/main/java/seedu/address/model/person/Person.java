@@ -111,6 +111,10 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
+    public Set<Tag> getModTags() {
+        return tags.get().toSet();
+    }
+
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -140,12 +144,4 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
-    /**
-     * Removes the specified tag from this Person's tag set
-     */
-    public void removeTag(Tag target) {
-        Set<Tag> tagsToUpdate = this.getTags();
-        tagsToUpdate.remove(target);
-        this.setTags(tagsToUpdate);
-    }
 }

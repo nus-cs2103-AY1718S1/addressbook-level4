@@ -16,7 +16,7 @@ public class DeleteTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the tag from all contacts in the address book.\n"
-            + "Parameters: Tag name)\n"
+            + "Parameters: Tag name\n"
             + "Example: " + COMMAND_WORD + " friends";
 
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Deleted Tag: %1$s";
@@ -30,16 +30,15 @@ public class DeleteTagCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-
         Tag tagToDelete = targetTag;
-
+        System.out.println("Step 1");
         try {
             model.deleteTag(tagToDelete);
         } catch (TagNotFoundException tnfe) {
             assert false : "The target tag cannot be missing";
         }
+
+        System.out.println("Step 4");
 
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, tagToDelete));
     }
