@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
@@ -77,8 +78,10 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            initializeColorForTag(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorFromTag(tag.tagName));
+            if (GuiSettings.getTagColored()) {
+                initializeColorForTag(tag.tagName);
+                tagLabel.setStyle("-fx-background-color: " + getColorFromTag(tag.tagName));
+            }
             tags.getChildren().add(tagLabel);
         });
     }
