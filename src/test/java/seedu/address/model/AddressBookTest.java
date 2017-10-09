@@ -73,7 +73,7 @@ public class AddressBookTest {
     public void testHashCodeFalse() {
         int addressBookAHash = new AddressBook().hashCode();
         int addressBookBHash = new AddressBook().hashCode();
-        assertEquals(addressBookAHash,addressBookBHash);
+        assertEquals(addressBookAHash, addressBookBHash);
     }
 
     /**
