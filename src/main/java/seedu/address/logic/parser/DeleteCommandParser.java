@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -31,12 +30,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
             }
         } else {
-
-            StringTokenizer defaultTokenizer = new StringTokenizer(args);
+            String[] tokens = (args.trim()).split(" ");
             List<Index> indexes = new ArrayList<>();
-            while (defaultTokenizer.hasMoreTokens()) {
+            for (String token : tokens) {
                 try {
-                    indexes.add(ParserUtil.parseIndex(defaultTokenizer.nextToken()));
+                    indexes.add(ParserUtil.parseIndex(token));
                 } catch (IllegalValueException ive) {
                     throw new ParseException(
                             String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
