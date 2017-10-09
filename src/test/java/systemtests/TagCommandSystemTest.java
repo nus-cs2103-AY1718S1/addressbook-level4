@@ -8,9 +8,6 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_OWESMONEY;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -41,7 +38,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-         /* Case: undo previous tag command -> rejected */
+        /* Case: undo previous tag command -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
@@ -51,7 +48,7 @@ public class TagCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-          /* Case: find persons with same tags in address book after deleting 1 of the person -> 1 person found */
+        /* Case: find persons with same tags in address book after deleting 1 of the person -> 1 person found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
         assert !getModel().getAddressBook().getPersonList().contains(BENSON);
         command = TagCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_OWESMONEY;
