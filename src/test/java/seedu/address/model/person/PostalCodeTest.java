@@ -7,6 +7,7 @@ import org.junit.Test;
 
 public class PostalCodeTest {
 
+    //@@author khooroko
     @Test
     public void isValidPostalCode() {
         // invalid postal codes
