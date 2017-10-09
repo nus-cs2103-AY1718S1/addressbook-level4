@@ -783,8 +783,14 @@ Use case ends.
 [none]
 * 2a. The file does not exist.
 +
-[none]
 ** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The persons' particulars format are invalid.
++
+** 2b1. AddressBook shows an error message.
 +
 Use case ends.
 
