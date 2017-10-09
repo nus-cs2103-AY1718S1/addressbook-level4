@@ -9,9 +9,12 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.xml.crypto.Data;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -24,8 +27,12 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
 
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
+
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
@@ -46,6 +53,19 @@ public class StorageManagerTest {
     public void testPrefFilePath() {
         assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
     }
+
+    @Test
+	public void read_notXmlFormat_exceptionThrown() throws DataConversionException, IOException {
+
+		// thrown.expect(Exception.class);
+		storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"), new JsonUserPrefsStorage("random.json"));
+		Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
+				.readAddressBook(storageManager.getBackupStorageFilePath());
+		assertFalse(backupAddressBookOptional.isPresent());
+        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
+         * That means you should not have more than one exception test in one method
+         */
+	}
 
     @Test
     public void backupAddressBook() throws Exception {
