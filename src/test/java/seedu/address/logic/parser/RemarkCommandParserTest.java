@@ -16,7 +16,7 @@ public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 
     @Test
-    public void parse_emptyStringInput_success() {
+    public void parseEmptyStringInputSuccess() {
 
 
         //Define user inputs
@@ -36,7 +36,7 @@ public class RemarkCommandParserTest {
     }
 
     @Test
-    public void parse_filledStringInput_success() {
+    public void parseFilledStringInputSuccess() {
 
 
         //Define user inputs
@@ -56,7 +56,7 @@ public class RemarkCommandParserTest {
     }
 
     @Test
-    public void parse_noIndexInput_failure() {
+    public void parseNoIndexInputFailure() {
 
         final String emptyRemark = "I love Coffee";
         String userInput = PREFIX_REMARK.toString() + emptyRemark;
@@ -67,7 +67,7 @@ public class RemarkCommandParserTest {
     }
 
     @Test
-    public void parse_noPrefixInput_failure() {
+    public void parseNoPrefixInputFailure() {
 
         Index thisIndex = INDEX_FIRST_PERSON;
         String userInput = thisIndex.getOneBased() + " ";

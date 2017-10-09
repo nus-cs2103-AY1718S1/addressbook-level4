@@ -137,7 +137,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
+    public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
         //Create RemarkCommand up for testing
         String remark = "Dummy";
         Index index = INDEX_FIRST_PERSON;

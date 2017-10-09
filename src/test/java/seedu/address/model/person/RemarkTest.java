@@ -21,12 +21,12 @@ public class RemarkTest {
 
         assertTrue(emptyRemark.toString().equals(""));
         assertFalse(emptyRemark.toString().equals(0));
-        assertFalse(emptyRemark.toString().equals(null));
+        assertFalse(emptyRemark.toString() == null);
         assertFalse(emptyRemark.equals(""));
 
         assertTrue(filledRemark.toString().equals("Filled Remark"));
         assertFalse(filledRemark.toString().equals(0));
-        assertFalse(filledRemark.toString().equals(null));
+        assertFalse(filledRemark.toString() == null);
         assertFalse(filledRemark.equals(""));
 
     }

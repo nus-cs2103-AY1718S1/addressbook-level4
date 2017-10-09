@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
@@ -33,7 +34,7 @@ public class RemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validRemarkAdd_success() throws Exception {
+    public void executeValidRemarkAddSuccess() throws Exception {
 
         Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("Remark To Add").build();
@@ -49,7 +50,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_validRemarkDelete_success() throws Exception {
+    public void executeValidRemarkDeleteSuccess() throws Exception {
 
         Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("").build();
@@ -65,7 +66,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_editRemarksSuccess() throws Exception {
+    public void executeValidIndexFilteredListEditRemarksSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -82,7 +83,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_deleteRemarksSuccess() throws Exception {
+    public void executeValidIndexFilteredListDeleteRemarksSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -99,7 +100,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         RemarkCommand remarkCommand = getRemarkCommandForPerson(outOfBoundIndex, VALID_REMARK_AMY);
 
@@ -107,7 +108,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void executeInvalidIndexFilteredListThrowsCommandException() {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
@@ -147,9 +148,9 @@ public class RemarkCommandTest {
         assertFalse(testCommand.equals(new ListCommand()));
         assertFalse(testCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_AMY)));
 
-        //Test to ensure command is not null
-        assertFalse(testCommand.equals(null));
-        assertFalse(testCommandTwo.equals(null));
+        //Test to check for null
+        assertFalse(testCommand == null);
+        assertFalse(testCommandTwo == null);
 
         //Test to check different Index returns false
         assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
