@@ -25,7 +25,7 @@ public interface ReadOnlyPerson {
     boolean isPinned();
     boolean setPin();
     boolean unsetPin();
-    
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
