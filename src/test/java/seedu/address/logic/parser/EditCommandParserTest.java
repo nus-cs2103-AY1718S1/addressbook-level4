@@ -213,6 +213,7 @@ public class EditCommandParserTest {
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
