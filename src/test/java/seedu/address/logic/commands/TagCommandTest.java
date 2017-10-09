@@ -4,8 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -66,17 +70,18 @@ public class TagCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 4);
         TagCommand command = prepareCommand("owesMoney colleagues criminal");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, CARL, ELLE));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, CARL, DANIEL, ELLE));
     }
 
     /**
      * Parses {@code userInput} into a {@code TagCommand}.
      */
     private TagCommand prepareCommand(String userInput) {
+
         TagCommand command =
-                new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.toLowerCase().split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

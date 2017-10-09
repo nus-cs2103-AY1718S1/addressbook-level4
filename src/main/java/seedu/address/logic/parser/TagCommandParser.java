@@ -21,7 +21,7 @@ public class TagCommandParser implements Parser<TagCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public TagCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
+        String trimmedArgs = args.trim().toLowerCase();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
