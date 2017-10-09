@@ -10,6 +10,7 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
@@ -22,11 +23,14 @@ import seedu.address.commons.util.CollectionUtil;
 public class UniqueTagList implements Iterable<Tag> {
 
     private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
+    private Tag pinTag;
 
     /**
      * Constructs empty TagList.
      */
-    public UniqueTagList() {}
+    public UniqueTagList() {
+        pinTag = createPinTag();
+    }
 
     /**
      * Creates a UniqueTagList using given tags.
@@ -35,10 +39,19 @@ public class UniqueTagList implements Iterable<Tag> {
     public UniqueTagList(Set<Tag> tags) {
         requireAllNonNull(tags);
         internalList.addAll(tags);
+        pinTag = createPinTag();
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    private Tag createPinTag() {
+        try {
+            return new Tag("Pinned");
+        } catch (IllegalValueException ive) {
+            return null; //Will not reach here
+        }
+
+    }
     /**
      * Returns all tags in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
@@ -91,6 +104,19 @@ public class UniqueTagList implements Iterable<Tag> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+
+    public void addPinTag() {
+        internalList.add(pinTag);
+    }
+
+    public void removePinTag() throws IllegalValueException {
+        if (contains(pinTag)) {
+            internalList.remove(pinTag);
+        } else {
+            throw new IllegalValueException("Unable to find tag");
+        }
+    }
+
 
     @Override
     public Iterator<Tag> iterator() {
