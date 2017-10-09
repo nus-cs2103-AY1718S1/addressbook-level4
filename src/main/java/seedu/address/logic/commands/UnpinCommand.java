@@ -13,7 +13,7 @@ public class UnpinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unpin";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unpins the selected person identified"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unpins the selected person identified "
             + "by the index number used in the last person listing.\n "
             + "Parameters: INDEX (must be a positive integer)\n "
             + "Example: " + COMMAND_WORD + " 1 ";

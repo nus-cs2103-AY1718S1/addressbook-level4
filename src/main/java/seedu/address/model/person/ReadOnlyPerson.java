@@ -23,8 +23,8 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     boolean isPinned();
-    boolean setPin();
-    boolean unsetPin();
+    void setPin();
+    void unsetPin();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

@@ -24,7 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
-    boolean pinned;
+    private boolean pinned;
 
     /**
      * Every field must be present and not null.
@@ -123,13 +123,13 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public boolean setPin() {
-        return true;
+    public void setPin() {
+        pinned =  true;
     }
 
     @Override
-    public boolean unsetPin() {
-        return false;
+    public void unsetPin() {
+        pinned = false;
     }
 
     /**
