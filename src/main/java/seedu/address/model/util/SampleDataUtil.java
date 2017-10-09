@@ -45,10 +45,10 @@ public class SampleDataUtil {
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"),
                     getTagSet("colleagues"),
-                        new Remark("Typing a long string to make sure it can get " +
-                                "displayed even though the string is long. StringStringString" +
-                                "StringStringStringStringStringStringStringStringStringString" +
-                                "StringStringStringStringStringString"))
+                        new Remark("Typing a long string to make sure it can get "
+                                + "displayed even though the string is long. StringStringString"
+                                + "StringStringStringStringStringStringStringStringStringString"
+                                + "StringStringStringStringStringString"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
