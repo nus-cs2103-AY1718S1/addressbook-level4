@@ -8,9 +8,7 @@ import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses the given {@code String} of arguments in the context of the UnpinCommand
- * and returns an UnpinCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
+ * Parses input arguments and creates a new UnpinCommand object
  */
 public class UnpinCommandParser implements Parser<UnpinCommand> {
 
