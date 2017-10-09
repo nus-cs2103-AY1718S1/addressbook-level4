@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing], http
 == Project Team
 
 === Niu Yunpeng
-image::yunpeng.jpg[width="150", align="left"]
+image::yunpengn.jpg[width="150", align="left"]
 {empty}[https://yunpengn.github.io/[homepage]] [https://github.com/yunpengn[github]]
 
 Role: Developer
@@ -19,7 +19,7 @@ Role: Developer
 '''
 
 === Ng Jun Yang
-image::junyang.jpg[width= "150", align="left"]
+image::junyango.jpg[width= "150", align="left"]
 {empty}[https://github.com/junyango[github]]
 
 Role: Developer
