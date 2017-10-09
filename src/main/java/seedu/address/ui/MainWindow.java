@@ -41,7 +41,9 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private StartUpPanel startUpPanel;
     private PersonListPanel personListPanel;
+    private PersonListStartUpPanel personListStartUpPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -131,16 +133,27 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    //@@author jelneo
+    /**
+     * Fills up all the placeholders of window once the app starts up.
+     * Should only display welcome page without contacts.
+     */
+    void fillInnerPartsForStartUp() {
+        startUpPanel = new StartUpPanel();
+        browserPlaceholder.getChildren().add(startUpPanel.getRoot());
+
+        personListStartUpPanel = new PersonListStartUpPanel();
+        personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
+    //@@author
 
     void hide() {
         primaryStage.hide();
