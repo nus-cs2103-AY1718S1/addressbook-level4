@@ -15,7 +15,9 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.Username;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -139,6 +141,12 @@ public class AddCommandTest {
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void authenticateUser(Username username, Password password) {
+            fail("This method should not be called.");
+        }
+
     }
 
     /**
