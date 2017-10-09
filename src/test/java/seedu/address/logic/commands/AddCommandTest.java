@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -140,6 +141,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -154,6 +160,11 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void handleListingUnit() {
+
         }
     }
 
