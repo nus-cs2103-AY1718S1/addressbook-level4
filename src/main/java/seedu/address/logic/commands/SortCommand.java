@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+
 /**
  * Sorts the contacts in the address book based on name.
  */
@@ -11,7 +12,7 @@ public class SortCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-
+        model.sortContact();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
