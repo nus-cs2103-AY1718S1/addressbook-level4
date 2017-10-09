@@ -47,6 +47,8 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label remark;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
