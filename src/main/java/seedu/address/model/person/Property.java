@@ -15,6 +15,7 @@ public class Property {
      * inherited by a more specific subclass.
      *
      * TODO: Investigate the performance drawback without using static final for these two strings.
+     * TODO: Should we create an arrayList in PropertyManager to store all constraints?
      */
     private String messageConstraints = "There is no constraint for this property.";
     private String validationRegex = ".*";
