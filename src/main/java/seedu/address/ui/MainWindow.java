@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -24,6 +25,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -52,10 +55,13 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private Button skipButton;
+    private Button rightButton;
 
     @FXML
-    private Button yesButton;
+    private Button leftButton;
+
+    @FXML
+    private ImageView tutorialImage;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -138,7 +144,8 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
 //        browserPanel = new BrowserPanel();
 //        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
+        leftButton.setVisible(false);
+        rightButton.setVisible(false);
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -155,10 +162,38 @@ public class MainWindow extends UiPart<Region> {
         initTutorial(commandBox);
     }
 
+    /**
+     * Initiates the tutorial if the program is opened for the first time.
+     * @param commandBox
+     */
     private void initTutorial(CommandBox commandBox) {
+        Tutorial newTutorial = new Tutorial(commandBox, browserPlaceholder, tutorialImage, logic);
+        ArrayList<TutSteps> tutSteps = newTutorial.getTutorialSteps();
         if (logic.getFilteredPersonList().get(0).getEmail().toString().equals("alexyeoh@example.com")) {
-            browserPlaceholder.getChildren().add(new ImageView(new Image("/images/bluebird.png")));
+            tutorialImage.setImage(new Image("/images/testIntro1.png"));
+            leftButton.setVisible(true);
+            rightButton.setVisible(true);
         }
+        leftButton.setOnAction(e -> {
+            try {
+                newTutorial.executeStep(tutSteps.get(0));
+            } catch (CommandException e1) {
+                e1.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+            leftButton.setText("Next");
+            tutSteps.remove(0);
+            if (tutSteps.size() == 0) {
+                leftButton.setVisible(false);
+                rightButton.setVisible(false);
+            }
+        });
+        rightButton.setOnAction(e -> {
+            newTutorial.endTutorial();
+            leftButton.setVisible(false);
+            rightButton.setVisible(false);
+        });
     }
 
     void hide() {

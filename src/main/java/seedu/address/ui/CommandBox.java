@@ -148,4 +148,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    public void setInputText(String toInput) {
+        this.commandTextField.setText(toInput);
+    }
 }
