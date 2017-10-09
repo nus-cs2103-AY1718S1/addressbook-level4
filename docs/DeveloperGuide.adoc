@@ -733,9 +733,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |sort people by name |locate people easily
 
-|`* * *` |user |set a list of favourite people|
-
-|`* * *` |user |see a list of frequently accessed contacts|
+|`* * *` |user |set a list of favourite people|search for my favourites easily
 
 |`* * *` |user |get confirmation before I edit or delete contacts|
 
@@ -743,13 +741,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add multiple numbers to a contact |separate their mobile and home numbers
 
-|`* * *` |user |password protect my addressBook |protect my contacts' information
-
-|`* * *` |user |call/message directly from my address book |reach them easily
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |customise the look of the address book |
+|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes
+
+|`* *` |user |customise screensavers|personalise the addressBook
+
+|`* *` |user |customise the colour and wallpaper of the address book |personalise my addressBook
+
+|`* *` |first time user |prompt user to input name |personalise the addressBook
 
 |`* *` |user |back up my address book data online |I can access my address book data from other places
 
@@ -769,19 +769,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |a calendar to sync my events |can plan them more efficiently
 
-|`* *` |user |know which method of communication my contacts prefers |use their favourite form of communication
-
 |`* *` |user |see most recently accessed contacts |so that I can access them faster
+
+|`* *` |busy user |see a list of frequently accessed contacts|so that I locate them faster
+
+|`* *` |user |password protect my addressBook |protect my contacts' information
+
+|`* *` |forgetful user |see a history of my last used commands |
 
 |`*` |user |add profile pictures to contacts |find my friends easily
 
 |`*` |user |set the colour of the tags |can view the tags easily
 
-|`*` |user |see which contacts knows each other |can communicate with them better
-
 |`*` |user |use facial recognition |enhance security
 
-|`*` |forgetful user |see a history of my last used commands |
+|`*` |user |call/message directly from my address book |reach them easily
 |=======================================================================
 
 {More to be added}
@@ -806,24 +808,25 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The list is empty
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. AddressBook shows an error message
 +
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Create a contact
+=== Use case: Add a person
 
 *MSS*
 
-1. User inputs the command with the correct keywords
-2. AddressBook confirms the addition by showing the confirmation message
+1. User requests to add person
+2. User inputs person details
+3. AddressBook adds the person
 +
 Use case ends.
 
@@ -833,29 +836,177 @@ Use case ends.
 +
 ** 2a1. AddressBook shows an error message
 +
-Use case ends.
+* 3a. The same person details exists in AddressBook
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
-=== Use case: Edit/Update a specific contact
+=== Use case: List all persons
 
 *MSS*
 
-1. User requests to edit a contact and inputs the command with correct keywords
-2. AddressBook updates the task with new details and displays a confirmation of the operation on the screen
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a person in the list
+4.  User inputs person details
+5.  AddressBook edit the person
 +
 Use case ends.
 
 *EXTENSIONS*
 
-* 2a. The given input is invalid
+* 2a. The given input is invalid (Wrong format, etc)
 +
 ** 2a1. Addressbook shows an error message for such situation
 +
 Use case ends.
 
-* 3a. The list contains no matching contact for the user to edit
+* 3a. The list contains no matching person to edit
 +
 ** 3a1. Addressbook shows an error message for such situation
++
+Use case ends.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find person
+2.  AddressBook lists the person found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Addressbook does not contain the person requested
++
+** 2a1. AddressBook displays an empty list
+
+Use case ends.
+
+* 3a. The given input or command is invalid (Wrong format, etc)
++
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a person in the list
+4.  AddressBook selects the person and displays the Google search page for the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Addressbook does not contain any person
++
+** 2a1. AddressBook displays an empty list
+
+Use case ends.
+
+* 3a. The given input or command is invalid (Wrong format, etc)
++
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Display History
+
+*MSS*
+
+1.  User requests to list history of commands
+2.  AddressBook shows a list of previous commands arranged from most recent to earliest
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Addressbook does not contain any history of commands
++
+** 2a1. AddressBook displays an empty list
+
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook search for previous commands
+3.  AddressBook undo the previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user undo without making any previous commands
++
+** 2a1. AddressBook shows an error message
+Use case ends.
+
+* 3a. The previous command cannot be done
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User requests to redo most recent undo command
+2.  AddressBook search for previous undo command
+3.  AddressBook redo the previous undo command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user redo without making any previous undo commands
++
+** 2a1. AddressBook shows an error message
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1.  User requests to clear all entries from AddressBook
+2.  AddressBook clears all entries
 +
 Use case ends.
 
