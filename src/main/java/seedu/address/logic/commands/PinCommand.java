@@ -2,10 +2,18 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 import java.util.List;
+
+
 
 import static java.util.Objects.requireNonNull;
 
@@ -20,6 +28,7 @@ public class PinCommand extends UndoableCommand {
 
     private static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Person: %1$s";
     private static final String MESSAGE_ALREADY_PINNED = "Person is already pinned!";
+    private static final String MESSAGE_PIN_PERSON_FAILED = "Pin was unsuccessful";
 
     private final Index index;
 
@@ -37,13 +46,27 @@ public class PinCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToPin = lastShownList.get(index.getZeroBased());
-
-        if (personToPin.isPinned()) {
-            return new CommandResult(MESSAGE_ALREADY_PINNED);
-        } else {
-            personToPin.setPin();
-            return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
+        try {
+            if(personToPin.isPinned()) {
+                return new CommandResult(MESSAGE_ALREADY_PINNED);
+            } else {
+                Person addPin = addPinTag(personToPin);
+                model.updatePerson(personToPin, addPin);
+                return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
+            }
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
+        } catch (PersonNotFoundException pnfe) {
+            throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
         }
 
+    }
+
+    private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
+        UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
+        updatedTags.addPinTag();
+
+        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getEmail(),
+                personToPin.getAddress(), updatedTags.toSet());
     }
 }
