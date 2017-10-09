@@ -1,5 +1,8 @@
 package seedu.address.model;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -8,9 +11,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.testutil.TypicalPersons;
-
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class UniqueTagListTest {
 
@@ -25,7 +25,7 @@ public class UniqueTagListTest {
     }
 
     @Test
-    public void TagsTests() throws IllegalValueException {
+    public void tagsTests() throws IllegalValueException {
         UniqueTagList uniqueTagList = new UniqueTagList();
         uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
         uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
@@ -34,7 +34,7 @@ public class UniqueTagListTest {
         assertTrue(uniqueTagList.contains(new Tag("friends")));
         assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa")));
 
-        for(Tag tag : uniqueTagList.asObservableList()){
+        for (Tag tag : uniqueTagList.asObservableList()) {
             assertTrue(tag.getTagColor().equals("#dcdcdc"));
         }
 
