@@ -28,5 +28,4 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check
     }
-
 }
