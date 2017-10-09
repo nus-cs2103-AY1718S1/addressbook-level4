@@ -98,13 +98,13 @@ public class ParserUtil {
      */
     public static String parseSortType(String sortType) throws IllegalValueException {
         String trimmedSortType = sortType.trim();
-        switch (trimmedSortType){
-            case "name":
-            case "phone":
-            case "email":
-                return trimmedSortType;
-            default:
-                throw new IllegalValueException(MESSAGE_INVALID_SORT);
+        switch (trimmedSortType) {
+        case "name":
+        case "phone":
+        case "email":
+            return trimmedSortType;
+        default:
+            throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
     }
 }

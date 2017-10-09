@@ -6,7 +6,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class SortCommandParser implements Parser<SortCommand>{
+/**
+ * Parses SortCommand arguments and creates a SortCommand object
+ */
+public class SortCommandParser implements Parser<SortCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
      * and returns an SortCommand object for execution.
