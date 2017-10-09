@@ -37,7 +37,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        pinned = false;
+        pinned = checkPinTag(tags);
     }
 
     /**
@@ -48,6 +48,15 @@ public class Person implements ReadOnlyPerson {
                 source.getTags());
     }
 
+    private boolean checkPinTag(Set<Tag> tags) {
+        for(Tag tag: tags) {
+            if(tag.tagName.equals("Pinned")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }
@@ -120,16 +129,6 @@ public class Person implements ReadOnlyPerson {
     @Override
     public boolean isPinned() {
         return pinned;
-    }
-
-    @Override
-    public void setPin() {
-        pinned =  true;
-    }
-
-    @Override
-    public void unsetPin() {
-        pinned = false;
     }
 
     /**
