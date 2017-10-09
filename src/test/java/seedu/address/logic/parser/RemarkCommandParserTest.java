@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.model.person.Remark;
 
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -24,13 +25,13 @@ public class RemarkCommandParserTest {
 
 
         String userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString() + emptyRemark;
-        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, emptyRemark);
+        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(emptyRemark));
         assertParseSuccess(parser, userInput, expectedCommand);
 
 
         // no remarks
         userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString();
-        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -44,13 +45,13 @@ public class RemarkCommandParserTest {
 
 
         String userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString() + emptyRemark;
-        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, emptyRemark);
+        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(emptyRemark));
         assertParseSuccess(parser, userInput, expectedCommand);
 
 
         // no remarks
         userInput = thisIndex.getOneBased() + " " + PREFIX_REMARK.toString();
-        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

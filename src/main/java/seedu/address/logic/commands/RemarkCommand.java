@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Remark;
 
 public class RemarkCommand extends UndoableCommand {
 
@@ -24,22 +25,22 @@ public class RemarkCommand extends UndoableCommand {
 
 
     private final Index personIndex;
-    private final String remarkString;
+    private final Remark remark;
 
     /**
      * Creates a RemarkCommand to add the remark
      */
-    public RemarkCommand(Index inputIndex, String inputString) {
+    public RemarkCommand(Index inputIndex, Remark inputRemark) {
         requireNonNull(inputIndex);
-        requireNonNull(inputString);
+        requireNonNull(inputRemark);
 
         this.personIndex = inputIndex;
-        this.remarkString = inputString;
+        this.remark = inputRemark;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, personIndex.getOneBased(), remarkString));
+        throw new CommandException(String.format(MESSAGE_ARGUMENTS, personIndex.getOneBased(), remark));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class RemarkCommand extends UndoableCommand {
         return other == this ||
                 (other instanceof RemarkCommand &&
                         this.personIndex.equals(((RemarkCommand) other).personIndex)) &&
-                        this.remarkString.equals(((RemarkCommand) other).remarkString);
+                        this.remark.equals(((RemarkCommand) other).remark);
     }
 
 }

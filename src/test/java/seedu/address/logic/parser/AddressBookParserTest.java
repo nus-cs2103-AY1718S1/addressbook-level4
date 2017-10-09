@@ -38,6 +38,7 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Remark;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -145,8 +146,8 @@ public class AddressBookParserTest {
                         index.getOneBased() + " " + PREFIX_REMARK + remark);
 
         assertTrue(testRemarkCommand instanceof RemarkCommand);
-        assertEquals(new RemarkCommand(index,remark),testRemarkCommand);
-        assertNotEquals(new RemarkCommand(index,""),testRemarkCommand);
+        assertEquals(new RemarkCommand(index, new Remark(remark)),testRemarkCommand);
+        assertNotEquals(new RemarkCommand(index,new Remark("")),testRemarkCommand);
     }
 
     @Test

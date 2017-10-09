@@ -14,23 +14,10 @@ public class Remark {
 
     /**
      * Validates given remark.
-     *
-     * @throws IllegalValueException if given remark string is invalid.
      */
-    public Remark(String remark) throws IllegalValueException {
+    public Remark(String remark){
         requireNonNull(remark);
-        String trimmedRemark = remark.trim();
-        if (!isValidRemark(trimmedRemark)) {
-            throw new IllegalValueException("Remark should be a String");
-        }
-        this.value = trimmedRemark;
-    }
-
-    /**
-     * Returns if a given string is a valid person remark.
-     */
-    public static boolean isValidRemark(String test) {
-        return (test instanceof String);
+        this.value = remark;
     }
 
     @Override

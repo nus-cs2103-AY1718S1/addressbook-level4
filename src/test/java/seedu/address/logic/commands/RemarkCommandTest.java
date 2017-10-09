@@ -11,6 +11,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Remark;
 
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
@@ -42,16 +43,16 @@ public class RemarkCommandTest {
         // Create RemarkCommand for testing
         // Amy used to test for empty remarks
         // Bob used to test for filled remarks
-        RemarkCommand testCommand = new RemarkCommand(INDEX_FIRST_PERSON, VALID_REMARK_AMY);
-        RemarkCommand testCommandTwo = new RemarkCommand(INDEX_SECOND_PERSON, VALID_REMARK_BOB);
+        RemarkCommand testCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
+        RemarkCommand testCommandTwo = new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_BOB));
 
         //Test for same object
         assertTrue(testCommand.equals(testCommand));
         assertTrue(testCommandTwo.equals(testCommandTwo));
 
         //Test for same values
-        assertTrue(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON,VALID_REMARK_AMY)));
-        assertTrue(testCommandTwo.equals(new RemarkCommand(INDEX_SECOND_PERSON,VALID_REMARK_BOB)));
+        assertTrue(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY))));
+        assertTrue(testCommandTwo.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_BOB))));
 
         //Test to ensure command is strictly a RemarkCommand
         assertFalse(testCommand.equals(new AddCommand(CARL)));
@@ -62,19 +63,19 @@ public class RemarkCommandTest {
         assertFalse(testCommand.equals(new RedoCommand()));
         assertFalse(testCommand.equals(new UndoCommand()));
         assertFalse(testCommand.equals(new ListCommand()));
-        assertFalse(testCommand.equals(new EditCommand(INDEX_FIRST_PERSON,DESC_AMY)));
+        assertFalse(testCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_AMY)));
 
         //Test to ensure command is not null
         assertFalse(testCommand.equals(null));
         assertFalse(testCommandTwo.equals(null));
 
         //Test to check different Index returns false
-        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON,VALID_REMARK_AMY)));
-        assertFalse(testCommandTwo.equals(new RemarkCommand(INDEX_FIRST_PERSON,VALID_REMARK_BOB)));
+        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
+        assertFalse(testCommandTwo.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
 
         //Test to check different remarks returns false
-        assertFalse(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON,VALID_REMARK_BOB)));
-        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON,VALID_REMARK_AMY)));
+        assertFalse(testCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
+        assertFalse(testCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
 
     }
 
@@ -86,7 +87,7 @@ public class RemarkCommandTest {
      * @param remark new remark to record
      */
     private RemarkCommand getRemarkCommandForPerson(Index index, String remark) {
-        RemarkCommand command = new RemarkCommand(index, remark);
+        RemarkCommand command = new RemarkCommand(index, new Remark(remark));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
