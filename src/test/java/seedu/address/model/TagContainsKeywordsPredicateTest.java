@@ -63,7 +63,7 @@ public class TagContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_TagDoesNotContainKeywords_returnsFalse() {
+    public void test_tagDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         TagContainsKeywordsPredicate predicate =
                 new TagContainsKeywordsPredicate(Collections.emptyList());

@@ -159,7 +159,7 @@ public class StringUtilTest {
         StringUtil.containsTag(tagList, word);
     }
 
-    public Set<Tag> setupTestTag(){
+    public Set<Tag> setupTestTag() {
         try {
 
             Set<Tag> testTag = new HashSet<Tag>();
@@ -258,6 +258,4 @@ public class StringUtilTest {
         thrown.expect(NullPointerException.class);
         StringUtil.getDetails(null);
     }
-
-
 }
