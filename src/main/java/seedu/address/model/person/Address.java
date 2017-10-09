@@ -11,13 +11,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+            "Person addresses can take any values, cannot be blank and must end with 6 digits seperated " +
+                    "from the rest of the address by a space";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].+(\\d{6})$";
 
     public final String value;
 
