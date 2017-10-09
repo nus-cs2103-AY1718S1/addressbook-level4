@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -60,6 +61,15 @@ public class ParserUtil {
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Debt>} if {@code debt} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Debt> parseDebt(Optional<String> debt) throws IllegalValueException {
+        requireNonNull(debt);
+        return debt.isPresent() ? Optional.of(new Debt(debt.get())) : Optional.empty();
     }
 
     /**

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -18,6 +19,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -45,6 +47,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_POSTAL_CODE + "POSTAL CODE] "
+            + "[" + PREFIX_DEBT + "DEBT] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -104,9 +107,11 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
+        Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
+                updatedDebt, updatedTags);
     }
 
     @Override
@@ -137,6 +142,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private PostalCode postalCode;
+        private Debt debt;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -147,6 +153,7 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
+            this.debt = toCopy.debt;
             this.tags = toCopy.tags;
         }
 
@@ -155,7 +162,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.postalCode,
-            this.tags);
+            this.debt, this.tags);
         }
 
         public void setName(Name name) {
@@ -198,6 +205,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(postalCode);
         }
 
+        public void setDebt(Debt debt) {
+            this.debt = debt;
+        }
+
+        public Optional<Debt> getDebt() {
+            return Optional.ofNullable(debt);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -226,6 +241,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getPostalCode().equals(e.getPostalCode())
+                    && getDebt().equals(e.getDebt())
                     && getTags().equals(e.getTags());
         }
     }
