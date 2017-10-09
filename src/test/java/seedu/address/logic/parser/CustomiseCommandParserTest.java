@@ -26,7 +26,8 @@ public class CustomiseCommandParserTest {
             FontSize fontSize = new FontSize(VALID_FONT_SIZE_SMALL);
 
             // multiple font sizes - last font size accepted
-            assertParseSuccess(parser, CustomiseCommand.COMMAND_WORD + FONT_SIZE_DESC_XSMALL + FONT_SIZE_DESC_SMALL, new CustomiseCommand(fontSize));
+            assertParseSuccess(parser, CustomiseCommand.COMMAND_WORD + FONT_SIZE_DESC_XSMALL
+                    + FONT_SIZE_DESC_SMALL, new CustomiseCommand(fontSize));
 
         } catch (IllegalValueException ile) {
             throw new AssertionError(MESSAGE_FONT_SIZE_CONSTRAINTS);
@@ -44,7 +45,8 @@ public class CustomiseCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid font size
-        assertParseFailure(parser, CustomiseCommand.COMMAND_WORD + INVALID_FONT_SIZE_DESC, FontSize.MESSAGE_FONT_SIZE_CONSTRAINTS);
+        assertParseFailure(parser, CustomiseCommand.COMMAND_WORD
+                + INVALID_FONT_SIZE_DESC, FontSize.MESSAGE_FONT_SIZE_CONSTRAINTS);
     }
 
 }

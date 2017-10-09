@@ -100,13 +100,13 @@ public class CustomiseCommandTest {
         }
     }
 
-    /**
+     /**
      * Returns an {@code RemarkCommand} with parameters {@code index} and {@code remark}
      */
-     private CustomiseCommand prepareCommand(FontSize fontSize) {
-         CustomiseCommand customiseCommand = new CustomiseCommand(fontSize);
-         customiseCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-         return customiseCommand;
-     }
+    private CustomiseCommand prepareCommand(FontSize fontSize) {
+        CustomiseCommand customiseCommand = new CustomiseCommand(fontSize);
+        customiseCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return customiseCommand;
+    }
 
 }
