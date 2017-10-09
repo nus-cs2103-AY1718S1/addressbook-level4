@@ -29,7 +29,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireNonNull(name);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -71,9 +71,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Phone getPhone() {
-        return phone.get();
-    }
+    public Phone getPhone() { return phone.get(); }
 
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));

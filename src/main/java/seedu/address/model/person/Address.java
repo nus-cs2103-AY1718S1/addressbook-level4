@@ -27,19 +27,17 @@ public class Address {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address) throws IllegalValueException {
-        requireNonNull(address);
-        if (!isValidAddress(address)) {
+        String trimmedAddress = address == null ? null : address.trim();
+        if (!isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = address;
+        this.value = trimmedAddress;
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
-    }
+    public static boolean isValidAddress(String test) { return test == null || test.matches(ADDRESS_VALIDATION_REGEX); }
 
     @Override
     public String toString() {
@@ -50,7 +48,7 @@ public class Address {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
+                && (this.value == ((Address) other).value || this.value.equals(((Address) other).value))); // state check
     }
 
     @Override

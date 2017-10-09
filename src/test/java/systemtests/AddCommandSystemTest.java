@@ -5,6 +5,9 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_ADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_EMAIL;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_PHONE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -148,17 +151,17 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing phone -> added */
+        command = AddCommand.COMMAND_WORD + " n/Kai Hsien" + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, new PersonBuilder().withName("Kai Hsien").withPhone(EMPTY_PHONE).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build());
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing email -> added */
+        command = AddCommand.COMMAND_WORD + " n/Jeremy" + PHONE_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, new PersonBuilder().withName("Jeremy").withPhone(VALID_PHONE_AMY).withEmail(EMPTY_EMAIL).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build());
 
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing address -> added */
+        command = AddCommand.COMMAND_WORD + " n/Adeeb" + PHONE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, new PersonBuilder().withName("Adeeb").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(EMPTY_ADDRESS).withTags(VALID_TAG_FRIEND).build());
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
@@ -224,6 +227,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();

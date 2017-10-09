@@ -153,16 +153,16 @@ public class EditCommand extends UndoableCommand {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
         }
 
-        public void setName(Name name) {
-            this.name = name;
-        }
+        public void setName(Name name) { this.name = name; }
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
 
         public void setPhone(Phone phone) {
-            this.phone = phone;
+            if (phone.value != null) {
+                this.phone = phone;
+            }
         }
 
         public Optional<Phone> getPhone() {
@@ -170,7 +170,9 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setEmail(Email email) {
-            this.email = email;
+            if (email.value != null) {
+                this.email = email;
+            }
         }
 
         public Optional<Email> getEmail() {
@@ -178,7 +180,9 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setAddress(Address address) {
-            this.address = address;
+            if (address.value != null) {
+                this.address = address;
+            }
         }
 
         public Optional<Address> getAddress() {
