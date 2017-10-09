@@ -9,10 +9,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import com.sun.org.apache.regexp.internal.RE;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds a person to the address book.
@@ -43,15 +46,16 @@ public class AddMultipleCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person(s) added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "The persons list contains person(s) that already exists in the address book.";
-    public static final String MESSAGE_SUCCESSFUL_PERSONS = "New person(s) that are successfully added: ";
     public static final String DEFAULT_FOLDER_PATH = "./data";
     
     private ArrayList<Person> toAdd;
+    private ArrayList<ReadOnlyPerson> readOnlyPeople;
     
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
     public AddMultipleCommand(ArrayList<ReadOnlyPerson> personsList) {
+        readOnlyPeople = personsList;
         toAdd = new ArrayList<>();
         for(ReadOnlyPerson person: personsList) {
             toAdd.add(new Person(person));
@@ -60,6 +64,7 @@ public class AddMultipleCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        int numberOfPersonsAdded = 0;
         StringBuilder successMessage = new StringBuilder();
         requireNonNull(model);
         try {
@@ -67,16 +72,19 @@ public class AddMultipleCommand extends UndoableCommand {
                 model.addPerson(personToAdd);
                 successMessage.append(System.lineSeparator());
                 successMessage.append(personToAdd);
+                numberOfPersonsAdded++;
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, successMessage));
         } catch (DuplicatePersonException e) {
-            String duplicatePersonMessage = MESSAGE_DUPLICATE_PERSON
-                    + System.lineSeparator()
-                    + System.lineSeparator()
-                    + MESSAGE_SUCCESSFUL_PERSONS 
-                    + successMessage;
+            try {
+                for (int i = 0; i < numberOfPersonsAdded; i++) {
+                    model.deletePerson(readOnlyPeople.get(i));
+                }
+            } catch(PersonNotFoundException pnfe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
             
-            throw new CommandException(duplicatePersonMessage);
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
     }
