@@ -115,7 +115,7 @@ public class PersonBuilder {
         try {
             this.person.setBloodType(new Bloodtype(bloodType));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("bloodtype is expected to be unique.");
+            throw new IllegalArgumentException("bloodType is expected to be unique.");
         }
         return this;
     }

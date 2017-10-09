@@ -18,15 +18,16 @@ public class Bloodtype {
      * otherwise " " (a blank string) becomes a valid input.
      * More specific blood types and difference are taken into account.
      * Example: O-, AB+
+
      */
     public static final String BLOODTYPE_VALIDATION_REGEX = "\\p{ASCII}{1,3}";
 
     public final String type;
 
     /**
-     * Validates given Bloodtype.
+     * Validates given bloodtype.
      *
-     * @throws IllegalValueException if given blood type string is invalid.
+     * @throws IllegalValueException if given bloodtype string is invalid.
      */
     public Bloodtype(String bloodType) throws IllegalValueException {
         requireNonNull(bloodType);
@@ -34,8 +35,9 @@ public class Bloodtype {
         if (!isValidBloodType(trimmedBloodType)) {
             throw new IllegalValueException(MESSAGE_BLOODTYPE_CONSTRAINTS);
         }
-        this.type = trimmedBloodType;
+        this.type = bloodType;
     }
+
 
     /**
      * Returns true if a given string is a valid person blood type.

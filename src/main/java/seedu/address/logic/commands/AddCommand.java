@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -27,12 +28,14 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_BLOODTYPE + "BLOODTYPE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example 1: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_BLOODTYPE + "O "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney \n"
             + "Example 2: " + COMMAND_WORD + " "
@@ -40,6 +43,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "87678977 "
             + PREFIX_EMAIL + "maryj@example.com "
             + PREFIX_ADDRESS + "170, Bugis Ave 3, #01-05 "
+            + PREFIX_BLOODTYPE + "A "
             + PREFIX_TAG + "wife ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
