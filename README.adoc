@@ -32,6 +32,6 @@ endif::[]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
-* Built upon the addressbook-level 4 application by _SE-EDU_ team.
+* Built upon the addressbook-level 4 application by _SE-EDU_ team , for National University of Singapore(NUS) module CS2103.
 
 == Licence : link:LICENSE[MIT]
