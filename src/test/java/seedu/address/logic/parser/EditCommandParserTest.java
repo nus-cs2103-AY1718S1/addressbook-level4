@@ -176,7 +176,7 @@ public class EditCommandParserTest {
         // postal code
         userInput = targetIndex.getOneBased() + POSTAL_CODE_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withPostalCode(VALID_POSTAL_CODE_AMY).build();
-        
+
         // debt
         userInput = targetIndex.getOneBased() + DEBT_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withDebt(VALID_DEBT_AMY).build();
