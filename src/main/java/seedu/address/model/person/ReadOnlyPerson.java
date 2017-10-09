@@ -22,7 +22,10 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-
+    boolean isPinned();
+    boolean setPin();
+    boolean unsetPin();
+    
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
