@@ -110,7 +110,8 @@ public class EditCommand extends UndoableCommand {
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode, updatedDebt, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
+                updatedDebt, updatedTags);
     }
 
     @Override
