@@ -100,7 +100,8 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Address getAddress() { return address.get();
+    public Address getAddress() {
+        return address.get();
     }
 
     public void setBirthday(Birthday birthday) {
