@@ -45,7 +45,7 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertTrue(!tag.getTagColor().equals("#dcdcdc"));
+            assertFalse(tag.getTagColor().equals("#dcdcdc"));
         }
     }
 }
