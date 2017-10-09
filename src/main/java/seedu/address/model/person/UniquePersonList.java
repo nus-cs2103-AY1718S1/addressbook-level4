@@ -128,7 +128,7 @@ public class UniquePersonList implements Iterable<Person> {
      * @param sortType
      */
     public void sort(String sortType) {
-        switch(sortType){
+        switch(sortType) {
         case "name":
             break;
 
