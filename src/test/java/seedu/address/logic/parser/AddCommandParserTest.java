@@ -96,7 +96,8 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
                 .withDebt(VALID_DEBT_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB
+                        + DEBT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
@@ -107,7 +108,8 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
                 .withDebt(VALID_DEBT_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY, new AddCommand(expectedPerson));
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY
+                + DEBT_DESC_AMY, new AddCommand(expectedPerson));
     }
 
     @Test
@@ -162,8 +164,8 @@ public class AddCommandParserTest {
 
         // invalid address
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                        Address.MESSAGE_ADDRESS_CONSTRAINTS);
+                        + INVALID_ADDRESS_DESC + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + TAG_DESC_HUSBAND
+                        + TAG_DESC_FRIEND, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         // invalid postal code
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

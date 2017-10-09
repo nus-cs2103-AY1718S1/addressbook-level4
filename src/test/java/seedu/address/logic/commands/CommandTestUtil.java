@@ -74,7 +74,8 @@ public class CommandTestUtil {
                 .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withPostalCode(VALID_POSTAL_CODE_BOB).withDebt(VALID_DEBT_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withPostalCode(VALID_POSTAL_CODE_BOB).withDebt(VALID_DEBT_BOB)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**
