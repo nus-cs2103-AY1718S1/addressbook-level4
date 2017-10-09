@@ -19,15 +19,15 @@ public class RemarkTest {
         assertFalse(emptyRemark.equals(filledRemark));
         assertFalse(emptyRemarkCopy.equals(filledRemarkCopy));
 
-        assertTrue(emptyRemark.toString().equals(""));
+        assertTrue("".equals(emptyRemark.toString()));
         assertFalse(emptyRemark.toString().equals(0));
         assertFalse(emptyRemark.toString() == null);
-        assertFalse(emptyRemark.equals(""));
+        assertFalse("".equals(emptyRemark));
 
         assertTrue(filledRemark.toString().equals("Filled Remark"));
         assertFalse(filledRemark.toString().equals(0));
         assertFalse(filledRemark.toString() == null);
-        assertFalse(filledRemark.equals(""));
+        assertFalse("".equals(filledRemark));
 
     }
 }
