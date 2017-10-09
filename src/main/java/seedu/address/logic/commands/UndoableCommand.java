@@ -6,7 +6,13 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.predicates.UniqueAddressPredicate;
+import seedu.address.model.person.predicates.UniqueEmailPredicate;
+import seedu.address.model.person.predicates.UniquePhonePredicate;
+
+import javax.sql.rowset.Predicate;
 
 /**
  * Represents a command which can be undone and redone.
@@ -32,7 +38,7 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        handleListingUnit();
     }
 
     /**
@@ -47,8 +53,36 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        handleListingUnit();
     }
+
+
+    /**
+     * handle different ListingUnit after redo and undo
+     */
+    private  void handleListingUnit() {
+        switch (ListingUnit.getCurrentListingUnit()) {
+
+            case ADDRESS:
+                UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
+                model.updateFilteredPersonList(addressPredicate);
+                break;
+
+            case PHONE:
+                UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
+                model.updateFilteredPersonList(phonePredicate);
+                break;
+
+            case EMAIL:
+                UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
+                model.updateFilteredPersonList(emailPredicate);
+                break;
+
+            default:
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
+    }
+
 
     @Override
     public final CommandResult execute() throws CommandException {

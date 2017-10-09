@@ -153,6 +153,7 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
         } catch (IllegalValueException ive) {
+            model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
             throw new CommandException(ive.getMessage());
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
