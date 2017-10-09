@@ -32,9 +32,7 @@ public class DeleteTagCommand extends UndoableCommand {
 
         try {
             model.deleteTag(tagToDelete);
-        } catch (TagNotFoundException tnfe) {
-            throw new CommandException(MESSAGE_USAGE);
-        } catch (TagInternalErrorException e) {
+        } catch (TagNotFoundException | TagInternalErrorException tnfe) {
             throw new CommandException(MESSAGE_USAGE);
         }
 

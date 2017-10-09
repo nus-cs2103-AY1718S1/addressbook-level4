@@ -90,9 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 addressBook.updatePerson(oldPerson, newPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new TagInternalErrorException();
-            } catch (PersonNotFoundException pnfe) {
+            } catch (DuplicatePersonException | PersonNotFoundException dpe) {
                 throw new TagInternalErrorException();
             }
         }
