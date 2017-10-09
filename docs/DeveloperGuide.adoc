@@ -724,7 +724,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |add a person's contact detail into the app
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -736,39 +736,37 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |get help information |know where is wrong whe I get errors
+|`* * *` |user |get help information |know where is wrong when I get errors
 
 |`* * *` |user |update contact's information |correct or add their information
 
 |`* * *` |user |list contacts |view who are my contacts
 
-|`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
+|`* * *` |secretive user |hide private details  |minimise the chance of someone else seeing them by accident
 
-|`* * *` |user |undo decision  |revert changes in case of mistake
+|`* * *` |careless user |undo decision  |revert changes in case of mistake
 
 |`* * *` |lazy user |have auto complete when I type  |type less word
 
-|`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
+|`* *` |user who share my device with others |password to lock my address book |prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
 
 |`* *` |frequent user |use non-case sensitive command |type command easily
 
-|`* *` |user with many friends |add multiple people at one time| save my time for adding
+|`* *` |user with many friends |add multiple people at one time |save my time for adding
 
 |`* *` |user |sort contacts |view my list easily
 
 |`* *` |user |tag my contacts |remember who they are through tags
 
-|`* *` |careful user |log in with my id and password |keep my privacy
+|`* *` |security conscious user |log in with my id and password |keep my privacy
 
 |`* *` |elder user |adjust font size |see more clearly
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |secretive user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |find a person by name |save time from browsing through the entire list
-
-|`* *` |forgettable user |stick some important people on the top|locate them quickly
+|`* *` |forgetful user |stick some important people on the top |locate them quickly
 
 |`* *` |user |create events and assign contacts |keep track of who is involved in events
 
@@ -782,13 +780,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |add pictures to contacts |remember who they are through pictures
 
-|`*` |user |alter whether information is private  |make information open to everyone whenever I want
+|`*` |secretive user |alter whether information is private |make information open to everyone whenever I want
 
-|`*` |user |sort the list  |locate a person easily
-
-|`*` |user |clean AddressBook  |save time from deleting people one by one
-
-|`*` |user |drag person card |reorder the list easily
+|`*` |user |drag person card |sort people into my own order
 
 |`*` |user |select font style |more comfortable to read
 |=======================================================================
@@ -799,6 +793,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add a person
+*MSS*
+
+1. User enters values for a new person.
+2. AddressBook add the new person into the database.
++
+Use case ends.
+
+*Extensions*
+2a. There is already this person
++
+Use case ends.
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Delete person
@@ -858,31 +877,6 @@ Use case resumes at step 2.
 ** 3b1. AddressBook shows an unnecessary update message.
 +
 Use case ends.
-
-[discrete]
-=== Use case: Add a person
-*MSS*
-
-1. User enters values for a new person.
-2. AddressBook add the new person into the database.
-+
-Use case ends.
-
-*Extensions*
-2a. There is already this person
-+
-Use case ends.
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 [discrete]
 === Use case: Add a tag to a person
