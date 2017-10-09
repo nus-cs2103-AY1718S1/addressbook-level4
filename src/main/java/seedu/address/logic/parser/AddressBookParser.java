@@ -53,7 +53,7 @@ public class AddressBookParser {
             return new AddCommandParser().parse(arguments);
 
         case AddMultipleCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new AddMultipleCommandParser().parse(arguments);
  
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
