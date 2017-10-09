@@ -43,9 +43,9 @@ public class StorageManagerTest {
     }
 
     @Test
-	public void testPrefFilePath() {
-    	assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
-	}
+    public void testPrefFilePath() {
+        assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
+    }
 
     @Test
     public void backupAddressBook() throws Exception {
@@ -82,21 +82,21 @@ public class StorageManagerTest {
     }
 
     @Test
-	public void backUpURLTest() {
-		String expectedURL = storageManager.getAddressBookFilePath() + "-backup.xml";
-    	String actualURL = storageManager.getBackupStorageFilePath();
-    	assertEquals(expectedURL, actualURL);
-	}
+    public void backUpURLTest() {
+        String expectedURL = storageManager.getAddressBookFilePath() + "-backup.xml";
+        String actualURL = storageManager.getBackupStorageFilePath();
+        assertEquals(expectedURL, actualURL);
+    }
 
-	@Test
-	public void backUpCommnadTest() throws IOException, DataConversionException {
-		AddressBook original = getTypicalAddressBook();
-		storageManager.backupAddressBook(original);
-		Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
-				.readAddressBook(storageManager.getBackupStorageFilePath());
-		AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
-		assertEquals(backupAddressBook, original);
-	}
+    @Test
+    public void backUpCommnadTest() throws IOException, DataConversionException {
+        AddressBook original = getTypicalAddressBook();
+        storageManager.backupAddressBook(original);
+        Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
+                .readAddressBook(storageManager.getBackupStorageFilePath());
+        AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
+        assertEquals(backupAddressBook, original);
+    }
 
     @Test
     public void prefsReadSave() throws Exception {
