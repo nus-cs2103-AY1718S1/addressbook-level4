@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= iConnect - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -92,23 +92,28 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find` `search` `get`
+=== Locating persons by different attrbutes: `find` `search` `get`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose specified attributes contain any of the given keywords. +
+Format: `find [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* The person can be found by searching any substring of the name. e.g. `hn` will match `John`
+* Name is searched by default without any tag required.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* At least one of the optional fields must be provided.
 ****
 
 Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
+* `find p/98765432` +
+Returns the person having phone number `98765432`
+* `find e/johndoe@gmail.com` +
+Returns the person having email `johndoe@gmail.com`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
