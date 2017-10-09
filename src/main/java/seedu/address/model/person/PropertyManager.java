@@ -28,10 +28,17 @@ public class PropertyManager {
     private static final HashMap<String, String> propertyConstraintMessages = new HashMap<>();
     private static final HashMap<String, String> propertyValidationRegex = new HashMap<>();
 
+    // Records whether has been initialized before.
+    private static boolean initialized = false;
+
     /**
      * Includes all the pre-loaded properties into {@code PropertyManager}.
      */
-    public PropertyManager() {
+    public static void initializePropertyManager() {
+        if (initialized) {
+            return;
+        }
+
         try {
             // Adds name as a pre-loaded property.
             addNewProperty("n", "name",
@@ -55,6 +62,8 @@ public class PropertyManager {
         } catch (DuplicatePropertyException dpe) {
             throw new RuntimeException("PropertyManager cannot be initialized. Stopping the application.");
         }
+
+        initialized = true;
     }
     /**
      * Adds a new available property with all the required information for setting up a property.
