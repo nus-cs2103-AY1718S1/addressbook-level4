@@ -142,24 +142,24 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseBloodType_null_throwsNullPointerException() throws Exception {
+    public void parseBloodTypeNullThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseBloodType(null);
     }
 
     @Test
-    public void parseBloodType_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseBloodTypeInvalidValueThrowsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseBloodType(Optional.of(INVALID_BLOODTYPE));
     }
 
     @Test
-    public void parseBloodType_optionalEmpty_returnsOptionalEmpty() throws Exception {
+    public void parseBloodTypeOptionalEmptyReturnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseBloodType(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseBloodType_validValue_returnsBloodType() throws Exception {
+    public void parseBloodTypeValidValueReturnsBloodType() throws Exception {
         Bloodtype expectedBloodType = new Bloodtype(VALID_BLOODTYPE);
         Optional<Bloodtype> actualBloodType = ParserUtil.parseBloodType(Optional.of(VALID_BLOODTYPE));
 
