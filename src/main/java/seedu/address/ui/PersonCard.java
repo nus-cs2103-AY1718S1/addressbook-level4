@@ -96,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setVisible(false);
         email.setVisible(false);
         tags.setVisible(false);
-        address.setStyle("-fx-font: 20 arial;");
+        address.setStyle("-fx-font: 16 arial;");
     }
 
     /**
@@ -107,7 +107,8 @@ public class PersonCard extends UiPart<Region> {
         address.setVisible(false);
         email.setVisible(false);
         tags.setVisible(false);
-        phone.setStyle("-fx-font: 20 arial;");
+        phone.setStyle("-fx-font: 16 arial;");
+
     }
 
     /**
@@ -118,7 +119,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setVisible(false);
         address.setVisible(false);
         tags.setVisible(false);
-        email.setStyle("-fx-font: 20 arial;");
+        email.setStyle("-fx-font: 16 arial;");
     }
 
     @Override
