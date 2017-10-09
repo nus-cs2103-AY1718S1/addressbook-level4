@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -31,6 +32,8 @@ public class BrowserPanel extends UiPart<Region> {
     private Label postalCode;
     @FXML
     private Label email;
+    @FXML
+    private FlowPane tags;
 
     public BrowserPanel() {
         super(FXML);
@@ -57,6 +60,23 @@ public class BrowserPanel extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        //person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(person);
+        //});
+    }
+
+    /**
+     * Initializes and styles tags belonging to each person. Each unique tag has a unique color.
+     * @param person
+     */
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-font-size:" + "24px");
+            tags.getChildren().add(tagLabel);
+        });
+        logger.finest("All tags for " + person.getName().toString() + " initialized");
     }
 
     /**
@@ -68,6 +88,7 @@ public class BrowserPanel extends UiPart<Region> {
         address.setText("");
         postalCode.setText("");
         email.setText("");
+        tags.getChildren().clear();
     }
 
     @Subscribe

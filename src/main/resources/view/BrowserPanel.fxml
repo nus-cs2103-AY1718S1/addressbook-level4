@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
@@ -14,4 +15,5 @@
          <Label fx:id="email" layoutX="13.0" layoutY="220.0" styleClass="window_small_label" text="\$email" />
       </children>
    </Pane>
+   <FlowPane fx:id="tags" layoutX="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" StackPane.alignment="CENTER_LEFT" />
 </StackPane>
