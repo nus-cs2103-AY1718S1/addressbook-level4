@@ -38,6 +38,14 @@ public class UniqueTagListTest {
             assertTrue(tag.getTagColor().equals("#dcdcdc"));
         }
 
+        uniqueTagList.setTagsColorOn();
+        uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
+        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
+        for (Tag tag : uniqueTagList.asObservableList()) {
+            assertTrue(!tag.getTagColor().equals("#dcdcdc"));
+        }
     }
 }
