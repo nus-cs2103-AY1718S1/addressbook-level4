@@ -85,17 +85,16 @@ Format: `List phone`
 
 Finds all persons with the specified attribute value. +
 Format: `view INDEX`
+****
+* You must list
+* If you call view after command `list`, it will only show the specified person.
+****
 
 Examples:
 
 * `list address` +
 `view 2` +
 find all persons with the second address shown in the address list.
-
-****
-* You must list
-* If you call view after command `list`, it will only show the specified person.
-****
 
 === Editing a person : `edit`
 
