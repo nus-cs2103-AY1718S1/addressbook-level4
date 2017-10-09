@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -19,6 +20,9 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.predicates.UniqueAddressPredicate;
+import seedu.address.model.person.predicates.UniqueEmailPredicate;
+import seedu.address.model.person.predicates.UniquePhonePredicate;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -112,9 +116,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException {
+
+        for (ReadOnlyPerson person : personList) {
+            addressBook.removePerson(person);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        handleListingUnit();
         indicateAddressBookChanged();
     }
 
@@ -160,6 +173,30 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    @Override
+    public void handleListingUnit() {
+        switch (ListingUnit.getCurrentListingUnit()) {
+
+        case ADDRESS:
+            UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(getUniqueAdPersonSet());
+            updateFilteredPersonList(addressPredicate);
+            break;
+
+        case PHONE:
+            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(getUniquePhonePersonSet());
+            updateFilteredPersonList(phonePredicate);
+            break;
+
+        case EMAIL:
+            UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(getUniqueEmailPersonSet());
+            updateFilteredPersonList(emailPredicate);
+            break;
+
+        default:
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
     }
 
 }

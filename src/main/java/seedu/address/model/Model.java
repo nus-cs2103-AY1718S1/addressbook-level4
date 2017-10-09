@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -37,6 +38,9 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Deletes the given list of person. */
+    void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException;
+
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
@@ -58,5 +62,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * handle different ListingUnit after redo and undo
+     */
+    void handleListingUnit();
 
 }

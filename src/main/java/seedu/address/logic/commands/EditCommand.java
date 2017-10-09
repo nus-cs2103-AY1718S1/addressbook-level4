@@ -182,6 +182,7 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_EMAIL_SUCCESS, editedEmail));
         } catch (IllegalValueException ive) {
+            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
             throw new CommandException(ive.getMessage());
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
@@ -209,6 +210,7 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredPersonList(new UniquePhonePredicate(model.getUniquePhonePersonSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_PHONE_SUCCESS, editedPhone));
         } catch (IllegalValueException ive) {
+            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
             throw new CommandException(ive.getMessage());
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
