@@ -14,14 +14,17 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
-== About
+== Introduction
 
 The Myth's Book is an address book dedicated for university students to store useful information
-about the people around them.
+about the people around them. The Myth's Book is a `Command Line Input` based software that is coded
+in Java programming language.
+
+== About
 
 This developer guide will teach you how to set up the application software on IntelliJ IDEA and
 allow you to understand the process, features and structure of the application software to help
-you become a good coder and contributor to The Myth's Book.
+you become a more knowledgeable contributor towards debugging, updating and improving The Myth's Book.
 
 == Setting up
 
