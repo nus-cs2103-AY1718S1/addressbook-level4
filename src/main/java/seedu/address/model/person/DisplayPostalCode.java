@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 //@@author khooroko
 public class DisplayPostalCode {
 
-    public static final String POSTAL_CODE_VALIDATION_REGEX = "^S\\d{6}";
+    public static final String DISPLAY_POSTAL_CODE_VALIDATION_REGEX = "^S\\d{6}";
     public static final String MESSAGE_DISPLAY_POSTAL_CODE_CONSTRAINTS = "Display postal code must be an S followed" +
             "by 6 digits";
     public static final String DISPLAY_PREFIX_POSTAL_CODE = "S";
@@ -18,10 +18,17 @@ public class DisplayPostalCode {
     public DisplayPostalCode(PostalCode postalCode) {
         requireNonNull(postalCode);
         String displayPostalCode = DISPLAY_PREFIX_POSTAL_CODE + postalCode.toString();
-        if (!displayPostalCode.matches(POSTAL_CODE_VALIDATION_REGEX)) {
+        if (!displayPostalCode.matches(DISPLAY_POSTAL_CODE_VALIDATION_REGEX)) {
             throw new AssertionError(MESSAGE_DISPLAY_POSTAL_CODE_CONSTRAINTS);
         }
         this.value = displayPostalCode;
+    }
+
+    /**
+     * Returns true if a given string is a valid person postal code.
+     */
+    public static boolean isValidDisplayPostalCode(String test) {
+        return test.matches(DISPLAY_POSTAL_CODE_VALIDATION_REGEX);
     }
 
     @Override
