@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/CS2103AUG2017-W11-B2/main.svg?branch=GeneralDocumentation["Build Status", link="https://travis-ci.org/CS2103AUG2017-W11-B2/main"]]
+https://travis-ci.org/CS2103AUG2017-W11-B2[image:https://travis-ci.org/CS2103AUG2017-W11-B2/main.svg?branch=master["Build Status", link="https://travis-ci.org/CS2103AUG2017-W11-B2/main"]]
 
 
 ifdef::env-github[]

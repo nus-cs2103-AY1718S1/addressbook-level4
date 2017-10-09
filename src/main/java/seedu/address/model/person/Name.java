@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -42,6 +45,12 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
+    /**
+     * Retrieves a listing of every word in the name, in order.
+     */
+    public List<String> getWordsInName() {
+        return Arrays.asList(fullName.split("\\s+"));
+    }
 
     @Override
     public String toString() {
