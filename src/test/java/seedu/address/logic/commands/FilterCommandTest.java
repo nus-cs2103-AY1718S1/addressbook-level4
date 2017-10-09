@@ -7,7 +7,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIE
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -76,8 +75,8 @@ public class FilterCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FilterCommand prepareCommand(String userInput) {
-        FilterCommand command =
-                new FilterCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        FilterCommand command = new FilterCommand(new TagContainsKeywordsPredicate
+                (Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

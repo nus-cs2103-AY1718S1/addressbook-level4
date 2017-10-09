@@ -6,14 +6,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
-import java.util.AbstractSet;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -165,9 +160,9 @@ public class StringUtilTest {
     }
 
     public Set<Tag> setupTestTag(){
-        try{
-            Set<Tag> testTag = new HashSet<Tag>();
+        try {
 
+            Set<Tag> testTag = new HashSet<Tag>();
 
             Tag friend = new Tag("friend");
             Tag colleague = new Tag("colleague");
