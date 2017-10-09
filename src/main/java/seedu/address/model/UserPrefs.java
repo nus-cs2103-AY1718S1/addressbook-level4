@@ -12,6 +12,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String adminUsername = "loanShark97";
+    private String adminPassword = "hitMeUp123";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -44,6 +46,23 @@ public class UserPrefs {
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }
+
+    public void setAdminUsername(String adminUsername) {
+        this.adminUsername = adminUsername;
+    }
+
+    public String getAdminUsername() {
+        return adminUsername;
+    }
+
+    public void setAdminPassword(String adminUsername) {
+        this.adminPassword = adminPassword;
+    }
+
+    public String getAdminPassword() {
+        return adminPassword;
+    }
+
 
     @Override
     public boolean equals(Object other) {
