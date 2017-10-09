@@ -26,20 +26,20 @@ public class SortCommand extends Command {
     public CommandResult execute() {
         //sort method calls goes here
         switch (sortType) {
-            case "name":
-                model.sort(sortType);//insert sort method call here
-                break;
+        case "name":
+            model.sort(sortType);//insert sort method call here
+            break;
 
-            case "phone":
-                //insert sort method call here
-                break;
+        case "phone":
+            //insert sort method call here
+            break;
 
-            case "email":
-                //insert sort method call here
-                break;
+        case "email":
+            //insert sort method call here
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
         //because "sorted by phone" sounds weird

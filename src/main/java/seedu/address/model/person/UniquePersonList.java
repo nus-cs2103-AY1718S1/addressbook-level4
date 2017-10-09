@@ -126,11 +126,11 @@ public class UniquePersonList implements Iterable<Person> {
     public void sort(String sortType) {
 
         switch(sortType){
-            case "name":
-                break;
+        case "name":
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }//for future sort types, this area and Comparator class must be changed
 
         Comparator<Person> sortie = new PersonComparator();
