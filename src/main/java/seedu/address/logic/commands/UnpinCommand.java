@@ -18,8 +18,8 @@ public class UnpinCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n "
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
-    public static final String MESSAGE_ALREADY_UNPINNED = "Person is not pinned!";
+    private static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
+    private static final String MESSAGE_ALREADY_UNPINNED = "Person is not pinned!";
 
     private final Index index;
 

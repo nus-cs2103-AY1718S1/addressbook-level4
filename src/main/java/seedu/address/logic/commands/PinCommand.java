@@ -18,8 +18,8 @@ public class PinCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n "
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Person: %1$s";
-    public static final String MESSAGE_ALREADY_PINNED = "Person is already pinned!";
+    private static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Person: %1$s";
+    private static final String MESSAGE_ALREADY_PINNED = "Person is already pinned!";
 
     private final Index index;
 
