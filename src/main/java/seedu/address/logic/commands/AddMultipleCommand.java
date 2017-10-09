@@ -21,14 +21,19 @@ public class AddMultipleCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "multiple";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple persons to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple person to the address book. "
             + "Parameters: "
+            + "FILE_NAME\n"
+            + "Example: " + COMMAND_WORD + " "
+            + "personsToAdd.txt";
+    
+    public static final String MESSAGE_PERSON_FORMAT = "Person format in .txt file: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example: "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
