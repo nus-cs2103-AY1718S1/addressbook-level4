@@ -3,7 +3,7 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
@@ -24,11 +24,8 @@ import seedu.address.commons.util.CollectionUtil;
 public class UniqueTagList implements Iterable<Tag> {
 
     private static Random random = new Random(123);
-
-    private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
-
     private static boolean tagColorOn;
-
+    private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
     /**
      * Constructs empty TagList.
      */
@@ -60,14 +57,14 @@ public class UniqueTagList implements Iterable<Tag> {
      */
     public void setTags(Set<Tag> tags) {
         requireAllNonNull(tags);
-        if (!tagColorOn){
-            for (Tag tag : tags){
+        if (!tagColorOn) {
+            for (Tag tag : tags) {
                 tag.setTagColor("#dcdcdc");
                 tagColorOn = false;
             }
         } else {
-            for( Tag tag : tags){
-                if (tag.tagColor.get() == null || tag.tagColor.get().equals("#dcdcdc")) {
+            for (Tag tag : tags) {
+                if (tag.getTagColor() == null || tag.getTagColor().equals("#dcdcdc")) {
                     float r = random.nextFloat();
                     float g = random.nextFloat();
                     float b = random.nextFloat();
@@ -178,12 +175,15 @@ public class UniqueTagList implements Iterable<Tag> {
     private static String convertColorToHexadecimal(Color color) {
         String hex = Integer.toHexString(color.getRGB() & 0xffffff);
         if (hex.length() < 6) {
-            if (hex.length() == 5)
+            if (hex.length() == 5) {
                 hex = "0" + hex;
-            if (hex.length() == 4)
+            }
+            if (hex.length() == 4) {
                 hex = "00" + hex;
-            if (hex.length() == 3)
+            }
+            if (hex.length() == 3) {
                 hex = "000" + hex;
+            }
         }
         hex = "#" + hex;
         return hex;

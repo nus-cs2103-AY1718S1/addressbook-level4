@@ -2,10 +2,6 @@ package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -19,66 +15,7 @@ public class Tag {
 
     public final String tagName;
 
-    public final StringProperty tagColor = new StringProperty() {
-
-        private String tagColorString;
-
-        @Override
-        public void bind(ObservableValue<? extends String> observable) {
-
-        }
-
-        @Override
-        public void unbind() {
-
-        }
-
-        @Override
-        public boolean isBound() {
-            return false;
-        }
-
-        @Override
-        public Object getBean() {
-            return null;
-        }
-
-        @Override
-        public String getName() {
-            return tagColorString;
-        }
-
-        @Override
-        public String get() {
-            return tagColorString;
-        }
-
-        @Override
-        public void addListener(ChangeListener<? super String> listener) {
-
-        }
-
-        @Override
-        public void removeListener(ChangeListener<? super String> listener) {
-
-        }
-
-        @Override
-        public void addListener(InvalidationListener listener) {
-
-        }
-
-        @Override
-        public void removeListener(InvalidationListener listener) {
-
-        }
-
-        @Override
-        public void set(String value) {
-            System.out.println("value changed to " + value);
-            tagColorString = value;
-        }
-    };
+    private String tagColor;
 
     /**
      * Validates given tag name.
@@ -86,7 +23,6 @@ public class Tag {
      * @throws IllegalValueException if the given tag name string is invalid.
      */
     public Tag(String name) throws IllegalValueException {
-        System.out.println("new tag created");
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!isValidTagName(trimmedName)) {
@@ -96,7 +32,11 @@ public class Tag {
     }
 
     public void setTagColor(String tagColor) {
-        this.tagColor.setValue(tagColor);
+        this.tagColor = tagColor;
+    }
+
+    public String getTagColor(){
+        return this.tagColor;
     }
 
     /**

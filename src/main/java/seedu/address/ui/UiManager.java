@@ -72,6 +72,7 @@ public class UiManager extends ComponentManager implements Ui {
         mainWindow.releaseResources();
     }
 
+    @Override
     public void  resetPanel(ObservableList<ReadOnlyPerson> personList){
         mainWindow.resetPanel(personList);
     }

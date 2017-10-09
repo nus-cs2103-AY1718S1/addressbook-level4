@@ -7,6 +7,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.Ui;
 
 /**
  * The API of the Model component.
@@ -49,4 +50,8 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Gets UI component
+     */
+    void getUi(Ui ui);
 }

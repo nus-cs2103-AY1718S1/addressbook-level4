@@ -19,9 +19,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.ui.Ui;
-import seedu.address.ui.UiManager;
-
-import javax.swing.*;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -104,17 +101,22 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    public void tagColor(boolean isOn){
-        if (isOn){
+    /**
+     * On/Off tag colors for AddressBook
+     * Updates UI by refreshing personListPanel
+     */
+    public void tagColor(boolean isOn) {
+        if (isOn) {
             addressBook.onTagColors();
         } else {
             addressBook.offTagColors();
         }
-        ((UiManager) ui).resetPanel(addressBook.getPersonList());
+        ui.resetPanel(addressBook.getPersonList());
         indicateAddressBookChanged();
     }
 
-    public void getUI(Ui ui){
+    @Override
+    public void getUi(Ui ui) {
         this.ui = ui;
     }
 

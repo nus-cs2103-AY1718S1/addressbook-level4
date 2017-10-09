@@ -24,7 +24,8 @@ public class ToggleTagColorCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        ((ModelManager) model).tagColor(toSet);
+        ModelManager modelManager = (ModelManager) model;
+        modelManager.tagColor(toSet);
         model.resetData(model.getAddressBook());
         logger.fine("Tag color set to " + (toSet ? "on" : "off"));
         return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on" : "off"));
