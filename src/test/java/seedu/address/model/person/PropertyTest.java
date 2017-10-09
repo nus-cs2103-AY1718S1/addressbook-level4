@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,16 +26,16 @@ public class PropertyTest {
 
     @Test
     public void createProperty_preLoadedProperty_invalidValue() {
+        Property newProperty = null;
         String value = "12";
         String expectedMessage = "Phone numbers can only contain numbers, and should be at least 3 digits long";
 
         try {
-            Property newProperty = new Property("p", value);
+            newProperty = new Property("p", value);
         } catch (IllegalValueException ive) {
             assertEquals(expectedMessage, ive.getMessage());
-            return;
         }
 
-        assert(false);
+        assertNull(newProperty);
     }
 }
