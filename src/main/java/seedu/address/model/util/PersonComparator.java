@@ -8,7 +8,7 @@ public class PersonComparator implements Comparator<Person>{
 
     public int compare(Person o1, Person o2 )
     {
-        if( o1 == o2 )
+        if( o1.equals(o2) )
             return 0;
         if( o1 == null )
             return 1;

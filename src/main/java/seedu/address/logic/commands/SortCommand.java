@@ -18,7 +18,7 @@ public class SortCommand extends Command {
 
     private String sortType;
 
-    public SortCommand(String type){
+    public SortCommand(String type) {
         this.sortType = type;
     }
 
@@ -43,9 +43,13 @@ public class SortCommand extends Command {
         }
 
         //because "sorted by phone" sounds weird
-        if(sortType.equals("phone")) {sortType = sortType + " number"; }
+        if ("phone".equals(sortType)) {
+            sortType = sortType + " number";
+        }
+        
         //lists all contacts after sorting
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
     }
+
 }

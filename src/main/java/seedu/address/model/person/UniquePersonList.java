@@ -127,7 +127,10 @@ public class UniquePersonList implements Iterable<Person> {
 
         switch(sortType){
             case "name":
-            break;
+                break;
+
+            default:
+                break;
         }//for future sort types, this area and Comparator class must be changed
 
         Comparator<Person> sortie = new PersonComparator();
