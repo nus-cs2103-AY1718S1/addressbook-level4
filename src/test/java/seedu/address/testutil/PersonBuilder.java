@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_POSTAL_CODE = "600123";
+    public static final String DEFAULT_DEBT_CODE = "123456789";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -34,9 +36,10 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTAL_CODE);
+            Debt defaultDebt = new Debt(DEFAULT_DEBT_CODE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultPostalCode,
-                    defaultTags);
+                    defaultDebt, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -105,6 +108,18 @@ public class PersonBuilder {
             this.person.setPhone(new Phone(phone));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Debt} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDebt(String debt) {
+        try {
+            this.person.setDebt(new Debt(debt));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("debt is expected to be unique.");
         }
         return this;
     }
