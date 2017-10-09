@@ -11,9 +11,8 @@ public class SortCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
-
+    
 }
