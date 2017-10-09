@@ -100,7 +100,7 @@ public class CustomiseCommandTest {
         }
     }
 
-     /**
+    /**
      * Returns an {@code RemarkCommand} with parameters {@code index} and {@code remark}
      */
     private CustomiseCommand prepareCommand(FontSize fontSize) {
