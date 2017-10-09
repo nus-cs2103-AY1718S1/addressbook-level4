@@ -94,14 +94,8 @@ find all persons with the second address shown in the address list.
 
 ****
 * You must list
+* If you call view after command `list`, it will only show the specified person.
 ****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Editing a person : `edit`
 
