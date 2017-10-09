@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -37,21 +39,28 @@ public class AddMultipleCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private ArrayList<Person> toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
-    public AddMultipleCommand(ReadOnlyPerson person) {
-        toAdd = new Person(person);
+    public AddMultipleCommand(ArrayList<ReadOnlyPerson> personsList) {
+        toAdd = new ArrayList<>();
+        for(ReadOnlyPerson person: personsList) {
+            toAdd.add(new Person(person));
+        }
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        StringBuilder successMessage = new StringBuilder();
         requireNonNull(model);
         try {
-            model.addPerson(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            for(Person personToAdd: toAdd) {
+                model.addPerson(personToAdd);
+                successMessage.append(personToAdd);
+            }
+            return new CommandResult(String.format(MESSAGE_SUCCESS, successMessage));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
