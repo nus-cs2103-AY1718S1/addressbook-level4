@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -33,6 +32,6 @@ public class RemarkTest {
 
         int filledRemarkHash = filledRemarkCopy.hashCode();
         int filledRemarkCopyHash = filledRemark.hashCode();
-        assertEquals(filledRemarkCopyHash,filledRemarkHash);
+        assertEquals(filledRemarkCopyHash, filledRemarkHash);
     }
 }
