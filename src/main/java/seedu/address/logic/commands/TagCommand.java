@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
@@ -11,8 +10,8 @@ public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
 
-    //public static final String MESSAGE_SUCCESS = "Listed all persons with specified tag";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters and shows list of persons with the specified tag.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Filters and shows list of persons with the specified tag.\n"
             + "Parameters: Existing tag\n"
             + "Example: " + COMMAND_WORD + " friends ";
 
