@@ -108,7 +108,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void backUpCommnadTest() throws IOException, DataConversionException {
+    public void backUpCommandTest() throws IOException, DataConversionException {
         AddressBook original = getTypicalAddressBook();
         storageManager.backupAddressBook(original);
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
