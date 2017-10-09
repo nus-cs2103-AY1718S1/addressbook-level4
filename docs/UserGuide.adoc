@@ -67,6 +67,29 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding multiple persons: `multiple`
+
+Adds multiple persons to the address book with inputs from a `.txt` file stored in the default data folder +
+Default data folder: `./data` +
+Format: `multiple FILE_NAME.txt`
+
+Examples:
+
+* `multiple personsToAdd.txt`
+* `multiple newStudentsToAdd.txt` 
+
+Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+The format in the `.txt` file is the same as `add` command except without the `add`
+
+Example of `.txt` file:
+
+****
+n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 +
+n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal +
+n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 t/pretty
+****
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
