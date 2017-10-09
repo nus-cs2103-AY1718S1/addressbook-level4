@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +34,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+        );
     }
 
     /**
@@ -47,7 +50,9 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append(" Tags: ")
+                .append(getRemark())
+                .append(" Remark: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

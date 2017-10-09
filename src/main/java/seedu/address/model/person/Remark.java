@@ -15,7 +15,7 @@ public class Remark {
     /**
      * Validates given remark.
      */
-    public Remark(String remark){
+    public Remark(String remark) {
         requireNonNull(remark);
         this.value = remark;
     }
