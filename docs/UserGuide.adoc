@@ -24,7 +24,8 @@ manipulate with information of their contacts in the address book.
 == About
 
 Feeling lost when using The Myth's Book? Don't worry. This user guide will provide information of the features
-and commands of the software and teach you on how you can start using The Myth's Book the better way and allow
+and commands of the software.
+This user guide will teach you on how you can start using The Myth's Book the better way and allow
 you to keep and access the necessary information of your contacts in your computer whenever you are using it.
 
 == Quick Start
