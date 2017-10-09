@@ -12,7 +12,6 @@ import seedu.address.model.person.predicates.UniqueAddressPredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
 
-import javax.sql.rowset.Predicate;
 
 /**
  * Represents a command which can be undone and redone.
@@ -63,23 +62,23 @@ public abstract class UndoableCommand extends Command {
     private  void handleListingUnit() {
         switch (ListingUnit.getCurrentListingUnit()) {
 
-            case ADDRESS:
-                UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-                model.updateFilteredPersonList(addressPredicate);
-                break;
+        case ADDRESS:
+            UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
+            model.updateFilteredPersonList(addressPredicate);
+            break;
 
-            case PHONE:
-                UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
-                model.updateFilteredPersonList(phonePredicate);
-                break;
+        case PHONE:
+            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
+            model.updateFilteredPersonList(phonePredicate);
+            break;
 
-            case EMAIL:
-                UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
-                model.updateFilteredPersonList(emailPredicate);
-                break;
+        case EMAIL:
+            UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
+            model.updateFilteredPersonList(emailPredicate);
+            break;
 
-            default:
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        default:
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
     }
 
