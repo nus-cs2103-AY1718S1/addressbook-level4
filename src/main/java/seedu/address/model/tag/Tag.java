@@ -35,7 +35,7 @@ public class Tag {
         this.tagColor = tagColor;
     }
 
-    public String getTagColor(){
+    public String getTagColor() {
         return this.tagColor;
     }
 

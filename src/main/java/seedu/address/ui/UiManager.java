@@ -73,7 +73,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
-    public void  resetPanel(ObservableList<ReadOnlyPerson> personList){
+    public void  resetPanel(ObservableList<ReadOnlyPerson> personList) {
         mainWindow.resetPanel(personList);
     }
 
