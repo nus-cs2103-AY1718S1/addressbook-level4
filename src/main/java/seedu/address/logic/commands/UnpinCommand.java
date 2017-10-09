@@ -18,7 +18,7 @@ public class UnpinCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n "
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
+    public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
     public static final String MESSAGE_ALREADY_UNPINNED = "Person is not pinned!";
 
     private final Index index;
@@ -40,7 +40,7 @@ public class UnpinCommand extends UndoableCommand {
 
         if (personToUnpin.isPinned()) {
             personToUnpin.unsetPin();
-            return new CommandResult(MESSAGE_PIN_PERSON_SUCCESS);
+            return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
         } else {
             return new CommandResult(MESSAGE_ALREADY_UNPINNED);
         }
