@@ -9,8 +9,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.xml.crypto.Data;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,8 +25,8 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
 
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
@@ -55,17 +53,18 @@ public class StorageManagerTest {
     }
 
     @Test
-	public void read_notXmlFormat_exceptionThrown() throws DataConversionException, IOException {
+    public void read_notXmlFormat_exceptionThrown() throws DataConversionException, IOException {
 
-		// thrown.expect(Exception.class);
-		storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"), new JsonUserPrefsStorage("random.json"));
-		Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
-				.readAddressBook(storageManager.getBackupStorageFilePath());
-		assertFalse(backupAddressBookOptional.isPresent());
+        // thrown.expect(Exception.class);
+        storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"),
+                new JsonUserPrefsStorage("random.json"));
+        Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
+                .readAddressBook(storageManager.getBackupStorageFilePath());
+        assertFalse(backupAddressBookOptional.isPresent());
         /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
          * That means you should not have more than one exception test in one method
          */
-	}
+    }
 
     @Test
     public void backupAddressBook() throws Exception {
@@ -102,10 +101,10 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void backUpURLTest() {
-        String expectedURL = storageManager.getAddressBookFilePath() + "-backup.xml";
-        String actualURL = storageManager.getBackupStorageFilePath();
-        assertEquals(expectedURL, actualURL);
+    public void backUpUrlTest() {
+        String expectedUrl = storageManager.getAddressBookFilePath() + "-backup.xml";
+        String actualUrl = storageManager.getBackupStorageFilePath();
+        assertEquals(expectedUrl, actualUrl);
     }
 
     @Test
