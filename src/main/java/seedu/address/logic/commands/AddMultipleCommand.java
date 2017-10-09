@@ -43,7 +43,8 @@ public class AddMultipleCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New persons added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-
+    public static final String DEFAULT_FOLDER_PATH = "./data";
+    
     private ArrayList<Person> toAdd;
 
     /**
