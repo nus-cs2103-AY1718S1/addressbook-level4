@@ -46,7 +46,7 @@ public class SortCommand extends Command {
         if ("phone".equals(sortType)) {
             sortType = sortType + " number";
         }
-        
+
         //lists all contacts after sorting
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
