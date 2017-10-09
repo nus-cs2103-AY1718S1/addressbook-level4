@@ -33,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setPostalCode(person.getPostalCode());
+        descriptor.setDebt(person.getDebt());
         descriptor.setTags(person.getTags());
     }
 
@@ -56,6 +57,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parsePhone(Optional.of(phone)).ifPresent(descriptor::setPhone);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Debt} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDebt(String debt) {
+        try {
+            ParserUtil.parseDebt(Optional.of(debt)).ifPresent(descriptor::setDebt);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("debt is expected to be unique.");
         }
         return this;
     }

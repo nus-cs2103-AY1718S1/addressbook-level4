@@ -24,7 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_POSTAL_CODE = "600123";
-    public static final String DEFAULT_DEBT_CODE = "10000";
+    public static final String DEFAULT_DEBT_CODE = "123456789";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
