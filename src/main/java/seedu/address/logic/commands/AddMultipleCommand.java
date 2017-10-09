@@ -41,12 +41,13 @@ public class AddMultipleCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New persons added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New person(s) added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "The persons list contains person(s) that already exists in the address book.";
+    public static final String MESSAGE_SUCCESSFUL_PERSONS = "New person(s) that are successfully added: ";
     public static final String DEFAULT_FOLDER_PATH = "./data";
     
     private ArrayList<Person> toAdd;
-
+    
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
@@ -69,7 +70,13 @@ public class AddMultipleCommand extends UndoableCommand {
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, successMessage));
         } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            String duplicatePersonMessage = MESSAGE_DUPLICATE_PERSON
+                    + System.lineSeparator()
+                    + System.lineSeparator()
+                    + MESSAGE_SUCCESSFUL_PERSONS 
+                    + successMessage;
+            
+            throw new CommandException(duplicatePersonMessage);
         }
 
     }
