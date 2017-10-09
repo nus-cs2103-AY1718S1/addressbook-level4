@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -56,7 +58,7 @@ public class SortCommandTest {
     }
 
     private void assertSortSuccessful(ReadOnlyAddressBook addressBook, List<ReadOnlyPerson> peopleList) {
-        assertTrue(isAddressBookSorted(addressBook,peopleList));
+        assertTrue(isAddressBookSorted(addressBook, peopleList));
     }
 
     /**
@@ -64,14 +66,16 @@ public class SortCommandTest {
      * Asserts that {@code AddressBook} contains all individuals being compared.
      */
     private boolean isAddressBookSorted(ReadOnlyAddressBook addressBook, List<ReadOnlyPerson> peopleList) {
-        for(int i = 0; i < peopleList.size() - 1; i++){
+        for (int i = 0; i < peopleList.size() - 1; i++) {
             ReadOnlyPerson person1 = peopleList.get(i);
-            ReadOnlyPerson person2 = peopleList.get(i+1);
+            ReadOnlyPerson person2 = peopleList.get(i + 1);
 
             assertTrue(addressBook.getPersonList().contains(person1));
             assertTrue(addressBook.getPersonList().contains(person2));
 
-            if (compareNamesAlphabetically(person1, person2)) return false;
+            if (compareNamesAlphabetically(person1, person2)) {
+                return false;
+            }
         }
 
         return true;
