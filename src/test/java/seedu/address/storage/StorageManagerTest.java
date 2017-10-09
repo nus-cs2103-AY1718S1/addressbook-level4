@@ -42,6 +42,10 @@ public class StorageManagerTest {
         return testFolder.getRoot().getPath() + fileName;
     }
 
+    @Test
+	public void testPrefFilePath() {
+    	assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
+	}
 
     @Test
     public void backupAddressBook() throws Exception {
