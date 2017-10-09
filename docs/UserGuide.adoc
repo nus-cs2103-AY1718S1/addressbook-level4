@@ -18,15 +18,15 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 The Myth's Book is an address book dedicated for university students to store useful information such
 as the phone numbers and emails of the people around them. The Myth's Book is a `Command Line Input` based
-software which helps caters to students who are efficient and comfortable in typing out command inputs to
+software which helps caters to students who are efficient and comfortable in typing out command line inputs to
 manipulate with information of their contacts in the address book.
 
 == About
 
-Feeling lost when using The Myth's Book? Don't worry. This user guide will provide information of the features
-and commands of the software.
-This user guide will teach you on how you can start using The Myth's Book the better way and allow
-you to keep and access the necessary information of your contacts in your computer whenever you are using it.
+Feeling lost when using The Myth's Book? Don't worry. This user guide will provide information to help you
+understand the features and commands of the software.
+This user guide will teach you on how to use The Myth's Book effectively and allow
+you to manipulate the necessary information of your contacts efficiently.
 
 == Quick Start
 
