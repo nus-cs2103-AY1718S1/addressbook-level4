@@ -17,9 +17,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "#e74c3c" /*red*/, "#f1c40f" /*yellow*/, "#3498db" /*blue*/,
-                                       "#1abc9c" /*turquoise*/, "#2ecc71" /*green*/, "#9b59b6" /*purple*/,
-                                       "#bdc3c7" /*gray*/ };
+    private static String[] colors = { "#d06651" /*red*/, "#f1c40f" /*yellow*/, "#3498db" /*blue*/,
+                                       "#1abc9c" /*turquoise*/, "#2ecc71" /*green*/, "#9b59b6" /*purple*/ };
     private static HashMap<String, String> tagColors = new HashMap<> ();
     private static Random random = new Random();
 

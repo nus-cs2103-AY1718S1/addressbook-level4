@@ -17,7 +17,7 @@
     </columnConstraints>
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
       </padding>
       <HBox alignment="CENTER_LEFT" spacing="5">
             <ImageView id="avatarImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
@@ -36,7 +36,10 @@
                </padding>
             </VBox>
       </HBox>
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+            <padding>
+               <Insets top="10.0" />
+            </padding></Label>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
     </VBox>

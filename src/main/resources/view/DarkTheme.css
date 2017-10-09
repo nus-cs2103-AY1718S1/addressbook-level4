@@ -131,13 +131,13 @@
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #444344 !important;
 }
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #716F70 !important;
 }
 
 .anchor-pane {
@@ -164,7 +164,7 @@
 
 .status-bar {
     -fx-background-color: derive(#f7f5f4, 80%);
-    -fx-text-fill: black;
+    -fx-padding: 0 10 0 10;
 }
 
 .result-display {
@@ -180,7 +180,8 @@
 
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: gray;
+    -fx-text-fill: derive(#716f70, -10%);
+    -fx-font-size: 13px;
 }
 
 .status-bar-with-border {
@@ -216,9 +217,9 @@
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: gray;
+    -fx-text-fill: derive(#716f70, -10%);
     -fx-opacity: 0.9;
 }
 
@@ -306,7 +307,7 @@
 
 .scroll-bar .thumb {
     -fx-background-color: derive(#f7f5f4, -25%);
-    -fx-background-insets: 2;
+    -fx-background-insets: 1;
     -fx-background-radius: 18 18 18 18;
 }
 
@@ -320,11 +321,11 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 5 3 5 3;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 3 5 3 5;
 }
 
 #cardPane {
