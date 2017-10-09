@@ -48,15 +48,20 @@ public class Person implements ReadOnlyPerson {
                 source.getTags());
     }
 
+    /**
+     * Checks whether person in pinned in addressbook
+     * @param tags
+     * @return true if Pinned is one of the tags, false if not
+     */
     private boolean checkPinTag(Set<Tag> tags) {
-        for(Tag tag: tags) {
-            if(tag.tagName.equals("Pinned")) {
+        for (Tag tag: tags) {
+            if ("Pinned".equals(tag.tagName)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }

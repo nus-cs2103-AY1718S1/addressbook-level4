@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -11,14 +15,15 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
-import java.util.List;
 
-import static java.util.Objects.requireNonNull;
 
 public class UnpinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unpin";
 
+    /**
+     * Shows message usage for unpin command
+     */
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unpins the selected person identified "
             + "by the index number used in the last person listing.\n "
             + "Parameters: INDEX (must be a positive integer)\n "
@@ -45,7 +50,7 @@ public class UnpinCommand extends UndoableCommand {
 
         ReadOnlyPerson personToUnpin = lastShownList.get(index.getZeroBased());
         try {
-            if(personToUnpin.isPinned()) {
+            if (personToUnpin.isPinned()) {
                 Person unpinTag = removePinTag(personToUnpin);
                 model.updatePerson(personToUnpin, unpinTag);
                 return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));

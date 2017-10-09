@@ -1,26 +1,25 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-
-import java.util.List;
-
-
-
-import static java.util.Objects.requireNonNull;
 
 public class PinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "pin";
 
+    /**
+     * Shows message usage for pin command
+     */
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Pins the selected person identified "
             + "by the index number used in the last person listing.\n "
             + "Parameters: INDEX (must be a positive integer)\n "
@@ -47,7 +46,7 @@ public class PinCommand extends UndoableCommand {
 
         ReadOnlyPerson personToPin = lastShownList.get(index.getZeroBased());
         try {
-            if(personToPin.isPinned()) {
+            if (personToPin.isPinned()) {
                 return new CommandResult(MESSAGE_ALREADY_PINNED);
             } else {
                 Person addPin = addPinTag(personToPin);
@@ -63,6 +62,9 @@ public class PinCommand extends UndoableCommand {
     }
 
     private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
+        /**
+         * Create a new UniqueTagList to add pin tag into the list.
+         */
         UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
         updatedTags.addPinTag();
 
