@@ -80,6 +80,10 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
     public static Optional<Birthday> parseBirthday(Optional<String> birtday) throws IllegalValueException {
         requireNonNull(birtday);
         return birtday.isPresent() ? Optional.of(new Birthday(birtday.get())) : Optional.empty();

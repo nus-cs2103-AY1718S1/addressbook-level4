@@ -100,17 +100,22 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Address getAddress() {
-        return address.get();
+    public Address getAddress() { return address.get();
     }
 
-    public void setBirthday(Birthday birthday) { this.birthday.set(requireNonNull(birthday)); }
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
 
     @Override
-    public ObjectProperty<Birthday> birthdayProperty() { return birthday; }
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
 
     @Override
-    public Birthday getBirthday() { return birthday.get(); }
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
