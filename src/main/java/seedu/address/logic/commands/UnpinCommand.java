@@ -15,8 +15,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
-
-
+/**
+ * Unpins an existing pinned person from the address book
+ */
 public class UnpinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unpin";
@@ -65,6 +66,12 @@ public class UnpinCommand extends UndoableCommand {
 
     }
 
+    /**
+     *
+     * @param personToUnpin
+     * @return updated Person with removed pin to be added to the address book
+     * @throws CommandException
+     */
     private Person removePinTag(ReadOnlyPerson personToUnpin) throws CommandException {
         try {
             UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());

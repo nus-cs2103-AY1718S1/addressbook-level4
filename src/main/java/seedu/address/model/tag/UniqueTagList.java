@@ -44,6 +44,10 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Creates a pin tag
+     * @return a Pin Tag to be used to add or remove person to be pinned in the address book
+     */
     private Tag createPinTag() {
         try {
             return new Tag("Pinned");
@@ -105,10 +109,17 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Adds a pin tag to the tag list
+     */
     public void addPinTag() {
         internalList.add(pinTag);
     }
 
+    /**
+     * Removes a pin tag from the tag list
+     * @throws IllegalValueException
+     */
     public void removePinTag() throws IllegalValueException {
         if (contains(pinTag)) {
             internalList.remove(pinTag);

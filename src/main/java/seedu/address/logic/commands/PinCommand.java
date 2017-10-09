@@ -13,6 +13,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.UniqueTagList;
 
+/**
+ * Pins an existing person on top of the address book
+ */
 public class PinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "pin";
@@ -58,9 +61,14 @@ public class PinCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(MESSAGE_PIN_PERSON_FAILED);
         }
-
     }
 
+    /**
+     *
+     * @param personToPin
+     * @return updated Person with added pin to be added to the address book
+     * @throws CommandException
+     */
     private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
         /**
          * Create a new UniqueTagList to add pin tag into the list.
