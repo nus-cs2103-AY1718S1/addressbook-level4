@@ -34,11 +34,17 @@ public class FontSize {
      */
     public static boolean isValidFontSize(String test) {
         for (String s : FONT_SIZE_VALIDATION) {
-            if (test.equalsIgnoreCase(s)) {
+            if (test.equals(s)) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other.equals(this.value));
     }
 
     @Override

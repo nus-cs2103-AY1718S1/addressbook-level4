@@ -50,4 +50,11 @@ public class CustomiseCommand extends UndoableCommand {
         }
         return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".");
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CustomiseCommand // instanceof handles nulls
+                && fontSize.equals(((CustomiseCommand) other).fontSize));
+    }
 }
