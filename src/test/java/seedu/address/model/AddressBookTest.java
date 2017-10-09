@@ -69,6 +69,13 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    @Test
+    public void testHashCodeFalse() {
+        int addressBookAHash = new AddressBook().hashCode();
+        int addressBookBHash = new AddressBook().hashCode();
+        assertEquals(addressBookAHash,addressBookBHash);
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
