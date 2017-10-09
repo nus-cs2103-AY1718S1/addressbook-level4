@@ -7,6 +7,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagInternalErrorException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
@@ -26,7 +27,7 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Deletes the given tag from every person. */
-    void deleteTag(Tag target) throws TagNotFoundException;
+    void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

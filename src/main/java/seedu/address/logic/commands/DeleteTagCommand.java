@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagInternalErrorException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
@@ -32,6 +33,8 @@ public class DeleteTagCommand extends UndoableCommand {
         try {
             model.deleteTag(tagToDelete);
         } catch (TagNotFoundException tnfe) {
+            throw new CommandException(MESSAGE_USAGE);
+        } catch (TagInternalErrorException e) {
             throw new CommandException(MESSAGE_USAGE);
         }
 

@@ -20,6 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagInternalErrorException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
@@ -60,6 +61,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -72,7 +74,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Deletes the tag from every person in the address book */
-    public void deleteTag(Tag target) throws TagNotFoundException {
+    public void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException {
 
         int tagsFound = 0;
         Iterator it = addressBook.getPersonList().iterator();
@@ -88,10 +90,10 @@ public class ModelManager extends ComponentManager implements Model {
 
             try {
                 addressBook.updatePerson(oldPerson, newPerson);
-            } catch (DuplicatePersonException e) {
-                e.printStackTrace();
-            } catch (PersonNotFoundException e) {
-                e.printStackTrace();
+            } catch (DuplicatePersonException dpe) {
+                throw new TagInternalErrorException();
+            } catch (PersonNotFoundException pnfe) {
+                throw new TagInternalErrorException();
             }
         }
 
