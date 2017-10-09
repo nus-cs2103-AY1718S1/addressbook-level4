@@ -2,7 +2,6 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
 
 public class EventName {
 
