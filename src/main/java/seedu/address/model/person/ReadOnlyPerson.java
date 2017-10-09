@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<PostalCode> postalCodeProperty();
     PostalCode getPostalCode();
+    ObjectProperty<DisplayPostalCode> displayPostalCodeProperty();
+    DisplayPostalCode getDisplayPostalCode();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 

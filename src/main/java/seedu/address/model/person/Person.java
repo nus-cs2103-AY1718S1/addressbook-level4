@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<DisplayPostalCode> displayPostalCode;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -36,6 +37,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.displayPostalCode = new SimpleObjectProperty<>(new DisplayPostalCode(postalCode));
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -117,6 +119,16 @@ public class Person implements ReadOnlyPerson {
     @Override
     public PostalCode getPostalCode() {
         return postalCode.get();
+    }
+
+    @Override
+    public ObjectProperty<DisplayPostalCode> displayPostalCodeProperty() {
+        return displayPostalCode;
+    }
+
+    @Override
+    public DisplayPostalCode getDisplayPostalCode() {
+        return displayPostalCode.get();
     }
 
     //@@author
