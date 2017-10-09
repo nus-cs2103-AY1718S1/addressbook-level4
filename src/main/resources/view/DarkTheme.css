@@ -337,6 +337,12 @@
     -fx-text-fill: white;
 }
 
+#commandText {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }

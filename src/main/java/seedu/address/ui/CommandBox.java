@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -23,7 +24,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
-    private static final double MULTIPLIER_FACTOR = 1.25;
     private static final String FXML = "CommandBox.fxml";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
@@ -37,6 +37,9 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextFieldKeyword;
+
+    @FXML
+    private Text commandText;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -112,6 +115,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void configInactiveKeyword() {
         commandTextFieldKeyword.setVisible(false);
+        commandText.setVisible(false);
         commandTextFieldKeyword.toBack();
         commandTextFieldKeyword.clear();
     }
@@ -123,15 +127,15 @@ public class CommandBox extends UiPart<Region> {
      */
     private void configActiveKeyword(String commandKeyword) {
         commandTextFieldKeyword.setVisible(true);
-        Text commandText = new Text(commandKeyword);
-        commandText.setFont(commandTextField.getFont());
-        final double width = commandText.getLayoutBounds().getWidth() * MULTIPLIER_FACTOR;
-        commandTextFieldKeyword.setText(commandKeyword);
+        commandText.setVisible(true);
+        commandText.setText(commandKeyword);
+        final double width = commandText.getLayoutBounds().getWidth();
         String color = keywordColorMap.get(commandKeyword);
-        commandTextFieldKeyword.setStyle("-fx-background-color: " + color + ";\n"
-                + " -fx-text-fill: red;");
+        commandTextFieldKeyword.setStyle("-fx-background-color: " + color + ";\n");
+        commandText.setFill(Color.RED);
         commandTextFieldKeyword.setPrefWidth(width);
         commandTextFieldKeyword.toFront();
+        commandText.toFront();
     }
 
 

@@ -3,14 +3,17 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="commandPane" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <TextField fx:id="commandTextFieldKeyword" alignment="CENTER" editable="false" maxWidth="-Infinity" StackPane.alignment="CENTER_LEFT">
-      <padding>
-         <Insets left="4.0" />
-      </padding>
+   <Text fx:id="commandText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
       <StackPane.margin>
-         <Insets left="4.5" />
+         <Insets left="13.0" />
+      </StackPane.margin>
+   </Text>
+   <TextField fx:id="commandTextFieldKeyword" alignment="CENTER" editable="false" maxWidth="-Infinity" StackPane.alignment="CENTER_LEFT">
+      <StackPane.margin>
+         <Insets left="13.0" />
       </StackPane.margin></TextField>
   <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." StackPane.alignment="CENTER_LEFT" />
 </StackPane>
