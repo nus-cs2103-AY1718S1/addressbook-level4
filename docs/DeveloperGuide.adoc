@@ -791,7 +791,8 @@ Use case ends.
 * 3a. The file contain person(s) that already exist in AddressBook.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. AddressBook deletes all successfully added persons prior to duplicated persons.
+** 3a2. AddressBook shows an error message.
 +
 Use case ends.
 
