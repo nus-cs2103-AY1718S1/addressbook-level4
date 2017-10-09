@@ -16,6 +16,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -75,6 +76,23 @@ public class StorageManagerTest {
         backupAddressBook = new AddressBook(backupAddressBookOptional.get());
         assertEquals(editedBook, backupAddressBook);
     }
+
+    @Test
+	public void backUpURLTest() {
+		String expectedURL = storageManager.getAddressBookFilePath() + "-backup.xml";
+    	String actualURL = storageManager.getBackupStorageFilePath();
+    	assertEquals(expectedURL, actualURL);
+	}
+
+	@Test
+	public void backUpCommnadTest() throws IOException, DataConversionException {
+		AddressBook original = getTypicalAddressBook();
+		storageManager.backupAddressBook(original);
+		Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
+				.readAddressBook(storageManager.getBackupStorageFilePath());
+		AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
+		assertEquals(backupAddressBook, original);
+	}
 
     @Test
     public void prefsReadSave() throws Exception {
