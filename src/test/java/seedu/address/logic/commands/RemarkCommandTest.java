@@ -1,21 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Remark;
-import seedu.address.testutil.PersonBuilder;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -30,6 +14,19 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.CARL;
 
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.testutil.PersonBuilder;
 
 public class RemarkCommandTest {
 
@@ -38,8 +35,8 @@ public class RemarkCommandTest {
     @Test
     public void execute_validRemarkAdd_success() throws Exception {
 
-        Person personToRemark = new PersonBuilder(model.getFilteredPersonList().
-                get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("Remark To Add").build();
+        Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("Remark To Add").build();
 
         RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, personToRemark.getRemark().value);
 
@@ -54,8 +51,8 @@ public class RemarkCommandTest {
     @Test
     public void execute_validRemarkDelete_success() throws Exception {
 
-        Person personToRemark = new PersonBuilder(model.getFilteredPersonList().
-                get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("").build();
+        Person personToRemark = new PersonBuilder(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withRemark("").build();
 
         RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, personToRemark.getRemark().value);
 
@@ -68,12 +65,13 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_editRemarks_success() throws Exception {
+    public void execute_validIndexFilteredList_editRemarksSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personToRemark).withRemark("Test").build();
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, editedPerson.getRemark().toString());
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON,
+                editedPerson.getRemark().toString());
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, personToRemark);
 
@@ -84,12 +82,13 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_deleteRemarks_success() throws Exception {
+    public void execute_validIndexFilteredList_deleteRemarksSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToRemark = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personToRemark).withRemark("").build();
-        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON, editedPerson.getRemark().toString());
+        RemarkCommand remarkCommand = getRemarkCommandForPerson(INDEX_FIRST_PERSON,
+                editedPerson.getRemark().toString());
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, personToRemark);
 

@@ -17,7 +17,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.sun.org.apache.regexp.internal.RE;
+// Unused import. But it looks important. I'll leave it here for now
+// import com.sun.org.apache.regexp.internal.RE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
@@ -141,12 +142,13 @@ public class AddressBookParserTest {
         String remark = "Dummy";
         Index index = INDEX_FIRST_PERSON;
 
-        RemarkCommand testRemarkCommand = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " " +
-                        index.getOneBased() + " " + PREFIX_REMARK + remark);
+        RemarkCommand testRemarkCommand = (RemarkCommand) parser.parseCommand(
+                RemarkCommand.COMMAND_WORD + " "
+                        + index.getOneBased() + " " + PREFIX_REMARK + remark);
 
         assertTrue(testRemarkCommand instanceof RemarkCommand);
-        assertEquals(new RemarkCommand(index, new Remark(remark)),testRemarkCommand);
-        assertNotEquals(new RemarkCommand(index,new Remark("")),testRemarkCommand);
+        assertEquals(new RemarkCommand(index, new Remark(remark)), testRemarkCommand);
+        assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
     }
 
     @Test
