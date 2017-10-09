@@ -88,6 +88,9 @@ public class RemarkCommand extends UndoableCommand {
                 && this.remark.equals(((RemarkCommand) other).remark); // state check
     }
 
+    /**
+     * Outputs success message based on whether a remark is added or removed
+     */
     private String outputCorrectTypeOfSuccessMessage(ReadOnlyPerson editedPerson) {
         if (editedPerson.getRemark().toString().isEmpty()) {
             return String.format(MESSAGE_REMOVE_REMARK_SUCCESS, editedPerson);
