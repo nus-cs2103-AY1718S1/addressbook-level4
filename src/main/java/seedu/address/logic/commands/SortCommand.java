@@ -14,5 +14,4 @@ public class SortCommand extends UndoableCommand {
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
-    
 }
