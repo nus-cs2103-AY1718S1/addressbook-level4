@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="startUpPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="welcomeMessage" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Codii" textAlignment="CENTER" StackPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <StackPane.margin>
+            <Insets top="50.0" />
+         </StackPane.margin>
+      </Text>
+      <Text fx:id="loginInstruction" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in using the command box above." textAlignment="CENTER" wrappingWidth="600.0" StackPane.alignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="loginFormat" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Format: login USERNAME PASSWORD" textAlignment="CENTER" StackPane.alignment="BOTTOM_CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <StackPane.margin>
+            <Insets bottom="50.0" />
+         </StackPane.margin>
+      </Text>
+   </children>
+   <padding>
+      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+   </padding>
+</StackPane>
