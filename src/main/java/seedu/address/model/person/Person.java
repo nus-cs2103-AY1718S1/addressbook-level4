@@ -35,10 +35,10 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
 
-        properties.put("n", new SimpleObjectProperty<>(name));
-        properties.put("p", new SimpleObjectProperty<>(phone));
-        properties.put("e", new SimpleObjectProperty<>(email));
-        properties.put("a", new SimpleObjectProperty<>(address));
+        properties.put("n", this.name);
+        properties.put("p", this.phone);
+        properties.put("e", this.email);
+        properties.put("a", this.address);
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
