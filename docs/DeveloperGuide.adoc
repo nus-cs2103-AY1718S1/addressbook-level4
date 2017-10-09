@@ -728,11 +728,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` | user | edit a person | change details of a person easily
 |`* * *` | user | tag a person | store some notes about certain people
 |`* * *` | user | categorize persons | easily organize contacts and later on find wrt group
+|`* * *` | student | group contacts by module | have people from specific module at hand
 |`* * *` | user with many persons in the address book | find all the persons that satisfy part of the name (eg. Jo*) | search without remembering all the details
 |`* * *` | user | get closest result if my input doesn't match any name | I get results even if I misspell
 |`* * *` | user | add a picture to a person | recall easily who the person is
 |`* * *` | user | add a social media link to a person | get more info about a person in one place (in the App)
-|`* * *` | user | be warned before execution of a hazardous command | prevent from disastrous mistakes
+|`* * *` | user | be warned before execution of a link:#hazardous-command[hazardous command] | prevent from disastrous mistakes
 |`* * *` | user | change the theme of the GUI (dark/bright) | prevent eye strain or simply customize
 |`* * *` | user | validate persons details when adding |  prevent any mistakes
 |`* * *` | user | input more than 1 phone number | can store home + office + mobile numbers easily
@@ -756,8 +757,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` | user | sort by frequency of access | easily access most frequent contacts
 |`* *` | forgetful user | have a reminder which reminds me to call someone at certain times | call my contacts if needed
 |`* *` | busy user | save appointment with people in my addressbook and send them a message about the appointment | set up appointment with my contacts easily
-|`* *` | stealthy users | have hidden contacts which can only be shown upon typing a secret phrase | hide my other girlfriends from my girlfriend
-|`* *` | stealthy users | delete all hidden contacts after the passphrase is entered wrongly 5 times | noone can excess my hidden contacts
+|`* *` | stealthy users | have link:#hidden-contact[hidden contacts] which can only be shown upon typing a secret phrase | hide my other girlfriends from my girlfriend
+|`* *` | stealthy users | delete all link:#hidden-contact[hidden contacts] after the passphrase is entered wrongly 5 times | no one can excess my link:#hidden-contact[hidden contacts]
 |`* *` | user | send my contact to people in my address book | so that I can give it to my friend when they ask
 |`* *` | user | type names in either case | it can auto-capitalise the first letter of all names
 |`*` | user with many persons in the address book | sort persons by name | locate a person easily
@@ -767,7 +768,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -942,20 +942,3 @@ Hazardous Command
 ....
 Command that may result in a largescale change in the addressbook (ie. clear, delete list)
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
