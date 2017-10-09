@@ -10,72 +10,53 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Property {
     /**
-     * There should be no constraint to a property by default. The regular expression below will match everything
-     * except for newline {@code \n}. However, these two strings should be overridden when this class is being
-     * inherited by a more specific subclass.
+     * Why do we only store three fields as instance variables in this class?<br>
      *
-     * TODO: Investigate the performance drawback without using static final for these two strings.
-     * TODO: Should we create an arrayList in PropertyManager to store all constraints?
+     * {@link #shortName} is used as the identifier for the property, {@link #fullName} is used stored because we may
+     * need to access it frequently (it will be a bad design decision if we have to perform HashMap access operation
+     * whenever we need to get the full name of a property), and {@link #value} must be stored here apparently.
      */
-    private String messageConstraints = "There is no constraint for this property.";
-    private String validationRegex = ".*";
-
-    private final String propertyName;
+    private final String shortName;
+    private final String fullName;
     private String value;
 
     /**
-     * Minimally, a property should at least have a name so that it can be distinguished from others. Meanwhile, it
-     * should have a value validated by {@link #isValid(String)}.
+     * Creates a property via its name in short form and its input value.
      *
-     * TODO: Investigate how to remove the duplication part of the constructors below.
-     * TODO: Can we consider using non-static initialization block?
-     *
-     * @param name is the name (identifier) of this property.
+     * @param shortName is the short name (identifier) of this property.
      */
-    public Property(String name, String value) throws IllegalValueException {
-        requireNonNull(value);
-        if (!isValid(value)) {
-            throw new IllegalValueException(messageConstraints);
-        }
-        this.value = value;
-        this.propertyName = name;
-    }
-
-    /**
-     * Creates a property of the person with customized constraints.
-     *
-     * @param name is the name (identifier) of this property.
-     * @param value is the value of this property.
-     * @param messageConstraint is the message displayed when the input value of this property is invalid.
-     * @param validationRegex is a regular expression used to validate the value of this property.
-     */
-    public Property(String name, String value, String messageConstraint, String validationRegex)
-            throws IllegalValueException {
-        // Sets the customized constraints first so that later can be used for validity check.
-        this.messageConstraints = messageConstraint;
-        this.validationRegex = validationRegex;
+    public Property(String shortName, String value) throws IllegalValueException {
+        this.shortName = shortName;
 
         requireNonNull(value);
         if (!isValid(value)) {
-            throw new IllegalValueException(messageConstraints);
+            throw new IllegalValueException(PropertyManager.getPropertyConstraintMessage(shortName));
         }
         this.value = value;
-        this.propertyName = name;
+        this.fullName = PropertyManager.getPropertyFullName(shortName);
     }
 
     /**
-     * Returns if a given string is a valid person email.
+     * Returns if a given string is a valid value for this property.
      */
     public boolean isValid(String test) {
-        return test.matches(validationRegex);
+        return test.matches(PropertyManager.getPropertyValidationRegex(shortName));
     }
 
-    public String getPropertyName() {
-        return propertyName;
+    public String getShortName() {
+        return shortName;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public String getValue() {
         return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -87,7 +68,7 @@ public class Property {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Property // instanceof handles nulls
-                    && this.propertyName.equals(((Property) (other)).getPropertyName())); // state check
+                    && this.shortName.equals(((Property) (other)).getShortName())); // state check
     }
 
     @Override
