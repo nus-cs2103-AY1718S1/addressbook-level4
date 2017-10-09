@@ -36,7 +36,7 @@ public class AddMultipleCommand extends UndoableCommand {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New persons added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private ArrayList<Person> toAdd;
@@ -58,6 +58,7 @@ public class AddMultipleCommand extends UndoableCommand {
         try {
             for(Person personToAdd: toAdd) {
                 model.addPerson(personToAdd);
+                successMessage.append(System.lineSeparator());
                 successMessage.append(personToAdd);
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, successMessage));
