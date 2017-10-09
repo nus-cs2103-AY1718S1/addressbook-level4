@@ -69,7 +69,7 @@ public class AddressBookParser {
             return new ClearCommand();
 
         } else if (commandWord.equalsIgnoreCase(FilterCommand.COMMAND_WORDVAR)) {
-                return new FilterCommandParser().parse(arguments);
+            return new FilterCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_2)) {
