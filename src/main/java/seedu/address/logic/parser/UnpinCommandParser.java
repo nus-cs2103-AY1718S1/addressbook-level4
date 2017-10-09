@@ -7,7 +7,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-public class UninCommandParser implements Parser<UnpinCommand> {
+public class UnpinCommandParser implements Parser<UnpinCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
