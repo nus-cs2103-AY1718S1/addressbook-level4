@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static java.util.Objects.requireNonNull;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Adds/Remove a remark from a person identified using it's last displayed index from the address book.
+ */
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
@@ -78,10 +82,10 @@ public class RemarkCommand extends UndoableCommand {
         // Check if
         // (a) Object is the same object
         // (b) Object is an instance of the object and that personIndex and remarkString are the same
-        return other == this ||
-                (other instanceof RemarkCommand &&
-                        this.personIndex.equals(((RemarkCommand) other).personIndex)) &&
-                        this.remark.equals(((RemarkCommand) other).remark);
+        return other == this // short circuit if same object
+                || (other instanceof RemarkCommand // instanceof handles nulls
+                && this.personIndex.equals(((RemarkCommand) other).personIndex))
+                && this.remark.equals(((RemarkCommand) other).remark); // state check
     }
 
     private String outputCorrectTypeOfSuccessMessage(ReadOnlyPerson editedPerson) {
