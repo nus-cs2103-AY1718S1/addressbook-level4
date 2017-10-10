@@ -3,12 +3,16 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.exceptions.PropertyNotFoundException;
 
 public class PropertyTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void createProperty_preLoadedProperty_successfulCreation() throws Exception {
@@ -32,6 +36,14 @@ public class PropertyTest {
             assertEquals(expectedMessage, ive.getMessage());
         }
 
+        assertNull(newProperty);
+    }
+
+    @Test
+    public void createProperty_customProperty_noSuchProperty() throws Exception {
+        thrown.expect(PropertyNotFoundException.class);
+
+        Property newProperty = new Property("w", "some random value");
         assertNull(newProperty);
     }
 
