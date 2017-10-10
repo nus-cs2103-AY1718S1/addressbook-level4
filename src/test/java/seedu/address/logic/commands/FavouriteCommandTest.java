@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import seedu.address.commons.core.index.Index;
 import static seedu.address.logic.commands.FavouriteCommand.MESSAGE_ARGUMENTS;
@@ -13,9 +14,12 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for FavouriteCommand.
@@ -25,8 +29,15 @@ public class FavouriteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute() throws Exception {
-        assertCommandFailure(prepareCommand(INDEX_FIRST_PERSON), model, String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased()));
+    public void execute_markFavourite_success() throws Exception {
+        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+                .withFavourite(true).build();
+        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITE_SUCCESS, editedPerson);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(favouriteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
