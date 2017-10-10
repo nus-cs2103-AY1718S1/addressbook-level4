@@ -51,7 +51,7 @@ public class CommandBoxHelper extends UiPart<Region> {
             commandString = commandText.getText();
             firstChar = commandText.getText().charAt(0);
         } catch (Exception e) {
-            helperText.setValue("hello");
+            helperText.setValue("");
         }
 
         switch (firstChar) {

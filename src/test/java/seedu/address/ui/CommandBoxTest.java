@@ -37,6 +37,7 @@ public class CommandBoxTest extends GuiUnitTest {
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
 
+
         defaultStyleOfCommandBox = new ArrayList<>(commandBoxHandle.getStyleClass());
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
