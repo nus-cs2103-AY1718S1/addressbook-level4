@@ -53,11 +53,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help` `h` `man`
 
 Format: `help`
+ (or) `h`
+ (or) `man`
 
 === Adding a person: `add` `creat` `put`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+(or) `creat n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+(or) `put n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -66,16 +70,20 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `creat n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `put n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 
 === Listing all persons : `list` `show` `all`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` or `show` or `all`
 
 === Editing a person : `edit` `update` `modify`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+ (or)`update INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+ (or)`modify INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,12 +99,17 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `update 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `modify 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
 === Locating persons by different attrbutes: `find` `search` `get`
 
 Finds persons whose specified attributes contain any of the given keywords. +
 Format: `find [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
-
+(or)`search [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
+(or)`get [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -110,9 +123,9 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find p/98765432` +
+* `search p/98765432` +
 Returns the person having phone number `98765432`
-* `find e/johndoe@gmail.com` +
+* `get e/johndoe@gmail.com` +
 Returns the person having email `johndoe@gmail.com`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
@@ -120,7 +133,9 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Deleting a person : `delete` `remove` `-`
 
 Deletes a group of people from the address book. +
-Format:'delete INDEX INDEX ...'
+Format:'delete INDEX,INDEX ...'
+(or)'remove INDEX,INDEX ...'
+(or)'- INDEX,INDEX ...'
 
 ****
 * Deletes the people at these given specified `INDEX`.
@@ -131,8 +146,14 @@ Format:'delete INDEX INDEX ...'
 Examples:
 
 * `list` +
-`delete 1 2` +
+`delete 1,2` +
 Deletes the 1st and 2nd person in the address book.
+* `list` +
+`remove 1,3` +
+Deletes the 1st and 3rd person in the address book.
+* `list` +
+`- 2,3` +
+Deletes the 2nd and 3rd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -141,6 +162,7 @@ Deletes the 1st person in the results of the `find` command.
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
+ (or) `choose INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -154,13 +176,13 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
+`choose 1` +
 Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history` `record`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` or `record`
 
 [NOTE]
 ====
