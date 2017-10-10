@@ -811,7 +811,7 @@ Use case ends.
 
 [none]
 
-*2a. The list is empty.
+* 2a. The list is empty.
 +
 Use case ends.
 
