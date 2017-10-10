@@ -69,10 +69,10 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_multipleTags_onePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+    public void execute_multipleTags_twoPersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
         FilterCommand command = prepareCommand("owesMoney family");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON));
     }
 
     @Test
