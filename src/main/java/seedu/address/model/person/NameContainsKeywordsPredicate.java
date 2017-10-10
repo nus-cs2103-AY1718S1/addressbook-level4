@@ -19,14 +19,18 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        String flag;
-        Boolean isSelected=keywords.stream().anyMatch( keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-        if(isSelected==true) return isSelected;
-        for(String keyword: keywords){
-            if(keyword.length()>=2 && keyword.substring(0, 2).equals("t/")) {
-                String tagName= "[" + keyword.substring(2) + "]";
-                for(Tag tag: person.getTags()){
-                    if(tag.toString().equals(tagName)) isSelected=true;
+        Boolean isSelected = keywords.stream().anyMatch(keyword ->
+                StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        if (isSelected == true) {
+            return isSelected;
+        }
+        for (String keyword: keywords) {
+            if (keyword.length() >= 2 && keyword.substring(0, 2).equals("t/")) {
+                String tagName = "[" + keyword.substring(2) + "]";
+                for (Tag tag: person.getTags()) {
+                    if (tag.toString().equals(tagName)) {
+                        isSelected = true;
+                    }
                 }
             }
         }
@@ -42,8 +46,9 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     public List<String> getSelectedTags() {
         List<String> tags = new ArrayList<String>();
-        if (keywords.size() == 0) return null;
-        else {
+        if (keywords.size() == 0) {
+            return null;
+        } else {
             for (String keyword : keywords) {
                 if (keyword.length() >= 2 && keyword.substring(0, 2).equals("t/")) {
                     String tagName = "[" + keyword.substring(2) + "]";
