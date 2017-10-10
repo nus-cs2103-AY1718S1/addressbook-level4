@@ -83,7 +83,7 @@ public class ModelManagerTest {
         // duplicate persons
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         thrown.expect(DuplicatePersonException.class);
-        modelManager.addPerson(TypicalPersons.ALICE);
+        modelManager.addPerson(ALICE);
 
         modelManager.deleteTag(tag);
 
@@ -92,29 +92,29 @@ public class ModelManagerTest {
         ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
         AddressBook expectedAddressBook = new AddressBookBuilder().build();
         emptyModelManager.deleteTag(tag);
-        assertEquals(emptyAddressBook,expectedAddressBook);
+        assertEquals(emptyAddressBook, expectedAddressBook);
 
         //person not found, no such tag
         Tag noSuchTag = new Tag("nosuchtag");
         modelManager.deleteTag(noSuchTag);
         expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        assertEquals(addressBook,expectedAddressBook);
+        assertEquals(addressBook, expectedAddressBook);
     }
 
     @Test
-    public void tagColor(){
+    public void tagColor() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         Logic logic = new LogicManager(modelManager);
         Config config = new Config();
-        Ui ui = new UiManager(logic,config,userPrefs);
+        Ui ui = new UiManager(logic, config, userPrefs);
         modelManager.getUi(ui);
 
         //default tagcolor should be off
         ObservableList<Tag> tags = addressBook.getTagList();
-        for (Tag tag : tags){
-            assertEquals(tag.getTagColor(),"#dcdcdc");
+        for (Tag tag : tags) {
+            assertEquals(tag.getTagColor(), "#dcdcdc");
         }
     }
 }
