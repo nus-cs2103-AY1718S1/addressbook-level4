@@ -54,7 +54,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -74,7 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+        throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
@@ -113,7 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+            && filteredPersons.equals(other.filteredPersons);
     }
 
 }

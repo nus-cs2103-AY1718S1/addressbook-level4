@@ -140,9 +140,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
-     * and the person list panel displays the persons in the model correctly.
+
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
@@ -246,6 +244,7 @@ public abstract class AddressBookSystemTest {
     private void assertApplicationStartingStateIsCorrect() {
         try {
             assertEquals("", getCommandBox().getInput());
+
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());

@@ -12,9 +12,9 @@ public class FindCommand extends Command {
     public static final String COMMAND_ALIAS = "f";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+        + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+        + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+        + "Example: " + COMMAND_WORD + " alice bob charlie";
 
     private final NameContainsKeywordsPredicate predicate;
 
@@ -31,7 +31,7 @@ public class FindCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindCommand // instanceof handles nulls
-                && this.predicate.equals(((FindCommand) other).predicate)); // state check
+            || (other instanceof FindCommand // instanceof handles nulls
+            && this.predicate.equals(((FindCommand) other).predicate)); // state check
     }
 }

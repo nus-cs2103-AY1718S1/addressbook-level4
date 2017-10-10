@@ -35,7 +35,7 @@ public class PersonListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+            personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -43,12 +43,12 @@ public class PersonListPanel extends UiPart<Region> {
 
     private void setEventHandlerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
-                    }
-                });
+            .addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    raise(new PersonPanelSelectionChangedEvent(newValue));
+                }
+            });
     }
 
     /**

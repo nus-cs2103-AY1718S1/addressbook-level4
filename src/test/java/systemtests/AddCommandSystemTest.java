@@ -5,6 +5,9 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_ADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_EMAIL;
+import static seedu.address.logic.commands.CommandTestUtil.EMPTY_PHONE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -64,7 +67,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         ReadOnlyPerson toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
+            + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -80,7 +83,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate person -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+            + TAG_DESC_FRIEND;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> rejected */
@@ -88,41 +91,41 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
         // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + " " + PREFIX_TAG.getPrefix() + "friends";
+            + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+            + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+            + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+            + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
+            .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND;
+            + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
-                < getModel().getAddressBook().getPersonList().size();
+            < getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
 
         /* Case: add to empty address book -> added */
@@ -133,7 +136,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
+            + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
@@ -148,17 +151,23 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing phone -> added */
+        toAdd = new PersonBuilder().withName("Kai Hsien").withPhone(EMPTY_PHONE).withEmail(VALID_EMAIL_AMY)
+            .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + " n/Kai Hsien" + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing email -> added */
+        command = AddCommand.COMMAND_WORD + " n/Jeremy" + PHONE_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
+        toAdd = new PersonBuilder().withName("Jeremy").withPhone(VALID_PHONE_AMY).withEmail(EMPTY_EMAIL)
+            .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing address -> added */
+        command = AddCommand.COMMAND_WORD + " n/Adeeb" + PHONE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND;
+        toAdd = new PersonBuilder().withName("Adeeb").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+            .withAddress(EMPTY_ADDRESS).withTags(VALID_TAG_FRIEND).build();
+        assertCommandSuccess(command, toAdd);
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
@@ -182,7 +191,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + INVALID_TAG_DESC;
+            + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
@@ -194,6 +203,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
      * the browser url and selected card remains unchanged.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(ReadOnlyPerson toAdd) {
@@ -203,6 +213,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     /**
      * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
      * instead.
+     *
      * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
      */
     private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
@@ -221,9 +232,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
+     *
      * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
@@ -238,6 +251,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
