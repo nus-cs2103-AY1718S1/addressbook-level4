@@ -81,13 +81,16 @@ public class PropertyManagerTest {
      * @param fieldName is the name of the private field in String format.
      * @return the number of items in the {@link HashMap}
      */
+    @SuppressWarnings(value = "unchecked")
     private int testPrivateFieldsCount(String fieldName) {
         HashMap<String, String> variable = null;
         try {
             Field field = PropertyManager.class.getDeclaredField(fieldName);
             field.setAccessible(true);
+
+            // We use an SuppressWarning annotation to avoid warning here, because this is
+            // in the test environment anyway.
             variable = (HashMap<String, String>) field.get(null);
-            return variable.size();
         } catch (NoSuchFieldException | IllegalAccessException e) {
             assert(false);
         }
