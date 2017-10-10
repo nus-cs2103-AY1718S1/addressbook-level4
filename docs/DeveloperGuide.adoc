@@ -907,7 +907,7 @@ Use case resumes at step 6.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be able to give a response within 1 second
-.  Should be able to hide personal information using a password
+.  Should be able to hide personal information
 .  Should be simple enough for a novice to utilise and navigate
 .  Data should only be read and modified by authorized party
 .  Should be easily maintained by other programmers
