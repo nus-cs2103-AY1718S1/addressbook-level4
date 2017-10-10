@@ -52,7 +52,7 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Bloodtype: ")
+                .append(" BloodType: ")
                 .append(getBloodType())          
                 .append(" Tags: ")
                 .append(getRemark())

@@ -88,7 +88,8 @@ public class ParserUtil {
     public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
-      
+    }
+
     /**
      * Parses a {@code Optional<String> bloodType} into an {@code Optional<Bloodtype>} if {@code bloodType} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
