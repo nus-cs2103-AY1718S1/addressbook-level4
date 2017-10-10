@@ -732,7 +732,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
 
-|`* * *` |As a user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
+|`* * *` |user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
@@ -896,6 +896,60 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Undo a command
+
+*MSS*
+
+1. User enters "history" command to view all history commands.
+2. AddressBook displays all history commands.
+3. User enters "undo" to request to undo the last link:#undoable-command[undoable command].
+4. AddressBook undoes the last link:#undoable-command[undoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#undoable-command[undoable command] commands in the history.
++
+[none]
+** 3a1 AddressBook displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo a command
+
+*MSS*
+
+1. User enters "history" command to view all history commands.
+2. AddressBook displays all history commands.
+3. User enters "redo" to request to undo the last link:#redoable-command[redoable command].
+4. AddressBook undoes the last link:#redoable-command[redoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#redoable-command[redoable command] commands in the history.
++
+[none]
+** 3a1 AddressBook displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear the address book
+
+*MSS*
+
+1. User enters "clear" command to delete all entries in address book.
+2. AddressBook deletes all data
++
+Use case ends.
+
+[discrete]
 === Use case: Show help window
 
 *MSS*
@@ -907,13 +961,27 @@ Use case ends.
 
 *Extensions*
 
-* 1a. User presses F1 on the keyboard
+[none]
+* 1a. User presses F1 on the keyboard or clicks on help icon
 +
 Use case resumes at step 2.
 
-* 1b. User clicks on help icon
+[discrete]
+=== Use case: Exit the app
+
+*MSS*
+
+1. User enters "exit" command for exiting the app.
+2. AddressBook terminates its work and exit.
 +
-User case resumes at step 2.
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User click File -> Exit button.
++
+Use case resumes at step 2.
 
 {More to be added}
 
@@ -997,11 +1065,25 @@ Private contact detail
 A contact detail that is not meant to be shared with others.
 ....
 
+[[redoable-command]]
+Redoable command
+
+....
+An redoable command is a command which has been undone, and no other commands in between.
+....
+
 [[travis]]
 Travis
 
 ....
 Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub.
+....
+
+[[undoable-command]]
+Undoable command
+
+....
+An undoable command is a command which modifies data in address book. For example, add, delete are undoable commands, while find, list are not.
 ....
 
 
