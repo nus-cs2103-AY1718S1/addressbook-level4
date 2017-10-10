@@ -1,8 +1,6 @@
 package seedu.address.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -18,7 +16,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
@@ -77,27 +75,33 @@ public class ModelManagerTest {
     public void deleteTag() throws IllegalValueException, PersonNotFoundException {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
-        Tag tag = new Tag("friend");
+        Tag tag = new Tag("friends");
 
-        // duplicate persons
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        thrown.expect(DuplicatePersonException.class);
-        modelManager.addPerson(ALICE);
-
-        modelManager.deleteTag(tag);
 
         //person not found, empty AddressBook
         AddressBook emptyAddressBook = new AddressBookBuilder().build();
         ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
         AddressBook expectedAddressBook = new AddressBookBuilder().build();
         emptyModelManager.deleteTag(tag);
-        assertEquals(emptyAddressBook, expectedAddressBook);
+        assertTrue(emptyAddressBook.equals(expectedAddressBook));
 
         //person not found, no such tag
         Tag noSuchTag = new Tag("nosuchtag");
-        modelManager.deleteTag(noSuchTag);
+    //    modelManager.deleteTag(noSuchTag);
         expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        assertEquals(addressBook, expectedAddressBook);
+        assertTrue(addressBook.equals(expectedAddressBook));
+
+        //deletes a tag
+        modelManager.deleteTag(tag);
+        AddressBook originalAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        for(ReadOnlyPerson person : originalAddressBook.getPersonList()) {
+            for(ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
+                if(person.getName().equals(personCopy.getName())) {
+                    assertFalse(person.getTags().equals(personCopy.getTags()));
+                }
+            }
+        }
     }
 
     @Test

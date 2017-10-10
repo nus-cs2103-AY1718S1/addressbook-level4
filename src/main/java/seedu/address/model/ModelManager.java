@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -91,7 +92,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
         for (ReadOnlyPerson oldPerson : persons) {
             Person newPerson = new Person(oldPerson);
-            Set<Tag> newPersonTags = oldPerson.getTags();
+            Set<Tag> newPersonTags = new HashSet<>(newPerson.getTags());
             boolean isPersonModified = newPersonTags.remove(tag);
 
             if (isPersonModified) {
