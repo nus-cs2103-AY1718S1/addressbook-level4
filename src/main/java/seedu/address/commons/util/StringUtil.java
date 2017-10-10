@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.IllegalFormatException;
 
 /**
  * Helper functions for handling strings.
@@ -65,6 +66,16 @@ public class StringUtil {
             int value = Integer.parseInt(s);
             return value > 0 && !s.startsWith("+"); // "+1" is successfully parsed by Integer#parseInt(String)
         } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+    
+    public static boolean isLettersOnly(String s) {
+        requireNonNull(s);
+
+        try {
+            return s.matches("[\\p{Alpha}][\\p{Alpha} ]*");
+        } catch (IllegalArgumentException iae) {
             return false;
         }
     }
