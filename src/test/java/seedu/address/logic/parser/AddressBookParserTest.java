@@ -79,8 +79,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_favourite() throws Exception {
-        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD);
-        assertTrue(command instanceof FavouriteCommand);
+        FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

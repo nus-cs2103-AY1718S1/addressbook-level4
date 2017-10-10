@@ -95,7 +95,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD)) {
-            return new FavouriteCommand();
+            return new FavouriteCommandParser().parse(arguments);
 
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
