@@ -69,11 +69,20 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB t/criminal`
 
 
-=== Listing all persons : `list`
+=== Listing persons - All / By tag : `list`
 
+* *Listing all persons* +
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
 Shorthand Format: `l`
+
+* *Listing persons by tag* +
+Shows a list of persons in the address book containing any of the input`tag` +
+Format: `list TAG1 TAG2...` +
+ +
+Examples: +
+`list colleagues friends` +
+Lists all contacts with the tag `colleagues` and/or `friends`.
 
 === Editing a person : `edit`
 
