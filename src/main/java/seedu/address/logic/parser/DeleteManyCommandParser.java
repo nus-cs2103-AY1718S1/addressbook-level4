@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.ArrayList;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteManyCommand;
@@ -21,9 +22,11 @@ public class DeleteManyCommandParser implements Parser<DeleteManyCommand> {
      */
     public DeleteManyCommand parse(String args) throws ParseException {
         try {
-            ArrayList<Index> indexArrayList;
-            int[] indexArray = args.split(' ');
-            for (int i = 0; i < indexArray.length; i++) {
+            ArrayList<Index> indexArrayList = new ArrayList<Index>();
+            String[] indexArray = args.split(" ");
+            System.out.println("args: " + args);
+            System.out.println("indexArray.length: " + indexArray.length);
+            for (int i = 1; i < indexArray.length; i++) {
                 Index index = ParserUtil.parseIndex(indexArray[i]);
                 indexArrayList.add(index);
             }
