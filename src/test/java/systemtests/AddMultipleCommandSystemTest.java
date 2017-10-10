@@ -56,5 +56,32 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
-    // Unable to test as of current implementation.
+
+    @Test
+    public void add() throws Exception {
+        /* Case: add from a file that does not exist in the data folder --> rejected */
+        String NOT_EXISTS_FILE = "doesNotExist.txt";
+        String command = AddMultipleCommand.COMMAND_WORD + "  " + NOT_EXISTS_FILE;
+        String expectedResultMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, NOT_EXISTS_FILE);
+        assertCommandFailure(command, expectedResultMessage);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
 }
