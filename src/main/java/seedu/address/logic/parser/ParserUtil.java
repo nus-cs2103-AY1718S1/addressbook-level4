@@ -28,6 +28,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_NUMBER = "Number passed is either invalid or not positive.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -41,6 +42,22 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code num} into a positive integer and returns it. Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified argument is invalid, or is not a positive integer.
+     */
+    public static int parsePositiveInteger(String num) throws IllegalValueException {
+        try {
+            int amount = Integer.parseInt(num.trim());
+            if (amount <= 0) {
+                throw new IllegalValueException(MESSAGE_INVALID_NUMBER);
+            }
+            return amount;
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException(MESSAGE_INVALID_NUMBER);
+        }
     }
 
     /**

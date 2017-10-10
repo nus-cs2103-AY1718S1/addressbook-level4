@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_NUMBER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -61,6 +62,50 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parsePositiveInteger_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(1, ParserUtil.parsePositiveInteger("1"));
+        assertEquals(12, ParserUtil.parsePositiveInteger("12"));
+
+        // Leading and trailing whitespaces
+        assertEquals(1, ParserUtil.parsePositiveInteger(" 1"));
+        assertEquals(1, ParserUtil.parsePositiveInteger("1 "));
+        assertEquals(1, ParserUtil.parsePositiveInteger(" 1 "));
+    }
+
+    @Test
+    public void parsePositiveInteger_zeroInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_NUMBER);
+
+        ParserUtil.parsePositiveInteger("0");
+    }
+
+    @Test
+    public void parsePositiveInteger_negativeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_NUMBER);
+
+        ParserUtil.parsePositiveInteger("-3");
+    }
+
+    @Test
+    public void parsePositiveInteger_nonIntegerInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_NUMBER);
+
+        ParserUtil.parsePositiveInteger("0.3");
+    }
+
+    @Test
+    public void parsePositiveInteger_nonNumberInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_NUMBER);
+
+        ParserUtil.parsePositiveInteger("afg");
     }
 
     @Test

@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -37,19 +38,64 @@ public class RedoCommandTest {
     public void execute() {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(deleteCommandTwo, deleteCommandOne));
-        RedoCommand redoCommand = new RedoCommand();
+        RedoCommand redoCommand = new RedoCommand(1);
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+        String successMessage = RedoCommand.getSuccessMessage(1);
+
         // multiple commands in redoStack
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(redoCommand, model, successMessage, expectedModel);
 
         // single command in redoStack
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(redoCommand, model, successMessage, expectedModel);
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_redoManyTimes() {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(deleteCommandTwo, deleteCommandOne));
+        RedoCommand redoCommand = new RedoCommand(2);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        String successMessage = RedoCommand.getSuccessMessage(2);
+
+        deleteFirstPerson(expectedModel);
+        deleteFirstPerson(expectedModel);
+        assertCommandSuccess(redoCommand, model, successMessage, expectedModel);
+
+        // no command in undoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_redoTooManyTimes() {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(deleteCommandTwo, deleteCommandOne));
+        RedoCommand redoCommand = new RedoCommand(3);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        String successMessage = RedoCommand.getSuccessMessage(2);
+
+        deleteFirstPerson(expectedModel);
+        deleteFirstPerson(expectedModel);
+        assertCommandSuccess(redoCommand, model, successMessage, expectedModel);
+
+        // no command in undoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void getSuccessMessage() {
+        assertEquals(RedoCommand.getSuccessMessage(1), "1 command redoed.");
+        assertEquals(RedoCommand.getSuccessMessage(2), "2 commands redoed.");
+        assertEquals(RedoCommand.getSuccessMessage(12), "12 commands redoed.");
     }
 }

@@ -166,7 +166,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo AMOUNT`
+
+****
+* Undoes the last `amount` of commands.
+* The `amount` refers to the number of undoable commands to be undoed.
+* The amount *must be a positive integer* `1, 2, 3, ...`
+****
 
 [NOTE]
 ====
@@ -177,39 +183,47 @@ Examples:
 
 * `delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo 1` (reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+`undo 1` +
+The `undo 1` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo 1` (reverses the `clear` command) +
+`undo 1` (reverses the `delete 1` command) +
+
+* `delete 1` +
+`clear` +
+`undo 2` (reverses the last commands) +
 
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo AMOUNT`
+
+****
+* Redoes the last `amount` of commands.
+* The `amount` refers to the number of undoable commands to be reversed.
+* The amount *must be a positive integer* `1, 2, 3, ...`
+****
 
 Examples:
 
 * `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo 1` (reverses the `delete 1` command) +
+`redo 1` (reapplies the `delete 1` command) +
 
 * `delete 1` +
-`redo` +
+`redo 1` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`undo 2` (reverses the last 2 commands) +
+`redo 2` (reapplies the last 2 commands) +
 // end::undoredo[]
 
 === Clearing all entries : `clear`
@@ -246,7 +260,9 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
 * *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *Undo* : `undo AMOUNT` +
+e.g. `undo 1`
+* *Redo* : `redo AMOUNT` +
+e.g. `redo 1`
