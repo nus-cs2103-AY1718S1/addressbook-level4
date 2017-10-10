@@ -42,7 +42,7 @@ public class AddressBookParser {
 
         case AddFacebookContactCommand.COMMAND_WORD:
         case AddFacebookContactCommand.COMMAND_ALIAS:
-            return new AddFacebookContactCommand();
+            return new AddFacebookContactParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:

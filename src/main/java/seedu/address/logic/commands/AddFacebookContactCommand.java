@@ -1,21 +1,43 @@
 package seedu.address.logic.commands;
 
+import facebook4j.*;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.*;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+
+import static java.util.Objects.requireNonNull;
 
 public class AddFacebookContactCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addfacebookcontact";
     public static final String COMMAND_ALIAS = "afbc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook friend to the address book.\n"
-            + "Alias: " + COMMAND_ALIAS + "\n";
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: FACEBOOK_CONTACT_NAME\n"
+            + "Example: " + COMMAND_WORD + "alice fong";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    private final Person toAdd;
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "addfacebookcontact command not implemented yet";
+    /**
+     * Creates an AddFacebookContactCommand to add the specified Facebook contact
+     * @param person
+     */
+    public AddFacebookContactCommand(Person person) {
+        toAdd = new Person(person);
+    }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+        requireNonNull(model);
+        try {
+            model.addPerson(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
     }
+
 }
