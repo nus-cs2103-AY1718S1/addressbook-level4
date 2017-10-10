@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103-Phase-B/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -721,20 +721,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
+|`* * *` | user | add a new person |
+|`* * *` | user | delete a person | remove entries that I no longer need
+|`* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+|`* * *` | user | edit a person | change details of a person easily
+|`* * *` | user | tag a person | store some notes about certain people
+|`* * *` | user | categorize persons | easily organize contacts and later on find wrt group
+|`* * *` | student | group contacts by module | have people from specific module at hand
+|`* * *` | user with many persons in the address book | find all the persons that satisfy part of the name (eg. Jo*) | search without remembering all the details
+|`* * *` | user | get closest result if my input doesn't match any name | I get results even if I misspell
+|`* * *` | user | add a picture to a person | recall easily who the person is
+|`* * *` | user | add a social media link to a person | get more info about a person in one place (in the App)
+|`* * *` | user | be warned before execution of a link:#hazardous-command[hazardous command] | prevent from disastrous mistakes
+|`* * *` | user | change the theme of the GUI (dark/bright) | prevent eye strain or simply customize
+|`* * *` | user | validate persons details when adding |  prevent any mistakes
+|`* * *` | user | input more than 1 phone number | can store home + office + mobile numbers easily
+|`* * *` | user | search for people via different fields (address, phone number etc.) | easily view people of same area of residence
+|`* * *` | user | allow mass deletion | easy cleanup
+|`* * *` | user | have a favourites tag that is always easily accessible | easily access most frequent contacts
+|`* * *` | forgetful user | show my phone number | so that I can give it to my friend when they ask
+|`* *` | user with many persons in the address book | apply filter: category, tag, name | easily view and process only certain group
+|`* *` | student | view my grades | I have all the important info in one place
+|`* *` | student | view my exam dates | I never miss them
+|`* *` | student | view my weekly schedule | I can easily check what classes I have at what time
+|`* *` | student | view my oncoming assignments | I never miss them
+|`* *` | user | redo the command | correct the mistake of undoing too many commands
+|`* *` | user | view the history of commands | check what I have done in the past
+|`* *` | user | import persons | share with other users and migrate from other systems
+|`* *` | user | export persons | share with other users and migrate from other systems
+|`* *` | user | use password to get access to my contacts | protect my data
+|`* *` | user | clear the address book | start anew
+|`* *` | user | see suggestions while typing | type commands faster
+|`* *` | impatient user | get the previously entered commands into the input field | type commands faster
+|`* *` | new user | use a tutorial | learn the features of the app quickly
+|`* *` | user | remove/categorize/tag all the persons selected by a filter | process multiple contacts quickly
+|`* *` | impatient user | use hotkeys | navigate faster
+|`* *` | user | add new fields to all the persons | customize the App
+|`* *` | user | sort by frequency of access | easily access most frequent contacts
+|`* *` | forgetful user | have a reminder which reminds me to call someone at certain times | call my contacts if needed
+|`* *` | busy user | save appointment with people in my addressbook and send them a message about the appointment | set up appointment with my contacts easily
+|`* *` | stealthy users | have link:#hidden-contact[hidden contacts] which can only be shown upon typing a secret phrase | hide my other girlfriends from my girlfriend
+|`* *` | stealthy users | delete all link:#hidden-contact[hidden contacts] after the passphrase is entered wrongly 5 times | no one can excess my link:#hidden-contact[hidden contacts]
+|`* *` | user | send my contact to people in my address book | so that I can give it to my friend when they ask
+|`* *` | user | type names in either case | it can auto-capitalise the first letter of all names
+|`*` | user with many persons in the address book | sort persons by name | locate a person easily
+|`*` | clumsy user | undo a command | correct a mistake that was previously executed
+|`*` | user with many persons in the address book | list categories with statistics | see how my contacts are grouped
 
-|`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,7 +804,99 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person.
+2.  AddressBook adds the person and shows success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Person already exists in AddressBook.
++
+[none]
+** 1a1. AddressBook shows an error message indicating person already exists .
++
+Use case ends.
+
+* 1b. Person added is of invalid format.
++
+[none]
+** 1b1. AddressBook shows an error message and display the help for add.
++
+Use case ends.
+
+[discrete]
+=== Use case: Import persons
+
+*MSS*
+
+1. User import persons from an external csv file.
+2. AddressBook iteratively adds the persons from the external csv and shows success message for each.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. File uploaded is of invalid format
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. A particular person is of invalid format.
++
+[none]
+** 2a1. AddressBook skips that person.
++
+Use case resumes at step 2.
++
+[none]
+* 2b. A particular person already exists in AddressBook.
++
+[none]
+** 2b1. AddressBook skips that person.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Save appointment
+
+*MSS*
+
+1. User adds an appointment to a contact through specifying the index.
+2. AddressBook sends an email to that contact.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The contact index doesn't exists.
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 1b. The appointment date or format is invalid.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. The email address is not correct and the email can't be delivered.
++
+[none]
+** 2a1. AddressBook notifies the user.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +904,14 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  The product should be usable by a novice who has never used a contact-management software
+.  Should come with automated unit tests and open source code.
+.  Should enter a new development stage every week by implementing some of the v2.0 features.
+.  v1.5 should be ready for release by 13th of November.
+.  Should be able to create backups.
+.  It's outlook should be customizable.
+.  Should be safe on any input. (not crash on invalid input)
+.  Should be easily extensible.
 
 [appendix]
 == Glossary
@@ -789,25 +924,25 @@ Windows, Linux, Unix, OS-X
 ....
 
 [[private-contact-detail]]
-Private contact detail
+
+Private Contact Detail
 
 ....
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[hidden-contact]]
 
-*Product Name*
+Hidden Contact
 
-Author: ...
+....
+Contacts that cannot be foiund using the find feature.
+....
 
-Pros:
+[[hazardous-command]]
 
-* ...
-* ...
+Hazardous Command
 
-Cons:
-
-* ...
-* ...
+....
+Command that may result in a largescale change in the addressbook (ie. clear, delete list)
+....
