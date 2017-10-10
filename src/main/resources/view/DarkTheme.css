@@ -124,20 +124,16 @@
     -fx-border-width: 1;
 }
 
-.list-cell .label {
-    -fx-text-fill: gray;
-}
-
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
-    -fx-text-fill: #444344 !important;
+    -fx-text-fill: #444344;
 }
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
-    -fx-text-fill: #716F70 !important;
+    -fx-text-fill: #716F70;
 }
 
 .anchor-pane {
