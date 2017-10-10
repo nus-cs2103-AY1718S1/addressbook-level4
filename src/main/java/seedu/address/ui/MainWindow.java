@@ -146,8 +146,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-//        browserPanel = new BrowserPanel();
-//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -176,6 +176,7 @@ public class MainWindow extends UiPart<Region> {
      */
     private void initTutorial(CommandBox commandBox) {
         Tutorial newTutorial = new Tutorial(commandBox, tutorialText, logic);
+        browserPlaceholder.getChildren().remove(browserPanel.getRoot());
         ArrayList<TutSteps> tutSteps = newTutorial.getTutorialSteps();
         tutorialText.setText(TutorialMessages.STEP_INTRO);
         setTutorialVisible(true);
@@ -191,6 +192,7 @@ public class MainWindow extends UiPart<Region> {
             tutSteps.remove(0);
             if (tutSteps.size() == 0) {
                 setTutorialVisible(false);
+                browserPlaceholder.getChildren().add(browserPanel.getRoot());
             }
         });
         rightButton.setOnAction(e -> {
@@ -205,6 +207,7 @@ public class MainWindow extends UiPart<Region> {
                     logger.warning("Wrong command input after skipping.");
                 }
             }
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
         });
     }
 
