@@ -44,8 +44,8 @@ public class EditMeetCommandParser implements Parser<EditMeetingCommand>{
         EditMeetingDescriptor editMeetingDescriptor = new EditMeetingDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editMeetingDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_DATE)).ifPresent(editMeetingDescriptor::setDate);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_LOCATION)).ifPresent(editMeetingDescriptor::setPlace);
+            ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).ifPresent(editMeetingDescriptor::setDate);
+            ParserUtil.parsePlace(argMultimap.getValue(PREFIX_LOCATION)).ifPresent(editMeetingDescriptor::setPlace);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editMeetingDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

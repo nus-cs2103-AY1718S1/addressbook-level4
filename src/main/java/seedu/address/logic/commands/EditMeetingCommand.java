@@ -188,7 +188,7 @@ public class EditMeetingCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getDate().equals(e.getDate())
-                    && getplace().equals(e.getplace())
+                    && getPlace().equals(e.getPlace())
                     && getTags().equals(e.getTags());
         }
     }
