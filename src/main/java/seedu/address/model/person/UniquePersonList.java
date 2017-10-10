@@ -63,7 +63,7 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(sortType);
         requireNonNull(isDescending);
 
-        if (internalList.size()< 1 ){
+        if (internalList.size() < 1) {
             throw new EmptyListException();
         }
 
