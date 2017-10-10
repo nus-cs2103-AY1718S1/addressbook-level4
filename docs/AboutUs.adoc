@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Derrick Chua
 image::derrrickchua.jpg[width="150", align="left"]
-{empty}[https://github.com/derrickchua[github]] 
+{empty}[https://github.com/derrickchua[github]]
 
 Role: Project Member
 Responsibilites: UI
