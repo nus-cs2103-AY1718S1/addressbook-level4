@@ -18,7 +18,7 @@ public class HelpCommand extends Command {
             + "will be shown.\n"
             + "Parameters: "
             + "[COMMAND_WORD] (must be a valid command word)\n"
-            + "Example: " + COMMAND_WORD + " " + EditCommand.COMMAND_WORD;
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 

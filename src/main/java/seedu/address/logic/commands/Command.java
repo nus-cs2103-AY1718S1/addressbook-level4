@@ -14,6 +14,9 @@ public abstract class Command {
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
+    public static final String MESSAGE_GET_MORE_HELP = "For more information regarding the command, "
+            + "enter 'help' (without the '   ') in the command box.";
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *

@@ -13,7 +13,8 @@ public class ClearCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "c";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clears all entries from the address book.\n"
-            + "Parameters: None";
+            + "Parameters: None\n"
+            + MESSAGE_GET_MORE_HELP;
     public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
 
 

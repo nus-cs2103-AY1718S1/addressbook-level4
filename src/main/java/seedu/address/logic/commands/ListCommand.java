@@ -13,7 +13,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows a list of all persons in the address book.\n"
-            + "Parameters: None";
+            + "Parameters: None\n"
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 

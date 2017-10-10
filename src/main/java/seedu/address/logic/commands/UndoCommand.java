@@ -16,7 +16,8 @@ public class UndoCommand extends Command {
     public static final String COMMAND_ALIAS = "u";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Restores the address book to the state before the previous undoable command was executed.\n"
-            + "Parameters: None";
+            + "Parameters: None"
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";

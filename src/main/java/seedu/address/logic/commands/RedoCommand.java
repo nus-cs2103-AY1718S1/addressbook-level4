@@ -16,7 +16,8 @@ public class RedoCommand extends Command {
     public static final String COMMAND_ALIAS = "r";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Reverses the most recent undo command.\n"
-            + "Parameters: None";
+            + "Parameters: None"
+            + MESSAGE_GET_MORE_HELP;
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
