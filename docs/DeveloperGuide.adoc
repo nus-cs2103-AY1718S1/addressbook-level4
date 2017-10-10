@@ -929,6 +929,9 @@ Use case ends.
 [none]
 * 2a. The list is empty.
 +
+[none]
+** 2a1. AddressBook shows a successful message.
++
 Use case ends.
 
 {More to be added}
