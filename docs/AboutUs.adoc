@@ -46,8 +46,8 @@ Responsibilities: Dev Ops + Threading
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
+=== Cui Xiaohan
+image::Cuixiaohan.jpg[width="150", align="left"]
 {empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
