@@ -14,7 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class DeleteManyCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "delete many";
+    public static final String COMMAND_WORD = "deletem";
     public static final String COMMAND_ALIAS = "dm";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
