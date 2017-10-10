@@ -2,15 +2,20 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
+import com.sun.org.apache.bcel.internal.generic.NOP;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -46,6 +51,21 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+    }
+
+    public void sort(Comparator sortComparator, Boolean isReverseOrder) throws NoPersonsException {
+        requireNonNull(sortComparator);
+        requireNonNull(isReverseOrder);
+
+        if (internalList.size() < 1) {
+            throw new NoPersonsException();
+        }
+
+        Collections.sort(internalList, sortComparator);
+
+        if (isReverseOrder) {
+            Collections.reverse(internalList);
+        }
     }
 
     /**
