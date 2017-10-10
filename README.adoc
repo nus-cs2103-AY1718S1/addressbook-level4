@@ -4,6 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 
 https://travis-ci.org/CS2103AUG2017-W11-B2[image:https://travis-ci.org/CS2103AUG2017-W11-B2/main.svg?branch=master["Build Status", link="https://travis-ci.org/CS2103AUG2017-W11-B2/main"]]
+https://ci.appveyor.com/project/ZY-Ang/main[image:https://ci.appveyor.com/api/projects/status/2yh61xpwvhmdgdkh?svg=true[Build status]]
 
 
 ifdef::env-github[]
