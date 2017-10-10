@@ -142,6 +142,21 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    void fillInnerPartsWithIndicatedList(String listName) {
+
+        switch(listName) {
+
+        case "blacklist":
+            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
+            break;
+
+        default:
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        }
+
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
     void hide() {
         primaryStage.hide();
     }
