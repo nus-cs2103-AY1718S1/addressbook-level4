@@ -1,8 +1,7 @@
 package seedu.address.model;
 
-
-import java.util.Comparator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
