@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -128,11 +129,14 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
     }
 
     //@@author jelneo
@@ -141,17 +145,20 @@ public class MainWindow extends UiPart<Region> {
      * Should only display welcome page without contacts.
      */
     void fillInnerPartsForStartUp() {
-        startUpPanel = new StartUpPanel();
-        browserPlaceholder.getChildren().add(startUpPanel.getRoot());
+        Platform.runLater(() -> {
+            startUpPanel = new StartUpPanel();
+            browserPlaceholder.getChildren().add(startUpPanel.getRoot());
 
-        personListStartUpPanel = new PersonListStartUpPanel();
-        personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
+            personListStartUpPanel = new PersonListStartUpPanel();
+            personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+            ResultDisplay resultDisplay = new ResultDisplay();
+            resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+            CommandBox commandBox = new CommandBox(logic);
+            commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        });
+
     }
     //@@author
 
