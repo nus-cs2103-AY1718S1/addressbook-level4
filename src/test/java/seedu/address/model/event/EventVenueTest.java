@@ -16,7 +16,7 @@ public class EventVenueTest {
         // valid addresses
         assertTrue(EventVenue.isValidAddress("Blk 456, Den Road, #01-355"));
         assertTrue(EventVenue.isValidAddress("-")); // one character
-        assertTrue(EventVenue.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+        assertTrue(EventVenue.isValidAddress("1234 Market St; San Francisco CA 2349879; USA")); // long address
     }
 }
 
