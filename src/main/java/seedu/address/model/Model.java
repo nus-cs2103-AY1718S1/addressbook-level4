@@ -30,6 +30,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    /** Adds the given person into blacklist */
+    void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

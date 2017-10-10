@@ -82,6 +82,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        addressBook.addBlacklistedPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
