@@ -11,7 +11,7 @@ import seedu.address.model.tag.Tag;
  * in descriptor given except it is null.
  */
 public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
-    public FindDetailDescriptor descriptor;
+    private FindDetailDescriptor descriptor;
 
     public DetailsContainsPredicate(FindDetailDescriptor descriptor) {
         this.descriptor = descriptor;

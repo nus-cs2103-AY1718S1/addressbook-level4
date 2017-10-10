@@ -31,8 +31,8 @@ public class FindOptionInDetail extends CommandOption<FindCommand> {
         if (!isValidOptionArgs()) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
-        ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(" " + optionArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                " " + optionArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         FindCommand.FindDetailDescriptor descriptor = new FindCommand.FindDetailDescriptor();
         try {
