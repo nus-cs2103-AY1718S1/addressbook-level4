@@ -19,6 +19,9 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
+/**
+ * The UI component that is responsible for listing out possible commands based on user input in CLI
+ */
 public class CommandBoxHelper extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
@@ -80,8 +83,8 @@ public class CommandBoxHelper extends UiPart<Region> {
             if (checkSubset(ExitCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue(helperText.getValue() + ExitCommand.COMMAND_WORD + "\n");
             }
-            if (!checkSubset(ExitCommand.COMMAND_WORD, commandString) &&
-                    !checkSubset(EditCommand.COMMAND_WORD, commandString)) {
+            if (!checkSubset(ExitCommand.COMMAND_WORD, commandString)
+                    && !checkSubset(EditCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue("");
             }
             break;
@@ -99,8 +102,8 @@ public class CommandBoxHelper extends UiPart<Region> {
             if (checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue(helperText.getValue() + HistoryCommand.COMMAND_WORD + "\n");
             }
-            if (!checkSubset(HelpCommand.COMMAND_WORD, commandString) &&
-                    !checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
+            if (!checkSubset(HelpCommand.COMMAND_WORD, commandString)
+                    && !checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue("");
             }
             break;
@@ -141,13 +144,15 @@ public class CommandBoxHelper extends UiPart<Region> {
     /**
      * Checks if commandFieldString is a subset of commandWord and if their first letter matches
      */
-    private boolean checkSubset(String commandWord , String commandFieldString){
+    private boolean checkSubset(String commandWord , String commandFieldString) {
         try {
             if (commandWord.contains(commandFieldString)) {
                 return true;
             } else {
                 return false;
             }
-        } catch (Exception e) { return false; }
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
