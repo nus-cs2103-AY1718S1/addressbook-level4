@@ -123,6 +123,11 @@ public class Person implements ReadOnlyPerson {
         return displayPostalCode;
     }
 
+    @Override
+    public DisplayPostalCode getDisplayPostalCode() {
+        return displayPostalCode.get();
+    }
+
     public void setDebt(Debt debt) {
         this.debt.set(requireNonNull(debt));
     }

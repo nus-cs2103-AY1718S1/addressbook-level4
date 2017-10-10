@@ -22,6 +22,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     PostalCode getPostalCode();
     ObjectProperty<DisplayPostalCode> displayPostalCodeProperty();
+    DisplayPostalCode getDisplayPostalCode();
     ObjectProperty<Debt> debtProperty();
     Debt getDebt();
     ObjectProperty<UniqueTagList> tagProperty();
