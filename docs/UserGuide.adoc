@@ -272,6 +272,20 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Customising the font size : `customise fs/FONT-SIZE`
+
+Customise the font size of Address Book +
+Format: `customise fs\FONT-SIZE`
+
+[TIP]
+A person can have any number of tags (including 0)
+
+Examples:
+
+* `customise fs\xsmall`
+* `customise fs\small`
+* `customise fs\xlarge`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -300,3 +314,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Customise* `customise fs/FONT-SIZE` +
+e.g. `customise fs/xsmall`
