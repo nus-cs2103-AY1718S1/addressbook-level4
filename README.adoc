@@ -9,11 +9,17 @@ https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_m
 
 
 ifdef::env-github[]
-image::docs/images/Ui_default.png[width="600"]
+image::docs/images/Ui_structure.png[width="600"]
+docs/images/Ui_default.png[width="600"]
+docs/images/Ui_contact.png[width="600"]
+docs/images/Ui_task.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui_default.png[width="600"]
+image::images/Ui_structure.png[width="600"]
+images/Ui_default.png[width="600"]
+images/Ui_contact.png[width="600"]
+images/Ui_task.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
