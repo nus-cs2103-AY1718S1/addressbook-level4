@@ -9,6 +9,8 @@ import javafx.scene.layout.Region;
  */
 public class PersonListStartUpPanel extends UiPart<Region> {
 
+    public static final String PERSON_LIST_START_UP_PANEL_ID = "#personListStartUpPane";
+
     private static final String FXML = "PersonListStartUpPanel.fxml";
 
     public PersonListStartUpPanel() {
