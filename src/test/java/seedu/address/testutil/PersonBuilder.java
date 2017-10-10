@@ -109,11 +109,6 @@ public class PersonBuilder {
         return this;
     }
 
-    /**
-     * Set the remark of the Person
-     * @param remark
-     * @return
-     */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
         return this;
