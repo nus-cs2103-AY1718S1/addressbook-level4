@@ -30,8 +30,8 @@ Responsibilities: Software Development
 '''
 
 === Suyash Shekhar
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+image::suyash.jpg[width="150", align="left"]
+{empty}[http://github.com/sushinoya[github]] [<<suyash#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Software Development
