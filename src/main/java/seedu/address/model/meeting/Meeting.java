@@ -3,16 +3,16 @@ package seedu.address.model.meeting;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.*;
+//import java.time.*;
 //import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 //import java.util.Set;
-import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-public class Meeting implements ReadOnlyMeeting {
+public class Meeting implements ReadOnlyMeeting {// a Meeting class for meeting card and reminder
     private ObjectProperty<Name> name;
     private ObjectProperty<Date> date;
     //private ObjectProperty<LocalTime> time;

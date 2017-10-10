@@ -1,12 +1,10 @@
 package seedu.address.model.meeting;
 
-import java.util.Set;
 import java.util.Date;
+
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.person.Person;
 
 public interface ReadOnlyMeeting {
-
     /**
      * A read-only immutable interface for a Meeting in the addressbook.
      * Implementations should guarantee: details are present and not null, field values are validated.
