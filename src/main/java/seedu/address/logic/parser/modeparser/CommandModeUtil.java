@@ -11,9 +11,9 @@ public class CommandModeUtil {
     // All modes start with prefix "-"
     public static final String PREFIX_MODE_INDICATOR = "-";
     // No mode means that prefix is empty
-    private static final String DEFAULT_MODE_PREFIX = "";
+    public static final String DEFAULT_MODE_PREFIX = "";
 
-    private static final Pattern MODE_PATTERN = Pattern.compile("^(-\\w*)");
+    private static final Pattern MODE_PATTERN = Pattern.compile("^(-\\w+)");
 
     public static String getModePrefix(String args) {
         try {

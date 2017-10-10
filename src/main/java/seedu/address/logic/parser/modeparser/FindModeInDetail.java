@@ -28,7 +28,7 @@ public class FindModeInDetail extends CommandMode<FindCommand> {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
         ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(modeArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+            ArgumentTokenizer.tokenize(" " + modeArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         FindCommand.FindDetailDescriptor descriptor = new FindCommand.FindDetailDescriptor();
         try {
@@ -37,6 +37,10 @@ public class FindModeInDetail extends CommandMode<FindCommand> {
             argMultimap.getValue(PREFIX_EMAIL).ifPresent(descriptor::setEmail);
             argMultimap.getValue(PREFIX_ADDRESS).ifPresent(descriptor::setAddress);
             Optional.of(ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG))).ifPresent(descriptor::setTags);
+
+            if (!descriptor.isValidDescriptor()) {
+                throw new ParseException(PARSE_EXCEPTION_MESSAGE);
+            }
 
             return new FindCommand(new DetailsContainsPredicate(descriptor));
         } catch (IllegalValueException ive) {

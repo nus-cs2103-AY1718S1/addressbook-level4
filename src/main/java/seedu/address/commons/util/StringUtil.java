@@ -72,17 +72,4 @@ public class StringUtil {
         }
     }
 
-    /**
-     * Changes a {@param tagSet} into String. Whitespace is added for splitting.
-     * @throws NullPointerException if {@code s} is null.
-     */
-    public static String buildTagSetIntoString(Set<Tag> tagSet) {
-        requireNonNull(tagSet);
-        StringBuilder builder = new StringBuilder();
-        for (Tag tag : tagSet) {
-            builder.append(tag.tagName);
-            builder.append(" ");
-        }
-        return builder.toString().trim();
-    }
 }

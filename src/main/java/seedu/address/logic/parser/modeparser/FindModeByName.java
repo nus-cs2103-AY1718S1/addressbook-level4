@@ -5,6 +5,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
 
@@ -26,4 +27,9 @@ public class FindModeByName extends CommandMode<FindCommand> {
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
+    @Override
+    boolean isValidModeArgs() {
+        return super.isValidModeArgs()
+             && !modeArgs.contains("-");
+    }
 }

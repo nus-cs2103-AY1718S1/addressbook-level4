@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -57,7 +58,7 @@ public class FindCommand extends Command {
         private String phone;
         private String email;
         private String address;
-        private Set<Tag> tags;
+        private Set<Tag> tags = new HashSet<>();
 
         public FindDetailDescriptor() {
         }
@@ -68,6 +69,17 @@ public class FindCommand extends Command {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+        }
+
+        /**
+         * @return true if any attribute not null.
+         */
+        public boolean isValidDescriptor() {
+            return getName().isPresent()
+                || getPhone().isPresent()
+                || getEmail().isPresent()
+                || getAddress().isPresent()
+                || !tags.isEmpty();
         }
 
         public Optional<String> getName() {
@@ -130,6 +142,17 @@ public class FindCommand extends Command {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
+        }
+
+        @Override
+        public String toString() {
+            return "FindDetailDescriptor{" +
+                    "name='" + name + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", email='" + email + '\'' +
+                    ", address='" + address + '\'' +
+                    ", tags=" + tags +
+                    '}';
         }
     }
 }

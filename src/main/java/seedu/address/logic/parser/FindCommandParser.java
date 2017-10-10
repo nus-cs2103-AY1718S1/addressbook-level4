@@ -29,8 +29,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 
-        String modePrefix = CommandModeUtil.getModePrefix(args);
-        String modeArgs = CommandModeUtil.getModeArgs(modePrefix, args);
+        String modePrefix = CommandModeUtil.getModePrefix(trimmedArgs);
+        String modeArgs = CommandModeUtil.getModeArgs(modePrefix, trimmedArgs);
 
         switch (modePrefix) {
             case FindCommand.PREFIX_FIND_IN_DETAIL:
