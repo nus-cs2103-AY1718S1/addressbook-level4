@@ -131,8 +131,11 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_NoteCommandWord_returnsNoteCommand() throws Exception {
-        assertTrue(parser.parseCommand(NoteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE ) instanceof NoteCommand);
+    public void parseCommand_noteCommandWord_returnsNoteCommand() throws Exception {
+        assertTrue(parser.parseCommand(NoteCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased()
+                + " " + PREFIX_NOTE)
+                instanceof NoteCommand);
         assertTrue(parser.parseCommand("note 3 n/") instanceof NoteCommand);
     }
 
