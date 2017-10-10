@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose tags contains any of the argument keywords.
@@ -15,16 +15,23 @@ public class FindTagsCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " friends owesMoney";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "FindTags command not implemented yet";
+    private final TagsContainsKeywordsPredicate predicate;
 
-    /**
-     * Executes the command and returns the result message.
-     *
-     * @return feedback message of the operation result for display
-     * @throws CommandException If an error occurs during command execution.
-     */
-    @Override
-    public CommandResult execute() throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+    public FindTagsCommand(TagsContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
     }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindTagsCommand // instanceof handles nulls
+                && this.predicate.equals(((FindTagsCommand) other).predicate)); // state check
+    }
+
 }
