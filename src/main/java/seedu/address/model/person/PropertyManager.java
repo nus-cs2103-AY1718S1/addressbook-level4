@@ -31,6 +31,10 @@ public class PropertyManager {
     // Records whether has been initialized before.
     private static boolean initialized = false;
 
+    static {
+        initializePropertyManager();
+    }
+
     /**
      * Includes all the pre-loaded properties into {@code PropertyManager}.
      */
