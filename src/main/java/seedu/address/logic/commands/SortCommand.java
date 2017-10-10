@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 /**
  * Lists all sorted persons in the address book to the user.
  */
-public class SortCommand extends Command {
+public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "st";
@@ -12,7 +12,7 @@ public class SortCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult executeUndoableCommand() {
         model.sortPerson();
 
         return new CommandResult(MESSAGE_SUCCESS);
