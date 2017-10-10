@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -32,7 +33,7 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(firstPredicate.equals(1));
 
         // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        assertNotNull(firstPredicate);
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
