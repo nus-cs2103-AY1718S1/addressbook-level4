@@ -28,10 +28,7 @@ public class Birthday {
         }
         else {
             String trimmedBirthday = birthday.trim();
-            if (!isValidBirthdayFormat(trimmedBirthday)) {
-                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-            }
-            else if(!isValidBirthday(trimmedBirthday)) {
+            if(!isValidBirthday(trimmedBirthday)) {
                 throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
             }
             this.value = trimmedBirthday;
@@ -42,6 +39,13 @@ public class Birthday {
      * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
+        return (isValidBirthdayFormat(test) && isValidDate(test));
+    }
+
+    /**
+     * Returns if a given string is a valid date.
+     */
+    public static boolean isValidDate(String test) {
         Boolean result = false;
         String[] birthdayParts = splitBirthday(test);
         int day = Integer.parseInt(birthdayParts[0]);
@@ -70,14 +74,14 @@ public class Birthday {
 
     /**
      * Returns if a given string has a valid person birthday format.
-     * */
+     */
     public static boolean isValidBirthdayFormat(String test) {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
     }
 
     /**
      * Returns an array with String split into 3 parts.
-     * */
+     */
     public static String[] splitBirthday(String test) {
         String[] birthdayParts = test.split("[///./-]");
 
@@ -86,7 +90,7 @@ public class Birthday {
 
     /**
      * Returns if a given int is a leap year.
-     * */
+     */
     public static boolean isLeapYear(int year) {
         Boolean result = false;
 

@@ -30,7 +30,7 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_BIRTHDAY = " ";
+    private static final String INVALID_BIRTHDAY = "32-7-1993";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
@@ -179,12 +179,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseBirthday_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseBirthday(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseBirthday_validValue_returnsEmail() throws Exception {
+    public void parseBirthday_validValue_returnsBirthday() throws Exception {
         Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
         Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
 
