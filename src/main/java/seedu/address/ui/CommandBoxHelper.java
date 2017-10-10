@@ -62,83 +62,83 @@ public class CommandBoxHelper extends UiPart<Region> {
                 } else {
                     helperText.setValue("");
                 }
-                break;
+            break;
             case 'c':
                 if (checkSubset(ClearCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(ClearCommand.COMMAND_WORD + "\n");
+                helperText.setValue(ClearCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 'd':
                 if (checkSubset(DeleteCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(DeleteCommand.COMMAND_WORD + "\n");
+                helperText.setValue(DeleteCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 'e':
                 if (checkSubset(EditCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(helperText.getValue() + EditCommand.COMMAND_WORD + "\n");
+                helperText.setValue(helperText.getValue() + EditCommand.COMMAND_WORD + "\n");
                 }
                 if (checkSubset(ExitCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(helperText.getValue() + ExitCommand.COMMAND_WORD + "\n");
+                helperText.setValue(helperText.getValue() + ExitCommand.COMMAND_WORD + "\n");
                 }
                 if (!checkSubset(ExitCommand.COMMAND_WORD, commandString) &&
                         !checkSubset(EditCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 'f':
                 if (checkSubset(FindCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(FindCommand.COMMAND_WORD + "\n");
+                helperText.setValue(FindCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 'h':
                 if (checkSubset(HelpCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(helperText.getValue() + HelpCommand.COMMAND_WORD + "\n");
+                helperText.setValue(helperText.getValue() + HelpCommand.COMMAND_WORD + "\n");
                 }
                 if (checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(helperText.getValue() + HistoryCommand.COMMAND_WORD + "\n");
+                helperText.setValue(helperText.getValue() + HistoryCommand.COMMAND_WORD + "\n");
                 }
                 if (!checkSubset(HelpCommand.COMMAND_WORD, commandString) &&
                         !checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 'l':
                 if (checkSubset(ListCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(ListCommand.COMMAND_WORD + "\n");
+                helperText.setValue(ListCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 'r':
                 if (checkSubset(RedoCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(RedoCommand.COMMAND_WORD + "\n");
+                helperText.setValue(RedoCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             case 's':
                 if (checkSubset(SelectCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(SelectCommand.COMMAND_WORD + "\n");
+                helperText.setValue(SelectCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue(SelectCommand.COMMAND_WORD);
+                helperText.setValue(SelectCommand.COMMAND_WORD);
                 }
-                break;
+            break;
             case 'u':
                 if (checkSubset(UndoCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(UndoCommand.COMMAND_WORD + "\n");
+                helperText.setValue(UndoCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+                helperText.setValue("");
                 }
-                break;
+            break;
             default:
                 helperText.setValue("No commands matching your words");
-                break;
+            break;
         }
     }
 
