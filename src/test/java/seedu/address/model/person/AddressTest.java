@@ -46,11 +46,19 @@ public class AddressTest {
         String testAddressWithLowerCasePostalCodeString = "Blk 456, Den Road, #01-355         s345123";
         String expectedAddressString = "Blk 456, Den Road, #01-355 S345123";
 
+        // instantiation
         Address address = new Address(testAddressString);
         Address addressWithLowerCasePostalCode = new Address(testAddressWithLowerCasePostalCodeString);
         Address expectedAddress = new Address(expectedAddressString);
+
+        // equality check
         assertEquals(address, expectedAddress);
         assertEquals(address, addressWithLowerCasePostalCode);
         assertEquals(addressWithLowerCasePostalCode, expectedAddress);
+
+        // hash code equality check
+        assertEquals(address.hashCode(), expectedAddress.hashCode());
+        assertEquals(address.hashCode(), addressWithLowerCasePostalCode.hashCode());
+        assertEquals(addressWithLowerCasePostalCode.hashCode(), expectedAddress.hashCode());
     }
 }
