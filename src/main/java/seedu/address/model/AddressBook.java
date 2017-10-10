@@ -50,7 +50,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// list overwrite operations
-
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
