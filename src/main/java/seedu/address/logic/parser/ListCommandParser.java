@@ -8,7 +8,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
