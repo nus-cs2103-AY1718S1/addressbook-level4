@@ -52,7 +52,7 @@ public class DeleteManyCommand extends UndoableCommand {
                 assert false : "The target person cannot be missing";
             }
 
-            result += String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+            result += String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete) + "\n";
 
 
         }
