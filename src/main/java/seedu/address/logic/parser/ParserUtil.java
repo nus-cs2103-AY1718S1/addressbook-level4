@@ -28,6 +28,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_STRING = "String does not contain alphabets only.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -41,6 +42,14 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+    
+    public static String parseString(String str) throws IllegalValueException {
+        String trimmedString = str.trim();
+        if (!StringUtil.isLettersOnly(trimmedString)) {
+            throw new IllegalValueException(MESSAGE_INVALID_STRING);
+        }
+        return trimmedString;
     }
 
     /**

@@ -25,10 +25,7 @@ public class DeleteCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
-    }
-
+    public DeleteCommand(Index targetIndex) { this.targetIndex = targetIndex; }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -38,7 +35,7 @@ public class DeleteCommand extends UndoableCommand {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
+        
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
