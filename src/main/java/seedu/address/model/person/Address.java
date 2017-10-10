@@ -28,7 +28,7 @@ public class Address {
      */
     public Address(String address) throws IllegalValueException {
         requireNonNull(address);
-        if (!isValidAddress(address)) {
+        if (!isUnknownAddress(address) && !isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = address;
@@ -40,6 +40,11 @@ public class Address {
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
+
+    /**
+     * Returns true if a given string is empty, which means an unknown address
+     */
+    public static boolean isUnknownAddress(String test) { return test.equals(""); }
 
     @Override
     public String toString() {
