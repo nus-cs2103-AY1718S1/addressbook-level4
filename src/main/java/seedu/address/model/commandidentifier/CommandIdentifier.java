@@ -1,4 +1,4 @@
-package seedu.address.model.commandword;
+package seedu.address.model.commandidentifier;
 
 import static java.util.Objects.requireNonNull;
 
@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -21,9 +20,9 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
-public class CommandWord {
+public class CommandIdentifier {
     public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "Invalid command argument!\n"
-            + "The command argument should be one of the following: "
+            + "The command argument should be one of the following (or their aliases):\n"
             + AddCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
@@ -38,18 +37,18 @@ public class CommandWord {
             + UndoCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
-            AddCommand.COMMAND_WORD,
-            ClearCommand.COMMAND_WORD,
-            DeleteCommand.COMMAND_WORD,
-            EditCommand.COMMAND_WORD,
-            ExitCommand.COMMAND_WORD,
-            FindCommand.COMMAND_WORD,
-            HelpCommand.COMMAND_WORD,
-            HistoryCommand.COMMAND_WORD,
-            ListCommand.COMMAND_WORD,
-            RedoCommand.COMMAND_WORD,
-            SelectCommand.COMMAND_WORD,
-            UndoCommand.COMMAND_WORD);
+            AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
+            ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS,
+            DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
+            EditCommand.COMMAND_WORD, EditCommand.COMMAND_ALIAS,
+            ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_ALIAS,
+            FindCommand.COMMAND_WORD, FindCommand.COMMAND_ALIAS,
+            HelpCommand.COMMAND_WORD, HelpCommand.COMMAND_ALIAS,
+            HistoryCommand.COMMAND_WORD, HistoryCommand.COMMAND_ALIAS,
+            ListCommand.COMMAND_WORD, ListCommand.COMMAND_ALIAS,
+            RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
+            SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_ALIAS,
+            UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
 
     public final String value;
 
@@ -58,7 +57,7 @@ public class CommandWord {
      *
      * @throws IllegalValueException if the given tag name string is invalid.
      */
-    public CommandWord(String commandWord) throws IllegalValueException {
+    public CommandIdentifier(String commandWord) throws IllegalValueException {
         requireNonNull(commandWord);
         if (!isValidCommandWord(commandWord) && !commandWord.equals("")) {
             throw new IllegalValueException(MESSAGE_COMMAND_WORD_CONSTRAINTS);
@@ -81,8 +80,8 @@ public class CommandWord {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof CommandWord // instanceof handles nulls
-                && this.value.equals(((CommandWord) other).value)); // state check
+                || (other instanceof CommandIdentifier // instanceof handles nulls
+                && this.value.equals(((CommandIdentifier) other).value)); // state check
     }
 
     @Override

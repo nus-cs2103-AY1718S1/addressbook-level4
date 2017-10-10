@@ -5,7 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.commandword.CommandWord;
+import seedu.address.model.commandidentifier.CommandIdentifier;
 
 /**
  * Parses input arguments and creates a new HelpCommand object
@@ -24,8 +24,8 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         }
 
         try {
-            CommandWord commandWord = ParserUtil.parseCommandWord(args);
-            return new HelpCommand(commandWord);
+            CommandIdentifier commandIdentifier = ParserUtil.parseCommandWord(args);
+            return new HelpCommand(commandIdentifier);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
