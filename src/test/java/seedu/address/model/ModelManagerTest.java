@@ -1,19 +1,32 @@
 package seedu.address.model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.Arrays;
+import java.util.Set;
 
+import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.TestApp;
+import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.TypicalPersons;
+import seedu.address.ui.Ui;
+import seedu.address.ui.UiManager;
 
 public class ModelManagerTest {
     @Rule
@@ -61,5 +74,49 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void deleteTag() throws IllegalValueException, PersonNotFoundException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        Tag tag = new Tag("friend");
+
+        // duplicate persons
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        thrown.expect(DuplicatePersonException.class);
+        modelManager.addPerson(TypicalPersons.ALICE);
+
+        modelManager.deleteTag(tag);
+
+        //person not found, empty AddressBook
+        AddressBook emptyAddressBook = new AddressBookBuilder().build();
+        ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
+        AddressBook expectedAddressBook = new AddressBookBuilder().build();
+        emptyModelManager.deleteTag(tag);
+        assertEquals(emptyAddressBook,expectedAddressBook);
+
+        //person not found, no such tag
+        Tag noSuchTag = new Tag("nosuchtag");
+        modelManager.deleteTag(noSuchTag);
+        expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertEquals(addressBook,expectedAddressBook);
+    }
+
+    @Test
+    public void tagColor(){
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        Logic logic = new LogicManager(modelManager);
+        Config config = new Config();
+        Ui ui = new UiManager(logic,config,userPrefs);
+        modelManager.getUi(ui);
+
+        //default tagcolor should be off
+        ObservableList<Tag> tags = addressBook.getTagList();
+        for (Tag tag : tags){
+            assertEquals(tag.getTagColor(),"#dcdcdc");
+        }
     }
 }
