@@ -785,6 +785,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user|auto-completion of commands|easier for user to type command quickly
 
+|`*` |user|smart suggestion of the next part of the commands|easier for user to type command correctly
+
 |`*` |user|trigger & password |make the app more secure with password defence
 
 |`*` |user|customise background wallpaper |for user to have a better background they like
