@@ -16,5 +16,6 @@
       <Label fx:id="phone" alignment="TOP_LEFT" contentDisplay="CENTER" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="address" alignment="TOP_LEFT" contentDisplay="CENTER" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="email" alignment="TOP_LEFT" contentDisplay="CENTER" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="remark" alignment="TOP_LEFT" contentDisplay="CENTER" textAlignment="CENTER" wrapText="true" />
    </children>
 </VBox>

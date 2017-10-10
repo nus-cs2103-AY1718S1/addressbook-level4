@@ -32,6 +32,8 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label remark;
+    @FXML
     private FlowPane tags;
     public PersonPanel() {
         super(FXML);
@@ -46,6 +48,7 @@ public class PersonPanel extends UiPart<Region> {
         phone.setText(person.getPhone().toString());
         address.setText(person.getAddress().toString());
         email.setText(person.getEmail().toString());
+        remark.setText(person.getRemark().toString());
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
