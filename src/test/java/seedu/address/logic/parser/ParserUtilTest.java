@@ -1,9 +1,9 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -16,8 +16,12 @@ import java.util.Set;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.kordamp.ikonli.feather.Feather;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -186,5 +190,55 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseCommand_validCommand_returnsCommand() throws Exception {
+        assertEquals(ParserUtil.parseCommand(Optional.of(AddCommand.COMMAND_WORD)),
+                Optional.of(AddCommand.COMMAND_WORD));
+        assertEquals(ParserUtil.parseCommand(Optional.of(ListCommand.COMMAND_WORD)),
+                Optional.of(ListCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parseCommand_invalidCommand_returnsEmptyOptional() throws Exception {
+        assertFalse(ParserUtil.parseCommand(Optional.of("")).isPresent());
+        assertFalse(ParserUtil.parseCommand(Optional.of("invalid-command")).isPresent());
+    }
+
+    @Test
+    public void parseCommand_emptyCommand_returnsEmptyOptional() throws Exception {
+        assertFalse(ParserUtil.parseCommand(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseIconCode_validCommand_returnsCorrectIcon() throws Exception {
+        assertEquals(ParserUtil.parseIconCode(AddCommand.COMMAND_WORD).get(), Feather.FTH_PLUS);
+        assertEquals(ParserUtil.parseIconCode(ListCommand.COMMAND_WORD).get(), Feather.FTH_PAPER);
+    }
+
+    @Test
+    public void parseIconCode_invalidCommand_returnsEmptyOptional() throws Exception {
+        assertFalse(ParserUtil.parseIconCode("").isPresent());
+        assertFalse(ParserUtil.parseIconCode("invalid-command").isPresent());
+    }
+
+    @Test
+    public void parseCommandAndArguments_validCommandAndArgument_returnsCommandAndArgument() throws Exception {
+        String[] commandAndArguments = {AddCommand.COMMAND_WORD, " arguments"};
+        assertArrayEquals(ParserUtil.parseCommandAndArguments(AddCommand.COMMAND_WORD + " arguments"),
+                commandAndArguments);
+    }
+
+    @Test
+    public void parseCommandAndArguments_validCommandNoArgument_returnsCommandAndEmptyArgument() throws Exception {
+        String[] commandAndArguments = {AddCommand.COMMAND_WORD, ""};
+        assertArrayEquals(ParserUtil.parseCommandAndArguments(AddCommand.COMMAND_WORD), commandAndArguments);
+    }
+
+    @Test
+    public void parseCommandAndArguments_emptyString_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        ParserUtil.parseCommandAndArguments("");
     }
 }
