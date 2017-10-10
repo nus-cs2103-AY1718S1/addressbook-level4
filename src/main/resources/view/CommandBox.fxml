@@ -7,15 +7,15 @@
 <?import javafx.scene.text.Text?>
 
 <StackPane fx:id="stackPane" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <Label fx:id="keywordLabel" text="Label" />
-   <Text fx:id="commandText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
+   <Label fx:id="keywordLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Label" />
+   <Text fx:id="commandTextDefault" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
       <StackPane.margin>
          <Insets left="13.0" />
       </StackPane.margin>
    </Text>
-   <TextField fx:id="commandTextFieldKeyword" alignment="CENTER" editable="false" maxWidth="-Infinity" StackPane.alignment="CENTER_LEFT">
-      <StackPane.margin>
-         <Insets left="13.0" />
-      </StackPane.margin></TextField>
+   <Text fx:id="commandTextXsmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextSmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
+   <Text fx:id="commandTextXLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
   <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." StackPane.alignment="CENTER_LEFT" />
 </StackPane>
