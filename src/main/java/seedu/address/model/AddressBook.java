@@ -60,6 +60,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void onTagColors() {
+        tags.setTagsColorOn();
+    }
+
+    public void offTagColors() {
+        tags.setTagsColorOff();
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */

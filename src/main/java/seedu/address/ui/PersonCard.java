@@ -1,17 +1,12 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.ReadOnlyPerson;
-
-
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -19,9 +14,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<>();
-    private static int colorIndex = 0;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -46,6 +38,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label bloodType;
+    @FXML
     private FlowPane tags;
     @FXML
     private Label remark;
@@ -67,7 +61,9 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        bloodType.textProperty().bind(Bindings.convert(person.bloodTypeProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(oldValue + " " + newValue);
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
@@ -81,28 +77,9 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            if (GuiSettings.getTagColored()) {
-                initializeColorForTag(tag.tagName);
-                tagLabel.setStyle("-fx-background-color: " + getColorFromTag(tag.tagName));
-            }
+            tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
             tags.getChildren().add(tagLabel);
         });
-    }
-
-    /**
-     * Sets color for each unique tag
-     * Round-robin assignment from first color to last color
-     */
-    private void initializeColorForTag(String tagName) {
-        if (!tagColors.containsKey(tagName)) {
-            tagColors.put(tagName, colors[colorIndex]);
-            colorIndex = (colorIndex + 1) % colors.length;
-        }
-
-    }
-
-    private String getColorFromTag(String tagName) {
-        return tagColors.get(tagName);
     }
 
     @Override
