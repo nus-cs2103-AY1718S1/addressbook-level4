@@ -1,9 +1,12 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class AddressTest {
 
@@ -21,6 +24,33 @@ public class AddressTest {
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355 S345123")); // upper case s
         assertTrue(Address.isValidAddress("12- S435342"));
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355  s345123")); // lower case s
-        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA s123123")); // long address
+        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; USA s123123")); // long address
+    }
+
+    @Test
+    public void addressBookParsing() throws IllegalValueException {
+        String testAddressString = "Blk 456, Den Road, #01-355         S345123";
+        String testAddressWithLowerCasePostalCodeString = "Blk 456, Den Road, #01-355         s345123";
+        String expectedAddressString = "Blk 456, Den Road, #01-355 S345123";
+
+        Address address = new Address(testAddressString);
+        assertEquals(address.toString(), expectedAddressString);
+        Address addressWithLowerCasePostalCode = new Address(testAddressWithLowerCasePostalCodeString);
+        assertEquals(addressWithLowerCasePostalCode.toString(), expectedAddressString);
+        assertEquals(addressWithLowerCasePostalCode.toString(), address.toString());
+    }
+
+    @Test
+    public void equals() throws IllegalValueException {
+        String testAddressString = "Blk 456, Den Road, #01-355         S345123";
+        String testAddressWithLowerCasePostalCodeString = "Blk 456, Den Road, #01-355         s345123";
+        String expectedAddressString = "Blk 456, Den Road, #01-355 S345123";
+
+        Address address = new Address(testAddressString);
+        Address addressWithLowerCasePostalCode = new Address(testAddressWithLowerCasePostalCodeString);
+        Address expectedAddress = new Address(expectedAddressString);
+        assertEquals(address, expectedAddress);
+        assertEquals(address, addressWithLowerCasePostalCode);
+        assertEquals(addressWithLowerCasePostalCode, expectedAddress);
     }
 }

@@ -9,6 +9,8 @@ public class PostalCodeTest {
 
     @Test
     public void isValidPostalCode() {
+        String exampleAddress = "Blk 456, Den Road, #01-355 S345123";
+
         // invalid name
         assertFalse(PostalCode.isValidPostalCode("")); // empty string
         assertFalse(PostalCode.isValidPostalCode(" ")); // spaces only
@@ -20,5 +22,7 @@ public class PostalCodeTest {
         assertTrue(PostalCode.isValidPostalCode("000000")); // alphabets only
         assertTrue(PostalCode.isValidPostalCode("123456")); // numbers only
         assertTrue(PostalCode.isValidPostalCode("000845")); // alphanumeric characters
+        assertTrue(PostalCode.isValidPostalCode(exampleAddress.substring(exampleAddress.length() - 6,
+                exampleAddress.length())));
     }
 }
