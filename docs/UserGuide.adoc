@@ -217,12 +217,15 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Sorts the address book : `sort`
+
+Sorts the contacts in the address book based on name. +
+Format: `sort`
+
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
-
-=== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
