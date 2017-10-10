@@ -9,8 +9,6 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.Arrays;
 
-import javafx.collections.ObservableList;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -113,8 +111,7 @@ public class ModelManagerTest {
         modelManager.getUi(ui);
 
         //default tagcolor should be off
-        ObservableList<Tag> tags = addressBook.getTagList();
-        for (Tag tag : tags) {
+        for (Tag tag : addressBook.getTagList()) {
             assertEquals(tag.getTagColor(), "#dcdcdc");
         }
     }
