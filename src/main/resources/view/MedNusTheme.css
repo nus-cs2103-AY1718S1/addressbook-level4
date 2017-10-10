@@ -111,7 +111,7 @@ ackground {
 }
 
 .list-cell .label {
-    /* -fx-text-fill: white; */
+    -fx-text-fill: white;
 }
 
 .cell_big_label { /* Used for people's names */
@@ -131,15 +131,14 @@ ackground {
      -fx-background-radius: 10px;
 }
 
-.anchor-pane-status { /* Effectively the status bar background */
-}
+.anchor-pane-status { /* Effectively the status bar background */}
 
 .pane-with-border { /* Command pane border background color */
      -fx-background-color: #DDDDDD;
 }
 
 .status-bar {
-    -fx-background-color: B3B3B3;
+    -fx-background-color: #DDDDDD;
     -fx-text-fill: black;
 }
 
@@ -155,7 +154,7 @@ ackground {
 
 .status-bar .label { /* Status bar font */
     -fx-font-family: sans-serif;
-    -fx-text-fill: #666666;
+    -fx-text-fill: #DDDDDD;
 }
 
 .status-bar-with-border {
@@ -184,7 +183,7 @@ ackground {
 }
 
 .menu-bar { /* Used for menu bar colour */
-    -fx-background-color: #4F6D7A;
+    -fx-background-color: #CE4E4E;
 }
 
 .menu-bar .label {
@@ -298,7 +297,7 @@ ackground {
 }
 
 #cardPane { /*Background of Listed contacts*/
-    -fx-background-color: #EC7171;
+    -fx-background-color: #E25555;
     -fx-border-width: 0;
 }
 
