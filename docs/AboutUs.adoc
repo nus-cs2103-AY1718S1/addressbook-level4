@@ -11,29 +11,28 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
+=== Damith C
 image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]]
+
+Role: Lecturer
+
+'''
+
+=== Ng Si Kai
+image::ngsikai.jpg[width="150", align="left"]
+{empty}[http://github.com/ngsikai[github]] [https://github.com/ngsikai/ngsikai.github.io[portfolio]]
 
 Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Lim Yong Song
+image::limyongsong.jpg[width="150", align="left"]
+{empty}[https://github.com/limyongsong[github]] [<<limyongsong#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Storage + UI
 
 '''
 

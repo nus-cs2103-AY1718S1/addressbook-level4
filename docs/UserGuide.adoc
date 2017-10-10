@@ -227,6 +227,15 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Coming in v2.0
+
+=== Ability to login/logout: `login`/`logout`
+
+=== Add a to-do note to contact: `todo`
+
+=== Link facebook page to contact: `link`
+
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
