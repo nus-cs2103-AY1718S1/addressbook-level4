@@ -7,7 +7,7 @@ public class BlacklistCommand extends Command {
     public static final String COMMAND_WORD = "blacklist";
     public static final String COMMAND_WORD_ALIAS = "bl";
 
-    public static final String MESSAGE_SUCCESS = "Listed all clients who are prohibited from borrowing money";
+    public static final String MESSAGE_SUCCESS = "Blacklist: Listed all clients who are prohibited from borrowing money";
 
 
     @Override
