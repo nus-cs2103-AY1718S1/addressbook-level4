@@ -55,6 +55,11 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            // As tab will shift focus away from the text box,
+            // consuming it causes the text box to remain focused
+            keyEvent.consume();
+            autoCompleteCommand();
         default:
             // let JavaFx handle the keypress
         }
@@ -84,6 +89,14 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.next());
+    }
+
+    /**
+     * Autocompletes the command in the textbox from incomplete input,
+     * and if command is already complete change to next possible command
+     */
+    private void autoCompleteCommand() {
+
     }
 
     /**
