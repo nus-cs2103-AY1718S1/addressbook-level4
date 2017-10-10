@@ -24,20 +24,23 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<DisplayPostalCode> displayPostalCode;
+    private ObjectProperty<Debt> debt;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, tags);
+    public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
+                  Debt debt, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, postalCode, debt, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.displayPostalCode = new SimpleObjectProperty<>(new DisplayPostalCode(postalCode));
+        this.debt = new SimpleObjectProperty<>(debt);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -47,7 +50,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getTags());
+                source.getDebt(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -106,7 +109,6 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author khooroko
     public void setPostalCode(PostalCode postalCode) {
         this.postalCode.set(requireNonNull(postalCode));
     }
@@ -131,7 +133,20 @@ public class Person implements ReadOnlyPerson {
         return displayPostalCode.get();
     }
 
-    //@@author
+    public void setDebt(Debt debt) {
+        this.debt.set(requireNonNull(debt));
+    }
+
+    @Override
+    public ObjectProperty<Debt> debtProperty() {
+        return debt;
+    }
+
+    @Override
+    public Debt getDebt() {
+        return debt.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -162,7 +177,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, tags);
+        return Objects.hash(name, phone, email, address, postalCode, debt, tags);
     }
 
     @Override

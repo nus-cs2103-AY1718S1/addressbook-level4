@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     PostalCode getPostalCode();
     ObjectProperty<DisplayPostalCode> displayPostalCodeProperty();
     DisplayPostalCode getDisplayPostalCode();
+    ObjectProperty<Debt> debtProperty();
+    Debt getDebt();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -37,7 +39,8 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
-                && other.getPostalCode().equals(this.getPostalCode());
+                && other.getPostalCode().equals(this.getPostalCode())
+                && other.getDebt().equals(this.getDebt());
     }
 
     /**
@@ -54,6 +57,7 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Postal Code: ")
                 .append(getPostalCode())
+                .append(getDebt())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
