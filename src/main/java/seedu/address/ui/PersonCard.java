@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +16,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static String[] colors = { "darkred", "forestgreen", "blue", "orange", "brown", "black", "pink",
+        "darkgrey", "limegreen" };
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Integer colourNum = 0;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -49,6 +55,22 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
+     * Assigns different colour to tags w/ different names
+     * Defaults to Grey colour when all colours are used up
+     * @param tagValue is the tagName
+     * @return
+     */
+    private static String getColorForTag(String tagValue) {
+
+        if (!tagColors.containsKey(tagValue) && colourNum < colors.length) {
+            tagColors.put(tagValue, colors[colourNum++]);
+        } else if (!tagColors.containsKey(tagValue) && tagColors.size() >= colors.length) {
+            tagColors.put(tagValue, "grey");
+        }
+        return tagColors.get(tagValue);
+
+    }
+    /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
@@ -59,12 +81,21 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Get the tags from a person and assign a colour to each tag
+     * before add the tag as a children (on scenebuilder) of the person on the app list
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override

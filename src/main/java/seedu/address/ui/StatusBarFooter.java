@@ -22,6 +22,7 @@ public class StatusBarFooter extends UiPart<Region> {
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
 
+
     /**
      * Used to generate time stamps.
      *
@@ -40,7 +41,8 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
-
+    @FXML
+    private StatusBar totalPersons;
 
     public StatusBarFooter(String saveLocation) {
         super(FXML);
@@ -49,6 +51,22 @@ public class StatusBarFooter extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    public StatusBarFooter(String saveLocation, int totalPersons) {
+        super(FXML);
+        setSyncStatus(SYNC_STATUS_INITIAL);
+        setSaveLocation("./" + saveLocation);
+        registerAsAnEventHandler(this);
+        setTotalPersons(totalPersons);
+    }
+
+    /**
+     * Displays the total number of persons on list on StatusBarFooter along with syncstatus and savelocation
+     * Placement determine by @see StatusBarFooter.fxml
+     * @param totalPersons
+     */
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(totalPersons + " person(s) total");
+    }
     /**
      * Sets the clock used to determine the current time.
      */
@@ -77,5 +95,6 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalPersons(abce.data.getPersonList().size());
     }
 }
