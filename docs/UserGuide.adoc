@@ -238,6 +238,28 @@ Format: `tagcolor On / tagcolor Off`
 Tag color is not fixed. (i.e. when tag color is offed and on again, the color is different)
 ====
 
+=== Adding/Removing Remarks to a person : `remark`
+
+Adds/Remove a remark from an existing person in the address book. +
+Format: `remark INDEX [r/REMARK]`
+
+Adding a Remark: You can add a remark by typing 'r/' followed by the remarks.
+
+Removing a Remark: You can remove a remark by typing 'r/' without specifying anything after it.
+
+****
+* Adds/Delete the remark of the person at the specified `INDEX`.
+* The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* When editing remarks, the existing remarks of the person will be removed i.e adding of remarks is not cumulative.
+****
+
+Examples:
+
+* `remark 1 r/Loves coffee` +
+Adds a remark 'Loves coffee' to the 1st person in the list.
+* `remark 1 r/` +
+Clears the existing remark for the 1st person in the list.
 
 === Exiting the program : `exit`
 
@@ -288,3 +310,4 @@ e.g.`s 2`
 * *Undo Shorthand Form* : `u`
 * *Redo* : `redo`
 * *Redo Shorthand Form* : `r`
+* *Adding/Deleting a Remark* : `remark`
