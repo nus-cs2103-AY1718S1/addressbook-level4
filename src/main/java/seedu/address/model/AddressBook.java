@@ -32,7 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * among constructors.
      */
     {
         persons = new UniquePersonList();
@@ -159,7 +159,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Sort person list in the address book
      */
-    public void sortPersonList() { persons.sort(); }
+    public void sortPersonList() {
+        persons.sort();
+    }
 
     //// tag-level operations
 

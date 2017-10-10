@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-
+/**
+ * Sort all persons in address book.
+ */
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
