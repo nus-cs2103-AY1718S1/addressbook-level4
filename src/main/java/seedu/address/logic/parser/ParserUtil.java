@@ -86,7 +86,7 @@ public class ParserUtil {
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.of(new Birthday(""));
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
     /**
