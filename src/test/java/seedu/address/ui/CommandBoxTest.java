@@ -37,6 +37,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
         defaultStyleOfCommandBox = new ArrayList<>(commandBoxHandle.getStyleClass());
 
+
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
     }
@@ -146,6 +147,8 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals("", commandBoxHandle.getInput());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
+
+
 
     /**
      * Pushes {@code keycode} and checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
