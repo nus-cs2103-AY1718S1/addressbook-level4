@@ -72,4 +72,34 @@ public class NameContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
+
+    @Test
+    public void test_nameContainsSubstrings_returnsTrue() {
+        // One substring
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Ali"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Multiple substrings
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Ali", "ob"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Only one matching substring
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("ob", "rol"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
+
+        // Mixed-case substrings
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("LIce", "OB"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
+
+    @Test
+    public void test_nameDoesNotContainSubstrings_returnsFalse() {
+        // Zero keywords
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        // Non-matching keyword
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("alicebob"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
 }
