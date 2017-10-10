@@ -5,8 +5,6 @@ import seedu.address.commons.events.storage.BackupDataEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ReadOnlyAddressBook;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Creates a backup of the address book.
  */
