@@ -131,7 +131,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
-        deleteButton = new DeleteButton(logic,0 );
+        deleteButton = new DeleteButton(logic, 0 );
         deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
 
         browserPanel = new BrowserPanel();

@@ -41,7 +41,7 @@ public class DeleteButton extends UiPart<Region> {
      */
     @FXML
     private void handleDeleteButtonPressed() throws CommandException, ParseException {
-        CommandResult commandResult = logic.execute("delete "+ getSelectedIndex());
+        CommandResult commandResult = logic.execute("delete " + getSelectedIndex());
         logger.info("Result: " + commandResult.feedbackToUser);
     }
 
