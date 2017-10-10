@@ -1,4 +1,4 @@
-ackground {
+background {
     -fx-background-color: red;
     background-color: #DDDDDD; /* Used in the default.html file */
 }
@@ -74,12 +74,14 @@ ackground {
 }
 
 .split-pane:horizontal .split-pane-divider { /* Used for split pane divider color */
-    -fx-background-color: #DDDDDD;
-    -fx-border-color: transparent transparent transparent #CCCCCC;
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent transparent white;
+    -fx-padding: 0 0 0 0;
+
 }
 
 .split-pane { /* Borders left pane. Borders right pane. */
-    -fx-background-color: #DDDDDD;
+    -fx-background-color: white;
 }
 
 .list-view {
@@ -134,11 +136,11 @@ ackground {
 .anchor-pane-status { /* Effectively the status bar background */}
 
 .pane-with-border { /* Command pane border background color */
-     -fx-background-color: #DDDDDD;
+     -fx-background-color: white;
 }
 
 .status-bar {
-    -fx-background-color: #DDDDDD;
+    -fx-background-color: white;
     -fx-text-fill: black;
 }
 
@@ -154,7 +156,7 @@ ackground {
 
 .status-bar .label { /* Status bar font */
     -fx-font-family: sans-serif;
-    -fx-text-fill: #DDDDDD;
+    -fx-text-fill: white;
 }
 
 .status-bar-with-border {
@@ -166,7 +168,7 @@ ackground {
 }
 
 .grid-pane { /* Status bar border */
-    -fx-background-color: #DDDDDD;
+    -fx-background-color: white;
     -fx-background-radius: 0px;
 }
 
@@ -320,7 +322,7 @@ ackground {
 
 #resultDisplay .content { /* Result box background color and radius */
     -fx-background-color: #CCCCCC;
-    -fx-padding: 10px;
+    -fx-padding: 0px;
 }
 
 #tags {
