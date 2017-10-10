@@ -15,6 +15,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +32,10 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
     private String bloodType;
+
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -40,7 +44,8 @@ public class XmlAdaptedPerson {
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
 
     /**
@@ -58,6 +63,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        remark = source.getRemark().value;
     }
 
     /**
@@ -76,6 +82,9 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Bloodtype bloodType = new Bloodtype(this.bloodType);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, bloodType, tags);
+        final Remark remark = new Remark(this.remark);
+
+        return new Person(name, phone, email, address, bloodType, tags, remark);
+
     }
 }

@@ -72,6 +72,13 @@ public class AddressBookTest {
     }
 
     @Test
+    public void testHashCodeFalse() {
+        int addressBookAHash = new AddressBook().hashCode();
+        int addressBookBHash = new AddressBook().hashCode();
+        assertEquals(addressBookAHash, addressBookBHash);
+    }
+
+    @Test
     public void tagColors() {
         addressBook.onTagColors();
         for (ReadOnlyPerson person : addressBook.getPersonList()) {
@@ -86,6 +93,7 @@ public class AddressBookTest {
             }
         }
     }
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
