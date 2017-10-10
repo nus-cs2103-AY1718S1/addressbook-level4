@@ -28,6 +28,15 @@ Responsibilities: UI
 
 '''
 
+=== Keith Ong Yong Siang
+image::keithsoc.jpg[width="150", align="left"]
+{empty}[http://github.com/keithsoc[github]] [<<keithsoc#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Integration, Code Quality, In charge of UI component
+
+'''
+
 === Marvin Chin
 image::marvinchin.jpg[width="150", align="left"]
 {empty}[http://github.com/marvinchin[github]] [<<marvinchin#, portfolio>>]
