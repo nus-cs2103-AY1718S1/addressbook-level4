@@ -95,22 +95,24 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `n/hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `n/Hans n/Bo` will match `Bo Hans`
+* You may search for different fields by adding a prefix. ([n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG])
+* Words will be matched if the keyword is contained by the peron's details e.g. `n/Han` will identify `Hans`, `n/Gabrielle` will not identify `Gabriel`.
+* Only Persons matching all the keywords will be returned (i.e. `AND` search). e.g. `n/Hans n/Bo` will not return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/John t/friend p/123` +
+Returns any person who's name contains `john`, has a tag which contains `friend` and who's phone contains `123`.
+* `find a/Blk 100 Street` +
+Returns any person who's address contains `Blk 100 Street` (case-insensitive). Does not return person who's address is `Street Blk 100`.
 
 === Deleting a person : `delete`
 
