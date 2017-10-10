@@ -19,6 +19,11 @@
     -fx-text-fill: derive(light, -40%);
 }
 
+#tag:hover {
+    -fx-underline: true;
+    -fx-text-fill: light !important;
+}
+
 .scroll-bar .thumb {
     -fx-background-color: derive(base, -5%);
     -fx-fill-width: 5;

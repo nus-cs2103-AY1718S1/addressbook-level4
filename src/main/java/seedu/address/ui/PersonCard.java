@@ -50,12 +50,12 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            person.getTags().forEach(tag -> tags.getChildren().add(new Tag(tag.tagName).getRoot()));
         });
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> tags.getChildren().add(new Tag(tag.tagName).getRoot()));
     }
 
     @Override

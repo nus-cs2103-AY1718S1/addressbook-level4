@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static MainWindow instance;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -45,6 +46,7 @@ public class MainWindow extends UiPart<Region> {
     private PersonPanel personPanel;
     private Config config;
     private UserPrefs prefs;
+
 
     @FXML
     private StackPane panelPlaceholder;
@@ -86,6 +88,15 @@ public class MainWindow extends UiPart<Region> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+        instance = this;
+    }
+
+    public static MainWindow getInstance() {
+        return instance;
+    }
+
+    public Logic getLogic() {
+        return logic;
     }
 
     public Stage getPrimaryStage() {
