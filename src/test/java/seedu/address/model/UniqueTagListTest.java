@@ -31,7 +31,7 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
-        assertTrue(uniqueTagList.contains(new Tag("friends")));
+        assertTrue(uniqueTagList.contains(new Tag("Test1")));
         assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa")));
 
         for (Tag tag : uniqueTagList.asObservableList()) {
