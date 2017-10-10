@@ -125,6 +125,26 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    @Test
+    public void tabAutoCompleteTest_withNoMatchingCommands() {
+        // text field is empty
+        assertInputHistory(KeyCode.TAB, "");
+
+        // one letter in text field
+        guiRobot.push(KeyCode.Y);
+        assertInputHistory(KeyCode.TAB, "y");
+
+        // two letters in text field
+        guiRobot.push(KeyCode.T);
+        assertInputHistory(KeyCode.TAB, "yt");
+    }
+
+    @Test
+    public void tabAutoCompleteTest_withMatchingCommand() {
+        guiRobot.push(KeyCode.L);
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
+    }
+
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
