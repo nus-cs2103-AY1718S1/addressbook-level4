@@ -23,7 +23,7 @@ In-charge of: Logic Component
 image::jasminesee.png[width="150", align="left"]
 {empty}[http://github.com/jasminesee[github]] [<<jasminesee#, portfolio>>]
 
-Role: Documentation, Integration +
+Role: Deliverable and Dateline, Integration +
 In-charge of: Model Component
 
 '''
@@ -41,7 +41,7 @@ In-charge of: UI Component
 image::limshunyong.png[width="150", align="left"]
 {empty}[http://github.com/limshunyong[github]] [<<limshunyong#, portfolio>>]
 
-Role: Code quality, Deliverable and Dateline +
+Role: Code quality, Documentation  +
 In-charge of: Storage Component
 
 '''
