@@ -7,10 +7,14 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.commons.exceptions.IllegalValueException;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.model.tag.Tag;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new ListCommand object
@@ -31,7 +35,9 @@ public class ListCommandParser implements Parser<ListCommand>{
             }
 
             Set<Tag> inputTag = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            return new ListCommand(inputTag);
+            List<Tag> inputTagNames = new ArrayList<>(inputTag);
+
+            return new ListCommand(new PersonContainsKeywordsPredicate(inputTagNames));
 
         } catch (IllegalValueException ive) {
             throw new ParseException(
