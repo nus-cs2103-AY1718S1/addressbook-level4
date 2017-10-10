@@ -729,30 +729,54 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |undo a previous command |undo commands with typing mistakes
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |add in contacts even information are partly lack |administrate contact with only part of information known
+|`* *` |user |add in contacts even if missing info for some fields |administrate contacts with only part of info known
 
-|`* *` |user |import existing addressBook to the software |administrate previous information without having to re-enter them
+|`* *` |user |import/export saved contact-list to/from the address book |allow for contact transfers to other address books and/or backups
 
-|`* *` |forgetful user |look up for contacts in partial name or initials | view of list of contacts with eligible information
+|`* *` |forgetful user |look up contacts with partial name or initials |view list of contacts with eligible information
 
-|`* *` |careless user |receive a list of proposed contacts if keyword with similarity does not match |still find the corresponding contact even small spelling mistakes are made
+|`* *` |careless user |get a list of possible contacts similiar to search keywords used |find correct contacts even with command typos
 
-|`*` |user |store and keep track of the contact that are most frequently looked up for |fast access to the frequently visited contacts
+|`* *` |user |make groups for specific contacts |find grouped contacts faster
 
-|`*` |user |add a contact as "star" contact |administrate VIP people in the address book
+|`* *` |user |have a text search bar for contacts |find contacts faster instead of using "find" command
+
+|`* *` |user with many contacts |sort persons by name |locate a person easily
+
+|`*` |user |keep track of and display frequently looked up contacts |quick access to frequently viewed contacts
+
+|`*` |user |mark a contact as "Favourite" |always find "Favourited" contacts easily
 
 |`*` |user |amend contact information |all information can be updated
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |clean up all contacts immediately |fast construct a new list of contacts
 
 |`*` |social user|generate and scan QR code for adding contacts |add in contacts quickly
-|=======================================================================
 
-{More to be added}
+|`*` |user |have an auto-complete command function in CLI |enter commands faster, increasing convenience
+
+|`*` |user |have each contact have a "comments" field |take notes for specific contacts
+
+|`*` |user |have each contact display their profile picture |allow quicker identification of contacts with similiar names
+
+|`*` |user |have displayed list of contacts display only "phone number" or "all info" |browse through contact list faster
+
+|`*` |social user |be able to connect the application to social media |see social media information related to my contacts
+
+|`*` |user |be able to customize the look and feel of the applicaiton |use the application with a comfortable UI
+
+|`*` |user |link the application to online contact backup services |manage contact backups and synchronisation between devices
+
+|`*` |user |have application and it's data file locked with a password |feel safe knowing my contact list will not be stolen and copied
+
+|`*` |user |selectively import/export contacts to/from a file |transfer contacts to or recieve contacts from another application user
+
+|`*` |fellow developer |have a plug-in system to allow new modules to be used |plug in new functionalities such as a calender and/or appointment system
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -877,21 +901,15 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
-
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  A user should be able to search for and locate a contact within 5 seconds.
-.  Contact list data should not be corrupted even in the event of the application being forcefully terminated while processing.
-.  A user should not be able to accidentally clear their contact list.
-.  A user's contact list data should not be viewable to anyone else who is not authorised.
-.  A user should be able to import or export contacts in batches via files.
 .  The GUI should complement the command line by providing a clean and easy to read interface.
-.  Should be able to install plug-ins that allow integration with calenders and/or social media profiles.
+.  The addressbook should never encounter a single error while in use.
+.  A new user should be able to pick up and be able to use the application easily.
 
 [appendix]
 == Glossary
