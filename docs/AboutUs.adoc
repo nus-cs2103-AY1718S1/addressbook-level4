@@ -37,7 +37,7 @@ Responsibilities: Model
 '''
 
 === Derek Kok
-image::m133225.jpg[width="150", align="left"]
+image::derek.jpg[width="150", align="left"]
 {empty}[http://github.com/Procrastinatus[github]] [<<derek#, portfolio>>]
 
 Role: Developer +
