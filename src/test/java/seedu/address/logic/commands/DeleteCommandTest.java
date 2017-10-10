@@ -11,6 +11,8 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -19,8 +21,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import org.junit.Test;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -35,7 +35,7 @@ public class DeleteCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToDelete = model1.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ReadOnlyPerson personToDelete_2 = model2.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyPerson personToDelete2 = model2.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
 
         personsToDelete1.add(INDEX_FIRST_PERSON);
         perosnsToDelete2.add(INDEX_FIRST_PERSON);
@@ -53,7 +53,7 @@ public class DeleteCommandTest {
 
         expectedModel1.deletePerson(personToDelete);
         expectedModel2.deletePerson(personToDelete);
-        expectedModel2.deletePerson(personToDelete_2);
+        expectedModel2.deletePerson(personToDelete2);
 
         assertCommandSuccess(deleteCommand1, model1, expectedMessage1, expectedModel1);
         assertCommandSuccess(deleteCommand2, model2, expectedMessage2, expectedModel2);
@@ -131,7 +131,7 @@ public class DeleteCommandTest {
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareCommand(Model environment,ArrayList<Index> indexes) {
+    private DeleteCommand prepareCommand(Model environment, ArrayList<Index> indexes) {
 
         DeleteCommand deleteCommand = new DeleteCommand(indexes);
         deleteCommand.setData(environment, new CommandHistory(), new UndoRedoStack());
