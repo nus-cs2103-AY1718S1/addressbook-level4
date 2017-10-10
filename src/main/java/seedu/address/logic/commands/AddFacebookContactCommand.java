@@ -17,6 +17,8 @@ public class AddFacebookContactCommand extends UndoableCommand {
             + "Parameters: FACEBOOK_CONTACT_NAME\n"
             + "Example: " + COMMAND_WORD + "alice fong";
 
+    public static final String MESSAGE_VERSION_ONE_TEST = "New person added: Khairul Rusydi Phone: 000 " +
+            "Email: a@b.c Address: - Tags: [facebookcontact]";
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     private final Person toAdd;
