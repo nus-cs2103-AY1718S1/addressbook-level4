@@ -52,4 +52,12 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    default String getTagsAsString() {
+        StringBuilder sb = new StringBuilder();
+        getTags().stream().forEach(
+                tag -> sb.append(tag.tagName + " ")
+        );
+        return sb.toString();
+    }
+
 }
