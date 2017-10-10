@@ -26,11 +26,10 @@ public class LoginCommandParserTest {
                     new LoginCommand(new Username(validUsername), new Password(validPassword));
 
             //no leading and trailing whitespaces
-            assertParseSuccess(parser,validUsername + " " + validPassword, expectedLoginCommand);
+            assertParseSuccess(parser, validUsername + " " + validPassword, expectedLoginCommand);
 
             // with leading and trailing whitespaces
-            assertParseSuccess(parser, validUsername + " " +
-                    validPassword + " ", expectedLoginCommand);
+            assertParseSuccess(parser, validUsername + " " + validPassword + " ", expectedLoginCommand);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }

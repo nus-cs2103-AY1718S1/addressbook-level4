@@ -12,20 +12,18 @@ import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
-import seedu.address.model.UserPrefs;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author jelneo
 public class LoginCommandTest {
-    private static final UserPrefs userPrefsTest = new UserPrefs();
 
     private boolean hasLoggedIn = true;
     private LoginAppRequestEvent event;
 
-
     @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
     public ExpectedException thrown = ExpectedException.none();
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
     public void execute_login_success() {
@@ -36,8 +34,10 @@ public class LoginCommandTest {
             assertEquals(hasLoggedIn, event.getLoginStatus());
             assertEquals(MESSAGE_LOGIN_ACKNOWLEDGEMENT, result.feedbackToUser);
 
-        } catch (Exception e) {
-            thrown.expect(IllegalValueException.class);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (CommandException ce) {
+            ce.printStackTrace();
         }
     }
     @Test
