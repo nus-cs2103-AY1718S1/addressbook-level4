@@ -38,7 +38,7 @@ Responsibilities: UI
 '''
 
 === Lawrence Li
-image::lawrence.png[width="150", align="left"]
+image::Lawrence.png[width="150", align="left"]
 {empty}[http://github.com/zzmobie[github]]
 
 Role: Developer +
