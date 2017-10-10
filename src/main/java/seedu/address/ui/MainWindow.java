@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,6 +17,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -204,7 +209,9 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleOpen() {
-
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open File");
+        File file = chooser.showOpenDialog(new Stage());
     }
 
     /**
