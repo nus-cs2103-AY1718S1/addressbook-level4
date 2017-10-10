@@ -9,6 +9,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -33,7 +34,7 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
     }
@@ -51,7 +52,7 @@ public class PersonBuilder {
     public PersonBuilder withName(String name) {
         try {
             this.person.setName(new Name(name));
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
         return this;
@@ -75,7 +76,7 @@ public class PersonBuilder {
     public PersonBuilder withAddress(String address) {
         try {
             this.person.setAddress(new Address(address));
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;
@@ -87,7 +88,7 @@ public class PersonBuilder {
     public PersonBuilder withPhone(String phone) {
         try {
             this.person.setPhone(new Phone(phone));
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
         }
         return this;
@@ -99,7 +100,7 @@ public class PersonBuilder {
     public PersonBuilder withEmail(String email) {
         try {
             this.person.setEmail(new Email(email));
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
         return this;

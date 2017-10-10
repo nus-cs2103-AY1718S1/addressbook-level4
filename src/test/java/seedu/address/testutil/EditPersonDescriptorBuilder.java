@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -41,7 +42,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withName(String name) {
         try {
             ParserUtil.parseName(Optional.of(name)).ifPresent(descriptor::setName);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
         return this;
@@ -53,7 +54,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withPhone(String phone) {
         try {
             ParserUtil.parsePhone(Optional.of(phone)).ifPresent(descriptor::setPhone);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
         }
         return this;
@@ -65,7 +66,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withEmail(String email) {
         try {
             ParserUtil.parseEmail(Optional.of(email)).ifPresent(descriptor::setEmail);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
         return this;
@@ -77,7 +78,7 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withAddress(String address) {
         try {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
         return this;

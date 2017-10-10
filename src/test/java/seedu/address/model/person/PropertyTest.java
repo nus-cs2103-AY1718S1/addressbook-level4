@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 
 public class PropertyTest {
 
@@ -27,7 +28,7 @@ public class PropertyTest {
 
         try {
             newProperty = new Property("p", value);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             assertEquals(expectedMessage, ive.getMessage());
         }
 

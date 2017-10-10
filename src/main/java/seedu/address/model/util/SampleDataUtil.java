@@ -12,6 +12,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -40,7 +41,7 @@ public class SampleDataUtil {
                     new Address("Blk 45 Aljunied Street 85, #11-31"),
                     getTagSet("colleagues"))
             };
-        } catch (IllegalValueException e) {
+        } catch (IllegalValueException | PropertyNotFoundException e) {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }

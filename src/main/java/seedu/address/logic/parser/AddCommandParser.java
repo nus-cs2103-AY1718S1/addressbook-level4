@@ -19,6 +19,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -49,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
 
             return new AddCommand(person);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }

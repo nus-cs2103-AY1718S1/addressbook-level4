@@ -95,6 +95,10 @@ public class PropertyManager {
         propertyValidationRegex.put(shortName, regex);
     }
 
+    public static boolean containsShortName(String shortName) {
+        return propertyShortNames.contains(shortName);
+    }
+
     public static String getPropertyFullName(String shortName) {
         return propertyFullNames.get(shortName);
     }

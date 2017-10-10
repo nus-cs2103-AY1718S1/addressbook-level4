@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 
 /**
  * Represents a Person's phone number in the address book.
@@ -9,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Phone extends Property {
     private static final String PROPERTY_SHORT_NAME = "p";
 
-    public Phone(String value) throws IllegalValueException {
+    public Phone(String value) throws IllegalValueException, PropertyNotFoundException {
         super(PROPERTY_SHORT_NAME, value);
     }
 

@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.exceptions.PropertyNotFoundException;
 
 /**
  * A generic class that represents a property of a person. All properties of a person (including name, email, phone
@@ -25,7 +26,11 @@ public class Property {
      *
      * @param shortName is the short name (identifier) of this property.
      */
-    public Property(String shortName, String value) throws IllegalValueException {
+    public Property(String shortName, String value) throws IllegalValueException, PropertyNotFoundException {
+        if (!PropertyManager.containsShortName(shortName)) {
+            throw new PropertyNotFoundException();
+        }
+
         this.shortName = shortName;
 
         requireNonNull(value);
