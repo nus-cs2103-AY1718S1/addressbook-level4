@@ -31,7 +31,6 @@ public class AddFacebookContactCommandTest {
     /**
      * Returns an {@code AddFacebookContactCommand}.
      */
-
     private AddFacebookContactCommand prepareCommand() throws ParseException {
         AddFacebookContactCommand newCommand = new AddFacebookContactParser().parse("Khairul Rusydi");
 
