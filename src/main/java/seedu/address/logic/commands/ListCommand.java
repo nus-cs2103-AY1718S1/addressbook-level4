@@ -1,9 +1,11 @@
 package seedu.address.logic.commands;
 
-import java.util.Collection;
+import java.util.Set;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import seedu.address.model.tag.Tag;
 
 /**
  * Lists all persons in the address book to the user.
@@ -20,9 +22,13 @@ public class ListCommand extends Command {
             + "Example: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + "friends";
 
-    public ListCommand() {;}
+    private final Set<Tag> toFind;
+
+    public ListCommand() { toFind = null;}
     
-    public ListCommand(Collection<String> enteredTag) {}
+    public ListCommand(Set<Tag> enteredTag) {
+        toFind = enteredTag;
+    }
     
     @Override
     public CommandResult execute() {
