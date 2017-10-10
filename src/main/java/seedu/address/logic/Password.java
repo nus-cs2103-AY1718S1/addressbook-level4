@@ -13,8 +13,8 @@ public class Password {
     public static final String MESSAGE_PASSWORD_CHARACTERS_CONSTRAINTS = "Password can only consist of uppercase "
             + "letters (A-Z), lowercase letters (a-z),"
             + " digits (0-9) and special characters (!@#$&()_-.+)";
-    public static final String MESSAGE_PASSWORD_LENGTH_CONSTRAINTS = "Length of password cannot be less than " +
-            PASSWORD_LENGTH + " characters.";
+    public static final String MESSAGE_PASSWORD_LENGTH_CONSTRAINTS = "Length of password cannot be less than "
+            + PASSWORD_LENGTH + " characters.";
     public static final String PASSWORD_VALIDATION_REGEX = "^[a-zA-Z0-9!@#$&()_\\-.+]+$";
 
     private String value;
