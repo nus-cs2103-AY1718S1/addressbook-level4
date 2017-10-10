@@ -53,7 +53,7 @@ public interface ReadOnlyPerson {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" BloodType: ")
-                .append(getBloodType())          
+                .append(getBloodType())
                 .append(" Tags: ")
                 .append(getRemark())
                 .append(" Remark: ");
