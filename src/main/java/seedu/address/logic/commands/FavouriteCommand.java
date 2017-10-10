@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Mark a person in the contact as favourite
  */
-public class FavouriteCommand extends UndoableCommand{
+public class FavouriteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "favourite";
 
