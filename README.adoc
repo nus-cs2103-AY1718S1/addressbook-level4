@@ -9,7 +9,7 @@ https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_m
 
 
 ifdef::env-github[]
-image::docs/images/Ui_structure.png[width="600"]
+image::docs/images/Ui_default.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
