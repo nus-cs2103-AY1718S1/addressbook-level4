@@ -352,6 +352,8 @@ a string heuristic for measuring the difference between two character sequences.
 of _hops_ that are required to get from a string to another, where _hops_ are insertions, deletions and substitution
 operations.
 
+image::FuzzyFindActivityDiagram.png[]
+
 The activity diagram for the fuzzy finding can be loosely described as seen in the figure above.
 
 1. A user sends a find request
@@ -376,7 +378,7 @@ public class Person implements ReadOnlyPerson {
 ----
 
 `FIND_NAME_GLOBAL_TOLERANCE` is the global minimum distance of the currently examined name word for the loose matching to execute.
-`FIND_NAME_DISTANCE_TOLERANCE` is the maximum levenshtein distance from the currently examined search parameter 
+`FIND_NAME_DISTANCE_TOLERANCE` is the maximum levenshtein distance from the currently examined search parameter
 to the currently examined name word in which the contact will be added.
 
 ==== Design Considerations
