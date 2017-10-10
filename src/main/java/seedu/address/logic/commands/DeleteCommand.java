@@ -63,7 +63,7 @@ public class DeleteCommand extends UndoableCommand {
             for (Index s: invalid) {
                 MESSAGE_DELETE_PERSON_FAIL.append(s.getOneBased());
             }
-            throw new CommandException(MESSAGE_DELETE_PERSON_FAIL.toString());
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
 
