@@ -22,8 +22,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 public class CommandWord {
-    public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "Command word should be "
-            + "one of the following: "
+    public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "Invalid command argument!\n"
+            + "The command argument should be one of the following: "
             + AddCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
