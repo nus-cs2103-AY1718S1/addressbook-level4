@@ -39,7 +39,7 @@ public class HelpCommand extends Command {
             break;
 
         case ClearCommand.COMMAND_WORD:
-            //commandResult = ClearCommand.MESSAGE_USAGE;
+            commandResult = ClearCommand.MESSAGE_USAGE;
             break;
 
         case DeleteCommand.COMMAND_WORD:
@@ -51,7 +51,7 @@ public class HelpCommand extends Command {
             break;
 
         case ExitCommand.COMMAND_WORD:
-            //commandResult = ExitCommand.MESSAGE_USAGE;
+            commandResult = ExitCommand.MESSAGE_USAGE;
             break;
 
         case FindCommand.COMMAND_WORD:
@@ -63,15 +63,15 @@ public class HelpCommand extends Command {
             break;
 
         case HistoryCommand.COMMAND_WORD:
-            //commandResult = HistoryCommand.MESSAGE_USAGE;
+            commandResult = HistoryCommand.MESSAGE_USAGE;
             break;
 
         case ListCommand.COMMAND_WORD:
-            //commandResult = ListCommand.MESSAGE_USAGE;
+            commandResult = ListCommand.MESSAGE_USAGE;
             break;
 
         case RedoCommand.COMMAND_WORD:
-            //commandResult = RedoCommand.MESSAGE_USAGE;
+            commandResult = RedoCommand.MESSAGE_USAGE;
             break;
 
         case SelectCommand.COMMAND_WORD:
@@ -79,11 +79,12 @@ public class HelpCommand extends Command {
             break;
 
         case UndoCommand.COMMAND_WORD:
-            //commandResult = UndoCommand.MESSAGE_USAGE;
+            commandResult = UndoCommand.MESSAGE_USAGE;
             break;
 
         default:
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());
+            commandResult = SHOWING_HELP_MESSAGE;
             break;
         }
 

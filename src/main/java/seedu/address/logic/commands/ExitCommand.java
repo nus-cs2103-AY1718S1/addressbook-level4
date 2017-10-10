@@ -12,6 +12,10 @@ public class ExitCommand extends Command {
 
     public static final String COMMAND_ALIAS = "q";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Exits the program.\n"
+            + "Parameters: None";
+
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Address Book as requested ...";
 
     @Override
