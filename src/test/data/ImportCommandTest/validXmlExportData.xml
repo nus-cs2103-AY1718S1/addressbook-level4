@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Hoon Meier</name>
+        <phone>8482424</phone>
+        <email>stefan@example.com</email>
+        <address>little india</address>
+    </persons>
+    <persons>
+        <name>Ida Mueller</name>
+        <phone>8482131</phone>
+        <email>hans@example.com</email>
+        <address>chicago ave</address>
+    </persons>
+</addressbook>
