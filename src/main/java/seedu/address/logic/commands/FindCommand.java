@@ -1,12 +1,9 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.*;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
