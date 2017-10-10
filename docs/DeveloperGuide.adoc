@@ -28,7 +28,7 @@ This app will not work with earlier versions of Java 8.
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has link:#gradle[Gradle] and link:#javaFX[JavaFX] plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
@@ -36,7 +36,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
+. Set up the correct JDK version for link:#gradle[Gradle]
 .. Click `Configure` > `Project Defaults` > `Project Structure`
 .. Click `New...` and find the directory of the JDK
 . Click `Import Project`
@@ -72,12 +72,12 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up link:#travis[Travis] to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both link:#travis[Travis] and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
 ==== Getting started with coding
 
@@ -110,25 +110,25 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 
 The rest of the App consists of four components.
 
-* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#ui-component[*`UI`*] : The link:#ui[UI] of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
 Each of the four components
 
-* Defines its _API_ in an `interface` with the same name as the Component.
+* Defines its _link:#api[API]_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the link:#class-diagram[class diagram] given below) defines it's link:#api[API] in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 2.1.2 : link:#class-diagram[Class Diagram] of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _link:#sequence-diagram[Sequence Diagram]_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
@@ -136,7 +136,7 @@ _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the link:#ui[UI] being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
@@ -146,22 +146,22 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== link:#ui[UI] component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 2.2.1 : Structure of the link:#ui[UI] Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*link:#api[API]* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The link:#ui[UI] consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `link:#ui[UI]` component uses link:#javaFX[JavaFX] link:#ui[UI] framework. The layout of these link:#ui[UI] parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `link:#ui[UI]` component,
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* Binds itself to some data in the `Model` so that the link:#ui[UI] can auto-update when data in the `Model` change.
+* Responds to events raised from various parts of the App and updates the link:#ui[UI] accordingly.
 
 === Logic component
 
@@ -171,7 +171,7 @@ _Figure 2.3.1 : Structure of the Logic Component_
 image::LogicCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
-*API* :
+*link:#api[API]* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
@@ -179,7 +179,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the link:#sequence-diagram[Sequence Diagram] for interactions within the `Logic` component for the `execute("delete 1")` link:#api[API] call.
 
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
@@ -189,13 +189,13 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*link:#api[API]* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the link:#ui[UI] can be bound to this list so that the link:#ui[UI] automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -203,7 +203,7 @@ The `Model`,
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*link:#api[API]* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
@@ -282,7 +282,7 @@ image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following link:#sequence-diagram[sequence diagram] shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
@@ -299,7 +299,7 @@ Commands that are not undoable are not added into the `undoStack`. For example, 
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following link:#activity-diagram[activity diagram] summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
@@ -378,7 +378,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using link:#travis[Travis].
 
 === Converting Documentation to PDF format
 
@@ -401,23 +401,23 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 3rd one. The first two methods might fail some link:#gui[GUI] tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
 * To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
 
-*Method 2: Using Gradle*
+*Method 2: Using link:#gradle[Gradle]*
 
 * Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using link:#gradle[Gradle].
 
-*Method 3: Using Gradle (headless)*
+*Method 3: Using link:#gradle[Gradle] (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our link:#gui[GUI] tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
@@ -425,10 +425,10 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.  *link:#gui[GUI] Tests* - These are tests involving the link:#gui[GUI]. They include,
+.. _System Tests_ that test the entire App by simulating user actions on the link:#gui[GUI]. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-link:#gui[GUI] Tests* - These are tests not involving the link:#gui[GUI]. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
@@ -441,13 +441,13 @@ e.g. `seedu.address.logic.LogicManagerTest`
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
-* Solution: Execute Gradle task `processResources`.
+* Solution: Execute link:#gradle[Gradle] task `processResources`.
 
 == Dev Ops
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+See <<UsingGradle#, UsingGradle.adoc>> to learn how to use link:#gradle[Gradle] for build automation.
 
 === Continuous Integration
 
@@ -464,7 +464,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using link:#gradle[Gradle]. For example, link:#gradle[Gradle] can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -508,8 +508,8 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 +
 ****
 * Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] link:#api[API] needs to be updated.
+**  Find out which of the existing link:#api[API] methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
 ** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
@@ -519,7 +519,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ==== `Ui` component
 
 [TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
+Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `link:#ui[UI]` component.
 
 . Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
 +
@@ -589,7 +589,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 +
 ****
 * Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
+** Add the link:#api[API] method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
 ** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
@@ -641,7 +641,7 @@ Let's teach the application to parse arguments that our `remark` command will ac
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
+===== [Step 3] link:#ui[UI]: Add a placeholder for remark in `PersonCard`
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
 
 **Main:**
@@ -686,7 +686,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 . Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
 
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
+===== [Step 7] link:#ui[UI]: Connect `Remark` field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
@@ -721,6 +721,20 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+|`* * *` |admin |add new module into the system |I can allow the teachers and students to access this new module
+
+|`* * *` |admin |add new teachers into the system |I can allow new teachers to access the software
+
+|`* * *` |admin |list the existing modules |I can view how many and what module do i have in the system
+
+|`* * *` |admin |update the detail of the existing module |I can make changes to the module without having to delete the module and recreate it
+
+|`* * *` |admin |delete teachers from the system |I can take away the access right of the teachers who are no longer working for the school
+
+|`* * *` |admin |update the detail of the teachers |I can make changes of the detail of the teachers without having to delete and recreate them
+
+|`* * *` |admin |view the commands/function i can use in this software |I no need to memorise the function in this software and can review them conviencely whenever i want
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |add a new person |
@@ -729,12 +743,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
+
+|`* * *` |teacher |add new location for a module in timetable |I can plan my teaching schedule
+
+|`* * *` |teacher |delete an existing module in a particular timeslot |I can make changes to the timeslot
+
+|`* * *` |teacher |delete an existing module in a particular location |I can make changes to the timeslot
+
+|`* * *` |teacher |update an existing module timeslot |I can change the current timeslot to an updated one
+
+|`* * *` |teacher |update an existing module location |I can change the current location to an updated one
+
+|`* * *` |teacher |list all the locations |I know all the locations I can choose from
+
+|`* * *` |teacher |view the help file  |I know all the available functions
+
+|`* * *` |teacher |view available slots at a specified location |I can determine if i should schedule my lecture there
+
+|`* * *` |teacher |login with my username/password |I can gain access to the product
+
+|`* * *` |teacher |register with username/password |I can gain access to the personalised timetable
+
+|`* * *` |student |check location and time slot of different modules |I can make my study plan
+
+|`* * *` |student |view all modules taught by a lecturer |I can make my study plan
+
+|`* *` |admin |list a particular lecturer |I no need to search manually in the list of teachers
+
+|`* *` |admin |generate comprehensive reports of the current semester detail |I can save time from making this report myself
+
+|`* *` |admin |view the history of commands |so I no need to go through the list to know what I have added so far
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |teacher |undo the previous command |I can revert to the previous state
 
-{More to be added}
+|`* *` |teacher |redo the previously undo-ed command |I can revert to the previous state
+
+|`* *` |teacher |show history of commands |I know what my previous commands were
+
+|`* *` |teacher |back up my file |I can retrieve back data
+
+|`* *` |teacher/student |export the timetable to various files (pdf, excel, png, jpeg) |I can print the timetable
+
+|`* *` |teacher/student |report bugs to developers | developer can solve the bug and improve the product
+
+|`* *` |teacher/student |bookmark a particular module |I can have easy access to the particular module
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -742,14 +801,172 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add module to timeslot
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add module timeslot.
+2. AddressBook adds module shows “successfully added” message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User enter wrong command format.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. The module code, class type, time-slot or location is not available.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Update module in a particular timeslot
+
+*MSS*
+
+1. User requests to list modules.
+2. AddressBook shows a list of modules.
+3. User requests to update a specific module in the list.
+4. AddressBook updates the module.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The module code, class type, time-slot or location is not available.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete module by module/timeslot/location
+
+*MSS*
+
+1. User requests to list module by module/timeslot/location.
+2. AddressBook shows a list of module/timeslot/location.
+3. User requests to delete a specific item (module/timeslot/location) on the list
+4. AddressBook deletes the item
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+{More to be added}
+
+[discrete]
+=== Use case: Redo command
+
+*MSS*
+
+1.  User requests redo the previously command
+2.  AddressBook redo previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Unable to find previous command
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo command
+
+*MSS*
+
+1.  User requests to undo previous command
+2.  AddressBook undo previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Unable to find previous command
++
+Use case ends.
+
+[discrete]
+=== Use case: History
+
+*MSS*
+
+1.  User requests to list history of commands
+2.  AddressBook shows a list of history of commands
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests show help guide
+2.  AddressBook shows help guide
++
+Use case ends.
+
+[discrete]
+=== Use case: list
+
+*MSS*
+
+1.  User requests to list all modules time-slots
+2.  AddressBook shows all modules time-slots
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: list [tag-name(module / location)]
+
+*MSS*
+
+1. User requests to list by tag-name
+2. AddressBook shows a list of information by tag-name
+3. User requests to view specific information of tag-name
 +
 Use case ends.
 
@@ -767,16 +984,72 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: login [userAccount]
+
+*MSS*
+
+1. User requests to login with a User Account
+2. AddressBook asks user to key in password
+3. User key in password
+4. AddressBook checks the password and show successful message
++
+Use case ends.
+
+*Extensions*
+
+* 4a. The account is not registered.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+   Environment requirement(s):
+       .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+       .  Minimum 512 MB of RAM memory
+       .  Server should have minimum 5 GB of storage size
+       .  Compatible with both 32-bits and 64-bits systems
 
-{More to be added}
+   Capacity
+       .  Should be able to hold up to 10000 persons without a noticeable sluggishness in performance for typical usage.
+
+   Constraint(s)
+       .  The system should be backward compatible with data produced by earlier version of the system
+       .  The total project cost should not exceed $10,000
+       .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+
+   Performance requirement(s):
+       .  The application should be respond to 1000 people within 2 seconds
+       .  Time to restart after failure should not be more than 5 seconds
+       .  Screen refresh time should be less than 1 second
+
+   Quality requirement(s):
+       .  The system should be usable by a novice who has never used an online timetable planner
+
+   Process requirement(s)
+       .  The project is expected to adhere a schedule that delivers an enhancement every week before tutorial.
+
+   Privacy:
+       .  Admin have higher access than lecturer as they have to manage the system
+
+   Notes about project scope:
+       .  The product is not required to allow users to chat and message with each other
+
+   Portability:
+       .  Can be compiled and run in different operating systems and processors
+
+   Security:
+       .  The application must preserve the availability, integrity and confidentiality of data
+
+   Reliability:
+       .  Data created in the system will be retained for 2 years
+       .  System must have less than 1 hour downtime per 3 months (e.g. to update/maintain the system)
+
 
 [appendix]
 == Glossary
@@ -794,6 +1067,70 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
+[[api]]
+API
+
+....
+An application program interface (API) is code that allows two software programs to communicate with each other. The API defines the correct way for a developer to write a program that requests services from an operating system (OS) or other application. APIs are implemented by function calls composed of verbs and nouns. The required syntax is described in the documentation of the application being called.
+....
+
+[[javaFX]]
+JavaFX
+
+....
+JavaFX is a software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices. JavaFX is intended to replace Swing as the standard GUI library for Java SE, but both will be included for the foreseeable future.
+....
+
+[[gradle]]
+Gradle
+
+....
+Gradle is a flexible general purpose build tool
+....
+
+[[travis]]
+Travis
+
+....
+Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub. Travis CI automatically detects when a commit has been made and pushed to a GitHub repository that is using Travis CI, and each time this happens, it will try to build the project and run tests. This includes commits to all branches, not just to the master branch.
+....
+
+[[gui]]
+GUI
+
+....
+A graphical user interface (GUI) is a human-computer interface (i.e., a way for humans to interact with computers) that uses windows, icons and menus and which can be manipulated by a mouse (and often to a limited extent by a keyboard as well).
+....
+
+[[ui]]
+UI
+
+....
+The user interface (UI), in the industrial design field of human–computer interaction, is the space where interactions between humans and machines occur.
+....
+
+[[activity-diagram]]
+Activity diagram
+
+....
+Activity diagram is basically a flowchart to represent the flow from one activity to another activity.
+....
+
+[[class-diagram]]
+Class diagram
+
+....
+In software engineering, a class diagram in the Unified Modeling Language (UML) is a type of static structure diagram that describes the structure of a system by showing the system's classes, their attributes, operations (or methods), and the relationships among objects.
+....
+
+[[sequence-diagram]]
+Sequence diagram
+
+....
+A sequence diagram is an interaction diagram that shows how objects operate with one another and in what order.
+....
+
 
 [appendix]
 == Product Survey

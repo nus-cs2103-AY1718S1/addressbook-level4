@@ -1,11 +1,17 @@
 package seedu.address.model;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 
 /**
  * The API of the Model component.
@@ -13,6 +19,15 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** Get a hash set of all the distinct Addresses */
+    HashSet<Address> getUniqueAdPersonSet();
+
+    /** Get a hash set of all the distinct Emails */
+    HashSet<Email> getUniqueEmailPersonSet();
+
+    /** Get a hash set of all the distinct Phones */
+    HashSet<Phone> getUniquePhonePersonSet();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -22,6 +37,9 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Deletes the given list of person. */
+    void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -44,5 +62,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * handle different ListingUnit after redo and undo
+     */
+    void handleListingUnit();
 
 }

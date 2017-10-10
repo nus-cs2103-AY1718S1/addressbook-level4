@@ -1,8 +1,10 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's address in the address book.
@@ -32,6 +34,13 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = address;
+    }
+
+    /**
+     * Get a StringProperty of the address
+     */
+    public StringProperty getAddressProperty() {
+        return new SimpleStringProperty(value);
     }
 
     /**
