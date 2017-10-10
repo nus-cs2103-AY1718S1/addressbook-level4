@@ -37,7 +37,7 @@ Responsibilities: Storage + UI
 '''
 
 === Nabeel Zaheer
-image::nabeelzaheer.jpg[width="150", align="left"]
+image::nabeelzaheer.png[width="150", align="left"]
 {empty}[https://github.com/NabeelZhr[github]] [<<NabeelZhr#, portfolio>>]
 
 Role: Developer +
