@@ -53,17 +53,13 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void readAddressBookNotInXmlFormat() throws DataConversionException, IOException {
+    public void onInitialStartupNoBackupTest() throws DataConversionException, IOException {
 
-        // thrown.expect(Exception.class);
         storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"),
                 new JsonUserPrefsStorage("random.json"));
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
                 .readAddressBook(storageManager.getBackupStorageFilePath());
         assertFalse(backupAddressBookOptional.isPresent());
-        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
-         * That means you should not have more than one exception test in one method
-         */
     }
 
     @Test
