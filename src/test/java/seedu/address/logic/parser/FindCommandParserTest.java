@@ -17,24 +17,24 @@ import seedu.address.testutil.FindDetailDescriptorBuilder;
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
-    private String Expected_Message = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+    private String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", Expected_Message);
+        assertParseFailure(parser, "     ", expectedMessage);
     }
 
     @Test
     public void parse_invalidModePrefix_throwsParseException() {
-        assertParseFailure(parser, "-a", Expected_Message);
-        assertParseFailure(parser, "--u", Expected_Message);
-        assertParseFailure(parser, "--d", Expected_Message);
+        assertParseFailure(parser, "-a", expectedMessage);
+        assertParseFailure(parser, "--u", expectedMessage);
+        assertParseFailure(parser, "--d", expectedMessage);
     }
 
     @Test
     public void parse_emptyModeArgs_throwsParseException() {
-        assertParseFailure(parser, "-u", Expected_Message);
-        assertParseFailure(parser, "-d    ", Expected_Message);
+        assertParseFailure(parser, "-u", expectedMessage);
+        assertParseFailure(parser, "-d    ", expectedMessage);
     }
 
     @Test
