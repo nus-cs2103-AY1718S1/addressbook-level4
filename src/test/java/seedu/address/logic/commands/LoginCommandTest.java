@@ -40,6 +40,7 @@ public class LoginCommandTest {
             ce.printStackTrace();
         }
     }
+
     @Test
     public void execute_login_failure() {
         try {
@@ -49,9 +50,10 @@ public class LoginCommandTest {
             assertEquals(!hasLoggedIn, event.getLoginStatus());
             assertEquals(MESSAGE_LOGIN_UNSUCCESSFUL, result.feedbackToUser);
 
-        } catch (Exception e) {
-            thrown.expect(IllegalValueException.class);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (CommandException ce) {
+            ce.printStackTrace();
         }
     }
-
 }
