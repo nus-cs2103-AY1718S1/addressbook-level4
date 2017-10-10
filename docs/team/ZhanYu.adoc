@@ -15,11 +15,8 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=find]
-
-#End of Extract#
+include::../UserGuide.adoc[leveloffset=2,tag=find]
 
 ---
 
@@ -33,7 +30,7 @@ This enhancement allows them to find contacts by close name words or by tags pre
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=findClose]
+include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
 //TODO: Add findClose section in Developer Guide (Implementation & Design Considerations See undoredo for example)
 
 #End of Extract#
