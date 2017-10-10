@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.util.PersonComparator;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -130,14 +128,19 @@ public class UniquePersonList implements Iterable<Person> {
     public void sort(String sortType) {
         switch(sortType) {
         case "name":
+            FXCollections.sort(internalList, (Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
+            break;
+
+        case "phone":
+            FXCollections.sort(internalList, (Person p1, Person p2) -> p1.getPhone().compareTo(p2.getPhone()));
+            break;
+
+        case "email":
+            FXCollections.sort(internalList, (Person p1, Person p2) -> p1.getEmail().compareTo(p2.getEmail()));
             break;
 
         default:
             break;
-        } //for future sort types, this area and Comparator class must be changed
-
-        Comparator<Person> sortie = new PersonComparator();
-
-        FXCollections.sort(internalList, sortie);
+        } //for future sort types, add into switch
     }
 }
