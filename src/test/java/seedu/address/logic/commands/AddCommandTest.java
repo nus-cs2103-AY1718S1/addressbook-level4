@@ -7,7 +7,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -111,22 +110,6 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
             return null;
-        }
-
-        @Override
-        public Map<String, String> getAliases() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deleteAlias(String alias) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addAlias(String alias, String command) {
-            fail("This method should not be called.");
         }
 
         @Override

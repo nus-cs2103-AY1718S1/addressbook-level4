@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -52,7 +51,6 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_alias() throws Exception {
-        parser.setAliases(new TreeMap<>());
         AliasCommand command = (AliasCommand) parser.parseCommand(
                 AliasCommand.COMMAND_WORD + " show " + ListCommand.COMMAND_WORD);
         assertEquals(new AliasCommand("show", ListCommand.COMMAND_WORD), command);

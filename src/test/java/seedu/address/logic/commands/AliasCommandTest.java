@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -36,15 +37,14 @@ public class AliasCommandTest {
 
     @Test
     public void execute_alias_addSuccess() throws Exception {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addAlias(LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD);
-
         assertCommandSuccess(
                 aliasCommand,
                 model,
                 String.format(AliasCommand.MESSAGE_ADD_SUCCESS, LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD),
-                expectedModel
+                model
         );
+
+        assertTrue(UserPrefs.getAliases().get(LIST_COMMAND_ALIAS) == ListCommand.COMMAND_WORD);
     }
 
     @Test
@@ -65,8 +65,6 @@ public class AliasCommandTest {
 
     @Test
     public void execute_alias_deleteSuccess() throws Exception {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
         aliasCommand.execute();
 
         Command aliasDeleteCommand = new AliasCommand(LIST_COMMAND_ALIAS, true);
@@ -76,8 +74,10 @@ public class AliasCommandTest {
                 aliasDeleteCommand,
                 model,
                 String.format(AliasCommand.MESSAGE_DELETE_SUCCESS, LIST_COMMAND_ALIAS),
-                expectedModel
+                model
         );
+
+        assertNull(UserPrefs.getAliases().get(LIST_COMMAND_ALIAS));
     }
 
     @Test
@@ -85,7 +85,6 @@ public class AliasCommandTest {
         aliasCommand.execute();
 
         final AddressBookParser parser = new AddressBookParser();
-        parser.setAliases(model.getAliases());
 
         Command firstCommand = parser.parseCommand(LIST_COMMAND_ALIAS);
         Command secondCommand = parser.parseCommand(ListCommand.COMMAND_WORD);

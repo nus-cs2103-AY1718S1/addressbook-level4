@@ -23,6 +23,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * Parses user input.
@@ -33,12 +34,6 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-
-    private Map<String, String> aliases;
-
-    public void setAliases(Map<String, String> aliases) {
-        this.aliases = aliases;
-    }
 
     /**
      * Parses user input into command for execution.
@@ -56,6 +51,7 @@ public class AddressBookParser {
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
+        Map<String, String> aliases = UserPrefs.getAliases();
         if (aliases != null && aliases.get(commandWord) != null) {
             commandWord = aliases.get(commandWord);
         }

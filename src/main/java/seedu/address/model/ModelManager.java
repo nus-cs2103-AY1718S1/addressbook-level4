@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -73,21 +72,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized Map<String, String> getAliases() {
-        return userPrefs.getAliases();
-    }
-
-    @Override
-    public synchronized void deleteAlias(String alias) {
-        userPrefs.deleteAlias(alias);
-    }
-
-    @Override
-    public synchronized void addAlias(String alias, String command) {
-        userPrefs.addAlias(alias, command);
     }
 
     @Override

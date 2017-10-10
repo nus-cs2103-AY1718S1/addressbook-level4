@@ -11,14 +11,21 @@ import seedu.address.commons.core.GuiSettings;
  */
 public class UserPrefs {
 
+    private static Map<String, String> aliases;
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private Map<String, String> aliases;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
-        this.aliases = new TreeMap<>();
+
+        if (aliases == null) {
+            initialiseAliases();
+        }
+    }
+
+    private static void initialiseAliases() {
+        aliases = new TreeMap<>();
     }
 
     public GuiSettings getGuiSettings() {
@@ -49,16 +56,16 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    protected Map<String, String> getAliases() {
+    public static Map<String, String> getAliases() {
         return aliases;
     }
 
-    protected void addAlias(String alias, String command) {
-        this.aliases.put(alias, command);
+    public static void addAlias(String alias, String command) {
+        aliases.put(alias, command);
     }
 
-    protected void deleteAlias(String alias) {
-        this.aliases.remove(alias);
+    public static void deleteAlias(String alias) {
+        aliases.remove(alias);
     }
 
     @Override

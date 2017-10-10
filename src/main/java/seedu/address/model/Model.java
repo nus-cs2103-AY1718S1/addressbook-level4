@@ -1,6 +1,5 @@
 package seedu.address.model;
 
-import java.util.Map;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -26,21 +25,6 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
-
-    /**
-     * Get aliases
-     */
-    Map<String, String> getAliases();
-
-    /**
-     * Deletes the given alias.
-     */
-    void deleteAlias(String alias);
-
-    /**
-     * Adds the given alias
-     */
-    void addAlias(String alias, String command);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
