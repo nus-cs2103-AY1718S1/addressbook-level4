@@ -110,8 +110,8 @@ Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRES
 
 
 ****
-* The search is case insensitive. e.g ` [e/google]` will match emails of google.com domain`
-* Only full words will be matched e.g. `[e/goo]` will not match emails with google.com domain`
+* The search is case insensitive. e.g `[e/google]` will match person with email of google.com domain`
+* Only full words will be matched e.g. `[e/goo]` will not match person with email with google.com domain`
 ****
 
 Examples:
