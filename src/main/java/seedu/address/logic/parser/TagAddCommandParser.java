@@ -3,7 +3,13 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -31,7 +37,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
         ArrayList<Index> index = new ArrayList<>();
 
         try {
-            for(int i = 1; i < argsArray.length; i++) {
+            for (int i = 1; i < argsArray.length; i++) {
                 index.add(ParserUtil.parseIndex(argsArray[i]));
             }
         } catch (IllegalValueException ive) {
