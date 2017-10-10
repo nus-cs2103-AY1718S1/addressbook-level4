@@ -35,4 +35,6 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+    Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException;
 }

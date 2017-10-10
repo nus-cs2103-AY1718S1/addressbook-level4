@@ -82,26 +82,53 @@ public class MainApp extends Application {
 
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * The data from the backup addressbook will be used instead if {@code storage}'s address book is not found,
+     * or errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        ReadOnlyAddressBook initialData = null;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                logger.info("Data file not found. Will try to read from backup file");
+                return initModelWithBackup(storage, userPrefs);
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will try to read from backup file");
+            return initModelWithBackup(storage, userPrefs);
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will try to read from backup file");
+            return initModelWithBackup(storage, userPrefs);
         }
 
+        return new ModelManager(initialData, userPrefs);
+    }
+
+    /**
+     * Returns a {@code ModelManager} with the data from {@code storage}'s backup address book and
+     * {@code userPrefs}. <br>
+     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
+     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     */
+    private Model initModelWithBackup(Storage storage, UserPrefs userPrefs) {
+        Optional<ReadOnlyAddressBook> addressBookOptional;
+        ReadOnlyAddressBook initialData;
+        try {
+            addressBookOptional = storage.readBackupAddressBook();
+            if (!addressBookOptional.isPresent()) {
+                logger.info("Backup file not found. Will be starting with a sample AddressBook");
+            }
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            storage.saveAddressBook(initialData);
+        } catch (DataConversionException e) {
+            logger.warning("Backup file not in the correct format. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the backup file. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        }
         return new ModelManager(initialData, userPrefs);
     }
 

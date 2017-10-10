@@ -20,14 +20,19 @@ import seedu.address.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
+    private static final String BACKUP_ROUTE_TAIL = "-backup.xml";
+
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private AddressBookStorage backupAddressbook;
 
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.backupAddressbook = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath()
+                + BACKUP_ROUTE_TAIL);
     }
 
     // ================ UserPrefs methods ==============================
@@ -66,6 +71,11 @@ public class StorageManager extends ComponentManager implements Storage {
         return addressBookStorage.readAddressBook(filePath);
     }
 
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(backupAddressbook.getAddressBookFilePath());
+    }
+
+
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
@@ -77,6 +87,11 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    private void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String backupPath = backupAddressbook.getAddressBookFilePath();
+        logger.fine("Backing up data to: " + backupPath);
+        saveAddressBook(addressBook, backupPath);
+    }
 
     @Override
     @Subscribe
@@ -84,6 +99,7 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+            backupAddressBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
