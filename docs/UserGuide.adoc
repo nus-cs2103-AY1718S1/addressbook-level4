@@ -234,7 +234,7 @@ There is no need to save manually.
 === Finding a person by name
 === Auto-focusing on input bar at the start of the application
 === Setting a task to be recurring
-=== Editing a task 
+=== Editing a task
 === Seeing tasks in certain range of time
 === Listing tasks by date
 === Listing tasks by priority
@@ -246,7 +246,7 @@ There is no need to save manually.
 === Adding a general notes or comments to each contact person
 === Listing last few contacts the user have found
 === Exporting contact info as an add command (user can choose whether to disclose the private information about this contact details)
-=== Exporting task details as an add command 
+=== Exporting task details as an add command
 === Pinning important contacts or task on top
 === Remindering region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
 === Possible new features
@@ -255,10 +255,10 @@ There is no need to save manually.
 ==== Adding new tasks with hierarchy
 ==== Editing hierarchy
 ==== Getting error and warnings on event conflicts
-==== Having multiple hot keys available 
+==== Having multiple hot keys available
 ==== Auto-completion of commands
 ==== Suggesting next part of the commands
-==== Trigger & password 
+==== Trigger & password
 ==== Customising background wallpaper
 ==== Having a settings manager/config file
 

@@ -791,7 +791,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user|customise background wallpaper |for user to have a better background they like
 
-|`*` |user|have a settings manager/config file |make it easier for user to migrate across devices and have some important settings 
+|`*` |user|have a settings manager/config file |make it easier for user to migrate across devices and have some important settings
 |=======================================================================
 
 {More to be added}
