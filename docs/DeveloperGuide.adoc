@@ -735,17 +735,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |admin |view the commands/function i can use in this software |I no need to memorise the function in this software and can review them conviencely whenever i want
 
+|`* *` |admin |find a particular lecturer |I no need to search manually in the list of teachers
+
+|`* *` |admin |generate comprehensive reports of the current semester detail |I can save time from making this report myself
+
+|`* *` |admin |view the history of commands |so I no need to go through the list to know what I have added so far
+
+|`* * *` |admin |add new location |I can update the list of location in the system whenever a new location is constructed
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`* * *` |teacher |add new location for a module in timetable |I can plan my teaching schedule
+|`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
 
 |`* * *` |teacher |delete an existing module in a particular timeslot |I can make changes to the timeslot
 
@@ -759,23 +767,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |view the help file  |I know all the available functions
 
-|`* * *` |teacher |view available slots at a specified location |I can determine if i should schedule my lecture there
+|`* * *` |teacher |view available slots at a specified location |I can determine if i can schedule my lecture there
 
-|`* * *` |teacher |login with my username/password |I can gain access to the product
+|`* * *` |teacher |login with my username/password |I can secure the information in my account
 
 |`* * *` |teacher |register with username/password |I can gain access to the personalised timetable
-
-|`* * *` |student |check location and time slot of different modules |I can make my study plan
-
-|`* * *` |student |view all modules taught by a lecturer |I can make my study plan
-
-|`* *` |admin |list a particular lecturer |I no need to search manually in the list of teachers
-
-|`* *` |admin |generate comprehensive reports of the current semester detail |I can save time from making this report myself
-
-|`* *` |admin |view the history of commands |so I no need to go through the list to know what I have added so far
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |teacher |undo the previous command |I can revert to the previous state
 
@@ -785,13 +781,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |teacher |back up my file |I can retrieve back data
 
+|`* * *` |student |check location and time slot of different modules |I can make my study plan
+
+|`* * *` |student |view all modules that are available next semester |I plan what module I would like to take next semester
+
 |`* *` |teacher/student |export the timetable to various files (pdf, excel, png, jpeg) |I can print the timetable
 
 |`* *` |teacher/student |report bugs to developers | developer can solve the bug and improve the product
 
 |`* *` |teacher/student |bookmark a particular module |I can have easy access to the particular module
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |=======================================================================
 
