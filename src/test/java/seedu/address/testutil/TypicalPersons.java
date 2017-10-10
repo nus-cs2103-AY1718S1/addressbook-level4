@@ -68,6 +68,7 @@ public class TypicalPersons {
         for (ReadOnlyPerson person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
+                ab.addBlacklistedPerson(person);
             } catch (DuplicatePersonException e) {
                 assert false : "not possible";
             }
