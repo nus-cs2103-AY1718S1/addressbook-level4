@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand.FindDetailDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * A utility class to help with building FindDetailDescriptorBuilder objects.
@@ -25,7 +25,7 @@ public class FindDetailDescriptorBuilder {
 
     /**
      * Returns an {@code FindDetailDescriptorBuilder} with fields containing {@code person}'s details
-     * in String and Set<Tag>.
+     * in string and tag set.
      */
     public FindDetailDescriptorBuilder(ReadOnlyPerson person) {
         descriptor = new FindDetailDescriptor();
@@ -36,21 +36,33 @@ public class FindDetailDescriptorBuilder {
         descriptor.setTags(person.getTags());
     }
 
+    /**
+     * Sets the {@code name} of the {@code FindDetailDescriptor} that we are building.
+     */
     public FindDetailDescriptorBuilder withName(String name) {
         Optional.of(name).ifPresent(descriptor::setName);
         return this;
     }
 
+    /**
+     * Sets the {@code phone} of the {@code FindDetailDescriptor} that we are building.
+     */
     public FindDetailDescriptorBuilder withPhone(String phone) {
         Optional.of(phone).ifPresent(descriptor::setPhone);
         return this;
     }
 
+    /**
+     * Sets the {@code email} of the {@code FindDetailDescriptor} that we are building.
+     */
     public FindDetailDescriptorBuilder withEmail(String email) {
         Optional.of(email).ifPresent(descriptor::setEmail);
         return this;
     }
 
+    /**
+     * Sets the {@code address} of the {@code FindDetailDescriptor} that we are building.
+     */
     public FindDetailDescriptorBuilder withAddress(String address) {
         Optional.of(address).ifPresent(descriptor::setAddress);
         return this;

@@ -4,7 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,7 +39,7 @@ public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void equals_FindByName() {
+    public void equals_findByName() {
         NameContainsKeywordsPredicate firstPredicate =
                 new NameContainsKeywordsPredicate(Collections.singletonList("first"));
         NameContainsKeywordsPredicate secondPredicate =
@@ -60,7 +66,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void equals_FindFuzzyFind() {
+    public void equals_indFuzzyFind() {
         FuzzySearchPredicate firstPredicate =
                 new FuzzySearchPredicate("first");
         FuzzySearchPredicate secondPredicate =
@@ -87,7 +93,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void equals_FindInDetails() {
+    public void equals_findInDetails() {
         FindCommand.FindDetailDescriptor firstDescriptor =
                 new FindDetailDescriptorBuilder().withName("first").build();
         FindCommand.FindDetailDescriptor secondDescriptor =

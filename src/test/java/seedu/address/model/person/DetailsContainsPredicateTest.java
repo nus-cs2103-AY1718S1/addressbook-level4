@@ -1,12 +1,13 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
+
 import seedu.address.logic.commands.FindCommand.FindDetailDescriptor;
 import seedu.address.testutil.FindDetailDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class DetailsContainsPredicateTest {
 
@@ -40,7 +41,8 @@ public class DetailsContainsPredicateTest {
         ReadOnlyPerson person = new PersonBuilder().build();
 
         // same name -> returns true
-        FindDetailDescriptor descriptor = new FindDetailDescriptorBuilder().withName(PersonBuilder.DEFAULT_NAME).build();
+        FindDetailDescriptor descriptor =
+                new FindDetailDescriptorBuilder().withName(PersonBuilder.DEFAULT_NAME).build();
         DetailsContainsPredicate predicate = new DetailsContainsPredicate(descriptor);
         assertTrue(predicate.test(person));
 
