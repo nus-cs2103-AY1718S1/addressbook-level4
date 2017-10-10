@@ -2,9 +2,19 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.model.person.exceptions.DuplicatePropertyException;
 
 public class PropertyManagerTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void addProperty_successfullyAdd() throws Exception {
         String shortName = "b";
@@ -21,5 +31,17 @@ public class PropertyManagerTest {
         assertEquals(fullName, PropertyManager.getPropertyFullName(shortName));
         assertEquals(message, PropertyManager.getPropertyConstraintMessage(shortName));
         assertEquals(regex, PropertyManager.getPropertyValidationRegex(shortName));
+    }
+
+    @Test
+    public void addProperty_invalidRegex() throws Exception {
+        String shortName = "d";
+        String fullName = "description";
+        String message = "Description can be any string, but cannot be blank";
+        String regex = "*asf";
+
+        thrown.expect(PatternSyntaxException.class);
+
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
     }
 }
