@@ -12,7 +12,9 @@ public class Phone {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
+            "Phone numbers can only contain numbers, dashes, parentheses, and spaces. Also, there should be at "
+                    + "least 3 numbers in the string.";
+    public static final String PHONE_REPLACEMENT_REGEX = "[() -]";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
@@ -24,10 +26,18 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
+        this.value = extractPhone(trimmedPhone);
+    }
+
+    /**
+     * Returns a phone number from the given string, by stripping certain special characters.
+     */
+    public static String extractPhone(String phoneNumber) throws IllegalValueException {
+        String strippedPhoneNumber = phoneNumber.replaceAll(PHONE_REPLACEMENT_REGEX, "");
+        if (!isValidPhone(strippedPhoneNumber)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
-        this.value = trimmedPhone;
+        return strippedPhoneNumber;
     }
 
     /**
