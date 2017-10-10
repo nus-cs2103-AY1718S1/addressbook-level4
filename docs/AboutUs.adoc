@@ -72,3 +72,12 @@ Role: Developer +
 Responsibilities: Data
 
 '''
+
+=== Wang Junming
+image::WangJunming.jpg[width="150", align="left"]
+{empty}[https://github.com/junming403[github]] [<<Wang Junming#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Full-stack
+
+'''
