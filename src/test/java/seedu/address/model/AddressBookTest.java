@@ -30,6 +30,7 @@ public class AddressBookTest {
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getBlacklistedPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
@@ -50,8 +51,9 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
+        List<Person> newBlacklistedPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        AddressBookStub newData = new AddressBookStub(newPersons, newBlacklistedPersons, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -61,6 +63,12 @@ public class AddressBookTest {
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getPersonList().remove(0);
+    }
+
+    @Test
+    public void getBlacklistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getBlacklistedPersonList().remove(0);
     }
 
     @Test
@@ -74,16 +82,23 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyPerson> blackListedPersons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyPerson> blacklistedPersons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
+            this.blackListedPersons.setAll(blackListedPersons);
             this.tags.setAll(tags);
         }
 
         @Override
         public ObservableList<ReadOnlyPerson> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
+            return blackListedPersons;
         }
 
         @Override

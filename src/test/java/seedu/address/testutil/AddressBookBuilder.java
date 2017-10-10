@@ -36,6 +36,18 @@ public class AddressBookBuilder {
     }
 
     /**
+     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withBlacklistedPerson(ReadOnlyPerson person) {
+        try {
+            addressBook.addBlacklistedPerson(person);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withTag(String tagName) {
