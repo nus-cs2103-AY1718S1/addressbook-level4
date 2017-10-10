@@ -85,10 +85,10 @@ public class FindCommand extends Command {
          */
         public boolean isValidDescriptor() {
             return getName().isPresent()
-                || getPhone().isPresent()
-                || getEmail().isPresent()
-                || getAddress().isPresent()
-                || !tags.isEmpty();
+                    || getPhone().isPresent()
+                    || getEmail().isPresent()
+                    || getAddress().isPresent()
+                    || !tags.isEmpty();
         }
 
         public Optional<String> getName() {
@@ -155,13 +155,13 @@ public class FindCommand extends Command {
 
         @Override
         public String toString() {
-            return "FindDetailDescriptor{" +
-                    "name='" + name + '\'' +
-                    ", phone='" + phone + '\'' +
-                    ", email='" + email + '\'' +
-                    ", address='" + address + '\'' +
-                    ", tags=" + tags +
-                    '}';
+            return "FindDetailDescriptor{"
+                    + "name='" + name + '\''
+                    + ", phone='" + phone + '\''
+                    + ", email='" + email + '\''
+                    + ", address='" + address + '\''
+                    + ", tags=" + tags
+                    + '}';
         }
     }
 }

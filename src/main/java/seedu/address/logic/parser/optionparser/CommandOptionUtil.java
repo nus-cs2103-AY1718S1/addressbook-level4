@@ -1,10 +1,10 @@
 package seedu.address.logic.parser.optionparser;
 
-import seedu.address.commons.core.LogsCenter;
-
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Contains utility methods used for parsing mode prefix and mode arguments.
