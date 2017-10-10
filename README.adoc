@@ -2,7 +2,7 @@
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/CS2103T-W10-B2/KayPoh[image:https://travis-ci.org/CS2103T-W10-B2/KayPoh.svg?branch=master[Build Status]]
+https://travis-ci.org/CS2103AUG2017-W10-B2/main[image:https://travis-ci.org/CS2103AUG2017-W10-B2/main.svg?branch=master[Build Status]]
 https://www.codacy.com/app/marvinchin/KayPoh?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103T-W10-B2/KayPoh&amp;utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/583536a5b9664061ab6a453eb0b5801b[Codacy Badge]]
 
 ifdef::env-github[]
