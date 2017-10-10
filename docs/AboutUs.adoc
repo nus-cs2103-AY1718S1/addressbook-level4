@@ -21,8 +21,8 @@ Responsibilities: Software Development
 '''
 
 === Glenice Tan
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+image::blackroxs.jpg[width="150", align="left"]
+{empty}[http://github.com/blackroxs[github]] [<<glenicetan#, portfolio>>]
 
 Role: Developer
 Responsibilities: Software Development
