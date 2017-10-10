@@ -3,7 +3,7 @@
  */
 
 @font-face {
-    src: url(“/src/main/resources/view/ProximaNovaAltRegular-webfont.ttf”);
+    src: url("./ProximaNovaAltRegular-webfont.ttf");
 }
 
 .root * {
