@@ -37,7 +37,7 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /** Sorts the persons object alphanumerically by name. */
-    void sortPerson();
+    void sortPersons();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

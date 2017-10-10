@@ -13,7 +13,7 @@ public class SortCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        model.sortPerson();
+        model.sortPersons();
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
