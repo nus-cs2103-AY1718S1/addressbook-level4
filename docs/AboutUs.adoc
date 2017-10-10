@@ -54,3 +54,11 @@ Role: Developer +
 Responsibilities: UI
 
 '''
+=== Ang Tian Lan
+image::tianlan.jpg[width="150", align="left"]
+{empty} [https://github.com/angtianlannus[github]]
+
+Role: Developer +
+Responsibilities: Storage, SortCommand, part of documentation
+
+'''
