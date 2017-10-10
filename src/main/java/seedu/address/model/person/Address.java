@@ -36,10 +36,9 @@ public class Address {
 
         int beginIndex = 0;
         int postalCodeLength = 7;
-        int postalCodeDigitLength = 6;
 
-        this.value = address.substring(beginIndex, address.length()- postalCodeLength).trim();
-        this.postalCode = new PostalCode(address.substring(address.length() - postalCodeDigitLength,
+        this.value = address.substring(beginIndex, address.length() - postalCodeLength).trim();
+        this.postalCode = new PostalCode(address.substring(address.length() - postalCodeLength,
                 address.length()));
     }
 
@@ -52,7 +51,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return String.format("%s S%s", this.value, this.postalCode);
+        return String.format("%s %s", this.value, this.postalCode);
     }
 
     @Override
