@@ -51,6 +51,10 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new BlacklistCommand();
 
+        case BanCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new BanCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD_ALIAS:
         case EditCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
