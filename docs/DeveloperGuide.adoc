@@ -729,7 +729,59 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |add a contact picture for my contacts |identify them more easily
+
+|`* * *` |user |categorise my contacts into groups |view my contacts by relevant groups
+
+|`* * *` |user |export and send my own contact information |share my own contact information with my friends more easily
+
+|`* * *` |user |add birthdays to my contacts |remember them easily
+
+|`* * *` |user with many contacts |filter my contacts by tags/groups etc. |find relevant contacts more easily
+
+|`* * *` |user who adds contacts temporarily (for events etc.) |delete all contacts with a given tag |remove contacts associated to a category that is no longer relevant to me
+
+|`* * *` |user with many contacts |sort my contacts alphabetically |find them more easily
+
+|`* * *` |user |favourite a contact |contact the person easily
+
+|`* * *` |user |export/import contacts |share them with other users
+
+|`* * *` |user with many contacts |sort my contacts according to most recently contacted |reach the people that I want to recontact easily
+
+|`* * *` |user |have a confirmation message before clearing/deleting contacts |prevent accidentally removing contacts
+
+|`* * *` |user |edit/delete multiple contacts at once |manage my contacts more efficiently
+
+|`* * *` |user |add nicknames for my contacts |search for/recognise them using their nickname
+
+|`* * *` |user |add multiple fields for my contacts |store multiple pieces of contact information for each person
+
+|`* * *` |user |add social media accounts for my contacts |remember them
+
+|`* * *` |user |integrate my contacts with social media such as Facebook |see their latest updates alongside the contact information.
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |non-technical user |use the addressbook without having to use the command line |learn how to use easily
+
+|`* *` |user |sort my contacts according to the frequency contacted |find my more important contacts easily
+
+|`* *` |user who is more of a visual learner |change the look of my Address Book between a list view and a thumbnail view |see larger contact photos
+
+|`* *` |user who dislikes people |blacklist or block contacts |not be contacted by them
+
+|`* *` |user |synchronise my contacts to the cloud |have the same set of contacts on multiple devices
+
+|`* *` |user |synchronise my contacts to the cloud |have the same set of contacts on multiple devices
+
+|`*` |salesperson |scan a namecard and have the contact automatically be added |add contacts more easily
+
+|`*` |user with sensitive data |protect my contacts with a password |prevent other people from snooping into my contacts
+
+|`*` |organisation admin |restrict access rights of users/user groups |manage their permissions easily
+
+|`*` |professional |share a group of contacts to a new team member |let the new team member can have all the team member's contacts easily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -767,6 +819,153 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Sort alphabetically
+
+*MSS*
+
+1. User enters 'sort' command
+2. AddressBook prompts for sort type
+3. User enters 'name'
+4. AddressBook sorts addresses in alphabetical order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The addressbook is empty
++
+Use case ends.
+
+As a user, I want to have a confirmation message before clearing/deleting contacts, so that I do not accidentally remove contacts.
+
+[discrete]
+=== Use Case: Clear AddressBook
+
+*MSS*
+
+1. User enters 'clear' command
+2. AddressBook prompts 'Are you sure you want to clear AddressBook? yes/no'
+3. User enters 'yes'
+4. AddressBook clears all persons
++
+Use case ends.
+
+As a user, I want to be able to edit/delete multiple contacts at once, so that I can manage my contacts more efficiently
+
+[discrete]
+=== Use case: Delete multiple persons
+
+*MSS*
+
+1. User enters 'delete many' command
+2. AddressBook shows a list of persons
+3. User requests to delete a set of people
+4. AddressBook deletes the persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+As a user, I want to be able to categorise my contacts into groups so that I can view my contacts by relevant groups
+
+[discrete]
+=== Use case: Add person to group
+
+*MSS*
+
+1. User enters 'add to group' command
+2. AddressBook shows a list of groups
+3. User selects a group
+4. AddressBook shows a list of persons
+5. User selects a specific person in the list
+6. AddressBook adds that person to the group
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2 or 4.
+
+[discrete]
+=== Use case: Delete persons of a given tag
+
+*MSS*
+
+1. User enters 'delete tagged' command
+2. AddressBook shows a list of tags
+3. User selects a specific tag in the list
+4. AddressBook prompts 'Are you sure you want to delete contacts tagged "temp"? yes/no'
+5. User enters 'yes'
+6. AddressBook deletes contacts with the tag 'temp'
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+As a user, I want to be able to add multiple fields for my contacts, so that I can store multiple pieces of contact information for each person
+
+[discrete]
+=== Use case: Add field to person
+
+*MSS*
+
+1. User enters 'add field' command
+2. AddressBook shows a list of persons
+3. User selects a specific person
+4. AddressBook prompts for field to add
+5. User enters 'p/12345678'
+6. AddressBook adds another phone number "12345678" to the contact alan
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,17 +974,33 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  A user should be able to accomplish all tasks using the GUI, without using the command line.
+.  Startup time should be under 3 seconds.
+.  A user without technical experience should be able to perform most functions using the GUI without much assistance or having to
+read the user guide.
 
 [appendix]
 == Glossary
+
+[[command-line-interface]]
+Command Line Interface (CLI)
+
+....
+User interacts with the address book by issuing commands on a specified line, receives a response and issues another command, and so forth.
+....
+
+[[graphical-user-interface]]
+Graphical User Interface (GUI)
+
+....
+User interacts with the address book through graphical icons and visual indicators.
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, macOS
 ....
 
 [[private-contact-detail]]
@@ -795,19 +1010,51 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[storage]]
+Storage
+
+....
+Saving of all contacts into a single file i.e. addressbook.xml into /data directory.
+....
+
+[[tags]]
+Tags
+
+....
+A label attached to each contact for the purpose of identification and categorization. Tagging will allow users to search for all address book contacts with the specified tag.
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts*
 
-Author: ...
+Author: Apple
 
 Pros:
 
-* ...
-* ...
+* Intuitive user interface, that makes it easy to add, find and modify contacts.
+* Extensive number of relevant fields for contacts.
+* Cloud integration allows contacts to be shared across multiple devices.
 
 Cons:
 
-* ...
-* ...
+* Limited additional functionality besides storing/finding contact information. Use case
+is thus limited.
+* No way to sort or filter contacts, other than alphabetically.
+* Does not work with all link:#mainstream-os[mainstream-os]. Only works with iOS and OS-X.
+
+*Google Contacts*
+
+Author: Google
+
+Pros:
+
+* Intuitive user interface, that makes it easy to add, find and modify contacts.
+* Labels allow contacts relevant to a specific tag to be found easily.
+* Cloud integration allows contacts to be shared across multiple devices.
+
+Cons:
+
+* Limited additional functionality besides storing/finding contact information. Use case
+is thus limited.
