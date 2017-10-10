@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_ARGUMENTS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_NOT_IMPLEMENTED_YET;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -20,14 +22,40 @@ public class SortCommandTest {
 
     @Test
     public void execute() throws Exception {
-        assertCommandFailure(prepareCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
+        final String filterType = "name";
+
+        assertCommandFailure(prepareCommand(filterType), model, String.format(MESSAGE_ARGUMENTS, filterType));
+    }
+
+    @Test
+    public void equals() {
+
+        final String filterType = "name";
+        final SortCommand standardCommand = new SortCommand(filterType);
+
+        // same filterTypes -> returns true
+        SortCommand commandWithSameValues = new SortCommand(filterType);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different filterTypes -> returns false
+        assertFalse(standardCommand.equals(new SortCommand("default")));
+
     }
 
     /**
-     * Returns a {@code SortCommand}.
+     * Returns a {@code SortCommand} with parameters {@code filterType}.
      */
-    private SortCommand prepareCommand() {
-        SortCommand sortCommand = new SortCommand();
+    private SortCommand prepareCommand(String filterType) {
+        SortCommand sortCommand = new SortCommand(filterType);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return sortCommand;
     }
