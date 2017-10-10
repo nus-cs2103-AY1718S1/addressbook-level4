@@ -15,9 +15,7 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class PersonListStartUpPanel extends UiPart<Region>{
 
-    public static final String DEFAULT_PAGE = "default.html";
     private static final String FXML = "PersonListStartUpPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListStartUpPanel.class);
 
     public PersonListStartUpPanel() {
         super(FXML);
