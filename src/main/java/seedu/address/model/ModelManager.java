@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -31,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,6 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
     }
 
     public ModelManager() {
@@ -108,6 +111,11 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tag);
     }
 
+    @Override
+    public void changeListTo(String listName) {
+        raise(new ChangeInternalListEvent(listName));
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -119,10 +127,25 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
+    }
+
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredBlacklistedPersons.setPredicate(predicate);
     }
 
     @Override
