@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.Ui;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,6 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private Ui ui;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -89,7 +92,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
         for (ReadOnlyPerson oldPerson : persons) {
             Person newPerson = new Person(oldPerson);
-            Set<Tag> newPersonTags = oldPerson.getTags();
+            Set<Tag> newPersonTags = new HashSet<>(newPerson.getTags());
             boolean isPersonModified = newPersonTags.remove(tag);
 
             if (isPersonModified) {
@@ -99,6 +102,25 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    /**
+     * On/Off tag colors for AddressBook
+     * Updates UI by refreshing personListPanel
+     */
+    public void setTagColor(boolean isOn) {
+        assert(ui != null);
+        if (isOn) {
+            addressBook.onTagColors();
+        } else {
+            addressBook.offTagColors();
+        }
+        ui.resetPanel(addressBook.getPersonList());
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void getUi(Ui ui) {
+        this.ui = ui;
+    }
 
     //=========== Filtered Person List Accessors =============================================================
 

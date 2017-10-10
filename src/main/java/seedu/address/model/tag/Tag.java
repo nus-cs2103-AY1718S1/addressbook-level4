@@ -15,6 +15,8 @@ public class Tag {
 
     public final String tagName;
 
+    private String tagColor;
+
     /**
      * Validates given tag name.
      *
@@ -27,6 +29,14 @@ public class Tag {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+    }
+
+    public void setTagColor(String tagColor) {
+        this.tagColor = tagColor;
+    }
+
+    public String getTagColor() {
+        return this.tagColor;
     }
 
     /**
