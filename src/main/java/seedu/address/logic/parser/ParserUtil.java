@@ -46,8 +46,8 @@ public class ParserUtil {
 
     /**
      *
-     * @param {@code oneBasedIndexes} into {@code numbers} and return it.the commas will be deleted.
-     * @throws IllegalValueException
+     * Parses  {@code oneBasedIndex} into an {@code numbers} and return it.the commas will be deleted.
+     * @throws IllegalValueException if the specified index is invalid.
      */
     public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException {
         String[] ns = oneBasedIndexes.split(",");
