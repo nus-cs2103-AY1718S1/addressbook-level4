@@ -8,6 +8,7 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
 public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
+    public static final String COMMAND_ALIAS = "t";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Filters and shows list of persons with the specified tag.\n"

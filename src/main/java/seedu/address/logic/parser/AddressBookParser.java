@@ -86,6 +86,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case TagCommand.COMMAND_WORD:
+        case TagCommand.COMMAND_ALIAS:
             return new TagCommandParser().parse(arguments);
 
         default:
