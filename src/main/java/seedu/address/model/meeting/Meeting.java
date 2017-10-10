@@ -62,6 +62,7 @@ public class Meeting implements ReadOnlyMeeting {
         return time.get();
     }
     */
+
     public void setTime(Date date) {
         this.date.set(requireNonNull(date));
     }
