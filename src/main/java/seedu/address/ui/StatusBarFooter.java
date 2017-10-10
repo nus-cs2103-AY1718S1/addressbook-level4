@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.util.Date;
 import java.util.logging.Logger;
