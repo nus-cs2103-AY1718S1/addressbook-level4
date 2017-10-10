@@ -21,14 +21,14 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code PinCommand and UnpinCommand}.
  */
 public class PinCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
+    public void executeValidIndexUnfilteredListSuccess() throws Exception {
         ReadOnlyPerson personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         PinCommand pinCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -38,18 +38,29 @@ public class PinCommandTest {
         expectedModel.pinPerson(personToPin);
 
         assertCommandSuccess(pinCommand, model, expectedMessage, expectedModel);
+
+        UnpinCommand unpinCommand = prepareUnpinCommand(INDEX_FIRST_PERSON);
+        personToPin = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        expectedModel.unpinPerson(personToPin);
+        expectedMessage = String.format(UnpinCommand.MESSAGE_UNPIN_PERSON_SUCCESS, personToPin);
+
+        assertCommandSuccess(unpinCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         PinCommand pinCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(pinCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        UnpinCommand unpinCommand = prepareUnpinCommand(outOfBoundIndex);
+
+        assertCommandFailure(unpinCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
+    public void executeValidIndexFilteredListSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -62,10 +73,18 @@ public class PinCommandTest {
         expectedModel.pinPerson(personToPin);
 
         assertCommandSuccess(pinCommand, model, expectedMessage, expectedModel);
+
+        UnpinCommand unpinCommand = prepareUnpinCommand(INDEX_FIRST_PERSON);
+        personToPin = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        expectedModel.unpinPerson(personToPin);
+        expectedMessage = String.format(UnpinCommand.MESSAGE_UNPIN_PERSON_SUCCESS, personToPin);
+
+        assertCommandSuccess(unpinCommand, model, expectedMessage, expectedModel);
+
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void executeInvalidIndexFilteredListThrowsCommandException() {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
@@ -75,28 +94,41 @@ public class PinCommandTest {
         PinCommand pinCommand = prepareCommand(outOfBoundIndex);
 
         assertCommandFailure(pinCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        UnpinCommand unpinCommand = prepareUnpinCommand(outOfBoundIndex);
+
+        assertCommandFailure(unpinCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
         PinCommand pinFirstCommand = new PinCommand(INDEX_FIRST_PERSON);
         PinCommand pinSecondCommand = new PinCommand(INDEX_SECOND_PERSON);
+        UnpinCommand unpinFirstCommand = new UnpinCommand(INDEX_FIRST_PERSON);
+        UnpinCommand unpinSecondCommand = new UnpinCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
         assertTrue(pinFirstCommand.equals(pinFirstCommand));
+        assertTrue(unpinFirstCommand.equals(unpinFirstCommand));
 
         // same values -> returns true
         PinCommand pinFirstCommandCopy = new PinCommand(INDEX_FIRST_PERSON);
         assertTrue(pinFirstCommand.equals(pinFirstCommandCopy));
+        UnpinCommand unpinFirstCommandCopy = new UnpinCommand(INDEX_FIRST_PERSON);
+        assertTrue(unpinFirstCommand.equals(unpinFirstCommandCopy));
+
 
         // different types -> returns false
         assertFalse(pinFirstCommand.equals(1));
+        assertFalse(unpinFirstCommand.equals(1));
 
         // null -> returns false
         assertFalse(pinFirstCommand.equals(null));
+        assertFalse(unpinFirstCommand.equals(null));
 
         // different person -> returns false
         assertFalse(pinFirstCommand.equals(pinSecondCommand));
+        assertFalse(unpinFirstCommand.equals(unpinSecondCommand));
     }
 
     /**
@@ -106,6 +138,12 @@ public class PinCommandTest {
         PinCommand pinCommand = new PinCommand(index);
         pinCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return pinCommand;
+    }
+
+    private UnpinCommand prepareUnpinCommand(Index index) {
+        UnpinCommand unpinCommand = new UnpinCommand(index);
+        unpinCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return unpinCommand;
     }
 
     /**
