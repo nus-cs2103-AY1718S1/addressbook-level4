@@ -16,20 +16,30 @@ public class Tutorial {
 
     private CommandBox commandBox;
     private PersonListPanel personListPanel;
+    private ResultDisplay resultDisplay;
     private TextArea tutorialText;
     private ArrayList<TutSteps> tutorialSteps = new ArrayList<>();
     private Logic logic;
 
-    public Tutorial(CommandBox commandBox, PersonListPanel personListPanel, TextArea tutorialText, Logic logic) {
+    public Tutorial(CommandBox commandBox, PersonListPanel personListPanel, ResultDisplay resultDisplay,
+                    TextArea tutorialText, Logic logic) {
+
         this.commandBox = commandBox;
         this.personListPanel = personListPanel;
         this.tutorialText = tutorialText;
         this.logic = logic;
+        this.resultDisplay = resultDisplay;
+
+        setUpTutorial();
+    }
+
+    private void setUpTutorial() {
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_ONE, false));
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_TWO, false));
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_THREE, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, false, "delete 6"));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FIVE, true, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, false));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FIVE, false, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_SIX, true, "delete 6"));
         tutorialSteps.add(new TutSteps("Last step", false));
     }
 
@@ -47,11 +57,15 @@ public class Tutorial {
             commandBox.tutorialHighlight();
             break;
         case 1:
-            commandBox.tutorialUnhighlight();
+            unhighlightAll();
+            resultDisplay.tutorialHighlight();
+            break;
+        case 2:
+            unhighlightAll();
             personListPanel.tutorialHighlight();
             break;
         default:
-            personListPanel.tutorialUnhighlight();
+            unhighlightAll();
         }
         if (currentStep.isLastStep()) {
             tutorialText.setVisible(false);
@@ -64,6 +78,12 @@ public class Tutorial {
         }
     }
 
+    private void unhighlightAll() {
+        personListPanel.tutorialUnhighlight();
+        commandBox.tutorialUnhighlight();
+        resultDisplay.tutorialUnhighlight();
+    }
+
     public ArrayList<TutSteps> getTutorialSteps() {
         return tutorialSteps;
     }
@@ -73,6 +93,7 @@ public class Tutorial {
      */
     public void endTutorial() {
         commandBox.setInputText("");
+        unhighlightAll();
     }
 }
 

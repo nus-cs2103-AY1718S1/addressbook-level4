@@ -43,6 +43,7 @@ public class MainApp extends Application {
     public static final Version VERSION = new Version(0, 6, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private static boolean firstTimeOpen = false;
 
     protected Ui ui;
     protected Logic logic;
@@ -92,6 +93,7 @@ public class MainApp extends Application {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
+                firstTimeOpen = true;
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
@@ -175,6 +177,10 @@ public class MainApp extends Application {
         }
 
         return initializedPrefs;
+    }
+
+    public static boolean isFirstTimeOpen() {
+        return firstTimeOpen;
     }
 
     private void initEventsCenter() {

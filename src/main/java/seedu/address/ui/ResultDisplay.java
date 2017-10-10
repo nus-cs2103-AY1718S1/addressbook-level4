@@ -37,4 +37,12 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
     }
+
+    public void tutorialHighlight() {
+        this.resultDisplay.setStyle("-fx-border-color: green; -fx-border-width: 2");
+    }
+
+    public void tutorialUnhighlight() {
+        this.resultDisplay.setStyle("-fx-border-color: null; -fx-border-width: null");
+    }
 }

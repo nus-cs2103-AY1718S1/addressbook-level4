@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -162,10 +163,8 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        if (logic.getFilteredPersonList().size() == 6) {
-            if ("royb@example.com".equals(logic.getFilteredPersonList().get(5).getEmail().toString())) {
-                initTutorial(commandBox);
-            }
+        if (MainApp.isFirstTimeOpen()) {
+            initTutorial(commandBox, resultDisplay);
         }
     }
 
@@ -174,8 +173,8 @@ public class MainWindow extends UiPart<Region> {
      *
      * @param commandBox
      */
-    private void initTutorial(CommandBox commandBox) {
-        Tutorial newTutorial = new Tutorial(commandBox, personListPanel, tutorialText, logic);
+    private void initTutorial(CommandBox commandBox, ResultDisplay resultDisplay) {
+        Tutorial newTutorial = new Tutorial(commandBox, personListPanel, resultDisplay, tutorialText, logic);
         browserPlaceholder.getChildren().remove(browserPanel.getRoot());
         ArrayList<TutSteps> tutSteps = newTutorial.getTutorialSteps();
         tutorialText.setText(TutorialMessages.STEP_INTRO);
@@ -198,15 +197,6 @@ public class MainWindow extends UiPart<Region> {
         rightButton.setOnAction(e -> {
             newTutorial.endTutorial();
             setTutorialVisible(false);
-            if (logic.getFilteredPersonList().size() == 6) {
-                try {
-                    logic.execute("delete 6");
-                } catch (CommandException e1) {
-                    logger.warning("Can't execute command after skipping.");
-                } catch (ParseException e1) {
-                    logger.warning("Wrong command input after skipping.");
-                }
-            }
             browserPlaceholder.getChildren().add(browserPanel.getRoot());
         });
     }

@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
@@ -81,7 +82,10 @@
                         <Button fx:id="rightButton" mnemonicParsing="false" text="Skip" visible="false" />
                     </buttons>
                   </ButtonBar>
-                  <TextArea fx:id="tutorialText" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="212.0" text="Welcome to Bluebird! Would you like to go through the tutorial?" visible="false" wrapText="true" GridPane.columnIndex="1" />
+                  <TextArea fx:id="tutorialText" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="212.0" visible="false" wrapText="true" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font></TextArea>
                </children>
                <StackPane.margin>
                   <Insets />
