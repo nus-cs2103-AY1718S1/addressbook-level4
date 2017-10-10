@@ -733,6 +733,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
+|`* * *` |advanced user |perform actions with hotkeys |increase productivity
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |delete a specific tag |remove tags that I no longer need
