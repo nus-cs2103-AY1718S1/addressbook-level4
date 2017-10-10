@@ -33,6 +33,7 @@ public class StorageManager extends ComponentManager implements Storage {
         this.backUpLocation = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath());
     }
 
+
     // ================ UserPrefs methods ==============================
 
     @Override
