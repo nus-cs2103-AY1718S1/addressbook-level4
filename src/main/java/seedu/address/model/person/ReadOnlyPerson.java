@@ -24,6 +24,7 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     boolean isNameCloseToAnyKeyword(List<String> keyWords);
+    boolean isNameMatchAnyKeyword(List<String> keyWords);
     boolean isTagSetJointKeywordSet(List<String> keyWords);
     boolean isSearchKeyWordsMatchAnyData(List<String> keyWords);
 
