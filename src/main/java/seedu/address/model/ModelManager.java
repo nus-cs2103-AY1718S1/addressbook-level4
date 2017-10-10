@@ -32,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyMeeting> filteredMeetings;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,6 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredMeetings = new FilteredList<>(this.addressBook.getMeetingList());
     }
 
     public ModelManager() {
@@ -82,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException {
         addressBook.addMeeting(meeting);
-        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETING);
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         indicateAddressBookChanged();
     }
 
@@ -119,6 +121,21 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyMeeting> getFilteredMeetingList() {
+        return FXCollections.unmodifiableObservableList(filteredMeetings);
+    }
+
+    @Override
+    public void updateFilteredMeetingList(Predicate<ReadOnlyMeeting> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }

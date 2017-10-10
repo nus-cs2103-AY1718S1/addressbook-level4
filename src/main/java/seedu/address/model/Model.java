@@ -54,4 +54,13 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<ReadOnlyMeeting> getFilteredMeetingList();
+
+    /**
+     * Updates the filter of the filtered meeting list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredMeetingList(Predicate<ReadOnlyMeeting> predicate);
+
 }
