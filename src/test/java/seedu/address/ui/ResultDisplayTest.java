@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 
 import org.junit.Before;
@@ -11,7 +12,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub");
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub", true);
 
     private ResultDisplayHandle resultDisplayHandle;
 
