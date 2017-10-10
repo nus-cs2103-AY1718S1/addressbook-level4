@@ -1,6 +1,12 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+import java.util.List;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -22,8 +28,12 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException{
         model.updateFilteredPersonList(predicate);
+        if (predicate.getSelectedTag()!=null){
+            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                    + " Selected tag: " + predicate.getSelectedTag());
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
