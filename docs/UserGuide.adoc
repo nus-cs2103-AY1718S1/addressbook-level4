@@ -212,6 +212,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Sorts the contact in the Address Book : `sort`
+
+Sorts the contacts in the address book based on the name. +
+Format: `sort` or `ss`
+
 === Filtering list by tags : `tag`
 
 Finds and filter list of persons with tags that is specified by the keywords. +
@@ -269,6 +274,27 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Sort* : `sort`
 * *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
 e.g. `tag friends classmates`
+
+== Command Shortcuts Summary
+
+* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Clear* : `c`
+* *Delete* : `d INDEX` +
+e.g. `d 3`
+* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `e 2 n/James Lee e/jameslee@example.com`
+* *Find* : `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `f James Jake`
+* *List* : `l`
+* *Select* : `s INDEX` +
+e.g.`select 2`
+* *History* : `h`
+* *Undo* : `u`
+* *Redo* : `r`
+* *Sort* : `ss`
+* *Tag*  : 't'
 
