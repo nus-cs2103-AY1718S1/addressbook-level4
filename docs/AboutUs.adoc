@@ -9,26 +9,26 @@ The dummy content given below serves as a placeholder to be used by future forks
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
-== Project Team
+== Project Team CS2103AUG2017-W15-B4
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
+=== Cui Xiaohan
+image::shaocongdong.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
+Role: UI designer
 
 '''
 
-=== John Roe
+=== Dong Shaocong
 image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead +
+Role: bla
 Responsibilities: UI
 
 '''
 
-=== Johnny Doe
+=== Jia Zhixin
 image::yijinl.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
 
@@ -37,7 +37,7 @@ Responsibilities: Data
 
 '''
 
-=== Johnny Roe
+=== Qi Kongjia
 image::m133225.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 

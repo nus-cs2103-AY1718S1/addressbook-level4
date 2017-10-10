@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -759,8 +759,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with at least person|link a task to a person|relate the relevant tasks to the relevant person and organiza tasks with different people better
 
-|`* *` |user |add image to a contact person|see the person more visually with an image
-
 |`* *` |user |add a general notes or comments to each contact person|record down some critical information about this person
 
 |`* *` |user |list last few contacts the user have found|see the most frequently searched or viewed contact person
@@ -772,6 +770,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |pin important contacts or task on top|to keep the important contacts on top of the view list for easier usage
 
 |`* *` |user |reminder region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
+
+|`*` |user |add image to a contact person|see the person more visually with an image
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 

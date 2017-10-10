@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -226,6 +226,41 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Coming in v2.0
+=== Adding a new task
+=== Deleting a task
+=== Marking a task as complete/incomplete
+=== Finding a person by name
+=== Auto-focusing on input bar at the start of the application
+=== Setting a task to be recurring
+=== Editing a task 
+=== Seeing tasks in certain range of time
+=== Listing tasks by date
+=== Listing tasks by priority
+=== Listing tasks by tag
+=== Viewing one task details with the relevant person in the addressbook
+=== Viewing one person details with the relevant tasks displayed in the addressbook
+=== Having a map view of the current selected person or himself
+=== Linking a task to a person
+=== Adding a general notes or comments to each contact person
+=== Listing last few contacts the user have found
+=== Exporting contact info as an add command (user can choose whether to disclose the private information about this contact details)
+=== Exporting task details as an add command 
+=== Pinning important contacts or task on top
+=== Remindering region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
+=== Possible new features
+==== Adding image to a contact person
+==== Sorting persons by name
+==== Adding new tasks with hierarchy
+==== Editing hierarchy
+==== Getting error and warnings on event conflicts
+==== Having multiple hot keys available 
+==== Auto-completion of commands
+==== Suggesting next part of the commands
+==== Trigger & password 
+==== Customising background wallpaper
+==== Having a settings manager/config file
 
 == FAQ
 
