@@ -14,6 +14,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
+    public static final String MESSAGE_NOENTRIESFOUND = "No person with given tags found.";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists all the people in address or people with certain tags.\n"
             + "Parameters: [optional]Tag\n"
@@ -37,6 +39,18 @@ public class ListCommand extends Command {
         } else {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
-        return new CommandResult(MESSAGE_SUCCESS);
+
+        if(AreEntriesWithTagsFound()){
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_NOENTRIESFOUND);
+        }
+    }
+
+    private boolean AreEntriesWithTagsFound(){
+        if (model.getFilteredPersonList().size() != 0)
+            return true;
+        else
+            return false;
     }
 }
