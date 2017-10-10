@@ -22,11 +22,12 @@ public class DeleteCommand extends UndoableCommand {
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final StringBuilder MESSAGE_DELETE_PERSON_FAIL= new StringBuilder(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    public static final StringBuilder MESSAGE_DELETE_PERSON_FAIL = new StringBuilder(
+            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
-    private boolean allvalid=true;
-    private int num_of_invalid=0;
+    private boolean allvalid = true;
+    private int num_of_invalid = 0;
 
     private final ArrayList<Index> targetIndex;
 
@@ -38,31 +39,29 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        ArrayList<ReadOnlyPerson> personstodelete= new ArrayList<ReadOnlyPerson>();
-        ArrayList<Index> invalid= new ArrayList<>();
+        List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
+        ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
+        ArrayList<Index> invalid = new ArrayList<>();
         for(Index s: targetIndex) {
             if (s.getZeroBased() >= lastShownList.size()) {
-                allvalid=false;
+                allvalid = false;
                 num_of_invalid++;
                 invalid.add(s);
-            }
-            else {
+            }else {
                 personstodelete.add(lastShownList.get(s.getZeroBased()));
             }
         }
-        if(allvalid) {
+        if (allvalid) {
             try {
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             }
             return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
-        }
-        else{
+        }else {
             MESSAGE_DELETE_PERSON_FAIL.append(num_of_invalid);
-            for(Index s: invalid) {
-              MESSAGE_DELETE_PERSON_FAIL.append(s.getOneBased());
+            for (Index s: invalid) {
+                MESSAGE_DELETE_PERSON_FAIL.append(s.getOneBased());
             }
             throw new CommandException(MESSAGE_DELETE_PERSON_FAIL.toString());
         }

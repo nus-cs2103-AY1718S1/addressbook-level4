@@ -65,9 +65,11 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
-    public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException{
-        for(ReadOnlyPerson S:targets){
-            addressBook.removePerson(S);
+
+    @Override
+    public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+        for (ReadOnlyPerson s:targets) {
+            addressBook.removePerson(s);
         }
         indicateAddressBookChanged();
     }

@@ -3,8 +3,6 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -42,21 +40,25 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
-    public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException{
-        String[] ns=oneBasedIndexes.split(",");
+    /**
+     *
+     * @param {@code oneBasedIndexes} into {@code numbers} and return it.the commas will be deleted.
+     * @throws IllegalValueException
+     */
+    public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException {
+        String[] ns = oneBasedIndexes.split(",");
         ArrayList<Index> numbers = new ArrayList<Index>();
-        boolean allvalid=true;
-        for (String a: ns){
-            String s=a.trim();
-            if(StringUtil.isNonZeroUnsignedInteger(s)){
+        boolean allvalid = true;
+        for (String a: ns) {
+            String s = a.trim();
+            if (StringUtil.isNonZeroUnsignedInteger(s)) {
                 numbers.add(Index.fromOneBased(Integer.parseInt(s)));
-            }
-            else{
-                allvalid=false;
+            } else {
+                allvalid = false;
 
             }
         }
-        if(!allvalid){
+        if (!allvalid) {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return numbers;
