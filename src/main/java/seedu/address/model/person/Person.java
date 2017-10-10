@@ -33,8 +33,8 @@ public class Person implements ReadOnlyPerson {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday=new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
-        this.address=new SimpleObjectProperty<>(birthday);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
@@ -45,8 +45,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getBirthday(),
-                source.getAddress(), source.getRemark(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getBirthday(), source.getRemark(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -63,9 +63,7 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
-    }
+    public void setPhone(Phone phone) { this.phone.set(requireNonNull(phone)); }
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {
@@ -90,6 +88,14 @@ public class Person implements ReadOnlyPerson {
     public Email getEmail() {
         return email.get();
     }
+
+    public void setBirthday(Birthday birthday){ this.birthday.setValue(requireNonNull(birthday));}
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() { return birthday; }
+
+    @Override
+    public Birthday getBirthday(){ return birthday.get(); }
 
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
