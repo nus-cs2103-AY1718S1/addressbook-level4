@@ -40,19 +40,18 @@ public class StatusBarFooter extends UiPart<Region> {
     private static final String FXML = "StatusBarFooter.fxml";
 
     @FXML
-    private StatusBar dateTime;
-    @FXML
     private StatusBar syncStatus;
+    @FXML
+    private StatusBar totalPersons;
     @FXML
     private StatusBar saveLocationStatus;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int totalPersons) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
-
-        setTimingToBar(date);
+        setTotalPersons(totalPersons);
         registerAsAnEventHandler(this);
     }
 
@@ -70,11 +69,6 @@ public class StatusBarFooter extends UiPart<Region> {
         return clock;
     }
 
-    private void setTimingToBar(Date date) {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("E, y-M-d 'at' h:m:s a z");
-        this.dateTime.setText(dateFormatter.format(date));
-    }
-
     private void setSaveLocation(String location) {
         Platform.runLater(() -> this.saveLocationStatus.setText(location));
     }
@@ -83,11 +77,16 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(totalPersons + " person(s) total");
+    }
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotalPersons(abce.data.getPersonList().size());
     }
 }
