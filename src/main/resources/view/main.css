@@ -37,6 +37,10 @@
  * Command Box
  */
 
+#commandBoxWrapper {
+    -fx-padding: 20;
+}
+
 #commandTextField {
     -fx-font-size: 25pt;
     -fx-font-weight: bold;
@@ -45,8 +49,12 @@
     -fx-padding: 0;
 }
 
-#commandBoxPlaceholder {
-    -fx-padding: 0 20 0 20;
+#commandBoxIconPlaceholder {
+    -fx-padding: 0 0 0 10;
+}
+
+#commandBoxIconPlaceholder .ikonli-font-icon {
+    -fx-icon-color: light;
 }
 
 /**

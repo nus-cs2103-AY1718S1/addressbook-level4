@@ -53,6 +53,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane commandBoxIconPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -141,6 +144,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        CommandBoxIcon commandBoxIcon = new CommandBoxIcon();
+        commandBoxIconPlaceholder.getChildren().add(commandBoxIcon.getRoot());
     }
 
     void hide() {
