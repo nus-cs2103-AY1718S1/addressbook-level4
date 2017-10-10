@@ -805,7 +805,6 @@ Use case ends.
 Use case resumes at step 2.
 
 === Use case: Add remark
-
 *MSS*
 
 1.  User requests to list persons
@@ -837,11 +836,10 @@ Use case resumes at step 2.
 
 1. User requests to list persons
 2. AddressBook shows a list of persons
-3. User requests to rename the tag
-4. User keys in the new input
-5. AddressBook replace the name of the existing to the newer version
-6. AddressBook prompt user to confirm the changes
-7. AddressBook shows a sucessful message regarding the replacement
+3. User requests to rename the tag and key in the new input
+4. AddressBook replace the name of the existing to the newer version
+5. AddressBook prompt user to confirm the changes
+6. AddressBook shows a sucessful message regarding the replacement
 Use case ends.
 
 **Extensions**
@@ -852,10 +850,10 @@ Use case ends.
 
 4a. The given tag is invalid
 
-> 4a1. AddressBook shows an error message <br>
+> 4a1. AddressBook shows an error message
   Use case resumes at step 3
 
-6a. User disconfirm the changes
+5a. User disconfirm the changes
 
 > Use case ends
 
