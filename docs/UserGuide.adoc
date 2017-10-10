@@ -94,6 +94,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating persons in address book: `find` or `f` or `search`
 
 Finds persons in the address book. +
@@ -124,6 +125,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns any person having tag `School`
 * `find School werk` +
 Returns any person having tag `School` or tag `werk`
+// end::find[]
 
 === Deleting a person : `delete` or `d`
 

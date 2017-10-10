@@ -1,0 +1,57 @@
+= Zhan Yu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Rolodex
+Rolodex is a desktop Address Book application for computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+Rolodex is an extension of AddressBook - Level 4, which is a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+= {empty}
+=== Enhancement Added: Find by close words (fuzzy searching) and find by tags
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=find]
+
+---
+
+==== Justification
+
+Users may sometimes key commands too quickly or forget the names of their contacts.
+This enhancement allows them to find contacts by close name words or by tags previously assigned to make finding contacts in the Rolodex a lot easier.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
+//TODO: Add findClose section in Developer Guide (Implementation & Design Considerations See undoredo for example)
+
+#End of Extract#
+
+---
+
+= {empty}
+=== Enhancement Proposed: Sortable parameters in commands augmenting list view
+
+To allow users to operate on a sorted list for longer displayed lists by the `list` or `find` command.
+
+=== Other contributions
+
+* Updated the General Documentation (Pull requests https://github.com[#11], https://github.com[#5])
+* Added continuous integration tools using https://travis-ci.org/CS2103AUG2017-W11-B2/main[Travis CI],
+https://ci.appveyor.com/project/ZY-Ang/main[AppVeyor],
+https://coveralls.io/github/CS2103AUG2017-W11-B2/main?branch=master[Coveralls] and
+https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
+
+= {empty}
+== Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
+
+{Optionally (not graded), you may include other projects in your portfolio.}

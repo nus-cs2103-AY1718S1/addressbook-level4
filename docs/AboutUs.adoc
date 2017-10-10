@@ -4,53 +4,37 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+Rolodex was developed by the https://github.com/orgs/CS2103AUG2017-W11-B2/people[Rolodex] team and
+is an extension of the AddressBook - Level 4 developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Ang Zhan Yu
+image::alexa.jpg[width="150", align="left"]
+{empty}https://ZY-Ang.github.io[homepage] https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
 
-Role: Project Advisor
+Role: Developer +
+Responsibilities: Storage
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Jolyn Tan
+image::jolyn.jpg[width="150", align="left"]
+{empty}http://github.com/lejolly[github] <<ZhanYu#, portfolio>>
 
 Role: Team Lead +
 Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Tan Mingrui
+image::mingrui.jpg[width="150", align="left"]
+{empty}http://github.com/yijinl[github] <<ZhanYu#, portfolio>>
 
 Role: Developer +
 Responsibilities: Data
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
