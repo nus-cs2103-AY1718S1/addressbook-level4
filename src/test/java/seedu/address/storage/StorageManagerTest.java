@@ -53,7 +53,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void read_notXmlFormat_exceptionThrown() throws DataConversionException, IOException {
+    public void readAddressBookNotInXmlFormat() throws DataConversionException, IOException {
 
         // thrown.expect(Exception.class);
         storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"),
