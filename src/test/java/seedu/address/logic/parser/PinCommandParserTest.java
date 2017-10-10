@@ -21,12 +21,12 @@ public class PinCommandParserTest {
     private PinCommandParser parser = new PinCommandParser();
 
     @Test
-    public void parse_validArgs_returnsPinCommand() {
+    public void parseValidArgsReturnsPinCommand() {
         assertParseSuccess(parser, "1", new PinCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE));
     }
 }

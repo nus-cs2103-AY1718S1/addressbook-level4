@@ -21,12 +21,12 @@ public class UnpinCommandParserTest {
     private UnpinCommandParser parser = new UnpinCommandParser();
 
     @Test
-    public void parse_validArgs_returnsUnpinCommand() {
+    public void parseValidArgsReturnsUnpinCommand() {
         assertParseSuccess(parser, "1", new UnpinCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE));
     }
 }
