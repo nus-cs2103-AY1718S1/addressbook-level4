@@ -1,6 +1,7 @@
 package seedu.address.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -88,16 +89,16 @@ public class ModelManagerTest {
 
         //person not found, no such tag
         Tag noSuchTag = new Tag("nosuchtag");
-    //    modelManager.deleteTag(noSuchTag);
+        modelManager.deleteTag(noSuchTag);
         expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertTrue(addressBook.equals(expectedAddressBook));
 
         //deletes a tag
         modelManager.deleteTag(tag);
         AddressBook originalAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        for(ReadOnlyPerson person : originalAddressBook.getPersonList()) {
-            for(ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
-                if(person.getName().equals(personCopy.getName())) {
+        for (ReadOnlyPerson person : originalAddressBook.getPersonList()) {
+            for (ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
+                if (person.getName().equals(personCopy.getName())) {
                     assertFalse(person.getTags().equals(personCopy.getTags()));
                 }
             }
@@ -116,7 +117,7 @@ public class ModelManagerTest {
 
         //default tagcolor should be off
         for (Tag tag : addressBook.getTagList()) {
-            assertEquals(tag.getTagColor(), "#dcdcdc");
+            assertTrue(tag.getTagColor().equals("#dcdcdc"));
         }
     }
 }
