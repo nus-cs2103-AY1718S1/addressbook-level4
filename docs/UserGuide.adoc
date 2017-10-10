@@ -100,6 +100,27 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `e 3 n/Carl Cooper` +
 Edits the name of the 3rd person to be `Carl Cooper`.
 
+=== Making a note: `note`
+
+Shorthand Alias: 'n'
+Makes a note for an existing person in the address book. +
+Format: `note INDEX [n/Note]`
+
+****
+* Adds the specified note for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Notes can be any string, or even left blank to remove existing notes. Existing notes will be replaced by the input note
+* You can remove a note from a person by typing `n/` without any text after it.
+****
+
+Examples:
+
+* `note 1 n/This is an important note`
+Adds or replace the existing note for the 1st person to be `This is an important note`
+* `edit 2 n/`
+Removes all existing notes from the 2nd person
+* `e 3 n/`
+Removes all existing notes from the 3rd person
+
 === Locating persons by name: `find`
 
 Shorthand Alias: `f`
@@ -191,7 +212,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `note` and `clear`).
 ====
 
 Examples:
@@ -274,3 +295,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Note* : `note 2 n\Very rich customer`

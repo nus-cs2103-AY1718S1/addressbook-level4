@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.List;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,9 +20,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-import java.util.List;
-import java.util.Set;
-
 /**
  * Deletes a person identified using it's last displayed index from the address book.
  */
@@ -29,8 +29,10 @@ public class NoteCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "n";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Modifies a note for the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + ": Modifies a note for the person identified by "
+            + "the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_NOTE + "NOTE]\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_NOTE + " Has 3 children.";
 
     public static final String MESSAGE_NOTE_SUCCESS = "Note Added: %1$s";
@@ -61,7 +63,8 @@ public class NoteCommand extends UndoableCommand {
         Address updatedAddress = personToNote.getAddress();
         Set<Tag> updatedTags = personToNote.getTags();
 
-        ReadOnlyPerson updatedPerson = new Person (updatedName, updatedPhone, updatedEmail, updatedAddress, this.note, updatedTags);
+        ReadOnlyPerson updatedPerson =
+                new Person (updatedName, updatedPhone, updatedEmail, updatedAddress, this.note, updatedTags);
 
         try {
             model.updatePerson(personToNote, updatedPerson);

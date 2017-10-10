@@ -85,7 +85,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
-            case NoteCommand.COMMAND_WORD: case NoteCommand.COMMAND_ALIAS:
+        case NoteCommand.COMMAND_WORD: case NoteCommand.COMMAND_ALIAS:
             return new NoteCommandParser().parse(arguments);
 
         default:

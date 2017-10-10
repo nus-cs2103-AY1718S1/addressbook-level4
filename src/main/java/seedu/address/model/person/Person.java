@@ -113,7 +113,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Note getNote() { return note.get(); };
+    public Note getNote() {
+        return note.get();
+    };
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

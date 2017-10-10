@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -14,7 +12,7 @@ public class Note {
 
     public final String value;
 
-    public Note(String value){
+    public Note(String value) {
         requireNonNull(value);
         this.value = value;
     }
