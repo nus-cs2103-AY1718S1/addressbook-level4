@@ -750,7 +750,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |store multiple email addresses or phone numbers for a single person |access all a contact's details in a single query
 
 |`* * *` |user |have the screen open at an appropriate size |avoid having to adjust screen sizes manually on each load
-=======
+
 |`* *` |user |put in phone numbers with dashes and spaces on it |copy-paste a number without having to strip the dashes/spaces
 
 |`* *` |user |adjust the text font size |see better if I have impaired sight
@@ -784,7 +784,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |add social media to contacts |
 
 |`* *` |user |access my contact's social media pages |
-=======
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |view two contacts at the same time |make a comparison of two persons' information similarities
