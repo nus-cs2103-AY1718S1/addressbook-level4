@@ -1,6 +1,6 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    -fx-background-color: red;
+    background-color: #DDDDDD; /* Used in the default.html file */
 }
 
 .label { /* Used in status bar font size, tag font family */
@@ -41,9 +41,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: blue;
+    -fx-control-inner-background: red;
+    -fx-background-color: red;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -57,11 +57,7 @@
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
-    -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
+    -fx-border-color: red;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -83,8 +79,6 @@
 }
 
 .split-pane { /* Borders left pane. Borders right pane. */
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
     -fx-background-color: #DDDDDD;
 }
 
@@ -113,7 +107,7 @@
 
 .list-cell:filled:selected #cardPane { /* Used for border on selected cell */
     -fx-border-color: transparent;
-    -fx-border-width: 1;
+    -fx-border-width: 0;
 }
 
 .list-cell .label {
@@ -134,21 +128,22 @@
 
 .anchor-pane { /* Effectively the command bar background */
      -fx-background-color: #CE4E4E;
+     -fx-background-radius: 10px;
 }
 
-.pane-with-border { /* Command pane background color */
-     -fx-background-color: #393E41;
-     -fx-border-color: transparent;
-     -fx-border-top-width: 0px;
+.anchor-pane-status { /* Effectively the status bar background */
+}
+
+.pane-with-border { /* Command pane border background color */
+     -fx-background-color: #DDDDDD;
 }
 
 .status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: B3B3B3;
     -fx-text-fill: black;
 }
 
 .result-display { /* Used for command results */
-    -fx-background-color: transparent;
     -fx-font-family: sans-serif;
     -fx-font-size: 14pt;
     -fx-text-fill: #808080;
@@ -158,25 +153,22 @@
     -fx-text-fill: black !important;
 }
 
-.status-bar .label {
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+.status-bar .label { /* Status bar font */
+    -fx-font-family: sans-serif;
+    -fx-text-fill: #666666;
 }
 
 .status-bar-with-border {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 25%);
-    -fx-border-width: 1px;
+    -fx-background-color: green;
 }
 
 .status-bar-with-border .label {
     -fx-text-fill: white;
 }
 
-.grid-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 30%);
-    -fx-border-width: 1px;
+.grid-pane { /* Status bar border */
+    -fx-background-color: #DDDDDD;
+    -fx-background-radius: 0px;
 }
 
 .grid-pane .anchor-pane { /* Status bar background */
@@ -184,7 +176,7 @@
 }
 
 .context-menu { /* Used for menu expansion button background */
-    -fx-background-color: #B3B3B3;
+    -fx-background-color: #393E41;
 }
 
 .context-menu .label {
@@ -213,36 +205,35 @@
  */
 .button {
     -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
+    -fx-border-color: red;
     -fx-border-width: 2;
-    -fx-background-radius: 0;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: blue;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
+    -fx-border-radius: 20;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #green;
+    -fx-background-color: red;
 }
 
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
+  -fx-text-fill: blue;
 }
 
 .button:focused {
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
 }
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: blue;
     -fx-text-fill: white;
 }
 
@@ -256,7 +247,7 @@
 }
 
 .dialog-pane {
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: blue;
 }
 
 .dialog-pane > *.button-bar > *.container {
@@ -270,7 +261,7 @@
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#1d1d1d, 25%);
+    -fx-background-color: blue;
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -328,9 +319,8 @@
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
-#resultDisplay .content { /* Result box background color */
+#resultDisplay .content { /* Result box background color and radius */
     -fx-background-color: #CCCCCC;
-    -fx-background-radius: 0;
     -fx-padding: 10px;
 }
 
