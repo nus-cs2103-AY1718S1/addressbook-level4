@@ -39,8 +39,8 @@ Responsibilities: Software Development
 '''
 
 === Shi Tian
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+image::shitian.jpg[width="150", align="left"]
+{empty}[http://github.com/shitian[github]] [<<shitian#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Software Development
