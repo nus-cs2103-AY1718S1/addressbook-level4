@@ -733,6 +733,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`*` |user who sends many emails frequently |email group of people in the address book |send mass emails easily
+
+|`*` |user visiting many persons in the address book |plan easiest route to visit group of people in the address book |save travel time
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user with many persons in the address book having multiple contact number |store multiple contact numbers per person |keep track of all their numbers easily
@@ -778,6 +782,7 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+
 === Use case: Undo Command
 
 *MSS*
@@ -786,15 +791,6 @@ Use case resumes at step 2.
 2.  AddressBook shows previous command to be undone.
 3.  User confirms to undo command.
 4.  AddressBook undo command.
-
-=== Use case: Clear all
-
-*MSS*
-
-1.  User request to clear AddressBook
-2.  AddressBook prompts user for confirmation
-3.  User confirm the deletion
-4.  AddressBook clear all contact in AdressBook
 +
 Use case ends.
 
@@ -809,6 +805,51 @@ Use case ends.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear all
+
+*MSS*
+
+1.  User request to clear AddressBook
+2.  AddressBook prompts user for confirmation
+3.  User confirm the deletion
+4.  AddressBook clear all contact in AdressBook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User cancels the action.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+
+[discrete]
+=== Use case: Show user guide
+
+*MSS*
+
+1.  User requests to show user guide
+2.  AddressBook shows user guide on a separate link:#form[form]
+3.  User closes the user guide
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User guide cannot be found.
 +
 Use case ends.
 
@@ -838,10 +879,6 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 3a. User cancels the action.
-
-Use case ends.
-
 {More to be added}
 
 [appendix]
@@ -850,6 +887,8 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be portable and can be ran from flash drives.
+.  Should be able to keep contact information secure.
 .  English should be the only language in the application.
 .  Application should not take more than 50mb of storage.
 .  A new user should be able to use the app with ease after 3 days of using it.
@@ -876,6 +915,12 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
+[[form]]
+Form
+
+....
+A panel that is also called a 'window' in Windows operating systems.
 
 [[RAM]]
 RAM
