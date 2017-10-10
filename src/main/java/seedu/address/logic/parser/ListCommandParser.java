@@ -27,10 +27,9 @@ public class ListCommandParser implements Parser<ListCommand>{
 
         try {
             if(!isPrefixPresent(argMultimap, PREFIX_TAG)) {
-               return new ListCommand();
+                return new ListCommand();
             }
 
-            //TODO: convert the string to collection to pass to parseTags
             Set<Tag> inputTag = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             return new ListCommand(inputTag);
 
