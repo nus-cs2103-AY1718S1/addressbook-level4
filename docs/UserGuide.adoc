@@ -70,7 +70,16 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+If tags are supplied, then shows the list of all persons with that tag in the address book. The tags are case-sensitive. +
+Format: `list [t/TAG]`
+
+Examples:
+
+* `list` +
+Shows the list of all persons in the address book
+* `list t/friends` +
+Shows the list of only those persons in the address book that are tagged as `friends`
+
 
 === Editing a person : `edit`
 
