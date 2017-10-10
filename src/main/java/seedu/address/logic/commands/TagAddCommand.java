@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -57,23 +59,23 @@ public class TagAddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-            if (index.get(0).getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        if (index.get(0).getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
 
-            ReadOnlyPerson personToEdit = lastShownList.get(index.get(0).getZeroBased());
-            Set<Tag> originalTagList = personToEdit.getTags();
-            tagAddDescriptor.getTags().addAll(originalTagList);
-            Person editedPerson = createEditedPerson(personToEdit, tagAddDescriptor);
-            try {
-                model.updatePerson(personToEdit, editedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        ReadOnlyPerson personToEdit = lastShownList.get(index.get(0).getZeroBased());
+        Set<Tag> originalTagList = personToEdit.getTags();
+        tagAddDescriptor.getTags().addAll(originalTagList);
+        Person editedPerson = createEditedPerson(personToEdit, tagAddDescriptor);
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
 
     }
 
@@ -142,16 +144,6 @@ public class TagAddCommand extends UndoableCommand {
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
-        }
-
-        public void addTags(Set<Tag> tagSet) {
-            try {
-                if(this.tags==null){System.out.println("null");}
-                this.tags.addAll(tagSet);
-            }
-            catch(NullPointerException e) {
-
-            }
         }
 
         public Set<Tag> getTags() { return tags; }
