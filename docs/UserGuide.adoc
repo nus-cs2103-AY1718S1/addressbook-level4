@@ -235,7 +235,7 @@ Format: `tagcolor On / tagcolor Off`
 
 [NOTE]
 ====
-To see changes, scroll the contact list up and down.
+Tag color is not fixed. (i.e. when tag color is offed and on again, the color is different)
 ====
 
 

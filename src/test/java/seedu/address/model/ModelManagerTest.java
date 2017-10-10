@@ -12,8 +12,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.ui.Ui;
+import seedu.address.ui.UiManager;
 
 public class ModelManagerTest {
     @Rule
@@ -61,5 +70,54 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void deleteTag() throws IllegalValueException, PersonNotFoundException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        Tag tag = new Tag("friends");
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+
+        //person not found, empty AddressBook
+        AddressBook emptyAddressBook = new AddressBookBuilder().build();
+        ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
+        AddressBook expectedAddressBook = new AddressBookBuilder().build();
+        emptyModelManager.deleteTag(tag);
+        assertTrue(emptyAddressBook.equals(expectedAddressBook));
+
+        //person not found, no such tag
+        Tag noSuchTag = new Tag("nosuchtag");
+        modelManager.deleteTag(noSuchTag);
+        expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertTrue(addressBook.equals(expectedAddressBook));
+
+        //deletes a tag
+        modelManager.deleteTag(tag);
+        AddressBook originalAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        for (ReadOnlyPerson person : originalAddressBook.getPersonList()) {
+            for (ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
+                if (person.getName().equals(personCopy.getName())) {
+                    assertFalse(person.getTags().equals(personCopy.getTags()));
+                }
+            }
+        }
+    }
+
+    @Test
+    public void tagColor() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        Logic logic = new LogicManager(modelManager);
+        Config config = new Config();
+        Ui ui = new UiManager(logic, config, userPrefs);
+        modelManager.getUi(ui);
+
+        //default tagcolor should be off
+        for (Tag tag : addressBook.getTagList()) {
+            assertTrue(tag.getTagColor().equals("#dcdcdc"));
+        }
     }
 }
