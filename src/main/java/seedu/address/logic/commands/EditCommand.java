@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -103,6 +104,10 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
+        if (!updatedTags.containsAll(personToEdit.getTags())) {
+            updatedTags.addAll(personToEdit.getTags());
+        }
+        
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
@@ -134,6 +139,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Tag> tagsToDel;
 
         public EditPersonDescriptor() {}
 
@@ -143,13 +149,15 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.tagsToDel = toCopy.tagsToDel;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(
+                    this.name, this.phone, this.email, this.address, this.tags, this.tagsToDel);
         }
 
         public void setName(Name name) {
@@ -190,6 +198,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setTagsToDel(Set<Tag> tagsToDel) {
+            this.tagsToDel = tagsToDel;
+        }
+
+        public Optional<Set<Tag>> getTagsToDel() {
+            return Optional.ofNullable(tagsToDel);
         }
 
         @Override
