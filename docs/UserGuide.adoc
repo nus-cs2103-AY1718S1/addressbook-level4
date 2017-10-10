@@ -132,6 +132,13 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+Another way to delete a contact in the list:
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +

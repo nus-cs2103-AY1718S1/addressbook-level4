@@ -130,10 +130,10 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        
+
         deleteButton = new DeleteButton(logic,0 );
         deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
-        
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -199,7 +199,7 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
-    
+
     void show() {
         primaryStage.show();
     }

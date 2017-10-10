@@ -18,7 +18,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
  */
 public class DeleteButton extends UiPart<Region> {
-    
+
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "DeleteButton.fxml";
 
@@ -43,13 +43,12 @@ public class DeleteButton extends UiPart<Region> {
     private void handleDeleteButtonPressed() throws CommandException, ParseException {
         CommandResult commandResult = logic.execute("delete "+ getSelectedIndex());
         logger.info("Result: " + commandResult.feedbackToUser);
-        
     }
-    
+
     private void setSelectedIndex(int i) {
         selectedIndex = i;
     }
-    
+
     private int getSelectedIndex() {
         return selectedIndex;
     }
@@ -60,5 +59,4 @@ public class DeleteButton extends UiPart<Region> {
         int baseOneIndex = event.getSelectionIndex() + 1;
         setSelectedIndex(baseOneIndex);
     }
-    
 }
