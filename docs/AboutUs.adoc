@@ -19,7 +19,7 @@ Role: Project Advisor
 '''
 
 === John Roe
-image::[width="150", align="left"]
+image::travisp.jpg[width="150", align="left"]
 {empty}[http://github.com/TravisPhey[github]] [<<travisphey#, portfolio>>]
 
 Role: Developer +
