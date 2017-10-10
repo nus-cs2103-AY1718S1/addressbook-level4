@@ -77,7 +77,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void sort() {
         Collections.sort(internalList, Comparator.comparing(firstPerson -> firstPerson.getName().fullName.replaceFirst(
-                "[a-z]{1}", firstPerson.getName().fullName.substring(0,1).toUpperCase())));
+                "[a-z]{1}", firstPerson.getName().fullName.substring(0, 1).toUpperCase())));
     }
 
     /**
