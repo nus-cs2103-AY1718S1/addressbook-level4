@@ -9,13 +9,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameContainsKeywordPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -111,7 +110,7 @@ public class CommandTestUtil {
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredPersonList(new NameContainsKeywordPredicate(splitName[0]));
 
         assert model.getFilteredPersonList().size() == 1;
     }
