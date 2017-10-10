@@ -4,9 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-Bamboo was developed by https://github.com/CS2103AUG2017-W09-B4/main[CS2103AUG2017-W09-B] team. +
+Bamboo was developed by https://github.com/CS2103AUG2017-W09-B4/main[CS2103AUG2017-W09-B4] team. +
 
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a group of NUS computing students based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
@@ -19,8 +19,8 @@ Role: Project Advisor
 '''
 
 === Chan Jian Hui
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/cjianhui[github]] [<<johndoe#, portfolio>>]
+image::jianhuic.jpg[width="150", height="250", align="left"]
+{empty}[http://github.com/cjianhui[github]] [<<cjianhui#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Logic
@@ -29,7 +29,7 @@ Responsibilities: Logic
 
 === Ng Aik Sheng
 image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/nassy93[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/nassy93[github]] [<<nas#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model
@@ -38,7 +38,7 @@ Responsibilities: Model
 
 === Derek Kok
 image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/Procrastinatus[github]] [<<derek#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI + Storage
@@ -47,7 +47,7 @@ Responsibilities: UI + Storage
 
 === Jiang Lingshuo
 image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/JiangLingshuo[github]] [<<lingshuo#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
