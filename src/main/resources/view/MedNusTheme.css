@@ -76,8 +76,6 @@ background {
 .split-pane:horizontal .split-pane-divider { /* Used for split pane divider color */
     -fx-background-color: white;
     -fx-border-color: transparent transparent transparent white;
-    -fx-padding: 0 0 0 0;
-
 }
 
 .split-pane { /* Borders left pane. Borders right pane. */
@@ -173,7 +171,7 @@ background {
 }
 
 .grid-pane .anchor-pane { /* Status bar background */
-    -fx-background-color: #B3B3B3;
+    -fx-background-color: white;
 }
 
 .context-menu { /* Used for menu expansion button background */
@@ -322,7 +320,7 @@ background {
 
 #resultDisplay .content { /* Result box background color and radius */
     -fx-background-color: #CCCCCC;
-    -fx-padding: 0px;
+    -fx-padding: 10px;
 }
 
 #tags {
