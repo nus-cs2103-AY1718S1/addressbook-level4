@@ -21,6 +21,10 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.XmlAddressBookStorage;
 
 public class BackupCommandTest {
+
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
     private Model model;
     private UserPrefs userPrefs;
     private StorageManager storageManager;
@@ -28,9 +32,6 @@ public class BackupCommandTest {
     private String filePath;
     private String backupFilePath;
     private BackupCommand backupCommand;
-
-    @Rule
-    public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Before
     public void setUp() {
