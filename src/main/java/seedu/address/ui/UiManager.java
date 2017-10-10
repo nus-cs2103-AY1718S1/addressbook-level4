@@ -129,8 +129,9 @@ public class UiManager extends ComponentManager implements Ui {
     public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
         // log in is successful
         if (event.getLoginStatus() == true) {
+            logger.info("Login successful");
             //show address book
-            mainWindow.fillInnerParts();
+            Platform.runLater(() -> mainWindow.fillInnerParts());
         }
     }
 }
