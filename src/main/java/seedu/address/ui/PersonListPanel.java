@@ -23,12 +23,6 @@ import seedu.address.commons.events.ui.SortListRequestEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
-
-
-
-
-
 /**
  * Panel containing the list of info.
  */

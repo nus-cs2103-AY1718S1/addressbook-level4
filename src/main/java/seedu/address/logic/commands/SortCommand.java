@@ -24,7 +24,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        EventsCenter.getInstance().post(new SortListRequestEvent(currentListingUnit));
+        EventsCenter.getInstance().post(new SortListRequestEvent());
         return new CommandResult(MESSAGE_SELECT_PERSON_SUCCESS);
 
     }

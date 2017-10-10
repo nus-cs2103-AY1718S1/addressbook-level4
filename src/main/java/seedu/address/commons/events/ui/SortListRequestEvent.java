@@ -8,16 +8,6 @@ import seedu.address.model.ListingUnit;
  */
 public class SortListRequestEvent extends BaseEvent {
 
-    private static ListingUnit listingUnit = ListingUnit.getCurrentListingUnit();
-
-    public SortListRequestEvent(ListingUnit currentListingUnit) {
-        this.listingUnit = currentListingUnit;
-    }
-
-    public ListingUnit getListingUnit() {
-        return listingUnit;
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
