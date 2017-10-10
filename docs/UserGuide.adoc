@@ -134,9 +134,9 @@ Deletes the 1st person in the results of the `find` command.
 
 Another way to delete a contact in the list:
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+1. Select a person in the list
+2. Click the delete button
+3. Selected person will be deleted from the list
 ****
 
 === Selecting a person : `select`
