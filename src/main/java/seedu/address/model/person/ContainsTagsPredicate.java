@@ -3,10 +3,11 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the tagss given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the tags given.
  */
 public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
@@ -18,8 +19,10 @@ public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         for (Tag tag : person.getTags()) {
-            if (keywords.contains(tag.tagName)) {
-                return true;
+            for (String keyword : keywords) {
+                if (keyword.equalsIgnoreCase(tag.tagName)) {
+                    return true;
+                }
             }
         }
         return false;
