@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -44,7 +43,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(),
-                source.getAddress(), source.getRemark(), source.getTags());
+            source.getAddress(), source.getRemark(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -71,7 +70,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Phone getPhone() { return phone.get(); }
+    public Phone getPhone() {
+        return phone.get();
+    }
 
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
@@ -152,8 +153,8 @@ public class Person implements ReadOnlyPerson {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+            || (other instanceof ReadOnlyPerson // instanceof handles nulls
+            && this.isSameStateAs((ReadOnlyPerson) other));
     }
 
     @Override

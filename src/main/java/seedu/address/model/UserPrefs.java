@@ -57,8 +57,8 @@ public class UserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return Objects.equals(guiSettings, o.guiSettings)
-                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+            && Objects.equals(addressBookFilePath, o.addressBookFilePath)
+            && Objects.equals(addressBookName, o.addressBookName);
     }
 
     @Override

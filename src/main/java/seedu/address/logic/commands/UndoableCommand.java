@@ -45,7 +45,7 @@ public abstract class UndoableCommand extends Command {
             executeUndoableCommand();
         } catch (CommandException ce) {
             throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+                + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }

@@ -51,8 +51,8 @@ public class Config {
         Config o = (Config) other;
 
         return Objects.equals(appTitle, o.appTitle)
-                && Objects.equals(logLevel, o.logLevel)
-                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath);
+            && Objects.equals(logLevel, o.logLevel)
+            && Objects.equals(userPrefsFilePath, o.userPrefsFilePath);
     }
 
     @Override

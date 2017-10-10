@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -11,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+        "Person addresses can take any values, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -37,7 +35,9 @@ public class Address {
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) { return test == null || test.matches(ADDRESS_VALIDATION_REGEX); }
+    public static boolean isValidAddress(String test) {
+        return test == null || test.matches(ADDRESS_VALIDATION_REGEX);
+    }
 
     @Override
     public String toString() {
@@ -47,8 +47,8 @@ public class Address {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && (this.value == ((Address) other).value || this.value.equals(((Address) other).value))); // state check
+            || (other instanceof Address // instanceof handles nulls
+            && (this.value == ((Address) other).value || this.value.equals(((Address) other).value))); // state check
     }
 
     @Override
