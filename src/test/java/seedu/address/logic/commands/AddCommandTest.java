@@ -133,6 +133,12 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public AddressBook getModifiableAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
     }
 
     /**
