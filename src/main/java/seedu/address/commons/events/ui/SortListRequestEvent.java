@@ -14,7 +14,7 @@ public class SortListRequestEvent extends BaseEvent {
         this.listingUnit = currentListingUnit;
     }
 
-    public ListingUnit getListingUnit(){
+    public ListingUnit getListingUnit() {
         return listingUnit;
     }
 

@@ -1,8 +1,8 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's phone number in the address book.

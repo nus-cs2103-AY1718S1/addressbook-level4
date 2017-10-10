@@ -8,7 +8,6 @@ import seedu.address.model.ListingUnit;
 /***
  * Sort list
  */
-
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
@@ -22,10 +21,10 @@ public class SortCommand extends Command {
 
     private static ListingUnit currentListingUnit = ListingUnit.getCurrentListingUnit();
 
+    @Override
     public CommandResult execute() throws CommandException {
 
-        EventsCenter.getInstance().
-                post(new SortListRequestEvent(currentListingUnit));
+        EventsCenter.getInstance().post(new SortListRequestEvent(currentListingUnit));
         return new CommandResult(MESSAGE_SELECT_PERSON_SUCCESS);
 
     }

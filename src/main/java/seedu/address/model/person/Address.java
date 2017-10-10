@@ -1,10 +1,10 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's address in the address book.
