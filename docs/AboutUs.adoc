@@ -4,14 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+iConnect was developed by the https://github.com/CS2103AUG2017-W09-B3[CS2103AUG2017-W09-B3]. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore] working on the next iteration of https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4].
 
 == Project Team
 
-=== John Doe
+=== Damith C. Rajapakse
 image::damithc.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
@@ -19,38 +18,38 @@ Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Sun Sheng Ran
+image::dalessr.jpg[width="150", align="left"]
+{empty}[http://github.com/dalessr[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Eldric  Lim
+image::eldriclim.jpg[width="150", align="left"]
+{empty}[http://github.com/eldriclim[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
+
+'''
+
+=== Zhang Hui
+image::ZhangH795.jpg[width="150", align="left"]
+{empty}[http://github.com/ZhangH795[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Model
+
+'''
+
+=== Zhao Peng Yu
+image::Pengyuz.jpg[width="150", align="left"]
+{empty}[http://github.com/Pengyuz[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Storage
 
 '''
