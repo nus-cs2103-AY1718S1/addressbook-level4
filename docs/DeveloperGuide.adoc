@@ -787,6 +787,14 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+== Use case: Search history
+
+*MSS*
+
+1. User request to search history by keying in 'history'
+2. Addressbook shows a list of commands used in the past.
+
 [discrete]
 === Use case: Find person
 
@@ -795,12 +803,19 @@ Use case resumes at step 2.
 1. User requests to find person by name
 2. AddressBook searches for person with the specified name and displays to user
 
+
 +
 Use case ends.
 
 *Extensions*
 
 [none]
+
+*2a. The list is empty.
++
+Use case ends.
+
+
 
 * 1a. The input name format is invalid.
 +
@@ -851,6 +866,7 @@ Use case ends.
 * 3a. The new tag is the same as an existing tag.
 +
 Use cse ends.
+
 
 
 {More to be added}
