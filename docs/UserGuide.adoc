@@ -232,6 +232,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear` or `c`
 
+=== Keyboard Shortcuts
+
+A list of keyboard shortcuts is provided link:#shortcuts[here].
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -265,3 +269,29 @@ e.g.`select 2`
 * *History* : `history` or `his` or `past`
 * *Undo* : `undo` or `u`
 * *Redo* : `redo` or `r`
+
+// tag::shortcut[]
+== Keyboard Shortcuts
+
+=== Command Shortcuts
+
+* `ctrl` + `a` : Add command
+* `ctrl` + `c` : Clear command
+* `ctrl` + `f` : Find command
+* `ctrl` + `l` : List command
+* `ctrl` + `h` : History command
+* `ctrl` + `z` : Undo command
+* `ctrl` + `y` : Redo command
+* `ctrl` + `\#` : Select contact at number `#`
+* `ctrl` + `d` + `\#`: Delete contact at number `#`
+* `ctrl` + `e` + `\#` : Edit contact at number `#`
+
+=== Navigation/Selection Shortcuts
+
+* `↑` or `↓` : Scroll the contact list
+* `shift` + `↑` or `shift` + `↓` : Select multiple contacts
+** `ctrl` + `d` : Delete selected contacts
+
+=== Additional Shortcuts
+
+* `esc` : Exit the application
