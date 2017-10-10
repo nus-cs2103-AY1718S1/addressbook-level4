@@ -33,4 +33,12 @@ public class PropertyTest {
 
         assertNull(newProperty);
     }
+
+    @Test
+    public void equalProperty_sameKeyAndValue_successfulCompare() throws Exception {
+        Property propertyA = new Property("a", "This is my address");
+        Property propertyB = new Property("a", "This is my address");
+
+        assertEquals(propertyA, propertyB);
+    }
 }
