@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -725,13 +725,74 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |add description to my contacts |I can make my contacts feel unique
+
 |`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |find a person by email |locate details of persons without having to go through the entire list
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |clear the storage in the address book |restart and empty the address book
+
+|`* * *` |user |find a person by phone number |locate details of persons without having to go through the entire list
+
+|`* * *` |user |find a person by tag |locate details of persons without having to go through the entire list
+
+|`* * *` |user |list my contacts by their tags |locate my contact more easily
+
+|`* * *` |user |find a person by date added |locate details of a persons without having to go through the entire list
+
+|`* *` |user |rename tag function |rename a specified tag from all contacts with that tag
+
+|`* *` |user |remove tag function |remove a specified tag from all contacts with that tag
+
+|`* *` |user |have an edit contact function |do not have to delete the contact and recreate contact when changing a person's particulars
+
+|`* *` |user |add multiple phone numbers to one contact |do not have to create another contact to add a person's secondary number(s)
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |to create favourite lists of contacts |find my most important contacts easily
+
+|`* *` |user |adjust the font size of the display contacts |I dont have to squint when I look for contacts 
+
+|`* *` |user with many contacts |group my contacts |I can find a contact easier by searching for the group name
+
+|`* *` |user |see my log history |retrieve information if I need to 
+
+|`* *` |user |add a event note to any contact |I remind myself about events I have with this contact 
+
+|`*` |user |store my contact's birthdays |keep track of my contact's birthdays
+
+|`*` |user |be notified of upcoming birthdays of my contacts |will not forget my contact's birthday
+
+|`*` |user with other address books |import data from address books |merge their data
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user with many persons in the address book |add profile pictures to contacts |identify my contacts easily
+
+|`*` |user who loves social media |like a integration of social media platforms with address book | I can browse social media while using address book 
+
+|`*` |user who loves forums |Like a forum feature |I can post any questions so that my contacts can answer 
+
+|`*` |user | add pictures to my contacts |I can better identify them with a picture 
+
+|`*` |user who loves going out |'HangOut' feature shows that I want to hang out |My contacts who sees that I am avaliable will contact me to hang out 
+
+|`* ` |user | send out mass email to people with the same tags | disseminate information effectively
+
+|`* ` |user | link me and my friends to our social media accounts | update and view others social media accounts easily
+
+|`* ` |user who is an employer | add notes to certain contacts with timers | keep track of tasks that I assign people to do
+
+|`* ` |user | have a synced task list with people with the same tags | keep track of each persons work progress
+
+|`* ` |user | integrate my address book with my phone contacts | easily add contacts to either address book or my phone contacts and have them be synced
+
+|`*` |user with many persons in the address book |view list of persons by first or last name |locate a person easily
+
 |=======================================================================
 
 {More to be added}
@@ -775,6 +836,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to run in 32bit or 64bit Windows/Linux/Mac Systems.
+.  Default program should not take up more than 1GB of space.
+.  Program should be easy for a non-tech savvy person to install without having to declare classpaths and change environmental variables 
 
 {More to be added}
 
