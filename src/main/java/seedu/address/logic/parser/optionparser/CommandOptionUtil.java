@@ -10,13 +10,13 @@ import seedu.address.commons.core.LogsCenter;
  * Contains utility methods used for parsing mode prefix and mode arguments.
  */
 public class CommandOptionUtil {
-
-    private static final Logger logger = LogsCenter.getLogger(CommandOptionUtil.class);
-
+    
     // No mode means that prefix is empty
     public static final String DEFAULT_OPTION_PREFIX = "";
     // All modes start with prefix "-"
     public static final String PREFIX_OPTION_INDICATOR = "-";
+
+    private static final Logger logger = LogsCenter.getLogger(CommandOptionUtil.class);
 
     private static final Pattern OPTION_PATTERN = Pattern.compile("^(-\\w+)");
 
