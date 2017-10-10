@@ -258,7 +258,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.persons.equals(((AddressBook) other).blacklistedPersons)
+                && this.blacklistedPersons.equals(((AddressBook) other).blacklistedPersons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
