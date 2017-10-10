@@ -16,7 +16,7 @@ public class StartUpPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
 
-    public StartUpPanel(){
+    public StartUpPanel() {
         super(FXML);
         logger.info("Loading start up panel...");
     }

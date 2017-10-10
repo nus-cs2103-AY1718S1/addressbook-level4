@@ -11,11 +11,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Username {
 
     public static final int USERNAME_LENGTH = 6;
-    public static final String MESSAGE_USERNAME_CHARACTERS_CONSTRAINTS = "Username can only consist of uppercase " +
-                                                                            "letters (A-Z), lowercase letters (a-z)," +
-                                                                            " digits (0-9) and underscores (_).";
-    public static final String MESSAGE_USERNAME_LENGTH_CONSTRAINTS = "Length of username cannot be less than " +
-                                                                          USERNAME_LENGTH + " characters.";
+    public static final String MESSAGE_USERNAME_CHARACTERS_CONSTRAINTS = "Username can only consist of uppercase "
+                                                                            + "letters (A-Z), lowercase letters (a-z),"
+                                                                            + " digits (0-9) and underscores (_).";
+    public static final String MESSAGE_USERNAME_LENGTH_CONSTRAINTS = "Length of username cannot be less than "
+                                                                          + USERNAME_LENGTH + " characters.";
     public static final String USERNAME_VALIDATION_REGEX = "^[a-zA-Z0-9_]+$";
 
     private String value;
@@ -26,7 +26,7 @@ public class Username {
      * @param value the username of the user
      * @throws IllegalValueException if given value string is invalid.
      */
-    public Username(String value) throws IllegalValueException{
+    public Username(String value) throws IllegalValueException {
         requireNonNull(value);
         String trimmedUsername = value.trim();
         if (!isValidUsernameLength(value)) {

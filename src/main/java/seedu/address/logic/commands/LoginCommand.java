@@ -33,7 +33,7 @@ public class LoginCommand extends Command {
      * @throws UserNotFoundException if user is not valid
      * @throws IllegalValueException if either username or password do not meet the username or password requirements
      */
-    private void verifyUser() throws UserNotFoundException, IllegalValueException{
+    private void verifyUser() throws UserNotFoundException, IllegalValueException {
         model.authenticateUser(username, password);
     }
 

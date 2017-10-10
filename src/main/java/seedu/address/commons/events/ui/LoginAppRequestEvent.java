@@ -10,7 +10,7 @@ public class LoginAppRequestEvent extends BaseEvent {
 
     private boolean hasLoginSuccessfully = false;
 
-    public LoginAppRequestEvent( boolean hasLoginSuccessfully) {
+    public LoginAppRequestEvent(boolean hasLoginSuccessfully) {
         this.hasLoginSuccessfully = hasLoginSuccessfully;
     }
 

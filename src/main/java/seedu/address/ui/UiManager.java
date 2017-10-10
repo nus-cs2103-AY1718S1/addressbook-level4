@@ -15,10 +15,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
-import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
 
 /**
