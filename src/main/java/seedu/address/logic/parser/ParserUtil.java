@@ -43,7 +43,7 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
-    
+
     public static String parseString(String str) throws IllegalValueException {
         String trimmedString = str.trim();
         if (!StringUtil.isLettersOnly(trimmedString)) {

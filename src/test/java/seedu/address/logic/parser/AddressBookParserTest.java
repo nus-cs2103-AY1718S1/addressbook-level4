@@ -82,7 +82,7 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
-    
+
     @Test
     public void parseCommand_delete_alt() throws Exception {
         DeleteAltCommand command = (DeleteAltCommand) parser.parseCommand(

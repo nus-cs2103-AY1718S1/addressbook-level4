@@ -64,7 +64,7 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
-            
+
         case DeleteAltCommand.COMMAND_WORD:
             return new DeleteAltCommandParser().parse(arguments);
 

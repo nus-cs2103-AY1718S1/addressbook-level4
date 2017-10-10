@@ -69,7 +69,7 @@ public class StringUtil {
             return false;
         }
     }
-    
+
     public static boolean isLettersOnly(String s) {
         requireNonNull(s);
 

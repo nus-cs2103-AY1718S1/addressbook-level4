@@ -31,11 +31,11 @@ public class DeleteAltCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        
+
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        
+
         int index = 0;
-        
+
         for (ReadOnlyPerson p : lastShownList) {
             if (p.getName().toString().contains(targetName)) {
                 index = lastShownList.indexOf(p);
