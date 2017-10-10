@@ -23,7 +23,9 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
 
+
     private ObjectProperty<UniqueTagList> tags;
+
 
     /**
      * Every field must be present and not null.
@@ -34,6 +36,7 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }

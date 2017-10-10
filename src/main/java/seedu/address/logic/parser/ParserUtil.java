@@ -44,6 +44,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code oneBasedName} into an {@code String} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static String parseNameString(String oneBasedName) throws IllegalValueException {
+        String trimmedName = oneBasedName.trim();
+        return trimmedName;
+    }
+
+    /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
