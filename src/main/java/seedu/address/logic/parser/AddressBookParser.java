@@ -71,7 +71,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         case RemoveTagCommand.COMMAND_WORD:
-            return new RemoveTagCommand(arguments);
+            return new RemoveTagParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
