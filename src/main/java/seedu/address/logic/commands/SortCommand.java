@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.EmptyListException;
 
 
 /**
@@ -21,6 +22,8 @@ public class SortCommand extends UndoableCommand {
 
     public static final String MESSAGE_SORT_LIST_SUCCESS = "List has been sorted.";
     public static final String MESSAGE_MULTIPLE_ATTRIBUTE = "Multiple attributes is not allowed.";
+    public static final String MESSAGE_EMPTY_LIST = "The list is empty.";
+
 
     private static final String PREFIX_NAME_SORT = "n/";
     private static final String PREFIX_PHONE_SORT = "p/";
@@ -53,7 +56,11 @@ public class SortCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         Comparator<ReadOnlyPerson> sortType = getComparator(this.sortType);
-        model.sortPerson(sortType, isDescending);
+        try {
+            model.sortPerson(sortType, isDescending);
+        } catch (EmptyListException ele) {
+            throw new CommandException(MESSAGE_EMPTY_LIST);
+        }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS));

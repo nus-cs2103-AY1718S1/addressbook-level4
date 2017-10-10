@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -76,7 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) {
+    public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
         addressBook.sortPerson(sortType, isDescending);
     }
 

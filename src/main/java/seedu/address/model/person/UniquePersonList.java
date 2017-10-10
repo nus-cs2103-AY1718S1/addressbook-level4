@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -13,7 +14,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -50,9 +54,18 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
-    public void sort(Comparator<ReadOnlyPerson> sortType, boolean isDescending) {
+    /**
+     * Sorts the list of persons.
+     *
+     * @throws EmptyListException if the list is empty.
+     */
+    public void sort(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
         requireNonNull(sortType);
         requireNonNull(isDescending);
+
+        if (internalList.size()< 1 ){
+            throw new EmptyListException();
+        }
 
         Collections.sort(internalList, sortType);
 

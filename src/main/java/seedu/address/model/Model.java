@@ -5,8 +5,8 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyListException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -29,7 +29,7 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Sorts the list of persons */
-    void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending);
+    void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
