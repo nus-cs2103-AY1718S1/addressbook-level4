@@ -6,15 +6,13 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.Arrays;
-import java.util.Set;
 
 import javafx.collections.ObservableList;
-import javafx.stage.Stage;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.TestApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
