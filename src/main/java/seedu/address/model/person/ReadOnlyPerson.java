@@ -53,16 +53,4 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
-    /**
-     * Returns True if tag contains input string tag name
-     */
-    default boolean containsTag(String tagName) {
-        Iterator<Tag> myIterator = this.getTags().iterator();
-        while (myIterator.hasNext()) {
-            if (tagName.equalsIgnoreCase(myIterator.next().tagName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
