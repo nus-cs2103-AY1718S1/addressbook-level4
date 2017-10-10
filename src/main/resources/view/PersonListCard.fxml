@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <GridPane fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <columnConstraints>
       <ColumnConstraints hgrow="NEVER" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
@@ -19,7 +18,7 @@
       <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-   <Label fx:id="id" alignment="TOP_LEFT" styleClass="cell_big_label">
+   <Label fx:id="id" alignment="TOP_LEFT">
     <minWidth>
       <!-- Ensures that the label text is never truncated -->
       <Region fx:constant="USE_PREF_SIZE" />
@@ -32,7 +31,4 @@
          </GridPane.margin>
       </FlowPane>
    </children>
-   <padding>
-      <Insets bottom="5.0" top="5.0" />
-   </padding>
 </GridPane>

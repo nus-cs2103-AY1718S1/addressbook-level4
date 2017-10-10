@@ -8,9 +8,8 @@
 
 .root * {
     base: black;
-    accent: #422F2F;
+    accent: #141E30;
     light: white;
-    midLight: derive(light, -70%);
     -fx-font-family: "Proxima Nova Alt Rg", "Helvetica";
     -fx-background-color: transparent;
     -fx-text-fill: light;
@@ -39,20 +38,38 @@
  */
 
 #commandTextField {
-    -fx-font-size: 30pt;
+    -fx-font-size: 25pt;
     -fx-font-weight: bold;
     -fx-border-color: transparent transparent light transparent;
     -fx-effect: dropshadow(gaussian, base, 5, 0, 0, 0);
+    -fx-padding: 0;
 }
 
-#details {
-    lighterBase: derive(base, 10%);
-    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, accent 0%, lighterBase 100%);
+#commandBoxPlaceholder {
+    -fx-padding: 0 20 0 20;
+}
+
+/**
+ * Result Display
+ */
+
+#resultDisplay {
+    -fx-font-size: 13pt;
+    -fx-text-fill: derive(light, -40%);
+}
+
+#resultDisplayPlaceholder {
+    -fx-padding: 0 10 0 10;
 }
 
 /**
  * Person List
  */
+
+#personListVBox {
+    -fx-padding: 0 0 0 20;
+}
+
 #personListVBox #name, #personListVBox #id{
     -fx-font-size: 15pt;
 }
@@ -77,15 +94,11 @@
 }
 
 #personPanel #name {
-    -fx-font-size: 50pt;
+    -fx-font-size: 40pt;
     -fx-effect: dropshadow(gaussian, base, 10, 0, 0, 2);
 }
 
-/**
- * Result Display
- */
-
-#resultDisplay {
-    -fx-font-size: 13pt;
-    -fx-text-fill: derive(light, -40%);
+#details {
+    lighterBase: derive(base, 10%);
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, accent 0%, lighterBase 100%);
 }

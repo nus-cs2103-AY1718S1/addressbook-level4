@@ -9,7 +9,4 @@
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
-   <padding>
-      <Insets left="15.0" right="15.0" />
-   </padding>
 </StackPane>

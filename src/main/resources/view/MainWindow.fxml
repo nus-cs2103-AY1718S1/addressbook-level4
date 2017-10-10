@@ -26,7 +26,7 @@
   </MenuBar>
    <VBox fx:id="details" VBox.vgrow="ALWAYS">
       <children>
-        <StackPane fx:id="commandBoxPlaceholder" prefHeight="125.0" VBox.vgrow="NEVER" />
+        <StackPane fx:id="commandBoxPlaceholder" prefHeight="100.0" VBox.vgrow="NEVER" />
         <StackPane fx:id="resultDisplayPlaceholder" prefHeight="200.0" VBox.vgrow="NEVER" />
          <GridPane fx:id="gridPane" alignment="CENTER" VBox.vgrow="ALWAYS">
             <columnConstraints>
@@ -38,10 +38,10 @@
                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-             <VBox fx:id="personList" prefWidth="340.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+             <VBox fx:id="personList" prefWidth="340.0" GridPane.rowIndex="1">
                <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
              </VBox>
-             <StackPane fx:id="panelPlaceholder" alignment="TOP_RIGHT" prefWidth="340.0" GridPane.rowIndex="1" />
+             <StackPane fx:id="panelPlaceholder" alignment="TOP_RIGHT" prefWidth="340.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
          </GridPane>
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
