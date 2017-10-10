@@ -174,7 +174,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Shows the command helper
      */
-    private void showHelper(){
+    private void showHelper() {
         helperContainer.getChildren().add(commandBoxHelper.getRoot());
         helpEnabled = true;
     }
@@ -182,9 +182,8 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Hides the command helper
      */
-    private void hideHelper(){
+    private void hideHelper() {
         helperContainer.getChildren().remove(commandBoxHelper.getRoot());
         helpEnabled = false;
     }
-
 }
