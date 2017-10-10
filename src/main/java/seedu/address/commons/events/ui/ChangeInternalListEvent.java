@@ -7,10 +7,14 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ChangeInternalListEvent extends BaseEvent{
 
-    private String listName;
+    private final String listName;
 
     public ChangeInternalListEvent(String listName) {
         this.listName = listName;
+    }
+
+    public String getListName() {
+        return listName;
     }
 
     @Override
