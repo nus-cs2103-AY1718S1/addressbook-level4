@@ -24,8 +24,8 @@ public class DeleteTagCommand extends UndoableCommand {
 
     private final Tag targetTag;
 
-    public DeleteTagCommand(String targetTag) throws IllegalValueException {
-        this.targetTag = new Tag(targetTag);
+    public DeleteTagCommand(Tag targetTag) {
+        this.targetTag = targetTag;
     }
 
 

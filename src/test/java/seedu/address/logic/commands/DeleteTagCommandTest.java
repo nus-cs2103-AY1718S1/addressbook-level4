@@ -30,7 +30,7 @@ public class DeleteTagCommandTest {
     public void execute_validTagOnePerson_success() throws Exception {
         String tagName = "owesMoney";
         Tag newTag = new Tag(tagName);
-        DeleteTagCommand deleteTagCommand = prepareCommand(tagName);
+        DeleteTagCommand deleteTagCommand = prepareCommand(newTag);
 
         String expectedMessage = String.format(DeleteTagCommand.MESSAGE_DELETE_TAG_SUCCESS, tagName);
 
@@ -44,7 +44,7 @@ public class DeleteTagCommandTest {
     public void execute_validTagTwoPersons_success() throws Exception {
         String tagName = "friends";
         Tag newTag = new Tag(tagName);
-        DeleteTagCommand deleteTagCommand = prepareCommand(tagName);
+        DeleteTagCommand deleteTagCommand = prepareCommand(newTag);
 
         String expectedMessage = String.format(DeleteTagCommand.MESSAGE_DELETE_TAG_SUCCESS, tagName);
 
@@ -57,7 +57,8 @@ public class DeleteTagCommandTest {
     @Test
     public void execute_invalidTagDoesNotExist_throwsCommandException() throws Exception {
         String tagName = "robot";
-        DeleteTagCommand deleteTagCommand = prepareCommand(tagName);
+        Tag newTag = new Tag(tagName);
+        DeleteTagCommand deleteTagCommand = prepareCommand(newTag);
 
         assertCommandFailure(deleteTagCommand, model, Messages.MESSAGE_INVALID_TAG_DISPLAYED);
     }
@@ -66,7 +67,8 @@ public class DeleteTagCommandTest {
     public void execute_invalidTagFormat_throwsCommandException() throws Exception {
         String tagName = "hi there";
         try {
-            prepareCommand(tagName);
+            Tag newTag = new Tag(tagName);
+            prepareCommand(newTag);
             fail("Expected IllegalValueException to be thrown");
         } catch (IllegalValueException ive) {
             assertEquals(null, ive.getMessage(), "Tags names should be alphanumeric");
@@ -75,14 +77,17 @@ public class DeleteTagCommandTest {
 
     @Test
     public void equals() throws Exception {
-        DeleteTagCommand deleteFirstCommand = prepareCommand("friend");
-        DeleteTagCommand deleteSecondCommand = prepareCommand("husband");
+        Tag tagOne = new Tag("friend");
+        Tag tagTwo = new Tag("husband");
+
+        DeleteTagCommand deleteFirstCommand = prepareCommand(tagOne);
+        DeleteTagCommand deleteSecondCommand = prepareCommand(tagTwo);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteTagCommand deleteFirstCommandCopy = prepareCommand("friend");
+        DeleteTagCommand deleteFirstCommandCopy = prepareCommand(tagOne);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -98,7 +103,7 @@ public class DeleteTagCommandTest {
     /**
      * Returns a {@code DeleteTagCommand} with the parameter {@code tagName}.
      */
-    private DeleteTagCommand prepareCommand(String tagName) throws Exception {
+    private DeleteTagCommand prepareCommand(Tag tagName) throws Exception {
         DeleteTagCommand deleteTagCommand = new DeleteTagCommand(tagName);
         deleteTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteTagCommand;
