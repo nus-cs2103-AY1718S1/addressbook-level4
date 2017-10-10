@@ -25,7 +25,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
          */
         String command = "   " + FilterCommand.COMMAND_WORD + " " + "owesMoney" + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON); // first names of Benson and Daniel are "Meier"
+        ModelHelper.setFilteredList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
