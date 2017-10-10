@@ -9,26 +9,25 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-import static seedu.address.logic.commands.AddFacebookContactCommand.MESSAGE_NOT_IMPLEMENTED_YET;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class AddFacebookContactCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        @Test
-        public void execute() throws Exception {
-            //assertCommandFailure(prepareCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
-        }
 
-        /**
-        * Returns an {@code RemarkCommand}.
-        */
+    @Test
+    public void execute() throws Exception {
+        //assertCommandFailure(prepareCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
+    }
 
-        private AddFacebookContactCommand prepareCommand() {
-            AddFacebookContactCommand addFacebookContactCommand = new AddFacebookContactCommand();
-            addFacebookContactCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-            return addFacebookContactCommand;
-        }
+    /**
+     * Returns an {@code AddFacebookContactCommand}.
+     */
+
+    private AddFacebookContactCommand prepareCommand() {
+        AddFacebookContactCommand addFacebookContactCommand = new AddFacebookContactCommand();
+        addFacebookContactCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addFacebookContactCommand;
+    }
 }
