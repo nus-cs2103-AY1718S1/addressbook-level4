@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,9 +14,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -85,9 +92,67 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void pinOrUnpinPerson(List<ReadOnlyPerson> persons) throws DuplicatePersonException {
-        addressBook.setPersons(persons);
-        indicateAddressBookChanged();
+    public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+        try {
+            List<ReadOnlyPerson> newList = new ArrayList<>();
+            Person addPin = addPinTag(person);
+            updatePerson(person, addPin);
+            combineList(newList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    @Override
+    public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+        try {
+            List<ReadOnlyPerson> newList = new ArrayList<>();
+            Person removePin = removePinTag(person);
+            updatePerson(person, removePin);
+            combineList(newList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    private void combineList(List<ReadOnlyPerson> newList) throws DuplicatePersonException {
+        newList.addAll(getFilteredPersonList().filtered(Model.PREDICATE_SHOW_PINNED_PERSONS).sorted());
+        newList.addAll(getFilteredPersonList().filtered(Model.PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
+        addressBook.setPersons(newList);
+    }
+
+    /**
+     * @param personToPin
+     * @return updated Person with added pin to be added to the address book
+     * @throws CommandException
+     */
+    private Person addPinTag(ReadOnlyPerson personToPin) throws CommandException {
+        /**
+         * Create a new UniqueTagList to add pin tag into the list.
+         */
+        UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
+        updatedTags.addPinTag();
+
+        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getEmail(),
+                personToPin.getAddress(), updatedTags.toSet());
+    }
+
+    /**
+     * @param personToUnpin
+     * @return updated Person with removed pin to be added to the address book
+     * @throws CommandException
+     */
+    private Person removePinTag(ReadOnlyPerson personToUnpin) throws CommandException {
+        try {
+            UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());
+            updatedTags.removePinTag();
+            return new Person(personToUnpin.getName(), personToUnpin.getPhone(), personToUnpin.getEmail(),
+                    personToUnpin.getAddress(), updatedTags.toSet());
+        } catch (IllegalValueException ive) {
+            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
     }
     //=========== Filtered Person List Accessors =============================================================
 

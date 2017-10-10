@@ -1,10 +1,10 @@
 package seedu.address.model;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -44,7 +44,12 @@ public interface Model {
     /**
      * Pins the given person
      */
-    void pinOrUnpinPerson(List<ReadOnlyPerson> persons) throws DuplicatePersonException;
+    void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+
+    /**
+     * Unpins the given person
+     */
+    void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

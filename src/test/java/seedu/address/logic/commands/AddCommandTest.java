@@ -7,7 +7,6 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -125,7 +124,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void pinOrUnpinPerson(List<ReadOnlyPerson> persons) throws DuplicatePersonException {
+        public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
             fail("This method should not be called.");
         }
 
