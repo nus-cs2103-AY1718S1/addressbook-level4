@@ -14,9 +14,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -88,6 +90,10 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortData();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
+        addressBook.removeTag(tagGettingRemoved);
     }
 
     //=========== Filtered Person List Accessors =============================================================
