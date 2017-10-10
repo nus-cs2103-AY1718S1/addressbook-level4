@@ -18,7 +18,7 @@ public class SelectCommand extends Command {
 
     public static final String COMMAND_ALIAS = "s";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Selects the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + MESSAGE_GET_MORE_HELP;

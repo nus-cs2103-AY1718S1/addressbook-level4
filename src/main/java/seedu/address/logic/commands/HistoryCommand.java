@@ -16,7 +16,7 @@ public class HistoryCommand extends Command {
 
     public static final String COMMAND_WORD = "history";
     public static final String COMMAND_ALIAS = "his";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Lists all the commands that you have entered in reverse chronological order.\n"
             + "Parameters: None\n"
             + MESSAGE_GET_MORE_HELP;

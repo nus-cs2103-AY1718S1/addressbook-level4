@@ -13,7 +13,8 @@ public class HelpCommand extends Command {
 
     public static final String COMMAND_ALIAS = "h";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the usage of the specific command"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Shows the usage of the specific command"
             + " identified. If no command is specified, the full program usage instructions "
             + "will be shown.\n"
             + "Parameters: "
