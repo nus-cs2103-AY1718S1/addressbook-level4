@@ -742,6 +742,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` | user | have a favourites tag that is always easily accessible | easily access most frequent contacts
 |`* * *` | forgetful user | show my phone number | so that I can give it to my friend when they ask
 |`* *` | user with many persons in the address book | apply filter: category, tag, name | easily view and process only certain group
+|`* *` | student | view my grades | I have all the important info in one place
+|`* *` | student | view my exam dates | I never miss them
+|`* *` | student | view my weekly schedule | I can easily check what classes I have at what time
+|`* *` | student | view my oncoming assignments | I never miss them
 |`* *` | user | redo the command | correct the mistake of undoing too many commands
 |`* *` | user | view the history of commands | check what I have done in the past
 |`* *` | user | import persons | share with other users and migrate from other systems
