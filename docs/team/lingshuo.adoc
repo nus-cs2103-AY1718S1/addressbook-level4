@@ -45,6 +45,6 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: 
+== Project:
 
 {Optionally (not graded), you may include other projects in your portfolio.}
