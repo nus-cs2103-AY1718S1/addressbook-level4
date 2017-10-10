@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team CS2103AUG2017-W15-B4
 
 === Cui Xiaohan
-image::shaocongdong.jpg[width="150", align="left"]
+image::xiaohan.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
 Role: UI designer
@@ -20,7 +20,7 @@ Role: UI designer
 '''
 
 === Dong Shaocong
-image::lejolly.jpg[width="150", align="left"]
+image::shaocongdong.png[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
 Role: bla
