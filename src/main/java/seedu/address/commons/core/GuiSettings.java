@@ -13,8 +13,6 @@ public class GuiSettings implements Serializable {
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
 
-    private static boolean tagColored;
-
     private Double windowWidth;
     private Double windowHeight;
     private Point windowCoordinates;
@@ -41,18 +39,6 @@ public class GuiSettings implements Serializable {
 
     public Point getWindowCoordinates() {
         return windowCoordinates;
-    }
-
-    public static boolean getTagColored() {
-        return tagColored;
-    }
-
-    public static void offTagColored() {
-        tagColored = false;
-    }
-
-    public static void onTagColored() {
-        tagColored = true;
     }
 
     @Override

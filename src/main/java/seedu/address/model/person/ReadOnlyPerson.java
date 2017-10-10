@@ -21,6 +21,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Bloodtype> bloodTypeProperty();
+    Bloodtype getBloodType();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -33,7 +35,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getBloodType().equals(this.getBloodType()));
     }
 
     /**
@@ -48,6 +51,8 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Bloodtype: ")
+                .append(getBloodType())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

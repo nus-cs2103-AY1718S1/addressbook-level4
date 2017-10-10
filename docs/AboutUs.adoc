@@ -11,19 +11,19 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Eric Loh
-image::ericloh.jpg[width="150", align="left"]
+image::EricLoh.jpg[width="150", align="left"]
 {empty}[https://github.com/Ericloh[github]] [<<ericloh#, portfolio>>]
 
-Role: Developer
+Role: Developer +
 Responsibilities: UI
 
 '''
 
 === Ernest Ong
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[Github]] [<<johndoe#, Portfolio>>]
+image::ernestong.png[width="150", align="left"]
+{empty}[http://github.com/ErnestOYH[Github]] [<<ernestong#, Portfolio>>]
 
-Role: Developer + Deliverables and Deadlines + Scheduling and Tracking +
+Role: Developer +
 Responsibilities: Logic
 
 '''
@@ -32,16 +32,16 @@ Responsibilities: Logic
 image::jeremylong.JPG[width="150", align="left"]
 {empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
 
-Role: Developer + Testing + TheGuyWhoDoesAnythingAndEverythingOrAtLeastTriesTo +
+Role: Developer + Testing + Integration + Deliverables and Deadlines + Documentation +
 Responsibilities: Storage
 
 '''
 
 === Khor Ru Shan
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[Github]] [<<johndoe#, Portfolio>>]
+image::rushan-khor.png[width="150", align="left"]
+{empty}[https://github.com/rushan-khor[Github]] [<<rushan-khor#, Portfolio>>]
 
-Role: Developer + Code Quality + UI Aesthetics Expert +
+Role: Developer + Code Quality + UI Art Direction +
 Responsibilities: Model
 
 
