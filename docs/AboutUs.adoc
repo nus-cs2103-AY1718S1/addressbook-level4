@@ -36,12 +36,12 @@ Responsibilities: Storage + UI
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Nabeel Zaheer
+image::nabeelzaheer.jpg[width="150", align="left"]
+{empty}[https://github.com/NabeelZhr[github]] [<<NabeelZhr#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model
 
 '''
 
