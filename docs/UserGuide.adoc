@@ -54,7 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add` `creat` `put`
+=== Adding a person: `add` `create` `put`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -92,7 +92,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by different attrbutes: `find` `search` `get`
+=== Locating persons by different attributes: `find` `search` `get`
 
 Finds persons whose specified attributes contain any of the given keywords. +
 Format: `find [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
@@ -116,6 +116,26 @@ Returns the person having phone number `98765432`
 Returns the person having email `johndoe@gmail.com`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Sorting list of persons: `sort`
+
+Sorts the full list of persons based on the specified attribute +
+Format: `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]`
+
+****
+* Sort command only accepts one attribute.
+* The list can be sorted by one of the following attribute: name, phone, email, address
+* Sorting order depends on the specified choice.
+* The `ASC` signifies sorting in ascending order.
+* The `DSC` signifies sorting in descending order.
+****
+
+Examples:
+
+* `sort n/ASC` +
+Returns list of persons sorted by names in ascending order
+* `sort p/DSC` +
+Returns list of persons sorted by phone in descending order
 
 === Deleting a person : `delete` `remove` `-`
 
@@ -248,6 +268,8 @@ e.g. `delete 3 4`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Sort* : `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]` +
+e.g. `sort n/ASC`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
