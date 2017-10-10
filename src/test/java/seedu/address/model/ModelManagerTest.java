@@ -1,19 +1,29 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -24,6 +34,41 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    /**
+     * Tests if the actual output of removeTag is equals to the expected
+     * output when given valid target indexes and a valid tag to remove.
+     */
+    @Test
+    public void removeTag_validIndexesAndTag_success() throws Exception {
+        Person oldPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends").build();
+        Person oldPerson2 = new PersonBuilder().withTags("classmate").build();
+        List<ReadOnlyPerson> oldPersonList = new ArrayList<ReadOnlyPerson>();
+        oldPersonList.add(oldPerson1);
+        oldPersonList.add(oldPerson2);
+        AddressBook oldAddressBook = new AddressBook();
+        oldAddressBook.setPersons(oldPersonList);
+
+
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        Tag toRemove = new Tag("owesMoney");
+
+        ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
+        expectedModel.removeTag(indexes, toRemove);
+
+        Person newPerson1 = new PersonBuilder().withName("BOB").withTags("friends").build();
+        Person newPerson2 = new PersonBuilder().withTags("classmate").build();
+        List<ReadOnlyPerson> newPersonList = new ArrayList<ReadOnlyPerson>();
+        newPersonList.add(newPerson1);
+        newPersonList.add(newPerson2);
+        AddressBook newAddressBook = new AddressBook();
+        newAddressBook.setPersons(newPersonList);
+        ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
+
+        assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
     }
 
     @Test
