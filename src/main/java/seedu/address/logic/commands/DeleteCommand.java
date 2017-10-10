@@ -27,7 +27,7 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
     private boolean allvalid = true;
-    private int num_of_invalid = 0;
+    private int numofinvalid = 0;
 
     private final ArrayList<Index> targetIndex;
 
@@ -42,12 +42,12 @@ public class DeleteCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
         ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
         ArrayList<Index> invalid = new ArrayList<>();
-        for(Index s: targetIndex) {
+        for (Index s: targetIndex) {
             if (s.getZeroBased() >= lastShownList.size()) {
                 allvalid = false;
-                num_of_invalid++;
+                numofinvalid++;
                 invalid.add(s);
-            }else {
+            } else {
                 personstodelete.add(lastShownList.get(s.getZeroBased()));
             }
         }
@@ -58,8 +58,8 @@ public class DeleteCommand extends UndoableCommand {
                 assert false : "The target person cannot be missing";
             }
             return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
-        }else {
-            MESSAGE_DELETE_PERSON_FAIL.append(num_of_invalid);
+        } else {
+            MESSAGE_DELETE_PERSON_FAIL.append(numofinvalid);
             for (Index s: invalid) {
                 MESSAGE_DELETE_PERSON_FAIL.append(s.getOneBased());
             }
