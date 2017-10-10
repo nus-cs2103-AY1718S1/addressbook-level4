@@ -52,6 +52,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane commandBoxHelperPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -139,8 +142,12 @@ public class MainWindow extends UiPart<Region> {
                 logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //CommandBoxHelper commandBoxHelper = new CommandBoxHelper();
+        //commandBoxHelperPlaceholder.getChildren().add(commandBoxHelper.getRoot());
+
     }
 
     void hide() {
