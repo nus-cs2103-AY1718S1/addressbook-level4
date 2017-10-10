@@ -158,6 +158,40 @@ Deletes the 2nd and 3rd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Adding a tag to a person(s) : `t-add`
+
+Adds tag to specified person(s) from the address book. +
+Format: `t-add [TAG] INDEX`
+
+****
+* Adds tag to the person(s) at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, multiple indices are allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`t-add friends 2 3` +
+Adds the tag friends to the 2nd and 3rd person in the address book.
+
+=== Removing a tag to a person(s) : `t-remove`
+
+Removes a tag from specified person(s) from the address book. +
+Format: `t-remove [TAG] INDEX`
+
+****
+* Removes a tag from the person(s) at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing, multiple indices are allowed.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`t-remove friends 2 3` +
+Removes the tag friends from the 2nd and 3rd person in the address book.
+
 === Selecting a person : `select` `choose`
 
 Selects the person identified by the index number used in the last person listing. +
