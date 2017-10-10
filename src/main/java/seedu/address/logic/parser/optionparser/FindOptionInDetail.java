@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.modeparser;
+package seedu.address.logic.parser.optionparser;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
@@ -16,19 +16,19 @@ import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSA
 /**
  * Finds contacts by adding details.
  */
-public class FindModeInDetail extends CommandMode<FindCommand> {
+public class FindOptionInDetail extends CommandOption<FindCommand> {
 
-    public FindModeInDetail(String modeArgs) {
-        super(modeArgs);
+    public FindOptionInDetail(String optionArgs) {
+        super(optionArgs);
     }
 
     @Override
     public FindCommand parse() throws ParseException {
-        if (!isValidModeArgs()) {
+        if (!isValidOptionArgs()) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
         ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(" " + modeArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+            ArgumentTokenizer.tokenize(" " + optionArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         FindCommand.FindDetailDescriptor descriptor = new FindCommand.FindDetailDescriptor();
         try {

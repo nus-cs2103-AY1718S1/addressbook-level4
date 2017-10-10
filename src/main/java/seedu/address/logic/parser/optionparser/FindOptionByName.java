@@ -1,35 +1,34 @@
-package seedu.address.logic.parser.modeparser;
+package seedu.address.logic.parser.optionparser;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
 
 /**
  * Finds contacts by name.
  */
-public class FindModeByName extends CommandMode<FindCommand> {
+public class FindOptionByName extends CommandOption<FindCommand> {
 
-    public FindModeByName(String modeArgs) {
-        super(modeArgs);
+    public FindOptionByName(String optionArgs) {
+        super(optionArgs);
     }
 
     @Override
     public FindCommand parse() throws ParseException {
-        if (!isValidModeArgs()) {
+        if (!isValidOptionArgs()) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
-        String[] nameKeywords = modeArgs.split("\\s+");
+        String[] nameKeywords = optionArgs.split("\\s+");
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
     @Override
-    boolean isValidModeArgs() {
-        return super.isValidModeArgs()
-             && !modeArgs.contains("-");
+    boolean isValidOptionArgs() {
+        return super.isValidOptionArgs()
+             && !optionArgs.contains("-");
     }
 }

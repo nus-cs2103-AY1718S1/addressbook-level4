@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.modeparser;
+package seedu.address.logic.parser.optionparser;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -9,18 +9,18 @@ import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSA
 /**
  * Finds contacts in fuzzy search.
  */
-public class FindModeFuzzy extends CommandMode<FindCommand> {
+public class FindOptionFuzzy extends CommandOption<FindCommand> {
 
-    public FindModeFuzzy(String modeArgs) {
-        super(modeArgs);
+    public FindOptionFuzzy(String optionArgs) {
+        super(optionArgs);
     }
 
     @Override
     public FindCommand parse() throws ParseException {
-        if (!isValidModeArgs()) {
+        if (!isValidOptionArgs()) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 
-        return new FindCommand(new FuzzySearchPredicate(modeArgs));
+        return new FindCommand(new FuzzySearchPredicate(optionArgs));
     }
 }

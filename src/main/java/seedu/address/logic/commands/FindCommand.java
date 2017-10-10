@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static seedu.address.logic.parser.modeparser.CommandModeUtil.PREFIX_MODE_INDICATOR;
+import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -19,16 +19,25 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
-
     /* Mode prefix definitions */
-
-    public static final String PREFIX_FIND_IN_DETAIL = PREFIX_MODE_INDICATOR + "d";
-    public static final String PREFIX_FIND_FUZZY_FIND = PREFIX_MODE_INDICATOR + "u";
+    public static final String PREFIX_FIND_IN_DETAIL = PREFIX_OPTION_INDICATOR + "d";
+    public static final String PREFIX_FIND_FUZZY_FIND = PREFIX_OPTION_INDICATOR + "u";
     public static final String PREFIX_FIND_BY_NAME = "";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are matched\n"
+            + "Parameters: KEYWORD [OPTION] ARGUMENTS...\n"
+            + "\tDefault: " + COMMAND_WORD + " ARGUMENT [ARGUMENTS]\n"
+            + "\t\tFinds all persons whose names contain any of the specified keywords (case-sensitive)"
+            + "\t\tand displays them as a list with index numbers.\n"
+            + "\t\tExample: " + COMMAND_WORD + " alice bob charlie\n"
+            + "\tOptions:\n"
+            + "\t  " + PREFIX_FIND_IN_DETAIL + " [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAGS]\n"
+            + "\t\tFinds all persons who match the given details\n"
+            + "\t\tExample: " + COMMAND_WORD + " " + PREFIX_FIND_IN_DETAIL + " n/Bob p/999 t/friend t/classmate\n"
+            + "\t  " + PREFIX_FIND_FUZZY_FIND + " ARGUMENT\n"
+            + "\t\tFuzzy search for people whose details contain the argument\n"
+            + "\t\tExample: " + COMMAND_WORD + " " + PREFIX_FIND_FUZZY_FIND + " @u.nus.edu";
+
 
     private final Predicate<ReadOnlyPerson> predicate;
 

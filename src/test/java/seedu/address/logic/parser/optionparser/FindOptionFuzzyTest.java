@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.modeparser;
+package seedu.address.logic.parser.optionparser;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -8,7 +8,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FuzzySearchPredicate;
 
-public class FindModeFuzzyTest {
+public class FindOptionFuzzyTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -16,14 +16,14 @@ public class FindModeFuzzyTest {
     @Test
     public void test_parseEmptyArg_throwException() throws Exception {
         thrown.expect(ParseException.class);
-        new FindModeFuzzy("").parse();
+        new FindOptionFuzzy("").parse();
     }
 
     @Test
     public void test_parseKeywords() throws Exception {
-        assertParseSuccess("Ac", new FindModeFuzzy("Ac").parse());
+        assertParseSuccess("Ac", new FindOptionFuzzy("Ac").parse());
 
-        assertParseFailure("Ac", new FindModeFuzzy("A").parse());
+        assertParseFailure("Ac", new FindOptionFuzzy("A").parse());
     }
 
     private static void assertParseSuccess(String excepted, FindCommand actual) {

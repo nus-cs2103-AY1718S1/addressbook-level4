@@ -2,10 +2,10 @@ package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.modeparser.CommandModeUtil;
-import seedu.address.logic.parser.modeparser.FindModeByName;
-import seedu.address.logic.parser.modeparser.FindModeFuzzy;
-import seedu.address.logic.parser.modeparser.FindModeInDetail;
+import seedu.address.logic.parser.optionparser.CommandOptionUtil;
+import seedu.address.logic.parser.optionparser.FindOptionByName;
+import seedu.address.logic.parser.optionparser.FindOptionFuzzy;
+import seedu.address.logic.parser.optionparser.FindOptionInDetail;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -29,16 +29,16 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 
-        String modePrefix = CommandModeUtil.getModePrefix(trimmedArgs);
-        String modeArgs = CommandModeUtil.getModeArgs(modePrefix, trimmedArgs);
+        String optionPrefix = CommandOptionUtil.getOptionPrefix(trimmedArgs);
+        String optionArgs = CommandOptionUtil.getOptionArgs(optionPrefix, trimmedArgs);
 
-        switch (modePrefix) {
+        switch (optionPrefix) {
             case FindCommand.PREFIX_FIND_IN_DETAIL:
-                return new FindModeInDetail(modeArgs).parse();
+                return new FindOptionInDetail(optionArgs).parse();
             case FindCommand.PREFIX_FIND_FUZZY_FIND:
-                return new FindModeFuzzy(modeArgs).parse();
+                return new FindOptionFuzzy(optionArgs).parse();
             case FindCommand.PREFIX_FIND_BY_NAME:
-                return new FindModeByName(modeArgs).parse();
+                return new FindOptionByName(optionArgs).parse();
             default:
                 throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }

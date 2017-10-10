@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.modeparser;
+package seedu.address.logic.parser.optionparser;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -11,7 +11,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import java.util.Arrays;
 import java.util.List;
 
-public class FindModeByNameTest {
+public class FindOptionByNameTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -19,17 +19,17 @@ public class FindModeByNameTest {
     @Test
     public void test_parseEmptyArg_throwException() throws Exception {
         thrown.expect(ParseException.class);
-        new FindModeByName("").parse();
+        new FindOptionByName("").parse();
     }
 
     @Test
     public void test_parseKeywords() throws Exception {
-        assertParseSuccess(Arrays.asList("Bob"), new FindModeByName("Bob").parse());
-        assertParseSuccess(Arrays.asList("Bob", "Alice"), new FindModeByName("Bob Alice").parse());
-        assertParseSuccess(Arrays.asList("Bob", "Alice", "Coal"), new FindModeByName("Bob  Alice   Coal").parse());
+        assertParseSuccess(Arrays.asList("Bob"), new FindOptionByName("Bob").parse());
+        assertParseSuccess(Arrays.asList("Bob", "Alice"), new FindOptionByName("Bob Alice").parse());
+        assertParseSuccess(Arrays.asList("Bob", "Alice", "Coal"), new FindOptionByName("Bob  Alice   Coal").parse());
 
-        assertParseFailure(Arrays.asList("Bob", "Alice"), new FindModeByName("Alice Bob").parse());
-        assertParseFailure(Arrays.asList("Bob", "Ali"), new FindModeByName("Alice Bob").parse());
+        assertParseFailure(Arrays.asList("Bob", "Alice"), new FindOptionByName("Alice Bob").parse());
+        assertParseFailure(Arrays.asList("Bob", "Ali"), new FindOptionByName("Alice Bob").parse());
     }
 
     private static void assertParseSuccess(List<String> excepted, FindCommand actual) {
@@ -41,11 +41,11 @@ public class FindModeByNameTest {
     }
 
     @Test
-    public void test_isValidModeArgs() {
-        Assert.assertTrue(new FindModeByName("abc").isValidModeArgs());
-        Assert.assertTrue(new FindModeByName("Alic bob").isValidModeArgs());
+    public void test_isValidOptionArgs() {
+        Assert.assertTrue(new FindOptionByName("abc").isValidOptionArgs());
+        Assert.assertTrue(new FindOptionByName("Alic bob").isValidOptionArgs());
 
-        Assert.assertFalse(new FindModeByName("-d").isValidModeArgs());
-        Assert.assertFalse(new FindModeByName("--d").isValidModeArgs());
+        Assert.assertFalse(new FindOptionByName("-d").isValidOptionArgs());
+        Assert.assertFalse(new FindOptionByName("--d").isValidOptionArgs());
     }
 }

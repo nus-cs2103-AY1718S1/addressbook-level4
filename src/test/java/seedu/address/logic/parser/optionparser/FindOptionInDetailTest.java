@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.modeparser;
+package seedu.address.logic.parser.optionparser;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.DetailsContainsPredicate;
 import seedu.address.testutil.FindDetailDescriptorBuilder;
 
-public class FindModeInDetailTest {
+public class FindOptionInDetailTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -18,84 +18,84 @@ public class FindModeInDetailTest {
     @Test
     public void test_parseEmptyArg_throwException() throws Exception {
         thrown.expect(ParseException.class);
-        new FindModeInDetail("").parse();
+        new FindOptionInDetail("").parse();
     }
 
     @Test
-    public void test_parseModeArgs_assertSuccess() throws Exception {
-        String inputModeArgs;
+    public void test_parseOptionArgs_assertSuccess() throws Exception {
+        String inputOptionArgs;
         FindDetailDescriptor expectedDescriptor;
 
         // test name
-        inputModeArgs = "n/Ali";
+        inputOptionArgs = "n/Ali";
         expectedDescriptor = new FindDetailDescriptorBuilder().withName("Ali").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test phone
-        inputModeArgs = "p/999";
+        inputOptionArgs = "p/999";
         expectedDescriptor = new FindDetailDescriptorBuilder().withPhone("999").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test email
-        inputModeArgs = "e/com";
+        inputOptionArgs = "e/com";
         expectedDescriptor = new FindDetailDescriptorBuilder().withEmail("com").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test address
-        inputModeArgs = "a/pgp";
+        inputOptionArgs = "a/pgp";
         expectedDescriptor = new FindDetailDescriptorBuilder().withAddress("pgp").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test one tag
-        inputModeArgs = "t/fr";
+        inputOptionArgs = "t/fr";
         expectedDescriptor = new FindDetailDescriptorBuilder().withTags("fr").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test tags
-        inputModeArgs = "t/fr t/family";
+        inputOptionArgs = "t/fr t/family";
         expectedDescriptor = new FindDetailDescriptorBuilder().withTags("fr", "family").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test mix
-        inputModeArgs = "n/alic a/pgp";
+        inputOptionArgs = "n/alic a/pgp";
         expectedDescriptor = new FindDetailDescriptorBuilder().withName("alic").withAddress("pgp").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test mix
-        inputModeArgs = "e/12 p/qq";
+        inputOptionArgs = "e/12 p/qq";
         expectedDescriptor = new FindDetailDescriptorBuilder().withEmail("12").withPhone("qq").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test mix
-        inputModeArgs = "n/alic p/999 e/u.nus.edu a/utown t/friend t/classmate";
+        inputOptionArgs = "n/alic p/999 e/u.nus.edu a/utown t/friend t/classmate";
         expectedDescriptor = new FindDetailDescriptorBuilder()
                 .withName("alic").withPhone("999").withEmail("u.nus.edu")
                 .withAddress("utown").withTags("friend", "classmate").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test add whitespace
-        inputModeArgs = "n/ Ali";
+        inputOptionArgs = "n/ Ali";
         expectedDescriptor = new FindDetailDescriptorBuilder().withName("Ali").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
 
         // test add whitespace
-        inputModeArgs = " n/ Ali ";
+        inputOptionArgs = " n/ Ali ";
         expectedDescriptor = new FindDetailDescriptorBuilder().withName("Ali").build();
-        assertParseSuccess(expectedDescriptor, new FindModeInDetail(inputModeArgs).parse());
+        assertParseSuccess(expectedDescriptor, new FindOptionInDetail(inputOptionArgs).parse());
     }
 
     @Test
     public void test_inValidDescriptor_wrongPrefix() throws Exception {
         thrown.expect(ParseException.class);
-        String inputModeArgs = "pp/999";
-        new FindModeInDetail(inputModeArgs).parse();
+        String inputOptionArgs = "pp/999";
+        new FindOptionInDetail(inputOptionArgs).parse();
     }
 
     @Test
     public void test_inValidDescriptor_noPrefix() throws Exception {
         thrown.expect(ParseException.class);
-        String inputModeArgs = "pgp";
-        new FindModeInDetail(inputModeArgs).parse();
+        String inputOptionArgs = "pgp";
+        new FindOptionInDetail(inputOptionArgs).parse();
     }
 
     private static void assertParseSuccess(FindDetailDescriptor excepted, FindCommand actual) {
