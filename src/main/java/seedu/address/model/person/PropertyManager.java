@@ -31,44 +31,40 @@ public class PropertyManager {
     // Records whether has been initialized before.
     private static boolean initialized = false;
 
-    static {
-        initializePropertyManager();
-    }
-
     /**
-     * Includes all the pre-loaded properties into {@code PropertyManager}.
+     * Makes use of static initialization block to guarantee all pre-loaded properties are included.
      */
-    public static void initializePropertyManager() {
-        if (initialized) {
-            return;
+    static {
+        if (!initialized) {
+            try {
+                // Adds name as a pre-loaded property.
+                addNewProperty("n", "name",
+                        "Person names should only contain alphanumeric characters and spaces, "
+                                + "and it should not be blank",
+                        "[\\p{Alnum}][\\p{Alnum} ]*");
+
+                // Adds email as a pre-loaded property.
+                addNewProperty("e", "email",
+                        "Person emails should be 2 alphanumeric/period strings separated by '@'",
+                        "[\\w\\.]+@[\\w\\.]+");
+
+                // Adds phone number as a pre-loaded property.
+                addNewProperty("p", "phone",
+                        "Phone numbers can only contain numbers, and should be at least 3 digits long",
+                        "\\d{3,}");
+
+                // Adds address as a pre-loaded property.
+                addNewProperty("a", "address",
+                        "Person addresses can take any values, and it should not be blank",
+                        "[^\\s].*");
+            } catch (DuplicatePropertyException dpe) {
+                throw new RuntimeException("PropertyManager cannot be initialized. Stopping the application.");
+            }
+
+            initialized = true;
         }
-
-        try {
-            // Adds name as a pre-loaded property.
-            addNewProperty("n", "name",
-                    "Person names should only contain alphanumeric characters and spaces, and it should not be blank",
-                    "[\\p{Alnum}][\\p{Alnum} ]*");
-
-            // Adds email as a pre-loaded property.
-            addNewProperty("e", "email",
-                    "Person emails should be 2 alphanumeric/period strings separated by '@'",
-                    "[\\w\\.]+@[\\w\\.]+");
-
-            // Adds phone number as a pre-loaded property.
-            addNewProperty("p", "phone",
-                    "Phone numbers can only contain numbers, and should be at least 3 digits long",
-                    "\\d{3,}");
-
-            // Adds address as a pre-loaded property.
-            addNewProperty("a", "address",
-                    "Person addresses can take any values, and it should not be blank",
-                    "[^\\s].*");
-        } catch (DuplicatePropertyException dpe) {
-            throw new RuntimeException("PropertyManager cannot be initialized. Stopping the application.");
-        }
-
-        initialized = true;
     }
+
     /**
      * Adds a new available property with all the required information for setting up a property.
      *

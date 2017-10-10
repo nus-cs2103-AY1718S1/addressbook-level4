@@ -3,16 +3,11 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 public class PropertyTest {
-    @BeforeClass
-    public static void setUp() {
-        PropertyManager.initializePropertyManager();
-    }
 
     @Test
     public void createProperty_preLoadedProperty_successfulCreation() throws Exception {

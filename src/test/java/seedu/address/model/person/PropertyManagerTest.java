@@ -2,15 +2,9 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PropertyManagerTest {
-    @BeforeClass
-    public static void setUp() {
-        PropertyManager.initializePropertyManager();
-    }
-
     @Test
     public void addProperty_successfullyAdd() throws Exception {
         String shortName = "b";
