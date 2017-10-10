@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.junit.Rule;
