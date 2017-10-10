@@ -46,7 +46,10 @@ To allow users to operate on a sorted list for longer displayed lists by the `li
 === Other contributions
 
 * Updated the General Documentation (Pull requests https://github.com[#11], https://github.com[#5])
-* Integrated continuous deployment using https://travis-ci.org/CS2103AUG2017-W11-B2/main[Travis CI]
+* Added continuous integration tools using https://travis-ci.org/CS2103AUG2017-W11-B2/main[Travis CI],
+https://ci.appveyor.com/project/ZY-Ang/main[AppVeyor],
+https://coveralls.io/github/CS2103AUG2017-W11-B2/main?branch=master[Coveralls] and
+https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 
 = {empty}
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
