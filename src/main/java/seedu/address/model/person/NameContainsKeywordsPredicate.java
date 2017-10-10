@@ -15,11 +15,13 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        String fullName = person.getName().fullName;
-        String lastName = fullName.substring(fullName.lastIndexOf(" ") + 1);
-        return keywords.stream()
-                .anyMatch(keyword -> fullName.toLowerCase().startsWith(keyword.toLowerCase())
-                        || lastName.toLowerCase().startsWith(keyword.toLowerCase()));
+        String[] nameParts = person.getName().fullName.split(" ");
+        for (String name: nameParts){
+            if (keywords.stream().anyMatch(keyword -> name.toLowerCase().startsWith(keyword.toLowerCase()))){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
