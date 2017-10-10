@@ -16,6 +16,7 @@ image::17navasaw.png[width="150", align="left"]
 {empty}[https://github.com/17navasaw[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer Guide + Integration
+
 Responsibilities: UI
 
 '''
@@ -25,6 +26,7 @@ image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
 Role: User Guide + Scheduling
+
 Responsibilities: Model
 
 '''
@@ -34,6 +36,7 @@ image::yijinl.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer Guide + Code Quality
+
 Responsibilities: Logic
 
 '''
