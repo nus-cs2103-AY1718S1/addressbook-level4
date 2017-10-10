@@ -5,8 +5,10 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -27,14 +29,29 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private StackPane helperContainer;
+    private CommandBoxHelper commandBoxHelper;
+    private Boolean helpEnabled = false;
+
     @FXML
     private TextField commandTextField;
 
-    public CommandBox(Logic logic) {
+    public CommandBox(Logic logic, StackPane commandBoxHelp) {
         super(FXML);
         this.logic = logic;
+        this.commandBoxHelper = new CommandBoxHelper();
+        this.helperContainer = commandBoxHelp;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
+            setStyleToDefault();
+
+            //shows helper if there is text in the command text field
+            if (!commandTextField.getText().trim().isEmpty() && !helpEnabled) {
+                showHelper();
+            }
+            commandBoxHelper.listHelp(commandTextField);
+
+        });
         commandTextField.setStyle("-fx-font-style: italic;" + " -fx-text-fill: lime");
         historySnapshot = logic.getHistorySnapshot();
     }
@@ -45,19 +62,24 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            case BACK_SPACE:
+                if (commandTextField.getText().trim().length() <= 0) {
+                    hideHelper();
+                }
+                break;
+            default:
+                // let JavaFx handle the keypress
         }
     }
 
@@ -102,6 +124,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
+            hideHelper();
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
@@ -146,6 +169,22 @@ public class CommandBox extends UiPart<Region> {
             return;
         }
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Shows the command helper
+     */
+    private void showHelper(){
+        helperContainer.getChildren().add(commandBoxHelper.getRoot());
+        helpEnabled = true;
+    }
+
+    /**
+     * Hides the command helper
+     */
+    private void hideHelper(){
+        helperContainer.getChildren().remove(commandBoxHelper.getRoot());
+        helpEnabled = false;
     }
 
 }
