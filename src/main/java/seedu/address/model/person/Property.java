@@ -66,9 +66,18 @@ public class Property {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Property // instanceof handles nulls
-                    && this.shortName.equals(((Property) (other)).getShortName())); // state check
+        if (other == this) {
+            // short circuit if same object.
+            return true;
+        } else if (other instanceof Property) {
+            // instanceof handles nulls and type checking.
+            Property otherProperty = (Property) (other);
+            // key-value pair check
+            return this.shortName.equals(otherProperty.getShortName())
+                    && this.value.equals(otherProperty.getValue());
+        } else {
+            return false;
+        }
     }
 
     @Override
