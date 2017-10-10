@@ -74,7 +74,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void successfulBackupOfAddressBook() throws Exception{
+    public void successfulBackupOfAddressBook() throws Exception {
         ReadOnlyAddressBook original = getTypicalAddressBook();
         storageManager.backupAddressBook(original);
         ReadOnlyAddressBook retrieved = storageManager.readAddressBook(getTempFilePath("ab-backup.xml")).get();
