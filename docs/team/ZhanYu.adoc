@@ -10,6 +10,7 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
+= {empty}
 === Enhancement Added: Find by close words (fuzzy searching) and find by tags
 
 ==== External behavior
@@ -37,6 +38,7 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
 
 ---
 
+= {empty}
 === Enhancement Proposed: Sortable parameters in commands augmenting list view
 
 To allow users to operate on a sorted list for longer displayed lists by the `list` or `find` command.
@@ -46,6 +48,7 @@ To allow users to operate on a sorted list for longer displayed lists by the `li
 * Updated the General Documentation (Pull requests https://github.com[#11], https://github.com[#5])
 * Integrated continuous deployment using https://travis-ci.org/CS2103AUG2017-W11-B2/main[Travis CI]
 
-== Project: PowerPointLabs
+= {empty}
+== Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 
 {Optionally (not graded), you may include other projects in your portfolio.}
