@@ -21,6 +21,7 @@ public class Address {
     public static final String ADDRESS_VALIDATION_REGEX = "[\\w].+\\s+([Ss]{1}\\d{6})$";
 
     public final String value;
+    public final PostalCode postalCode;
 
     /**
      * Validates given address.
@@ -32,7 +33,14 @@ public class Address {
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = address;
+
+        int beginIndex = 0;
+        int postalCodeLength = 7;
+        int postalCodeDigitLength = 6;
+
+        this.value = address.substring(beginIndex, address.length()- postalCodeLength).trim();
+        this.postalCode = new PostalCode(address.substring(address.length() - postalCodeDigitLength,
+                address.length()));
     }
 
     /**
@@ -44,19 +52,19 @@ public class Address {
 
     @Override
     public String toString() {
-        return value;
+        return String.format("%s S%s", this.value, this.postalCode);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
+                && this.toString().equals(((Address) other).toString())); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return toString().hashCode();
     }
 
 }
