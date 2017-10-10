@@ -114,11 +114,6 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<PostalCode> postalCodeProperty() {
-        return postalCode;
-    }
-
-    @Override
     public PostalCode getPostalCode() {
         return postalCode.get();
     }
@@ -126,11 +121,6 @@ public class Person implements ReadOnlyPerson {
     @Override
     public ObjectProperty<DisplayPostalCode> displayPostalCodeProperty() {
         return displayPostalCode;
-    }
-
-    @Override
-    public DisplayPostalCode getDisplayPostalCode() {
-        return displayPostalCode.get();
     }
 
     public void setDebt(Debt debt) {
