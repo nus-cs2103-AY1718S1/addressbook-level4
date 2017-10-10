@@ -1,12 +1,5 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,10 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -336,8 +326,6 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(commandResult.feedbackToUser.toString()));
-            setFontSize(commandResult.feedbackToUser);
             initHistory();
             historySnapshot.next();
             // process result of the command
@@ -351,36 +339,6 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
-        }
-    }
-
-    /**
-     * Sets the command box style to user preferred font size.
-     */
-    private void setFontSize(String userPref) {
-        switch (userPref) {
-        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
-            commandTextField.setStyle("-fx-font-size: x-small;");
-            break;
-
-        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
-            commandTextField.setStyle("-fx-font-size: small;");
-            break;
-
-        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
-            commandTextField.setStyle("-fx-font-size: normal;");
-            break;
-
-        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
-            commandTextField.setStyle("-fx-font-size: x-large;");
-            break;
-
-        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
-            commandTextField.setStyle("-fx-font-size: xx-large;");
-            break;
-
-        default:
-            break;
         }
     }
 
