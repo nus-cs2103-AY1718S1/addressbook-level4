@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -8,14 +9,18 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SortListRequestEvent;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -80,6 +85,51 @@ public class PersonListPanel extends UiPart<Region> {
     private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(personList);
+    }
+
+    @Subscribe
+    private void handleSortListRequestEvent(SortListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        SortedList<ReadOnlyPerson> sortedList;
+
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case ADDRESS:
+            sortedList = new SortedList<ReadOnlyPerson>(personList, new Comparator<ReadOnlyPerson>() {
+                @Override
+                public int compare(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson) {
+                    return firstPerson.getAddress().value.compareTo(secondPerson.getAddress().value);
+                }
+            });
+            break;
+
+        case PHONE:
+            sortedList = new SortedList<ReadOnlyPerson>(personList, new Comparator<ReadOnlyPerson>() {
+                @Override
+                public int compare(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson) {
+                    return firstPerson.getPhone().value.compareTo(secondPerson.getPhone().value);
+                }
+            });
+            break;
+
+        case EMAIL:
+            sortedList = new SortedList<ReadOnlyPerson>(personList, new Comparator<ReadOnlyPerson>() {
+                @Override
+                public int compare(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson) {
+                    return firstPerson.getEmail().value.compareTo(secondPerson.getEmail().value);
+                }
+            });
+            break;
+
+        default:
+            sortedList = new SortedList<ReadOnlyPerson>(personList, new Comparator<ReadOnlyPerson>() {
+                @Override
+                public int compare(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson) {
+                    return firstPerson.getName().fullName.compareTo(secondPerson.getName().fullName);
+                }
+            });
+            break;
+        }
+        setConnections(sortedList);
     }
 
     /**
