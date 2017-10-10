@@ -295,4 +295,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Note* : `note 2 n\Very rich customer`
+* *Note* : `note 2 n\Have a scheduled meeting on Wed, 11 Oct 2017`
