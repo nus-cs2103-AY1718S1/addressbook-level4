@@ -6,10 +6,6 @@ import seedu.address.logic.commands.AddFacebookContactCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,7 +34,7 @@ public class AddFacebookContactParser implements Parser<AddFacebookContactComman
 
             Email email;
             // create new person object
-            if(user.getEmail() != null){
+            if (user.getEmail() != null) {
                 email = new Email(user.getEmail());
             } else {
                 email = new Email("a@b.c");
