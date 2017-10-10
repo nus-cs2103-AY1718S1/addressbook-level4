@@ -1,8 +1,13 @@
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a Event's time in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ */
 public class EventTime {
 
     public static final String MESSAGE_TIME_CONSTRAINTS =

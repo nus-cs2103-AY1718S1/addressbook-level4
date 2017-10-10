@@ -2,11 +2,16 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Objects;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-
+/**
+ * Represents an Event in the address book.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class Event implements ReadOnlyEvent {
 
     private ObjectProperty<EventName> name;
@@ -24,7 +29,7 @@ public class Event implements ReadOnlyEvent {
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
         this(source.getName(), source.getTime(), source.getVenue());

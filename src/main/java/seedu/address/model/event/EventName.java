@@ -1,8 +1,13 @@
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents an Event's name in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ */
 public class EventName {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
