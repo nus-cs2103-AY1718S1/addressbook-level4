@@ -146,7 +146,9 @@ public class TagAddCommand extends UndoableCommand {
             this.tags = tags;
         }
 
-        public Set<Tag> getTags() { return tags; }
+        public Set<Tag> getTags() {
+            return tags;
+        }
 
         @Override
         public boolean equals(Object other) {
