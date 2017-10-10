@@ -101,17 +101,17 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons : `find`
+=== Locating persons by any field : `find`
 
 Alias: `f`
 
 Finds person based on the searched  field. +
-Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS]or  [t/TAG]`
+Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS] or  [t/TAG]`
 
 
 ****
-* The search is case insensitive. e.g `[e/google]` will match person with email of google.com domain`
-* Only full words will be matched e.g. `[e/goo]` will not match person with email with google.com domain`
+* The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain`
+* Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain`
 ****
 
 Examples:
@@ -121,7 +121,7 @@ Returns `john` and `John Doe`
 * `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find e/yahoo` +
-Returns person with email of yahoo domain`
+Returns person with email of `[yahoo.com]` domain`
 
 === Deleting persons by range : `delete`
 
