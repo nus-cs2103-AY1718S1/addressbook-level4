@@ -8,6 +8,9 @@ import seedu.address.logic.commands.ListByTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
+/**
+ * Parses input arguments and creates a new ListByTagCommand object
+ */
 public class ListByTagCommandParser implements Parser<ListByTagCommand> {
 
     /**
