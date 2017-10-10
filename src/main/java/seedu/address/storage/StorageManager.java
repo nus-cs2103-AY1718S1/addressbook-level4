@@ -48,7 +48,6 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-
     // ================ AddressBook methods ==============================
 
     @Override
