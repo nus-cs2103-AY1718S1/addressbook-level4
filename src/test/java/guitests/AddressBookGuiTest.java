@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.PropertyManager;
 import seedu.address.testutil.TypicalPersons;
 
 /**
@@ -39,6 +40,7 @@ public abstract class AddressBookGuiTest {
 
     @BeforeClass
     public static void setupOnce() {
+        PropertyManager.initializePropertyManager();
         try {
             FxToolkit.registerPrimaryStage();
             FxToolkit.hideStage();
