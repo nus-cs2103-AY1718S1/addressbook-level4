@@ -20,6 +20,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -93,9 +94,9 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
             return new RedoCommand();
 
-        } else if (commandWord.equalsIgnoreCase(FavouriteCommand)) {
+        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD)) {
             return new FavouriteCommand();
-            
+
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
