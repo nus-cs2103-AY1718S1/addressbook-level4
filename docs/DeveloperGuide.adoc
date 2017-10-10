@@ -775,8 +775,8 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Should be able backwards compatible with data stored by earlier version.
-.  Should come up with automated Junit tests.
+.  Should be backwards compatible with data stored by earlier version.
+.  Software should be well tested.
 .  Should be able to be used by a novice user who had never use address book application before.
 .  Should be able to respond to any commands within 5 seconds.
 .  Should be able to recover records of address book in event of program crash.
