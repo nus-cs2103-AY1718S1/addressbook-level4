@@ -61,5 +61,9 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        
+        //test for tags
+        modelManagerCopy.deleteTag("friends");
+        assertFalse(modelManager.equals(modelManagerCopy));
     }
 }
