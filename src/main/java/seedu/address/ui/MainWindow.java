@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -22,9 +21,6 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -67,10 +63,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
-    
+
     @FXML
     private StackPane deleteButtonPlaceholder;
-    
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -136,7 +131,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         
-        deleteButton = new DeleteButton(logic,0); //instantiate delete button, pass in logic for access to delete cmd
+        deleteButton = new DeleteButton(logic,0 );
         deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
         
         browserPanel = new BrowserPanel();
