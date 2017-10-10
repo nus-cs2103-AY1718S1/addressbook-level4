@@ -23,15 +23,20 @@ public class Birthday {
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
-            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        if(birthday == "") {
+            this.value = birthday;
         }
-        this.value = trimmedBirthday;
+        else {
+            String trimmedBirthday = birthday.trim();
+            if (!isValidBirthday(trimmedBirthday)) {
+                throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+            }
+            this.value = trimmedBirthday;
+        }
     }
 
     /**
-     * Returns if a given string is a valid person email.
+     * Returns if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
