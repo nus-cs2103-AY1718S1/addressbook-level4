@@ -8,9 +8,9 @@ import org.junit.Test;
 import guitests.guihandles.StartUpPanelHandle;
 
 //@@author jelneo
-public class StartUpPanelTest extends GuiUnitTest{
-    private static final String START_UP_MESSAGE = "Welcome to CodiiLog in using the command box above." +
-            "Format: login USERNAME PASSWORD";
+public class StartUpPanelTest extends GuiUnitTest {
+    private static final String START_UP_MESSAGE = "Welcome to CodiiLog in using the command box above."
+            + "Format: login USERNAME PASSWORD";
     private StartUpPanel startUpPanel;
     private StartUpPanelHandle startUpPanelHandle;
 

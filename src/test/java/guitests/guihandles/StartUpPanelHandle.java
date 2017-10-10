@@ -7,7 +7,7 @@ import javafx.scene.text.Text;
 /**
  * A handler for the {@code StartUpPanel} of the UI
  */
-public class StartUpPanelHandle extends NodeHandle<Node>{
+public class StartUpPanelHandle extends NodeHandle<Node> {
 
     public static final String WELCOME_MESSAGE_ID = "#welcomeMessage";
     public static final String LOGIN_INSTRUCTION_ID = "#loginInstruction";
@@ -29,8 +29,7 @@ public class StartUpPanelHandle extends NodeHandle<Node>{
      * Returns the text in the start up panel.
      */
     public String getText() {
-        String text = "" + welcomeMessage.getText() + loginInstruction.getText() +
-                loginFormat.getText();
+        String text = "" + welcomeMessage.getText() + loginInstruction.getText() + loginFormat.getText();
         return text;
     }
 
