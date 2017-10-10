@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static List<String> DEFAULT_COLORED_TAGS = Arrays.asList("friends", "colleagues", "family", "neighbours");
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -59,12 +63,22 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Initialises tags for each person and adds corresponding style classes to each tag
+     * so that each tag can have different properties (e.g. color) depending on the tag name.
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label newLabel = new Label(tag.tagName);
+            if (DEFAULT_COLORED_TAGS.contains(tag.tagName)) {
+                newLabel.getStyleClass().add(tag.tagName);
+            }
+            tags.getChildren().add(newLabel);
+        });
     }
 
     @Override
