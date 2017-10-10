@@ -24,23 +24,7 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        //sort method calls goes here
-        switch (sortType) {
-        case "name":
-            model.sort(sortType); //insert sort method call here
-            break;
-
-        case "phone":
-            //insert sort method call here
-            break;
-
-        case "email":
-            //insert sort method call here
-            break;
-
-        default:
-            break;
-        }
+        model.sort(sortType);
 
         //because "sorted by phone" sounds weird
         if ("phone".equals(sortType)) {
