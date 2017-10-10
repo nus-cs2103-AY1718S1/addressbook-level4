@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -23,7 +26,28 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
+        String[] parameters = (String[]) predicate.getKeywords().toArray();
+
+        List<String> matchedNames = new ArrayList<>();
+        ArrayList<String> nameList = new ArrayList<>();
+
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            String[] str = model.getAddressBook().getPersonList().get(i).getName().toString().toLowerCase().split(" ");
+            for (int j = 0; j < str.length; j++) {
+                nameList.add(str[j]);
+            }
+        }
+
+        for (int i = 0; i < parameters.length; i++) {
+            for (int j = 0; j < nameList.size(); j++) {
+                if (nameList.get(j).contains(parameters[i].toLowerCase())) {
+                    matchedNames.add(nameList.get(j));
+                }
+            }
+        }
+
+        NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(matchedNames);
+        model.updateFilteredPersonList(updatedPredicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
