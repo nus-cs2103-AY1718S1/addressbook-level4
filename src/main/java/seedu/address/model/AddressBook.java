@@ -12,6 +12,7 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
@@ -42,6 +43,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        meetings = new UniqueMeetingList();
     }
 
     public AddressBook() {}

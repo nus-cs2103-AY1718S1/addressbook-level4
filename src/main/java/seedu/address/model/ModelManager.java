@@ -137,7 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredMeetingList(Predicate<ReadOnlyMeeting> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredMeetings.setPredicate(predicate);
     }
 
     @Override
