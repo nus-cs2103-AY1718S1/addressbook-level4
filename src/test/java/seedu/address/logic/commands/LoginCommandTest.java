@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_UNSUCCESSF
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -20,7 +19,6 @@ public class LoginCommandTest {
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-    public ExpectedException thrown = ExpectedException.none();
 
     private final boolean hasLoggedIn = true;
     private LoginAppRequestEvent event;
