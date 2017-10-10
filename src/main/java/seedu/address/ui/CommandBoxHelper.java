@@ -56,28 +56,28 @@ public class CommandBoxHelper extends UiPart<Region> {
         //TO-DO fill in all other commands
         //TO-DO fix for words of the same letter
         switch (firstChar) {
-            case 'a':
-                if (checkSubset(AddCommand.COMMAND_WORD, commandString)) {
-                    helperText.setValue(AddCommand.COMMAND_WORD + "\n");
+        case 'a':
+            if (checkSubset(AddCommand.COMMAND_WORD, commandString)) {
+            helperText.setValue(AddCommand.COMMAND_WORD + "\n");
+            } else {
+            helperText.setValue("");
+            }
+        break;
+        case 'c':
+            if (checkSubset(ClearCommand.COMMAND_WORD, commandString)) {
+            helperText.setValue(ClearCommand.COMMAND_WORD + "\n");
                 } else {
-                    helperText.setValue("");
+            helperText.setValue("");
                 }
-            break;
-            case 'c':
-                if (checkSubset(ClearCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(ClearCommand.COMMAND_WORD + "\n");
-                } else {
-                helperText.setValue("");
-                }
-            break;
-            case 'd':
-                if (checkSubset(DeleteCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(DeleteCommand.COMMAND_WORD + "\n");
-                } else {
-                helperText.setValue("");
-                }
-            break;
-            case 'e':
+        break;
+        case 'd':
+            if (checkSubset(DeleteCommand.COMMAND_WORD, commandString)) {
+            helperText.setValue(DeleteCommand.COMMAND_WORD + "\n");
+            } else {
+            helperText.setValue("");
+               }
+        break;
+        case 'e':
                 if (checkSubset(EditCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue(helperText.getValue() + EditCommand.COMMAND_WORD + "\n");
                 }
