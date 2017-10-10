@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -39,10 +40,17 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
                 && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
     }
 
-    public String getSelectedTag(){
-        if(keywords.size()==0) return null;
-        else if(keywords.get(0).substring(0,2).equals("t/"))
-            return "[" + keywords.get(0).substring(2) + "]";
-        else return null;
+    public List<String> getSelectedTags() {
+        List<String> tags = new ArrayList<String>();
+        if (keywords.size() == 0) return null;
+        else {
+            for (String keyword : keywords) {
+                if (keyword.length() >= 2 && keyword.substring(0, 2).equals("t/")) {
+                    String tagName = "[" + keyword.substring(2) + "]";
+                    tags.add(tagName);
+                }
+            }
+        }
+        return tags;
     }
 }

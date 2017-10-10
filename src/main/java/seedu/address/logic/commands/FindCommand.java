@@ -30,9 +30,16 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException{
         model.updateFilteredPersonList(predicate);
-        if (predicate.getSelectedTag()!=null){
-            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
-                    + " Selected tag: " + predicate.getSelectedTag());
+        List<String> tags=predicate.getSelectedTags();
+        if (tags!=null){
+            if(tags.size()!=0) {
+                String selectedTags=" Selected tags:";
+                for(String eachTag: tags){
+                    selectedTags+=" " + eachTag;
+                }
+                return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                        + selectedTags);
+            }
         }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
