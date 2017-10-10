@@ -32,11 +32,11 @@ Responsibilities: Project
 '''
 
 === Zhou Kai
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+image::Zk_pic.jpg[width="150", align="left"]
+{empty}[http://github.com/zhoukai07[github]] [<<zhoukai#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Project
 
 '''
 
@@ -46,14 +46,5 @@ image::m133225.jpg[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
 
 '''
