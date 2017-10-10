@@ -18,12 +18,12 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 //@@author jelneo
 public class LoginCommandTest {
 
-    private boolean hasLoggedIn = true;
-    private LoginAppRequestEvent event;
-
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    public ExpectedException thrown = ExpectedException.none();
+
+    private final boolean hasLoggedIn = true;
+    private LoginAppRequestEvent event;
 
     @Test
     public void execute_login_success() {
