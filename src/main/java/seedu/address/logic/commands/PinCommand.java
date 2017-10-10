@@ -2,8 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -56,6 +60,13 @@ public class PinCommand extends UndoableCommand {
                 Person addPin = addPinTag(personToPin);
                 model.updatePerson(personToPin, addPin);
                 model.updateFilteredPersonList(p -> p.getTags().contains(getPinTag(addPin)));
+                Collection<ReadOnlyPerson> listOfPersons = model.getFilteredPersonList();
+                List<ReadOnlyPerson> newList = new ArrayList<>();
+                newList.addAll(listOfPersons);
+                model.updateFilteredPersonList(p -> !p.getTags().contains(getPinTag(addPin)));
+                listOfPersons = model.getFilteredPersonList();
+                newList.addAll(listOfPersons);
+
                 return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
             }
         } catch (DuplicatePersonException dpe) {
