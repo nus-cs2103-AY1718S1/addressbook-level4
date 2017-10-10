@@ -991,19 +991,7 @@ Use case ends.
 *MSS*
 
 1. User requests to clear the UniCity.
-2. UniCity asks the user to confirm clearing the entire address book.
-3. User confirms to proceed.
-4. UniCity deletes everything that has been stored.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. User decides not to proceed to clear UniCity.
-+
-[none]
-** 3a1. UniCity displays clearing aborted.
+2. UniCity deletes everything that has been stored.
 +
 Use case ends.
 
@@ -1023,19 +1011,7 @@ Use case ends.
 *MSS*
 
 1. User requests to exit UniCity.
-2. UniCity asks the user to confirm.
-3. User confirms to exit the application.
-4. UniCity shuts down.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. User decides not to proceed to exit UniCity.
-+
-[none]
-** 3a1. UniCity displays exit aborted.
+2. UniCity shuts down.
 +
 Use case ends.
 
