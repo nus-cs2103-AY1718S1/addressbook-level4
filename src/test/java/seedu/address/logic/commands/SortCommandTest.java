@@ -51,6 +51,8 @@ public class SortCommandTest {
 
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
 
+        assertEquals(SortCommand.MESSAGE_SUCCESS, result.feedbackToUser);
+
         assertSortSuccessful(model.getAddressBook(), model.getFilteredPersonList());
 
         assertEquals(expectedModel.getFilteredPersonList(), model.getFilteredPersonList());
@@ -72,6 +74,7 @@ public class SortCommandTest {
             assertTrue(addressBook.getPersonList().contains(person1));
             assertTrue(addressBook.getPersonList().contains(person2));
 
+            //return false when names are incorrectly positioned or unsorted
             if (compareNamesAlphabetically(person1, person2)) {
                 return false;
             }
@@ -81,13 +84,15 @@ public class SortCommandTest {
     }
 
     /**
-     * Returns true if name of person1 is correctly positioned alphabetically in front of person2.
+     * Returns false if name of person1 is correctly positioned alphabetically in front of person2.
      */
     private boolean compareNamesAlphabetically(ReadOnlyPerson person1, ReadOnlyPerson person2) {
         String name1 = person1.getName().toString();
         String name2 = person2.getName().toString();
-
+        System.out.println(name1 + " " + name2);
         int compare = name1.compareTo(name2);
+
+        //compare > 0 if for e.g. name1 starts with h and name2 starts with f
         if (compare > 0) {
             return true;
         }
