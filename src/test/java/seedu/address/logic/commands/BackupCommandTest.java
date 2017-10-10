@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -26,7 +27,6 @@ public class BackupCommandTest {
     private AddressBookStorage addressBookStorage;
     private String filePath;
     private String backupFilePath;
-
     private BackupCommand backupCommand;
 
     @Rule
