@@ -3,16 +3,17 @@ package seedu.address.model.meeting;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-//import java.time.*;
-//import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
-//import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-public class Meeting implements ReadOnlyMeeting {// a Meeting class for meeting card and reminder
+/**
+ * Represents a Meeting in the address book.
+ * Guarantees: details are present and not null, field values are validated.
+ */
+public class Meeting implements ReadOnlyMeeting {
     private ObjectProperty<Name> name;
     private ObjectProperty<Date> date;
     //private ObjectProperty<LocalTime> time;

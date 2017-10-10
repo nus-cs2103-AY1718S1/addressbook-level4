@@ -4,11 +4,12 @@ import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
 
+/**
+ * A read-only immutable interface for a Meeting in the addressbook.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
 public interface ReadOnlyMeeting {
-    /**
-     * A read-only immutable interface for a Meeting in the addressbook.
-     * Implementations should guarantee: details are present and not null, field values are validated.
-     */
+    
     ObjectProperty<Name> nameProperty();
     Name getName();
     ObjectProperty<Date> dateProperty();
