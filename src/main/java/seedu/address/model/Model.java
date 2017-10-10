@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Collection;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -26,6 +27,9 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Adds all persons in the given collection */
+    void addPersons(Collection<ReadOnlyPerson> persons);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
