@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -41,6 +42,31 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     *
+     * Parses  {@code oneBasedIndex} into an {@code numbers} and return it.the commas will be deleted.
+     * @throws IllegalValueException if the specified index is invalid.
+     */
+    public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException {
+        String[] ns = oneBasedIndexes.split(",");
+        ArrayList<Index> numbers = new ArrayList<Index>();
+        boolean allvalid = true;
+        for (String a: ns) {
+            String s = a.trim();
+            if (StringUtil.isNonZeroUnsignedInteger(s)) {
+                numbers.add(Index.fromOneBased(Integer.parseInt(s)));
+            } else {
+                allvalid = false;
+
+            }
+        }
+        if (!allvalid) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return numbers;
+
     }
 
     /**
