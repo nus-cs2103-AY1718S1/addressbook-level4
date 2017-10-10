@@ -200,6 +200,14 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Browse address book to open
+     */
+    @FXML
+    private void handleOpen() {
+
+    }
+
+    /**
      * Closes the application.
      */
     @FXML
