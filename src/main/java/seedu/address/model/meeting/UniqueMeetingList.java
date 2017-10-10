@@ -21,7 +21,7 @@ import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
  * @see Meeting#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniqueMeetingList implements Iterable<Meeting>{
+public class UniqueMeetingList implements Iterable<Meeting> {
 
     private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
     // used by asObservableList()

@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

@@ -14,7 +14,7 @@ import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -195,7 +195,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyMeeting> getMeetingList(){
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
         return meetings.asObservableList();
     }
 
