@@ -15,16 +15,16 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::alexa.jpg[width="150", align="left"]
 {empty}https://ZY-Ang.github.io[homepage] https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
 
-Role: Developer +
+Role: Team Lead, Developer +
 Responsibilities: Storage
 
 '''
 
 === Jolyn Tan
 image::jolyn.jpg[width="150", align="left"]
-{empty}http://github.com/lejolly[github] <<ZhanYu#, portfolio>>
+{empty}https://github.com/jo-lyn[github] <<Jolyn#, portfolio>>
 
-Role: Team Lead +
+Role: Developer +
 Responsibilities: UI
 
 '''
