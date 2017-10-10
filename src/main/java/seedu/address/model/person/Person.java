@@ -34,8 +34,8 @@ public class Person implements ReadOnlyPerson {
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
         this.address=new SimpleObjectProperty<>(birthday);
+        this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -45,7 +45,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getBirthday(),
                 source.getAddress(), source.getRemark(), source.getTags());
     }
 
