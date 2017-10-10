@@ -735,11 +735,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many persons in the address book |list people by tags |locate a person easily
 
+|`* * *` |user with many persons in the address book |have different colored tags |easily differentiate people based on different tags
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |add contacts from pre-existing address book |save time without entering the same contacts again
 
 |`* *` |user |auto-format phone number |easily figure out the country code or phone number
+
+|`* *` |user |add a picture of the person |make it easier for myself to identify the person
+
+|`* *` |user |find contacts in runtime |find contacts without typing the entire name
 
 |`* *` |user with many persons in the address book |set password to the address book |keep my contacts safe from others
 
@@ -749,9 +755,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |add a picture of the person |make it easier for myself to identify the person
 
+|`* *` |user with many persons in the address book |see the contact details in grid view |find information faster
+
+|`*` |user |sync contacts from online services like facebook,google etc |add contacts directly without entering them
+
+|`*` |user |add prefix to name |assign proper designation to each name
+
+|`*` |user |add deadlines |so that I can finish tasks on time
+
+|`*` |user |use google maps to show me the address of person |navigate to that address
+
+|`*` |user |add homepage for the person |see the persons further details or publications if need be
+
+|`*` |user |add notes to a person |add extra information about that person
+
+|`*` |user |add twitter id |remain updated with their twitter posts
+
 |`*` |user |add multiple phone numbers to a person |know multiple ways to contact a person
 
 |`*` |user |enter the location for storage file |store my contacts anywhere I want
+
+|`*` |user |see the emails or messages exchanged with person |see the history of interaction with the person
+
+|`*` |user |receive notification for birthday |call or text the person to wish him/her
+
+|`*` |user |have alternate themes for the app |change look of the app if I get bored with one theme
 
 |`*` |user with many persons in the address book |add job title and department to a person |know the profession of each entry
 
@@ -764,7 +792,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |see the number of connections made by person |see the people with most connections
 
 |`*` |user |add a person with incomplete details |add a person and fill incomplete entries later
-|=======================================================================
 
 {More to be added}
 
@@ -798,6 +825,63 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+=== Use case: Find contact's birthday
+
+*MSS*
+
+1.  User searches for specific person.
+2.  AddressBook shows the person for the user.
+3.  User checks person's birthday.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The searched person is not in the AddressBook.
++
+[none]
+** 2a1. Steps 1-2 are repeated as long as the person is not found.
++
+Use case resumes from step 3.
+
+=== Use case: List people with a specific tag
+
+*MSS*
+
+1.  User specifies the tag she wants to be searched.
+2.  The AddressBook shows the contacts with the searched tag.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person types the tag incorrectly and no contacts are found.
++
+[none]
+** 2a1. Steps 1-2 are repeated as long as the tag is typed incorrectly.
++
+Use case ends.
+
+=== Use case: Sort contacts by name
+
+*MSS*
+
+1.  User lists all the contacts.
+2.  AddressBook shows the contacts in the order they were added to the AddressBook.
+3.  User sorts the contacts.
+4.  AddressBook lists all the contacts sorted by the their name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no contacts.
++
+Use case ends.
 
 {More to be added}
 
