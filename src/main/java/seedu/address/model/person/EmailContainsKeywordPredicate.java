@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
-
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code email} matches the keyword given.
  */
@@ -16,7 +14,7 @@ public class EmailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword);
+        return person.getEmail().toString().toLowerCase().contains(keyword.toLowerCase());
     }
 
     @Override
