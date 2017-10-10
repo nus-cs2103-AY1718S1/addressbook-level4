@@ -212,6 +212,25 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Filtering list by tags : `tag`
+
+Finds and filter list of persons with tags that is specified by the keywords. +
+Format: `tag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
+* Only the tags is searched.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends classmates` will return persons with tags `friends`, `classmates`
+****
+
+Examples:
+
+* `tag friends` +
+Returns any person having tags `friends` or `bestFriends`
+* `tag friends classmates colleagues` +
+Returns any person having tags `friends`, `classmates`, or `colleagues`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -250,3 +269,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
+e.g. `tag friends classmates`
+
