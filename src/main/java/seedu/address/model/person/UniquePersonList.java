@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -71,6 +72,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts the persons object in the list alphanumerically by name.
+     */
+    public void sort() {
+        requireNonNull(internalList);
+        Collections.sort(internalList);
+    }
+
+    /**
      * Removes the equivalent person from the list.
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
@@ -97,7 +106,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     * Returns the backing list as an u {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
