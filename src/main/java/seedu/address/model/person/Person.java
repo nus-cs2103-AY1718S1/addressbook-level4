@@ -49,7 +49,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBloodType(), source.getTags(),source.getRemark());
+                source.getBloodType(), source.getTags(), source.getRemark());
 
     }
 
