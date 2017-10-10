@@ -1,11 +1,9 @@
 package seedu.address.logic.commands;
 
-import java.util.Set;
-
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 /**
  * Lists all persons in the address book to the user.
@@ -17,22 +15,28 @@ public class ListCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: \n"
+            + ": Lists all the people in address or people with certain tags.\n"
+            + "Parameters: [optional]Tag\n"
             + "Example: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + "friends";
 
-    private final Set<Tag> toFind;
+    private final PersonContainsKeywordsPredicate predicate;
 
-    public ListCommand() { toFind = null;}
+    public ListCommand() {
+        this.predicate = null;
+    }
     
-    public ListCommand(Set<Tag> enteredTag) {
-        toFind = enteredTag;
+    public ListCommand(PersonContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
     }
     
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        if (this.predicate != null) {
+            model.updateFilteredPersonList(predicate);
+        } else {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
