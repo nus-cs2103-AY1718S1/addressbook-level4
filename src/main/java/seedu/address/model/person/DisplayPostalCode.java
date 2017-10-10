@@ -43,8 +43,8 @@ public class DisplayPostalCode {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof PostalCode // instanceof handles nulls
-                && this.value.equals(((PostalCode) other).value)); // state check
+                || (other instanceof DisplayPostalCode // instanceof handles nulls
+                && this.value.equals(((DisplayPostalCode) other).value)); // state check
     }
 
     @Override
