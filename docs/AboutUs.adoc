@@ -15,42 +15,34 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::17navasaw.png[width="150", align="left"]
 {empty}[https://github.com/17navasaw[github]] [<<johndoe#, portfolio>>]
 
-Role:
+Role: Developer Guide + Integration
+Responsibilities: UI
 
 '''
 
-=== John Roe
+=== Cheng Jin Ting
 image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: User Guide + Scheduling
+Responsibilities: Model
 
 '''
 
-=== Johnny Doe
+=== Calvin Tantio
 image::yijinl.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
+Role: Developer Guide + Code Quality
+Responsibilities: Logic
 
 '''
 
-=== Johnny Roe
+=== Chung Tin Long
 image::m133225.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
+Role: Developer Guide
+Responsibilities: Storage
 
 '''
