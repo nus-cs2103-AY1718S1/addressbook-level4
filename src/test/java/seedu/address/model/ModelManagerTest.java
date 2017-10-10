@@ -1,13 +1,15 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.util.Arrays;
+
+import javafx.collections.ObservableList;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,8 +26,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-
-import javafx.collections.ObservableList;
 
 public class ModelManagerTest {
     @Rule
