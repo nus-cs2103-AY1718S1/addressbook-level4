@@ -2,12 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -54,6 +56,9 @@ public class UnpinCommand extends UndoableCommand {
             if (personToUnpin.isPinned()) {
                 Person unpinTag = removePinTag(personToUnpin);
                 model.updatePerson(personToUnpin, unpinTag);
+                List<ReadOnlyPerson> newList = unpinAndSortContact(unpinTag);
+                model.getModifiableAddressBook().setPersons(newList);
+                model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
                 return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
             } else {
                 return new CommandResult(MESSAGE_ALREADY_UNPINNED);
@@ -64,6 +69,18 @@ public class UnpinCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_UNPIN_PERSON_FAILED);
         }
 
+    }
+
+    /**
+     * Set pinned contact on top of all persons
+     * @param removePin
+     * @return pinned list, where pinned contacts are on top
+     */
+    private List<ReadOnlyPerson> unpinAndSortContact(Person removePin) {
+        List<ReadOnlyPerson> newList = new ArrayList<>();
+        newList.addAll(model.getFilteredPersonList().filtered(Model.PREDICATE_SHOW_PINNED_PERSONS).sorted());
+        newList.addAll(model.getFilteredPersonList().filtered(Model.PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
+        return newList;
     }
 
     /**
