@@ -13,14 +13,16 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthdays should only contain numbers between /, and should be in the format DD/MM/YYYY";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)" +
-            "(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6" +
-            "-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\" +
-            "d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
+            + "(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6"
+            + "-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\"
+            + "d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+    public static final String DEFAULT_BIRTHDAY_VALUE = "--/--/----";
     public final String value;
 
+
     /**
-     * Validates given phone number.
+     * Validates given birthday number.
      *
      * @throws IllegalValueException if given birthday is invalid.
      */
@@ -37,7 +39,7 @@ public class Birthday {
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test == DEFAULT_BIRTHDAY_VALUE;
     }
 
     @Override

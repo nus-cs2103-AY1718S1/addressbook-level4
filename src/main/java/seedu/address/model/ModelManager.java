@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -68,6 +70,20 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addBirthday(ReadOnlyPerson person, Birthday birthday) throws PersonNotFoundException,
+                                                                             DuplicatePersonException {
+        Person newPerson = new Person(person);
+        try {
+            newPerson.setBirthday(birthday);
+            addressBook.updatePerson(person, newPerson);
+        } catch (PersonNotFoundException | DuplicatePersonException e) {
+            throw e;
+        }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }

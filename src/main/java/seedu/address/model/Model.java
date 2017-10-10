@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -45,4 +46,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Adds birthday to the given person.
+     */
+    void addBirthday(ReadOnlyPerson personToUpdate, Birthday inputBirthday) throws PersonNotFoundException,
+                                                                                   DuplicatePersonException;
 }
