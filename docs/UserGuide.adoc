@@ -41,6 +41,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Features
 
+This application comes pre-loaded with necessary contacts from school, so that students do not have to search and add one by one when they need them. `coming in v2.0`
+
+This application supports Alphanumeric and Chinese character input as name. `coming in v2.0`
 ====
 *Command Format*
 
@@ -59,8 +62,12 @@ Format: `help`
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
-[TIP]
-A person can have any number of tags (including 0)
+
+****
+* A person can have any number of tags (including 0) +
+* It is optional to add fields other than name and phone number `coming in v2.0` +
+* You can add multiple phone numbers and tag them with remarks `coming in v2.0`
+****
 
 Examples:
 
@@ -95,14 +102,14 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` / just type in the search bar the name or the phone number you want to search for, and the results will be automatically displayed in the left pane in no time. `coming in v2.0`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Either name or phone number is searched. `coming in v2.0`
+* Words will be matched according to prefix e.g. `Han` will match `Hans` and `Hansen` `coming in v2.0`
+* Only persons matching all keyword as prefixes will be returned (i.e. `AND` search). e.g. `Hans Bo` will return `Hanschler Bonobo`, `Hansen Boening` `coming in v2.0`
 ****
 
 Examples:
@@ -110,7 +117,7 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names `Betsy`, `Tim`, and `John` as name prefixes
 
 === Deleting a person : `delete`
 
