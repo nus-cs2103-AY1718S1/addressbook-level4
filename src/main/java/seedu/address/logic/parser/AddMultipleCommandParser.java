@@ -78,9 +78,9 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
             
             bufferedReader.close();
         } catch (FileNotFoundException fnfe) {
-            throw new ParseException("Unable to open file '" + fileName + "'");
+            throw new ParseException(String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, fileName));
         } catch (IOException ioe) {
-            throw new ParseException("Error reading file '" + fileName + "'");
+            throw new ParseException(String.format(AddMultipleCommand.MESSAGE_ERROR_FILE, fileName));
         }
 
         return new AddMultipleCommand(personsList);

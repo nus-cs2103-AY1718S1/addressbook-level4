@@ -47,6 +47,8 @@ public class AddMultipleCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person(s) added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "The persons list contains person(s) that already exists in the address book.";
     public static final String DEFAULT_FOLDER_PATH = "./data";
+    public static final String MESSAGE_INVALID_FILE = "Unable to open file '%1$s'";
+    public static final String MESSAGE_ERROR_FILE = "Error reading file '%1$s'";
     
     private ArrayList<Person> toAdd;
     private ArrayList<ReadOnlyPerson> readOnlyPeople;
