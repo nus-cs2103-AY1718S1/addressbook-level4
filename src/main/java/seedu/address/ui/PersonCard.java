@@ -16,7 +16,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -57,6 +59,23 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
         registerAsAnEventHandler(this);
+        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
+
+        switch (currentUnit) {
+        case ADDRESS:
+            switchToAddressCard();
+            break;
+
+        case EMAIL:
+            switchToEmailCard();
+            break;
+
+        case PHONE:
+            switchToPhoneCard();
+            break;
+
+        default:
+        }
     }
 
     /**
@@ -74,8 +93,43 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    /**
+     * change the card state to hide irrelevant information and only show address
+     */
+    private void switchToAddressCard() {
+        name.setVisible(false);
+        phone.setVisible(false);
+        email.setVisible(false);
+        tags.setVisible(false);
+        address.setStyle("-fx-font: 16 arial;");
+    }
+
+    /**
+     * change the card state to hide irrelevant information and only show phone
+     */
+    private void switchToPhoneCard() {
+        name.setVisible(false);
+        address.setVisible(false);
+        email.setVisible(false);
+        tags.setVisible(false);
+        phone.setStyle("-fx-font: 16 arial;");
+
+    }
+
+    /**
+     * change the card state to hide irrelevant information and only show email
+     */
+    private void switchToEmailCard() {
+        name.setVisible(false);
+        phone.setVisible(false);
+        address.setVisible(false);
+        tags.setVisible(false);
+        email.setStyle("-fx-font: 16 arial;");
     }
 
     @Override

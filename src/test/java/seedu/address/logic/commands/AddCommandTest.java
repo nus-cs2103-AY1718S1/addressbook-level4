@@ -7,6 +7,8 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -20,7 +22,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -102,6 +107,24 @@ public class AddCommandTest {
         }
 
         @Override
+        public HashSet<Address> getUniqueAdPersonSet() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public HashSet<Email> getUniqueEmailPersonSet() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public HashSet<Phone> getUniquePhonePersonSet() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -114,6 +137,11 @@ public class AddCommandTest {
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -132,6 +160,11 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void handleListingUnit() {
+
         }
     }
 

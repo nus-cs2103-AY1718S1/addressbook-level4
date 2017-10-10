@@ -13,33 +13,42 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of info.
  */
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
+    private ObservableList<ReadOnlyPerson> personList;
+
     @FXML
     private ListView<PersonCard> personListView;
 
-    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+
+    public PersonListPanel(ObservableList<ReadOnlyPerson> infoList) {
         super(FXML);
-        setConnections(personList);
+        this.personList = infoList;
+        setConnections(infoList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    private void setConnections(ObservableList<ReadOnlyPerson> infoList) {
+
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                infoList, (person) -> new PersonCard(person, infoList.indexOf(person) + 1));
+
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
+
     }
+
 
     private void setEventHandlerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
@@ -67,6 +76,12 @@ public class PersonListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    @Subscribe
+    private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setConnections(personList);
+    }
+
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
@@ -84,5 +99,4 @@ public class PersonListPanel extends UiPart<Region> {
             }
         }
     }
-
 }
