@@ -16,8 +16,8 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removetag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag\n" +
-            "Parameters: TAG (must be a string)";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag\n"
+            + "Parameters: TAG (must be a string)";
 
     public static final String MESSAGE_SUCCESS = "Tag removed";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
