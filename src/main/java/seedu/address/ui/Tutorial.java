@@ -15,18 +15,21 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class Tutorial {
 
     private CommandBox commandBox;
+    private PersonListPanel personListPanel;
     private TextArea tutorialText;
     private ArrayList<TutSteps> tutorialSteps = new ArrayList<>();
     private Logic logic;
 
-    public Tutorial(CommandBox commandBox, TextArea tutorialText, Logic logic) {
+    public Tutorial(CommandBox commandBox, PersonListPanel personListPanel, TextArea tutorialText, Logic logic) {
         this.commandBox = commandBox;
+        this.personListPanel = personListPanel;
         this.tutorialText = tutorialText;
         this.logic = logic;
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_ONE, false));
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_TWO, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_THREE, false, "delete 6"));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, true, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_THREE, false));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, false, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FIVE, true, "delete 6"));
         tutorialSteps.add(new TutSteps("Last step", false));
     }
 
@@ -39,14 +42,25 @@ public class Tutorial {
      */
     public void executeStep(TutSteps currentStep) throws CommandException, ParseException {
         commandBox.setInputText(currentStep.getCommandInput());
-        if (!currentStep.isLastStep() && !currentStep.isToExecute()) {
+        switch (currentStep.getStepNumber()) {
+        case 0:
+            commandBox.tutorialHighlight();
+            break;
+        case 1:
+            commandBox.tutorialUnhighlight();
+            personListPanel.tutorialHighlight();
+            break;
+        default:
+            personListPanel.tutorialUnhighlight();
+        }
+        if (currentStep.isLastStep()) {
+            tutorialText.setVisible(false);
+        } else if (!currentStep.isToExecute()) {
             tutorialText.setText(currentStep.getTextDisplay());
-        } else if (!currentStep.isLastStep() && currentStep.isToExecute()) {
+        } else if (currentStep.isToExecute()) {
             CommandResult result = logic.execute(currentStep.getCommandInput());
             commandBox.setInputText("");
             tutorialText.setText(currentStep.getTextDisplay());
-        } else {
-            tutorialText.setVisible(false);
         }
     }
 
@@ -67,16 +81,18 @@ public class Tutorial {
  */
 class TutSteps {
 
-    private static int numSteps = 0;
+    private static int totalNumSteps = 0;
     private String textDisplay;
     private boolean toExecute = false;
     private boolean isLastStep = false;
+    private int stepNumber;
     private String commandInput = "";
 
     public TutSteps(String textDisplay, boolean toExecute) {
         this.textDisplay = textDisplay;
         this.toExecute = toExecute;
-        if (numSteps++ == TutorialMessages.NUM_STEPS) {
+        stepNumber = totalNumSteps;
+        if (totalNumSteps++ == TutorialMessages.NUM_STEPS) {
             this.isLastStep = true;
         }
     }
@@ -85,7 +101,8 @@ class TutSteps {
         this.textDisplay = textDisplay;
         this.toExecute = toExecute;
         this.commandInput = commandInput;
-        if (numSteps++ == TutorialMessages.NUM_STEPS) {
+        stepNumber = totalNumSteps;
+        if (totalNumSteps++ == TutorialMessages.NUM_STEPS) {
             this.isLastStep = true;
         }
     }
@@ -104,5 +121,9 @@ class TutSteps {
 
     public boolean isToExecute() {
         return toExecute;
+    }
+
+    public int getStepNumber() {
+        return stepNumber;
     }
 }

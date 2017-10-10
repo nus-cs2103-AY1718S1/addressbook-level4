@@ -175,7 +175,7 @@ public class MainWindow extends UiPart<Region> {
      * @param commandBox
      */
     private void initTutorial(CommandBox commandBox) {
-        Tutorial newTutorial = new Tutorial(commandBox, tutorialText, logic);
+        Tutorial newTutorial = new Tutorial(commandBox, personListPanel, tutorialText, logic);
         browserPlaceholder.getChildren().remove(browserPanel.getRoot());
         ArrayList<TutSteps> tutSteps = newTutorial.getTutorialSteps();
         tutorialText.setText(TutorialMessages.STEP_INTRO);
