@@ -1,13 +1,13 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.optionparser.CommandOptionUtil;
 import seedu.address.logic.parser.optionparser.FindOptionByName;
 import seedu.address.logic.parser.optionparser.FindOptionFuzzy;
 import seedu.address.logic.parser.optionparser.FindOptionInDetail;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -33,14 +33,14 @@ public class FindCommandParser implements Parser<FindCommand> {
         String optionArgs = CommandOptionUtil.getOptionArgs(optionPrefix, trimmedArgs);
 
         switch (optionPrefix) {
-            case FindCommand.PREFIX_FIND_IN_DETAIL:
-                return new FindOptionInDetail(optionArgs).parse();
-            case FindCommand.PREFIX_FIND_FUZZY_FIND:
-                return new FindOptionFuzzy(optionArgs).parse();
-            case FindCommand.PREFIX_FIND_BY_NAME:
-                return new FindOptionByName(optionArgs).parse();
-            default:
-                throw new ParseException(PARSE_EXCEPTION_MESSAGE);
+        case FindCommand.PREFIX_FIND_IN_DETAIL:
+            return new FindOptionInDetail(optionArgs).parse();
+        case FindCommand.PREFIX_FIND_FUZZY_FIND:
+            return new FindOptionFuzzy(optionArgs).parse();
+        case FindCommand.PREFIX_FIND_BY_NAME:
+            return new FindOptionByName(optionArgs).parse();
+        default:
+            throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
     }
 

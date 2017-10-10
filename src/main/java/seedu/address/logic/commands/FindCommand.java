@@ -1,14 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
+import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.

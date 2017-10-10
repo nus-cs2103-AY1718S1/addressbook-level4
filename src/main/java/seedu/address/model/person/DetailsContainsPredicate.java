@@ -1,11 +1,10 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.logic.commands.FindCommand.FindDetailDescriptor;
-import seedu.address.model.tag.Tag;
-
 import java.util.Iterator;
 import java.util.function.Predicate;
+
+import seedu.address.logic.commands.FindCommand.FindDetailDescriptor;
+import seedu.address.model.tag.Tag;
 
 /**
  * Tests that every {@code ReadOnlyPerson}'s attribute matches corresponding keyword

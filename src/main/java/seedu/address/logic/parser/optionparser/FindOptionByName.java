@@ -1,12 +1,12 @@
 package seedu.address.logic.parser.optionparser;
 
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
 
 import java.util.Arrays;
 
-import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Finds contacts by name.

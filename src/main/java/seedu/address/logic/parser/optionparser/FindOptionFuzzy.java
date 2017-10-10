@@ -1,10 +1,10 @@
 package seedu.address.logic.parser.optionparser;
 
+import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
+
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FuzzySearchPredicate;
-
-import static seedu.address.logic.parser.FindCommandParser.PARSE_EXCEPTION_MESSAGE;
 
 /**
  * Finds contacts in fuzzy search.

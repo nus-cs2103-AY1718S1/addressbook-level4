@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
-
 import java.util.function.Predicate;
 
 /**
@@ -10,7 +8,9 @@ import java.util.function.Predicate;
 public class FuzzySearchPredicate implements Predicate<ReadOnlyPerson> {
     private final String keyword;
 
-    public FuzzySearchPredicate(String keyword) {this.keyword = keyword;}
+    public FuzzySearchPredicate(String keyword) {
+        this.keyword = keyword;
+    }
 
     @Override
     public boolean test(ReadOnlyPerson person) {

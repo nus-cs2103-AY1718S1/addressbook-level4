@@ -8,7 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public abstract class CommandOption<T extends Command> {
 
-    String optionArgs;
+    protected String optionArgs;
 
     CommandOption(String optionArgs) {
         this.optionArgs = optionArgs;
