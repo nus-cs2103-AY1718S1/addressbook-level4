@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertEquals;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
 import org.junit.Rule;
@@ -13,6 +15,22 @@ import seedu.address.model.person.exceptions.DuplicatePropertyException;
 public class PropertyManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void preLoadedProperty_checkInitializationSuccessful() {
+        assertEquals("name", PropertyManager.getPropertyFullName("n"));
+        assertEquals("email", PropertyManager.getPropertyFullName("e"));
+        assertEquals("phone", PropertyManager.getPropertyFullName("p"));
+        assertEquals("address", PropertyManager.getPropertyFullName("a"));
+    }
+
+    @Test
+    public void preLoadedProperty_checkCount() throws Exception {
+        int numPreLoadedProperties = testPrivateFieldsCount("propertyFullNames");
+
+        assertEquals(numPreLoadedProperties, testPrivateFieldsCount("propertyConstraintMessages"));
+        assertEquals(numPreLoadedProperties, testPrivateFieldsCount("propertyValidationRegex"));
+    }
 
     @Test
     public void addProperty_successfullyAdd() throws Exception {
@@ -55,5 +73,25 @@ public class PropertyManagerTest {
         thrown.expect(DuplicatePropertyException.class);
 
         PropertyManager.addNewProperty(shortName, fullName, message, regex);
+    }
+
+    /**
+     * Uses reflection to get the size of private static {@link HashMap}s.
+     *
+     * @param fieldName is the name of the private field in String format.
+     * @return the number of items in the {@link HashMap}
+     */
+    private int testPrivateFieldsCount(String fieldName) {
+        HashMap<String, String> variable = null;
+        try {
+            Field field = PropertyManager.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            variable = (HashMap<String, String>) field.get(null);
+            return variable.size();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            assert(false);
+        }
+
+        return variable.size();
     }
 }
