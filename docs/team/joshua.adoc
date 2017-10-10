@@ -8,14 +8,14 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Remark Command
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=remark]
 
 #End of Extract#
 
@@ -30,7 +30,7 @@ include::../UserGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=remark]
 
 #End of Extract#
 
@@ -38,7 +38,7 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 === Enhancement Proposed: Add command `remark`
 
-{Explain similar to the Undo/Redo feature above.}
+The remark command allows additional information to be displayed on a person's card.
 
 === Other contributions
 
