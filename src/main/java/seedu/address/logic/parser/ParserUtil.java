@@ -1,11 +1,18 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.kordamp.ikonli.Ikon;
+import org.kordamp.ikonli.feather.Feather;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -20,9 +27,12 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -42,6 +52,11 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+
+    /**
+     * Used for initial separation of command word and args.
+     */
+    public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -131,5 +146,84 @@ public class ParserUtil {
             }
         }
         return Optional.empty();
+    }
+
+    /**
+     * Parses {@code Optional<String> command} and returns the corresponding {@code Optional<Ikon> icon}
+     * if valid.
+     */
+    public static Optional<Ikon> parseIconCode(String command) {
+        requireNonNull(command);
+
+        switch (command) {
+
+        case MusicCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_PLAY);
+
+        case AddCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_PLUS);
+
+        case AliasCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_LINK);
+
+        case EditCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_FILE_ADD);
+
+        case SelectCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_HEAD);
+
+        case DeleteCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_TRASH);
+
+        case ClearCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_CROSS);
+
+        case FindCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_SEARCH);
+
+        case ListCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_PAPER);
+
+        case HistoryCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_CLOCK);
+
+        case ExitCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_POWER);
+
+        case HelpCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_HELP);
+
+        case UndoCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_ARROW_LEFT);
+
+        case RedoCommand.COMMAND_WORD:
+            return Optional.of(Feather.FTH_ARROW_RIGHT);
+
+        default:
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Parses {@code String userInput} and returns an array of {commandWord, arguments} if valid.
+     */
+    public static String[] parseCommandAndArguments(String userInput) throws ParseException {
+        requireNonNull(userInput);
+
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        Map<String, String> aliases = UserPrefs.getAliases();
+        if (aliases != null && aliases.get(commandWord) != null) {
+            commandWord = aliases.get(commandWord);
+        }
+
+        String[] ret = {commandWord, arguments};
+        return ret;
     }
 }
