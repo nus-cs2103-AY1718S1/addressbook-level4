@@ -2,10 +2,10 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.TextArea;
+import seedu.address.commons.core.TutorialMessages;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -15,24 +15,24 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class Tutorial {
 
     private CommandBox commandBox;
-    private StackPane browserPlaceholder;
-    private ImageView tutorialImage;
+    private TextArea tutorialText;
     private ArrayList<TutSteps> tutorialSteps = new ArrayList<>();
     private Logic logic;
 
-    public Tutorial(CommandBox commandBox, StackPane browserPlaceholder, ImageView tutorialImage, Logic logic) {
+    public Tutorial(CommandBox commandBox, TextArea tutorialText, Logic logic) {
         this.commandBox = commandBox;
-        this.browserPlaceholder = browserPlaceholder;
-        this.tutorialImage = tutorialImage;
+        this.tutorialText = tutorialText;
         this.logic = logic;
-        tutorialSteps.add(new TutSteps("/images/step1.png", false));
-        tutorialSteps.add(new TutSteps("/images/step2.png", true, "delete 1"));
-        tutorialSteps.add(new TutSteps(true, "delete 1", "/images/step3.png"));
-        tutorialSteps.add(new TutSteps("LAST", false));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_ONE, false));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_TWO, false));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_THREE, false, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, true, "delete 6"));
+        tutorialSteps.add(new TutSteps("Last step", false));
     }
 
     /**
      * Executes the current tutorial's step.
+     *
      * @param currentStep
      * @throws CommandException
      * @throws ParseException
@@ -40,13 +40,13 @@ public class Tutorial {
     public void executeStep(TutSteps currentStep) throws CommandException, ParseException {
         commandBox.setInputText(currentStep.getCommandInput());
         if (!currentStep.isLastStep() && !currentStep.isToExecute()) {
-            tutorialImage.setImage(new Image(currentStep.getImageUrl()));
+            tutorialText.setText(currentStep.getTextDisplay());
         } else if (!currentStep.isLastStep() && currentStep.isToExecute()) {
-            logic.execute(currentStep.getCommandInput());
+            CommandResult result = logic.execute(currentStep.getCommandInput());
             commandBox.setInputText("");
-            tutorialImage.setImage(new Image(currentStep.getImageUrl()));
+            tutorialText.setText(currentStep.getTextDisplay());
         } else {
-            tutorialImage.setImage(null);
+            tutorialText.setVisible(false);
         }
     }
 
@@ -58,7 +58,6 @@ public class Tutorial {
      * Ends the tutorial.
      */
     public void endTutorial() {
-        tutorialImage.setImage(null);
         commandBox.setInputText("");
     }
 }
@@ -69,39 +68,30 @@ public class Tutorial {
 class TutSteps {
 
     private static int numSteps = 0;
-    private String imageUrl;
-    private boolean hasCommandInput;
+    private String textDisplay;
     private boolean toExecute = false;
     private boolean isLastStep = false;
-    private String commandInput = null;
+    private String commandInput = "";
 
+    public TutSteps(String textDisplay, boolean toExecute) {
+        this.textDisplay = textDisplay;
+        this.toExecute = toExecute;
+        if (numSteps++ == TutorialMessages.NUM_STEPS) {
+            this.isLastStep = true;
+        }
+    }
 
-    public TutSteps(boolean toExecute, String commandInput, String imageUrl) {
+    public TutSteps(String textDisplay, boolean toExecute, String commandInput) {
+        this.textDisplay = textDisplay;
         this.toExecute = toExecute;
         this.commandInput = commandInput;
-        this.imageUrl = imageUrl;
-        numSteps++;
-    }
-
-    public TutSteps(String imageUrl, boolean hasCommandInput, String commandInput) {
-        this.imageUrl = imageUrl;
-        this.hasCommandInput = hasCommandInput;
-        this.commandInput = commandInput;
-        if (numSteps++ == 3) {
+        if (numSteps++ == TutorialMessages.NUM_STEPS) {
             this.isLastStep = true;
         }
     }
 
-    public TutSteps(String imageUrl, boolean hasCommandInput) {
-        this.imageUrl = imageUrl;
-        this.hasCommandInput = hasCommandInput;
-        if (numSteps++ == 3) {
-            this.isLastStep = true;
-        }
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
+    public String getTextDisplay() {
+        return textDisplay;
     }
 
     public boolean isLastStep() {
@@ -109,10 +99,7 @@ class TutSteps {
     }
 
     public String getCommandInput() {
-        if (hasCommandInput || toExecute) {
-            return this.commandInput;
-        }
-        return "";
+        return commandInput;
     }
 
     public boolean isToExecute() {

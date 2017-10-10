@@ -10,8 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.TutorialMessages;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -62,6 +63,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private ImageView tutorialImage;
+
+    @FXML
+    private TextArea tutorialText;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -144,8 +148,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
 //        browserPanel = new BrowserPanel();
 //        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        leftButton.setVisible(false);
-        rightButton.setVisible(false);
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -159,41 +162,57 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        initTutorial(commandBox);
+        if (logic.getFilteredPersonList().size() == 6) {
+            if ("royb@example.com".equals(logic.getFilteredPersonList().get(5).getEmail().toString())) {
+                initTutorial(commandBox);
+            }
+        }
     }
 
     /**
      * Initiates the tutorial if the program is opened for the first time.
+     *
      * @param commandBox
      */
     private void initTutorial(CommandBox commandBox) {
-        Tutorial newTutorial = new Tutorial(commandBox, browserPlaceholder, tutorialImage, logic);
+        Tutorial newTutorial = new Tutorial(commandBox, tutorialText, logic);
         ArrayList<TutSteps> tutSteps = newTutorial.getTutorialSteps();
-        if (logic.getFilteredPersonList().get(0).getEmail().toString().equals("alexyeoh@example.com")) {
-            tutorialImage.setImage(new Image("/images/testIntro1.png"));
-            leftButton.setVisible(true);
-            rightButton.setVisible(true);
-        }
+        tutorialText.setText(TutorialMessages.STEP_INTRO);
+        setTutorialVisible(true);
         leftButton.setOnAction(e -> {
             try {
                 newTutorial.executeStep(tutSteps.get(0));
             } catch (CommandException e1) {
-                e1.printStackTrace();
+                logger.warning("Can't execute command in tutorial.");
             } catch (ParseException e1) {
-                e1.printStackTrace();
+                logger.warning("Wrong command input in tutorial.");
             }
             leftButton.setText("Next");
             tutSteps.remove(0);
             if (tutSteps.size() == 0) {
-                leftButton.setVisible(false);
-                rightButton.setVisible(false);
+                setTutorialVisible(false);
             }
         });
         rightButton.setOnAction(e -> {
             newTutorial.endTutorial();
-            leftButton.setVisible(false);
-            rightButton.setVisible(false);
+            setTutorialVisible(false);
+            if (logic.getFilteredPersonList().size() == 6) {
+                try {
+                    logic.execute("delete 6");
+                } catch (CommandException e1) {
+                    logger.warning("Can't execute command after skipping.");
+                } catch (ParseException e1) {
+                    logger.warning("Wrong command input after skipping.");
+                }
+            }
         });
+    }
+
+    private void setTutorialVisible(boolean isVisible) {
+        leftButton.setVisible(isVisible);
+        rightButton.setVisible(isVisible);
+        tutorialText.setVisible(isVisible);
+        tutorialImage.setVisible(isVisible);
     }
 
     void hide() {

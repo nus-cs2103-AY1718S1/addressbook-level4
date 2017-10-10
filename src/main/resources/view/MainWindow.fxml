@@ -8,7 +8,12 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -52,20 +57,36 @@
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
          <children>
-            <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="192.0" StackPane.alignment="CENTER">
-              <buttons>
-                <Button fx:id="leftButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="96.0" text="Yes" />
-                  <Button fx:id="rightButton" mnemonicParsing="false" text="Skip" />
-              </buttons>
+            <GridPane alignment="CENTER" prefWidth="277.0" scaleShape="false" StackPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="tutorialImage" fitHeight="150.0" fitWidth="173.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@../images/testIntro1.png" />
+                     </image></ImageView>
+                  <ButtonBar maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="192.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <buttons>
+                      <Button fx:id="leftButton" mnemonicParsing="false" prefHeight="33.0" prefWidth="96.0" text="Yes" visible="false" />
+                        <Button fx:id="rightButton" mnemonicParsing="false" text="Skip" visible="false" />
+                    </buttons>
+                  </ButtonBar>
+                  <TextArea fx:id="tutorialText" editable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="212.0" text="Welcome to Bluebird! Would you like to go through the tutorial?" visible="false" wrapText="true" GridPane.columnIndex="1" />
+               </children>
                <StackPane.margin>
-                  <Insets right="250.0" top="150.0" />
+                  <Insets />
                </StackPane.margin>
-            </ButtonBar>
-            <ImageView fx:id="tutorialImage" fitHeight="150.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
-               <StackPane.margin>
-                  <Insets bottom="50.0" right="250.0" />
-               </StackPane.margin>
-            </ImageView>
+            </GridPane>
          </children>
     </StackPane>
   </SplitPane>
