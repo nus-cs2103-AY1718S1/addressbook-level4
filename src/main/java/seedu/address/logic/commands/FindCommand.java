@@ -31,8 +31,8 @@ public class FindCommand extends Command {
         List<String> matchedNames = new ArrayList<>();
         ArrayList<String> nameList = new ArrayList<>();
 
-        for (int i = 0; i < model.getFilteredPersonList().size(); i++) {
-            String[] str = model.getFilteredPersonList().get(i).getName().toString().toLowerCase().split(" ");
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            String[] str = model.getAddressBook().getPersonList().get(i).getName().toString().toLowerCase().split(" ");
             for (int j = 0; j < str.length; j++) {
                 nameList.add(str[j]);
             }
