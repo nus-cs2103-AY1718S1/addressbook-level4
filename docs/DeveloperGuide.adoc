@@ -917,6 +917,26 @@ Use case ends.
 Use case resumes at step 4.
 
 [discrete]
+=== Use case: Backup data
+
+*MSS*
+
+1.  User requests to backup data
+2.  AddressBook backs up the data to the hard drive
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook fails to save the data.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
 === Use case: Restore backup
 
 *MSS*
