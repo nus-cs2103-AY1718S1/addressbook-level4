@@ -34,13 +34,26 @@ public class PropertyManagerTest {
     }
 
     @Test
-    public void addProperty_invalidRegex() throws Exception {
+    public void addProperty_invalidRegex_error() throws Exception {
         String shortName = "d";
         String fullName = "description";
         String message = "Description can be any string, but cannot be blank";
         String regex = "*asf";
 
         thrown.expect(PatternSyntaxException.class);
+
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
+    }
+
+    @Test
+    public void addProperty_duplicateShortName_error() throws Exception {
+        // Duplicate because the shortName is the same as the pre-loaded property "address".
+        String shortName = "a";
+        String fullName = "mailing address";
+        String message = "Description can be any string, but cannot be blank";
+        String regex = "[^\\s].*";
+
+        thrown.expect(DuplicatePropertyException.class);
 
         PropertyManager.addNewProperty(shortName, fullName, message, regex);
     }
