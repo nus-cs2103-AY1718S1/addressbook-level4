@@ -727,11 +727,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |add a new task |track task that the user is interested
+
 |`* * *` |user |delete a task |untrack task that I no longer interested
 
 |`* * *` |user |mark a task as complete/incomplete |record my progress on doing tasks
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |focus on input bar at the start |get rid of the need of using mouse to click the input bar
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -747,16 +751,45 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |list tasks by tag|see tasks by tag
 
+|`* *` |user with at least one task|view one task details with the relevant person in the addressbook|see the details and get the information of a task and the relevant person
+
+|`* *` |user with at least one person|view one person details with the relevant tasks displayed in the addressbook|see person details and the relevant tasks in the application that are relevant to this person only
+
+|`* *` |user with at least one person|have a map view of the current selected person or himself|see the address of himself or the persons in the addressbook visually
+
+|`* *` |user with at least person|link a task to a person|relate the relevant tasks to the relevant person and organiza tasks with different people better
+
+|`* *` |user |add image to a contact person|see the person more visually with an image
+
+|`* *` |user |add a general notes or comments to each contact person|record down some critical information about this person
+
+|`* *` |user |list last few contacts the user have found|see the most frequently searched or viewed contact person
+
+|`* *` |user |export contact info as an add command (user can choose whether to disclose the private information about this contact details)|copy and paste for other users to directly add this contact person's information
+
+|`* *` |user |export task details as an add command |copy and paste for other users to directly add this task information
+
+|`* *` |user |pin important contacts or task on top|to keep the important contacts on top of the view list for easier usage
+
+|`* *` |user |reminder region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user|add new tasks with hierarchy |trace the tasks in the future
 
 |`*` |user|edit hierarchy|change the structure or name of the hierarchy
 
-|`*` |user with at least one task|view one task details|see the details and get the information of a task
-
 |`*` |user with too many tasks that create conflicts|get error and warnings on event conflicts|to manage task more efficiently without conflicts
 
+|`*` |user|have multiple hot keys available |quickly use this app without using mouse
+
+|`*` |user|auto-completion of commands|easier for user to type command quickly
+
+|`*` |user|trigger & password |make the app more secure with password defence
+
+|`*` |user|customise background wallpaper |for user to have a better background they like
+
+|`*` |user|have a settings manager/config file |make it easier for user to migrate across devices and have some important settings 
 |=======================================================================
 
 {More to be added}
