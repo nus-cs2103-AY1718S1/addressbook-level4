@@ -11,6 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -54,6 +55,7 @@ public class PinCommand extends UndoableCommand {
             } else {
                 Person addPin = addPinTag(personToPin);
                 model.updatePerson(personToPin, addPin);
+                model.updateFilteredPersonList(p -> p.getTags().contains(getPinTag(addPin)));
                 return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
             }
         } catch (DuplicatePersonException dpe) {
@@ -64,7 +66,6 @@ public class PinCommand extends UndoableCommand {
     }
 
     /**
-     *
      * @param personToPin
      * @return updated Person with added pin to be added to the address book
      * @throws CommandException
@@ -79,4 +80,20 @@ public class PinCommand extends UndoableCommand {
         return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getEmail(),
                 personToPin.getAddress(), updatedTags.toSet());
     }
+
+    /**
+     * Searches the tag list to find Pinned Tag. Can always be found as the person in pinned already
+     *
+     * @param pinnedPerson
+     * @return tag that contains Pinned
+     */
+    private Tag getPinTag(Person pinnedPerson) {
+        for (Tag tag : pinnedPerson.getTags()) {
+            if ("Pinned".equals(tag.tagName)) {
+                return tag;
+            }
+        }
+        return null; //It will never reach here
+    }
+
 }
