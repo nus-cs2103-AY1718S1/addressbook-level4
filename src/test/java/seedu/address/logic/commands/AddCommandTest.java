@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -124,6 +125,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void pinOrUnpinPerson(List<ReadOnlyPerson> persons) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -132,12 +138,6 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
-        }
-
-        @Override
-        public AddressBook getModifiableAddressBook() {
-            fail("This method should not be called.");
-            return null;
         }
     }
 

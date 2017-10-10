@@ -54,10 +54,8 @@ public class UnpinCommand extends UndoableCommand {
         ReadOnlyPerson personToUnpin = lastShownList.get(index.getZeroBased());
         try {
             if (personToUnpin.isPinned()) {
-                Person unpinTag = removePinTag(personToUnpin);
-                model.updatePerson(personToUnpin, unpinTag);
-                List<ReadOnlyPerson> newList = unpinAndSortContact(unpinTag);
-                model.getModifiableAddressBook().setPersons(newList);
+                List<ReadOnlyPerson> newList = unpinAndSortContact(personToUnpin);
+                model.pinOrUnpinPerson(newList);
                 model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
                 return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
             } else {
@@ -73,11 +71,13 @@ public class UnpinCommand extends UndoableCommand {
 
     /**
      * Set pinned contact on top of all persons
-     * @param removePin
      * @return pinned list, where pinned contacts are on top
      */
-    private List<ReadOnlyPerson> unpinAndSortContact(Person removePin) {
+    private List<ReadOnlyPerson> unpinAndSortContact(
+            ReadOnlyPerson personToUnpin) throws CommandException, PersonNotFoundException, DuplicatePersonException {
         List<ReadOnlyPerson> newList = new ArrayList<>();
+        Person unpinTag = removePinTag(personToUnpin);
+        model.updatePerson(personToUnpin, unpinTag);
         newList.addAll(model.getFilteredPersonList().filtered(Model.PREDICATE_SHOW_PINNED_PERSONS).sorted());
         newList.addAll(model.getFilteredPersonList().filtered(Model.PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
         return newList;

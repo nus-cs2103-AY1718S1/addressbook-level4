@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -54,12 +55,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    @Override
-    public AddressBook getModifiableAddressBook() {
-        return addressBook;
-    }
-
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -86,6 +84,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void pinOrUnpinPerson(List<ReadOnlyPerson> persons) throws DuplicatePersonException {
+        addressBook.setPersons(persons);
+        indicateAddressBookChanged();
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -101,7 +104,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        indicateAddressBookChanged();
     }
 
     @Override

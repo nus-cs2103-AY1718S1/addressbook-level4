@@ -54,10 +54,8 @@ public class PinCommand extends UndoableCommand {
             if (personToPin.isPinned()) {
                 return new CommandResult(MESSAGE_ALREADY_PINNED);
             } else {
-                Person addPin = addPinTag(personToPin);
-                model.updatePerson(personToPin, addPin);
-                List<ReadOnlyPerson> newList = pinAndSortContact(addPin);
-                model.getModifiableAddressBook().setPersons(newList);
+                List<ReadOnlyPerson> newList = pinAndSortContact(personToPin);
+                model.pinOrUnpinPerson(newList);
                 model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
                 return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
@@ -71,11 +69,13 @@ public class PinCommand extends UndoableCommand {
 
     /**
      * Set pinned contact on top of all persons
-     * @param addPin
      * @return pinned list, where pinned contacts are on top
      */
-    private List<ReadOnlyPerson> pinAndSortContact(Person addPin) {
+    private List<ReadOnlyPerson> pinAndSortContact(
+            ReadOnlyPerson personToPin) throws CommandException, DuplicatePersonException, PersonNotFoundException {
         List<ReadOnlyPerson> newList = new ArrayList<>();
+        Person addPin = addPinTag(personToPin);
+        model.updatePerson(personToPin, addPin);
         newList.addAll(model.getFilteredPersonList().filtered(Model.PREDICATE_SHOW_PINNED_PERSONS).sorted());
         newList.addAll(model.getFilteredPersonList().filtered(Model.PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
         return newList;
