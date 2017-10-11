@@ -3,15 +3,20 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +30,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private SortedList<ReadOnlyPerson> sortedPersons;
+    private Comparator<ReadOnlyPerson> comparator;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -96,6 +103,23 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateSortComparator(List<SortArgument> sortArguments) {
+        comparator = (person1, person2) -> {
+            List<SortArgument> sortArgumentComparatorList = new ArrayList<>(sortArguments);
+            int c = 0;
+            for (SortArgument sortArgument : sortArgumentComparatorList) {
+                if (c != 0) {
+                    return c;
+                } else {
+                    c = person1.compareTo(person2, sortArgument);
+                }
+            }
+            return c;
+        };
+        sortedPersons.setComparator(comparator);
     }
 
     @Override
