@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateBorrow;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -70,6 +71,16 @@ public class ParserUtil {
     public static Optional<Debt> parseDebt(Optional<String> debt) throws IllegalValueException {
         requireNonNull(debt);
         return debt.isPresent() ? Optional.of(new Debt(debt.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> dateBorrow} into an {@code Optional<dateBorrow>}
+     * if {@code dateBorrow} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DateBorrow> parseDateBorrow(Optional<String> dateBorrow) throws IllegalValueException {
+        requireNonNull(dateBorrow);
+        return dateBorrow.isPresent() ? Optional.of(new DateBorrow(dateBorrow.get())) : Optional.empty();
     }
 
     /**
