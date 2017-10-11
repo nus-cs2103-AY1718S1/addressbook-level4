@@ -34,11 +34,6 @@ public class UniquePropertyMap implements Iterable<Property> {
      * Creates a UniquePropertyMap using given properties.
      * Enforces no nulls.
      */
-    public UniquePropertyMap(Map<String, Property> properties) {
-        requireAllNonNull(properties);
-        internalMap.putAll(properties);
-    }
-
     public UniquePropertyMap(Set<Property> properties) throws DuplicatePropertyException {
         requireAllNonNull(properties);
 

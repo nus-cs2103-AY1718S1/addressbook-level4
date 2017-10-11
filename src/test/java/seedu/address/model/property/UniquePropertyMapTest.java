@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Rule;
@@ -25,19 +26,19 @@ public class UniquePropertyMapTest {
     }
 
     @Test
-    public void createPropertyMap_validButEmptyInput_successfullyCreated() {
-        HashMap<String, Property> myMap = new HashMap<>();
-        UniquePropertyMap propertyMap = new UniquePropertyMap(myMap);
+    public void createPropertyMap_validButEmptyInput_successfullyCreated() throws Exception {
+        Set<Property> mySet = new HashSet<>();
+        UniquePropertyMap propertyMap = new UniquePropertyMap(mySet);
 
         assertEquals(0, propertyMap.toSet().size());
     }
 
     @Test
     public void createPropertyMap_validNonEmptyInput_successfullyCreated() throws Exception {
-        HashMap<String, Property> myMap = new HashMap<>();
-        myMap.put("a", new Property("a", "some address"));
-        myMap.put("p", new Property("p", "12345678"));
-        UniquePropertyMap propertyMap = new UniquePropertyMap(myMap);
+        Set<Property> mySet = new HashSet<>();
+        mySet.add(new Property("a", "some address"));
+        mySet.add(new Property("p", "12345678"));
+        UniquePropertyMap propertyMap = new UniquePropertyMap(mySet);
 
         assertEquals(2, propertyMap.toSet().size());
     }
