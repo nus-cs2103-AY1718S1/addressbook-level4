@@ -91,15 +91,12 @@ public class ModelManager extends ComponentManager implements Model {
             return;
         }
 
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-
+        for (ReadOnlyPerson oldPerson : addressBook.getPersonList()) {
             Person newPerson = new Person(oldPerson);
             Set<Tag> newTags = newPerson.getTags()
                                         .stream()
                                         .filter(x -> !x.tagName.equals(tag.tagName))
                                         .collect(Collectors.toSet());
-
             newPerson.setTags(newTags);
 
             addressBook.updatePerson(oldPerson, newPerson);
@@ -109,7 +106,6 @@ public class ModelManager extends ComponentManager implements Model {
                                       .stream()
                                       .filter(x -> !x.tagName.equals(tag.tagName))
                                       .collect(Collectors.toSet());
-
         addressBook.setTags(newTags);
 
         indicateAddressBookChanged();
