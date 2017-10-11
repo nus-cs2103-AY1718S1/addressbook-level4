@@ -14,6 +14,15 @@ Role: Project Advisor
 
 '''
 
+=== https://github.com/grantcm[Grant Miller]
+image::grantcm.png[width="150", align="left"]
+
+Role: Integration, Code Quality, Testing
+
+In Charge of: Logic and Model
+
+'''
+
 === http://github.com/aali195[Ahmed Ali]
 image::aali195.jpg[width="150", align="left"]
 

@@ -38,6 +38,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== V2.0 Features
+
+Focused on increasing ease of use for addressbook
+
+[NOTE]
+====
+Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists.
+====
+
+
 == Features
 
 ====
