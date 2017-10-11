@@ -99,14 +99,4 @@ public class ModelManagerTest {
             }
         }
     }
-
-    @Test
-    public void tagColor() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-
-        //default tagcolor should be off
-        for (Tag tag : addressBook.getTagList()) {
-            assertTrue(tag.getTagColor().equals("grey"));
-        }
-    }
 }

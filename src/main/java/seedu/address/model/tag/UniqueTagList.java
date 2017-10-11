@@ -60,7 +60,7 @@ public class UniqueTagList implements Iterable<Tag> {
         } else if (!isOn) {
             setOffColor(tags);
         }
-
+        assert CollectionUtil.elementsAreUnique(internalList);
         internalList.setAll(tags);
     }
     public void setTags(Set<Tag> tags) {
