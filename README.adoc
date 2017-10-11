@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= ConnectUs Addressbook
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,13 +15,19 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* This is a desktop Address Book application. It has a GUI used for basic commands and a CLI (Command Line Interface) used for more complex commands.
 * It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
 * What's different from https://github.com/se-edu/addressbook-level3[level 3]:
 ** A more sophisticated GUI that includes a list  panel and an in-built Browser.
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* What's different from https://github.com/se-edu/addressbook-level4[level 4]:
+** Added a delete button to delete selected contacts.
+** Unknown commands are now shown with a red "Unknown Command" message in the console.
+** Tags can now be colour coded e.g. family = yellow, friends = green.
+** Added in remarks for each contact
+** Tags can now be filtered
 
 == Site Map
 
@@ -35,5 +41,7 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+
+* AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/
 
 == Licence : link:LICENSE[MIT]
