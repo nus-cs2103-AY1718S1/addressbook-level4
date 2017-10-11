@@ -24,7 +24,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Avatar> avatar;
-
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -108,7 +107,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Avatar> avatarProperty() { return avatar; }
+    public ObjectProperty<Avatar> avatarProperty() { return avatar; };
 
     @Override
     public Avatar getAvatar() { return avatar.get(); }
