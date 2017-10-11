@@ -41,11 +41,15 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * This is a method for loading person page
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX  + person.getAddress().toString().replaceAll(" ", "+").replaceAll(",", "+").replaceAll("#","+").replaceAll("-","+")
-        + GOOGLE_SEARCH_URL_SUFFIX);
-        //loadPage(GOOGLE_SEARCH_URL_PREFIX  + person.getAddress().toString().replaceAll(" ", "+").replaceAll(",", "+")
-        //+ GOOGLE_SEARCH_URL_SUFFIX);
+        loadPage(GOOGLE_SEARCH_URL_PREFIX  + person.getAddress().toString().replaceAll(" ",
+                "+").replaceAll(",", "+").replaceAll("#",
+                "+").replaceAll("-", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
         System.out.print(person.getAddress().toString());
     }
 

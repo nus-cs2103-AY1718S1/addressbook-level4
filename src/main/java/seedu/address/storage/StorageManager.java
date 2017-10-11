@@ -93,4 +93,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    // ================ TaskBook storage methods ==============================
+
+
 }
