@@ -721,17 +721,64 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to sort my contacts both by their first name or last name |
 
-|`* * *` |user |add a new person |
+|`* * *` |user |have a "comment" section for each contact |record personal/miscellaneous information about the person
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |export all saved contacts and print out  |refer to when I can't use the software
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add and create tags and add them to contacts |quickly find related personnels when needs be
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |add and create tags and add them to contacts |quickly find related personnels when needs be
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |be able to edit the contact details |update when my contacts change their particulars
+
+|`* * *` |user |have the option to favourite some contacts |retrieve the information of contacts that I will frequently access
+
+|`* * *` |user |able to search my contacts by tags |know my relationship with the contact
+
+|`* * *` |user |add a person's details |use the saved details to contact him/her
+
+|`* * *` |new user |use the graphical interface |easily perform operations
+
+|`* * *` |new user |see tutorial bubbles the first time I use the software |familiarise myself with the features
+
+|`* * *` |forgetful user |use only a small part of a person's details to find his or her contacts|
+
+|`* * *` |forgetful user |attach an image to a contact |remember his name / face later
+
+|`* * *` |salesperson |be able to store the birthday of my customers |remember their birthday
+
+|`* * *` |tutor with many new students each semester |be able add multiple students |update my address book quickly each new semester
+
+|`* * *` |salesperson |be able to email my contacts |update them with the latest products information
+
+|`* *` |user |export my address book to a readable file format (e.g. CSV, Excel spreadsheet)|share the address book contacts with other people
+
+|`* *` |user |link contacts with URLs |easily access their social media profiles
+
+|`* *` |user / businessman |able to create "events" where I set the time/location/content and invite contacts to attend the event |
+
+|`* *` |user |open a sending mail window by clicking on a contact's address |email him / her faster
+
+|`* *` |user |quickly exports a group of contacts into .vcf |load them onto my smartphone
+
+|`* *` |user |have different themes for the address book |use one that suits my preference
+
+|`* *` |main tutor with many assistant tutors |merge the different address book of my assistant tutors |have all the students contact
+
+|`* *` |tutor |keep track of my student's grades as a part of their contact information (maybe the information should be tucked in a relatively "hidden" section)|
+
+|`* *` |tutor |have an option to blast emails to a group of contacts |disseminate informations quickly
+
+|`* *` |tutor or a businessperson |have an option to quickly generate a visual timetable |easily refer to to make new appointment / tutorial slots
+
+|`* *` |tutor of many students |see a notification when I try to add an already occupied time slot |my timetable won't clash
+
+|`* *` |tutor / businessman |have an option to set an alarm before a meeting / tutorial slot |won't forget
+
+|`* *` |salesperson |receive notification of my contacts' birthday |remember to send them well wishes
+
 |=======================================================================
 
 {More to be added}
@@ -742,6 +789,88 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a new person
+2.  User gives details of the information to be added, following the appropriate formatting
+3.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user does not follow the specified format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3a. The given name already exists.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List persons
+
+*MSS*
+
+1.  User requests to list contacts.
+2.  AddressBook lists all persons in the book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The book is empty.
++
+Use case ends.
+
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit a person
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.	AddressBook updates that person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The AddressBook is empty.
++
+Use case ends.
+
+* 3a. The index provided is invalild
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3b. The user provides no information to update
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3c. The iuser violates the specified format
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case ends.
+
 === Use case: Delete person
 
 *MSS*
@@ -775,12 +904,7 @@ Use case resumes at step 2.
 1.  User requests to add multiple persons from a `.txt` file
 2.  AddressBook parse persons' particulars from file
 3.  AddressBook adds all persons in the file
-+
-Use case ends.
 
-*Extensions*
-
-[none]
 * 2a. The file does not exist.
 +
 ** 2a1. AddressBook shows an error message.
@@ -802,7 +926,39 @@ Use case ends.
 +
 Use case ends.
 
-{More to be added}
+=== Use case:  History
+
+*MSS*
+
+1.  User requests to list the history of commands
+2.  AddressBook lists the history of commands
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+
+* 2a. There are no previous commands
++
+Use case ends.
+
+=== Use case:  Undo
+
+*MSS*
+
+1.  User requests to undo the previous command
+2.  AddressBook undoes the previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The previous command is not an undoable command (add, delete, edit, clear).
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -810,11 +966,52 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be backwards compatible with data stored by earlier version.
+.  Software should be well tested.
+.  Should be able to be used by a novice user who had never use address book application before.
+.  Should be able to respond to any commands within 5 seconds.
+.  Should be able to recover records of address book in event of program crash.
+.  Should have a well documented user guide to facilitate novice user.
+.  The data should be stored locally.
 
 {More to be added}
 
 [appendix]
 == Glossary
+
+[[address-book]]
+Address Book
+
+....
+Collection of all persons data used by application
+....
+
+[[person]]
+Person
+
+....
+Represents a particular collection of data associated with one entry in the address book.
+....
+
+[[command]]
+Command
+....
+An action executed by the application on the address book.
+....
+
+[[keyword]]
+Keyword
+
+....
+Specifier used to query data, (ie. part of name, phone number, address).
+....
+
+[[Tag]]
+Tag
+
+....
+A custom specifier to categorize contacts by similarity, (ie. 'friends', 'family', 'colleagues').
+....
 
 [[mainstream-os]]
 Mainstream OS
