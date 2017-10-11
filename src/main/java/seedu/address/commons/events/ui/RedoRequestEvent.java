@@ -1,4 +1,14 @@
 package seedu.address.commons.events.ui;
 
-public class RedoRequestEvent {
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * Indicates a request for the redo of a command
+ */
+public class RedoRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
