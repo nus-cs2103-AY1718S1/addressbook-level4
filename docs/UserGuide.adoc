@@ -239,6 +239,37 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Changing a person's remark : `remark`
+
+Changes the remark of an existing person in the address book. +
+Format: `remark INDEX r/[Remark]` +
+Alias: `re`
+
+* `list` +
+`remark 1 r/Loves beer` +
+Changes the remark of the 1st person in the address book to "Loves beer".
+
+* `find Tony` +
+`remark 2 r/Going overseas` +
+Changes the remark of the 2nd person returned by the `find` command to "Going overseas".
+
+=== Viewing statistics : `statistics`
+View a monthly breakdown on the number of persons added to the address book. +
+Format: `statistics` +
+Alias: `st`
+
+=== Viewing contacts with birthday in current month : `birthday`
+View a list of persons with birthdays in the current month +
+Format: `birthday` +
+Alias: `bd`
+
+****
+* Changes the remark of the person identified by the index number used in the last
+person listing.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The contents of the remark can be empty.
+
 === Increase/decrease font size : `size`
 
 Increases the font size by the number given, in pts. +
@@ -412,6 +443,10 @@ e.g. `findregex Joh?n`
 * *Quick Help* : `quickhelp`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Remark* : `remark INDEX r/REMARK` +
+e.g.`remark 4 r/new remark`
+* *Statistics* : `statistics`
+* *Birthday* : `birthday`
 * *Font size* : `size AMOUNT` +
 e.g. `size 3`
 * *History* : `history`
