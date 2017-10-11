@@ -97,8 +97,8 @@ public class ModelManager extends ComponentManager implements Model {
                                         .stream()
                                         .filter(x -> !x.tagName.equals(tag.tagName))
                                         .collect(Collectors.toSet());
-            newPerson.setTags(newTags);
 
+            newPerson.setTags(newTags);
             addressBook.updatePerson(oldPerson, newPerson);
         }
 
@@ -106,8 +106,8 @@ public class ModelManager extends ComponentManager implements Model {
                                       .stream()
                                       .filter(x -> !x.tagName.equals(tag.tagName))
                                       .collect(Collectors.toSet());
-        addressBook.setTags(newTags);
 
+        addressBook.setTags(newTags);
         indicateAddressBookChanged();
     }
 
