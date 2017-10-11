@@ -18,7 +18,7 @@ public class TitleTest {
         assertTrue(Title.isValidTitle("12345")); // numbers only
         assertTrue(Title.isValidTitle("nus 50th anniversary")); // alphanumeric characters
         assertTrue(Title.isValidTitle("CS2103 MIDTERM")); // with capital letters
-        // long names
+        // long names with symbols
         assertTrue(Title.isValidTitle("National University of Singapore: 2020 Homecoming Graduation Ceremony"));
-   }
+    }
 }

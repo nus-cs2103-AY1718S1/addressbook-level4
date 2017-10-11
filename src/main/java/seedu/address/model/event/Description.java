@@ -10,13 +10,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Description {
     public static final String MESSAGE_DESCRIPTION_CONSTRAINTS =
-            "Event Descriptions should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Event descriptions should not be blank";
 
     /*
      * The first character of the Description must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DESCRIPTION_VALIDATION_REGEX = "[\\p{Alnum}]*";
+    public static final String DESCRIPTION_VALIDATION_REGEX = ".*[^ ].*";
 
     public final String description;
 

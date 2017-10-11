@@ -21,7 +21,6 @@ public class Event implements ReadOnlyEvent {
     private ObjectProperty<Title> title;
     private ObjectProperty<Timing> timing;
     private ObjectProperty<Description> description;
-
     private ObjectProperty<UniqueTagList> tags;
 
     /**
