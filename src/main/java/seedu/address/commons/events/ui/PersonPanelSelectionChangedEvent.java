@@ -10,9 +10,11 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final PersonCard newSelection;
+    private final int selectionIndex;
 
-    public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
+    public PersonPanelSelectionChangedEvent(PersonCard newSelection, int selectionIndex) {
         this.newSelection = newSelection;
+        this.selectionIndex = selectionIndex;
     }
 
     @Override
@@ -23,4 +25,5 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
     public PersonCard getNewSelection() {
         return newSelection;
     }
+    public int getSelectionIndex() { return  selectionIndex; }
 }
