@@ -4,10 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+AddressBookX was developed by the team W13B3 from CS2103T AY17/18, National University of Singapore . +
 
 == Project Team
 
@@ -15,43 +12,34 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::derrrickchua.jpg[width="150", align="left"]
 {empty}[https://github.com/derrickchua[github]]
 
-Role: Project Member
-Responsibilites: UI
+Role: Project Member +
+Responsibilities: UI
 
 '''
 
 === Lim Yang Sheng
 image::LimYangSheng.jpg[width="150", align="left"]
-{empty}[http://github.com/LimYangSheng[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/LimYangSheng[github]]
 
 Role: Project Member +
 Responsibilities: Storage
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Li Zeyong
+image::newalter.jpg[width="150", align="left"]
+{empty}[http://github.com/newalter[github]]
 
-Role: Developer +
-Responsibilities: Data
+Role: Project Member +
+Responsibilities: Logic, Code Quality
 
 '''
 
 === Lee Guo Sheng Alexander
 image::alexanderlee.jpg[width="150", align="left"]
-{empty}[http://github.com/alexanderleegs[github]] [<<alexanderlee#, portfolio>>]
+{empty}[http://github.com/alexanderleegs[github]]
 
 Role: Developer +
 Responsibilities: Model, Deliverables and deadlines
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
 
 '''
