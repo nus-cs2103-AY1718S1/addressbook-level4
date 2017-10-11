@@ -36,7 +36,10 @@ public class SortCommandParser implements Parser<SortCommand> {
                     SortCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.size() < 1) {
+        /**
+         *  Invalid command arguments would result in a loaded preamble
+         */
+        if (!argMultimap.getPreamble().equals("")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 

@@ -18,7 +18,7 @@ public class SortCommand extends UndoableCommand {
     public static final String REVERSE_ORDER = "r";
 
     public static final String MESSAGE_SORT_PERSON_SUCCESS = "Sorted address book by %1$s in %2$s order.";
-    public static final String MESSAGE_MULTIPLE_ATTRIBUTE_ERROR = "Only one attribute can be entered.";
+    public static final String MESSAGE_MULTIPLE_ATTRIBUTE_ERROR = "Only one field can be entered.";
     public static final String MESSAGE_EMPTY_LIST = "No person(s) to sort.";
 
     private static final String PREFIX_NAME_FIELD = "n/";
@@ -31,7 +31,7 @@ public class SortCommand extends UndoableCommand {
             + ": Sorts persons either in ascending or descending order (ascending by default)"
             + " according to prefix specified (name by default)\n"
             + "Parameters: "
-            + "[PREFIX\\[r]]\n"
+            + "[PREFIX/[r]]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_EMAIL_FIELD + REVERSE_ORDER;
 
