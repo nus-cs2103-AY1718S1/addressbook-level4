@@ -10,7 +10,6 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-= {empty}
 === Enhancement Added: Find by close words (fuzzy searching) and find by tags
 
 ==== External behavior
@@ -38,7 +37,6 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
 
 ---
 
-= {empty}
 === Enhancement Proposed: Sortable parameters in commands augmenting list view
 
 To allow users to operate on a sorted list for longer displayed lists by the `list` or `find` command.
@@ -51,7 +49,6 @@ https://ci.appveyor.com/project/ZY-Ang/main[AppVeyor],
 https://coveralls.io/github/CS2103AUG2017-W11-B2/main?branch=master[Coveralls] and
 https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 
-= {empty}
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 
 {Optionally (not graded), you may include other projects in your portfolio.}
