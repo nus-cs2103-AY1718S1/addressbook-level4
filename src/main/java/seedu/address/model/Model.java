@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -48,5 +49,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Sort the given list according to alphabetical order
+     * @throws NullPointerException if {@code contactList} is null.
+     */
+    Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList);
 
 }
