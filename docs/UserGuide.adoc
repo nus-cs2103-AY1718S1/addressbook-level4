@@ -72,6 +72,30 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+Shows a list of all distinct addresses of all persons in the address book. +
+Format: `List address`
+
+Shows a list of all distinct emails of all persons in the address book. +
+Format: `List email`
+
+Shows a list of all distinct phones of all persons in the address book. +
+Format: `List phone`
+
+=== View all persons with the specified attribute: `view`
+
+Finds all persons with the specified attribute value. +
+Format: `view INDEX`
+****
+* You must list
+* If you call view after command `list`, it will only show the specified person.
+****
+
+Examples:
+
+* `list address` +
+`view 2` +
+find all persons with the second address shown in the address list.
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -85,12 +109,23 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
+Edits an existing attribute(address/email/phone) in the address book. +
+Format: `edit INDEX [ADDRESS/EMAIL/PHONE]...`
+
+****
+* Edits the attribute at the specified `INDEX`. The index refers to the index number shown in the last attribute listing. The index *must be a positive integer* 1, 2, 3, ...
+* Requires to list by that specified attribute(address/email/phone) first.
+* All persons with the specifed attribute value will be updated to with the attribute of input values.
+****
+
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 Clementi Ave 3` +
+Edits all the persons with the third address shown in the address list to be `Clementi Ave 3` (Assume user types `list address` first).
 
 === Locating persons by name: `find`
 
@@ -123,6 +158,17 @@ Format: `delete INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+Deletes all the persons with specified attribute value in the attribute list from the address book. +
+Format: `delete INDEX`
+
+****
+* Deletes all the persons with specified attribute value at the specified `INDEX`.
+* The index refers to the index number shown in the most recent attribute listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+
+
 Examples:
 
 * `list` +
@@ -131,6 +177,10 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list address` +
+`delete 2` +
+Deletes all the persons who with the second address value shown in the address list.
+
 
 === Selecting a person : `select`
 

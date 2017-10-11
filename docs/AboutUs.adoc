@@ -54,3 +54,39 @@ Role: Developer +
 Responsibilities: UI
 
 '''
+
+=== Ang Tian Lan
+image::tianlan.jpg[width="150", align="left"]
+{empty} [https://github.com/angtianlannus[github]]
+
+Role: Developer +
+Responsibilities: Storage, SortCommand, part of documentation
+
+'''
+
+=== Cao Liang
+image::liang_profile_pic.jpeg[width="150", align="left"]
+{empty}[https://github.com/caoliangnus[github]] [<<Cao Liang#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Data
+
+'''
+
+=== Wang Junming
+image::WangJunming.jpg[width="150", align="left"]
+{empty}[https://github.com/junming403[github]] [<<Wang Junming#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Full-stack
+
+'''
+
+=== Chew Chaow Thong Daniel
+image::DanielChew.jpg[width="150", align="left"]
+{empty}[https://github.com/cctdaniel[github]] [<<Chew Chaow Thong Daniel#, portfolio>>]
+
+Role: Developer +
+Responsibilities: UI
+
+'''
