@@ -72,6 +72,27 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorting persons [Coming in v2.0]: `sort`
+
+Sorts the list of persons in the last person listing. +
+Format: `sort SORT_CRITERIA`
+****
+* Sorts the list of persons in the last person listing based on the specified `SORT_CRITERIA`.
+* `SORT_CRITERIA` must be one of the following options:
+** `name` - Sorts contacts by their name in alphabetical order.
+** `tag` - Sorts contacts by tags in alphabetical order. Contacts with multiple tags will appear more than once.
+** `recent` - Sorts contacts based on how recently they are selected.
+****
+
+Examples:
+
+* `list` +
+`sort name` +
+lists all contacts in the address book, sorted by name
+* `find bob` +
+`sort tag` +
+lists all the contacts that contain the keyword `bob`, sorted based on their tags.
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -92,7 +113,9 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating contacts: `find`
+
+==== To find a contact by name:
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -112,7 +135,20 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+[[find-by-tag]]
+==== To find a contact by tag [Coming in v2.0]:
+
+Finds persons who are assigned the input tag. +
+Format: `find t/TAG`
+
+Examples:
+
+* `find t/colleagues` +
+Returns all contacts with the tag `colleagues`
+
+=== Deleting contacts: `delete`
+
+==== To delete a single person:
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -131,6 +167,20 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+==== To delete contacts with a certain tag [Coming in v2.0]:
+
+Deletes all contacts that have a certain tag from the address book. +
+Format: `delete t/TAG`
+
+[NOTE]
+All contacts with the input tag will be deleted.
+Make sure that none of the contacts that you do not intend to delete have the input tag.
+You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
+
+Examples:
+* `delete t/temp`
+Deletes all contacts with the tag `temp`
 
 === Selecting a person : `select`
 
@@ -212,10 +262,45 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Exporting contact data: `export`
+
+Exports contact data to an external file. +
+Format: `export FILE_PATH`
+
+****
+* Exports contact data to the location specified by `FILE_PATH`. The user must have *write access* to the specified file path.
+* The input `FILE_PATH` must be an absolute file path.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+****
+
+Examples:
+
+* `export /Users/seedu/Documents/exportData.xml` +
+exports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+=== Importing contact data: `import`
+
+Imports contact data from an external file. +
+Format: `import FILE_PATH`
+
+****
+* Imports contact data from data file at the location specified by `FILE_PATH`. The user must have *read access* to the specified file path.
+* The input `FILE_PATH` must be an absolute file path, e.g.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+****
+
+Examples:
+
+* `import /Users/seedu/Documents/exportData.xml` +
+imports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
 
 === Exiting the program : `exit`
 
@@ -226,6 +311,23 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Synchronizing with the cloud [Coming in v2.0]:
+
+==== Configuring your cloud account: `sync`
+
+Configures the addressbook to synchronize with the cloud using the given user credentials. +
+Format: `sync u/USERNAME p/PASSWORD`
+
+==== Synchronizing
+Address book data is automatically synchronized with cloud when an internet connection is available. +
+There is no need to synchronize manually.
+
+==== Removing your cloud account: `unsync`
+
+Stops synchronizing of contact information with any previously configured cloud accounts. +
+Format: `unsync`
+
 
 == FAQ
 
