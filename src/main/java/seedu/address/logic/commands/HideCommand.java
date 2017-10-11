@@ -9,6 +9,9 @@ import seedu.address.model.person.NameIsPrivatePredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Hides a person identified using it's last displayed index from the address book.
+ */
 public class HideCommand extends Command {
 
     public static final String COMMAND_WORD = "hide";
