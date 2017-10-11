@@ -11,30 +11,28 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts Address Book contacts according to specified field.\n"
-            + "Parameters: 'name', 'phone', or 'email'\n"
+            + "Parameters: TYPE (must be either 'name', 'phone, or 'email')\n"
             + "Example: " + COMMAND_WORD + " name";
 
-    public String MESSAGE_SORT_SUCCESS = "Sorted all persons by ";
+    public static final String MESSAGE_SORT_SUCCESS = "Sorted all persons by %s";
 
     private String sortType;
 
     public SortCommand(String type) {
         this.sortType = type;
-        MESSAGE_SORT_SUCCESS = MESSAGE_SORT_SUCCESS + type;
     }
 
     @Override
     public CommandResult execute() {
         model.sort(sortType);
 
-        //because "sorted by phone" sounds weird
-        if ("phone".equals(sortType)) {
-            sortType = sortType + " number";
-        }
-
         //lists all contacts after sorting
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SORT_SUCCESS);
+        if (!("phone".equals(sortType))) {
+            return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, sortType));
+        } else {
+            return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, (sortType + " number")));
+        }
     }
 
     @Override
