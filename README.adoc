@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= Personal Information Management Application (PIMP)
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
