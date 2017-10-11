@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.TaskBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -75,7 +76,10 @@ public class TypicalPersons {
         return ab;
     }
 
-    public static TaskBook getTypicalAddressbook
+    public static TaskBook getTypicalTaskbook() {
+        TaskBook tb = new TaskBook();
+        return tb;
+    }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
