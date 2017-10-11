@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/TravisPhey/main //made edits
+:repoURL: https://github.com/CS2103AUG2017-T10-B4/main //made edits
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
