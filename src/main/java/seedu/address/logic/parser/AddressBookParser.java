@@ -102,6 +102,10 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new UndoCommand();
 
+        case UnbanCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new UnbanCommandParser().parse(arguments);
+
         case RedoCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new RedoCommand();
