@@ -1,7 +1,5 @@
 package guitests;
 
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
 import java.util.concurrent.TimeoutException;
 
 import org.junit.After;
@@ -21,17 +19,7 @@ import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.Password;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.Username;
-import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.testutil.TypicalPersons;
 
 /**
