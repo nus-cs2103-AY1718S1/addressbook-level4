@@ -53,9 +53,13 @@ public class UniquePropertyMap implements Iterable<Property> {
     /**
      * Replaces all the properties in this map with those in the argument property map.
      */
-    public void setProperties(Map<String, Property> properties) {
+    public void setProperties(Set<Property> properties) throws DuplicatePropertyException {
         requireAllNonNull(properties);
-        internalMap.putAll(properties);
+        internalMap.clear();
+
+        for (Property property: properties) {
+            add(property);
+        }
     }
 
     /**
