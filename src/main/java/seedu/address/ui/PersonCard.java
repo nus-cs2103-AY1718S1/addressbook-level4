@@ -38,7 +38,6 @@ public class PersonCard extends UiPart<Region> {
      */
 
 
-
     //tagColor matches a specific tag with a color
     private static ArrayList<String> colors = new ArrayList<String>(
             Arrays.asList("red", "blue", "orange", "brown", "green", "pink", "black", "grey"));
@@ -49,6 +48,8 @@ public class PersonCard extends UiPart<Region> {
 
     @FXML
     private HBox cardPane;
+    @FXML
+    public ImageView picture;
     @FXML
     private Label name;
     @FXML
@@ -112,9 +113,11 @@ public class PersonCard extends UiPart<Region> {
             try {
                 person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
                 ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+                FileInputStream fileStream = new FileInputStream(person.getPicture().getPictureUrl());
+                Image newPicture = new Image(fileStream);
+                picture.setImage(newPicture);
             } catch (Exception e) {
-                String curDir = System.getProperty("user.dir");
-                System.out.println(e + "Current Directory: " + curDir);
+                System.out.println(e + "No file valid chosen");
             }
         } else {
             System.out.println("Invalid File");
