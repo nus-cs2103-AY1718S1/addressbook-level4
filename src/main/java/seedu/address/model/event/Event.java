@@ -30,7 +30,8 @@ public class Event implements ReadOnlyEvent {
         requireAllNonNull(title, timing, description, tags);
         this.title = new SimpleObjectProperty<>(title);
         this.timing = new SimpleObjectProperty<>(timing);
-        this.description = new SimpleObjectProperty<>(description);
+        this.description = new SimpleObjectProperty<>(description
+        );
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
