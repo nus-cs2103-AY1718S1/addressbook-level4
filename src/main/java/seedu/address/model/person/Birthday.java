@@ -25,7 +25,7 @@ public class Birthday {
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        if (birthday == "") {
+        if (birthday.equals("")) {
             this.value = birthday;
         } else {
             String trimmedBirthday = birthday.trim();
