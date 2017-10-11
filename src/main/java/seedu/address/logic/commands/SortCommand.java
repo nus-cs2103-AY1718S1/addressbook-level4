@@ -37,4 +37,11 @@ public class SortCommand extends Command {
         return new CommandResult(MESSAGE_SORT_SUCCESS);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && this.sortType.equals(((SortCommand) other).sortType)); // state check
+    }
+
 }
