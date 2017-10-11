@@ -18,10 +18,6 @@ import seedu.address.model.UserPrefs;
 
 public class SortCommandTest {
     private Model model;
-    private SortCommand sortCommandName;
-    private SortCommand sortCommandPhone;
-    private SortCommand sortCommandEmail;
-
 
     @Before
     public void setUp() {
@@ -29,8 +25,8 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByName() {
-        sortCommandName = new SortCommand("name");
+    public void execute_sortByName_success() throws Exception {
+        SortCommand sortCommandName = new SortCommand("name");
         sortCommandName.setData(model, new CommandHistory(), new UndoRedoStack());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -41,8 +37,8 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByPhone() {
-        sortCommandPhone = new SortCommand("phone");
+    public void execute_sortByPhone_success() throws Exception {
+        SortCommand sortCommandPhone = new SortCommand("phone");
         sortCommandPhone.setData(model, new CommandHistory(), new UndoRedoStack());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -53,8 +49,8 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByEmail() {
-        sortCommandEmail = new SortCommand("email");
+    public void execute_sortByEmail_success() throws Exception {
+        SortCommand sortCommandEmail = new SortCommand("email");
         sortCommandEmail.setData(model, new CommandHistory(), new UndoRedoStack());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
