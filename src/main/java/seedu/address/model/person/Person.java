@@ -146,7 +146,9 @@ public class Person implements ReadOnlyPerson {
     public void removeTag(String str) {
         Set<Tag> tagset = getTags();
         for (Tag t : tagset) {
-            if (t.isSame(str))  tagset.remove(t);
+            if (t.isSame(str)){
+                tagset.remove(t);
+            }
         }
         setTags(tagset);
     }
