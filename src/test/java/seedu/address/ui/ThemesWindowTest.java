@@ -30,4 +30,5 @@ public class ThemesWindowTest extends GuiUnitTest {
         URL expectedHelpPage = ThemesWindow.class.getResource(THEMES_FILE_PATH);
         assertEquals(expectedHelpPage, themesWindowHandle.getLoadedUrl());
     }
+
 }
