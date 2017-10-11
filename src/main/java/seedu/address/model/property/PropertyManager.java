@@ -1,11 +1,11 @@
-package seedu.address.model.person;
+package seedu.address.model.property;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import seedu.address.model.person.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 /**
  * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the
@@ -16,6 +16,8 @@ import seedu.address.model.person.exceptions.DuplicatePropertyException;
  *
  * Customize properties include all properties except the pre-loaded ones, which are added by the following command:
  * <pre>{@code config --add-property <property_name> ...}</pre>
+ *
+ * TODO: Should we extend {@link seedu.address.commons.core.ComponentManager} as superclass?
  */
 public class PropertyManager {
     // A collection of the short names of all available properties.

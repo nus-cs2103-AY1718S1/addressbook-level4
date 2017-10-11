@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.property;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 public class PropertyManagerTest {
     @Rule

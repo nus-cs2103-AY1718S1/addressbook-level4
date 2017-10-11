@@ -33,7 +33,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.PropertyManager;
+import seedu.address.model.property.PropertyManager;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 

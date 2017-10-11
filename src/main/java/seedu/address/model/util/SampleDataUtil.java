@@ -6,13 +6,13 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PropertyNotFoundException;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.Email;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.Phone;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**

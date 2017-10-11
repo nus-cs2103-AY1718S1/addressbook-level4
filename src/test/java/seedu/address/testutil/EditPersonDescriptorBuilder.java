@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PropertyNotFoundException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.

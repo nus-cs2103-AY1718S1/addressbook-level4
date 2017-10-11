@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.property;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.exceptions.PropertyNotFoundException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 public class PropertyTest {
     @Rule
