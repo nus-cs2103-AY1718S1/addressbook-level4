@@ -142,8 +142,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void getUi(Ui ui) {
-            fail("This method should not be called.");
+        public void setTagColor(boolean isOn, String tag, String color) {
+            fail("This method should not be called");
         }
     }
 

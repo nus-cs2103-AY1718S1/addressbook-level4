@@ -31,11 +31,11 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
-        assertTrue(uniqueTagList.contains(new Tag("Test1")));
-        assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa")));
+        assertTrue(uniqueTagList.contains(new Tag("Test1","")));
+        assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa","")));
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertTrue(tag.getTagColor().equals("#dcdcdc"));
+            assertTrue(tag.getTagColor().equals("grey"));
         }
 
         uniqueTagList.setTagsColorOn();
@@ -45,7 +45,7 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertFalse(tag.getTagColor().equals("#dcdcdc"));
+            assertFalse(tag.getTagColor().equals("grey"));
         }
     }
 }
