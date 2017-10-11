@@ -72,7 +72,7 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
-== Sorting the list of persons : `sort`
+=== Sorting the list of persons : `sort`
 
 Sorts by specified type and shows a list of persons in the address book. +
 Format: `sort [type]`
