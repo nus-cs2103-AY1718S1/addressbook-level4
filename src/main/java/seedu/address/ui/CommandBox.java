@@ -26,6 +26,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private boolean commandIsInvalid;
 
     @FXML
     private TextField commandTextField;
@@ -101,22 +102,22 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            final boolean isInvalid = false;
+            commandIsInvalid = false;
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, isInvalid));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, commandIsInvalid));
 
         } catch (CommandException | ParseException e) {
-            final boolean isInvalid = true;
+            commandIsInvalid = true;
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage(), isInvalid));
+            raise(new NewResultAvailableEvent(e.getMessage(), commandIsInvalid));
         }
     }
 
