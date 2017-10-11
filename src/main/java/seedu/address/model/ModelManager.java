@@ -58,6 +58,11 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    @Override
+    public void sortContact() {
+        addressBook.sort();
+    }
+
     /**
      * Raises an event to indicate the model has changed
      */
