@@ -1,8 +1,8 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.levenshteinDistance;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.commons.util.StringUtil.levenshteinDistance;
 
 import java.util.Collections;
 import java.util.List;
@@ -129,27 +129,26 @@ public class Person implements ReadOnlyPerson {
      * If no conditions are triggered, the method returns false.
      *
      * @param keyWords for searching
-     * @return {@code true} if the name matches or is close to any keyWord,
-     * {@code false} otherwise.
+     * @return {@code true} if the name is close to any keyWord,
+     *         {@code false} otherwise.
      */
     @Override
     public boolean isNameCloseToAnyKeyword(List<String> keyWords) {
-        final List<String> wordsInName = getName().getWordsInName();
-        for (String nameWord : wordsInName) {
-            if (nameWord.length() >= FIND_NAME_GLOBAL_TOLERANCE) {
-                for (String keyWord : keyWords) {
-                    if (levenshteinDistance(nameWord, keyWord) <= FIND_NAME_DISTANCE_TOLERANCE) {
-                        return true;
-                    }
-                }
-            } else {
-                if (keyWords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(getName().fullName, keyword))) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return getName().getWordsInName().stream()
+                .anyMatch(nameWord -> nameWord.length() >= FIND_NAME_GLOBAL_TOLERANCE && keyWords.stream()
+                        .anyMatch(keyWord -> levenshteinDistance(nameWord, keyWord) <= FIND_NAME_DISTANCE_TOLERANCE));
+    }
+
+    /**
+     * Returns whether a person's name matches any of the specified keywords
+     * @param keyWords for searching
+     * @return {@code true} if the name matches any keyWord,
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean isNameMatchAnyKeyword(List<String> keyWords) {
+        return keyWords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(getName().fullName, keyword));
     }
 
     /**
@@ -168,6 +167,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public boolean isSearchKeyWordsMatchAnyData(List<String> keyWords) {
         return isNameCloseToAnyKeyword(keyWords)
+                || isNameMatchAnyKeyword(keyWords)
                 || isTagSetJointKeywordSet(keyWords);
     }
 
