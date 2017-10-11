@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -80,6 +81,8 @@ public class ParserUtil {
             newDate = df.parse(date.get());
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (NoSuchElementException e){
+
         }
         return date.isPresent() ? Optional.of(newDate) : Optional.empty();
     }
