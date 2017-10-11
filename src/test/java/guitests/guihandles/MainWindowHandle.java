@@ -35,7 +35,6 @@ public class MainWindowHandle extends StageHandle {
     public MainWindowHandle(Stage stage) {
         super(stage);
 
-        // Have to login first
         modelManager = new ModelManager();
         try {
             login();
@@ -47,7 +46,7 @@ public class MainWindowHandle extends StageHandle {
                 browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
                 statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
             });
-        } catch(IllegalValueException ive) {
+        } catch (IllegalValueException ive) {
             ive.printStackTrace();
         } catch (CommandException ce) {
             ce.printStackTrace();
