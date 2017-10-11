@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 
 import java.util.logging.Logger;
 
@@ -48,23 +47,23 @@ public class ResultDisplay extends UiPart<Region> {
 
     private void setFontSize(String userPref) {
         switch (userPref) {
-        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+        case FONT_SIZE_XSMALL:
             resultDisplay.setStyle("-fx-font-size: x-small;");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+        case FONT_SIZE_SMALL:
             resultDisplay.setStyle("-fx-font-size: small;");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+        case FONT_SIZE_NORMAL:
             resultDisplay.setStyle("-fx-font-size: normal;");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+        case FONT_SIZE_LARGE:
             resultDisplay.setStyle("-fx-font-size: x-large;");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+        case FONT_SIZE_XLARGE:
             resultDisplay.setStyle("-fx-font-size: xx-large;");
             break;
 

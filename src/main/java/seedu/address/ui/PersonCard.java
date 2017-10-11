@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -157,23 +156,23 @@ public class PersonCard extends UiPart<Region> {
 
     private void setFontSize(String userPref) {
         switch (userPref) {
-        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+        case FONT_SIZE_XSMALL:
             setFontSizeHelper("x-small");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+        case FONT_SIZE_SMALL:
             setFontSizeHelper("small");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+        case FONT_SIZE_NORMAL:
             setFontSizeHelper("normal");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+        case FONT_SIZE_LARGE:
             setFontSizeHelper("x-large");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+        case FONT_SIZE_XLARGE:
             setFontSizeHelper("xx-large");
             break;
 
