@@ -47,4 +47,11 @@ public class BanCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_BAN_PERSON_SUCCESS, personToBan));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BanCommand // instanceof handles nulls
+                && this.targetIndex.equals(((BanCommand) other).targetIndex)); // state check
+    }
 }

@@ -20,7 +20,7 @@ public class UnbanCommand extends UndoableCommand{
             + ": Unban a person identified by the index number used in the last person listing from blacklist.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_BAN_PERSON_SUCCESS = "Removed person from blacklist: %1$s";
+    public static final String MESSAGE_UNBAN_PERSON_SUCCESS = "Removed person from blacklist: %1$s";
 
     private final Index targetIndex;
 
@@ -45,6 +45,13 @@ public class UnbanCommand extends UndoableCommand{
             assert false : "The target person is not in blacklist";
         }
 
-        return new CommandResult(String.format(MESSAGE_BAN_PERSON_SUCCESS, personToUnban));
+        return new CommandResult(String.format(MESSAGE_UNBAN_PERSON_SUCCESS, personToUnban));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UnbanCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UnbanCommand) other).targetIndex)); // state check
     }
 }
