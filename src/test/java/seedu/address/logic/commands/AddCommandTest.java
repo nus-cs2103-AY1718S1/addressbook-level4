@@ -141,7 +141,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList){
+        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
             fail("This method should not be called.");
             return false;
         }

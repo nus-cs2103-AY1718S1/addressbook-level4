@@ -38,7 +38,7 @@ public class ModelManagerTest {
      */
 
     @Test
-    public void sortPersonByName_validSort_success() throws Exception{
+    public void sortPersonByName_validSort_success() throws Exception {
         Person inputPerson1 = new PersonBuilder().withName("YING ZHENG").build();
         Person inputPerson2 = new PersonBuilder().withName("JACOB").build();
         Person inputPerson3 = new PersonBuilder().withName("VIVEK").build();

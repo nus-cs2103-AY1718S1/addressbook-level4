@@ -24,7 +24,8 @@ public class SortCommand extends Command {
 
     private ArrayList<ReadOnlyPerson> contactList;
 
-    public SortCommand(){
+
+    public SortCommand() {
         contactList = new ArrayList<>();
     }
 
@@ -32,7 +33,7 @@ public class SortCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isNotEmpty = model.sortPersonByName(contactList);
-        if( isNotEmpty == false){
+        if (isNotEmpty == false) {
             return new CommandResult(MESSAGE_EMPTY_LIST);
         }
         return new CommandResult(MESSAGE_SUCCESS);

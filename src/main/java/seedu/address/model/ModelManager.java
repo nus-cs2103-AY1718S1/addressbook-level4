@@ -94,7 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
 
-        if(filteredPersons.size() == 0){
+        if (filteredPersons.size() == 0) {
             return false;
         }
         contactList.addAll(filteredPersons);
