@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Place {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+            "Places can take any values, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -48,8 +48,8 @@ public class Place {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.person.Address // instanceof handles nulls
-                && this.value.equals(((seedu.address.model.person.Address) other).value)); // state check
+                || (other instanceof seedu.address.model.meeting.Place // instanceof handles nulls
+                && this.value.equals(((seedu.address.model.meeting.Place) other).value)); // state check
     }
 
     @Override

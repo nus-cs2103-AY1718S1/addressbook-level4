@@ -1,18 +1,12 @@
 package seedu.address.storage;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-import java.util.Date;
-//import java.util.HashSet;
 import java.util.List;
-//import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
@@ -60,18 +54,10 @@ public class XmlAdaptedMeeting {
     public Meeting toModelType() throws IllegalValueException {
 
         final NameMeeting name = new NameMeeting(this.name);
+        final DateTime dateTime = new DateTime(this.date);
         final Place place = new Place(this.place);
-        //convert String date to Long Date
-        DateFormat df = new SimpleDateFormat("ddMMyyyy HH:mm");
-        Date newDate = new Date();
-        try {
-            newDate = df.parse(this.date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        final Date date = newDate;
 
-        return new Meeting(name, date, place);
+        return new Meeting(name, dateTime, place);
     }
 
 }

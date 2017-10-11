@@ -4,14 +4,14 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
-import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.NameMeeting;
+import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,7 +87,7 @@ public class EditMeetingCommand extends UndoableCommand {
         assert meetingToEdit != null;
 
         NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
-        Date updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
+        DateTime updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
         //Set<Tag> updatedTags = editMeetingDescriptor.getTags().orElse(meetingToEdit.getTags());
 
@@ -118,7 +118,7 @@ public class EditMeetingCommand extends UndoableCommand {
      */
     public static class EditMeetingDescriptor {
         private NameMeeting name;
-        private Date date;
+        private DateTime date;
         private Place place;
 
         public EditMeetingDescriptor() {
@@ -144,9 +144,9 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setDate(Date date) { this.date = date; }
+        public void setDate(DateTime date) { this.date = date; }
 
-        public Optional<Date> getDate() {
+        public Optional<DateTime> getDate() {
             return Optional.ofNullable(date);
         }
 

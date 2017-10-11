@@ -2,13 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.NoSuchElementException;
+//import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,6 +12,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 
+import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.person.Address;
@@ -73,18 +70,9 @@ public class ParserUtil {
      * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+    public static Optional<DateTime> parseDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        DateFormat df = new SimpleDateFormat("ddMMyyyy HH:mm");
-        Date newDate = new Date();
-        try {
-            newDate = df.parse(date.get());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (NoSuchElementException e){
-
-        }
-        return date.isPresent() ? Optional.of(newDate) : Optional.empty();
+        return date.isPresent() ? Optional.of(new DateTime(date.get())) : Optional.empty();
     }
 
     /**

@@ -12,8 +12,9 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddMeetingCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.meeting.NameMeeting;
+import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
 
 import seedu.address.model.meeting.ReadOnlyMeeting;
@@ -38,7 +39,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
 
         try {
             NameMeeting name = ParserUtil.parseNameMeeting(argMultimap.getValue(PREFIX_NAME)).get();
-            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            DateTime date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Place place = ParserUtil.parsePlace(argMultimap.getValue(PREFIX_LOCATION)).get();
 
             ReadOnlyMeeting meeting = new Meeting(name, date, place);

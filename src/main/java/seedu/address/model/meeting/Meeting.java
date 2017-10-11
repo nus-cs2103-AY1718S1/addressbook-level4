@@ -15,15 +15,14 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class Meeting implements ReadOnlyMeeting {
     private ObjectProperty<NameMeeting> name;
-    private ObjectProperty<Date> date;
+    private ObjectProperty<DateTime> date;
     //private ObjectProperty<LocalTime> time;
     private ObjectProperty<Place> place;
 
-    public Meeting(NameMeeting name, Date date, Place place) {
+    public Meeting(NameMeeting name, DateTime date, Place place) {
         requireAllNonNull(name, date, place);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
-        //this.time = new SimpleObjectProperty<>(time);
         this.place = new SimpleObjectProperty<>(place);
         // protect internal tags from changes in the arg list
     }
@@ -64,17 +63,17 @@ public class Meeting implements ReadOnlyMeeting {
     }
     */
 
-    public void setTime(Date date) {
+    public void setDateTime(DateTime date) {
         this.date.set(requireNonNull(date));
     }
 
     @Override
-    public ObjectProperty<Date> dateProperty() {
+    public ObjectProperty<DateTime> dateProperty() {
         return date;
     }
 
     @Override
-    public Date getDate() {
+    public DateTime getDate() {
         return date.get();
     }
 
