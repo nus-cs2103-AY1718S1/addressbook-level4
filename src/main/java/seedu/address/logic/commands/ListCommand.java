@@ -40,17 +40,21 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
 
-        if(AreEntriesWithTagsFound()){
+        if (areEntriesWithTagsFound()) {
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_NOENTRIESFOUND);
         }
     }
 
-    private boolean AreEntriesWithTagsFound(){
-        if (model.getFilteredPersonList().size() != 0)
+    /**
+     * Returns true if any entries are found for a tag in the address book
+     */
+    private boolean areEntriesWithTagsFound() {
+        if (model.getFilteredPersonList().size() != 0) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 }
