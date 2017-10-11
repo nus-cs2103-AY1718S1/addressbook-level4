@@ -23,6 +23,9 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Hides the given person. */
+    void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 

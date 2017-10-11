@@ -22,6 +22,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private boolean isPrivate = false;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -62,6 +63,15 @@ public class Person implements ReadOnlyPerson {
 
     public void setPhone(Phone phone) {
         this.phone.set(requireNonNull(phone));
+    }
+
+    public boolean setPrivate() {
+        this.isPrivate = true;
+        return true;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
     }
 
     @Override

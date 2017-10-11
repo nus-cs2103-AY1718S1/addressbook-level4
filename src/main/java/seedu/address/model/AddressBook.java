@@ -156,6 +156,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    public boolean hidePerson(ReadOnlyPerson toHide) throws PersonNotFoundException{
+        if (persons.hide(toHide)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
