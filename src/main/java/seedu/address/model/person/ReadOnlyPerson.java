@@ -33,6 +33,8 @@ public interface ReadOnlyPerson {
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
+     *
+     * TODO: Should we include comparision of {@code getProperties} here?
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object
@@ -40,8 +42,7 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()))
-                && other.getProperties().equals(this.getProperties());
+                && other.getAddress().equals(this.getAddress()));
     }
 
     /**
