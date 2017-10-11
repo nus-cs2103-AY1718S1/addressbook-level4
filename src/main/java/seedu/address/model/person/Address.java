@@ -21,6 +21,10 @@ public class Address {
 
     public final String value;
 
+    /**
+     * Initialise a Address object with value of empty String. This can ONLY be used in the default field of
+     * {@code AddPersonOptionalFieldDescriptor}
+     */
     public Address() {
         this.value = "";
     }

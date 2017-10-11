@@ -71,6 +71,10 @@ public class AddCommand extends UndoableCommand {
                 && toAdd.equals(((AddCommand) other).toAdd));
     }
 
+    /**
+     * Stores the optional details to add the person with. By default each field is an object
+     * with value of empty String.
+     */
     public static class AddPersonOptionalFieldDescriptor {
         private Phone phone;
         private Email email;
@@ -86,7 +90,6 @@ public class AddCommand extends UndoableCommand {
             this.phone = phone;
         }
 
-        //TODO: Remove Optional.ofNullable because it is already initialised
         public Phone getPhone() {
             return phone;
         }
