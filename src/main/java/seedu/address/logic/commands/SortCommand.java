@@ -15,6 +15,7 @@ import seedu.address.model.person.exceptions.NoPersonsException;
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALT = "s";
     public static final String REVERSE_ORDER = "r";
 
     public static final String MESSAGE_SORT_PERSON_SUCCESS = "Sorted address book by %1$s in %2$s order.";

@@ -78,6 +78,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALT:
             return new SortCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
