@@ -31,7 +31,7 @@
     </StackPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="250" prefWidth="340"
+        <VBox fx:id="personList" minWidth="150" prefWidth="200"
               SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
@@ -39,12 +39,13 @@
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
         </VBox>
 
-        <StackPane fx:id="browserPlaceholder" prefWidth="340">
+        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
         </StackPane>
-      <VBox prefHeight="200.0" minWidth="250" prefWidth="340" SplitPane.resizableWithParent="false">
+      <VBox fx:id="eventList" minWidth="150" prefWidth="200"
+            SplitPane.resizableWithParent="false">
           <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
           </padding>
