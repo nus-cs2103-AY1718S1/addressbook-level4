@@ -15,6 +15,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -29,6 +30,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -42,6 +44,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
@@ -50,6 +53,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -66,6 +70,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
@@ -97,6 +102,51 @@ public class DeleteCommandTest {
 
         // different person -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+    }
+
+    @Test
+    public void execute_validIndexDeleteByAddress_success() throws Exception {
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ListingUnit.setCurrentListingUnit(ListingUnit.ADDRESS);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_WITH_ADDRESS_SUCCESS,
+                personToDelete.getAddress());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexDeleteByPhone_success() throws Exception {
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ListingUnit.setCurrentListingUnit(ListingUnit.PHONE);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_WITH_PHONE_SUCCESS,
+                personToDelete.getPhone());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexDeleteByEmail_success() throws Exception {
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ListingUnit.setCurrentListingUnit(ListingUnit.EMAIL);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_WITH_EMAIL_SUCCESS,
+                personToDelete.getEmail());
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     /**
