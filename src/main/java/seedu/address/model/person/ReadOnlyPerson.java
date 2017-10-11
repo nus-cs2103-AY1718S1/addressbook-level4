@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Favourite> favouriteProperty();
+    Favourite getFavourite();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
