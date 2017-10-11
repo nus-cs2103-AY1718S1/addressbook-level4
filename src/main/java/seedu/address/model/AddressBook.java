@@ -81,6 +81,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
+        try {
+            setMeetings(newData.getMeetingList());
+        } catch (DuplicateMeetingException e) {
+            assert false : "AddressBooks should not have duplicate meetings";
+        }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
