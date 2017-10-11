@@ -103,8 +103,6 @@ public class ModelManagerTest {
     @Test
     public void tagColor() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
 
         //default tagcolor should be off
         for (Tag tag : addressBook.getTagList()) {

@@ -31,7 +31,7 @@ public class ToggleTagColorCommand extends Command {
         model.setTagColor(toSet, tag, color);
         model.resetData(model.getAddressBook());
         logger.fine("Tag color set to " + (toSet ? "on" : "off"));
-        if (!tag.equals("") && !model.getAddressBook().getTagList().contains(tag)) {
+        if (!"".equals(tag) && !model.getAddressBook().getTagList().contains(tag)) {
             message = "No such tag";
         } else if (tagCustomized(tag, color)) {
             message = tag + " tag set to " + color;
@@ -42,6 +42,6 @@ public class ToggleTagColorCommand extends Command {
     }
 
     private boolean tagCustomized(String tag, String color) {
-        return !tag.equals("") && !color.equals("");
+        return !"".equals(tag) && "".equals(color);
     }
 }

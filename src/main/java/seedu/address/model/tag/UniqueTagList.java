@@ -21,7 +21,6 @@ import seedu.address.commons.util.CollectionUtil;
  */
 public class UniqueTagList implements Iterable<Tag> {
 
-    private static boolean tagColorOn;
     private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
     /**
      * Constructs empty TagList.
@@ -56,8 +55,6 @@ public class UniqueTagList implements Iterable<Tag> {
 
         requireAllNonNull(tags);
 
-        tagColorOn = isOn;
-
         if (isOn) {
             setColor(tags, tagString, color);
         } else if (!isOn) {
@@ -91,15 +88,13 @@ public class UniqueTagList implements Iterable<Tag> {
         }
     }
 
-
-
     private void setRandomColor(Set<Tag> tags) {
         for (Tag tag : tags) {
             tag.setRandomColor();
         }
     }
     private boolean hasAssigned(String tagString, String color) {
-        return !tagString.equals("") && !color.equals("");
+        return !"".equals(tagString) && !"".equals(color);
     }
 
     /**
@@ -173,14 +168,6 @@ public class UniqueTagList implements Iterable<Tag> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
-    }
-
-    public void setTagsColorOn() {
-        tagColorOn = true;
-    }
-
-    public void setTagsColorOff() {
-        tagColorOn = false;
     }
 
     /**
