@@ -1,7 +1,5 @@
 package seedu.address.testutil;
 
-import static java.util.logging.Level.FINEST;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,11 +28,11 @@ public class TestLogger {
     private Logger logger;
     private Level originalLevel;
 
-	/**
-	 * @param classType is the type of class that will be logging
-	 * @param level : logs with level >= level will be filtered
-	 */
-	public TestLogger(Class<?> classType, Level level) {
+    /**
+     * @param classType is the type of class that will be logging
+     * @param level : logs with level >= level will be filtered
+     */
+    public TestLogger(Class<?> classType, Level level) {
         logger = LogsCenter.getLogger(classType);
         attachLogCapturer(level);
         originalLevel = logger.getLevel();
@@ -82,8 +80,8 @@ public class TestLogger {
          */
         @Override
         public String format(final LogRecord record) {
-            return MessageFormat.format("{0} - {1}\n", record.getLevel(), record.getMessage(),
-                    record.getParameters());
+            MessageFormat messageFormat = new MessageFormat("{0} - {1}\n");
+            return messageFormat.format(new Object[] {record.getLevel(), record.getMessage()});
         }
 
     }
