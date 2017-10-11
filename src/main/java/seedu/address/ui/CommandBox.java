@@ -25,8 +25,8 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
-    private final String[] commandList = {"add", "clear", "delete", "edit", "find", "help", "history", "list", "redo"
-        , "select", "undo"};
+    private final String[] commandList = {"add", "clear", "delete", "edit", "find", "help", "history", "list", "redo",
+        "select", "undo"};
     private ListElementPointer historySnapshot;
 
     @FXML
