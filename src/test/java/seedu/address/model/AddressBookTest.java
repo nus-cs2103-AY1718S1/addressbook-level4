@@ -62,7 +62,9 @@ public class AddressBookTest {
     @Test
     public void sorted() {
         AddressBook newData = getTypicalAddressBook();
-        SortedList<ReadOnlyPerson> sorted = newData.getPersonList().sorted(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
+        SortedList<ReadOnlyPerson> sorted =
+                newData.getPersonList()
+                        .sorted(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
         assertEquals(sorted, newData.getPersonList());
     }
 
