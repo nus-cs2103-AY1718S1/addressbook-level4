@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.UnpinCommand.MESSAGE_UNPIN_PERSON_SUC
 import static seedu.address.model.Model.PREDICATE_SHOW_PINNED_PERSONS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -86,7 +85,7 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
         assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
 
-         /* ------------------ Performing pin operation while a filtered list is being shown ---------------------- */
+        /* ------------------ Performing pin operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered person list, pin index within bounds of address book and person list -> pinned */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
