@@ -6,24 +6,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-import java.util.logging.StreamHandler;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -65,13 +60,14 @@ public class StorageManagerTest {
 
     @Test
     public void onInitialStartupNoBackupTest() throws DataConversionException, IOException {
+        testLogger = new TestLogger(storageManager.getClass(), Level.WARNING);
         storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"),
                 new JsonUserPrefsStorage("random.json"));
 
         // test for log message.
-        testLogger = new TestLogger(storageManager.getClass());
         String capturedLog = testLogger.getTestCapturedLog();
-        assertEquals(capturedLog, "WARNING - AddressBook not present, backup not possible");
+        String expectedLogMessage = "WARNING - AddressBook not present, backup not possible\n";
+        assertEquals(capturedLog, expectedLogMessage);
 
         // testing if backup exists
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
@@ -88,7 +84,12 @@ public class StorageManagerTest {
         // create new backup by loading another Storage Manager
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
+        testLogger = new TestLogger(StorageManager.class, Level.INFO);
         StorageManager backupStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+
+        String capturedLog = testLogger.getTestCapturedLog();
+        String expectedLog = "INFO - AddressBook present, back up success\n";
+        assertEquals(capturedLog, expectedLog);
 
         // checks that the backup properly backups the new file.
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = backupStorageManager
