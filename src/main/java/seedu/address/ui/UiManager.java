@@ -134,6 +134,7 @@ public class UiManager extends ComponentManager implements Ui {
             //show address book
             Platform.runLater(() -> mainWindow.fillInnerParts());
         }
+    }
     
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
