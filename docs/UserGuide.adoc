@@ -59,16 +59,16 @@ Shows the usage of the specific command identified. If no command is specified, 
 Format: `help [COMMAND_IDENTIFIER]`
 
 [NOTE]
-A command identifier includes all existing commands and their aliases
+A command identifier includes all existing commands and their aliases.
 
 [TIP]
-You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`
+You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`.
 
 Examples:
 
-* `help`
-* `help add`
-* `help a`
+* `help` (without command identifier)
+* `help add` (using command word)
+* `help a` (using alias)
 
 
 === Adding a person: `add`
