@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventList;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -26,7 +29,9 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final EventList events;
     private final UniqueTagList tags;
+    private final UniqueTagList eventTags;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,6 +43,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new EventList();
+        eventTags = new UniqueTagList();
     }
 
     public AddressBook() {
@@ -171,6 +178,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //// event-level operations
+
+    /**
+     * Adds an event to the address book.
+     * Also checks the new event's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the events to point to those in {@link #tags}.
+     */
+    public void addEvent(ReadOnlyEvent e) {
+        Event newEvent = new Event(e);
+        // TODO: create a master list for tags and update it
+        // syncMasterTagListWith(newEvent);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        events.add(newEvent);
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -193,6 +217,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
     }
 
     @Override
