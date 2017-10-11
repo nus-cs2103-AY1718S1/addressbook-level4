@@ -20,7 +20,7 @@ Responsibilities: Model
 '''
 
 == Phung Tuan Hoang
-image::phungtuanhoang.jpq[width="150", align="left"]
+image::phungtuanhoang.jpg[width="150", align="left"]
 {empty}[https://github.com/phungtuanhoang1996[github]][<<phungtuanhoang#, portfolio>>]
 
 Role: Developer, Repo Maintainer +
