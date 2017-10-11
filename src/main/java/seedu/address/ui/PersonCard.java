@@ -1,11 +1,21 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
+
+import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -48,10 +58,10 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        registerAsAnEventHandler(this);
         ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
 
         switch (currentUnit) {
-
         case ADDRESS:
             switchToAddressCard();
             break;
@@ -139,4 +149,46 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
+
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.message);
+    }
+
+    private void setFontSize(String userPref) {
+        switch (userPref) {
+        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+            setFontSizeHelper("x-small");
+            break;
+
+        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+            setFontSizeHelper("small");
+            break;
+
+        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+            setFontSizeHelper("normal");
+            break;
+
+        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+            setFontSizeHelper("x-large");
+            break;
+
+        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+            setFontSizeHelper("xx-large");
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    private void setFontSizeHelper(String fontSize) {
+        name.setStyle("-fx-font-size: " + fontSize + ";");
+        id.setStyle("-fx-font-size: " + fontSize + ";");
+        phone.setStyle("-fx-font-size: " + fontSize + ";");
+        address.setStyle("-fx-font-size: " + fontSize + ";");
+        email.setStyle("-fx-font-size: " + fontSize + ";");
+        tags.setStyle("-fx-font-size: " + fontSize + ";");
+    }
+
 }

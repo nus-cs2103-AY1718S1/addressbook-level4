@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.font.FontSize;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -59,6 +60,15 @@ public class ParserUtil {
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> fontSize} into an {@code Optional<FontSize>} if {@code fontSize} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<FontSize> parseFontSize(Optional<String> fontSize) throws IllegalValueException {
+        requireNonNull(fontSize);
+        return fontSize.isPresent() ? Optional.of(new FontSize(fontSize.get())) : Optional.empty();
     }
 
     /**
