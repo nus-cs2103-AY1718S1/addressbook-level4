@@ -7,7 +7,6 @@ https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appv
 https://coveralls.io/github/CS2103AUG2017-T17-B2/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T17-B2/main/badge.svg?branch=master[Coverage Status]]
 https://www.codacy.com/app/CS2103-T17-B2/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-T17-B2/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/8df307dff09345e1b8f3ef976eb2c06e[Codacy Badge]]
 
-ifdef::env-github[]
 image::docs/images/medicalbook.png[width="600"]
 endif::[]
 
