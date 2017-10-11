@@ -21,9 +21,9 @@ import seedu.address.model.UserPrefs;
 //@@author jelneo
 public class LoginCommandTest {
 
-    private final boolean hasLoggedIn = true;
     private static final String TEST_USERNAME = "TESTloanShark97";
     private static final String TEST_PASSWORD = "TESThitMeUp123";
+    private final boolean hasLoggedIn = true;
     private LoginAppRequestEvent event;
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
