@@ -14,12 +14,13 @@ public class SortCommand extends Command {
             + "Parameters: 'name', 'phone', or 'email'\n"
             + "Example: " + COMMAND_WORD + " name";
 
-    public static final String MESSAGE_SORT_SUCCESS = "Sorted all persons by ";
+    public String MESSAGE_SORT_SUCCESS = "Sorted all persons by ";
 
     private String sortType;
 
     public SortCommand(String type) {
         this.sortType = type;
+        MESSAGE_SORT_SUCCESS = MESSAGE_SORT_SUCCESS + type;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class SortCommand extends Command {
 
         //lists all contacts after sorting
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
+        return new CommandResult(MESSAGE_SORT_SUCCESS);
     }
 
 }
