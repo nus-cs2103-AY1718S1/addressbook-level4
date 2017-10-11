@@ -90,6 +90,14 @@ n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 +
 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal +
 n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 t/pretty
 ****
+=== Export: `export`
+Exports the all contacts to a `.txt` file in a specified location. +
+Format: `export [FILETYPE] [PATH]` +
+
+Example: 
+
+* `export .txt C:/New Folder`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
@@ -259,6 +267,10 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Multiple* `multiple FILE_NAME.txt` +
+e.g `multiple personsToAdd.txt`
+* *Export* `export [FILETYPE] [EXPORT_PATH]` +
+e.g `export .txt C:/Users/This User/Desktop`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
