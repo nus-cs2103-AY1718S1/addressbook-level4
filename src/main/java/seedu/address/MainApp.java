@@ -40,6 +40,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
+
     public static final Version VERSION = new Version(0, 6, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
@@ -209,4 +210,5 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
