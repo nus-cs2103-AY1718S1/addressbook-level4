@@ -22,12 +22,10 @@ public class CopyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Outputs a selectable string of text "
             + "that contains email addresses of the selected person(s) in email-friendly format.\n"
             + "Parameters: INDEX (One or more, positive integers separated by comma) \n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " 1 " + "\n"
             + "Output: johndoe@example.com";
 
-    private ArrayList<String> outputList;
-
-    public String MESSAGE_COPY_SUCCESS = outputList.toString();
+    private ArrayList<String> outputList = new ArrayList<String> ();
 
     private final ArrayList<Index> targetIndices;
 
@@ -50,11 +48,13 @@ public class CopyCommand extends Command {
             }
 
             ReadOnlyPerson targetPerson = lastShownList.get(targetIndex.getZeroBased());
-            outputList.add((targetPerson.getEmail()).toString() + ", ");
+            outputList.add((targetPerson.getEmail()).toString());
         }
 
+        String MESSAGE_OUTPUT = outputList.toString().substring(1, outputList.toString().length() - 1);
+
         //return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
-        return new CommandResult(MESSAGE_COPY_SUCCESS);
+        return new CommandResult(MESSAGE_OUTPUT);
     }
 
     @Override
