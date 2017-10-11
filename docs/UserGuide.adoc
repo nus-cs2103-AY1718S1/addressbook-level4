@@ -147,6 +147,28 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by name: `sort`
+
+Sort the existing list. +
+Format: `sort KEYWORD`
+
+****
+* The sort command will sort the list according to its current listed attribute
+* If the list was not listed in any attribute, it will be sorted by name of the person by default
+****
+
+Examples:
+
+* `list address` +
+Returns a list of addresses +
+`sort` +
+Return a list of addresses sorted lexicographically
+
+* `list` +
+Returns whole list +
+`sort` +
+Return a list sorted by name lexicographically
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
