@@ -64,11 +64,11 @@ Alias: `qh`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
+Format: `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
 Alias: `a`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags, phone numbers, emails or addresses (including 0)
 
 ****
 * If a person to be added is similar to one of the existing contacts, a prompt will show you that similar contact/s. (Coming in v2.0)
@@ -78,18 +78,37 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Bob p/91294232`
+* `add n/Sally e/friend@casual.com e/colleague@work.com
 * `add n/Allen Walker p/11112222 e/allen@walker.com a/Agate Street 22 f/allenwalker t/allenwalker99 i/iamallen`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list` +
-Alias: `l`
+Shows a list of persons in the address book. +
+Format: `list [m/MODE] [tag/TAG]`
+
+****
+* MODE can be either "recent", "frequent" or "tag". If MODE is set to "tag", the field [tag/TAG] must also be included.
+* If the [m/MODE] field is empty, a list of all persons is shown
+* Using MODE = "recent" will return a list of the 5 most recently accessed entries
+* Using MODE = "frequent" will return a list of the 5 most frequently accessed entries
+* Using MODE = "tag" will return a list of all person that are tagged with TAG
+****
+
+Examples:
+
+* `list`
+Lists all persons
+* `list m/recent`
+Lists the 5 most recently accessed entries.
+* `list m/tag tag/work`
+Returns a list of all persons tagged with "work"
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
 Alias: `e`
 
 ****
