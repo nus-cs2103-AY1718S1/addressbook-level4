@@ -63,12 +63,12 @@ public class TypicalPersons {
             .withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street")
             .withPostalCode("111111").withDebt("1234567").build();
-    public static final ReadOnlyPerson LAWRENCE = new PersonBuilder().withName("Lawrence Koh").
-            withPhone("87652533")
+    public static final ReadOnlyPerson LAWRENCE = new PersonBuilder().withName("Lawrence Koh")
+            .withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withPostalCode("111111").withDebt("1234567").build();
-    public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep").
-            withPhone("9482224")
+    public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep")
+            .withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave")
             .withPostalCode("111111").withDebt("1234567").build();
     public static final ReadOnlyPerson SIRISHA = new PersonBuilder().withName("Lakshmi Sirisha")
