@@ -18,7 +18,6 @@ public class SearchBox extends UiPart<Region> {
     private static final String ERROR_STYLE_CLASS = "error";
 
     private static final Logger logger = LogsCenter.getLogger(SearchBox.class);
-    private final Logic logic;
     private static final String FXML = "SearchBox.fxml";
 
 
@@ -28,7 +27,6 @@ public class SearchBox extends UiPart<Region> {
 
     public SearchBox (Logic logic){
         super(FXML);
-        this.logic = logic;
 
         searchTextField.textProperty().addListener( (observable, oldValue, newValue) -> {
 
