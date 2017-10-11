@@ -42,7 +42,7 @@ Responsibilities: Logic
 '''
 
 === Chung Tin Long
-image::icehawker.jpg[width="150", align="left"]
+image::icehawk.jpg[width="150", align="left"]
 {empty}[https://github.com/icehawker[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer Guide
