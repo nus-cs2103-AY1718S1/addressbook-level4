@@ -63,6 +63,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException {
+        this.meetings.setMeetings(meetings);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
