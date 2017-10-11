@@ -3,7 +3,6 @@ package seedu.address.model;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.ObservableList;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -19,12 +18,12 @@ public interface Model {
     /**
      * Comparators for sorting purposes
      */
-    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_NAME =
-            (ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getName().compareTo(p2.getName());
-    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_PHONE =
-            (ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getPhone().compareTo(p2.getPhone());
-    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_EMAIL =
-            (ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getEmail().compareTo(p2.getEmail());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_NAME = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getName().compareTo(p2.getName());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_PHONE = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getPhone().compareTo(p2.getPhone());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_EMAIL = (
+        ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getEmail().compareTo(p2.getEmail());
     /**
      * {@code Predicate} that always evaluate to true
      */

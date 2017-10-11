@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -194,15 +195,15 @@ public class ModelManager extends ComponentManager implements Model {
     public void sort(String sortType) throws DuplicatePersonException {
         switch (sortType) {
         case "name":
-            addressBook.setPersons(sortByName());
+            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
             break;
 
         case "phone":
-            addressBook.setPersons(sortByPhone());
+            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_PHONE));
             break;
 
         case "email":
-            addressBook.setPersons(sortByEmail());
+            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_EMAIL));
             break;
 
         default:
@@ -212,36 +213,19 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    private ArrayList<ReadOnlyPerson> sortByName() {
+    /**
+     * Sort the addressbook by the comparator given
+     * @return ArrayList<ReadOnlyPerson> sorted list</ReadOnlyPerson>
+     */
+    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
         ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
         SortedList<ReadOnlyPerson> sortedList =
-                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(COMPARATOR_SORT_BY_NAME);
+                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
-        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(COMPARATOR_SORT_BY_NAME);
+        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
         newList.addAll(sortedList);
 
         return newList;
     }
 
-    private ArrayList<ReadOnlyPerson> sortByPhone() {
-        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
-        SortedList<ReadOnlyPerson> sortedList =
-                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(COMPARATOR_SORT_BY_PHONE);
-        newList.addAll(sortedList);
-        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(COMPARATOR_SORT_BY_PHONE);
-        newList.addAll(sortedList);
-
-        return newList;
-    }
-
-    private ArrayList<ReadOnlyPerson> sortByEmail() {
-        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
-        SortedList<ReadOnlyPerson> sortedList =
-                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(COMPARATOR_SORT_BY_EMAIL);
-        newList.addAll(sortedList);
-        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(COMPARATOR_SORT_BY_EMAIL);
-        newList.addAll(sortedList);
-
-        return newList;
-    }
 }
