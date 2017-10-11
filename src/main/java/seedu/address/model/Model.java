@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -57,5 +58,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Adds the given event
+     */
+    void addEvent(ReadOnlyEvent event);
 
 }
