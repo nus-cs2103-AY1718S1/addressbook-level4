@@ -36,6 +36,15 @@ public class Task implements ReadOnlyTask {
     }
 
     /**
+     * Helper constructor, for: copy
+     * @param tags, the tag set that already present
+     */
+    public Task (Set<Tag> tags) {
+        this();
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    /**
      * Constructor with a name and description only to be passed in (first type)
      * @param name, the name of this task
      * @param description, the description of this task
@@ -72,6 +81,31 @@ public class Task implements ReadOnlyTask {
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+    }
+
+    /**
+     * Constructor with also a time only to be passed in (third type, start and end)
+     * @param name, the name of this task
+     * @param description, the description of this task
+     * @param startDateTime, the start date and time of this task
+     * @param endDateTime, the end date and time of this task
+     * @param tags, the tag set
+     */
+    public Task (String name, String description, String startDateTime, String endDateTime, Set<Tag> tags) {
+        this(tags);
+        this.taskName = new SimpleObjectProperty<>(name);
+        this.taskDescription = new SimpleObjectProperty<>(description);
+        this.startDateTime = new SimpleObjectProperty<>(startDateTime);
+        this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+    }
+
+    /**
+     * Copy constructor for task class
+     * @param task
+     */
+    public Task (ReadOnlyTask task) {
+        this(task.getName(), task.getDescription(), task.getStartDateTime(),
+                task.getEndDateTime(), task.getTags());
     }
 
     /**
