@@ -27,3 +27,12 @@ Role: Developer +
 Responsibilities: Integration, Testing, Git Expert, In charge of Storage component
 
 '''
+
+=== Alex Foo
+image::alexfoodw.png[width="150", align="left"]
+{empty}[http://github.com/alexfoodw[github]] [<<alexfoodw#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Integration, Documentation, Intellij Expert, In charge of Model component
+
+
