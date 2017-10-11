@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,11 +10,15 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import javax.imageio.ImageIO;
 
 
 /**
@@ -62,6 +68,8 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        picture = new ImageView();
+        initImage();
     }
 
     /**
@@ -77,6 +85,20 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+    }
+
+    private void initImage() {
+        try {
+            File picFile = new File(person.getPicture().getPictureUrl());
+            FileInputStream fileStream = new FileInputStream(picFile);
+            Image personPicture = new Image(fileStream);
+            picture.setFitHeight(120);
+            picture.setFitWidth(100);
+            picture.setImage(personPicture);
+            cardPane.getChildren().add(picture);
+        } catch (Exception e) {
+            System.out.println("Image not found");
+        }
     }
 
     /**
