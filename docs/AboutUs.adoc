@@ -27,3 +27,13 @@ Role: Developer +
 Responsibilities: Model
 
 '''
+
+=== Chan Qing Hong
+image::ChanQingHong.jpg[width="150", align="left"]
+{empty}[http://github.com/cqhchan[github]] [<<cqhchan#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Model
+
+'''
+
