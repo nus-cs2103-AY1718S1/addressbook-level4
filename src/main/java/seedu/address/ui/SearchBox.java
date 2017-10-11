@@ -13,6 +13,10 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+
+/**
+ * * The UI component that is responsible for real-time partial searching of contact name
+ */
 public class SearchBox extends UiPart<Region> {
 
     private static final String ERROR_STYLE_CLASS = "error";
@@ -20,18 +24,16 @@ public class SearchBox extends UiPart<Region> {
     private static final Logger logger = LogsCenter.getLogger(SearchBox.class);
     private static final String FXML = "SearchBox.fxml";
 
-
-
     @FXML
     private TextField searchTextField;
 
     public SearchBox (Logic logic){
         super(FXML);
-
-        searchTextField.textProperty().addListener( (observable, oldValue, newValue) -> {
-
-            if (newValue.equals("")){
-                try{
+        // track all changes in the searchTextField and call for partial search real-time.
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // show list of all contact when this textfield is empty
+            if (newValue.equals("")) {
+                try {
                     CommandResult commandResult = logic.execute("list");
                     logger.info("Result: " + commandResult.feedbackToUser);
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
@@ -42,9 +44,8 @@ public class SearchBox extends UiPart<Region> {
                     logger.info("Invalid command: list");
                     raise(new NewResultAvailableEvent(e.getMessage(), true));
                 }
-            }
-            else{
-                try{
+            } else {
+                try {
                     CommandResult commandResult = logic.execute("pfind " + newValue);
                     logger.info("Result: " + commandResult.feedbackToUser);
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
