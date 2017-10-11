@@ -81,3 +81,12 @@ Role: Developer +
 Responsibilities: Full-stack
 
 '''
+
+=== Chew Chaow Thong Daniel
+image::DanielChew.jpg[width="150", align="left"]
+{empty}[https://github.com/cctdaniel[github]] [<<Chew Chaow Thong Daniel#, portfolio>>]
+
+Role: Developer +
+Responsibilities: UI
+
+'''
