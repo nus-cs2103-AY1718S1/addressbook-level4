@@ -50,18 +50,13 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void start(Stage primaryStage) {
+        Stage loginStage = new Stage();
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
-
+        loginStage.setTitle(config.getAppTitle());
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
-
-        loginPage = new LoginPage(primaryStage, loginLogic);
-
-        logger.info("Login Created...");
-
-        loginPage.show();
-        if (loginPage.getSession()) {
+        loginStage.getIcons().add(getImage(ICON_APPLICATION));
             try {
                 mainWindow = new MainWindow(primaryStage, config, prefs, logic);
                 mainWindow.show(); //This should be called before creating other UI parts
@@ -71,7 +66,13 @@ public class UiManager extends ComponentManager implements Ui {
                 logger.severe(StringUtil.getDetails(e));
                 showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
             }
-        }
+
+        loginPage = new LoginPage(loginStage, loginLogic);
+
+        logger.info("Login Created...");
+
+        loginPage.show();
+
     }
 
     public void startMainApp(Stage primaryStage) {
@@ -79,7 +80,7 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
-        if (loginPage.getSession()) {
+       // if (loginPage.getSession()) {
             try {
                 mainWindow = new MainWindow(primaryStage, config, prefs, logic);
                 mainWindow.show(); //This should be called before creating other UI parts
@@ -89,7 +90,7 @@ public class UiManager extends ComponentManager implements Ui {
                 logger.severe(StringUtil.getDetails(e));
                 showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
             }
-        }
+       // }
     }
 
     @Override

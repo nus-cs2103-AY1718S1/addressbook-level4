@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="usernameText" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="platform" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text id="usernameText" layoutX="82.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="149.00000542402267" />
       <Text id="passwordText" fx:id="passwordText" layoutX="82.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />

@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -46,7 +47,8 @@ public class LoginPage extends UiPart<Region> {
     private static boolean session;
 
     // Independent Ui parts residing in this Ui container
-
+    @FXML
+    private AnchorPane platform;
 
     @FXML
     private Button loginButton;
@@ -89,7 +91,11 @@ public class LoginPage extends UiPart<Region> {
             logger.info(usernameTextField.getText());
             logger.info(passwordTextField.getText());
             logger.info("Result: " + result);
+            if (session){
+                
+        primaryStage.close();
 
+        }
 
     }
 
