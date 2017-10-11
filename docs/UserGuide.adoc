@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Contact Pro - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103-Phase-B/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T12-B1`      Since: `Sept 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -22,9 +22,14 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `contactpro.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Contact Pro.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  The first time you run the app, it will ask for your personal details and creation of password. +
+Tutorial will be proposed too.
+[NOTE]
+Coming in v2.0: whole point 5
+
 +
 image::Ui.png[width="790"]
 +
@@ -33,7 +38,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Contact Pro.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -56,34 +61,41 @@ Format: `help`
 
 === Adding a person: `add` (alias `a`)
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+[NOTE]
+Coming in v2.0: Adding pictures, social media links, auto-capitalization
+
+Adds a person to the Contact Pro +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pic/PICTUREPATH] [link/LINK]... [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags and social media links (including 0) +
+If you type full name in small letters, it will be auto-capitalized
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pic/C:\Users\User\Documents\pic.jpg link/https://www.facebook.com/happy.potter`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `a n/Nam p/12345678 e/n@example.com a/Nam street, block 8, #02-03 t/me`
 
 === Listing all persons : `list` (alias `ls`)
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the Contact Pro, sorted alphabetically by full name. +
 Format: `list` or `ls`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+[NOTE]
+Coming in v2.0: Changing picture and social media links
+
+Edits an existing person in the Contact Pro. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pic/PICTUREPATH] [link/LINK]... [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags or social media links, the existing tags/links of the person will be removed i.e adding of tags/links is not cumulative.
+* You can remove all the person's tags/links by typing `t/` or `link/` without specifying any tags/links after it.
 ****
 
 Examples:
@@ -117,7 +129,7 @@ Returns `Nam`
 
 === Deleting a person : `delete` (alias `del`)
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the Contact Pro. +
 Format: `delete INDEX` or `del INDEX`
 
 ****
@@ -130,18 +142,22 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the Contact Pro.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 * `list` +
 `del 1` +
-Deletes the 1st person in the address book.
+Deletes the 1st person in the Contact Pro.
 
 === Selecting a person : `select`
 
+[NOTE]
+Coming in v2.0: `select me`
+
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Special format: `select me` will display your personal data
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -153,10 +169,57 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the Contact Pro.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Grouping persons : `group`
+
+[NOTE]
+Coming in v2.0: group
+
+Used to manage groups of persons identified by the indices used in the last person listing. +
+Format: `group n/NAME INDEX...` +
+
+****
+* If a group with such a name exists, adds the persons at `INDEX...`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`group n/CS2103 2 3` +
+Adds the 2nd and 3rd person to the group CS2103 in the Contact Pro.
+* `find Betsy` +
+`group n/Family 1` +
+Adds the 1st person from the results of the `find` command to the group Family.
+
+=== Removing from groups : `ungroup`
+
+[NOTE]
+Coming in v2.0: ungroup
+
+Used to remove from groups persons identified by the indices used in the last person listing. +
+Format: `ungroup n/NAME INDEX...` +
+
+****
+* If a group ends up being empty, it is removed.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`ungroup n/CS2103 2 3` +
+Removes the 2nd and 3rd person from the group CS2103 in the Contact Pro.
+* `find Betsy` +
+`ungroup n/Family 1` +
+Removes the 1st person from the results of the `find` command from the group Family.
+
 
 === Listing entered commands : `history`
 
@@ -171,12 +234,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the Contact Pro to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Contact Pro's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -220,7 +283,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` (alias `clr`)
 
-Clears all entries from the address book. +
+Clears all entries from the Contact Pro. +
 Format: `clear` or `clr`
 
 === Exiting the program : `exit` (alias `q`)
@@ -230,29 +293,85 @@ Format: `exit` or `q`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Contact Pro data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Exporting the data : `export`
+
+[NOTE]
+Coming in v2.0: command `export`
+
+Exports all the data to the path specified. +
+Format: `export PATH`
+
+Examples:
+
+* `export C:\Users\User\Documents\exported` +
+Exports the data to the Documents folder and saves under a name 'exported'
+
+=== Importing the data : `import`
+
+[NOTE]
+Coming in v2.0: command `import`
+
+Import all the data from the path specified. +
+Format: `import PATH`
+
+Examples:
+
+* `import C:\Users\User\Documents\imported` +
+Imports the data from the Documents folder and saves them in the current Contact Pro
+
+== Course mode
+
+View and manage your modules, grades, exams and assignments
+
+[NOTE]
+Coming in v2.0: Course mode
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Either use `export` and `import` or install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Contact Pro folder.
+
+== Hotkeys
+
+[NOTE]
+Coming in v2.0
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` (`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+=== Default mode
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` (`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague pic/C:\Users\User\Documents\mypic.jpg`
 * *Clear* : `clear` (`clr`)
 * *Delete* : `delete INDEX` (`del INDEX`)+
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` (`f KEYWORD [MORE_KEYWORDS]`) +
 e.g. `find James Jake`
 * *List* : `list` (`ls`)
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
+* *Select* : `select INDEX` (also `select me`) +
+e.g.: +
+`select 2` +
+`select me`
+* *Group* : `group n/NAME INDEX...` +
+e.g.: `group n/Family 2 3`
+* *Ungroup* : `ungroup n/NAME INDEX...` +
+e.g.: `ungroup n/Family 2 3`
 * *History* : `history` (`h`)
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Import* : `import PATH` +
+e.g. `import C:\Users\User\Documents\imported`
+* *Export* : `export PATH` +
+`export C:\Users\User\Documents\exported`
+
+=== Course mode
+
+[NOTE]
+Coming in v2.0
+
+=== Global
