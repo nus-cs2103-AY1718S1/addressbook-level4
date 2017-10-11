@@ -5,7 +5,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-public class DeleteTagCommand extends UndoableCommand{
+/**
+ * Deletes a tag from all contacts in the address book.
+ */
+public class DeleteTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tagDelete";
     public static final String COMMAND_ALIAS = "t";
@@ -19,18 +22,18 @@ public class DeleteTagCommand extends UndoableCommand{
 
     private final Tag targetTag;
 
-    public DeleteTagCommand(Tag tag){
+    public DeleteTagCommand(Tag tag) {
         this.targetTag = tag;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        try{
+        try {
             model.deleteTag(targetTag);
-        } catch (PersonNotFoundException pnfe){
+        } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
-        } catch (DuplicatePersonException dpe){
+        } catch (DuplicatePersonException dpe) {
             assert false : "There should not be any duplicate person";
         }
 
