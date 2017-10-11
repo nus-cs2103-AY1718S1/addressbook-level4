@@ -21,5 +21,8 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
         assertTrue(Phone.isValidPhone("93121234 15341234")); // spaces within digits
+        assertTrue(Phone.isValidPhone("HP: 928782711")); // hand phone number
+        assertTrue(Phone.isValidPhone("O: 9134343431")); // office number
+        assertTrue(Phone.isValidPhone("H: 911")); // house number
     }
 }

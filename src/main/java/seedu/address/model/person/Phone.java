@@ -12,8 +12,8 @@ public class Phone {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "(?=(?:.*\\d){3})[0-9 ]+";
+            "Users are to label their numbers with HP: H: or O:\n For example, HP: 91234567 H: 97287288 O: 34987987.\n Phone numbers can only contain numbers, and should be at least 3 digits long";
+    public static final String PHONE_VALIDATION_REGEX = "(?=(?:.*\\d){3})[(HPO:)0-9 ]+";
     public final String value;
 
     /**
