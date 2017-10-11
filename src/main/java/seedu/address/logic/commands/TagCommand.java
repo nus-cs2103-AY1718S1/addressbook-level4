@@ -13,8 +13,8 @@ public class TagCommand extends UndoableCommand {
     
     private final String tag;
     
-    public TagCommand(String tag) {
-        this.tag = tag;
+    public TagCommand() {
+        this.tag = "dummy";
     }
 
     @Override
