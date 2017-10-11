@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Aaron
-image::aaronyhsoh.jpg[width="150", align="left"]
+image::aaronyhsoh.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: UI
@@ -20,7 +20,7 @@ Responsibilities: UI
 ...
 
 === Wu Qihao
-image::qihao27.jpg[width="150", align="left"]
+image::qihao27.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Storage
@@ -28,7 +28,7 @@ Responsibilities: Storage
 ...
 
 === Valensia
-image::valensia0711.jpg[width="150", align="left"]
+image::valensia0711.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Model
@@ -36,7 +36,7 @@ Responsibilities: Model
 ...
 
 === Xiang Hailin
-image::Hailinx.jpg[width="150", align="left"]
+image::Hailinx.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Logic
