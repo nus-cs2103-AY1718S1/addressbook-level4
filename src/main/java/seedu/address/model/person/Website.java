@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Website {
     public static final String MESSAGE_WEBSITE_CONSTRAINS =
-            "Website can only contain https/http:// www.";
+            "Website should contain a prefix of http://www https://www.";
     public static final String WEBSITE_VALIDATION_REGEX =
             "https?://(www\\.)?[-a-z0-9]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)";
     public static final String WEBSITE_EXAMPLE = "http://www.website.com";
@@ -43,7 +43,8 @@ public class Website {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Website // instanceof handles nulls
-                && this.value.equals(((Website) other).value)); // state check
+                && (this.value == ((Website) other).value
+                || this.value.equals(((Website) other).value))); // state check
     }
 
     @Override
