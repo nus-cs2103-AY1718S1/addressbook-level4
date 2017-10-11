@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103-T10-B1/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -92,8 +92,9 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons : `find`
 
+==== Default
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -111,6 +112,42 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+==== Option1
+
+Conducts fuzzy search for persons whose any detail contain the given keywords. +
+Format: `find -u KEYWORD`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* All details are searched, including name, phone, email, address, tag and so on
+****
+
+Examples:
+
+* `find -u jo` +
+Returns `john` and `John Doe`
+* `find -u 999` +
+Returns any person containing number `999`
+
+==== Option2
+
+Finds by the specific details. +
+Format: `find -d [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* At lease one argument must be given. e.g `find -d` will not work
+* Returns any person whose name contains the given name if name is specified, phone number contains +
+the given phone number if it is specified and so on to all details
+****
+
+Examples:
+
+* `find -d n/jo` +
+Returns `john` and `John Doe`
+* `find -d p/999 e/nus` +
+Returns any person whose phone number contains number `999` and email address contains `nus`
 
 === Deleting a person : `delete`
 

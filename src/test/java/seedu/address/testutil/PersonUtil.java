@@ -22,6 +22,14 @@ public class PersonUtil {
     }
 
     /**
+     * Returns an add command string (use alias command) for adding the {@code person}.
+     */
+    public static String getAddAliasCommand(ReadOnlyPerson person) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+    }
+
+
+    /**
      * Returns the part of command string for the given {@code person}'s details.
      */
     public static String getPersonDetails(ReadOnlyPerson person) {

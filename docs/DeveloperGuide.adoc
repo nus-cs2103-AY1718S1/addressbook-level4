@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103-T10-B1/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -729,7 +729,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |add details to a certain contact after adding them |have more information available afterwards
+
+|`* * *` |user |be notified if I were to delete a contact |I don’t mistakenly delete a contact
+
+|`* * *` |user |have a more flexible addition of contact |add contacts without address or email as compulsory elements
+
+|`* * *` |user |show list of favourite contacts |quickly find people I contact often
+
+|`* * *` |user |be notified when entering user with same name |avoid confusion in the future
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |use link:#right-click-menu[right click menu] for most link:#common-commands[common commands] |no typing is required and makes my life easy
+
+|`* *` |user |show contact according to categories of labels |access certain group by label
+
+|`* *` |user |copy email address to clipboard |paste it into my email application’s recipients field
+
+|`* *` |user |have wrong command to be highlighted |change it immediately
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -767,6 +785,255 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add person details
+
+*MSS*
+
+1.  User requests to create a contact with more details including birthday, home call number and so on
+2.  User types in these details
+3.  AddressBook adds a new contact with these details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User types with wrong format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Use right click menu
+
+*MSS*
+
+1.  User requests to delete or edit one person
+2.  User right clicks that contact
+3.  AddressBook displays a menu with delete and edit options
+4.  User choose delete option
+5.  AddressBook delete that contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User choose edit option.
++
+[none]
+** 4a1. AddressBook shows a dialogue for editing.
+** 4a2. User types in information.
+** 4a3. AddressBook saves these information.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show contact according to categories of labels
+
+*MSS*
+
+1.  User requests to show all persons with a specific label
+2.  AddressBook shows a list a person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The label does not exist.
++
+[none]
+** 1a1. AddressBook shows a empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete confirmation
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to delete a specific person in the list
+4.  AddressBook displays a dialogue window asking user to confirm deletion
+5.  User confirms deletion request
+6.  AddressBook deletes the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given index is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 5a. User cancels deletion.
++
+Use case ends.
+
+[discrete]
+=== Use case: Flexible contact addition
+
+*MSS*
+
+1.  User requests to add a person
+2.  User inputs desired details, eg: address, email, birthday, etc...
+3.  AddressBook adds the person to the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user input is invalid.
++
+[none]
+** 2a1.  AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Copy email address
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to copy a specific person’s email address to clipboard
+4.  AddressBook copy the person’s email address to clipboard
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The specified person’s email address is empty.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Favourite contacts
+
+*MSS*
+
+1.  User requests to list commonly contacted persons
+2.  AddressBook saves and displays list without command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Highlight contacts with same name
+
+*MSS*
+
+1.  User requests to add a person
+2.  AddressBook notify if name entered matches any name in list
+3.  User edit the name of contact
+4.  AddressBook removes the notification
++
+Use case ends.
+
+[discrete]
+=== Use case: Highlight invalid command
+
+*MSS*
+
+1.  User inputs command
+2.  AddressBook highlights invalid command
+3.  User edits command
+4.  Addressbook removes highlight
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Command entered is valid.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add photos to contacts
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User picks a person
+4.  User requests to add a photo to contacts
+5.  AddressBook adds photo to contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 4a. Contact already has a photo.
++
+[none]
+** 4a1. AddressBook displays message “already has a photo”.
++
+** 4a2. AddressBook displays a dialogue window asking user if user wants to change the current photo.
++
+Use case resumes at step 5.
+
+[discrete]
+=== Use case: Password feature
+
+*MSS*
+
+1.  User runs the application
+2.  AddressBook displays a window asking user to input password
+3.  User inputs password
+4.  AddressBook displays main window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User inputs wrong password.
++
+[none]
+** 3a1. AddressBook displays message “Wrong password”.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +1042,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to sort within 1 second.
+.  A user with average software using skills should be able to understand the user interface within 20 minutes.
+.  A new user who is able to comprehend simple english can use the application within 20 minutes.
+.  Should only store data locally unless user shares with other applications.
 
 {More to be added}
 
@@ -793,6 +1064,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[right-click-menu]]
+Right click menu
+
+....
+A drop down menu that contains various commands
+....
+
+[[common-commands]]
+Common commands
+
+....
+edit, delete
 ....
 
 [appendix]
