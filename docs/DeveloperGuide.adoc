@@ -1001,6 +1001,127 @@ Use case ends.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Add an event
+
+*MSS*
+
+1.  User requests to add an event
+2.  User enters event name, date, time, location
+3.  AddressBook adds event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters the wrong input format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit an event
+
+*MSS*
+
+1.  User requests to edit an event
+2.  AddressBook shows all event
+3.  User choose on the specific event that he/she wants to edit
+4.  User edits the event either by name, date or time
+5.  AddressBook edits event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User enters the wrong input format for edited part
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete event
+
+*MSS*
+
+1.  User requests to delete an event
+2.  AddressBook shows all events
+3.  User types specific event name
+4.  AddressBook deletes event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User enters wrong input format.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Query an event
+
+*MSS*
+
+1.  User requests to list all events
+2.  User enters the event name that he/she wants to query
+3.  AddressBook display all information of the chosen event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User enters wrong input format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+== Use case: Warnings when adding event
+
+*MSS*
+
+1.  User requests to add an event
+2.  User enters event name, time, date and location
+3.  AddressBook pops out a warning
+4.  AddressBook prevents user from adding
++
+Use case ends.
+
+[discrete]
+== Use case: Reminders to follow-up on clients after events
+
+*MSS*
+
+1.  AddressBook pops out a reminder after event has passed
+2.  AddressBook shows which event and client the user has to follow up
+3.  User enters 'yes' or 'no' to indicate whether it has been done or not
+4.  AddressBook stops reminder once user enters 'yes'
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters wrong input format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
