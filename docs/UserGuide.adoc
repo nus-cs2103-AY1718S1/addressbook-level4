@@ -131,6 +131,44 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Pinning a person: `pin`
+
+Pins a person on top of the addressbook. +
+Format: `pin INDEX`
+
+****
+* A person can only be pinned if they are not pinned previously.
+* Pins the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`pin 2` +
+Pins the 2nd person to the top of the address book.
+
+=== Unpinning a person: `unpin`
+
+Unpins a person from the top of the addressbook. +
+Format: `unpin INDEX`
+
+****
+* A person can only be unpinned if they are pinned previously.
+* Unpins the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`unpin 1` +
+Unpins the 1st person from the top of the address book.
+
+
+
 === Select a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
