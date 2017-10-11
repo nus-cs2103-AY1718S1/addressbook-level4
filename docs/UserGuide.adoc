@@ -211,6 +211,12 @@ Selects the 1st person in the results of the `find` command.
 `s 7` +
 Selects the 7th person in the address book.
 
+=== Creating a backup : `backup`
+
+Shorthand Alias: `b`
+Creates a backup file to store the data in address book. +
+Format: `backup`
+
 === Listing entered commands : `history`
 
 Shorthand Alias: `hx`
