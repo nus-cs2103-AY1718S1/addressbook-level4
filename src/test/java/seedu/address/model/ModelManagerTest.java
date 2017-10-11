@@ -1,11 +1,13 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Rule;
@@ -13,7 +15,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -24,6 +29,49 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    /**
+     * Tests if sortPersonByName can return a list of sorted names from an input
+     * of names with random orders.
+     * @throws Exception
+     */
+
+    @Test
+    public void sortPersonByName_validSort_success() throws Exception{
+        Person inputPerson1 = new PersonBuilder().withName("YING ZHENG").build();
+        Person inputPerson2 = new PersonBuilder().withName("JACOB").build();
+        Person inputPerson3 = new PersonBuilder().withName("VIVEK").build();
+        Person inputPerson4 = new PersonBuilder().withName("JIA SHU").build();
+
+        ArrayList<ReadOnlyPerson> inputPersonList = new ArrayList<>();
+
+        inputPersonList.add(inputPerson1);
+        inputPersonList.add(inputPerson2);
+        inputPersonList.add(inputPerson3);
+        inputPersonList.add(inputPerson4);
+
+        AddressBook inputAddressBook = new AddressBook();
+        inputAddressBook.setPersons(inputPersonList);
+
+        ModelManager expectedModel = new ModelManager(inputAddressBook, new UserPrefs());
+        inputPersonList.clear();
+        expectedModel.sortPersonByName(inputPersonList);
+        inputAddressBook.setPersons(inputPersonList);
+
+        ArrayList<ReadOnlyPerson> sortedInputPersonList = new ArrayList<>();
+
+        sortedInputPersonList.add(inputPerson2);
+        sortedInputPersonList.add(inputPerson4);
+        sortedInputPersonList.add(inputPerson3);
+        sortedInputPersonList.add(inputPerson1);
+
+        AddressBook sortedAddressBook = new AddressBook();
+        sortedAddressBook.setPersons(sortedInputPersonList);
+
+        ModelManager actualModel = new ModelManager(sortedAddressBook, new UserPrefs());
+
+        assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
     }
 
     @Test
