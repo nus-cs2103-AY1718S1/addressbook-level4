@@ -15,7 +15,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and sorted order (by full name), does not allow nulls.
+ * A list of persons that enforces uniqueness between its elements and sorted order (by full name),
+ * does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
