@@ -29,6 +29,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_SORT = "Invalid Sorting type.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -89,5 +90,21 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a String and checks for validity. Leading and trailing whitespaces will be removed
+     * @throws IllegalValueException if specified string is invalid (not 1 of 3 options)
+     */
+    public static String parseSortType(String sortType) throws IllegalValueException {
+        String trimmedSortType = sortType.trim();
+        switch (trimmedSortType) {
+        case "name":
+        case "phone":
+        case "email":
+            return trimmedSortType;
+        default:
+            throw new IllegalValueException(MESSAGE_INVALID_SORT);
+        }
     }
 }
