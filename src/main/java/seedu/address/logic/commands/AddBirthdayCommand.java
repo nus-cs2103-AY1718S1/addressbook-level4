@@ -52,7 +52,7 @@ public class AddBirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToUpdate = lastShownList.get(targetIndex.getZeroBased());
-        ReadOnlyPerson newPerson = null;
+        Person newPerson = null;
 
         try {
             newPerson = addBirthday(personToUpdate, inputBirthday);
@@ -62,6 +62,8 @@ public class AddBirthdayCommand extends UndoableCommand {
         } catch (DuplicatePersonException e) {
             e.printStackTrace();
         }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_ADD_BIRTHDAY_SUCCESS, newPerson));
     }
