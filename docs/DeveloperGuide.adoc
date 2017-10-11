@@ -316,12 +316,13 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
-**Pros:** Easy to implement. +
-**Cons:** May have performance issues in terms of memory usage. +
-**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Alternative 1 (current choice):** Individual command knows how to undo/redo by itself. +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
+**Alternative 2:** Saves the entire address book. +
+**Pros:** Easy to implement. +
+**Cons:** May have performance issues in terms of memory usage. +
+
 
 ---
 
@@ -731,9 +732,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
 
-|`* * *` |As a user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
+|`* * *` |user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by name and tag|locate details of persons without having to go through the entire list
 
 |`* * *` |user |get help information |know where is wrong when I get errors
 
@@ -784,6 +785,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |drag person card |sort people into my own order
 
 |`*` |user |select font style |more comfortable to read
+
 |=======================================================================
 
 {More to be added}
@@ -895,6 +897,60 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Undo a command
+
+*MSS*
+
+1. User enters "history" command to view all history commands.
+2. AddressBook displays all history commands.
+3. User enters "undo" to request to undo the last link:#undoable-command[undoable command].
+4. AddressBook undoes the last link:#undoable-command[undoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#undoable-command[undoable command] commands in the history.
++
+[none]
+** 3a1 AddressBook displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo a command
+
+*MSS*
+
+1. User enters "history" command to view all history commands.
+2. AddressBook displays all history commands.
+3. User enters "redo" to request to undo the last link:#redoable-command[redoable command].
+4. AddressBook undoes the last link:#redoable-command[redoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#redoable-command[redoable command] commands in the history.
++
+[none]
+** 3a1 AddressBook displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear the address book
+
+*MSS*
+
+1. User enters "clear" command to delete all entries in address book.
+2. AddressBook deletes all data
++
+Use case ends.
+
+[discrete]
 === Use case: Show help window
 
 *MSS*
@@ -906,13 +962,47 @@ Use case ends.
 
 *Extensions*
 
-* 1a. User presses F1 on the keyboard
+[none]
+* 1a. User presses F1 on the keyboard or clicks on help icon
 +
 Use case resumes at step 2.
 
-* 1b. User clicks on help icon
+[discrete]
+=== Use case: Exit the app
+
+*MSS*
+
+1. User enters "exit" command for exiting the app.
+2. AddressBook terminates its work and exit.
 +
-User case resumes at step 2.
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User click File -> Exit button.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort persons
+
+*MSS*
+
+1.  User requests to sort persons
+2.  AddressBook shows a list of sorted persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. AddressBook shows a successful message.
++
+Use case ends.
 
 [discrete]
 === Use case: List persons
@@ -1000,7 +1090,29 @@ Use case ends.
 +
 Use case ends.
 
-{More to be added}
+[discrete]
+=== Use case: find a person by tag
+
+*MSS*
+
+1. User enters tag names for a person list
+2. AddressBook displays the list of persons that contains either of the tag names
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User does not enter tag names
++
+AddressBook shows and error message.
++
+Use case ends.
+
+* 1b. User does not use correct format
++
+AddressBook displays an empty list.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -1081,11 +1193,25 @@ Private contact detail
 A contact detail that is not meant to be shared with others.
 ....
 
+[[redoable-command]]
+Redoable command
+
+....
+An redoable command is a command which has been undone, and no other commands in between.
+....
+
 [[travis]]
 Travis
 
 ....
 Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub.
+....
+
+[[undoable-command]]
+Undoable command
+
+....
+An undoable command is a command which modifies data in address book. For example, add, delete are undoable commands, while find, list are not.
 ....
 
 
