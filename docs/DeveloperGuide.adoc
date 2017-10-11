@@ -908,6 +908,46 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Login to admin account
+
+*MSS*
+
+1.  User requests admin access
+2.  AddressBook shows a login option
+3.  User enters login details
+4.  AddressBook shows admin options
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given admin login details are wrong.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort persons by group
+
+*MSS*
+
+1.  User requests list of persons
+2.  AddressBook shows a list of persons
+3.  User requests list to be sorted by group
+4.  AddressBook shows sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. AddressBook displays an empty list
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
