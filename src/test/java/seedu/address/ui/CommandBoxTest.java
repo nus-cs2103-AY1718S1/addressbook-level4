@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -149,6 +151,11 @@ public class CommandBoxTest extends GuiUnitTest {
     public void tabAutoCompleteTest_withMatchingCommand() {
         guiRobot.push(KeyCode.L);
         assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
+        guiRobot.push(KeyCode.ENTER);
+
+        // text in text filed is in uppercase
+        guiRobot.push(new KeyCodeCombination(KeyCode.A, KeyCombination.SHIFT_DOWN));
+        assertInputHistory(KeyCode.TAB, "add");
     }
 
     /**
