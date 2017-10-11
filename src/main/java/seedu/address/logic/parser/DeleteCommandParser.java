@@ -30,7 +30,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
             }
         } else {
-            String[] tokens = (args.trim()).split(" ");
+            String[] tokens = args.trim().split("\\s+");
             List<Index> indexes = new ArrayList<>();
             for (String token : tokens) {
                 try {
