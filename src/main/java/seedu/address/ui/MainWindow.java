@@ -41,7 +41,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private InfoPanel infoPanel;
     private StartUpPanel startUpPanel;
     private PersonListPanel personListPanel;
     private PersonListStartUpPanel personListStartUpPanel;
@@ -49,7 +49,7 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -135,8 +135,9 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        infoPanel = new InfoPanel();
+        infoPlaceholder.getChildren().clear();
+        infoPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 
     //@@author jelneo
@@ -147,7 +148,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
             startUpPanel = new StartUpPanel();
-            browserPlaceholder.getChildren().add(startUpPanel.getRoot());
+            infoPlaceholder.getChildren().add(startUpPanel.getRoot());
 
             personListStartUpPanel = new PersonListStartUpPanel();
             personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());

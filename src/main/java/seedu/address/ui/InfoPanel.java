@@ -16,9 +16,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class InfoPanel extends UiPart<Region> {
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML = "InfoPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -29,13 +29,13 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
-    private Label postalCode;
+    private Label displayPostalCode;
     @FXML
     private Label email;
     @FXML
     private FlowPane tags;
 
-    public BrowserPanel() {
+    public InfoPanel() {
         super(FXML);
 
         loadDefaultPage();
@@ -58,7 +58,7 @@ public class BrowserPanel extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
+        displayPostalCode.textProperty().bind(Bindings.convert(person.displayPostalCodeProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         //person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
@@ -86,7 +86,7 @@ public class BrowserPanel extends UiPart<Region> {
         name.setText("");
         phone.setText("");
         address.setText("");
-        postalCode.setText("");
+        displayPostalCode.setText("");
         email.setText("");
         tags.getChildren().clear();
     }

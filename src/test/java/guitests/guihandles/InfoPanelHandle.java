@@ -9,9 +9,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- * A handler for the {@code BrowserPanel} of the UI.
+ * A handler for the {@code InfoPanel} of the UI.
  */
-public class BrowserPanelHandle extends NodeHandle<Node> {
+public class InfoPanelHandle extends NodeHandle<Node> {
 
     public static final String BROWSER_ID = "#browser";
 
@@ -19,7 +19,7 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
 
     private URL lastRememberedUrl;
 
-    public BrowserPanelHandle(Node browserPanelNode) {
+    public InfoPanelHandle(Node browserPanelNode) {
         super(browserPanelNode);
 
         WebView webView = getChildNode(BROWSER_ID);

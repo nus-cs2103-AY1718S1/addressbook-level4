@@ -11,7 +11,7 @@
          <Label fx:id="name" layoutX="10.0" styleClass="window_big_label" text="\$name" />
          <Label fx:id="phone" layoutX="13.0" layoutY="100.0" styleClass="window_small_label" text="\$phone" />
          <Label fx:id="address" layoutX="13.0" layoutY="140.0" styleClass="window_small_label" text="\$address" />
-         <Label fx:id="postalCode" layoutX="13.0" layoutY="180.0" styleClass="window_small_label" text="\$postalCode" />
+         <Label fx:id="displayPostalCode" layoutX="13.0" layoutY="180.0" styleClass="window_small_label" text="\$postalCode" />
          <Label fx:id="email" layoutX="13.0" layoutY="220.0" styleClass="window_small_label" text="\$email" />
       </children>
    </Pane>
