@@ -24,7 +24,7 @@ image::newalter.jpg[width="150", align="left"]
 {empty}[http://github.com/newalter[github]]
 
 Role: Project Member +
-Responsibilities: Logic
+Responsibilities: In charge of `Logic`
 
 '''
 
