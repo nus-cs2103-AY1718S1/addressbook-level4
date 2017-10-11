@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -103,7 +104,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeTag(Tag tag)  {
+        public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove)  {
             fail("This method should not be called.");
         }
 
@@ -138,6 +139,12 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
         }
     }
 

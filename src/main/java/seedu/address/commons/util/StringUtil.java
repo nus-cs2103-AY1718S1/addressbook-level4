@@ -5,6 +5,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Helper functions for handling strings.
@@ -33,12 +39,63 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
+
         for (String wordInSentence: wordsInPreppedSentence) {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Returns true if the {@code tagList} contains the {@code word}.
+     *   case sensitive and a full word match is required.
+     *   <br>examples:<pre>
+     *       containsTag(tagList, "abc") == false where tagList does not contain a [abc] tag
+     *       containsTag(tagList, "DEF") == true where tagList contains a [DEF] tag
+     *       containsTag(tagList, "AB") == false where tagList contains only [ABC] tag
+     *       </pre>
+     * @param tagList cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsTag(Set<Tag> tagList, String word) {
+        requireNonNull(tagList);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        CharSequence space = " ";
+        //check if there is more than one tag searched.
+        //more than 1 tag searched. split into a list of searches.
+        if (preppedWord.contains(space)) {
+            String[] separateTags = word.split(" ");
+            List<String> tagFilters = Arrays.asList(separateTags);
+            for (Tag tag : tagList) {
+                if (haveMatchedTags(tagFilters, tag)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        //only 1 tag searched. Check if tagList contains word as a tag
+        try {
+            Tag checkTag = new Tag(preppedWord);
+            return tagList.contains(checkTag);
+
+        } catch (IllegalValueException e) {
+            return false;
+        }
+    }
+
+
+    /**
+     * Checks if any of the words in tagFilters match with the tag word.
+     * Used by containsTag method.
+     */
+    private static boolean haveMatchedTags(List<String> tagFilters, Tag tag) {
+        String encapsulatedTag = tag.toString();
+        return tagFilters.contains(encapsulatedTag.substring(1, encapsulatedTag.length() - 1));
     }
 
     /**

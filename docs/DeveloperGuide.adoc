@@ -1,4 +1,5 @@
 = AddressBook Level 4 - Developer Guide
+= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -991,7 +992,19 @@ Use case ends.
 *MSS*
 
 1. User requests to clear the UniCity.
-2. UniCity deletes everything that has been stored.
+2. UniCity asks the user to confirm clearing the entire address book.
+3. User confirms to proceed.
+4. UniCity deletes everything that has been stored.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User decides not to proceed to clear UniCity.
++
+[none]
+** 3a1. UniCity displays clearing aborted.
 +
 Use case ends.
 
@@ -1011,7 +1024,19 @@ Use case ends.
 *MSS*
 
 1. User requests to exit UniCity.
-2. UniCity shuts down.
+2. UniCity asks the user to confirm.
+3. User confirms to exit the application.
+4. UniCity shuts down.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User decides not to proceed to exit UniCity.
++
+[none]
+** 3a1. UniCity displays exit aborted.
 +
 Use case ends.
 
@@ -1020,7 +1045,8 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+.  able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should start up within 5 seconds of running the app.
 .  Every command should be documented.
 .  User interface should intuitive for a novice user.
@@ -1049,10 +1075,11 @@ A contact detail that is not meant to be shared with others
 Application Programming Interface
 
 ....
-A specific method prescribed by a computer operating system or by an application program by which a programmer writing an application program can make requests of the operating system or another application.
+A specific method prescribed by a computer operating system or by an application program by which a programmer writing
+an application program can make requests of the operating system or another application.
 ....
 
-[bug]
+[[bug]]
 Bug
 
 ....
@@ -1063,35 +1090,40 @@ A coding error in a computer program.
 Help System
 
 ....
-A documentation component of a software program that explains the features of the program and helps the user understand its capabilities.
+A documentation component of a software program that explains the features of the program and helps the user understand
+its capabilities.
 ....
 
 [[information-architecture]]
 Information Architecture
 
 ....
-The set of ideas about how all information in a given context should be treated philosophically and, in a general way, how it should be organized; this is expressed in an information architecture document.
+The set of ideas about how all information in a given context should be treated philosophically and, in a general way,
+how it should be organized; this is expressed in an information architecture document.
 ....
 
 [[IDE]]
 Integrated Development Environment
 
 ....
-A programming environment that has been packaged as an application program, typically consisting of a code editor, a compiler, a debugger, and a GUI builder.
+A programming environment that has been packaged as an application program, typically consisting of a code editor, a
+compiler, a debugger, and a GUI builder.
 ....
 
 [[KISS Principle]]
 Keep It Simple, Stupid
 
 ....
-The principle that people want products that are easy to learn and use, and that companies realize time and cost benefits by producing such products.
+The principle that people want products that are easy to learn and use, and that companies realize time and cost benefits
+ by producing such products.
 ....
 
 [[OOP]]
 Object-Oriented Programming
 
 ....
-A programming model organized around objects rather than actions and data rather than logic, based on the idea that what we really care about are the objects we want to manipulate, rather than the logic required to manipulate them.
+A programming model organized around objects rather than actions and data rather than logic, based on the idea that what
+ we really care about are the objects we want to manipulate, rather than the logic required to manipulate them.
 ....
 
 [[SDK]]
@@ -1112,7 +1144,9 @@ A phase of software development in which the software is tested in the "real wor
 User Interface
 
 ....
-Everything designed into an information device with which a human being may interact -- including display screen, keyboard, mouse, light pen, the appearance of a desktop, illuminated characters, help messages, and how an application program or a Web site invites interaction and responds to it.
+Everything designed into an information device with which a human being may interact -- including display screen,
+keyboard, mouse, light pen, the appearance of a desktop, illuminated characters, help messages, and how an application
+program or a Web site invites interaction and responds to it.
 ....
 
 [appendix]
