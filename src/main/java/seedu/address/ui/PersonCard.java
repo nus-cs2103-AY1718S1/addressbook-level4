@@ -53,7 +53,8 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
     }
-    private static String getColorForTag(String tagValue){
+
+    private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
@@ -75,6 +76,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise the {@code person} tags
+     * @param person Person to be assigned tag color.
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
