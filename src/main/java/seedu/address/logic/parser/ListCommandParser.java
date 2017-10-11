@@ -51,5 +51,4 @@ public class ListCommandParser implements Parser<ListCommand>{
     private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix tagPrefix) {
         return Stream.of(tagPrefix).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
 }

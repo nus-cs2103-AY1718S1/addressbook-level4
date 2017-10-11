@@ -27,11 +27,11 @@ public class ListCommand extends Command {
     public ListCommand() {
         this.predicate = null;
     }
-    
+
     public ListCommand(PersonContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
-    
+
     @Override
     public CommandResult execute() {
         if (this.predicate != null) {
