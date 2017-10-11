@@ -1,26 +1,10 @@
 package seedu.address.logic.trie;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandCollection;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
+
 
 /**
  * Class for the autocomplete command function
@@ -61,7 +45,7 @@ public class CommandTrie implements Trie {
     public String attemptAutoComplete (String input) throws NullPointerException {
         StringBuilder output = new StringBuilder();
 
-        if (commandSet.contains(input)){
+        if (commandSet.contains(input)) {
             //Don't need to traverse trie
             if (commandMap.containsKey (input)) {
                 output.append(" ");
