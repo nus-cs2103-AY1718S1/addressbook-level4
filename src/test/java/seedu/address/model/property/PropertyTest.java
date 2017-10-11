@@ -9,7 +9,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
-import seedu.address.model.property.Property;
 
 public class PropertyTest {
     @Rule

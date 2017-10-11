@@ -4,8 +4,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.UniquePersonList;
-
 public class UniquePersonListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
