@@ -19,12 +19,12 @@ Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Li Zeyong
+image::newalter.jpg[width="150", align="left"]
+{empty}[http://github.com/newalter[github]]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Project Member +
+Responsibilities: Logic
 
 '''
 
