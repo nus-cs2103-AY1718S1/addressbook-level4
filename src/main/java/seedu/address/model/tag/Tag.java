@@ -71,7 +71,7 @@ public class Tag {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
                 && this.tagName.equals(((Tag) other).tagName))
-                && this.tagColor.equals(((Tag) other).getTagColor());// state check
+                && this.tagColor.equals(((Tag) other).getTagColor()); // state check
     }
 
     @Override

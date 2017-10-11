@@ -49,7 +49,7 @@ public class UniqueTagListTest {
             assertTrue(tag.getTagColor().equals("grey"));
         }
 
-        Tag tag = new Tag("friends","blue");
+        Tag tag = new Tag("friends", "blue");
 
         //Test random color
         tag.setRandomColor();
@@ -60,8 +60,18 @@ public class UniqueTagListTest {
         assertTrue(tag.getTagColor().equals("blue"));
 
         //Test off color
-
         tag.setOffColor();
         assertTrue(tag.getTagColor().equals("grey"));
+
+
+        //Reset tagList
+        uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
+        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
+
+        uniqueTagList.setTags();
     }
+
+
 }
