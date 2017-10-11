@@ -21,7 +21,7 @@ public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_sortByName_success() {
+    public void executeSortByNameSuccess() {
         SortCommand sortCommand = prepareCommand(TO_SORT_NAME);
 
         String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_NAME);
@@ -33,7 +33,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByPhone_success() {
+    public void executeSortByPhoneSuccess() {
         SortCommand sortCommand = prepareCommand(TO_SORT_PHONE);
 
         String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_PHONE);
@@ -45,7 +45,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByEmail_success() {
+    public void executeSortByEmailSuccess() {
         SortCommand sortCommand = prepareCommand(TO_SORT_EMAIL);
 
         String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_EMAIL);
@@ -57,7 +57,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_sortByAddress_success() {
+    public void executeSortByAddressSuccess() {
         SortCommand sortCommand = prepareCommand(TO_SORT_ADDRESS);
 
         String expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, TO_SORT_ADDRESS);
