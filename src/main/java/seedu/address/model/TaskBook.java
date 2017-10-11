@@ -43,7 +43,7 @@ public class TaskBook implements ReadOnlyTaskBook {
     public TaskBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the tasks and Tags in the {@code toBeCopied}
      */
     public TaskBook(ReadOnlyTaskBook toBeCopied) {
         this();
@@ -52,8 +52,8 @@ public class TaskBook implements ReadOnlyTaskBook {
 
     //// list overwrite operations
 
-    public void setTasks(List<? extends ReadOnlyTask> persons) throws DuplicateTaskException {
-        this.tasks.setTasks(persons);
+    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
+        this.tasks.setTasks(tasks);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -68,50 +68,50 @@ public class TaskBook implements ReadOnlyTaskBook {
         try {
             setTasks(newData.getTaskList());
         } catch (DuplicateTaskException e) {
-            assert false : "AddressBooks should not have duplicate persons";
+            assert false : "AddressBooks should not have duplicate tasks";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(tasks);
     }
 
-    //// person-level operations
+    //// task-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a task to the task book.
+     * Also checks the new task's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the task to point to those in {@link #tags}.
      *
-     * @throws DuplicateTaskException if an equivalent person already exists.
+     * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void addPerson(ReadOnlyTask p) throws DuplicateTaskException {
+    public void addTask(ReadOnlyTask p) throws DuplicateTaskException {
         Task newTask = new Task(p);
         syncMasterTagListWith(newTask);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // This can cause the tags master list to have additional tags that are not tagged to any task
+        // in the task list.
         tasks.add(newTask);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
      *
-     * @throws DuplicateTaskException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
+     * @throws DuplicateTaskException if updating the task's details causes the task to be equivalent to
+     *      another existing task in the list.
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncMasterTagListWith(Task)
      */
-    public void updatePerson(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
             throws DuplicateTaskException, TaskNotFoundException {
         requireNonNull(editedReadOnlyTask);
 
         Task editedTask = new Task(editedReadOnlyTask);
         syncMasterTagListWith(editedTask);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // This can cause the tags master list to have additional tags that are not tagged to any task
+        // in the task list.
         tasks.setTask(target, editedTask);
     }
 
@@ -125,18 +125,18 @@ public class TaskBook implements ReadOnlyTaskBook {
         tags.mergeFrom(taskTags);
 
         // Create map with values = tag object references in the master list
-        // used for checking person tag references
+        // used for checking task tag references
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        // Rebuild the list of task tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         task.setTags(correctTagReferences);
     }
 
     /**
-     * Ensures that every tag in these persons:
+     * Ensures that every tag in these tasks:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
      */
