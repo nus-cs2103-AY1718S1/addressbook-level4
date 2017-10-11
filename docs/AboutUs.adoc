@@ -17,7 +17,9 @@ Role: Project Advisor
 === [Grant Miller]
 image::grantcm.png[width="150", align="left"]
 
-Role:
+Role: Integration, Code Quality, Testing
+
+In Charge of: Logic and Model
 
 '''
 
