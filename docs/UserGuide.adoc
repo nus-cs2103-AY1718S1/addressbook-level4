@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Rolodex - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -94,6 +94,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating persons in address book: `find` or `f` or `search`
 
 Finds persons in the address book. +
@@ -124,6 +125,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns any person having tag `School`
 * `find School werk` +
 Returns any person having tag `School` or tag `werk`
+// end::find[]
 
 === Deleting a person : `delete` or `d`
 
@@ -230,6 +232,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear` or `c`
 
+=== Keyboard Shortcuts
+
+A list of keyboard shortcuts is provided link:#shortcuts[here].
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -263,3 +269,29 @@ e.g.`select 2`
 * *History* : `history` or `his` or `past`
 * *Undo* : `undo` or `u`
 * *Redo* : `redo` or `r`
+
+// tag::shortcut[]
+== Keyboard Shortcuts
+
+=== Command Shortcuts
+
+* `ctrl` + `a` : Add command
+* `ctrl` + `c` : Clear command
+* `ctrl` + `f` : Find command
+* `ctrl` + `l` : List command
+* `ctrl` + `h` : History command
+* `ctrl` + `z` : Undo command
+* `ctrl` + `y` : Redo command
+* `ctrl` + `\#` : Select contact at number `#`
+* `ctrl` + `d` + `\#`: Delete contact at number `#`
+* `ctrl` + `e` + `\#` : Edit contact at number `#`
+
+=== Navigation/Selection Shortcuts
+
+* `↑` or `↓` : Scroll the contact list
+* `shift` + `↑` or `shift` + `↓` : Select multiple contacts
+** `ctrl` + `d` : Delete selected contacts
+
+=== Additional Shortcuts
+
+* `esc` : Exit the application

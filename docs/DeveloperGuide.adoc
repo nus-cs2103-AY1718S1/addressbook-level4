@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Rolodex - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,15 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+Rolodex is a desktop address book application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+
+This guide will walk you through the design, implementation and development environment of Rolodex. This is the go-to page for all your information needs in understanding our application.
 
 == Setting up
 
@@ -344,6 +350,64 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::findClose[]
+=== Fuzzy finding mechanism
+The fuzzy finding mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
+a string heuristic for measuring the difference between two character sequences. It can be informally viewed as the number
+of _hops_ that are required to get from a string to another, where _hops_ are insertions, deletions and substitution
+operations.
+
+The activity diagram for the fuzzy finding can be loosely described as seen in the figure below:
+
+image::FuzzyFindActivityDiagram.png[]
+
+1. A user sends a find request
+2. Application looks at all contacts currently in the database
+3. If the search parameters loosely match any of the name words of the current contact, add it into the list view.
+4. Otherwise, if it is an exact match on any of the name words of the current contact, add it into the list view.
+5. Otherwise, if it matches any other conditions specified under the find command, add it into the list view.
+
+[NOTE]
+If a contact's name word has a shorter length than the specified global minimum, the condition automatically triggers to false
+and starts searching for exact matches.
+
+The settings for the loose matching can be found as a static constant of the Person class.
+
+[source,java]
+----
+public class Person implements ReadOnlyPerson {
+    private static final int FIND_NAME_GLOBAL_TOLERANCE = 4;
+    private static final int FIND_NAME_DISTANCE_TOLERANCE = 2;
+    ...
+}
+----
+
+`FIND_NAME_GLOBAL_TOLERANCE` is the global minimum distance of the currently examined name word for the loose matching to execute.
+`FIND_NAME_DISTANCE_TOLERANCE` is the maximum levenshtein distance from the currently examined search parameter
+to the currently examined name word in which the contact will be added.
+
+==== Design Considerations
+
+**Aspect:** Length of name word +
+**Alternative 1 (current choice):** Use a global minimum for defining when the fuzzy finding should execute. +
+**Pros:** Name words have higher minimum hop to length ratio. +
+**Cons:** User might need fuzzy finding on name words with character length lesser than the global minimum. +
+**Pros:** Easy logic to understand, implement and maintain. +
+**Cons:** Rudimentary algorithm.
+
+---
+
+**Aspect:** Location of fuzzy find settings +
+**Alternative 1 (current choice):** Use private static constant in a person. +
+**Pros:** User does not need to worry about changing the settings or the intricacies of the fuzzy finding. +
+**Cons:** User might need stricter or looser limits than the ones defined for them. +
+**Pros:** Developers can easily change and manage settings and limits. +
+**Cons:** Users have no way of accessing the settings and limits. +
+**Alternative 2:** Allow user to set fuzzy find settings in a document file. +
+**Pros:** Advanced users can change the settings to suit their needs better. +
+**Cons:** Developers need to spend more work maintaining more components including storage.
+// end::findClose[]
 
 === Logging
 
@@ -732,6 +796,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
+
+|`* * *` |advanced user |perform actions with hotkeys |increase productivity
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
