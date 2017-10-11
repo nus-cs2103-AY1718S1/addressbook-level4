@@ -896,18 +896,52 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-=== Use case:  History
+[discrete]
+=== Use case: Adding multiple persons
 
 *MSS*
 
-1.  User requests to list the history of commands
-2.  AddressBook lists the history of commands
+1.  User requests to add multiple persons from a `.txt` file
+2.  AddressBook parse persons' particulars from file
+3.  AddressBook adds all persons in the file
+
+* 2a. The file does not exist.
++
+** 2a1. AddressBook shows an error message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
+* 2b. The persons' particulars format are invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3a. The file contain person(s) that already exist in AddressBook.
++
+[none]
+** 3a1. AddressBook deletes all successfully added persons prior to duplicated persons.
+** 3a2. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case:  History
+
+*MSS*
+
+1.  User requests to list the history of commands
+2.  AddressBook lists the history of commands
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+
 * 2a. There are no previous commands
 +
 Use case ends.

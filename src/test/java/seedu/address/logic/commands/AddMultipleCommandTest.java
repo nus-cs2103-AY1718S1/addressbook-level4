@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
@@ -12,6 +13,8 @@ import java.util.function.Predicate;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import com.sun.org.apache.regexp.internal.RE;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
@@ -24,71 +27,96 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandTest {
+public class AddMultipleCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullPersonList_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddMultipleCommand(null);
     }
 
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+        ArrayList<ReadOnlyPerson> validPersonArrayList = new ArrayList<>();
+        Person validPerson1 = new PersonBuilder().withName("Alice").build();
+        Person validPerson2 = new PersonBuilder().withName("Bob").build();
+        validPersonArrayList.add(validPerson1);
+        validPersonArrayList.add(validPerson2);
+        
+        CommandResult commandResult = getAddMultipleCommandForPerson(validPersonArrayList, modelStub).execute();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        StringBuilder successMessage = new StringBuilder();
+        for(ReadOnlyPerson personToAdd: validPersonArrayList) {
+            successMessage.append(System.lineSeparator());
+            successMessage.append(personToAdd);
+        }
+        
+        assertEquals(String.format(AddMultipleCommand.MESSAGE_SUCCESS, successMessage), commandResult.feedbackToUser);
+        assertEquals(validPersonArrayList, modelStub.personsAdded);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+        ArrayList<ReadOnlyPerson> validPersonArrayList = new ArrayList<>();
+        Person validPerson1 = new PersonBuilder().withName("Alice").build();
+        Person validPerson2 = new PersonBuilder().withName("Bob").build();
+        validPersonArrayList.add(validPerson1);
+        validPersonArrayList.add(validPerson2);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddMultipleCommand.MESSAGE_DUPLICATE_PERSON);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddMultipleCommandForPerson(validPersonArrayList, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        ArrayList<ReadOnlyPerson> personArrayList1 = new ArrayList<>();
+        ArrayList<ReadOnlyPerson> personArrayList2 = new ArrayList<>();
+        
+        ReadOnlyPerson alice = new PersonBuilder().withName("Alice").build();
+        ReadOnlyPerson bob = new PersonBuilder().withName("Bob").build();
+        ReadOnlyPerson mary = new PersonBuilder().withName("Mary").build();
+        ReadOnlyPerson jane = new PersonBuilder().withName("Jane").build();
+        
+        personArrayList1.add(alice);
+        personArrayList1.add(bob);
+        personArrayList2.add(mary);
+        personArrayList2.add(jane);
+        
+        AddMultipleCommand addPersonArrayList1 = new AddMultipleCommand(personArrayList1);
+        AddMultipleCommand addPersonArrayList2 = new AddMultipleCommand(personArrayList2);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addPersonArrayList1.equals(addPersonArrayList1));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddMultipleCommand addPersonArrayList1Copy = new AddMultipleCommand(personArrayList1);
+        assertTrue(addPersonArrayList1.equals(addPersonArrayList1Copy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addPersonArrayList1.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addPersonArrayList1.equals(null));
 
         // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertFalse(addPersonArrayList1.equals(addPersonArrayList2));
     }
 
     /**
      * Generates a new AddCommand with the details of the given person.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddMultipleCommand getAddMultipleCommandForPerson(ArrayList<ReadOnlyPerson> personList, Model model) {
+        AddMultipleCommand command = new AddMultipleCommand(personList);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -131,15 +159,10 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateFilteredListToShowAll() {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
-        
+
         @Override
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
