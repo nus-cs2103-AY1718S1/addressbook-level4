@@ -51,6 +51,11 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    protected Stage primaryStage;
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     @Override
     public void init() throws Exception {
@@ -183,6 +188,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("");
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }

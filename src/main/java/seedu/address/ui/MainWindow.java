@@ -16,6 +16,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -37,6 +38,8 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_WIDTH = 450;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private MainApp mainApp;
 
     private Stage primaryStage;
     private Logic logic;
@@ -202,13 +205,23 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Browse address book to open
+     * Opens a FileChooser to let the user select an address book to load.
      */
     @FXML
     private void handleOpen() {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Open File");
-        File file = chooser.showOpenDialog(new Stage());
+        FileChooser fileChooser = new FileChooser();
+
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        if (file != null) {
+            mainApp.start(mainApp.getPrimaryStage());
+        }
     }
 
     /**
