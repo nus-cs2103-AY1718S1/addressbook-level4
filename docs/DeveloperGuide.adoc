@@ -839,7 +839,7 @@ Use case ends.
 1.  User requests to edit a person
 2.  AddressBook shows a list of persons
 3.  User requests to edit a specific person in the list
-4.	AddressBook updates that person
+4.  AddressBook updates that person
 +
 Use case ends.
 
@@ -959,6 +959,23 @@ Use case ends.
 
 [none]
 * 2a. The previous command is not an undoable command (add, delete, edit, clear).
++
+Use case ends.
+
+=== Use case:  Export
+
+*MSS*
+
+1.  User requests to export the addressbook to a `.txt` file
+2.  AddressBook exports the addressbook to a `.txt` file in the specified folder
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The specfied path is not accessible
+** 2a1. AddressBook shows an error message
 +
 Use case ends.
 
