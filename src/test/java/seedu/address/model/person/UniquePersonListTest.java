@@ -1,4 +1,4 @@
-package seedu.address.model;
+package seedu.address.model.person;
 
 import org.junit.Rule;
 import org.junit.Test;
