@@ -1,14 +1,12 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import static java.util.Objects.requireNonNull;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -124,7 +122,7 @@ public class Person implements ReadOnlyPerson {
      */
     @Override
     public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.get().toSet());
+        return tags.get().toSet();
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
