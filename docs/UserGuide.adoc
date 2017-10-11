@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -48,13 +48,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Command words can be replaced by their specified aliases e.g. `delete INDEX` is the same as `d INDEX`.
 ====
 
 === Viewing help : `help`
 
+Alias: `h`
+
 Format: `help`
 
 === Adding a person: `add`
+
+Alias: `a`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -69,10 +74,14 @@ Examples:
 
 === Listing all persons : `list`
 
+Alias: `l`
+
 Shows a list of all persons in the address book. +
 Format: `list`
 
 === Editing a person : `edit`
+
+Alias: `e`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -92,53 +101,60 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by any field : `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Alias: `f`
+
+Finds person based on the searched  field. +
+Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS] or  [t/TAG]`
+
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain
+* Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find e/yahoo` +
+Returns person with email of `[yahoo.com]` domain
 
-=== Deleting a person : `delete`
+=== Deleting persons by range : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Alias: `d`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [OTHER INDICES]...`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the people at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 1 2` +
+Deletes the 1st and 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Locating a person's address : `locate` [Coming in v2.0]
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Alias: `lc`
+
+Locates the address of the person identified by the index number used in the last person listing. +
+Format: `locate INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google Maps web page of the address at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -146,13 +162,15 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
+`locate 2` +
+Locates the 2nd person's address in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Locates the 1st person's address in the results of the `find` command.
 
 === Listing entered commands : `history`
+
+Alias: `his`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -164,6 +182,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
+
+Alias: `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -191,6 +211,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
+Alias: `r`
+
 Reverses the most recent `undo` command. +
 Format: `redo`
 
@@ -214,10 +236,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
+Alias: `c`
+
 Clears all entries from the address book. +
 Format: `clear`
 
 === Exiting the program : `exit`
+
+Alias: `q`
 
 Exits the program. +
 Format: `exit`

@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -727,11 +727,54 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |delete multiple persons at once  |avoid going through the hassle of removing one at each time
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |select multiple person |perform the same command to multiple contacts at once
+
+|`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
+
+|`* * *` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
+
+|`* * *` |user |get suggestions on the tags I have used |be consistent with the tags I use
+
+|`* *` |user |see a sorted list of my contacts |it will save time and energy on my end
+
+|`* *` |user |use shortcut to any command |it will be easier for me to find someone in my contact list
+
+|`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
+
+|`* *` |user |rename any field |update my relationship with contact
+
+|`* *` |user |view the location of an address on google maps |make plans to travel there
+
+|`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
+
+|`* *` |user |find my contact's address on google map |locate my contact
+
+|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |be able to link my addressbook to my google calendar |set events and reminders related to my contacts
+
+|`* *` |user |create a timeline with a contact |record and store activities with them
+
+|`* *` |user |see my contacts' social media profile pictures |identify them more easily
+
+|`* *` |user |write down remarks for a contact |record specific information about the contact
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |choose the colour for my contact's tag |differentiate contact's with different tags just by looking at them
+
+|`*` |user |sort persons by birthday |view whose birthdays are in the upcoming months
+
+|`*` |user |key in a contact's birthday and be reminded about it when the time comes |wish him/her happy birthday
+
+|`*` |user |be prompted to confirm my input whenever I add a person |avoid adding a person with the wrong details
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +810,58 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Add remark
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a specific person in the list
+4.  AddressBook successfully adds remark to contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index or format is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Rename existing tag
+#Pre-condition :The identitifed tag exists in Addressbook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename the tag and key in the new input
+4. AddressBook prompts user to confirm the changes
+5. User confirms changes
+6. AddressBook successfully replaces the name of the existing tag to the newer version
++
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given tag is invalid
+
+> 3a1. AddressBook shows an error message
+  Use case resumes at step 2
+
+5a. User disconfirm the changes
+
+> Use case ends
+
 {More to be added}
 
 [appendix]
@@ -775,6 +870,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Respond time should be less than 10s
+.  Should be able to automatically create a backup file for the contacts data stored
+.  The project is expected to adhere to a schedule that delivers a feature set every week
 
 {More to be added}
 
