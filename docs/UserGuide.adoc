@@ -112,6 +112,16 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by name: `findregex`
+
+Finds persons whose names match the regex given. Note that only the name is searched. +
+Format: `findregex REGEX`
+
+Examples:
+
+* `findregex ^^Joh?n$` +
+Returns `Jon` and `John`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -152,6 +162,27 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Increase/decrease font size : `size`
+
+Increases the font size by the number given, in pts. +
+Format: `size [AMOUNT]`
+
+****
+* If `AMOUNT` is not given, it resets the font size to the default.
+* If `AMOUNT` is positive, it will increase the font size by the given amount.
+* If `AMOUNT` is negative, it will decrease the font size instead.
+* The end font size will be between 8pt and 20pt.
+****
+
+Examples:
+
+* `size 2` +
+Increases the font size by 2 pts.
+* `size -3` +
+Decreases the font size by 3 pts.
+* `size` +
+Resets the font size back to the default.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -165,12 +196,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo AMOUNT`
+Restores the address book to the state before some recent _undoable_ commands were executed. +
+Format: `undo [AMOUNT]`
 
 ****
-* Undoes the last `amount` of commands.
-* The `amount` refers to the number of undoable commands to be undoed.
+* If `AMOUNT` is not given, it undoes one command.
+* If `AMOUNT` is given, it undoes a number of commands depending on the AMOUNT given.
 * The amount *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -199,14 +230,18 @@ The `undo 1` command fails as there are no undoable commands executed previously
 `clear` +
 `undo 2` (reverses the last commands) +
 
+* `delete 1` +
+`clear` +
+`undo 2` (reverses the `clear` and the `delete 1` command) +
+
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Reverses the most recent `undo` commands. +
 Format: `redo AMOUNT`
 
 ****
-* Redoes the last `amount` of commands.
-* The `amount` refers to the number of undoable commands to be reversed.
+* If `AMOUNT` is not given, it redoes one command.
+* If `AMOUNT` is given, it redoes a number of commands depending on the AMOUNT given.
 * The amount *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -230,6 +265,20 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Export all entries : `export`
+
+Exports all entries in the address book into the given format and stores it at the given location. (Coming in v2.0) +
+Format: `export FORMAT LOCATION`
+
+****
+* `FORMAT` can be XML, JSON, CSV, or YAML.
+* `LOCATION` must be writable.
+****
+
+Examples:
+
+* `export JSON ~/contacts.json` stores all contacts into `~/contacts.json` in JSON format.
 
 === Exiting the program : `exit`
 
@@ -257,12 +306,17 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find Regex* : `findregex REGEX` +
+e.g. `findregex Joh?n`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g. `select 2`
+e.g.`select 2`
+* *Font size* : `size AMOUNT` +
+e.g. `size 3`
 * *History* : `history`
-* *Undo* : `undo AMOUNT` +
-e.g. `undo 1`
-* *Redo* : `redo AMOUNT` +
-e.g. `redo 1`
+* *Undo* : `undo [AMOUNT]`
+* *Redo* : `redo [AMOUNT]`
+* *Export* : `export FORMAT LOCATION` +
+e.g. `export JSON ~/contacts.json`
+
