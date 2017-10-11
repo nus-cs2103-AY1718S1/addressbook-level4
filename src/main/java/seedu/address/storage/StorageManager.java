@@ -28,20 +28,6 @@ public class StorageManager extends ComponentManager implements Storage {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
-
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        try {
-            addressBookOptional = addressBookStorage.readAddressBook();
-            if (addressBookOptional.isPresent()) {
-                backupAddressBook(addressBookOptional.get());
-            }
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. "
-                    + "Backup of addressbook not available for this instance.");
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. "
-                    + "Backup of addressbook not available for this instance.");
-        }
     }
 
     // ================ UserPrefs methods ==============================
@@ -89,18 +75,6 @@ public class StorageManager extends ComponentManager implements Storage {
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
-    }
-
-    @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, getBackupStorageFilePath());
-    }
-
-    /**
-     * @return filepath to AddressBook backup file.
-     */
-    public String getBackupStorageFilePath() {
-        return addressBookStorage.getAddressBookFilePath() + "-backup.xml";
     }
 
 

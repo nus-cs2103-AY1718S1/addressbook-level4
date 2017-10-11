@@ -2,12 +2,10 @@ package seedu.address.storage;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,40 +39,6 @@ public class StorageManagerTest {
         return testFolder.getRoot().getPath() + fileName;
     }
 
-
-    @Test
-    public void backupAddressBook() throws Exception {
-        // set up
-        AddressBook original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-
-        // create new backup by loading another Storage Manager
-        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
-        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        StorageManager backupStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
-
-        // checks that the backup properly backups the new file.
-        Optional<ReadOnlyAddressBook> backupAddressBookOptional = backupStorageManager
-                .readAddressBook(backupStorageManager.getBackupStorageFilePath());
-        AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
-        assertEquals(backupAddressBook, original);
-
-        // checks that the file does not backup on every save
-        AddressBook editedBook = new AddressBook();
-        backupStorageManager.saveAddressBook(editedBook);
-        Optional<ReadOnlyAddressBook> mainAddressBookOptional = backupStorageManager
-                .readAddressBook(backupStorageManager.getAddressBookFilePath());
-
-        AddressBook mainAddressBook = new AddressBook(mainAddressBookOptional.get());
-        assertFalse(mainAddressBook.equals(backupAddressBook));
-
-        // checks that the backup only saves on the initialization of another storage manager.
-        StorageManager anotherStorageManager = new StorageManager(addressBookStorage, userPrefsStorage);
-        backupAddressBookOptional = anotherStorageManager
-                .readAddressBook(backupStorageManager.getBackupStorageFilePath());
-        backupAddressBook = new AddressBook(backupAddressBookOptional.get());
-        assertEquals(editedBook, backupAddressBook);
-    }
 
     @Test
     public void prefsReadSave() throws Exception {
