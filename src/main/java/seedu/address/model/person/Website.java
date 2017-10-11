@@ -12,26 +12,26 @@ public class Website {
     public static final String WEBSITE_VALIDATION_REGEX =
             "https?://(www\\.)?[-a-z0-9]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)";
     public static final String WEBSITE_EXAMPLE = "http://www.website.com";
-    public static final String WEBSITE_NULL = ""; // no website
+    public static final String WEBSITE_NULL = null; // no website
     public final String value;
 
     /**
      *
      */
     public Website(String website)throws IllegalValueException {
-        String trimmedWebsite = website == null ? WEBSITE_NULL : website.trim();
+        String trimmedWebsite = website == WEBSITE_NULL ? WEBSITE_NULL : website.trim();
         if (!isValidWebsite(trimmedWebsite)) {
             throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINS);
         }
 
-        this.value = website;
+        this.value = trimmedWebsite;
     }
 
     /**
      * Returns true if given string is valid person website
      */
     public static boolean isValidWebsite(String test) {
-        return test.equals(WEBSITE_NULL) || test.matches(WEBSITE_VALIDATION_REGEX);
+        return test == WEBSITE_NULL || test.matches(WEBSITE_VALIDATION_REGEX);
     }
 
     @Override

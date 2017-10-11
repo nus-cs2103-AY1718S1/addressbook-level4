@@ -22,6 +22,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Website> website;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -34,6 +35,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        // this.website = new SimpleObjectProperty<>(website);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -116,6 +118,20 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    public void setWebsite(Website website) {
+        this.website.set(requireNonNull(website));
+    }
+
+    @Override
+    public ObjectProperty<Website> websiteProperty() {
+        return website;
+    }
+
+    @Override
+    public Website getWebsite() {
+        return website.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -147,6 +163,7 @@ public class Person implements ReadOnlyPerson {
         this.setEmail(replacement.getEmail());
         this.setAddress(replacement.getAddress());
         this.setRemark(replacement.getRemark());
+        this.setWebsite(replacement.getWebsite());
         this.setTags(replacement.getTags());
     }
 
