@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.Meeting;
@@ -26,12 +25,10 @@ public class AddMeetingCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE + "DATE "
-            + PREFIX_TIME + "TIME "
             + PREFIX_LOCATION + "LOCATION "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE + "21102017 "
-            + PREFIX_TIME + "2100 "
+            + PREFIX_DATE + "21102017 21:00"
             + PREFIX_LOCATION + "School of Computing, NUS ";
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
