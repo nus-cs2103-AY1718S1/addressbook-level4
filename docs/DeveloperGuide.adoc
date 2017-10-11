@@ -737,7 +737,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |edit information about a contact without retyping everything |save time and work
 
-|`* * *` |user |add or delete multiple users in one go |I can save time by not repeating commands
+|`* * *` |user |add or delete multiple users in one go |save time by not repeating commands
 
 |`* * *` |user |tag people using any tag |organize my contacts and add other pertinent information about them
 
