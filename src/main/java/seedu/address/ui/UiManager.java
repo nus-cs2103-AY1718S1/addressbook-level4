@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.loginLogic;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -32,10 +33,13 @@ public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
+
     private Logic logic;
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
+    private LoginPage loginPage;
+    private loginLogic loginLogic;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -52,14 +56,39 @@ public class UiManager extends ComponentManager implements Ui {
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
-        try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
-            mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+        loginPage = new LoginPage(primaryStage, loginLogic);
 
-        } catch (Throwable e) {
-            logger.severe(StringUtil.getDetails(e));
-            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+        logger.info("Login Created...");
+
+        loginPage.show();
+        if (loginPage.getSession()) {
+            try {
+                mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+                mainWindow.show(); //This should be called before creating other UI parts
+                mainWindow.fillInnerParts();
+
+            } catch (Throwable e) {
+                logger.severe(StringUtil.getDetails(e));
+                showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+            }
+        }
+    }
+
+    public void startMainApp(Stage primaryStage) {
+        logger.info("Starting MainUI...");
+        primaryStage.setTitle(config.getAppTitle());
+
+        //Set the application icon.
+        if (loginPage.getSession()) {
+            try {
+                mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+                mainWindow.show(); //This should be called before creating other UI parts
+                mainWindow.fillInnerParts();
+
+            } catch (Throwable e) {
+                logger.severe(StringUtil.getDetails(e));
+                showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+            }
         }
     }
 
