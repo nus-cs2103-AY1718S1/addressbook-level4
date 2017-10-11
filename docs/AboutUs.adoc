@@ -21,7 +21,7 @@ Responsibilities: Model
 
 == Phung Tuan Hoang
 image::phungtuanhoang.png[width="150", align="left"]
-{empty}[https://github.com/phungtuanhoang1996[github]]
+{empty}[https://github.com/phungtuanhoang1996[github]][<<phungtuanhoang#, portfolio>>]
 
 Role: Developer, Repo Maintainer +
 Responsibilities: Storage
