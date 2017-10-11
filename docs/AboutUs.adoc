@@ -15,7 +15,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::alexa.jpg[width="150", align="left"]
 {empty}https://ZY-Ang.github.io[homepage] https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
 
-Role: Team Lead, Developer +
+Role: Developer +
 Responsibilities: Storage
 
 '''
