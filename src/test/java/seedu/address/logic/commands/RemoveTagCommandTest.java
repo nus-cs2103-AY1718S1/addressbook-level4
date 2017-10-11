@@ -20,10 +20,11 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+
 public class RemoveTagCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
