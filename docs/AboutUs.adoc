@@ -54,3 +54,11 @@ Role: Developer +
 Responsibilities: UI
 
 '''
+
+=== Lu Lechuan
+image::lulechuan.png[width="150", align="left"]
+{empty}[https://github.com/lulechuan]
+
+Role: Developer
+
+'''
