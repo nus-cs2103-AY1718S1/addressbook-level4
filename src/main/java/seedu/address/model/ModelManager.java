@@ -52,7 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
-        
+
         this.userPrefs = userPrefs;
     }
 
@@ -151,7 +151,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author
-    
+
     @Override
     public void changeListTo(String listName) {
         raise(new ChangeInternalListEvent(listName));
