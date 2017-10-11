@@ -753,6 +753,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with many persons in the address book |make groups of contacts |group relevant contacts together
 
+|`*` |user |add a picture of the person |make it easier for myself to identify the person
+
 |`* *` |user with many persons in the address book |see the contact details in grid view |find information faster
 
 |`*` |user |sync contacts from online services like facebook,google etc |add contacts directly without entering them
@@ -790,7 +792,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |see the number of connections made by person |see the people with most connections
 
 |`*` |user |add a person with incomplete details |add a person and fill incomplete entries later
-|=======================================================================
 
 {More to be added}
 
