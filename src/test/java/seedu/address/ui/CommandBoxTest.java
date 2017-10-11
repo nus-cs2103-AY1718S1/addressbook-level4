@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
