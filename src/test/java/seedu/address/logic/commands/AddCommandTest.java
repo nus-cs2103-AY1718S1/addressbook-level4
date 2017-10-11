@@ -25,6 +25,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -103,6 +105,9 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException { }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -136,8 +141,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+
         }
 
     }

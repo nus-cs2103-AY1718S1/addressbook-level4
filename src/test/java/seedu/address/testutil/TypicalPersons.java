@@ -75,6 +75,8 @@ public class TypicalPersons {
         return ab;
     }
 
+    public static TaskBook getTypicalAddressbook
+
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
