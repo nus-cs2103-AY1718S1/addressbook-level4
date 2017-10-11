@@ -14,7 +14,7 @@ import seedu.address.commons.util.CollectionUtil;
 
 /**
  * A list of tags that enforces no nulls and uniqueness between its elements.
- *
+ * <p>
  * Supports minimal set of list operations for the app's features.
  *
  * @see Tag#equals(Object)
@@ -26,7 +26,8 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Constructs empty TagList.
      */
-    public UniqueTagList() {}
+    public UniqueTagList() {
+    }
 
     /**
      * Creates a UniqueTagList using given tags.
@@ -93,9 +94,9 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     /**
-     *Removes a Tag from the list if it is present.
-     *@param toRemove Tag to be removed
+     * Removes a Tag from the list if it is present.
      *
+     * @param toRemove Tag to be removed
      */
     public void remove(Tag toRemove) {
         requireNonNull(toRemove);
@@ -123,7 +124,7 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
                 || (other instanceof UniqueTagList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueTagList) other).internalList));
+                && this.internalList.equals(((UniqueTagList) other).internalList));
     }
 
     /**
