@@ -16,6 +16,10 @@ public class Email {
 
     public final String value;
 
+    public Email() {
+        this.value = "";
+    }
+
     /**
      * Validates given email.
      *

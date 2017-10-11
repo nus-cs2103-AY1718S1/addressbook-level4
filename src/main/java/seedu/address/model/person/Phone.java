@@ -16,6 +16,10 @@ public class Phone {
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
+    public Phone() {
+        this.value = "";
+    }
+
     /**
      * Validates given phone number.
      *

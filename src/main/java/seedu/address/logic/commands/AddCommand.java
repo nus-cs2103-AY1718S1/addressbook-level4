@@ -7,8 +7,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
+
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -24,9 +29,9 @@ public class AddCommand extends UndoableCommand {
             + ": Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: "
             + COMMAND_WORD + " "
@@ -66,5 +71,63 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
+    }
+
+    public static class AddPersonOptionalFieldDescriptor {
+        private Phone phone;
+        private Email email;
+        private Address address;
+
+        public AddPersonOptionalFieldDescriptor() {
+            this.phone = new Phone();
+            this.email = new Email();
+            this.address = new Address();
+        }
+
+        public void setPhone(Phone phone) {
+            this.phone = phone;
+        }
+
+        //TODO: Remove Optional.ofNullable because it is already initialised
+        public Phone getPhone() {
+            return phone;
+        }
+
+        public void setEmail(Email email) {
+            this.email = email;
+        }
+
+        public Email getEmail() {
+            return email;
+        }
+
+        public void setAddress(Address address) {
+            this.address = address;
+        }
+
+        public Address getAddress() {
+            return address;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof AddCommand.AddPersonOptionalFieldDescriptor)) {
+                return false;
+            }
+
+            // state check
+            AddCommand.AddPersonOptionalFieldDescriptor a
+                    = (AddCommand.AddPersonOptionalFieldDescriptor) other;
+
+            return getPhone().equals(a.getPhone())
+                    && getEmail().equals(a.getEmail())
+                    && getAddress().equals(a.getAddress());
+        }
     }
 }

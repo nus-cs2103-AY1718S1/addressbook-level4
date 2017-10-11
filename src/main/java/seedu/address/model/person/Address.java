@@ -21,6 +21,10 @@ public class Address {
 
     public final String value;
 
+    public Address() {
+        this.value = "";
+    }
+
     /**
      * Validates given address.
      *
