@@ -37,6 +37,48 @@ public class ModelManagerTest {
     }
 
     /**
+     * Tests if sortPersonByName can return a list of sorted names from an input
+     * of names with random orders.
+     * @throws Exception
+     */
+
+    @Test
+    public void sortPersonByName_validSort_success() throws Exception {
+        Person inputPerson1 = new PersonBuilder().withName("YING ZHENG").build();
+        Person inputPerson2 = new PersonBuilder().withName("JACOB").build();
+        Person inputPerson3 = new PersonBuilder().withName("VIVEK").build();
+        Person inputPerson4 = new PersonBuilder().withName("JIA SHU").build();
+
+        ArrayList<ReadOnlyPerson> inputPersonList = new ArrayList<>();
+
+        inputPersonList.add(inputPerson1);
+        inputPersonList.add(inputPerson2);
+        inputPersonList.add(inputPerson3);
+        inputPersonList.add(inputPerson4);
+
+        AddressBook inputAddressBook = new AddressBook();
+        inputAddressBook.setPersons(inputPersonList);
+
+        ModelManager expectedModel = new ModelManager(inputAddressBook, new UserPrefs());
+        inputPersonList.clear();
+        expectedModel.sortPersonByName(inputPersonList);
+        inputAddressBook.setPersons(inputPersonList);
+
+        ArrayList<ReadOnlyPerson> sortedInputPersonList = new ArrayList<>();
+
+        sortedInputPersonList.add(inputPerson2);
+        sortedInputPersonList.add(inputPerson4);
+        sortedInputPersonList.add(inputPerson3);
+        sortedInputPersonList.add(inputPerson1);
+
+        AddressBook sortedAddressBook = new AddressBook();
+        sortedAddressBook.setPersons(sortedInputPersonList);
+
+        ModelManager actualModel = new ModelManager(sortedAddressBook, new UserPrefs());
+        assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
+    }
+  
+    /*
      * Tests if the actual output of removeTag is equals to the expected
      * output when given valid target indexes and a valid tag to remove.
      */

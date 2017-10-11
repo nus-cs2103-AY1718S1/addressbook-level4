@@ -140,6 +140,12 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
     }
 
     /**

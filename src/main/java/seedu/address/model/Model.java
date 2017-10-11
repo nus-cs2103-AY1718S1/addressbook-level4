@@ -52,4 +52,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Sort the given list according to alphabetical order
+     * @throws NullPointerException if {@code contactList} is null.
+     */
+    Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList);
+
 }
