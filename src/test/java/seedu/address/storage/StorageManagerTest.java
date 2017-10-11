@@ -6,15 +6,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -25,6 +35,10 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
 
+    private static OutputStream logCapturingStream;
+    private static StreamHandler customLogHandler;
+    private static Logger log;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -34,17 +48,31 @@ public class StorageManagerTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
+
     private StorageManager storageManager;
+
 
     @Before
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        Logger log = LogsCenter.getLogger(storageManager.getClass()); // matches the logger in the affected class
     }
-
     private String getTempFilePath(String fileName) {
         return testFolder.getRoot().getPath() + fileName;
+    }
+
+    public void attachLogCapturer() {
+        logCapturingStream = new ByteArrayOutputStream();
+        Handler[] handlers = log.getParent().getHandlers();
+        customLogHandler = new StreamHandler(logCapturingStream, new testLogFormatter());
+        log.addHandler(customLogHandler);
+    }
+
+    public String getTestCapturedLog() throws IOException {
+        customLogHandler.flush();
+        return logCapturingStream.toString();
     }
 
     @Test
@@ -54,11 +82,13 @@ public class StorageManagerTest {
 
     @Test
     public void onInitialStartupNoBackupTest() throws DataConversionException, IOException {
-
+        attachLogCapturer();
         storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"),
                 new JsonUserPrefsStorage("random.json"));
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
                 .readAddressBook(storageManager.getBackupStorageFilePath());
+        String capturedLog = getTestCapturedLog();
+        assertEquals(capturedLog, "WARNING - AddressBook not presen t, backup not possible");
         assertFalse(backupAddressBookOptional.isPresent());
     }
 
@@ -76,6 +106,7 @@ public class StorageManagerTest {
         // checks that the backup properly backups the new file.
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = backupStorageManager
                 .readAddressBook(backupStorageManager.getBackupStorageFilePath());
+
         AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
         assertEquals(backupAddressBook, original);
 
@@ -168,7 +199,21 @@ public class StorageManagerTest {
         public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
+
+    }
+    public class testLogFormatter extends Formatter {
+
+        /**
+         * @see java.util.logging.Formatter#format(java.util.logging.LogRecord)
+         */
+        @Override
+        public String format(final LogRecord record) {
+            return MessageFormat.format(record.getLevel() + " - " + record.getMessage(), record.getParameters());
+        }
     }
 
-
+    @After
+    public void detachLogCapturer() {
+        log.removeHandler(customLogHandler);
+    }
 }
