@@ -31,7 +31,7 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("H: 911")); // house number
         assertTrue(Phone.isValidPhone("O: 911 H: 972727 HP: 9234817")); // multiple numbers with different labels
         assertTrue(Phone.isValidPhone("H: 916541 H: 916541 H: 965411 H: 965411")); // multiple numbers with same labels
-        assertTrue(Phone.isValidPhone("916541 H: 916541 965411 HP: 965411")); // mixture of numbers with and without labels
+        assertTrue(Phone.isValidPhone("916541 H: 916541 HP: 965411")); // mixture of numbers with and without labels
 
     }
 }
