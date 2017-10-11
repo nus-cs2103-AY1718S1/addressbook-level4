@@ -131,6 +131,16 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Adding a remark : `remark`
+
+Adds a remark to a person already in address book
+Format: `remark INDEX r/REMARK`
+
+Examples:
+
+remark 1 r/ "Likes to code."
+Appends remark to the person at index 1
+
 === Select a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +

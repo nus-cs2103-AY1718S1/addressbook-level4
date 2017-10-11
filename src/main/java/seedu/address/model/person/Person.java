@@ -24,18 +24,21 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Remark> remarks;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks) {
+        requireAllNonNull(name, phone, email, address, tags, remarks);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.remarks = new SimpleObjectProperty<>(remarks);
     }
 
     /**
@@ -43,7 +46,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getTags(), source.getRemark());
     }
 
     public void setName(Name name) {
@@ -109,6 +112,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remarks;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remarks.get();
+    }
+
+    public void setRemark(Remark remark) {
+        this.remarks.set(requireNonNull(remark));
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
