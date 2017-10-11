@@ -13,14 +13,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 public class TagCommandParser implements Parser<TagCommand> {
-    
-    public static final String TAG_SEPARATOR_REGEX = ","; 
-    
+
+    public static final String TAG_SEPARATOR_REGEX = ",";
+
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
 
         Index[] parsedIndices;
+        Set<Tag> tagList;
 
         try {
             String[] splitIndices = splitIndices(argMultimap);
@@ -29,18 +30,15 @@ public class TagCommandParser implements Parser<TagCommand> {
             for (int i = 0; i < numberOfIndices; i++) {
                 parsedIndices[i] = ParserUtil.parseIndex(splitIndices[i]);
             }
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
-        
-        return new TagCommand();
+
+        return new TagCommand(parsedIndices, tagList);
     }
-        
+
     private String[] splitIndices(ArgumentMultimap argMultimap) {
         return argMultimap.getPreamble().split(TAG_SEPARATOR_REGEX);
-    }    
-    
-        
     }
+}

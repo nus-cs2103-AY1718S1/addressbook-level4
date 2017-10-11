@@ -71,7 +71,7 @@ public class AddressBookParser {
             return new ListCommand();
             
         case TagCommand.COMMAND_WORD:
-            return new TagCommand();
+            return new TagCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
