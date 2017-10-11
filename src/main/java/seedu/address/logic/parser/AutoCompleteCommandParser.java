@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import seedu.address.logic.autocomplete.CommandWordUsageTuple;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -23,7 +25,7 @@ import seedu.address.logic.commands.UndoCommand;
  */
 public class AutoCompleteCommandParser {
 
-    private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.toList({
+    private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.asList(new CommandWordUsageTuple[] {
         new CommandWordUsageTuple(AddCommand.COMMAND_WORD, AddCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_USAGE),
@@ -64,7 +66,7 @@ public class AutoCompleteCommandParser {
      * @return true if commandWord contains stub as the first few letters
      */
     private boolean startWithSameLetters(String stub, String commandWord) {
-        return stub.equals(commandWord.subString(0, stub.length()));
+        return stub.equals(commandWord.substring(0, stub.length()));
     }
 
 }

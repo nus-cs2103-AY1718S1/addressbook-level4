@@ -26,6 +26,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private ListElementPointer autoCompleteSnapshot;
 
     @FXML
     private TextField commandTextField;
@@ -63,6 +64,12 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             // let JavaFx handle the keypress
+            // Update the autocomplete possibilities only when textbox is changed by non-shortcut user key press
+            // Autocomplete support only for commands at the moment, only update when only 1 word in textbox
+            if (commandTextField.getText().split(" ").length == 1) {
+                initAutoComplete();
+            }
+
         }
     }
 
@@ -97,19 +104,12 @@ public class CommandBox extends UiPart<Region> {
      * and if command is already complete change to next possible command
      */
     private void autoCompleteCommand() {
-        // Do nothing if there are more than one word in textbox.
-        // No support for non-command autocomplete yet (area for future enhancement)
-        if (commandTextField.getText().split(" ").length > 1) {
-            return;
+        assert autoCompleteSnapshot != null;
+        if (!autoCompleteSnapshot.hasNext()) {
+            autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
         }
 
-        ListElementPointer possibilities = logic.getAutoCompletePossibilities(commandTextField.getText());
-        assert possibilities != null;
-        if (!possibilities.hasNext()) {
-            return;
-        }
-
-        replaceTextAndSelectAllForward(historySnapshot.next());
+        replaceTextAndSelectAllForward(autoCompleteSnapshot.next());
     }
 
     /**
@@ -128,7 +128,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void replaceTextAndSelectAllForward(String text) {
         commandTextField.setText(text);
-        commandTextField.selectRange(commandTextField.getCaretPosition(), commandTextField.getText().length());
+        commandTextField.selectRange(commandTextField.getText().length(), commandTextField.getCaretPosition());
     }
 
     /**
@@ -164,6 +164,11 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot.add("");
     }
 
+    private void initAutoComplete() {
+        logic.updateAutoCompletePossibilities(commandTextField.getText());
+        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+    }
+
     /**
      * Sets the command box style to use the default style.
      */
@@ -182,6 +187,10 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    private void updateAutoCompletePossibilities(String stub) {
+        logic.updateAutoCompletePossibilities(stub);
     }
 
 }

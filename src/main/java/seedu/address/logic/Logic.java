@@ -26,5 +26,8 @@ public interface Logic {
     ListElementPointer getHistorySnapshot();
 
     /** Returns the list of commands that autocomplete function should complete for the user */
-    ListElementPointer getAutoCompletePossibilities(String autocompleteStub);
+    ListElementPointer getAutoCompleteSnapshot();
+
+    void updateAutoCompletePossibilities(String stub);
+
 }

@@ -9,7 +9,7 @@ import seedu.address.logic.parser.AutoCompleteCommandParser;
  * Stores the possible autocomplete options.
  */
 public class AutoCompletePossibilities {
-    private LinkedList<String> possibilities;
+    private List<String> possibilities;
     private AutoCompleteCommandParser commandParser;
 
     /** Default constructor */

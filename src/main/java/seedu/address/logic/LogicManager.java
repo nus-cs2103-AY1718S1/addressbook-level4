@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.autocomplete.AutoCompletePossibilities;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,7 +24,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
-    private final AutoCompletePossibilities autoCompletePossibilities;
+    private AutoCompletePossibilities autoCompletePossibilities;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -57,11 +58,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ListElementPointer getAutoCompletePossibilities(String autocompleteStub) {
-        return new ListElementPointer(generateAutocompletePossibilities(autocompleteStub));
+    public ListElementPointer getAutoCompleteSnapshot() {
+        return new ListElementPointer(autoCompletePossibilities.getPossibilities());
     }
 
-    public ListElementPointer updateAutoCompletePossibilities(String stub) {
+    public void updateAutoCompletePossibilities(String stub) {
         autoCompletePossibilities = new AutoCompletePossibilities(stub);
     }
 
