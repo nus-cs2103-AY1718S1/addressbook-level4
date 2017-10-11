@@ -21,20 +21,20 @@ public class PasswordTest {
     }
 
     @Test
-    public void isValidPassword() {
+    public void hasValidPasswordCharacters() {
         // blank password
         assertFalse(Password.isValidPasswordLength(""));
         assertFalse(Password.isValidPasswordLength(" "));
 
         // password contains illegal characters
-        assertFalse(Password.isValidPassword("?what?"));
-        assertFalse(Password.isValidPassword("?what?The//"));
-        assertFalse(Password.isValidPassword("?what?The][]"));
+        assertFalse(Password.hasValidPasswordCharacters("?what?"));
+        assertFalse(Password.hasValidPasswordCharacters("?what?The//"));
+        assertFalse(Password.hasValidPasswordCharacters("?what?The][]"));
 
         // valid password
-        assertTrue(Password.isValidPassword("password123"));
-        assertTrue(Password.isValidPassword("password_-#$"));
-        assertTrue(Password.isValidPassword("PASSword_-#$"));
+        assertTrue(Password.hasValidPasswordCharacters("password123"));
+        assertTrue(Password.hasValidPasswordCharacters("password_-#$"));
+        assertTrue(Password.hasValidPasswordCharacters("PASSword_-#$"));
     }
 
 }

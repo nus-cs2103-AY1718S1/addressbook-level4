@@ -9,19 +9,19 @@ import org.junit.Test;
 public class UsernameTest {
 
     @Test
-    public void isValidUsername() {
+    public void hasValidUsernameCharacters() {
         // blank username
-        assertFalse(Username.isValidUsername(""));
-        assertFalse(Username.isValidUsername(" "));
+        assertFalse(Username.hasValidUsernameCharacters(""));
+        assertFalse(Username.hasValidUsernameCharacters(" "));
 
         // username that contains illegal characters
-        assertFalse(Username.isValidUsername("?username?"));
-        assertFalse(Username.isValidUsername(".username123.%@$#"));
+        assertFalse(Username.hasValidUsernameCharacters("?username?"));
+        assertFalse(Username.hasValidUsernameCharacters(".username123.%@$#"));
 
         // valid username
-        assertTrue(Username.isValidUsername("username123"));
-        assertTrue(Username.isValidUsername("UsErName123"));
-        assertTrue(Username.isValidUsername("UsErName123__"));
+        assertTrue(Username.hasValidUsernameCharacters("username123"));
+        assertTrue(Username.hasValidUsernameCharacters("UsErName123"));
+        assertTrue(Username.hasValidUsernameCharacters("UsErName123__"));
     }
 
     @Test
