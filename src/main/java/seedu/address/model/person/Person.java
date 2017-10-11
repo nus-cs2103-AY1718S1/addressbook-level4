@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,6 +15,7 @@ import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
+import seedu.address.model.property.UniquePropertyList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -27,7 +28,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<HashMap<String, Property>> properties;
+    private ObjectProperty<UniquePropertyList> properties;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -40,12 +41,12 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
 
-        HashMap<String, Property> defaultProperties = new HashMap<>();
-        defaultProperties.put("n", name);
-        defaultProperties.put("p", phone);
-        defaultProperties.put("e", email);
-        defaultProperties.put("a", address);
-        setProperties(defaultProperties);
+        Set<Property> properties = new HashSet<>();
+        properties.add(name);
+        properties.add(phone);
+        properties.add(email);
+        properties.add(address);
+        this.properties = new SimpleObjectProperty<>(new UniquePropertyList(properties));
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -116,17 +117,24 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<HashMap<String, Property>> properties() {
+    public ObjectProperty<UniquePropertyList> properties() {
         return properties;
     }
 
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     @Override
-    public HashMap<String, Property> getProperties() {
-        return properties.get();
+    public Set<Property> getProperties() {
+        return Collections.unmodifiableSet(properties.get().toSet());
     }
 
-    public void setProperties(HashMap<String, Property> replacement) {
-        this.properties.set(replacement);
+    /**
+     * Replaces this person's properties with the properties in the argument tag set.
+     */
+    public void setProperties(Set<Property> replacement) {
+        properties.set(new UniquePropertyList(replacement));
     }
 
     /**

@@ -9,6 +9,7 @@ import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
+import seedu.address.model.property.UniquePropertyList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -26,8 +27,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    ObjectProperty<HashMap<String, Property>> properties();
-    HashMap<String, Property> getProperties();
+    ObjectProperty<UniquePropertyList> properties();
+    Set<Property> getProperties();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
