@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -102,12 +101,21 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = personToEdit.getTags();
 
-        if (!updatedTags.containsAll(personToEdit.getTags())) {
-            updatedTags.addAll(personToEdit.getTags());
+        if (editPersonDescriptor.getTagsToDel().isPresent()) {
+            for (Tag tag : editPersonDescriptor.getTagsToDel().get()) {
+                if (tag.getTagName().equals("all")) {
+                    updatedTags.clear();
+                }
+            }
+            updatedTags.removeAll(editPersonDescriptor.getTagsToDel().get());
         }
-        
+
+        if (editPersonDescriptor.getTags().isPresent()) {
+            updatedTags.addAll(editPersonDescriptor.getTags().get());
+        }
+
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 

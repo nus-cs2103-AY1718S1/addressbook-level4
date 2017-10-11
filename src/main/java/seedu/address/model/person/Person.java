@@ -108,7 +108,7 @@ public class Person implements ReadOnlyPerson {
      */
     @Override
     public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.get().toSet());
+        return tags.get().toSet();
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
