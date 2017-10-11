@@ -33,7 +33,7 @@
   </StackPane>
 
 
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="155.0" minHeight="78.0" prefHeight="78.0" prefWidth="690.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="155.0" minHeight="97.0" prefHeight="100.0" prefWidth="690.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
@@ -60,7 +60,7 @@
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefHeight="145.0" prefWidth="340">
+    <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
