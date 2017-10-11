@@ -11,8 +11,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthdays should be 8 numbers separated into the following format - 'DD/MM/YYYY' by '/', '-' or '.'";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[///./-](0[1-9]|1[012]|[1-9])[///./-](19|20)\\d\\d$";
+            "Person birthdays should be 6-8 numbers separated by '/', '-' or '.' with the format of day/month/year"
+            + "\nExamples of valid format: 01/12/1990, 6-3-1991, 18-07-1992";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[///./-]"
+            + "(0[1-9]|1[012]|[1-9])[///./-](19|20)\\d\\d$";
 
     public final String value;
 
@@ -23,12 +25,11 @@ public class Birthday {
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        if(birthday == "") {
+        if (birthday == "") {
             this.value = birthday;
-        }
-        else {
+        } else {
             String trimmedBirthday = birthday.trim();
-            if(!isValidBirthday(trimmedBirthday)) {
+            if (!isValidBirthday(trimmedBirthday)) {
                 throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
             }
             this.value = trimmedBirthday;
@@ -52,20 +53,17 @@ public class Birthday {
         int month = Integer.parseInt(birthdayParts[1]);
         int year = Integer.parseInt(birthdayParts[2]);
 
-        if(month == 2) {
-            if(isLeapYear(year) && day <= 29) {
+        if (month == 2) {
+            if (isLeapYear(year) && day <= 29) {
+                result = true;
+            } else if (day <= 28) {
                 result = true;
             }
-            else if(day <= 28) {
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            if (day <= 30) {
                 result = true;
             }
-        }
-        else if(month == 4 || month == 6 || month == 9 || month == 11) {
-            if(day <= 30) {
-                result = true;
-            }
-        }
-        else {
+        } else {
             result = true;
         }
 
@@ -94,7 +92,7 @@ public class Birthday {
     public static boolean isLeapYear(int year) {
         Boolean result = false;
 
-        if(year%4 == 0 && year%100 != 0 || year%400 == 0) {
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
             result = true;
         }
 
