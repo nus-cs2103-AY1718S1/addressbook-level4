@@ -14,7 +14,7 @@ Role: Project Advisor
 
 '''
 
-=== [Grant Miller]
+=== https://github.com/grantcm[Grant Miller]
 image::grantcm.png[width="150", align="left"]
 
 Role: Integration, Code Quality, Testing
