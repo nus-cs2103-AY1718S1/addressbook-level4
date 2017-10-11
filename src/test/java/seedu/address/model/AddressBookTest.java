@@ -85,7 +85,8 @@ public class AddressBookTest {
         private final ObservableList<ReadOnlyPerson> blackListedPersons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyPerson> blacklistedPersons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<?
+                extends ReadOnlyPerson> blacklistedPersons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.blackListedPersons.setAll(blackListedPersons);
             this.tags.setAll(tags);

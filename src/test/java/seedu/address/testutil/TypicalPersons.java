@@ -59,16 +59,26 @@ public class TypicalPersons {
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
-    public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withPostalCode("111111").withDebt("1234567").build();
-    public static final ReadOnlyPerson LAWRENCE = new PersonBuilder().withName("Lawrence Koh").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withPostalCode("111111").withDebt("1234567").build();
-    public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withPostalCode("111111").withDebt("1234567").build();
-    public static final ReadOnlyPerson SIRISHA = new PersonBuilder().withName("Lakshmi Sirisha").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withPostalCode("111111").withDebt("1234567").build();
-    public static final ReadOnlyPerson RUSHAN = new PersonBuilder().withName("Khor Ru Shan").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withPostalCode("111111").withDebt("1234567").build();
+    public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal")
+            .withPhone("95352563")
+            .withEmail("heinz@example.com").withAddress("wall street")
+            .withPostalCode("111111").withDebt("1234567").build();
+    public static final ReadOnlyPerson LAWRENCE = new PersonBuilder().withName("Lawrence Koh").
+            withPhone("87652533")
+            .withEmail("cornelia@example.com").withAddress("10th street")
+            .withPostalCode("111111").withDebt("1234567").build();
+    public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep").
+            withPhone("9482224")
+            .withEmail("werner@example.com").withAddress("michegan ave")
+            .withPostalCode("111111").withDebt("1234567").build();
+    public static final ReadOnlyPerson SIRISHA = new PersonBuilder().withName("Lakshmi Sirisha")
+            .withPhone("9482427")
+            .withEmail("lydia@example.com").withAddress("little tokyo")
+            .withPostalCode("111111").withDebt("1234567").build();
+    public static final ReadOnlyPerson RUSHAN = new PersonBuilder().withName("Khor Ru Shan")
+            .withPhone("9482442")
+            .withEmail("anna@example.com").withAddress("4th street")
+            .withPostalCode("111111").withDebt("1234567").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
