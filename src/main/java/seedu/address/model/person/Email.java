@@ -40,7 +40,9 @@ public class Email {
     /**
      * Returns true if given string is empty, representing an unknown email
      */
-    private static boolean isUnknownEmail(String test) { return test.equals(""); }
+    private static boolean isUnknownEmail(String test) {
+        return test.equals("");
+    }
 
     /**
      *
