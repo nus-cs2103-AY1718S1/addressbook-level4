@@ -14,7 +14,7 @@ public class ContactDeletionEvent extends BaseEvent {
     public ContactDeletionEvent(Index targetIndex) {
         this.targetIndex = targetIndex.getZeroBased();
     }
-    
+
     @ Override
     public String toString(){ return this.getClass().getSimpleName(); }
 }
