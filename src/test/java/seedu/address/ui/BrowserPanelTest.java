@@ -48,7 +48,7 @@ public class BrowserPanelTest extends GuiUnitTest {
                 .replaceAll("#", "+")
                 .replaceAll("-", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
-        waitUntilBrowserLoaded(browserPanelHandle);
+        //waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 }

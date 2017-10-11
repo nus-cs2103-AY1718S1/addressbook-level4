@@ -22,7 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/search/";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "/data=!4m2!2m1!4b1";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "/data=!4m2!2m1!4b1?dg=dbrw&newdg=1";
 
     private static final String FXML = "BrowserPanel.fxml";
 
