@@ -124,6 +124,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
