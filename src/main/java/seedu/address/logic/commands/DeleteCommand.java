@@ -13,9 +13,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class DeleteCommand extends UndoableCommand {
 
+    public static final String[] COMMAND_WORDS = {"delete", "del", "d", "-"};
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";

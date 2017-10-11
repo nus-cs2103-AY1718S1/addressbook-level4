@@ -12,6 +12,8 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
+//Arnol adds a line
+
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
@@ -729,9 +731,39 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |careless user| undo/redo previous command |
+
+|`* *` |user | search with partial keyword | find details I'm not sure of
+
+|`* *` |user | import contact from other types of file|
+
+|`* *` |user | add birthday to contacts |
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |artistic user| customize the GUI without extensive programming knowledge|
+
+|`* *` |forgetful user| have reminder for upcoming link:#event[events]|
+
+|`* *` |lazy user | auto-complete my command| reduce typing
+
+|`* *` |secured user| set password to unlock the addressbook| have enhanced security
+
+|`* *` |unorganized user| add link:#appointment[appointment] to contacts|
+
+|`* *` |user with international friends| add country/area code to phone number| know exactly where the number connects to
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user | check last modified date for a contact| identify possible outdated contacts
+
+|`*` |efficiency user| load multiple addressbooks | have different book for different purpose
+
+|`*` |experienced user| write multiple command in a single line| shorten typing time
+
+|`*` |lazy user| create an email by clicking on email address on person card| send email on the fly
+
+
 |=======================================================================
 
 {More to be added}
@@ -781,6 +813,20 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[appointment]]
+Appointment
+
+....
+Agenda, Venue, Date and Time
+....
+
+[[event]]
+Event
+
+....
+Things specific to a contact which requires attention. eg: appointment, birthday, etc.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -794,6 +840,7 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
 
 [appendix]
 == Product Survey
