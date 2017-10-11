@@ -13,8 +13,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.logic.ContactAltDeletionEvent;
-import seedu.address.commons.events.logic.ContactDeletionEvent;
+// import seedu.address.commons.events.logic.ContactAltDeletionEvent;
+// import seedu.address.commons.events.logic.ContactDeletionEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -131,15 +131,15 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
-    @Subscribe
-    private void handleContactDeletionEvent(ContactDeletionEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showDeleteOperationAlertAndWait();
-    }
+   // @Subscribe
+   // private void handleContactDeletionEvent(ContactDeletionEvent event) {
+       // logger.info(LogsCenter.getEventHandlingLogMessage(event));
+       // showDeleteOperationAlertAndWait();
+   // }
 
-    @Subscribe
-    private void handleContactDeletionEvent(ContactAltDeletionEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showDeleteOperationAlertAndWait();
-    }
+   // @Subscribe
+   // private void handleContactDeletionEvent(ContactAltDeletionEvent event) {
+       // logger.info(LogsCenter.getEventHandlingLogMessage(event));
+       // showDeleteOperationAlertAndWait();
+   // }
 }

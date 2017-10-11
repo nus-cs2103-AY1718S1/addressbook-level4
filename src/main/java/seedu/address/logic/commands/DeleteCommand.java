@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
-import seedu.address.commons.core.EventsCenter;
+// import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.logic.ContactDeletionEvent;
+// import seedu.address.commons.events.logic.ContactDeletionEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -34,7 +34,7 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        EventsCenter.getInstance().post(new ContactDeletionEvent(targetIndex));
+        // EventsCenter.getInstance().post(new ContactDeletionEvent(targetIndex));
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
