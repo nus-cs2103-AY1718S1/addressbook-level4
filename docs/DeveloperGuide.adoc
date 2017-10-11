@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T11-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T11-B3`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -729,6 +729,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |advanced user |enter command with shorter prefix|enhance my efficiency of using the app
+
+|`* * *` |clumsy user|prompt with warning/suggestion when enter invalid details during search|enter correct details after being reminded
+
+|`* * *` |user |add birthday to person and be reminded when date is near |know the birthday and prepare in advance
+
+|`* * *` |user |find a person by address, birthday, phone, tags |locate details of persons when name is forgetten
+
+|`* * *` |user |add a new person leaving out any details other than name |add a person that I am not familar with
+
+|`* * *` |user |edit details of a person |change person's details without removing and adding the person again
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
@@ -826,14 +838,48 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Merge duplicate contacts
+=== Use case: Find person
 
 *MSS*
 
-1. User requests to list duplicate contacts
-2. Addressbook displays a list of contacts with the exact same information
-3. User selects duplicate contacts to merge using index.
-4. Addressbook merges contacts.
+1. User requests to find person
+2. User enters the category (i.e. name/address/tag/phone) and details to search for person
+3. AddressBook shows the list of persons with the details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The category entered is invalid.
++
+** 2a1. AddressBook shows an error message.
+** 2a2. AddressBook prompts user to type from a list of categories.
+** 2a3. User enters new category.
+** Steps 2a1 - 2a3 are repeated until valid category is entered.
+** User resumes from step 3.
++
+* 2b. The detail entered is invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
++
+* 2c. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Edit details of person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit details of a specific person in the list
+4. AddressBook prompts the category to edit
+5. User enters category and new details
+6. AddressBook changes the detail of the category of the person
 +
 Use case ends.
 
@@ -844,20 +890,21 @@ Use case ends.
 +
 Use case ends.
 
-[none]
-* 2a. The list contains contacts with the same information but with some duplicate fields, some missing and others extra.
-+
-[none]
-** 2a1. User selects contacts to merge.
-+
-Use case resumes at step 4.
-
 * 3a. The given index is invalid.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+* 5a. The given category is invalid.
++
+[none]
+** 5a1. AddressBook shows an error message.
+** 5a2. AddressBook prompts for new entry.
+** 5a3. User enters new category and detail.
+** Repeat 5a1-5a3 until valid category is entered.
+** User resumes from step 6.
 
 [discrete]
 === Use Case: Tag multiple people with the same tag
