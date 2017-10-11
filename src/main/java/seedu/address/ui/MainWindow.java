@@ -162,6 +162,10 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    /**
+     * Fills up the placeholders of PersonListPanel with the given list name.
+     * Should only display welcome page without contacts.
+     */
     void fillInnerPartsWithIndicatedList(String listName) {
 
         switch(listName) {

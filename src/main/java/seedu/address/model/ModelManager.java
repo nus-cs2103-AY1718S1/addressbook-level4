@@ -14,12 +14,12 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
-import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -204,7 +204,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons) && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons);
     }
 
 }

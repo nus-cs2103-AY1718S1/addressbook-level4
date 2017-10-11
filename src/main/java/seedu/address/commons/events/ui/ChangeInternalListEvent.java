@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Represents a change of internal list in the Person List Panel
  */
-public class ChangeInternalListEvent extends BaseEvent{
+public class ChangeInternalListEvent extends BaseEvent {
 
     private final String listName;
 
