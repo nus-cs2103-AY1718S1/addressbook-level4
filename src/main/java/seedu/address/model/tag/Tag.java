@@ -15,12 +15,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Tag {
 
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String DEFAULT_COLOR = "grey";
 
-    public final String tagName;
+    private static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private static Random random = new Random();
 
+    public final String tagName;
     private String tagColor;
 
     /**
@@ -28,20 +29,21 @@ public class Tag {
      *
      * @throws IllegalValueException if the given tag name string is invalid.
      */
-    public Tag(String name) throws IllegalValueException {
+    public Tag(String name, String tagColor) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!isValidTagName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+        this.tagColor = tagColor;
     }
 
     public String getTagColor() {
         return this.tagColor;
     }
 
-    public void setColor(String color){
+    public void setColor(String color) {
         tagColor = color;
     }
     public void setRandomColor() {

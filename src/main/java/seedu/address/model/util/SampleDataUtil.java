@@ -69,7 +69,7 @@ public class SampleDataUtil {
     public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
         HashSet<Tag> tags = new HashSet<>();
         for (String s : strings) {
-            tags.add(new Tag(s));
+            tags.add(new Tag(s, Tag.DEFAULT_COLOR));
         }
 
         return tags;
