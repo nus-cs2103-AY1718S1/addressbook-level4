@@ -47,14 +47,14 @@ public class SearchBox extends UiPart<Region> {
             }
             else{
                 try{
-                    CommandResult commandResult = logic.execute("find " + newValue);
+                    CommandResult commandResult = logic.execute("pfind " + newValue);
                     logger.info("Result: " + commandResult.feedbackToUser);
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
                 } catch (CommandException | ParseException e) {
                     // handle command failure
                     setStyleToIndicateCommandFailure();
-                    logger.info("Invalid command: find " + newValue);
+                    logger.info("Invalid command: pfind " + newValue);
                     raise(new NewResultAvailableEvent(e.getMessage(), true));
                 }
             }
