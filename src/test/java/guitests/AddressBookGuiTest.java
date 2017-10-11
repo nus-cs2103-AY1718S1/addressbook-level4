@@ -39,8 +39,6 @@ import seedu.address.testutil.TypicalPersons;
  */
 public abstract class AddressBookGuiTest {
 
-    private static final String ADMIN_USERNAME = "loanShark97";
-    private static final String ADMIN_PASSWORD = "hitMeUp123";
     /* The TestName Rule makes the current test name available inside test methods */
     @Rule
     public TestName name = new TestName();
@@ -50,24 +48,6 @@ public abstract class AddressBookGuiTest {
     protected Stage stage;
 
     protected MainWindowHandle mainWindowHandle;
-    private static ModelManager modelManager;
-    private static Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-
-    private static void login() {
-        modelManager = new ModelManager();
-        try {
-            Username username = new Username(ADMIN_USERNAME);
-            Password password = new Password(ADMIN_PASSWORD);
-            LoginCommand loginCommand = new LoginCommand(username, password);
-            loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-            loginCommand.execute();
-        } catch(IllegalValueException ive) {
-            ive.printStackTrace();
-        } catch (CommandException ce) {
-            ce.printStackTrace();
-        }
-    }
 
     @BeforeClass
     public static void setupOnce() {
@@ -81,7 +61,6 @@ public abstract class AddressBookGuiTest {
 
     @Before
     public void setup() throws Exception {
-        login();
         FxToolkit.setupStage((stage) -> {
             this.stage = stage;
         });
@@ -89,6 +68,8 @@ public abstract class AddressBookGuiTest {
         FxToolkit.showStage();
 
         mainWindowHandle = new MainWindowHandle(stage);
+        // Login is required to test main GUIs in the address book
+        mainWindowHandle.login();
         mainWindowHandle.focus();
     }
 
