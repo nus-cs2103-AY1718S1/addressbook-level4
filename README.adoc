@@ -8,7 +8,7 @@ https://coveralls.io/github/CS2103AUG2017-W09-B4/main?branch=master[image:https:
 https://www.codacy.com/app/cjianhui/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2017-W09-B4/main&amp;utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/5a888940d87744a1ad2c3399fbe840f5[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/bambooUI.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
