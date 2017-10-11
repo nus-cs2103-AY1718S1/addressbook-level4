@@ -25,7 +25,7 @@ public class CopyCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 " + "\n"
             + "Output: johndoe@example.com";
 
-    private ArrayList<String> outputList = new ArrayList<String> ();
+    private ArrayList<String> outputList = new ArrayList<>();
 
     private final ArrayList<Index> targetIndices;
 
@@ -34,15 +34,12 @@ public class CopyCommand extends Command {
         this.targetIndices = targetIndices;
     }
 
-
     @Override
     public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for (int i = 0; i < targetIndices.size(); i++) {
-            Index targetIndex = targetIndices.get(i);
-
+        for (Index targetIndex : targetIndices) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
@@ -51,11 +48,13 @@ public class CopyCommand extends Command {
             outputList.add((targetPerson.getEmail()).toString());
         }
 
+        // outputList without square brackets
         String MESSAGE_OUTPUT = outputList.toString().substring(1, outputList.toString().length() - 1);
+        // outputList use semi-colon separator
+        MESSAGE_OUTPUT = MESSAGE_OUTPUT.replace(",", ";");
 
-        //return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         return new CommandResult(MESSAGE_OUTPUT);
-    }
+}
 
     @Override
     public boolean equals(Object other) {
