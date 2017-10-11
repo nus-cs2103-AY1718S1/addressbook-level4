@@ -84,6 +84,35 @@ public class PinCommandTest {
     }
 
     @Test
+    public void executeAlreadyPinnedUnpinned() throws Exception {
+        showFirstPersonOnly(model);
+        ReadOnlyPerson personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.pinPerson(personToPin);
+        PinCommand pinCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = PinCommand.MESSAGE_ALREADY_PINNED;
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
+        expectedModel.pinPerson(personToPin);
+        expectedModel.pinPerson(personToPin);
+
+        assertCommandSuccess(pinCommand, model, expectedMessage, expectedModel);
+
+        UnpinCommand unpinCommand = prepareUnpinCommand(INDEX_FIRST_PERSON);
+        personToPin = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        model.unpinPerson(personToPin);
+
+        expectedMessage = UnpinCommand.MESSAGE_ALREADY_UNPINNED;
+
+        personToPin = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        expectedModel.unpinPerson(personToPin);
+        expectedModel.unpinPerson(personToPin);
+
+        assertCommandSuccess(unpinCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void executeInvalidIndexFilteredListThrowsCommandException() {
         showFirstPersonOnly(model);
 
@@ -123,8 +152,8 @@ public class PinCommandTest {
         assertFalse(unpinFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(pinFirstCommand.equals(null));
-        assertFalse(unpinFirstCommand.equals(null));
+        assertFalse(pinFirstCommand == null);
+        assertFalse(unpinFirstCommand == null);
 
         // different person -> returns false
         assertFalse(pinFirstCommand.equals(pinSecondCommand));
@@ -144,14 +173,5 @@ public class PinCommandTest {
         UnpinCommand unpinCommand = new UnpinCommand(index);
         unpinCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return unpinCommand;
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assert model.getFilteredPersonList().isEmpty();
     }
 }
