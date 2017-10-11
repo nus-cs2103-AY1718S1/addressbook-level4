@@ -85,7 +85,7 @@ public class ParserUtil {
      * Leading and trailing whitespaces will be trimmed.
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static CommandIdentifier parseCommandWord(String commandWord) throws IllegalValueException {
+    public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
         requireNonNull(commandWord);
         return new CommandIdentifier(commandWord.trim());
     }

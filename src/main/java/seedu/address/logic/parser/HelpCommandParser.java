@@ -24,7 +24,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         }
 
         try {
-            CommandIdentifier commandIdentifier = ParserUtil.parseCommandWord(args);
+            CommandIdentifier commandIdentifier = ParserUtil.parseCommandIdentifier(args);
             return new HelpCommand(commandIdentifier);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

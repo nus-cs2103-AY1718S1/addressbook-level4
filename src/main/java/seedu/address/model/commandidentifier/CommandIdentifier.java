@@ -59,7 +59,7 @@ public class CommandIdentifier {
      */
     public CommandIdentifier(String commandWord) throws IllegalValueException {
         requireNonNull(commandWord);
-        if (!isValidCommandWord(commandWord) && !commandWord.equals("")) {
+        if (!isValidCommandIdentifier(commandWord) && !commandWord.equals("")) {
             throw new IllegalValueException(MESSAGE_COMMAND_WORD_CONSTRAINTS);
         }
         this.value = commandWord;
@@ -68,7 +68,7 @@ public class CommandIdentifier {
     /**
      * Returns true if a given string is a valid existing command word.
      */
-    private boolean isValidCommandWord(String test) {
+    private boolean isValidCommandIdentifier(String test) {
         return COMMAND_VALIDATION_LIST.contains(test);
     }
 
