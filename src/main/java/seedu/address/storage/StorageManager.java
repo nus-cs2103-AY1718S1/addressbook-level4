@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -81,7 +80,7 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
-    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException{
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
         return readAddressBook(backUpLocation.getAddressBookFilePath());
     }
 
@@ -97,7 +96,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
-    private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException{
+    private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         String backupPath = backUpLocation.getAddressBookFilePath();
         logger.fine("Backing up data to: " + backupPath);
         saveAddressBook(addressBook, backupPath);
