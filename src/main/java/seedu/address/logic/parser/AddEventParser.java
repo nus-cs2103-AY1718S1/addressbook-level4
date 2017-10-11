@@ -2,9 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
-
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.stream.Stream;
 
@@ -17,6 +16,9 @@ import seedu.address.model.event.EventTime;
 import seedu.address.model.event.EventVenue;
 import seedu.address.model.event.ReadOnlyEvent;
 
+/**
+ * Parses input arguments and creates a new AddEventCommand object
+ */
 public class AddEventParser implements Parser<AddEventCommand> {
 
     /**

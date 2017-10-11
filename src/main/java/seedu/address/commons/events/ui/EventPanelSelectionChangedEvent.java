@@ -2,7 +2,6 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.EventCard;
-import seedu.address.ui.PersonCard;
 
 /**
  * Represents a selection change in the Event List Panel

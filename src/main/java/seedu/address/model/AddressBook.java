@@ -175,6 +175,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
         if (events.remove(key)) {
             return true;
@@ -183,6 +187,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Adds an event to the address book.
+     *
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
     public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
         Event newEvent = new Event(e);
         events.add(newEvent);

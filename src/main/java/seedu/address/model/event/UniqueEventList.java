@@ -9,11 +9,21 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+
+/**
+ * A list of events that enforces uniqueness between its elements and does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Event#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
+ */
 public class UniqueEventList implements Iterable<Event> {
 
 
@@ -47,7 +57,9 @@ public class UniqueEventList implements Iterable<Event> {
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
-    public void setPerson(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicatePersonException, PersonNotFoundException {
+    public void setPerson(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicatePersonException,
+            PersonNotFoundException {
+
         requireNonNull(editedEvent);
 
         int index = internalList.indexOf(target);

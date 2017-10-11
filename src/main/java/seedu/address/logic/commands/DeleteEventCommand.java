@@ -8,6 +8,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 
+/**
+ * Deletes an event identified using it's last displayed index from the address book.
+ */
 public class DeleteEventCommand extends UndoableCommand {
 
 
