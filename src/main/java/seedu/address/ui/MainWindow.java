@@ -228,10 +228,6 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.web.WebView?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser"/>
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Pane minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0">
+      <children>
+         <Label fx:id="name" layoutX="10.0" styleClass="window_big_label" text="\$name" />
+         <Label fx:id="phone" layoutX="13.0" layoutY="100.0" styleClass="window_small_label" text="\$phone" />
+         <Label fx:id="address" layoutX="13.0" layoutY="140.0" styleClass="window_small_label" text="\$address" />
+         <Label fx:id="postalCode" layoutX="13.0" layoutY="180.0" styleClass="window_small_label" text="\$postalCode" />
+         <Label fx:id="email" layoutX="13.0" layoutY="220.0" styleClass="window_small_label" text="\$email" />
+      </children>
+   </Pane>
+   <FlowPane fx:id="tags" layoutX="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" StackPane.alignment="CENTER_LEFT" />
 </StackPane>

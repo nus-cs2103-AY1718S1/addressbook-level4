@@ -131,6 +131,18 @@
     -fx-text-fill: #010504;
 }
 
+.window_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 64px;
+    -fx-text-fill: #fffef7;
+}
+
+.window_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 36px;
+    -fx-text-fill: #fffef7;
+}
+
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
