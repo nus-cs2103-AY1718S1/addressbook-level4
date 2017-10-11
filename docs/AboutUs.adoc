@@ -38,7 +38,7 @@ Responsibilities: Data
 '''
 
 === Qi Kongjia
-image::m133225.jpg[width="150", align="left"]
+image::qikongjia.png[width="150", align="left"]
 {empty}[https://github.com/yuzu1209[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
