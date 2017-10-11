@@ -70,7 +70,7 @@ public class CommandBox extends UiPart<Region> {
      * Updates the text field with the command that is the closest to the current text field string
      */
     private void selectClosestResultBasedOnTextFieldValue() {
-        String currentText = commandTextField.getText();
+        String currentText = commandTextField.getText().toLowerCase();
         if (currentText.length() != 0) {
             for(String commandWord : commandList) {
                 if (currentText.length() <= commandWord.length()
