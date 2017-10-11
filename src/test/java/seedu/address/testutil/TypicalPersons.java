@@ -51,6 +51,24 @@ public class TypicalPersons {
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withPostalCode("040004").withEmail("anna@example.com").withDebt("45")
             .withAddress("4th street").build();
+    public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
+            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withPhone("85355255")
+            .withTags("friends").build();
+    public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
+            .withAddress("311, Clementi Ave 2, #02-25")
+            .withEmail("johnd@example.com").withPhone("98765432")
+            .withTags("owesMoney", "friends").build();
+    public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal").withPhone("95352563")
+            .withEmail("heinz@example.com").withAddress("wall street").build();
+    public static final ReadOnlyPerson LAWRENCE = new PersonBuilder().withName("Lawrence Koh").withPhone("87652533")
+            .withEmail("cornelia@example.com").withAddress("10th street").build();
+    public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep").withPhone("9482224")
+            .withEmail("werner@example.com").withAddress("michegan ave").build();
+    public static final ReadOnlyPerson SIRISHA = new PersonBuilder().withName("Lakshmi Sirisha").withPhone("9482427")
+            .withEmail("lydia@example.com").withAddress("little tokyo").build();
+    public static final ReadOnlyPerson RUSHAN = new PersonBuilder().withName("Khor Ru Shan").withPhone("9482442")
+            .withEmail("anna@example.com").withAddress("4th street").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
@@ -84,10 +102,22 @@ public class TypicalPersons {
                 assert false : "not possible";
             }
         }
+
+        for (ReadOnlyPerson person : getTypicalBlacklistedPersons()) {
+            try {
+                ab.addBlacklistedPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
         return ab;
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalBlacklistedPersons() {
+        return new ArrayList<>(Arrays.asList(JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN));
     }
 }

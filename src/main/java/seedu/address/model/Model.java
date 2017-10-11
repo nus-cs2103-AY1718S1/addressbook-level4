@@ -20,6 +20,8 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -29,8 +31,14 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Deletes the given person. */
+    void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Adds the given person into blacklist */
+    void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -45,11 +53,20 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    /** Returns an unmodifiable view of the blacklisted filtered person list */
+    ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates the filter of the filtered blacklisted person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 
@@ -59,4 +76,6 @@ public interface Model {
      * @throws IllegalValueException if username and password do not follow username and password requirements.
      */
     void authenticateUser(Username username, Password password) throws UserNotFoundException, IllegalValueException;
+
+  void changeListTo(String listName);
 }
