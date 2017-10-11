@@ -54,7 +54,11 @@ public class DeleteCommand extends UndoableCommand {
             }
             counter++;
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personsToDelete));
+        StringBuilder builder = new StringBuilder();
+        for (ReadOnlyPerson toAppend: personsToDelete) {
+            builder.append("\n" + toAppend.toString());
+        }
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, builder));
     }
 
     @Override
