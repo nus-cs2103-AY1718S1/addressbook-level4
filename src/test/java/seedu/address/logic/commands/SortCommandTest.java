@@ -1,11 +1,10 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalSortTypes.SORT_TYPE_EMAIL;
 import static seedu.address.testutil.TypicalSortTypes.SORT_TYPE_NAME;
 import static seedu.address.testutil.TypicalSortTypes.SORT_TYPE_PHONE;
-import static seedu.address.testutil.TypicalSortTypes.SORT_TYPE_EMAIL;
 
 import org.junit.Before;
 import org.junit.Test;

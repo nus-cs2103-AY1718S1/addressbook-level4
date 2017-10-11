@@ -192,7 +192,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseSortType_Valid() throws Exception {
+    public void parseSortType_validInput_success() throws Exception {
         // No whitespaces
         assertEquals(VALID_SORT_NAME, ParserUtil.parseSortType("name"));
         assertEquals(VALID_SORT_PHONE, ParserUtil.parseSortType("phone"));
