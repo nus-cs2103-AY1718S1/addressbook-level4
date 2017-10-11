@@ -22,4 +22,6 @@ public class Favourite {
         this.favourite = false;
     }
 
+    public boolean checkFavourite() { return favourite; }
+
 }
