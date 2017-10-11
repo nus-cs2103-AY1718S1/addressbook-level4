@@ -22,9 +22,9 @@ Responsibilities: Storage
 
 === Jolyn Tan
 image::jolyn.jpg[width="150", align="left"]
-{empty}http://github.com/lejolly[github] <<ZhanYu#, portfolio>>
+{empty}https://github.com/jo-lyn[github] <<Jolyn#, portfolio>>
 
-Role: Team Lead +
+Role: Developer +
 Responsibilities: UI
 
 '''

@@ -14,6 +14,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+Rolodex is a desktop address book application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+
+This guide will walk you through the design, implementation and development environment of Rolodex. This is the go-to page for all your information needs in understanding our application.
+
 == Setting up
 
 === Prerequisites
@@ -732,6 +738,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
+
+|`* * *` |advanced user |perform actions with hotkeys |increase productivity
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
