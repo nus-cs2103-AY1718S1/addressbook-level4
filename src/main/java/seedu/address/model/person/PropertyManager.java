@@ -16,6 +16,8 @@ import seedu.address.model.person.exceptions.DuplicatePropertyException;
  *
  * Customize properties include all properties except the pre-loaded ones, which are added by the following command:
  * <pre>{@code config --add-property <property_name> ...}</pre>
+ *
+ * TODO: Should we extend {@link seedu.address.commons.core.ComponentManager} as superclass?
  */
 public class PropertyManager {
     // A collection of the short names of all available properties.
