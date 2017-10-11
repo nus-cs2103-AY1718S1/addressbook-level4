@@ -177,6 +177,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            throw new DuplicatePersonException();
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
@@ -190,6 +195,11 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            personsAdded.add(new Person(person));
+        }
+
+        @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             personsAdded.add(new Person(person));
         }
 
