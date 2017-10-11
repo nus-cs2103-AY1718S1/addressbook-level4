@@ -44,7 +44,15 @@ public class Address {
     /**
      * Returns true if a given string is empty, which means an unknown address
      */
-    public static boolean isUnknownAddress(String test) { return test.equals(""); }
+    private static boolean isUnknownAddress(String test) { return test.equals(""); }
+
+    /**
+     *
+     * @return true if a given address has unknown value
+     */
+    public boolean isUnknownAddress() {
+        return value.equals("");
+    }
 
     @Override
     public String toString() {
