@@ -13,6 +13,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.ContactAltDeletionEvent;
+import seedu.address.commons.events.logic.ContactDeletionEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -24,6 +26,11 @@ import seedu.address.model.UserPrefs;
 public class UiManager extends ComponentManager implements Ui {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
+
+    public static final String DELETE_WARNING_DIALOG_STAGE_TITLE = "Deleting a contact";
+    public static final String DELETE_WARNING_DIALOG_HEADER_MESSAGE = "Warning";
+    public static final String DELETE_WARNING_DIALOG_CONTENT_MESSAGE = "Are you sure to delete this person?\n\n" +
+            "Use 'undo' command if this is not an intended execution.";
 
     public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
     public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
@@ -75,6 +82,11 @@ public class UiManager extends ComponentManager implements Ui {
         showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);
     }
 
+    private void showDeleteOperationAlertAndWait() {
+        showAlertDialogAndWait(AlertType.WARNING, DELETE_WARNING_DIALOG_STAGE_TITLE,
+                DELETE_WARNING_DIALOG_HEADER_MESSAGE, DELETE_WARNING_DIALOG_CONTENT_MESSAGE);
+    }
+
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }
@@ -117,5 +129,17 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
                 event.exception);
+    }
+
+    @Subscribe
+    private void handleContactDeletionEvent(ContactDeletionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showDeleteOperationAlertAndWait();
+    }
+
+    @Subscribe
+    private void handleContactDeletionEvent(ContactAltDeletionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showDeleteOperationAlertAndWait();
     }
 }

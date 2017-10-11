@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.logic.ContactAltDeletionEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -29,6 +31,8 @@ public class DeleteAltCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+
+        EventsCenter.getInstance().post(new ContactAltDeletionEvent(targetName));
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
