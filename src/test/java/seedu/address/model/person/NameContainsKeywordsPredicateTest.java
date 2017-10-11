@@ -55,11 +55,11 @@ public class NameContainsKeywordsPredicateTest {
         // Mixed-case keywords
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-        
+
         // Start of first name match
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("ali", "Nam"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-        
+
         // Start of last name match
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("Bo", "Guy"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
@@ -74,11 +74,11 @@ public class NameContainsKeywordsPredicateTest {
         // Non-matching keyword
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("Carol"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-        
+
         // Not start of name match
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("lice"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-        
+
         // Keywords match phone, email and address, but does not match name
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
