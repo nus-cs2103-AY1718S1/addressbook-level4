@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -7,10 +8,10 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
- * JAXB-friendly adapted version of the {@link Property}.
+ * JAXB-friendly adapted version of the {@link Property}, stored within each person.
  */
 public class XmlAdaptedProperty {
-    @XmlValue
+    @XmlAttribute
     private String shortName;
     @XmlValue
     private String value;

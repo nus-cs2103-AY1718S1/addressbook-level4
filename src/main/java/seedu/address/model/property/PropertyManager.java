@@ -112,4 +112,8 @@ public class PropertyManager {
     public static String getPropertyValidationRegex(String shortName) {
         return propertyValidationRegex.get(shortName);
     }
+
+    public static HashSet<String> getAllShortNames() {
+        return propertyShortNames;
+    }
 }
