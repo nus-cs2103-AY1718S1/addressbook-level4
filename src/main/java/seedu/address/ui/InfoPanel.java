@@ -6,9 +6,13 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -23,15 +27,27 @@ public class InfoPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
+    private Pane pane;
+    @FXML
     private Label name;
     @FXML
+    private Text phoneField;
+    @FXML
     private Label phone;
+    @FXML
+    private Text addressField;
     @FXML
     private Label address;
     @FXML
     private Label displayPostalCode;
     @FXML
+    private Text emailField;
+    @FXML
     private Label email;
+    @FXML
+    private Text debtField;
+    @FXML
+    private Label debt;
     @FXML
     private FlowPane tags;
 
@@ -47,6 +63,10 @@ public class InfoPanel extends UiPart<Region> {
      * @param person the selected person to display the full info of.
      */
     private void loadPersonInfo(ReadOnlyPerson person) {
+        phoneField.setText("HP: ");
+        addressField.setText("Address: ");
+        emailField.setText("Email: ");
+        debtField.setText("Debt: $");
         bindListeners(person);
     }
 
@@ -60,6 +80,7 @@ public class InfoPanel extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         displayPostalCode.textProperty().bind(Bindings.convert(person.displayPostalCodeProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         //person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -83,12 +104,24 @@ public class InfoPanel extends UiPart<Region> {
      * Sets all info fields to not display anything.
      */
     private void loadDefaultPage() {
-        name.setText("");
-        phone.setText("");
-        address.setText("");
-        displayPostalCode.setText("");
-        email.setText("");
-        tags.getChildren().clear();
+        for (Node node : pane.getChildren()) {
+            if(node instanceof TextFlow) {
+                for (Node subNode : ((TextFlow) node).getChildren()) {
+                    if(subNode instanceof Text) {
+                        ((Text) subNode).setText("");
+                    }
+                    if(subNode instanceof Label) {
+                        ((Label) subNode).setText("");
+                    }
+                }
+            }
+            if(node instanceof Text) {
+                ((Text) node).setText("");
+            }
+            if(node instanceof Label) {
+                ((Label) node).setText("");
+            }
+        }
     }
 
     @Subscribe

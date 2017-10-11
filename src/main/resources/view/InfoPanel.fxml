@@ -2,18 +2,45 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <Pane minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0">
+   <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
       <children>
-         <Label fx:id="name" layoutX="10.0" styleClass="window_big_label" text="\$name" />
-         <Label fx:id="phone" layoutX="13.0" layoutY="100.0" styleClass="window_small_label" text="\$phone" />
-         <Label fx:id="address" layoutX="13.0" layoutY="140.0" styleClass="window_small_label" text="\$address" />
-         <Label fx:id="displayPostalCode" layoutX="13.0" layoutY="180.0" styleClass="window_small_label" text="\$postalCode" />
-         <Label fx:id="email" layoutX="13.0" layoutY="220.0" styleClass="window_small_label" text="\$email" />
+         <Label fx:id="name" alignment="TOP_LEFT" prefHeight="200.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
+         <TextFlow prefHeight="100.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Debt: " />
+               <Label fx:id="debt" styleClass="window_small_label" text="\$debt" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="100.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="100.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
+               <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="100.0" prefWidth="400.0">
+            <children>
+               <Label fx:id="displayPostalCode" styleClass="window_small_label" text="\$postalCode" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="100.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
+               <Label fx:id="email" styleClass="window_small_label" text="\$email" />
+            </children>
+         </TextFlow>
+         <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" />
       </children>
-   </Pane>
-   <FlowPane fx:id="tags" layoutX="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" StackPane.alignment="CENTER_LEFT" />
+   </VBox>
 </StackPane>
