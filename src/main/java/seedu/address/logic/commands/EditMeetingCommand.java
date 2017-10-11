@@ -34,7 +34,7 @@ public class EditMeetingCommand extends UndoableCommand {
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_DATE + "01012017 12:00"
+            + PREFIX_DATE + "01012017 12:00 "
             + PREFIX_LOCATION + "Clementi MRT";
 
     public static final String MESSAGE_EDIT_MEETING_SUCCESS = "Edited Meeting: %1$s";
