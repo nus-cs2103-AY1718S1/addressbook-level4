@@ -12,9 +12,9 @@ public class Phone {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Users are to label their numbers with HP: (HandPhone number) H: (Home number) or O: (Office number)\n " +
-                    "For example, HP: 91234567 H: 97287288 O: 34987987.\n " +
-                    "Phone numbers can only contain numbers, and should be at least 3 digits long";
+            "Users are to label their numbers with HP: (HandPhone number) H: (Home number) or O: (Office number)\n "
+                    +"For example, HP: 91234567 H: 97287288 O: 34987987.\n "
+                    + "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "(?=(?:.*\\d){3})[(HPO:)0-9 ]+";
     public final String value;
 
