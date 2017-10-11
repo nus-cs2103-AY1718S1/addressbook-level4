@@ -95,7 +95,7 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = logic.getCommandKeywordColorMap();
         String[] commands = {"help", "add", "list", "edit", "find",
-                "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
+            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
         TextFields.bindAutoCompletion(commandTextField, commands);
         historySnapshot = logic.getHistorySnapshot();
         registerAsAnEventHandler(this);
