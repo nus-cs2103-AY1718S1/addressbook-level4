@@ -1,12 +1,15 @@
 package seedu.address.logic.trie;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandCollection;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -26,15 +29,15 @@ import seedu.address.logic.commands.UndoCommand;
 public class CommandTrie implements Trie {
 
     private Node root = null;
-    private Set<String> commandSet = Stream.of(
-            AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
-            EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
-            HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
-            RedoCommand.COMMAND_WORD, RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
-            UndoCommand.COMMAND_WORD
-    ).collect(Collectors.toSet());
+    private Set<String> commandSet;
+    private Map<String, String> commandMap;
+    private CommandCollection commandCollection;
 
     public CommandTrie () {
+        commandCollection = new CommandCollection ();
+        commandSet = commandCollection.getCommandSet();
+        commandMap = commandCollection.getCommandMap();
+
         for (String command : commandSet) {
             this.insert(command);
         }
@@ -56,28 +59,38 @@ public class CommandTrie implements Trie {
      * @return input if the command is not found, otherwise String representation of command word
      */
     public String attemptAutoComplete (String input) throws NullPointerException {
-        char[] inputArray = input.toLowerCase().toCharArray();
         StringBuilder output = new StringBuilder();
-        Node temp = root;
-        int i = 0;
 
-        while (!isLeaf(temp)) {
-            if (i < inputArray.length) {
-                if (temp.getKey() == inputArray[i]) {
-                    output.append(inputArray[i]);
-                    temp = temp.getChild();
-                    i++;
-                } else {
-                    temp = temp.getNext();
-                }
-            } else if (temp.hasNext()) {
-                return input;
-            } else {
-                output.append(temp.getKey());
-                temp = temp.getChild();
+        if (commandSet.contains(input)){
+            //Don't need to traverse trie
+            if (commandMap.containsKey (input)) {
+                output.append(" ");
+                output.append(commandMap.get(input));
             }
+        } else {
+            //Need to search trie
+            char[] inputArray = input.toLowerCase().toCharArray();
+            Node temp = root;
+            int i = 0;
+
+            while (!isLeaf(temp)) {
+                if (i < inputArray.length) {
+                    if (temp.getKey() == inputArray[i]) {
+                        output.append(inputArray[i]);
+                        temp = temp.getChild();
+                        i++;
+                    } else {
+                        temp = temp.getNext();
+                    }
+                } else if (temp.hasNext()) {
+                    return input;
+                } else {
+                    output.append(temp.getKey());
+                    temp = temp.getChild();
+                }
+            }
+            output.append(temp.getKey());
         }
-        output.append(temp.getKey());
 
         return output.toString();
     }
@@ -86,7 +99,6 @@ public class CommandTrie implements Trie {
      * Insert function for trie
      * @param input key
      */
-
     public void insert (String input) {
         char[] inputArray = input.toCharArray();
 

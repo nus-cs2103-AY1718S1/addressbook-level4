@@ -110,9 +110,12 @@ public class CommandBox extends UiPart<Region> {
                 logger.info("Autocomplete failed with input: " + input);
             } else if (commandSet.contains(command)) {
                 //Able to autocomplete to a correct command
-                commandTextField.setText(command);
-                commandTextField.positionCaret(command.length());
+                this.replaceText(command);
                 logger.info("Autocomplete successful with input: " + input + " to " + command);
+            } else if (commandSet.contains(input)) {
+                //Add parameters
+                this.replaceText(input + command);
+                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
             }
         } catch (NullPointerException e) {
             setStyleToIndicateCommandFailure();
