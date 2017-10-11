@@ -9,12 +9,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents the password of a user account
  */
 public class Password {
-    public static final int PASSWORD_LENGTH = 6;
+    public static final int PASSWORD_MIN_LENGTH = 6;
     public static final String MESSAGE_PASSWORD_CHARACTERS_CONSTRAINTS = "Password can only consist of uppercase "
             + "letters (A-Z), lowercase letters (a-z),"
             + " digits (0-9) and special characters (!@#$&()_-.+)";
     public static final String MESSAGE_PASSWORD_LENGTH_CONSTRAINTS = "Length of password cannot be less than "
-            + PASSWORD_LENGTH + " characters.";
+            + PASSWORD_MIN_LENGTH + " characters.";
     public static final String PASSWORD_VALIDATION_REGEX = "^[a-zA-Z0-9!@#$&()_\\-.+]+$";
 
     private String value;
@@ -31,7 +31,7 @@ public class Password {
         if (!isValidPasswordLength(value)) {
             throw new IllegalValueException(MESSAGE_PASSWORD_LENGTH_CONSTRAINTS);
         }
-        if (!isValidPassword(value)) {
+        if (!hasValidPasswordCharacters(value)) {
             throw new IllegalValueException(MESSAGE_PASSWORD_CHARACTERS_CONSTRAINTS);
         }
         this.value = trimmedPassword;
@@ -41,13 +41,13 @@ public class Password {
      * Returns if a given string has a valid password length.
      */
     public static boolean isValidPasswordLength(String testVal) {
-        return testVal.length() >= PASSWORD_LENGTH;
+        return testVal.length() >= PASSWORD_MIN_LENGTH;
     }
 
     /**
      * Returns if a given string has valid password characters.
      */
-    public static boolean isValidPassword(String testVal) {
+    public static boolean hasValidPasswordCharacters(String testVal) {
         return testVal.matches(PASSWORD_VALIDATION_REGEX);
     }
 
