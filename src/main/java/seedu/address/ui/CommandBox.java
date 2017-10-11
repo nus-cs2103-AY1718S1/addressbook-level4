@@ -60,6 +60,7 @@ public class CommandBox extends UiPart<Region> {
             // consuming it causes the text box to remain focused
             keyEvent.consume();
             autoCompleteCommand();
+            break;
         default:
             // let JavaFx handle the keypress
         }
