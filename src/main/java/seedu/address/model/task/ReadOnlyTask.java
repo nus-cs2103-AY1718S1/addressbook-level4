@@ -14,11 +14,11 @@ public interface ReadOnlyTask {
 
     ObjectProperty<String> nameProperty();
     String getName();
-    ObjectProperty<String> phoneProperty();
+    ObjectProperty<String> descriptionProperty();
     String getDescription();
-    ObjectProperty<String> emailProperty();
+    ObjectProperty<String> startTimeProperty();
     String getStartDateTime();
-    ObjectProperty<String> addressProperty();
+    ObjectProperty<String> endTimeProperty();
     String getEndDateTime();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
