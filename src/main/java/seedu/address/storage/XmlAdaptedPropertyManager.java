@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -14,6 +15,7 @@ public class XmlAdaptedPropertyManager {
     private List<XmlAdaptedPropertyInfo> property;
 
     public XmlAdaptedPropertyManager() {
+        property = new ArrayList<>();
         for (String shortName: PropertyManager.getAllShortNames()) {
             XmlAdaptedPropertyInfo info = new XmlAdaptedPropertyInfo(shortName,
                     PropertyManager.getPropertyFullName(shortName),
