@@ -90,6 +90,10 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new HistoryCommand();
 
+        case LoginCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new LoginCommandParser().parse(arguments);
+
         case ExitCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new ExitCommand();

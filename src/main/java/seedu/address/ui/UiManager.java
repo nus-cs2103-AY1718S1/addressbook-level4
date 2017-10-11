@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -56,7 +57,7 @@ public class UiManager extends ComponentManager implements Ui {
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+            mainWindow.fillInnerPartsForStartUp();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
@@ -120,6 +121,20 @@ public class UiManager extends ComponentManager implements Ui {
                 event.exception);
     }
 
+    //@@author jelneo
+    /**
+     * Handles login event.
+     * Displays contacts in address book if login is successful
+     */
+    @Subscribe
+    public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
+        // log in is successful
+        if (event.getLoginStatus() == true) {
+            logger.info("Login successful");
+            //show address book
+            Platform.runLater(() -> mainWindow.fillInnerParts());
+        }
+    
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

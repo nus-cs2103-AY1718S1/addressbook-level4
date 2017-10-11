@@ -20,6 +20,9 @@ public class JsonUserPrefsStorageTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/JsonUserPrefsStorageTest/");
 
+    private static final String TEST_USERNAME = "TESTloanShark97";
+    private static final String TEST_PASSWORD = "TESThitMeUp123";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -84,6 +87,8 @@ public class JsonUserPrefsStorageTest {
         userPrefs.setGuiSettings(1000, 500, 300, 100);
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
+        userPrefs.setAdminUsername(TEST_USERNAME);
+        userPrefs.setAdminPassword(TEST_PASSWORD);
         return userPrefs;
     }
 

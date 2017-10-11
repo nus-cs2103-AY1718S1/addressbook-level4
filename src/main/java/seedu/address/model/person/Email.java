@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
@@ -19,7 +19,7 @@ public class Email {
     /**
      * Validates given email.
      *
-     * @throws IllegalValueException if given email address string is invalid.
+     * @throws IllegalValueException if given email email string is invalid.
      */
     public Email(String email) throws IllegalValueException {
         requireNonNull(email);

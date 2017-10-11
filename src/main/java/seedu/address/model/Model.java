@@ -3,6 +3,10 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.UserNotFoundException;
+import seedu.address.logic.Password;
+import seedu.address.logic.Username;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -66,5 +70,12 @@ public interface Model {
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 
-    void changeListTo(String listName);
+    /**
+     * Authenticates user
+     * @throws UserNotFoundException if user is not found
+     * @throws IllegalValueException if username and password do not follow username and password requirements.
+     */
+    void authenticateUser(Username username, Password password) throws UserNotFoundException, IllegalValueException;
+
+  void changeListTo(String listName);
 }
