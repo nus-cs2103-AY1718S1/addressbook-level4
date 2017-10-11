@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 //import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -94,6 +95,14 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+    @Override
+    public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedMeeting)
+            throws DuplicateMeetingException, MeetingNotFoundException {
+        requireAllNonNull(target, editedMeeting);
+
+        addressBook.updateMeeting(target, editedMeeting);
         indicateAddressBookChanged();
     }
     @Override

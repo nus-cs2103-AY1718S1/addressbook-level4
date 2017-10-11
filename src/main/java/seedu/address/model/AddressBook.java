@@ -15,6 +15,7 @@ import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 //import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -131,6 +132,25 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+    }
+
+    /**
+     * Replaces the given meeting {@code target} in the list with {@code editedReadOnlyMeeting}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyMeeting}.
+     *
+     * @throws DuplicateMeetingException if updating the person's details causes the meeting to be equivalent to
+     *      another existing meeting in the list.
+     * @throws MeetingNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedReadOnlyMeeting)
+            throws DuplicateMeetingException, MeetingNotFoundException {
+        requireNonNull(editedReadOnlyMeeting);
+
+        Meeting editedMeeting = new Meeting(editedReadOnlyMeeting);
+//        syncMasterTagListWith(editedMeeting);
+        // TODO: the tags master list will be updated even though the below line fails.
+        meetings.setMeeting(target, editedMeeting);
     }
 
     /**
