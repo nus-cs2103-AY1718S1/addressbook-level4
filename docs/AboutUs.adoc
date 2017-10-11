@@ -29,7 +29,7 @@ Responsibilities: Storage
 
 === Hu Wanqing
 image::celiahuuuu.png[width="150", align="left"]
-{empty}[http://github.com/celiahuuuu[github]] [<<HuWanqing#, portfolio>>]
+{empty}[http://github.com/celiahuuuu[github]] [<<huwanqing#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Model

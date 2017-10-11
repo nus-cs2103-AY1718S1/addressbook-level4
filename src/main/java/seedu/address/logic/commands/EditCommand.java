@@ -53,8 +53,11 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private Index index;
+    private EditPersonDescriptor editPersonDescriptor;
+    private ReadOnlyPerson editedPerson;
+    private ReadOnlyPerson personToEdit;
+    private Set<Tag> newTags;
 
     /**
      * @param index of the person in the filtered person list to edit
@@ -68,6 +71,18 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    /**
+     * Assign original and edited persons directly
+     * Can only be used in test
+     * @param targetPerson Original person
+     * @param updatedPerson Edited person
+     */
+    public EditCommand (ReadOnlyPerson targetPerson, ReadOnlyPerson updatedPerson) {
+        this.personToEdit = targetPerson;
+        this.editedPerson = updatedPerson;
+        index = Index.fromOneBased(1);
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -76,10 +91,13 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        if (personToEdit == null && editedPerson == null) { // Distinguish with JUnit tests
+            personToEdit = lastShownList.get(index.getZeroBased());
+            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        }
 
         try {
+            newTags = model.extractNewTag(editedPerson);
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -106,6 +124,35 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBirthday, updatedTags);
+    }
+
+    @Override
+    protected void undo() {
+        try {
+            model.updatePerson(editedPerson, personToEdit);
+            model.removeTags(newTags);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    protected void redo() {
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override

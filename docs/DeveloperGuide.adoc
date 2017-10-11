@@ -316,12 +316,13 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
-**Pros:** Easy to implement. +
-**Cons:** May have performance issues in terms of memory usage. +
-**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Alternative 1 (current choice):** Individual command knows how to undo/redo by itself. +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
+**Alternative 2:** Saves the entire address book. +
+**Pros:** Easy to implement. +
+**Cons:** May have performance issues in terms of memory usage. +
+
 
 ---
 
@@ -723,7 +724,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |add a person's contact detail into the app
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -731,43 +732,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
 
-|`* * *` |As a user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
+|`* * *` |user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by name and tag|locate details of persons without having to go through the entire list
 
-|`* * *` |user |get help information |know where is wrong whe I get errors
+|`* * *` |user |get help information |know where is wrong when I get errors
 
 |`* * *` |user |update contact's information |correct or add their information
 
 |`* * *` |user |list contacts |view who are my contacts
 
-|`* * *` |user |hide private details  |minimise the chance of someone else seeing them by accident
+|`* * *` |secretive user |hide private details  |minimise the chance of someone else seeing them by accident
 
-|`* * *` |user |undo decision  |revert changes in case of mistake
+|`* * *` |careless user |undo decision  |revert changes in case of mistake
 
 |`* * *` |lazy user |have auto complete when I type  |type less word
 
-|`* *` |user who share my device with others| password to lock my address book| prevent others looking at it
+|`* *` |user who share my device with others |password to lock my address book |prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
 
 |`* *` |frequent user |use non-case sensitive command |type command easily
 
-|`* *` |user with many friends |add multiple people at one time| save my time for adding
+|`* *` |user with many friends |add multiple people at one time |save my time for adding
 
 |`* *` |user |sort contacts |view my list easily
 
 |`* *` |user |tag my contacts |remember who they are through tags
 
-|`* *` |careful user |log in with my id and password |keep my privacy
+|`* *` |security conscious user |log in with my id and password |keep my privacy
 
 |`* *` |elder user |adjust font size |see more clearly
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |secretive user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |find a person by name |save time from browsing through the entire list
-
-|`* *` |forgettable user |stick some important people on the top|locate them quickly
+|`* *` |forgetful user |stick some important people on the top |locate them quickly
 
 |`* *` |user |create events and assign contacts |keep track of who is involved in events
 
@@ -781,15 +780,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |add pictures to contacts |remember who they are through pictures
 
-|`*` |user |alter whether information is private  |make information open to everyone whenever I want
+|`*` |secretive user |alter whether information is private |make information open to everyone whenever I want
 
-|`*` |user |sort the list  |locate a person easily
-
-|`*` |user |clean AddressBook  |save time from deleting people one by one
-
-|`*` |user |drag person card |reorder the list easily
+|`*` |user |drag person card |sort people into my own order
 
 |`*` |user |select font style |more comfortable to read
+
 |=======================================================================
 
 {More to be added}
@@ -798,6 +794,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add a person
+*MSS*
+
+1. User enters values for a new person.
+2. AddressBook add the new person into the database.
++
+Use case ends.
+
+*Extensions*
+2a. There is already this person
++
+Use case ends.
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Delete person
@@ -859,31 +880,6 @@ Use case resumes at step 2.
 Use case ends.
 
 [discrete]
-=== Use case: Add a person
-*MSS*
-
-1. User enters values for a new person.
-2. AddressBook add the new person into the database.
-+
-Use case ends.
-
-*Extensions*
-2a. There is already this person
-+
-Use case ends.
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
 === Use case: Add a tag to a person
 
 *MSS*
@@ -901,6 +897,60 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Undo a command
+
+*MSS*
+
+1. User enters "history" command to view all history commands.
+2. AddressBook displays all history commands.
+3. User enters "undo" to request to undo the last link:#undoable-command[undoable command].
+4. AddressBook undoes the last link:#undoable-command[undoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#undoable-command[undoable command] commands in the history.
++
+[none]
+** 3a1 AddressBook displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo a command
+
+*MSS*
+
+1. User enters "history" command to view all history commands.
+2. AddressBook displays all history commands.
+3. User enters "redo" to request to undo the last link:#redoable-command[redoable command].
+4. AddressBook undoes the last link:#redoable-command[redoable command] and displays successful message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No more link:#redoable-command[redoable command] commands in the history.
++
+[none]
+** 3a1 AddressBook displays error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear the address book
+
+*MSS*
+
+1. User enters "clear" command to delete all entries in address book.
+2. AddressBook deletes all data
++
+Use case ends.
+
+[discrete]
 === Use case: Show help window
 
 *MSS*
@@ -912,16 +962,72 @@ Use case ends.
 
 *Extensions*
 
-* 1a. User presses F1 on the keyboard
+[none]
+* 1a. User presses F1 on the keyboard or clicks on help icon
 +
 Use case resumes at step 2.
 
-* 1b. User clicks on help icon
+[discrete]
+=== Use case: Exit the app
+
+*MSS*
+
+1. User enters "exit" command for exiting the app.
+2. AddressBook terminates its work and exit.
 +
-User case resumes at step 2.
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User click File -> Exit button.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort persons
+
+*MSS*
+
+1.  User requests to sort persons
+2.  AddressBook shows a list of sorted persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. AddressBook shows a successful message.
++
+Use case ends.
 
 {More to be added}
 
+=== Use case: find a person by tag
+
+*MSS*
+
+1. User enters tag names for a person list
+2. AddressBook displays the list of persons that contains either of the tag names
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User does not enter tag names
++
+AddressBook shows and error message.
++
+Use case ends.
+
+* 1b. User does not use correct format
++
+AddressBook displays an empty list.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -1002,11 +1108,25 @@ Private contact detail
 A contact detail that is not meant to be shared with others.
 ....
 
+[[redoable-command]]
+Redoable command
+
+....
+An redoable command is a command which has been undone, and no other commands in between.
+....
+
 [[travis]]
 Travis
 
 ....
 Travis CI is a hosted, distributed continuous integration service used to build and test projects hosted at GitHub.
+....
+
+[[undoable-command]]
+Undoable command
+
+....
+An undoable command is a command which modifies data in address book. For example, add, delete are undoable commands, while find, list are not.
 ....
 
 
