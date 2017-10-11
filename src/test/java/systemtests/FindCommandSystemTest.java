@@ -99,7 +99,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-        
+
         /* Case: find person in address book, keyword is substring of name but not start -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " eier";
         ModelHelper.setFilteredList(expectedModel);
