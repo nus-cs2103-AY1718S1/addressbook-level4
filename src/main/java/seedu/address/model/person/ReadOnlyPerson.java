@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
