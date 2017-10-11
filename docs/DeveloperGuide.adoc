@@ -733,25 +733,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |store more information about people around me
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |request for a help guide |know more about the address book and use it with less difficulty
 
-|`* * *` |user |list and view all my contacts |
+|`* * *` |user |list and view all my contacts |browse through my stored contacts and in the event of not being able to search for them
 
 |`* * *` |user |edit a person's information |constantly update or correct a contact's information
 
 |`* * *` |user |select a person by index |use the information provided to search on Google
 
-|`* * *` |user |view the history of the commands inputted |
+|`* * *` |user |view the history of the commands inputted |know which steps have been made to the addressbook
 
 |`* * *` |user |undo the commands that were inputted |revert unnecessary or unwanted changes
 
 |`* * *` |user |redo the commands that is undone |revert changes that were undone
 
-|`* * *` |user |clear entries in my addressbook |
+|`* * *` |user |clear entries in my addressbook |remove unnecessary information of my contacts or remake a new contact list
 
 |`* * *` |user |exit the program |
 
@@ -763,48 +763,50 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |store multiple phone numbers and email addresses for any contact |store extra communication information of my contact
 
-|`* * *` |user |access Facebook, LinkedIn and Google |search and add my contacts on respective websites
+|`* * *` |social user |access Facebook, LinkedIn and Google |search and add my contacts on respective websites
 
 |`* * *` |user |have a confirmation request of the details inputted before adding an individual|make changes to any errors inputted
 
-|`* * *` |user |have a confirmation request & warning message upon using the clear command |avoid accidentally clearing my address book
+|`* * *` |responsible user |have a confirmation request & warning message upon using the clear command |avoid accidentally clearing my address book
 
-|`* * *` |user |find contacts based on part of their names |
+|`* * *` |user |find contacts based on part of their names |ease the search for the necessary contacts without being too specific in spelling names
 
 |`* * *` |user |find users based on any of their details (i.e. phone or tag) |find the person more easily
 
 |`* * *` |user |have a filter system to find contacts first by name, and then any additional relevant information(tags or email addresses) |search for a person more accurately in the case of multiple people with similar names.
 
-|`* * *` |user |sort my contacts in an alphabetical order |view my overall contact list alphabetically
+|`* * *` |organized user |sort my contacts in an alphabetical order |view my overall contact list in an alphabetically organized manner
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |have directions to the contact's address with Google Maps from current location |
+|`* *` |user |have directions to the contact's address with Google Maps from current location |have direct and easier access in being referred to the location in Google Maps application
 
 |`* *` |user |choose various colour themes for the address book |view the address book in my favourite visuals
 
-|`* *` |user |add some important people to a favourites list |access my favourite contacts easily
+|`* *` |social user |add some important people to a favourites list |access my favourite contacts easily
 
-|`* *` |user |see my most viewed contacts on a "speed check" tab |search quickly for contacts that i often search for based on the number of times i searched for them
+|`* *` |task-oriented user |see my most viewed contacts on a "speed check" tab |search quickly for contacts that i often search for based on the number of times i searched for them
 
-|`* *` |user |sort the list of contacts based on their details |view contacts based on my preferable detail i am wishing to search for
+|`* *` |task-oriented user |sort the list of contacts based on their details |view contacts based on my preferable detail i am wishing to search for
 
-|`* *` |user |save my contacts list in a portable format |keep a soft copy of it and be able to retrieve if i lost my original contact list or want to access it in another computer
+|`* *` |responsible user |save my contacts list in a portable format |keep a soft copy of it and be able to retrieve if i lost my original contact list or want to access it in another computer
 
-|`* *` |user |add organisations/groups |search for individuals based on their organization groups
+|`* *` |social user |add organisations/groups |search for individuals based on their organization groups
 
-|`* *` |user |store internet links to their organization website, github, instagram or facebook |more information on my contacts
+|`* *` |social user |store internet links to their organization website, github, linkedIn or facebook |more information on my contacts
 
-|`* *` |user |have the option to add a picture of an individual |recognize contacts by their facial features.
+|`* *` |social user |have the option to add a picture of an individual |recognize contacts by their facial features.
 
-|`* *` |user |get reminders |know if i am attending an event with another contact, or if it is the contact's birthday
+|`* *` |task-oriented user |get reminders |know if i am attending an event with another contact, or if it is the contact's birthday
 
-|`* *` |user |be able to create appointments with my contacts |be notified of my upcoming meetings
+|`* *` |task-oriented user |be able to create appointments with my contacts |be notified of my upcoming meetings
 
-|`* *` |user |add birthday information to my contact in the address book |
+|`* *` |social user |add birthday information to my contact in the address book |have easier access to the upcoming birthday dates of the people around me
 
 |=======================================================================
 
+Social user - a user who likes to know more information about the people around them so as to understand them better +
+Task-oriented user - a user who prefers to have purposeful functions which would help facilitate easier access towards executing his work +
 {More to be added}
 
 [appendix]
