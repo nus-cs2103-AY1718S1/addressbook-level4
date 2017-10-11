@@ -117,6 +117,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_alias_find() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
     public void parseCommand_findtags() throws Exception {
         List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
         FindTagsCommand command = (FindTagsCommand) parser.parseCommand(
@@ -125,11 +133,11 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_alias_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    public void parseCommand_alias_findtags() throws Exception {
+        List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
+        FindTagsCommand command = (FindTagsCommand) parser.parseCommand(
+                FindTagsCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
