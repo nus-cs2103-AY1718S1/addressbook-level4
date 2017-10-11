@@ -4,12 +4,12 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
-// import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
-// import seedu.address.commons.events.logic.ContactAltDeletionEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+// import seedu.address.commons.core.EventsCenter;
+// import seedu.address.commons.events.logic.ContactAltDeletionEvent;
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
