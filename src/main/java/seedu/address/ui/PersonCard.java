@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.util.ColorsUtil;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -17,8 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "#d06651" /*red*/, "#f1c40f" /*yellow*/, "#3498db" /*blue*/,
-                                       "#1abc9c" /*turquoise*/, "#2ecc71" /*green*/, "#9b59b6" /*purple*/ };
+    private static String[] colors = ColorsUtil.getTagColors();
     private static HashMap<String, String> tagColors = new HashMap<> ();
     private static Random random = new Random();
 
