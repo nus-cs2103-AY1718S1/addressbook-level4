@@ -49,7 +49,7 @@ public class Event implements ReadOnlyEvent {
         return name.get();
     }
 
-    public void setTime(EventTime time) {
+    public void setDateTime(EventTime time) {
         this.time.set(requireNonNull(time));
     }
 
