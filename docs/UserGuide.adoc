@@ -169,6 +169,24 @@ Deletes the 1st person in the results of the `find` command.
 `d 4` +
 Deletes the 4th person in the address book.
 
+=== Deleting a tag : `deletetag`
+
+Shorthand Alias: `dt`
+Deletes the specified tag from the address book. +
+Format: `deletetag TAGNAME`
+
+****
+* Deletes the tag with the specified `TAGNAME`.
+* The tag name *must be alphanumeric* friend, class1, 123, ...
+****
+
+Examples:
+
+* `deletetag buddy` +
+Deletes the tag `buddy` from all contacts in the address book.
+* `dt class2101` +
+Deletes the tag `class2101` from all contacts in the address book.
+
 === Selecting a person : `select`
 
 Shorthand Alias: `s`
