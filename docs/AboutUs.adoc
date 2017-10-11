@@ -20,12 +20,12 @@ Responsibilites: UI
 
 '''
 
-=== Li Zeyong
-image::newalter.jpg[width="150", align="left"]
-{empty}[http://github.com/newalter[github]]
+=== John Roe
+image::lejolly.jpg[width="150", align="left"]
+{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Member +
-Responsibilities: In charge of `Logic`
+Role: Team Lead +
+Responsibilities: UI
 
 '''
 
