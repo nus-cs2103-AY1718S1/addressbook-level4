@@ -1,6 +1,6 @@
 language: java
 notifications:
-	email: false
+  email: false
 
 matrix:
   include:
