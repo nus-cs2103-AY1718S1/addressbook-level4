@@ -12,7 +12,6 @@ import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Optional;
 import java.util.logging.Formatter;
-import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
@@ -48,24 +47,25 @@ public class StorageManagerTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-
     private StorageManager storageManager;
-
 
     @Before
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
-        Logger log = LogsCenter.getLogger(storageManager.getClass()); // matches the logger in the affected class
+        log = LogsCenter.getLogger(storageManager.getClass()); // matches the logger in the affected class
     }
+
     private String getTempFilePath(String fileName) {
         return testFolder.getRoot().getPath() + fileName;
     }
 
+    /**
+     * Attaches Log Capturer to the logger.
+     */
     public void attachLogCapturer() {
         logCapturingStream = new ByteArrayOutputStream();
-        Handler[] handlers = log.getParent().getHandlers();
         customLogHandler = new StreamHandler(logCapturingStream, new testLogFormatter());
         log.addHandler(customLogHandler);
     }
@@ -88,7 +88,7 @@ public class StorageManagerTest {
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
                 .readAddressBook(storageManager.getBackupStorageFilePath());
         String capturedLog = getTestCapturedLog();
-        assertEquals(capturedLog, "WARNING - AddressBook not presen t, backup not possible");
+        assertEquals(capturedLog, "WARNING - AddressBook not present, backup not possible");
         assertFalse(backupAddressBookOptional.isPresent());
     }
 
@@ -201,6 +201,7 @@ public class StorageManagerTest {
         }
 
     }
+
     public class testLogFormatter extends Formatter {
 
         /**
@@ -208,7 +209,8 @@ public class StorageManagerTest {
          */
         @Override
         public String format(final LogRecord record) {
-            return MessageFormat.format(record.getLevel() + " - " + record.getMessage(), record.getParameters());
+            return MessageFormat.format("{0} - {1}", record.getLevel(), record.getMessage(),
+                    record.getParameters());
         }
     }
 
