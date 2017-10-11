@@ -38,11 +38,11 @@ public interface ReadOnlyMeeting {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Date: ")
+                .append("\nDate and Time: ")
                 .append(getDate())
                 //.append(" Time: ")
                 //.append(getTime())
-                .append(" Place: ")
+                .append("\nLocation: ")
                 .append(getPlace());
         return builder.toString();
     }
