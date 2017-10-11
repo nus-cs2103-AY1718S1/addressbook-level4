@@ -42,8 +42,8 @@ Responsibilities: Logic
 '''
 
 === Chung Tin Long
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+image::icehawker.jpg[width="150", align="left"]
+{empty}[https://github.com/icehawker[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer Guide
 
