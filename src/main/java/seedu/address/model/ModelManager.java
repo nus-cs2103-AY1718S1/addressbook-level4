@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -113,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
             // default case for empty arguments
             if (sortArguments == null || sortArguments.isEmpty()) {
                 return person1.compareTo(person2);
-                        
+
             } else {
                 int c = 0;
                 for (SortArgument sortArgument : sortArguments) {
@@ -124,7 +123,7 @@ public class ModelManager extends ComponentManager implements Model {
                     }
                 }
                 return c;
-                
+
             }
         };
         sortedPersons.setComparator(comparator);

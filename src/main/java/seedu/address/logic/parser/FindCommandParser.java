@@ -28,7 +28,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         List<SortArgument> sortArgumentList = new ArrayList<>();
 
         setupArguments(keywords, dataKeywords, sortArgumentList);
-        
+
         if (dataKeywords.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));

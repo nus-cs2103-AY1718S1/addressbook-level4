@@ -30,7 +30,7 @@ public class ListCommandParser {
         List<SortArgument> sortArgumentList = new ArrayList<>();
 
         setupArguments(keywords, dataKeywords, sortArgumentList);
-        
+
         if (!dataKeywords.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
