@@ -103,6 +103,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -115,6 +120,11 @@ public class AddCommandTest {
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
