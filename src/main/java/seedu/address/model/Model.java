@@ -34,6 +34,9 @@ public interface Model {
      */
     void addPerson(int position, ReadOnlyPerson person);
 
+    /** Sorts the person list */
+    void sortPersons();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
