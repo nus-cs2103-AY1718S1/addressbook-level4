@@ -15,10 +15,9 @@ public class HelpCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Shows the usage of the specific command"
-            + " identified. If no command is specified, the full program usage instructions "
-            + "will be shown.\n"
+            + " identified. If no command is specified, opens help window.\n"
             + "Parameters: "
-            + "[COMMAND_WORD] (must be a valid command word)\n"
+            + "[COMMAND_IDENTIFIER] (must be a valid command word)\n"
             + MESSAGE_GET_MORE_HELP;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
