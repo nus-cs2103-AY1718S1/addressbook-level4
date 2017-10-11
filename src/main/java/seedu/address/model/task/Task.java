@@ -1,5 +1,7 @@
 package seedu.address.model.task;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -147,17 +149,41 @@ public class Task implements ReadOnlyTask {
     public ObjectProperty<String> nameProperty() {
         return taskName;
     }
+
     public ObjectProperty<String> descriptionProperty() {
         return taskDescription;
     }
+
     public ObjectProperty<String> startTimeProperty() {
         return startDateTime;
     }
+
     public ObjectProperty<String> endTimeProperty() {
         return endDateTime;
     }
+
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
+    }
+
+    public void setName(String name) {
+        this.taskName.set(requireNonNull(name));
+    }
+
+    public void setDescription(String description) {
+        this.taskName.set(requireNonNull(description));
+    }
+
+    public void setStartDateTime(String startDateTime) {
+        this.taskName.set(requireNonNull(startDateTime));
+    }
+
+    public void setEndDateTime(String endDateTime) {
+        this.taskName.set(requireNonNull(endDateTime));
+    }
+
+    public void setTags(Set<Tag> replacement) {
+        tags.set(new UniqueTagList(replacement));
     }
 
 }
