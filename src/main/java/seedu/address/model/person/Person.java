@@ -15,7 +15,7 @@ import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
-import seedu.address.model.property.UniquePropertyList;
+import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -28,7 +28,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<UniquePropertyList> properties;
+    private ObjectProperty<UniquePropertyMap> properties;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -46,7 +46,7 @@ public class Person implements ReadOnlyPerson {
         properties.add(phone);
         properties.add(email);
         properties.add(address);
-        this.properties = new SimpleObjectProperty<>(new UniquePropertyList(properties));
+        this.properties = new SimpleObjectProperty<>(new UniquePropertyMap(properties));
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -117,7 +117,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<UniquePropertyList> properties() {
+    public ObjectProperty<UniquePropertyMap> properties() {
         return properties;
     }
 
@@ -134,7 +134,7 @@ public class Person implements ReadOnlyPerson {
      * Replaces this person's properties with the properties in the argument tag set.
      */
     public void setProperties(Set<Property> replacement) {
-        properties.set(new UniquePropertyList(replacement));
+        properties.set(new UniquePropertyMap(replacement));
     }
 
     /**

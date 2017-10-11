@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import java.util.HashMap;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -9,7 +8,7 @@ import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
-import seedu.address.model.property.UniquePropertyList;
+import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -27,7 +26,7 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    ObjectProperty<UniquePropertyList> properties();
+    ObjectProperty<UniquePropertyMap> properties();
     Set<Property> getProperties();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
