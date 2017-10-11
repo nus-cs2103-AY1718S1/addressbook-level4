@@ -113,8 +113,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommandPin() throws Exception {
-        assertTrue(parser.parseCommand(PinCommand.COMMAND_WORD) instanceof PinCommand);
-        assertTrue(parser.parseCommand(PinCommand.COMMAND_WORD + " 3") instanceof PinCommand);
+        PinCommand command = (PinCommand) parser.parseCommand(
+                PinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new PinCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
@@ -138,8 +139,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommandUnpinCommand() throws Exception {
-        assertTrue(parser.parseCommand(UnpinCommand.COMMAND_WORD) instanceof UnpinCommand);
-        assertTrue(parser.parseCommand(UnpinCommand.COMMAND_WORD + " 3") instanceof UnpinCommand);
+        UnpinCommand command = (UnpinCommand) parser.parseCommand(
+                UnpinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new UnpinCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
