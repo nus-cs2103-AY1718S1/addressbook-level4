@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: Immunity Book 
+== Project: Immunity Book
 Immunity Book is a newly conceptualised contact book that is secure, efficient and handy for users with everchaning contact list.
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
