@@ -706,9 +706,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *`|user |assign multiple phone numbers and emails to the same person |store both personal and work contact numbers of a person
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *`|user | put persons into groups |manage different social circles
 
-|`* *`|user | put persons into groups |manage different social circles
+|`* * *`|System admin|set expiry date to a person |no need to delete useless contacts periodically
+
+|`* * *`|HR manager |add multiple persons by importing CSV file|save time
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *`|user | view number of edits to the address book during the session | recognize if a mistake has been made during the session
 
@@ -730,13 +734,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*`|System admin|set expiry date to a person |no need to delete useless contacts periodically
-
 |`*` |user |change the tag color |easily recognise tags
 
 |`*` |user |search for a person in the address book on Google |find more information on person
-
-|`*`|HR manager |add multiple persons by importing CSV file|save time
 
 |`*`|HR manager |add person from social media account |save time
 
