@@ -11,10 +11,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class EventTime {
 
     public static final String MESSAGE_TIME_CONSTRAINTS =
-            "Event time must be numbers followed by pm/am";
+            "Event date & time must be numbers followed by ddmmyyyy hh:mmpm/am";
 
 
-    public static final String TIME_VALIDATION_REGEX = "\\b((1[0-2]|0?[1-9])([0-5][0-9])([AaPp][Mm]))";
+        public static final String TIME_VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}(\\s((0[1-9]|1[012]):([0-5][0-9])(([AaMm|PpMm|]{2,2})))?$)";
 
     public final String value;
 
