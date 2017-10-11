@@ -21,10 +21,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 public class RemoveTagCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -34,7 +34,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_remove_one_tag() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeTag_success() throws IllegalValueException, PersonNotFoundException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand("friends");
@@ -51,5 +51,4 @@ public class RemoveTagCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
-
 }
