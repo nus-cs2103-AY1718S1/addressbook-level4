@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
 import java.io.File;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
