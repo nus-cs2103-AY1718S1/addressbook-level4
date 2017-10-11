@@ -143,6 +143,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        SearchBox searchBox = new SearchBox();
+        searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
     }
 
     void hide() {
