@@ -51,7 +51,7 @@ public interface ReadOnlyPerson {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Favourite")
-                .append(getFavourite())
+                .append(getFavourite().toString())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
