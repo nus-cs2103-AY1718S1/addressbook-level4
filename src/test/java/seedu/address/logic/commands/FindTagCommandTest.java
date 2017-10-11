@@ -62,9 +62,9 @@ public class FindTagCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 5);
         FindTagCommand command = prepareCommand("friends owesMoney");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, FIONA, GEORGE));
     }
 
     private FindTagCommand prepareCommand(String userInput) {
