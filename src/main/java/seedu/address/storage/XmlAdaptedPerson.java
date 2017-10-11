@@ -67,9 +67,9 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
-        final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
-        final Address address = new Address(this.address);
+        final Phone phone = this.phone.equals("") ? new Phone() : new Phone(this.phone);
+        final Email email = this.email.equals("") ? new Email() : new Email(this.email);
+        final Address address = this.address.equals("") ? new Address() : new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, tags);
     }
