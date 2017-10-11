@@ -138,7 +138,7 @@ Deletes the 1st person in the results of the `find` command.
 * `list` +
 `del 1` +
 Deletes the 1st person in the address book.
-`del selected` + 
+`del selected` +
 Deletes all selected persons.
 
 === Selecting a person : `select`
@@ -161,7 +161,7 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
-`select all` + 
+`select all` +
 Selects all persons currently displayed.
 
 === Listing entered commands : `history`
