@@ -10,10 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -26,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueEventList events;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +43,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new UniqueEventList();
     }
 
     public AddressBook() {
@@ -168,6 +175,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        if (events.remove(key)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
+        Event newEvent = new Event(e);
+        events.add(newEvent);
+    }
+
+
     /*****************************************************
      * Tag-level operations
      *****************************************************/
@@ -189,6 +210,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
     }
 
     @Override
