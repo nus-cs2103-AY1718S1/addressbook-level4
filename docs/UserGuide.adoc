@@ -55,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Alias: `h`
 
-Shows the usage of the specific command identified. If no command is specified, opens help window +
+Shows the usage of the specific command identified. If no command is specified, opens help window. +
 Format: `help [COMMAND_IDENTIFIER]`
 
 [NOTE]
@@ -63,6 +63,13 @@ A command identifier includes all existing commands and their aliases
 
 [TIP]
 You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`
+
+Examples:
+
+* `help`
+* `help add`
+* `help a`
+
 
 === Adding a person: `add`
 
