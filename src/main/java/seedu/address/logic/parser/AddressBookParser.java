@@ -60,6 +60,9 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        case CommentCommand.COMMAND_WORD:
+            return new CommentCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
