@@ -18,13 +18,14 @@ import seedu.address.model.tag.Tag;
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "AddressBook")
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
-
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private XmlAdaptedPropertyManager properties;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -33,6 +34,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        properties = new XmlAdaptedPropertyManager();
     }
 
     /**
