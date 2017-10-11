@@ -62,7 +62,6 @@ public class UniqueTagList implements Iterable<Tag> {
         }
 
         internalList.setAll(tags);
-        assert CollectionUtil.elementsAreUnique(internalList);
     }
     public void setTags(Set<Tag> tags) {
         requireAllNonNull(tags);

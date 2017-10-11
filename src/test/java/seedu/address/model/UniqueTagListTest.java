@@ -2,6 +2,10 @@ package seedu.address.model;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +15,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.testutil.TypicalPersons;
+
+
 
 public class UniqueTagListTest {
 
@@ -64,13 +70,42 @@ public class UniqueTagListTest {
         assertTrue(tag.getTagColor().equals("grey"));
 
 
-        //Reset tagList
+        //New tagList
         uniqueTagList = new UniqueTagList();
-        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
-        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
-        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Set<Tag> tags = new HashSet<>(model.getAddressBook().getTagList());
 
-        uniqueTagList.setTags();
+        //Set all to random colors
+        uniqueTagList.setTags(tags, true, "", "");
+
+        for (Tag tag1 : tags) {
+            assertFalse(tag1.getTagColor().equals("grey"));
+        }
+
+        uniqueTagList = new UniqueTagList();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Set<Tag> tags1 = new HashSet<>(model.getAddressBook().getTagList());
+
+        //Set all to grey
+        uniqueTagList.setTags(tags1, false, "", "");
+
+        for (Tag tag1 : tags) {
+            assertTrue(tag1.getTagColor().equals("grey"));
+        }
+
+        uniqueTagList = new UniqueTagList();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Set<Tag> tags2 = new HashSet<>(model.getAddressBook().getTagList());
+
+        //Set friends to blue
+        uniqueTagList.setTags(tags, true, "friends", "blue");
+
+        for (Tag tagtest : tags2) {
+            if (tagtest.tagName.equals("friends")) {
+                assertTrue(tagtest.getTagColor().equals("blue"));
+            }
+        }
+
     }
 
 
