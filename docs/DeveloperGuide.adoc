@@ -398,6 +398,9 @@ to the currently examined name word in which the contact will be added.
 **Cons:** User might need stricter or looser limits than the ones defined for them. +
 **Pros:** Developers can easily change and manage settings and limits. +
 **Cons:** Users have no way of accessing the settings and limits. +
+**Alternative 2:** Allow user to set fuzzy find settings in a document file. +
+**Pros:** Advanced users can change the settings to suit their needs better. +
+**Cons:** Developers need to spend more work maintaining more components including storage.
 // end::findClose[]
 
 === Logging
