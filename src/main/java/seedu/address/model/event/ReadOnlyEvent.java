@@ -1,4 +1,4 @@
-package seedu.address.model.event.exceptions;
+package seedu.address.model.event;
 
 import java.util.Set;
 
