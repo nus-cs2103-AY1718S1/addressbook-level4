@@ -1,7 +1,9 @@
 package seedu.address.model;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.ObservableList;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -15,11 +17,21 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface Model {
     /**
+     * Comparators for sorting purposes
+     */
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_NAME =
+            (ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getName().compareTo(p2.getName());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_PHONE =
+            (ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getPhone().compareTo(p2.getPhone());
+    Comparator<ReadOnlyPerson> COMPARATOR_SORT_BY_EMAIL =
+            (ReadOnlyPerson p1, ReadOnlyPerson p2) -> p1.getEmail().compareTo(p2.getEmail());
+    /**
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> UniqueTagList.containsPinTag(p);
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !UniqueTagList.containsPinTag(p);
+
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -73,5 +85,5 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-    void sort(String sortType);
+    void sort(String sortType) throws DuplicatePersonException;
 }

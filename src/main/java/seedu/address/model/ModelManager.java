@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -118,8 +119,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void combineList(List<ReadOnlyPerson> newList) throws DuplicatePersonException {
-        newList.addAll(getFilteredPersonList().filtered(Model.PREDICATE_SHOW_PINNED_PERSONS).sorted());
-        newList.addAll(getFilteredPersonList().filtered(Model.PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
+        newList.addAll(getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted());
+        newList.addAll(getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
         addressBook.setPersons(newList);
     }
 
@@ -190,8 +191,57 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sort(String sortType) {
-        addressBook.sort(sortType);
+    public void sort(String sortType) throws DuplicatePersonException {
+        switch (sortType) {
+        case "name":
+            addressBook.setPersons(sortByName());
+            break;
+
+        case "phone":
+            addressBook.setPersons(sortByPhone());
+            break;
+
+        case "email":
+            addressBook.setPersons(sortByEmail());
+            break;
+
+        default:
+            break;
+
+        }
         indicateAddressBookChanged();
+    }
+
+    private ArrayList<ReadOnlyPerson> sortByName() {
+        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
+        SortedList<ReadOnlyPerson> sortedList =
+                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(COMPARATOR_SORT_BY_NAME);
+        newList.addAll(sortedList);
+        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(COMPARATOR_SORT_BY_NAME);
+        newList.addAll(sortedList);
+
+        return newList;
+    }
+
+    private ArrayList<ReadOnlyPerson> sortByPhone() {
+        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
+        SortedList<ReadOnlyPerson> sortedList =
+                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(COMPARATOR_SORT_BY_PHONE);
+        newList.addAll(sortedList);
+        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(COMPARATOR_SORT_BY_PHONE);
+        newList.addAll(sortedList);
+
+        return newList;
+    }
+
+    private ArrayList<ReadOnlyPerson> sortByEmail() {
+        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
+        SortedList<ReadOnlyPerson> sortedList =
+                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(COMPARATOR_SORT_BY_EMAIL);
+        newList.addAll(sortedList);
+        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(COMPARATOR_SORT_BY_EMAIL);
+        newList.addAll(sortedList);
+
+        return newList;
     }
 }
