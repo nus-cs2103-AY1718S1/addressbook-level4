@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
@@ -15,6 +14,9 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Adds a remark to a person in the address book.
+ */
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
@@ -70,6 +72,11 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     *
+     * @param personToEdit
+     * @return String that shows whether add or delete was successfully done
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
