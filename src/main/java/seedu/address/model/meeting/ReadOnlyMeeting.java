@@ -9,8 +9,8 @@ import javafx.beans.property.ObjectProperty;
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyMeeting {
-    ObjectProperty<Name> nameProperty();
-    Name getName();
+    ObjectProperty<NameMeeting> nameProperty();
+    NameMeeting getName();
     ObjectProperty<Date> dateProperty();
     Date getDate();
     //ObjectProperty<LocalTime> timeProperty();

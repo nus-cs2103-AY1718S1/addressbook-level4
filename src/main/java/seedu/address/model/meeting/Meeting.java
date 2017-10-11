@@ -14,12 +14,12 @@ import javafx.beans.property.SimpleObjectProperty;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Meeting implements ReadOnlyMeeting {
-    private ObjectProperty<Name> name;
+    private ObjectProperty<NameMeeting> name;
     private ObjectProperty<Date> date;
     //private ObjectProperty<LocalTime> time;
     private ObjectProperty<Place> place;
 
-    public Meeting(Name name, Date date, Place place) {
+    public Meeting(NameMeeting name, Date date, Place place) {
         requireAllNonNull(name, date, place);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
@@ -35,17 +35,17 @@ public class Meeting implements ReadOnlyMeeting {
         this(source.getName(), source.getDate(), source.getPlace());
     }
 
-    public void setName(Name name) {
+    public void setName(NameMeeting name) {
         this.name.set(requireNonNull(name));
     }
 
     @Override
-    public ObjectProperty<Name> nameProperty() {
+    public ObjectProperty<NameMeeting> nameProperty() {
         return name;
     }
 
     @Override
-    public Name getName() {
+    public NameMeeting getName() {
         return name.get();
     }
 
