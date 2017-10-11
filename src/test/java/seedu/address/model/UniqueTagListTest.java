@@ -43,7 +43,7 @@ public class UniqueTagListTest {
         assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa", "")));
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertTrue(tag.getTagColor().equals("grey"));
+            assertTrue("grey".equals(tag.getTagColor()));
         }
 
         uniqueTagList = new UniqueTagList();
@@ -52,22 +52,22 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertTrue(tag.getTagColor().equals("grey"));
+            assertTrue("grey".equals(tag.getTagColor()));
         }
 
         Tag tag = new Tag("friends", "blue");
 
         //Test random color
         tag.setRandomColor();
-        assertFalse(tag.getTagColor().equals("blue"));
+        assertFalse("blue".equals(tag.getTagColor()));
 
         //Test set color
         tag.setColor("blue");
-        assertTrue(tag.getTagColor().equals("blue"));
+        assertTrue("blue".equals(tag.getTagColor()));
 
         //Test off color
         tag.setOffColor();
-        assertTrue(tag.getTagColor().equals("grey"));
+        assertTrue("grey".equals(tag.getTagColor()));
 
 
         //New tagList
@@ -79,7 +79,7 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(tags, true, "", "");
 
         for (Tag tag1 : tags) {
-            assertFalse(tag1.getTagColor().equals("grey"));
+            assertFalse("grey".equals(tag1.getTagColor()));
         }
 
         uniqueTagList = new UniqueTagList();
@@ -90,7 +90,7 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(tags1, false, "", "");
 
         for (Tag tag1 : tags) {
-            assertTrue(tag1.getTagColor().equals("grey"));
+            assertTrue("grey".equals(tag1.getTagColor()));
         }
 
         uniqueTagList = new UniqueTagList();
@@ -101,8 +101,8 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(tags, true, "friends", "blue");
 
         for (Tag tagtest : tags2) {
-            if (tagtest.tagName.equals("friends")) {
-                assertTrue(tagtest.getTagColor().equals("blue"));
+            if ("friends".equals(tagtest.tagName)) {
+                assertTrue("blue".equals(tagtest.getTagColor()));
             }
         }
 

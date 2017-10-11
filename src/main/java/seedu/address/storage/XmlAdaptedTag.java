@@ -12,7 +12,6 @@ public class XmlAdaptedTag {
 
     @XmlValue
     private String tagName;
-    private String tagColor;
 
     /**
      * Constructs an XmlAdaptedTag.
@@ -27,7 +26,6 @@ public class XmlAdaptedTag {
      */
     public XmlAdaptedTag(Tag source) {
         tagName = source.tagName;
-        tagColor = source.getTagColor();
     }
 
     /**

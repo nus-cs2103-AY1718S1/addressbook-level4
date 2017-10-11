@@ -88,7 +88,7 @@ public class ToggleTagCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         assertTrue(command.execute().feedbackToUser.equals("friends tag set to blue"));
         for (Tag tag : model.getAddressBook().getTagList()) {
-            if (tag.tagName.equals("friends")) {
+            if ("friends".equals(tag.tagName)) {
                 assertTrue(tag.getTagColor().equals("blue"));
                 assertFalse(tag.getTagColor().equals("pink"));
             }
@@ -102,13 +102,13 @@ public class ToggleTagCommandTest {
             assertTrue(tag.getTagColor().equals("grey"));
             assertFalse(tag.getTagColor().equals("blue"));
         }
-        assertTrue(commandResult.feedbackToUser.equals("TagColor set to off"));
+        assertTrue("TagColor set to off".equals(commandResult.feedbackToUser));
 
         //Check if color will set to random
         command = new ToggleTagColorCommand(true, "", "");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         commandResult = command.execute();
-        assertTrue(commandResult.feedbackToUser.equals("TagColor set to random"));
+        assertTrue("TagColor set to random".equals(commandResult.feedbackToUser));
     }
 
     private void resetAddressBook() {
