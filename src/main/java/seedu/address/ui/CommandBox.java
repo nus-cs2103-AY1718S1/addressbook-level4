@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
@@ -92,6 +94,9 @@ public class CommandBox extends UiPart<Region> {
         configPrefixList();
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = logic.getCommandKeywordColorMap();
+        String[] commands = {"help", "add", "list", "edit", "find",
+                "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
+        TextFields.bindAutoCompletion(commandTextField, commands);
         historySnapshot = logic.getHistorySnapshot();
         registerAsAnEventHandler(this);
     }
