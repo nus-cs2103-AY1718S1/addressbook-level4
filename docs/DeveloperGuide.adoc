@@ -352,9 +352,9 @@ a string heuristic for measuring the difference between two character sequences.
 of _hops_ that are required to get from a string to another, where _hops_ are insertions, deletions and substitution
 operations.
 
-image::FuzzyFindActivityDiagram.png[]
+The activity diagram for the fuzzy finding can be loosely described as seen in the figure below:
 
-The activity diagram for the fuzzy finding can be loosely described as seen in the figure above.
+image::FuzzyFindActivityDiagram.png[]
 
 1. A user sends a find request
 2. Application looks at all contacts currently in the database
