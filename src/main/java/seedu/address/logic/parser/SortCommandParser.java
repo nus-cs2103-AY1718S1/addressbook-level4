@@ -32,7 +32,8 @@ public class SortCommandParser implements Parser<SortCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         if (argMultimap.size() > 2) {
-            throw new ParseException(String.format(SortCommand.MESSAGE_MULTIPLE_ATTRIBUTE_ERROR, SortCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(SortCommand.MESSAGE_MULTIPLE_ATTRIBUTE_ERROR,
+                    SortCommand.MESSAGE_USAGE));
         }
 
         if (argMultimap.size() < 1) {
@@ -65,7 +66,7 @@ public class SortCommandParser implements Parser<SortCommand> {
                 return;
 
             }
-    };
+        };
 
     }
 

@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.sun.org.apache.bcel.internal.generic.NOP;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
@@ -52,6 +50,13 @@ public class UniquePersonList implements Iterable<Person> {
         }
         internalList.add(new Person(toAdd));
     }
+
+    /**
+     * Sorts persons in address book by field and in order specified.
+     * @param sortComparator
+     * @param isReverseOrder
+     * @throws NoPersonsException
+     */
 
     public void sort(Comparator sortComparator, Boolean isReverseOrder) throws NoPersonsException {
         requireNonNull(sortComparator);
