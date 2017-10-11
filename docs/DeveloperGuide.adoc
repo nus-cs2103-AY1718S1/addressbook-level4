@@ -734,7 +734,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a person by name and tag|locate details of persons without having to go through the entire list
 
 |`* * *` |user |get help information |know where is wrong when I get errors
 
@@ -785,6 +785,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |drag person card |sort people into my own order
 
 |`*` |user |select font style |more comfortable to read
+
 |=======================================================================
 
 {More to be added}
@@ -985,6 +986,28 @@ Use case resumes at step 2.
 
 {More to be added}
 
+=== Use case: find a person by tag
+
+*MSS*
+
+1. User enters tag names for a person list
+2. AddressBook displays the list of persons that contains either of the tag names
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User does not enter tag names
++
+AddressBook shows and error message.
++
+Use case ends.
+
+* 1b. User does not use correct format
++
+AddressBook displays an empty list.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
