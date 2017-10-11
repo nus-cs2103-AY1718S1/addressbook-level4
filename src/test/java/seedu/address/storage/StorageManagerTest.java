@@ -30,13 +30,10 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TestLogger;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
-
-    private static OutputStream logCapturingStream;
-    private static StreamHandler customLogHandler;
-    private static Logger log;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -48,31 +45,17 @@ public class StorageManagerTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private StorageManager storageManager;
+    private TestLogger testLogger;
 
     @Before
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
-        log = LogsCenter.getLogger(storageManager.getClass()); // matches the logger in the affected class
     }
 
     private String getTempFilePath(String fileName) {
         return testFolder.getRoot().getPath() + fileName;
-    }
-
-    /**
-     * Attaches Log Capturer to the logger.
-     */
-    public void attachLogCapturer() {
-        logCapturingStream = new ByteArrayOutputStream();
-        customLogHandler = new StreamHandler(logCapturingStream, new testLogFormatter());
-        log.addHandler(customLogHandler);
-    }
-
-    public String getTestCapturedLog() throws IOException {
-        customLogHandler.flush();
-        return logCapturingStream.toString();
     }
 
     @Test
@@ -82,13 +65,17 @@ public class StorageManagerTest {
 
     @Test
     public void onInitialStartupNoBackupTest() throws DataConversionException, IOException {
-        attachLogCapturer();
         storageManager = new StorageManager(new XmlAddressBookStorage("NotXmlFormatAddressBook.xml"),
                 new JsonUserPrefsStorage("random.json"));
+
+        // test for log message.
+        testLogger = new TestLogger(storageManager.getClass());
+        String capturedLog = testLogger.getTestCapturedLog();
+        assertEquals(capturedLog, "WARNING - AddressBook not present, backup not possible");
+
+        // testing if backup exists
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = storageManager
                 .readAddressBook(storageManager.getBackupStorageFilePath());
-        String capturedLog = getTestCapturedLog();
-        assertEquals(capturedLog, "WARNING - AddressBook not present, backup not possible");
         assertFalse(backupAddressBookOptional.isPresent());
     }
 
@@ -106,7 +93,6 @@ public class StorageManagerTest {
         // checks that the backup properly backups the new file.
         Optional<ReadOnlyAddressBook> backupAddressBookOptional = backupStorageManager
                 .readAddressBook(backupStorageManager.getBackupStorageFilePath());
-
         AddressBook backupAddressBook = new AddressBook(backupAddressBookOptional.get());
         assertEquals(backupAddressBook, original);
 
@@ -214,8 +200,4 @@ public class StorageManagerTest {
         }
     }
 
-    @After
-    public void detachLogCapturer() {
-        log.removeHandler(customLogHandler);
-    }
 }
