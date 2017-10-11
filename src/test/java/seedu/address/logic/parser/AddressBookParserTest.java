@@ -147,7 +147,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_invalidLogin() throws Exception {
         thrown.expect(ParseException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT ,LoginCommand.MESSAGE_USAGE));
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
         parser.parseCommand(LoginCommand.COMMAND_WORD);
     }
 }
