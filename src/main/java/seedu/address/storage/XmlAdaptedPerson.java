@@ -14,6 +14,7 @@ import seedu.address.model.property.Address;
 import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -30,6 +31,9 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+
+    @XmlElement
+    private List<XmlAdaptedProperty> properties = new ArrayList<>();
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -51,6 +55,12 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().getValue();
         email = source.getEmail().getValue();
         address = source.getAddress().getValue();
+
+        properties = new ArrayList<>();
+        for (Property property: source.getProperties()) {
+            properties.add(new XmlAdaptedProperty(property));
+        }
+
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
