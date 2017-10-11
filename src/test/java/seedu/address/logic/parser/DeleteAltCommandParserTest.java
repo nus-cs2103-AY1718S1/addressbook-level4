@@ -1,14 +1,13 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.DeleteAltCommand;
-import seedu.address.logic.commands.DeleteCommand;
-
-import org.junit.Test;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.DeleteAltCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
