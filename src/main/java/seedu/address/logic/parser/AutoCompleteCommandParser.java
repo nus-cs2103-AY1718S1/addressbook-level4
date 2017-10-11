@@ -19,7 +19,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
- * Parses incomplete user input.
+ * Parses incomplete user input into list of possible command skeletons.
  */
 public class AutoCompleteCommandParser {
 

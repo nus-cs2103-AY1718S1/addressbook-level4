@@ -1,5 +1,10 @@
 package seedu.address.logic.autocomplete;
 
+/**
+ * Stores a pair of command word and its usage,
+ * autocomplete feature will generate command skeleton based on {@code COMMAND_USAGE} specified in each command class.
+ * Possible enhancement would be to support multiple command skeletons for each command.
+ */
 public class CommandWordUsageTuple {
 
     private final String commandWord;

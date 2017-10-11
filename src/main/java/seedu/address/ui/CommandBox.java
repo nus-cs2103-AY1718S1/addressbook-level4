@@ -109,7 +109,7 @@ public class CommandBox extends UiPart<Region> {
             return;
         }
 
-        replaceText(historySnapshot.next());
+        replaceTextAndSelectAllForward(historySnapshot.next());
     }
 
     /**
@@ -119,6 +119,16 @@ public class CommandBox extends UiPart<Region> {
     private void replaceText(String text) {
         commandTextField.setText(text);
         commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    /**
+     * Sets {@code CommandBox}'s text field with {@code text},
+     * selects all text beyond previous caret position,
+     * and positions the caret to the end of the {@code text}.
+     */
+    private void replaceTextAndSelectAllForward(String text) {
+        commandTextField.setText(text);
+        commandTextField.selectRange(commandTextField.getCaretPosition(), commandTextField.getText().length());
     }
 
     /**

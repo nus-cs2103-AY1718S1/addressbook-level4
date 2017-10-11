@@ -1,5 +1,8 @@
 package seedu.address.logic.autocomplete;
 
+/**
+ * Stores a pair of stub, and its respective autocomplete possibilities.
+ */
 public class StubPossibilitiesTuple {
 
     private final String stub;
