@@ -11,8 +11,8 @@ import javafx.beans.property.ObjectProperty;
 public interface ReadOnlyMeeting {
     ObjectProperty<NameMeeting> nameProperty();
     NameMeeting getName();
-    ObjectProperty<Date> dateProperty();
-    Date getDate();
+    ObjectProperty<DateTime> dateProperty();
+    DateTime getDate();
     //ObjectProperty<LocalTime> timeProperty();
     //LocalTime getTime();
     ObjectProperty<Place> placeProperty();
