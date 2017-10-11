@@ -20,11 +20,11 @@ Responsibilities: LOGIC
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Melvin Leo
+image::melvinleo.jpg[width="150", align="left"]
+{empty}[https://github.com/Melvin-leo[github]] [<<Melvin-leo#, portfolio>>]
 
-Role: Team Lead +
+Role: Developer +
 Responsibilities: UI
 
 '''
