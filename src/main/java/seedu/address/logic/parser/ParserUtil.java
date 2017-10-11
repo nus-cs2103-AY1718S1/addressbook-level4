@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,6 +14,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+
+import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -55,6 +60,40 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NameMeeting> parseNameMeeting(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new NameMeeting(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        DateFormat df = new SimpleDateFormat("ddMMyyyy HH:mm");
+        Date newDate = new Date();
+        try {
+            newDate = df.parse(date.get());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.isPresent() ? Optional.of(newDate) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> Place} into an {@code Optional<Place>} if {@code place} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Place> parsePlace(Optional<String> place) throws IllegalValueException {
+        requireNonNull(place);
+        return place.isPresent() ? Optional.of(new Place(place.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -80,32 +119,7 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-    /**
-     * Parses a {@code Optional<String> Date} into an {@code Optional<Date>} if {@code date} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
-        requireNonNull(date);
-        return date.isPresent() ? Optional.of(new Date(date.get())) : Optional.empty();
-    }
-    /**
-     * Parses a {@code Optional<String> Place} into an {@code Optional<Place>} if {@code place} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Place> parsePlace(Optional<String> place) throws IllegalValueException {
-        requireNonNull(place);
-        return place.isPresent() ? Optional.of(new Place(place.get())) : Optional.empty();
-    }
 
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
-        }
-        return tagSet;
-    }
+
+
 }

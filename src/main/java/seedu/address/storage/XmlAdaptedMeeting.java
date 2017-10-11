@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.Meeting;
-import seedu.address.model.meeting.Name;
+import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
@@ -59,10 +59,10 @@ public class XmlAdaptedMeeting {
      */
     public Meeting toModelType() throws IllegalValueException {
 
-        final Name name = new Name(this.name);
+        final NameMeeting name = new NameMeeting(this.name);
         final Place place = new Place(this.place);
         //convert String date to Long Date
-        DateFormat df = new SimpleDateFormat("ddMMyyyy");
+        DateFormat df = new SimpleDateFormat("ddMMyyyy HH:mm");
         Date newDate = new Date();
         try {
             newDate = df.parse(this.date);
