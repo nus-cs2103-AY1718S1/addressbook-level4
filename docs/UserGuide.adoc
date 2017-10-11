@@ -48,34 +48,49 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* The alias stated below refers to the command shortcut you can use instead of typing the full command. e.g. `l` instead of `list`
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` +
+Alias: `h`
+
+=== Viewing quick help : `quickhelp`
+
+Format: `quickhelp` +
+Alias: `qh`
 
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
+Alias: `a`
 
 [TIP]
 A person can have any number of tags (including 0)
+
+****
+* If a person to be added is similar to one of the existing contacts, a prompt will show you that similar contact/s. (Coming in v2.0)
+****
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Allen Walker p/11112222 e/allen@walker.com a/Agate Street 22 f/allenwalker t/allenwalker99 i/iamallen`
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
+Alias: `l`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
+Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,11 +106,52 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 f/becca93` +
+Edits the Facebook username of 3rd person.
+
+=== Add tag/s to existing contact : `addtags`
+
+Add one or more tags to an existing person in the address book. +
+Format: `addtags INDEX TAG [TAG]...` +
+Alias: `at`
+
+****
+* Add tag/s to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least 1 tag must be added
+* The command will ignore tags that already exist in that contact.
+****
+
+Examples:
+
+* `addtags 1 friends` +
+Add a tag 'friends' to the 1st person.
+* `addtags 2 classmate CS2103` +
+Add tags "classmate" and "CS2103" to the 2nd person.
+
+=== Remove tag/s to existing contact : `removetags`
+
+Remove one or more tags from an existing person in the address book. +
+Format: `removetags INDEX TAG [TAG]...` +
+Alias: `rt`
+
+****
+* Remove tag/s from the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least 1 tag must be removed
+* The command will ignore tags that do not exist in that contact.
+****
+
+Examples:
+
+* `removetags 1 friends` +
+Remove the tag 'friends' from the 1st person.
+* `removetags 2 classmate CS2103` +
+Remove tags "classmate" and "CS2103"(if they exist) from the 2nd person.
 
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -125,7 +181,8 @@ Returns `Jon` and `John`
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
+Alias: `d`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -145,7 +202,8 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Alias: `s`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -186,7 +244,8 @@ Resets the font size back to the default.
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Alias: `h`
 
 [NOTE]
 ====
@@ -196,8 +255,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before some recent _undoable_ commands were executed. +
-Format: `undo [AMOUNT]`
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo [AMOUNT]` +
+Alias: `u`
 
 ****
 * If `AMOUNT` is not given, it undoes one command.
@@ -237,7 +297,8 @@ The `undo 1` command fails as there are no undoable commands executed previously
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` commands. +
-Format: `redo AMOUNT`
+Format: `redo [AMOUNT]` +
+Alias: `r`
 
 ****
 * If `AMOUNT` is not given, it redoes one command.
@@ -264,7 +325,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` +
+Alias: `c`
+
+=== Access a person's social media : `socialmedia`
+
+Access a person's social media profile on the browser. +
+Format: `socialmedia INDEX TYPE` +
+Alias: `sm`
+
+****
+* Loads the social media page of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* TYPE can be either of the following: 'facebook', 'twitter', 'instagram'
+****
 
 === Export all entries : `export`
 
@@ -283,7 +358,8 @@ Examples:
 === Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Alias: `ex`
 
 === Saving the data
 
@@ -304,19 +380,25 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Add Tags* : `addtags INDEX TAG [TAG]...` +
+e.g. `addtags 1 friends classmate`
+* *Remove Tags* : `removetags INDEX TAG [TAG]...` +
+e.g. `removetags 2 neighbour`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Find Regex* : `findregex REGEX` +
 e.g. `findregex Joh?n`
 * *List* : `list`
 * *Help* : `help`
+* *Quick Help* : `quickhelp`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *Font size* : `size AMOUNT` +
 e.g. `size 3`
 * *History* : `history`
+* *Social Media* : `socialmedia INDEX TYPE` +
+e.g. `socialmedia 1 facebook`
 * *Undo* : `undo [AMOUNT]`
 * *Redo* : `redo [AMOUNT]`
 * *Export* : `export FORMAT LOCATION` +
 e.g. `export JSON ~/contacts.json`
-
