@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
@@ -41,12 +41,12 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
 
-        Set<Property> properties = new HashSet<>();
-        properties.add(name);
-        properties.add(phone);
-        properties.add(email);
-        properties.add(address);
-        this.properties = new SimpleObjectProperty<>(new UniquePropertyMap(properties));
+        HashMap<String, Property> properties = new HashMap<>();
+        properties.put("n", name);
+        properties.put("p", phone);
+        properties.put("e", email);
+        properties.put("a", address);
+        setProperties(properties);
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -133,7 +133,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Replaces this person's properties with the properties in the argument tag set.
      */
-    public void setProperties(Set<Property> replacement) {
+    public void setProperties(HashMap<String, Property> replacement) {
         properties.set(new UniquePropertyMap(replacement));
     }
 
