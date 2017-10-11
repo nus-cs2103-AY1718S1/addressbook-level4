@@ -100,6 +100,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to the specific position in list.
+     * Only used to undo deletion
+     */
+    public void addPerson(int position, ReadOnlyPerson p) {
+        Person newPerson = new Person(p);
+        syncMasterTagListWith(newPerson);
+        persons.add(position, newPerson);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
@@ -152,6 +162,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Remove tags that only in this deleted person
+     */
+    public void separateMasterTagListWith(Set<Tag> tagsToRemove) {
+        for (Tag tag : tagsToRemove) {
+            tags.remove(tag);
+        }
+    }
+
+    /**
+     * A Javadoc method.
+     * Get the tags in the new-added person, but not in the list
+     */
+    public Set<Tag> extractNewTags(ReadOnlyPerson person) {
+        Set<Tag> personTags = person.getTags();
+        Set<Tag> newTags = new HashSet<Tag>();
+
+        for (Tag tag : personTags) {
+            if (!tags.contains(tag)) {
+                newTags.add(tag);
+            }
+        }
+
+        return newTags;
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
@@ -189,6 +225,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public boolean equals(Object other) {
+        boolean t1 = this.persons.equals(((AddressBook) other).persons);
+        boolean t2 = this.tags.equalsOrderInsensitive(((AddressBook) other).tags);
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)

@@ -51,6 +51,15 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Adds a person to the specific position in list.
+     * Only used to undo deletion
+     */
+    public void add(int position, ReadOnlyPerson toAdd) {
+        requireNonNull(toAdd);
+        internalList.add(position, new Person(toAdd));
+    }
+
+    /**
      * Sorts the person list.
      */
     public void sort() {

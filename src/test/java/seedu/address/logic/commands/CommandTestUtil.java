@@ -17,6 +17,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -121,6 +122,30 @@ public class CommandTestUtil {
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
         try {
             model.deletePerson(firstPerson);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Adds the person at the back in the address book.
+     */
+    public static void addPerson(Model model, ReadOnlyPerson person) {
+        try {
+            model.addPerson(person);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Impossible.", dpe);
+        }
+    }
+
+    /**
+     * Modify target person's details to be editedPerson's
+     */
+    public static void modifyPerson(Model model, ReadOnlyPerson targetPerson, ReadOnlyPerson editedPerson) {
+        try {
+            model.updatePerson(targetPerson, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Impossible.", dpe);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
