@@ -32,11 +32,12 @@ public interface ReadOnlyEvent {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Event Name: ")
+        builder.append(" Event: ")
                 .append(getName())
-                .append(" Time: ")
+                .append(" | ")
+                .append(" Date/Time: ")
                 .append(getTime())
+                .append(" | ")
                 .append(" Venue: ")
                 .append(getVenue());
         return builder.toString();
