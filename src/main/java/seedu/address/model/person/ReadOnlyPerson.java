@@ -28,6 +28,9 @@ public interface ReadOnlyPerson {
     boolean isTagSetJointKeywordSet(List<String> keyWords);
     boolean isSearchKeyWordsMatchAnyData(List<String> keyWords);
 
+    int compareTo(ReadOnlyPerson otherPerson);
+    int compareTo(ReadOnlyPerson otherPerson, SortArgument sortArgument);
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
