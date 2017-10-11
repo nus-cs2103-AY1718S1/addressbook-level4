@@ -32,6 +32,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.TagsContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -87,8 +88,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_findtags() throws Exception {
-        FindTagsCommand command = (FindTagsCommand) parser.parseCommand(FindTagsCommand.COMMAND_WORD);
-        assertTrue(command instanceof FindTagsCommand);
+        List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
+        FindTagsCommand command = (FindTagsCommand) parser.parseCommand(
+                FindTagsCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
