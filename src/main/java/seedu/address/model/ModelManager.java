@@ -43,8 +43,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        comparator = (p1, p2) -> 0;
         sortedPersons = new SortedList<>(filteredPersons);
+        updateSortComparator(null);
     }
 
     public ModelManager() {
@@ -76,6 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        updateSortComparator(null);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
