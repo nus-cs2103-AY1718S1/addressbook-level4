@@ -692,17 +692,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |edit person information |update details and fix mistakes
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |undo a command’s effect |fix user mistakes
+
+|`* * *` |user |redo a command’s effect after undoing |reapply the effect of the command if it was not a mistake
+
+|`* * *`|user |assign multiple phone numbers and emails to the same person |store both personal and work contact numbers of a person
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *`|user | put persons into groups |manage different social circles
+
+|`* *`|user | view number of edits to the address book during the session | recognize if a mistake has been made during the session
+
+|`* *`|general user | rearrange the order of addressbook entries |have preferred entries on top when using “list” command
+
+|`* *`|general user |get help from within the software |will not have to memorise commands
+
+|`* *`|general user |search for person on social media |find more information on person
+
+|`* *` |user |view typed command history |locate mistakes in typed commands
+
+|`* *` |user |clear typed command history |keep the command list relevant ??
+
+|`* *`| user | shorthand commands | to speed up use of addressbook
+
+|`* *`| user | autocomplete commands | to speed up use of addressbook
+
+|`* *`| any user |login to the correct account |view only the commands available to that account’s permissions
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`|System admin|set expiry date to a person |no need to delete useless contacts periodically
+
+|`*` |user |change the tag color |easily recognise tags
+
+|`*` |user |search for a person in the address book on Google |find more information on person
+
+|`*`|HR manager |add multiple persons by importing CSV file|save time
+
+|`*`|HR manager |add person from social media account |save time
+
+|`*`|System admin|backup data to the cloud|recover data in case local file is corrupted or lost
+
+|`*`|HR manager|add person with LinkedIn or Facebook profile|save time from typing person’s details manually
+
 |=======================================================================
-
-{More to be added}
-
 [appendix]
 == Use Cases
 
@@ -734,7 +774,124 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person with the person’s name, phone number and email address
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User did not give enough details
++
+AddressBook displays an error message
++
+Use case ends.
+
+
+[discrete]
+=== Use case: View command history
+
+*MSS*
+
+1.  User requests to view command history
+2.  AddressBook displays the command history in reverse chronological order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook displays an empty list
++
+Use case ends.
+
+
+[discrete]
+=== Use case: find a person in the address book
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User inputs the name of the person
+4.  AddressBook returns the people with a similar name and their details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook displays an empty list
++
+Use case ends.
+
+* 4a. No person is found
++
+[none]
+** 3a1. AddressBook shows an empty list
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list with new details
+4. AddressBook updates the person’s details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook displays an empty list
++
+Use case ends.
+
+[none]
+* 3a. User did not give enough details
++
+** 4a1. AddressBook displays an error message
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Add a person from their social media account
+
+*MSS*
+
+1.  User requests to add a Facebook or Linkedin URL
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Given URL is broken
++
+** 2a1. AddressBook displays an error message.
++
+Use case ends.
+
+[none]
+* 1b. Given URL is from Facebook
++
+** 2a1. AddressBook asks the user to input missing details.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -742,8 +899,13 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Retrieve the correct persons the user searches using specific keywords
+.  Should back up the database to more than one location
+.  Extract only relevant user information when adding a person from the web
+.  Use an link:#open-standard[open standard] to store the user data to allow for editing outside of the address book and easy debugging
+.  Should autosave to the address book database regularly to avoid lost work if the computer crashes
+.  Either command line or GUI is to be used to execute command at a time.
 
-{More to be added}
 
 [appendix]
 == Glossary
@@ -760,6 +922,13 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[open-standard]]
+Open standard
+
+....
+XML, CSV
 ....
 
 [appendix]
