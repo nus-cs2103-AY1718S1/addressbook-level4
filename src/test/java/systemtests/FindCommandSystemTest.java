@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -108,6 +109,11 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: first argument with no prefix searches for name*/
+        command = FindCommand.COMMAND_WORD + " Meier";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: find person in address book, keyword is substring of name -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " n/Mei";
         assertCommandSuccess(command, expectedModel);
@@ -125,8 +131,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: wrong format -> error */
-        command = FindCommand.COMMAND_WORD + " Mark";
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        command = FindCommand.COMMAND_WORD + "";
+        expectedResultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: find phone number of person in address book -> 1 persons found */

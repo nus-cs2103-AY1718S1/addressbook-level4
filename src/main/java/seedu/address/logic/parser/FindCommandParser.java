@@ -1,6 +1,12 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AddressContainsKeywordPredicate;
@@ -23,13 +31,9 @@ import seedu.address.model.person.TagsContainKeywordPredicate;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
-    private static Set<String> prefixSet =
-            new HashSet<String>(Arrays.asList(
-                    CliSyntax.PREFIX_NAME_STRING,
-                    CliSyntax.PREFIX_TAG_STRING,
-                    CliSyntax.PREFIX_ADDRESS_STRING,
-                    CliSyntax.PREFIX_PHONE_STRING,
-                    CliSyntax.PREFIX_EMAIL_STRING));
+
+
+   private static List<Prefix> prefixList = Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_EMPTY);
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -42,103 +46,48 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-
-        List<String> keywordsWithPrefix = trimInputIntoKeywordsWithPrefix(trimmedArgs);
-        List<Predicate> predicateList = new ArrayList<>();
-
-        for (String keywordWithPrefix : keywordsWithPrefix) {
-            predicateList.add(keywordWithPrefixIntoPredicate(keywordWithPrefix));
-        }
-
-        return new FindCommand(new PersonContainsFieldsPredicate(predicateList));
-    }
-
-    /**
-     * Parses {@code keywordWithPrefix}, identifies its prefix and returns
-     * appropriate predicate for filtering
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    private Predicate keywordWithPrefixIntoPredicate(String keywordWithPrefix) throws ParseException {
-
-        String prefix = extractPrefixFromKeywordWithPrefix(keywordWithPrefix);
-        String keyword = extractKeywordFromKeywordWithPrefix(keywordWithPrefix);
-
-        switch (prefix) {
-        case CliSyntax.PREFIX_NAME_STRING:
-            return new NameContainsKeywordPredicate(keyword);
-        case CliSyntax.PREFIX_PHONE_STRING:
-            return new PhoneContainsKeywordPredicate(keyword);
-        case CliSyntax.PREFIX_ADDRESS_STRING:
-            return new AddressContainsKeywordPredicate(keyword);
-        case CliSyntax.PREFIX_EMAIL_STRING:
-            return new EmailContainsKeywordPredicate(keyword);
-        case CliSyntax.PREFIX_TAG_STRING:
-            return new TagsContainKeywordPredicate(keyword);
-        default:
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
+        return new FindCommand(inputIntoPredicate(args));
     }
 
     /**
      * Parses {@code userInput}
-     * returns list of keywordsWithPrefix
-     * @throws ParseException if the {@code input} does not start with a valid prefix
+     * returns {@code PersonContainsFieldsPredicate} that matches the requirements of the input
      */
-    private List<String> trimInputIntoKeywordsWithPrefix(String userInput) throws ParseException {
-        int startIndex = 0;
-        int index = 0;
-        int endIndex = userInput.length();
-        int prefixLength = 2;
+    private PersonContainsFieldsPredicate inputIntoPredicate(String userInput) {
 
-        List<String> keywordsWithPrefix = new ArrayList<>();
+        ArgumentMultimap argumentMultimap =
+                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        //ensure we start with a prefix
-        if (endIndex < 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        //ensure we start with a valid prefix
-        String firstPrefix = userInput.substring(startIndex, startIndex + prefixLength);
-        if (!prefixSet.contains(firstPrefix)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        while (index + prefixLength < endIndex) {
-            index++;
-            String prefix = userInput.substring(index, index + prefixLength);
-
-            if (prefixSet.contains(prefix)) {
-                keywordsWithPrefix.add(userInput.substring(startIndex, index).trim());
-                startIndex = index;
+        List<Predicate> predicateList = new ArrayList<>();
+        for (Prefix prefix : prefixList) {
+            for (String value : argumentMultimap.getAllValues(prefix)) {
+                predicateList.add(valueAndPrefixIntoPredicate(value, prefix));
             }
         }
-
-        //handles the last detail query
-        keywordsWithPrefix.add(userInput.substring(startIndex, index + prefixLength).trim());
-        return keywordsWithPrefix;
+        return new PersonContainsFieldsPredicate(predicateList);
     }
 
     /**
-     * Parses {@code keywordWithPrefix}
-     * returns prefix
-     * @throws ParseException if the {@code keywordWithPrefix} does not conform the expected format
+     * Takes in {@code value} and {@code prefix}
+     * returns {@code Predicate} that checks for the value in person's field based on prefix
      */
-    private String extractPrefixFromKeywordWithPrefix(String keywordWithPrefix) throws ParseException {
-        if (keywordWithPrefix.length() < 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    private Predicate valueAndPrefixIntoPredicate(String value, Prefix prefix) {
+        switch (prefix.toString()) {
+        case CliSyntax.PREFIX_NAME_STRING:
+            return new NameContainsKeywordPredicate(value);
+        case CliSyntax.PREFIX_PHONE_STRING:
+            return new PhoneContainsKeywordPredicate(value);
+        case CliSyntax.PREFIX_ADDRESS_STRING:
+            return new AddressContainsKeywordPredicate(value);
+        case CliSyntax.PREFIX_EMAIL_STRING:
+            return new EmailContainsKeywordPredicate(value);
+        case CliSyntax.PREFIX_TAG_STRING:
+            return new TagsContainKeywordPredicate(value);
+        case CliSyntax.PREFIX_EMPTY_STRING:
+            return new NameContainsKeywordPredicate(value);
+        default:
+            return new NameContainsKeywordPredicate(value);
         }
-        return keywordWithPrefix.substring(0, 2);
-    }
-
-    /**
-     * Parses {@code keywordWithPrefix}
-     * returns keyword
-     * @throws ParseException if the {@code keywordWithPrefix} does not conform the expected format
-     */
-    private String extractKeywordFromKeywordWithPrefix(String keywordWithPrefix) throws ParseException {
-        if (keywordWithPrefix.length() < 3) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-        return keywordWithPrefix.substring(2, keywordWithPrefix.length());
     }
 }
+
