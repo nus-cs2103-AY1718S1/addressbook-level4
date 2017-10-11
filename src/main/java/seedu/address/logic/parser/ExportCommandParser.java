@@ -23,36 +23,25 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     public ExportCommand parse(String args) throws ParseException {
         String[] arguments = args.split(" ");
 
+        if (arguments.length < 3) throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+
         switch (arguments[1]) {
             case ".txt":
                 //need to check whether windows or posix
                 //for now just do windows
 
-                char[] tmp = arguments[2].toCharArray();
+                char[] tmp = args.toCharArray();
                 if (tmp[tmp.length - 1] == '/') {
-                    arguments[2] = new String(tmp, 0, tmp.length - 1);
-                }
+                    args = new String(tmp, 6, args.length() - 7);
+                } else args = new String(tmp, 6, args.length() - 6);
 
-                try {
-                    Path exportPath = Paths.get(arguments[2]);
-                    return new ExportCommand(".txt", arguments[2]);
-                } catch (IllegalArgumentException e) {
-                    throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
-                } catch (FileSystemNotFoundException e) {
-                    throw new ParseException(
-                            ExportCommand.MESSAGE_PATH_NOT_FOUND
-                    );
-                } catch (SecurityException e) {
-                    throw new ParseException(
-                            ExportCommand.MESSAGE_ACCESS_DENIED
-                    );
-                }
+                Path exportPath = Paths.get(args);
+                return new ExportCommand(".txt", args);
 
 
             default:
                 throw new ParseException(
-                        ExportCommand.MESSAGE_PATH_NOT_FOUND
+                        ExportCommand.MESSAGE_FILE_TYPE_NOT_SUPPORTED
                 );
         }
     }

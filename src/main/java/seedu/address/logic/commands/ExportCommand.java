@@ -27,6 +27,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_ACCESS_DENIED = "Access denied";
     public static final String MESSAGE_ERROR_WRITING_FILE = "Error writing file";
     public static final String MESSAGE_ERROR_READING_FILE = "Error reading file";
+    public static final String MESSAGE_FILE_TYPE_NOT_SUPPORTED = "File type not supported";
 
     private String exportPath;
     private String exportType;
@@ -45,12 +46,19 @@ public class ExportCommand extends Command {
 
         Charset charset = Charset.forName("US-ASCII");
 
-        File file = new File(exportPath + "/addressbook.txt");
+        File file = new File(exportPath);
+        try {
+            file.mkdirs();
+        } catch (SecurityException e) {
+            throw new CommandException(MESSAGE_ACCESS_DENIED);
+        }
+
+        file = new File(exportPath + "/addressbook.txt");
 
         try {
             file.createNewFile();
         } catch (IOException e) {
-            throw new CommandException(MESSAGE_ERROR_WRITING_FILE);
+            throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
         try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), charset)) {
