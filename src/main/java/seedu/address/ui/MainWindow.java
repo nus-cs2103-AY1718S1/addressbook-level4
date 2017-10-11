@@ -49,7 +49,7 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane infoPlaceholder;
+    private StackPane infoPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -136,8 +136,8 @@ public class MainWindow extends UiPart<Region> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         infoPanel = new InfoPanel();
-        infoPlaceholder.getChildren().clear();
-        infoPlaceholder.getChildren().add(infoPanel.getRoot());
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 
     //@@author jelneo
@@ -148,7 +148,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
             startUpPanel = new StartUpPanel();
-            infoPlaceholder.getChildren().add(startUpPanel.getRoot());
+            infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
             personListStartUpPanel = new PersonListStartUpPanel();
             personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());

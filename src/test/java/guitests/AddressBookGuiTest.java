@@ -82,7 +82,7 @@ public abstract class AddressBookGuiTest {
     }
 
     protected InfoPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+        return mainWindowHandle.getInfoPanel();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

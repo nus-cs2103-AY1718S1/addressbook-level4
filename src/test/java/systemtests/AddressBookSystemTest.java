@@ -1,11 +1,7 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.InfoPanel.DEFAULT_PAGE;
-import static seedu.address.ui.InfoPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.InfoPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -66,7 +62,6 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -88,8 +83,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public InfoPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    public InfoPanelHandle getInfoPanel() {
+        return mainWindowHandle.getInfoPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -111,8 +106,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -159,7 +152,6 @@ public abstract class AddressBookSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -171,7 +163,7 @@ public abstract class AddressBookSystemTest {
      * @see InfoPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getInfoPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
@@ -190,7 +182,7 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+        assertEquals(expectedUrl, getInfoPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
@@ -201,7 +193,7 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getInfoPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -248,7 +240,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getInfoPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

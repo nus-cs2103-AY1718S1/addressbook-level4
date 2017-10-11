@@ -27,7 +27,7 @@ public class MainWindowHandle extends StageHandle {
     private CommandBoxHandle commandBox;
     private StatusBarFooterHandle statusBarFooter;
     private MainMenuHandle mainMenu;
-    private InfoPanelHandle browserPanel;
+    private InfoPanelHandle infoPanel;
     private ModelManager modelManager;
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -43,7 +43,7 @@ public class MainWindowHandle extends StageHandle {
                 resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
                 commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
                 mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-                browserPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.BROWSER_ID));
+                infoPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.INFO_PANEL_ID));
                 statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
             });
         } catch (IllegalValueException ive) {
@@ -86,7 +86,7 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public InfoPanelHandle getBrowserPanel() {
-        return browserPanel;
+    public InfoPanelHandle getInfoPanel() {
+        return infoPanel;
     }
 }
