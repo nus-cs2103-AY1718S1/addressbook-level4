@@ -5,9 +5,6 @@ import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_ACKNOWLEDG
 import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_UNSUCCESSFUL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
-
-import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
@@ -20,20 +17,15 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author jelneo
 public class LoginCommandTest {
 
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
-
     private final boolean hasLoggedIn = true;
-    private LoginAppRequestEvent event;
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private static final String TEST_USERNAME = "TESTloanShark97";
     private static final String TEST_PASSWORD = "TESThitMeUp123";
+    private LoginAppRequestEvent event;
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_login_success() {
@@ -45,7 +37,6 @@ public class LoginCommandTest {
             CommandResult result = loginCommand.execute();
             assertEquals(hasLoggedIn, event.getLoginStatus());
             assertEquals(MESSAGE_LOGIN_ACKNOWLEDGEMENT, result.feedbackToUser);
-
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         } catch (CommandException ce) {
@@ -63,7 +54,6 @@ public class LoginCommandTest {
             CommandResult result = loginCommand.execute();
             assertEquals(!hasLoggedIn, event.getLoginStatus());
             assertEquals(MESSAGE_LOGIN_UNSUCCESSFUL, result.feedbackToUser);
-
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         } catch (CommandException ce) {
