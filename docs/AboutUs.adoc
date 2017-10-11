@@ -45,11 +45,11 @@ Responsibilities: Model
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Ong Hong Jing
+image::onghongjing.png[width="150", align="left"]
+{empty}[http://github.com/Houjisan[github]] [<<onghongjing#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''
