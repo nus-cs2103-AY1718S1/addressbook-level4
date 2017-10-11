@@ -96,7 +96,6 @@ public class UniquePropertyMapTest {
 
     @Test
     public void equal_samePropertyMap_returnTrue() throws Exception {
-        Set<Property> myNewSet = new HashSet<>();
         UniquePropertyMap propertyMap1 = createSampleMap();
         UniquePropertyMap propertyMap2 = createSampleMap();
 
