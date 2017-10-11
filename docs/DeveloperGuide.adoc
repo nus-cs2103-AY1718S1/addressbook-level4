@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T12-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -690,7 +690,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | store details for contacts
 
 |`* * *` |user |edit person information |update details and fix mistakes
 
@@ -701,6 +701,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |undo a command’s effect |fix user mistakes
 
 |`* * *` |user |redo a command’s effect after undoing |reapply the effect of the command if it was not a mistake
+
+|`* * *` |user |add or delete a remark on a person |to store extra information about someone in the addressbook
 
 |`* * *`|user |assign multiple phone numbers and emails to the same person |store both personal and work contact numbers of a person
 
