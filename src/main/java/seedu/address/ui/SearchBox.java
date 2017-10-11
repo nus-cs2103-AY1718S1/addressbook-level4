@@ -27,7 +27,7 @@ public class SearchBox extends UiPart<Region> {
     @FXML
     private TextField searchTextField;
 
-    public SearchBox (Logic logic){
+    public SearchBox (Logic logic) {
         super(FXML);
         // track all changes in the searchTextField and call for partial search real-time.
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
