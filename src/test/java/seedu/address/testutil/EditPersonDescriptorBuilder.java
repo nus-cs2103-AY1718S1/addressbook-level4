@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -97,9 +96,13 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    public EditPersonDescriptorBuilder withDelTags(String... tags) {
+    /**
+     * Parses the {@code tagsToDel} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withDelTags(String... tagsToDel) {
         try {
-            descriptor.setTagsToDel(ParserUtil.parseTags(Arrays.asList(tags)));
+            descriptor.setTagsToDel(ParserUtil.parseTags(Arrays.asList(tagsToDel)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }
