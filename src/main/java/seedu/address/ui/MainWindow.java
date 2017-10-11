@@ -58,6 +58,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane taskListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
