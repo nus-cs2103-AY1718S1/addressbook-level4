@@ -6,11 +6,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Tag;
 
 public class StringUtilTest {
 
@@ -63,10 +68,10 @@ public class StringUtilTest {
 
     @Test
     public void containsWordIgnoreCase_nullWord_throwsNullPointerException() {
-        assertExceptionThrown(NullPointerException.class, "typical sentence", null, Optional.empty());
+        assertExceptionThrownSentence(NullPointerException.class, "typical sentence", null, Optional.empty());
     }
 
-    private void assertExceptionThrown(Class<? extends Throwable> exceptionClass, String sentence, String word,
+    private void assertExceptionThrownSentence(Class<? extends Throwable> exceptionClass, String sentence, String word,
             Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
@@ -75,19 +80,19 @@ public class StringUtilTest {
 
     @Test
     public void containsWordIgnoreCase_emptyWord_throwsIllegalArgumentException() {
-        assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",
+        assertExceptionThrownSentence(IllegalArgumentException.class, "typical sentence", "  ",
                 Optional.of("Word parameter cannot be empty"));
     }
 
     @Test
     public void containsWordIgnoreCase_multipleWords_throwsIllegalArgumentException() {
-        assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "aaa BBB",
+        assertExceptionThrownSentence(IllegalArgumentException.class, "typical sentence", "aaa BBB",
                 Optional.of("Word parameter should be a single word"));
     }
 
     @Test
-    public void containsWordIgnoreCase_nullSentence_throwsNullPointerException() {
-        assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
+    public void containsWordIgnoreCase_emptySentence_throwsNullPointerException() {
+        assertExceptionThrownSentence(NullPointerException.class, null, "abc", Optional.empty());
     }
 
     /*
@@ -137,6 +142,105 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
+
+    //---------------- Tests for containsTag ------------------------------------------
+
+    /*
+     * Invalid equivalence partitions for word: null, empty
+     * Invalid equivalence partitions for sentence: null
+     * The four test cases below test one invalid input at a time.
+     */
+
+    //overload for taglist, a set of tags
+    private void assertExceptionThrown(Class<? extends Throwable> exceptionClass, Set<Tag> tagList, String word,
+                                       Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsTag(tagList, word);
+    }
+
+    public Set<Tag> setupTestTag() {
+        try {
+
+            Set<Tag> testTag = new HashSet<Tag>();
+
+            Tag friend = new Tag("friend");
+            Tag colleague = new Tag("colleague");
+            Tag neighbour = new Tag("neighbour");
+            Tag family = new Tag("family");
+            testTag.add(friend);
+            testTag.add(colleague);
+            testTag.add(neighbour);
+            testTag.add(family);
+
+            return testTag;
+        } catch (IllegalValueException e) {
+            return null;
+        }
+    }
+
+
+    @Test
+    public void containsTag_nullWord_throwsNullPointerException() {
+        Set<Tag> testTag = setupTestTag();
+        assertExceptionThrown(NullPointerException.class, testTag, null, Optional.empty());
+    }
+
+
+    @Test
+    public void containsTag_emptyWord_throwsIllegalArgumentException() {
+        Set<Tag> testTag = setupTestTag();
+        assertExceptionThrown(IllegalArgumentException.class, testTag, "  ",
+                Optional.of("Word parameter cannot be empty"));
+    }
+
+    @Test
+    public void containsTag_nullTags_throwsNullPointerException() {
+        assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
+    }
+
+    /*
+     * Valid equivalence partitions for word:
+     *   - any word
+     *   - word containing symbols/numbers
+     *   - word with leading/trailing spaces
+     *
+     * Possible scenarios returning true:
+     *   - matches any tags of a person, regardless of number of spaces behind the query words
+     *   - if there are multiple words, any words that match any tags of a person
+     *
+     * Possible scenarios returning false:
+     *   - query word does not follow case of the tag word
+     *   - query word matches part of a tag word
+     *   - tags match part of the query word
+     *   - word(s) does not match any of the tags of a person
+     *
+     * The test method below tries to verify all above with a reasonably low number of test cases.
+     */
+
+    @Test
+    public void containsTag_validInputs_correctResult() {
+
+        Set<Tag> testTag = setupTestTag();
+        // Unmatched Tags
+        assertFalse(StringUtil.containsTag(testTag, "abc")); // Boundary case
+        assertFalse(StringUtil.containsTag(testTag, "123"));
+
+        // Matches a partial word only
+        assertFalse(StringUtil.containsTag(testTag, "famil")); // Tag word bigger than query word
+        assertFalse(StringUtil.containsTag(testTag, "neighbours")); // Query word bigger than tag word
+
+        // Matches word in the tags, different upper/lower case letters
+        assertFalse(StringUtil.containsTag(testTag, "Friend")); // incorrect case of query word
+        assertTrue(StringUtil.containsTag(testTag, "family")); // correct case of query word
+        assertTrue(StringUtil.containsTag(testTag, " colleague  ")); // query word contains spaces at its boundaries
+
+        // Matches multiple words in Tags
+        assertTrue(StringUtil.containsTag(testTag , "friend colleague")); // query contains multiple words
+        assertTrue(StringUtil.containsTag(testTag , "family tutor")); //query contains a matched and unmatched word
+    }
+
+
     //---------------- Tests for getDetails --------------------------------------
 
     /*
@@ -154,6 +258,4 @@ public class StringUtilTest {
         thrown.expect(NullPointerException.class);
         StringUtil.getDetails(null);
     }
-
-
 }

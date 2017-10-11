@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -29,7 +30,8 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Deletes given tag from every person */
-    void removeTag(Tag tag);
+    void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
+            DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
