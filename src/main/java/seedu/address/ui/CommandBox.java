@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -23,8 +24,9 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static Trie commandTrie;
 
+    private Trie commandTrie;
+    private Set<String> commandSet;
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -36,6 +38,7 @@ public class CommandBox extends UiPart<Region> {
         super(FXML);
         this.logic = logic;
         commandTrie = logic.getCommandTrie();
+        commandSet = commandTrie.getCommandSet();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -102,9 +105,11 @@ public class CommandBox extends UiPart<Region> {
             String command = commandTrie.attemptAutoComplete(input);
 
             if (input.equals(command)) {
+                //No command exists in trie
                 setStyleToIndicateCommandFailure();
                 logger.info("Autocomplete failed with input: " + input);
-            } else {
+            } else if (commandSet.contains(command)) {
+                //Able to autocomplete to a correct command
                 commandTextField.setText(command);
                 commandTextField.positionCaret(command.length());
                 logger.info("Autocomplete successful with input: " + input + " to " + command);

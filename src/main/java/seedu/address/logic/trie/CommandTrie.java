@@ -1,5 +1,10 @@
 package seedu.address.logic.trie;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -21,22 +26,33 @@ import seedu.address.logic.commands.UndoCommand;
 public class CommandTrie implements Trie {
 
     private Node root = null;
-    private String[] commands = new String[] {
-        AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
-        EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
-        HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
-        RedoCommand.COMMAND_WORD, RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
-        UndoCommand.COMMAND_WORD
-    };
+    private Set<String> commandSet = Stream.of(
+            AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
+            EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
+            HelpCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
+            RedoCommand.COMMAND_WORD, RemarkCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
+            UndoCommand.COMMAND_WORD
+    ).collect(Collectors.toSet());
 
     public CommandTrie () {
-        for (String command : commands) {
-            insert(command);
+        for (String command : commandSet) {
+            this.insert(command);
         }
     }
 
     /**
-     * @param input
+     * Indicates whether or note a node is a leaf
+     */
+    public boolean isLeaf(Node current) {
+        if (!current.hasNext() && !current.hasChild()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param input key to autocomplete
      * @return input if the command is not found, otherwise String representation of command word
      */
     public String attemptAutoComplete (String input) throws NullPointerException {
@@ -45,7 +61,7 @@ public class CommandTrie implements Trie {
         Node temp = root;
         int i = 0;
 
-        while (temp.hasChild() || temp.hasNext()) {
+        while (!isLeaf(temp)) {
             if (i < inputArray.length) {
                 if (temp.getKey() == inputArray[i]) {
                     output.append(inputArray[i]);
@@ -68,7 +84,7 @@ public class CommandTrie implements Trie {
 
     /**
      * Insert function for trie
-     * @param input
+     * @param input key
      */
 
     public void insert (String input) {
@@ -111,5 +127,9 @@ public class CommandTrie implements Trie {
                 }
             }
         }
+    }
+
+    public Set<String> getCommandSet() {
+        return commandSet;
     }
 }
