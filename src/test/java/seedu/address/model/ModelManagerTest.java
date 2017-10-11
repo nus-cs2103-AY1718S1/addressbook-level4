@@ -77,7 +77,7 @@ public class ModelManagerTest {
         ModelManager actualModel = new ModelManager(sortedAddressBook, new UserPrefs());
         assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
     }
-    
+
     /*
      * Tests if the actual output of removeTag is equals to the expected
      * output when given valid target indexes and a valid tag to remove.
