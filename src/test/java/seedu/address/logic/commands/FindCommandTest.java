@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,14 +38,14 @@ public class FindCommandTest {
         PersonDataContainsKeywordsPredicate secondPredicate =
                 new PersonDataContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        FindCommand findFirstCommand = new FindCommand(firstPredicate, new ArrayList<>());
+        FindCommand findSecondCommand = new FindCommand(secondPredicate, new ArrayList<>());
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate, new ArrayList<>());
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -76,7 +77,8 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
-                new FindCommand(new PersonDataContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(new PersonDataContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))),
+                        new ArrayList<>());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
