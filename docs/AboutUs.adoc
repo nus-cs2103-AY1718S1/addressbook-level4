@@ -22,8 +22,8 @@ Responsibilities: UI
 '''
 
 === Cheng Jin Ting
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+image::JT.jpg[width="150", align="left"]
+{empty}[http://github.com/jin-ting[github]] [<<JinTing#, portfolio>>]
 
 Role: User Guide + Scheduling
 
