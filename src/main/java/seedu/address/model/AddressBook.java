@@ -58,9 +58,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setTags(Set<Tag> tags, boolean isOn, String tagString, String color) {
         this.tags.setTags(tags, isOn, tagString, color);
-        for (Person person : persons) {
-            syncMasterTagListWith(person);
-        }
     }
 
     public void setTags(Set<Tag> tags) {

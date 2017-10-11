@@ -36,7 +36,7 @@ public class XmlAdaptedTag {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Tag toModelType() throws IllegalValueException {
-        return new Tag(tagName, tagColor);
+        return new Tag(tagName, "grey");
     }
 
 }
