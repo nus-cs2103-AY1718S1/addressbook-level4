@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -24,6 +25,7 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

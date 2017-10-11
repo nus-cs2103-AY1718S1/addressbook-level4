@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -14,17 +15,23 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_WORD_2 = "remove";
+    public static final String COMMAND_WORD_3 = "-";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
+    public static final StringBuilder MESSAGE_DELETE_PERSON_FAIL = new StringBuilder(
+            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
+    private boolean allvalid = true;
+    private int numofinvalid = 0;
 
-    private final Index targetIndex;
+    private final ArrayList<Index> targetIndex;
 
-    public DeleteCommand(Index targetIndex) {
+    public DeleteCommand(ArrayList<Index> targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -32,21 +39,34 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
+        ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
+        ArrayList<Index> invalid = new ArrayList<>();
+        for (Index s: targetIndex) {
+            if (s.getZeroBased() >= lastShownList.size()) {
+                allvalid = false;
+                numofinvalid++;
+                invalid.add(s);
+            } else {
+                personstodelete.add(lastShownList.get(s.getZeroBased()));
+            }
+        }
+        if (allvalid) {
+            try {
+                model.deletePerson(personstodelete);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
+            return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
+        } else {
+            MESSAGE_DELETE_PERSON_FAIL.append(numofinvalid);
+            for (Index s: invalid) {
+                MESSAGE_DELETE_PERSON_FAIL.append(s.getOneBased());
+            }
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
     @Override

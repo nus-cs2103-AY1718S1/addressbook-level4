@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -66,6 +67,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deletePerson(ArrayList<ReadOnlyPerson> targets) throws PersonNotFoundException {
+        for (ReadOnlyPerson s:targets) {
+            addressBook.removePerson(s);
+        }
         indicateAddressBookChanged();
     }
 
