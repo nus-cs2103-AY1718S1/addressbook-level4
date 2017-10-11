@@ -55,6 +55,9 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane searchBoxPlaceholder;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
