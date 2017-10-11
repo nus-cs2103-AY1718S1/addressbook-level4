@@ -46,6 +46,7 @@ public class Person implements ReadOnlyPerson {
         properties.put("p", phone);
         properties.put("e", email);
         properties.put("a", address);
+        this.properties = new SimpleObjectProperty<>();
         setProperties(properties);
 
         // protect internal tags from changes in the arg list
