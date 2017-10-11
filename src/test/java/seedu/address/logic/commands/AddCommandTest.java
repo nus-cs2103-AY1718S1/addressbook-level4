@@ -137,11 +137,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateSortedPersonList() {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void updateSortComparator(List<SortArgument> sortArguments) {
             fail("This method should not be called.");
         }
