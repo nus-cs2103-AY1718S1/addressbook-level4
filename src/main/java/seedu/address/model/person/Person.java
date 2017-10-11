@@ -23,14 +23,17 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Bloodtype> bloodType;
-
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Remark> remark;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Bloodtype bloodType, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, bloodType, tags);
+
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Bloodtype bloodType, Set<Tag> tags, Remark remark) {
+        requireAllNonNull(name, phone, email, address, bloodType, tags, remark);
+
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -38,6 +41,7 @@ public class Person implements ReadOnlyPerson {
         this.bloodType = new SimpleObjectProperty<>(bloodType);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.remark = new SimpleObjectProperty<>(remark);
     }
 
     /**
@@ -45,7 +49,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBloodType(), source.getTags());
+                source.getBloodType(), source.getTags(), source.getRemark());
+
     }
 
     public void setName(Name name) {
@@ -136,6 +141,20 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
     }
 
     @Override

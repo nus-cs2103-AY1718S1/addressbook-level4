@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Bloodtype getBloodType();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -50,9 +52,11 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Bloodtype: ")
+                .append(" BloodType: ")
                 .append(getBloodType())
-                .append(" Tags: ");
+                .append(" Tags: ")
+                .append(getRemark())
+                .append(" Remark: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

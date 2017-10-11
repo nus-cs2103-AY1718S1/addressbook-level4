@@ -38,6 +38,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getBloodType().type, actualCard.getBloodType());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+        assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
     }
 
     /**
