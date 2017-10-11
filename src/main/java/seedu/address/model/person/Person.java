@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<DisplayPostalCode> displayPostalCode;
     private ObjectProperty<Debt> debt;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -38,6 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.displayPostalCode = new SimpleObjectProperty<>(new DisplayPostalCode(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -107,19 +109,23 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author khooroko
     public void setPostalCode(PostalCode postalCode) {
         this.postalCode.set(requireNonNull(postalCode));
     }
 
     @Override
-    public ObjectProperty<PostalCode> postalCodeProperty() {
-        return postalCode;
+    public PostalCode getPostalCode() {
+        return postalCode.get();
     }
 
     @Override
-    public PostalCode getPostalCode() {
-        return postalCode.get();
+    public ObjectProperty<DisplayPostalCode> displayPostalCodeProperty() {
+        return displayPostalCode;
+    }
+
+    @Override
+    public DisplayPostalCode getDisplayPostalCode() {
+        return displayPostalCode.get();
     }
 
     public void setDebt(Debt debt) {
@@ -136,7 +142,6 @@ public class Person implements ReadOnlyPerson {
         return debt.get();
     }
 
-    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -167,7 +172,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, debt, tags);
+        return Objects.hash(name, phone, email, address, postalCode, displayPostalCode, debt, tags);
     }
 
     @Override

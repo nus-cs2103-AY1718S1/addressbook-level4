@@ -20,8 +20,9 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    ObjectProperty<PostalCode> postalCodeProperty();
     PostalCode getPostalCode();
+    ObjectProperty<DisplayPostalCode> displayPostalCodeProperty();
+    DisplayPostalCode getDisplayPostalCode();
     ObjectProperty<Debt> debtProperty();
     Debt getDebt();
     ObjectProperty<UniqueTagList> tagProperty();
