@@ -92,6 +92,26 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Filtering persons by tags: `filter`
+
+Filters persons whose tags contain any of the given keywords. +
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case sensitive. e.g `professor` will match `professor`
+* The order of the keywords does not matter. e.g. `professor tutor` keywords will match `[tutor]` and '[professor]' tags
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Tags matching at least one keyword will be returned (i.e. `OR` search). e.g. `tutor` will return persons with both `[tutor]` and '[professor]' tags
+****
+
+Examples:
+
+* `filter professor` +
+Returns any person having at least a `[professor]` tag
+* `filter professor tutor` +
+Returns any person having at least a `[professor]` or `[tutor]` tags, or both
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -241,6 +261,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Filter* : `filter KEYWORD [MORE_KEYWORDS]` +
+e.g. `filter friend hallmate`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
