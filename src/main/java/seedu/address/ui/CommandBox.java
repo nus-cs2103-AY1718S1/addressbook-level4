@@ -97,7 +97,19 @@ public class CommandBox extends UiPart<Region> {
      * and if command is already complete change to next possible command
      */
     private void autoCompleteCommand() {
+        // Do nothing if there are more than one word in textbox.
+        // No support for non-command autocomplete yet (area for future enhancement)
+        if (commandTextField.getText().split(" ").length > 1) {
+            return;
+        }
 
+        ListElementPointer possibilities = logic.getAutoCompletePossibilities(commandTextField.getText());
+        assert possibilities != null;
+        if (!possibilities.hasNext()) {
+            return;
+        }
+
+        replaceText(historySnapshot.next());
     }
 
     /**

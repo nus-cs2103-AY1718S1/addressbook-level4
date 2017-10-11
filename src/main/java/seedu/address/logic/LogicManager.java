@@ -23,6 +23,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final AutoCompletePossibilities autoCompletePossibilities;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -54,4 +55,14 @@ public class LogicManager extends ComponentManager implements Logic {
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
+    @Override
+    public ListElementPointer getAutoCompletePossibilities(String autocompleteStub) {
+        return new ListElementPointer(generateAutocompletePossibilities(autocompleteStub));
+    }
+
+    public ListElementPointer updateAutoCompletePossibilities(String stub) {
+        autoCompletePossibilities = new AutoCompletePossibilities(stub);
+    }
+
 }
