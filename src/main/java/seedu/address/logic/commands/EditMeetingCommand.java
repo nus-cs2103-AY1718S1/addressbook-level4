@@ -52,7 +52,7 @@ public class EditMeetingCommand extends UndoableCommand {
      * @param index of the meeting in the filtered Meeting list to edit
      * @param editMeetingDescriptor details to edit the meeting with
      */
-    public EditMeetingCommand(Index index, EditMeetingDescriptor editMeetinbgDescriptor) {
+    public EditMeetingCommand(Index index, EditMeetingDescriptor editMeetingDescriptor) {
         requireNonNull(index);
         requireNonNull(editMeetingDescriptor);
 
