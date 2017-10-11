@@ -681,6 +681,13 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
+== Scenario
+
+We have been asked create an address book that can be used by a tour guide to record the details of their customers. We have been given a generic address book program written in Java using OOP principles to build on with features that we would think will improve their experience.
+
+The vision of this project is to create an address book that can be used safely, comfortably and navigated quickly by a tour guide with average computing experience.
+
+[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
