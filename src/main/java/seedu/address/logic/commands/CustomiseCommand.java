@@ -9,7 +9,7 @@ import seedu.address.model.font.FontSize;
 /**
  * Customise the look of the Address Book application.
  */
-public class CustomiseCommand extends UndoableCommand {
+public class CustomiseCommand extends Command {
     public static final String COMMAND_WORD = "customise";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Customise the look of the Address Book application. "
             + "Parameters: "
@@ -30,26 +30,26 @@ public class CustomiseCommand extends UndoableCommand {
     };
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult execute() {
         switch (fontSize.value) {
         case FONT_SIZE_XSMALL:
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(MESSAGE_SUCCESS + FONT_SIZE_XSMALL + "."));
+            EventsCenter.getInstance().post(new ChangeFontSizeEvent(FONT_SIZE_XSMALL));
             return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".");
 
         case FONT_SIZE_SMALL:
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(MESSAGE_SUCCESS + FONT_SIZE_SMALL + "."));
+            EventsCenter.getInstance().post(new ChangeFontSizeEvent(FONT_SIZE_SMALL));
             return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".");
 
         case FONT_SIZE_NORMAL:
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(MESSAGE_SUCCESS + FONT_SIZE_NORMAL + "."));
+            EventsCenter.getInstance().post(new ChangeFontSizeEvent(FONT_SIZE_NORMAL));
             return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".");
 
         case FONT_SIZE_LARGE:
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(MESSAGE_SUCCESS + FONT_SIZE_LARGE + "."));
+            EventsCenter.getInstance().post(new ChangeFontSizeEvent(FONT_SIZE_LARGE));
             return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".");
 
         case FONT_SIZE_XLARGE:
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(MESSAGE_SUCCESS + FONT_SIZE_XLARGE + "."));
+            EventsCenter.getInstance().post(new ChangeFontSizeEvent(FONT_SIZE_XLARGE));
             return new CommandResult(MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".");
 
         default:
@@ -64,4 +64,5 @@ public class CustomiseCommand extends UndoableCommand {
                 || (other instanceof CustomiseCommand // instanceof handles nulls
                 && fontSize.equals(((CustomiseCommand) other).fontSize));
     }
+
 }
