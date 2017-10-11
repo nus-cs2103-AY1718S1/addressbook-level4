@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -45,6 +45,16 @@ public interface Model {
      */
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * Replaces the given meeting {@code target} with {@code editedMeeting}.
+     *
+     * @throws DuplicateMeetingException if updating the meeting's details causes the meeting to be equivalent to
+     *      another existing meeting in the list.
+     * @throws MeetingNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedMeeting)
+            throws DuplicateMeetingException, MeetingNotFoundException;
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 

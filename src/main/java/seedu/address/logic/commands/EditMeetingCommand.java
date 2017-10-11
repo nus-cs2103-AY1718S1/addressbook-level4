@@ -8,6 +8,8 @@ import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.Name;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.tag.Tag;
 
 import java.util.Date;
@@ -21,6 +23,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 
 public class EditMeetingCommand extends UndoableCommand {
 
@@ -92,9 +95,9 @@ public class EditMeetingCommand extends UndoableCommand {
         Name updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
         Date updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
-        Set<Tag> updatedTags = editMeetingDescriptor.getTags().orElse(meetingToEdit.getTags());
+        //Set<Tag> updatedTags = editMeetingDescriptor.getTags().orElse(meetingToEdit.getTags());
 
-        return new Meeting(updatedName, updatedDate, updatedPlace,  updatedTags);
+        return new Meeting(updatedName, updatedDate, updatedPlace);
     }
 
     @Override
