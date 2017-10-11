@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Rule;
@@ -16,6 +17,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -55,6 +57,13 @@ public class AddressBookTest {
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
+    }
+
+    @Test
+    public void sorted() {
+        AddressBook newData = getTypicalAddressBook();
+        SortedList<ReadOnlyPerson> sorted = newData.getPersonList().sorted(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
+        assertEquals(sorted, newData.getPersonList());
     }
 
     @Test

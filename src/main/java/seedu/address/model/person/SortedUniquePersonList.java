@@ -32,7 +32,7 @@ public class SortedUniquePersonList implements Iterable<Person> {
     /**
      * Sorts the list of unique persons
      */
-    private void sort() {
+    public void sort() {
         internalList.sort(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
     }
 
