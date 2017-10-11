@@ -32,7 +32,7 @@ public class CustomiseCommandTest {
 
         String expectedMessage = MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".";
 
-        assertEquals(expectedMessage, customiseCommand.executeUndoableCommand().feedbackToUser);
+        assertEquals(expectedMessage, customiseCommand.execute().feedbackToUser);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class CustomiseCommandTest {
 
         String expectedMessage = MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".";
 
-        assertEquals(expectedMessage, customiseCommand.executeUndoableCommand().feedbackToUser);
+        assertEquals(expectedMessage, customiseCommand.execute().feedbackToUser);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class CustomiseCommandTest {
 
         String expectedMessage = MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".";
 
-        assertEquals(expectedMessage, customiseCommand.executeUndoableCommand().feedbackToUser);
+        assertEquals(expectedMessage, customiseCommand.execute().feedbackToUser);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class CustomiseCommandTest {
 
         String expectedMessage = MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".";
 
-        assertEquals(expectedMessage, customiseCommand.executeUndoableCommand().feedbackToUser);
+        assertEquals(expectedMessage, customiseCommand.execute().feedbackToUser);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CustomiseCommandTest {
 
         String expectedMessage = MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".";
 
-        assertEquals(expectedMessage, customiseCommand.executeUndoableCommand().feedbackToUser);
+        assertEquals(expectedMessage, customiseCommand.execute().feedbackToUser);
     }
 
     @Test

@@ -5,13 +5,16 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
+
+import org.controlsfx.control.textfield.TextFields;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,7 +28,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -93,7 +95,11 @@ public class CommandBox extends UiPart<Region> {
         configPrefixList();
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = logic.getCommandKeywordColorMap();
+        String[] commands = {"help", "add", "list", "edit", "find",
+            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
+        TextFields.bindAutoCompletion(commandTextField, commands);
         historySnapshot = logic.getHistorySnapshot();
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -342,6 +348,10 @@ public class CommandBox extends UiPart<Region> {
         tagLabel.toFront();
     }
 
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
+        setFontSize(event.message);
+    }
 
     /**
      * This method only remove all tag label in stack pane
@@ -437,8 +447,6 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
-            EventsCenter.getInstance().post(new ChangeFontSizeEvent(commandResult.feedbackToUser.toString()));
-            setFontSize(commandResult.feedbackToUser);
             initHistory();
             historySnapshot.next();
             // process result of the command
@@ -461,27 +469,27 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setFontSize(String userPref) {
         switch (userPref) {
-        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
+        case FONT_SIZE_XSMALL:
             commandTextField.setStyle("-fx-font-size: x-small;");
             fontIndex = 1;
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
+        case FONT_SIZE_SMALL:
             commandTextField.setStyle("-fx-font-size: small;");
             fontIndex = 2;
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
+        case FONT_SIZE_NORMAL:
             commandTextField.setStyle("-fx-font-size: normal;");
             fontIndex = 3;
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
+        case FONT_SIZE_LARGE:
             commandTextField.setStyle("-fx-font-size: x-large;");
             fontIndex = 4;
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
+        case FONT_SIZE_XLARGE:
             commandTextField.setStyle("-fx-font-size: xx-large;");
             fontIndex = 5;
             break;

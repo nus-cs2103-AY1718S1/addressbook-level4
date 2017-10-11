@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -157,54 +156,38 @@ public class PersonCard extends UiPart<Region> {
 
     private void setFontSize(String userPref) {
         switch (userPref) {
-        case MESSAGE_SUCCESS + FONT_SIZE_XSMALL + ".":
-            name.setStyle("-fx-font-size: x-small;");
-            id.setStyle("-fx-font-size: x-small;");
-            phone.setStyle("-fx-font-size: x-small;");
-            address.setStyle("-fx-font-size: x-small;");
-            email.setStyle("-fx-font-size: x-small;");
-            tags.setStyle("-fx-font-size: x-small;");
+        case FONT_SIZE_XSMALL:
+            setFontSizeHelper("x-small");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_SMALL + ".":
-            name.setStyle("-fx-font-size: small;");
-            id.setStyle("-fx-font-size: small;");
-            phone.setStyle("-fx-font-size: small;");
-            address.setStyle("-fx-font-size: small;");
-            email.setStyle("-fx-font-size: small;");
-            tags.setStyle("-fx-font-size: small;");
+        case FONT_SIZE_SMALL:
+            setFontSizeHelper("small");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_NORMAL + ".":
-            name.setStyle("-fx-font-size: normal;");
-            id.setStyle("-fx-font-size: normal;");
-            phone.setStyle("-fx-font-size: normal;");
-            address.setStyle("-fx-font-size: normal;");
-            email.setStyle("-fx-font-size: normal;");
-            tags.setStyle("-fx-font-size: normal;");
+        case FONT_SIZE_NORMAL:
+            setFontSizeHelper("normal");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_LARGE + ".":
-            name.setStyle("-fx-font-size: x-large;");
-            id.setStyle("-fx-font-size: x-large;");
-            phone.setStyle("-fx-font-size: x-large;");
-            address.setStyle("-fx-font-size: x-large;");
-            email.setStyle("-fx-font-size: x-large;");
-            tags.setStyle("-fx-font-size: x-large;");
+        case FONT_SIZE_LARGE:
+            setFontSizeHelper("x-large");
             break;
 
-        case MESSAGE_SUCCESS + FONT_SIZE_XLARGE + ".":
-            name.setStyle("-fx-font-size: xx-large;");
-            id.setStyle("-fx-font-size: xx-large;");
-            phone.setStyle("-fx-font-size: xx-large;");
-            address.setStyle("-fx-font-size: xx-large;");
-            email.setStyle("-fx-font-size: xx-large;");
-            tags.setStyle("-fx-font-size: xx-large;");
+        case FONT_SIZE_XLARGE:
+            setFontSizeHelper("xx-large");
             break;
 
         default:
             break;
         }
+    }
+
+    private void setFontSizeHelper(String fontSize) {
+        name.setStyle("-fx-font-size: " + fontSize + ";");
+        id.setStyle("-fx-font-size: " + fontSize + ";");
+        phone.setStyle("-fx-font-size: " + fontSize + ";");
+        address.setStyle("-fx-font-size: " + fontSize + ";");
+        email.setStyle("-fx-font-size: " + fontSize + ";");
+        tags.setStyle("-fx-font-size: " + fontSize + ";");
     }
 
 }
