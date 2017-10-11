@@ -29,7 +29,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * Creates an RemoveTagCommand to remove the specified {@code Tag}
      */
     public RemoveTagCommand (String tag) {
-        toRemove = tag;
+        this.toRemove = tag;
     }
 
     @Override
