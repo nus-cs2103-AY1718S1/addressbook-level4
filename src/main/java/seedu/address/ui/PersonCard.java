@@ -79,6 +79,26 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Handler for adding image to person
+     */
+    @FXML
+    private void handleAddImage() {
+        FileChooser picChooser = new FileChooser();
+        File selectedPic = picChooser.showOpenDialog(null);
+        if (selectedPic != null) {
+            try {
+                person.getPicture().setPictureUrl(person.getName().toString() + person.getPhone().toString() + ".jpg");
+                ImageIO.write(ImageIO.read(selectedPic), "jpg", new File(person.getPicture().getPictureUrl()));
+            } catch (Exception e) {
+                String curDir = System.getProperty("user.dir");
+                System.out.println(e + "Current Directory: " + curDir);
+            }
+        } else {
+            System.out.println("Invalid File");
+        }
+    }
+
     //following method gets the color related to a specified tag
     private static String getColorForTag(String tag) {
         if (!tagColor.containsKey(tag)) { //if the hashmap does not have this tag
