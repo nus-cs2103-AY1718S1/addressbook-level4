@@ -27,7 +27,9 @@ public class DeleteAltCommand extends UndoableCommand {
 
     private final String targetName;
 
-    public DeleteAltCommand(String targetName) { this.targetName = targetName; }
+    public DeleteAltCommand(String targetName) {
+        this.targetName = targetName;
+    }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {

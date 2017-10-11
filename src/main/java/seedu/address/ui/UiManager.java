@@ -29,8 +29,8 @@ public class UiManager extends ComponentManager implements Ui {
 
     public static final String DELETE_WARNING_DIALOG_STAGE_TITLE = "Deleting a contact";
     public static final String DELETE_WARNING_DIALOG_HEADER_MESSAGE = "Warning";
-    public static final String DELETE_WARNING_DIALOG_CONTENT_MESSAGE = "Are you sure to delete this person?\n\n" +
-            "Use 'undo' command if this is not an intended execution.";
+    public static final String DELETE_WARNING_DIALOG_CONTENT_MESSAGE = "Are you sure to delete this person?\n\n"
+            + "Use 'undo' command if this is not an intended execution.";
 
     public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
     public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
