@@ -135,7 +135,11 @@ public class UiManager extends ComponentManager implements Ui {
             Platform.runLater(() -> mainWindow.fillInnerParts());
         }
     }
-    
+
+    /**
+     * Handles change internal list event.
+     * Displays the list that user requested(e.g mainlist, blacklist etc)
+     */
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
