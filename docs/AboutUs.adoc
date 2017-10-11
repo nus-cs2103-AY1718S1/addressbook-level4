@@ -9,7 +9,7 @@ AddressBookX was developed by the team W13B3 from CS2103T AY17/18, National Univ
 == Project Team
 
 === Derrick Chua
-image::derrrickchua.jpg[width="150", align="left"]
+image::derrickchua.jpg[width="150", align="left"]
 {empty}[https://github.com/derrickchua[github]]
 
 Role: Project Member +
