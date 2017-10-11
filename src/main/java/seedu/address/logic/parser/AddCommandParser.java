@@ -39,8 +39,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        AddPersonOptionalFieldDescriptor addPersonOptionalFieldDescriptor
-            = new AddPersonOptionalFieldDescriptor();
+        AddPersonOptionalFieldDescriptor addPersonOptionalFieldDescriptor =
+                new AddPersonOptionalFieldDescriptor();
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();

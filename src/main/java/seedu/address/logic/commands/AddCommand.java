@@ -7,8 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Optional;
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -122,8 +120,8 @@ public class AddCommand extends UndoableCommand {
             }
 
             // state check
-            AddCommand.AddPersonOptionalFieldDescriptor a
-                    = (AddCommand.AddPersonOptionalFieldDescriptor) other;
+            AddCommand.AddPersonOptionalFieldDescriptor a =
+                    (AddCommand.AddPersonOptionalFieldDescriptor) other;
 
             return getPhone().equals(a.getPhone())
                     && getEmail().equals(a.getEmail())
