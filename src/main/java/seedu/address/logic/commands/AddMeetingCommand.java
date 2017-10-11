@@ -21,14 +21,14 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addmeeting";
     public static final String COMMAND_ALIAS = "am";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE + "DATE "
             + PREFIX_LOCATION + "LOCATION "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE + "21102017 21:00"
+            + PREFIX_DATE + "31102017 21:30 "
             + PREFIX_LOCATION + "School of Computing, NUS ";
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
@@ -37,7 +37,7 @@ public class AddMeetingCommand extends UndoableCommand {
     private final Meeting toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
     public AddMeetingCommand(ReadOnlyMeeting meeting) {
         toAdd = new Meeting(meeting);
