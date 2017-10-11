@@ -2,6 +2,10 @@ package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
 
+import java.awt.Color;
+
+import java.util.Random;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -14,6 +18,8 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
+
+    private static Random random = new Random();
 
     private String tagColor;
 
@@ -31,12 +37,24 @@ public class Tag {
         this.tagName = trimmedName;
     }
 
-    public void setTagColor(String tagColor) {
-        this.tagColor = tagColor;
-    }
-
     public String getTagColor() {
         return this.tagColor;
+    }
+
+    public void setColor(String color){
+        tagColor = color;
+    }
+    public void setRandomColor() {
+        float r = random.nextFloat();
+        float g = random.nextFloat();
+        float b = random.nextFloat();
+        Color randomColor = new Color(r, g, b);
+        String colorInHexString = convertColorToHexadecimal(randomColor);
+        tagColor = colorInHexString;
+    }
+
+    public void setOffColor() {
+        tagColor = "grey";
     }
 
     /**
@@ -65,4 +83,24 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    /**
+     * Converts a color to hexadecimal string
+     *
+     */
+    private static String convertColorToHexadecimal(Color color) {
+        String hex = Integer.toHexString(color.getRGB() & 0xffffff);
+        if (hex.length() < 6) {
+            if (hex.length() == 5) {
+                hex = "0" + hex;
+            }
+            if (hex.length() == 4) {
+                hex = "00" + hex;
+            }
+            if (hex.length() == 3) {
+                hex = "000" + hex;
+            }
+        }
+        hex = "#" + hex;
+        return hex;
+    }
 }

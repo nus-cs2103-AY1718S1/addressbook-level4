@@ -62,11 +62,6 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         bloodType.textProperty().bind(Bindings.convert(person.bloodTypeProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(oldValue + " " + newValue);
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
     }
 

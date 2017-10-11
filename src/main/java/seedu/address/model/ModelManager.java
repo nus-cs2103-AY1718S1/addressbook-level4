@@ -19,7 +19,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.ui.Ui;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -30,7 +29,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    private Ui ui;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -106,20 +104,10 @@ public class ModelManager extends ComponentManager implements Model {
      * On/Off tag colors for AddressBook
      * Updates UI by refreshing personListPanel
      */
-    public void setTagColor(boolean isOn) {
-        assert(ui != null);
-        if (isOn) {
-            addressBook.onTagColors();
-        } else {
-            addressBook.offTagColors();
-        }
-        ui.resetPanel(addressBook.getPersonList());
+    public void setTagColor(boolean isOn, String tagString, String color) {
+        Set<Tag> tag = new HashSet<>(addressBook.getTagList());
+        addressBook.setTags(tag, isOn, tagString, color);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public void getUi(Ui ui) {
-        this.ui = ui;
     }
 
     //=========== Filtered Person List Accessors =============================================================

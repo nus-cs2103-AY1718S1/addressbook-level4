@@ -51,7 +51,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
-     * Gets UI component
+     * Sets and updates the tag colors of a person
      */
-    void getUi(Ui ui);
+    void setTagColor(boolean toSet, String tag, String color);
 }

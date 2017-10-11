@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ModelManager;
 
 /**
  *  Changes tag color mode in address book
@@ -17,15 +16,18 @@ public class ToggleTagColorCommand extends Command {
     private final Logger logger = LogsCenter.getLogger(ToggleTagColorCommand.class);
 
     private boolean toSet;
+    private String tag;
+    private String color;
 
-    public ToggleTagColorCommand(boolean toSet) {
+    public ToggleTagColorCommand(boolean toSet, String tag, String color) {
         this.toSet = toSet;
+        this.tag = tag;
+        this.color = color;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        ModelManager modelManager = (ModelManager) model;
-        modelManager.setTagColor(toSet);
+        model.setTagColor(toSet, tag, color);
         model.resetData(model.getAddressBook());
         logger.fine("Tag color set to " + (toSet ? "on" : "off"));
         return new CommandResult(String.format("%s%s", MESSAGE_SUCCESS, toSet ? "on" : "off"));
