@@ -113,6 +113,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
+        return filteredPersons.getPredicate();
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
