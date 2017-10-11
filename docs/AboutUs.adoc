@@ -23,6 +23,15 @@ In Charge of: Logic and Model
 
 '''
 
+=== http://github.com/aali195[Ahmed Ali]
+image::aali195.jpg[width="150", align="left"]
+
+Role: Scheduling and tracking, Documentation
+
+In Charge of: UI
+
+'''
+
 == Contributors
 
 We welcome contributions. See  <<ContactUs#, Contact Us>> page for more info.
