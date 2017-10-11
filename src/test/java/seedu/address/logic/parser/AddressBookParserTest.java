@@ -123,7 +123,7 @@ public class AddressBookParserTest {
                 FindTagsCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
-  
+
     @Test
     public void parseCommand_alias_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -131,7 +131,6 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
-
 
     @Test
     public void parseCommand_help() throws Exception {
