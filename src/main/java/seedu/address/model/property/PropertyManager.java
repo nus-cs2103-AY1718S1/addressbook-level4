@@ -1,11 +1,11 @@
-package seedu.address.model.person;
+package seedu.address.model.property;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import seedu.address.model.person.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 /**
  * Manages the different properties (both pre-loaded ones and customize ones) of all persons stored in the

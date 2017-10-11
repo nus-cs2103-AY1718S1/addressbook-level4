@@ -1,7 +1,7 @@
-package seedu.address.model.person;
+package seedu.address.model.property;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.exceptions.PropertyNotFoundException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * Represents a Person's name in the address book.

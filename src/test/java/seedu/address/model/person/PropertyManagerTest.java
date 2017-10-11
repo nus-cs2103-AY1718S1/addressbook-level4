@@ -10,7 +10,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.PropertyManager;
 
 public class PropertyManagerTest {
     @Rule

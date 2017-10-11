@@ -3,11 +3,11 @@ package seedu.address.storage;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Property;
-import seedu.address.model.person.exceptions.PropertyNotFoundException;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
- * JAXB-friendly adapted version of the {@link seedu.address.model.person.Property}.
+ * JAXB-friendly adapted version of the {@link Property}.
  */
 public class XmlAdaptedProperty {
     @XmlValue
