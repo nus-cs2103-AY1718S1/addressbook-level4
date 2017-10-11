@@ -11,14 +11,15 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, cannot be blank and must end with 'S' or 's' "
-                    + "appended to 6 digits seperated from the rest of the address by a/mutliples spaces";
+            "Person addresses can take any values, cannot be blank and must end with 'S' or 's' appended "
+                    + "with 6 digits seperated from the rest of the address by one or multiple space(s)";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[\\w].+\\s+([Ss]{1}\\d{6})$";
+    public static final int POSTAL_CODE_STRING_LENGTH = 7;
 
     public final String value;
     public final PostalCode postalCode;
@@ -34,11 +35,8 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
 
-        int beginIndex = 0;
-        int postalCodeLength = 7;
-
-        this.value = address.substring(beginIndex, address.length() - postalCodeLength).trim();
-        this.postalCode = new PostalCode(address.substring(address.length() - postalCodeLength,
+        this.value = address.substring(0, address.length() - POSTAL_CODE_STRING_LENGTH).trim();
+        this.postalCode = new PostalCode(address.substring(address.length() - POSTAL_CODE_STRING_LENGTH,
                 address.length()));
     }
 
