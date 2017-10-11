@@ -747,11 +747,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |rename any field |update my relationship with contact
 
+|`* *` |user |view the location of an address on google maps |make plans to travel there
+
 |`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
 
 |`* *` |user |find my contact's address on google map |locate my contact
 
-|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact 
+|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
