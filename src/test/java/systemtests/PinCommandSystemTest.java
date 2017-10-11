@@ -1,5 +1,6 @@
 package systemtests;
 
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.PinCommand.MESSAGE_PIN_PERSON_SUCCESS;
@@ -9,6 +10,9 @@ import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.List;
 import java.util.Set;
@@ -76,6 +80,83 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
         Index middlePersonIndex = getMidIndex(getModel());
         assertCommandSuccess(middlePersonIndex);
 
+        /* Case: unpin the pinned person in the list */
+        pinnedPerson = unpinPerson(getModel(), INDEX_FIRST_PERSON);
+        command = UnpinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
+
+         /* ------------------ Performing pin operation while a filtered list is being shown ---------------------- */
+
+        /* Case: filtered person list, pin index within bounds of address book and person list -> pinned */
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        Index index = INDEX_FIRST_PERSON;
+        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertCommandSuccess(index);
+
+        /* Case: unpin the pinned person in the list */
+        pinnedPerson = unpinPerson(getModel(), INDEX_FIRST_PERSON);
+        command = UnpinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
+
+        /* Case: filtered person list, pin index within bounds of address book but out of bounds of person list
+         * -> rejected
+         */
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        command = PinCommand.COMMAND_WORD + " " + invalidIndex;
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* --------------------------- Performing multiple pin and unpin operations------------------------------- */
+
+        /* Case: Pins last 3 persons and unpins them accordingly */
+        //Pin last person
+        showAllPersons();
+        expectedModel = getModel();
+        lastPersonIndex = getLastIndex(expectedModel);
+        command = PinCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
+        pinnedPerson = pinPerson(expectedModel, lastPersonIndex);
+        expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        //Pin second last person
+        expectedModel = getModel();
+        lastPersonIndex = getLastIndex(expectedModel);
+        command = PinCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
+        pinnedPerson = pinPerson(expectedModel, lastPersonIndex);
+        expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        //Pin third last person
+        expectedModel = getModel();
+        lastPersonIndex = getLastIndex(expectedModel);
+        command = PinCommand.COMMAND_WORD + " " + lastPersonIndex.getOneBased();
+        pinnedPerson = pinPerson(expectedModel, lastPersonIndex);
+        expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        //Unpin third person
+        expectedModel = getModel();
+        command = UnpinCommand.COMMAND_WORD + " " + INDEX_THIRD_PERSON.getOneBased();
+        pinnedPerson = unpinPerson(expectedModel, INDEX_THIRD_PERSON);
+        expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        //Unpin second person
+        expectedModel = getModel();
+        command = UnpinCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased();
+        pinnedPerson = unpinPerson(expectedModel, INDEX_SECOND_PERSON);
+        expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+        //Unpin first person
+        expectedModel = getModel();
+        command = UnpinCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
+        pinnedPerson = unpinPerson(expectedModel, INDEX_FIRST_PERSON);
+        expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, pinnedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
         /* --------------------------------- Performing invalid pin operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
@@ -108,7 +189,7 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
      * @return the pinned person
      */
     private ReadOnlyPerson pinPerson(Model model, Index index) {
-        ReadOnlyPerson targetPerson = getPerson(model, index);
+        ReadOnlyPerson targetPerson = model.getFilteredPersonList().get(index.getZeroBased());
         try {
             model.pinPerson(targetPerson);
         } catch (PersonNotFoundException pnfe) {
@@ -125,13 +206,13 @@ public class PinCommandSystemTest extends AddressBookSystemTest {
      * @return the unpinned person
      */
     private ReadOnlyPerson unpinPerson(Model model, Index index) {
-        ReadOnlyPerson targetPerson = getPerson(model, index);
+        ReadOnlyPerson targetPerson = model.getFilteredPersonList().get(index.getZeroBased());
         try {
             model.unpinPerson(targetPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         } catch (CommandException ce) {
-            throw new AssertionError("targetPerson unable to be pinned");
+            throw new AssertionError("targetPerson unable to be unpinned");
         }
         return targetPerson;
     }
