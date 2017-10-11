@@ -39,8 +39,7 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (event.isUnknownCommandEntered()) { //unknown command entered
             setStyleToIndicateCommandFailure();
-        }
-        else {
+        } else {
             setStyleToDefault();
         }
         Platform.runLater(() -> displayed.setValue(event.message));
