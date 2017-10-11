@@ -121,26 +121,4 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    /**
-     * calls sort method with appropriate comparator
-     * @param sortType
-     */
-    public void sort(String sortType) {
-        switch(sortType) {
-        case "name":
-            FXCollections.sort(internalList, (Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
-            break;
-
-        case "phone":
-            FXCollections.sort(internalList, (Person p1, Person p2) -> p1.getPhone().compareTo(p2.getPhone()));
-            break;
-
-        case "email":
-            FXCollections.sort(internalList, (Person p1, Person p2) -> p1.getEmail().compareTo(p2.getEmail()));
-            break;
-
-        default:
-            break;
-        } //for future sort types, add into switch
-    }
 }
