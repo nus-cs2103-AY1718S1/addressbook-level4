@@ -28,6 +28,7 @@ public class DeleteCommand extends UndoableCommand {
     public DeleteCommand(Index targetIndex) {
         this.targetIndices.add(targetIndex);
     }
+
     public DeleteCommand(List<Index> indices) {
         targetIndices.addAll(indices);
     }
@@ -35,20 +36,23 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         List<ReadOnlyPerson> personsToDelete = new ArrayList<>();
-        for (Index targetIndex: targetIndices) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        int counter = 0;
+        for (Index targetIndex : targetIndices) {
+            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+            if (targetIndex.getZeroBased() - counter >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+            ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased() - counter);
             personsToDelete.add(personToDelete);
+
             try {
                 model.deletePerson(personToDelete);
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             }
+            counter++;
         }
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personsToDelete));
     }
