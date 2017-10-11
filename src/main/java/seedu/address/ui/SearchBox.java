@@ -29,20 +29,35 @@ public class SearchBox extends UiPart<Region> {
     public SearchBox (Logic logic){
         super(FXML);
         this.logic = logic;
-        
+
         searchTextField.textProperty().addListener( (observable, oldValue, newValue) -> {
-            try{
-                CommandResult commandResult = logic.execute("find " + newValue);
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
-            } catch (CommandException | ParseException e) {
-                // handle command failure
-                setStyleToIndicateCommandFailure();
-                logger.info("Invalid command: find " + newValue);
-                raise(new NewResultAvailableEvent(e.getMessage(), true));
+            if (newValue.equals("")){
+                try{
+                    CommandResult commandResult = logic.execute("list");
+                    logger.info("Result: " + commandResult.feedbackToUser);
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // handle command failure
+                    setStyleToIndicateCommandFailure();
+                    logger.info("Invalid command: list");
+                    raise(new NewResultAvailableEvent(e.getMessage(), true));
+                }
             }
+            else{
+                try{
+                    CommandResult commandResult = logic.execute("find " + newValue);
+                    logger.info("Result: " + commandResult.feedbackToUser);
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
+                } catch (CommandException | ParseException e) {
+                    // handle command failure
+                    setStyleToIndicateCommandFailure();
+                    logger.info("Invalid command: find " + newValue);
+                    raise(new NewResultAvailableEvent(e.getMessage(), true));
+                }
+            }
 
         });
     }
