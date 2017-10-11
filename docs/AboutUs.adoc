@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Herbert Ilhan Tanujaya
-image::herbert.png[width="150", align="left"]
+image::donjar.png[width="150", align="left"]
 {empty}[https://github.com/donjar[github]]
 
 Role: Developer +
@@ -20,7 +20,7 @@ Responsibilities: Model
 '''
 
 === Ken Lim
-image::ken.jpg[width="150", align="left"]
+image::kenpaxtonlim.png[width="150", align="left"]
 {empty}[http://github.com/kenpaxtonlim[github]]
 
 Role: Developer +
@@ -29,7 +29,7 @@ Responsibilities: Logic
 '''
 
 === Derek Nam
-image::derek.jpg[width="150", align="left"]
+image::500poundbear.png[width="150", align="left"]
 {empty}[http://github.com/500poundbear[github]]
 
 Role: Developer +
@@ -38,7 +38,7 @@ Responsibilities: UI
 '''
 
 === Lawrence Li
-image::Lawrence.png[width="150", align="left"]
+image::zzmobie.png[width="150", align="left"]
 {empty}[http://github.com/zzmobie[github]]
 
 Role: Developer +
