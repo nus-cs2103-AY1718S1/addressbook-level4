@@ -26,7 +26,6 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private boolean commandIsInvalid;
 
     @FXML
     private TextField commandTextField;
@@ -101,6 +100,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        boolean commandIsInvalid;
         try {
             commandIsInvalid = false;
             CommandResult commandResult = logic.execute(commandTextField.getText());
