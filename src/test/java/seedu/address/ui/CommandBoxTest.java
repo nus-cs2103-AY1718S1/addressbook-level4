@@ -137,6 +137,12 @@ public class CommandBoxTest extends GuiUnitTest {
         // two letters in text field
         guiRobot.push(KeyCode.T);
         assertInputHistory(KeyCode.TAB, "yt");
+
+        // current text in text field is longer than some commands
+        guiRobot.push(KeyCode.Y);
+        guiRobot.push(KeyCode.SPACE);
+        guiRobot.push(KeyCode.Y);
+        assertInputHistory(KeyCode.TAB, "yty y");
     }
 
     @Test
