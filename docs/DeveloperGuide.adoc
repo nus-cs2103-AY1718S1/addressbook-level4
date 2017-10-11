@@ -955,8 +955,8 @@ Use case ends.
 
 *MSS*
 
-1. User enters "help" for the help command
-2. AddressBook displays the help window
+1. User enters value for help command.
+2. AddressBook displays the help window.
 +
 Use case ends.
 
@@ -1004,8 +1004,93 @@ Use case ends.
 +
 Use case ends.
 
-{More to be added}
+[discrete]
+=== Use case: List persons
 
+*MSS*
+
+1. User enters value for list command.
+2. AddressBook displays list of persons.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There is no person in AddressBook
++
+** AddressBook shows a no person message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find person/s by name
+
+*MSS*
+
+1. User enters values for find command.
+2. AddressBook displays persons with name matching at least one keyword.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There is no person with a name matching any keyword
++
+** AddressBook shows a no person found message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1. User enters value for list command.
+2. AddressBook displays list of persons.
+3. User enters index value for select command.
+4. AddressBook displays Google search page of the person at the entered index value.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There is no person in AddressBook
++
+** AddressBook shows a no person message.
++
+Use case ends.
+
+* 1b. User enters value for find command.
++
+** 1b1. AddressBook displays persons with name matching at least one keyword.
++
+User case resumes at step 3.
+
+* 3a. User enters invalid index value
++
+** AddressBook displays an invalid index message.
++
+Use case ends.
+
+[discrete]
+=== Use case: List command history
+
+*MSS*
+
+1. User enters value for history command.
+2. AddressBook displays a list of commands the User has entered from most recent to earliest.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. User has not entered any previous commands
++
+** AddressBook displays a no previous command entered message.
++
+Use case ends.
+
+[discrete]
 === Use case: find a person by tag
 
 *MSS*
