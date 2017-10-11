@@ -47,11 +47,11 @@ public class SortCommandTest {
 
     @Test
     public void execute() throws CommandException {
-        CommandResult result = sortCommand.execute();
+        //check whether expectedModel is sorted.
+        assertSortSuccessful(expectedModel.getAddressBook(), expectedModel.getFilteredPersonList());
 
+        //execute sort command for model
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
-
-        assertEquals(SortCommand.MESSAGE_SUCCESS, result.feedbackToUser);
 
         assertSortSuccessful(model.getAddressBook(), model.getFilteredPersonList());
 
@@ -89,7 +89,7 @@ public class SortCommandTest {
     private boolean compareNamesAlphabetically(ReadOnlyPerson person1, ReadOnlyPerson person2) {
         String name1 = person1.getName().toString();
         String name2 = person2.getName().toString();
-        System.out.println(name1 + " " + name2);
+
         int compare = name1.compareTo(name2);
 
         //compare > 0 if for e.g. name1 starts with h and name2 starts with f
