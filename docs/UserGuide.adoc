@@ -112,6 +112,23 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Hiding a person: `hide`
+
+Hide specified person according to index from the address book. +
+Format: `hide INDEX`
+
+****
+* Hides the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The indext *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `hide 2`
+Deletes the 2nd person in the address book.
+
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
