@@ -12,13 +12,12 @@ public class Timing {
     public static final String MESSAGE_TIMING_CONSTRAINTS =
             "Event Timings should contain a 4-digit 24-hour format start timing and end timing separated by a \"-\", "
                     + "and it should not be blank";
-
     /*
      * The first character of the Timing must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String TIMING_VALIDATION_REGEX =
-            "([01]?[0-9]|2[0-3]):[0-5][0-9]-([01]?[0-9]|2[0-3]):[0-5][0-9]";
+            "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
 
     public final String timing;
     public final int start;
