@@ -104,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
      * On/Off tag colors for AddressBook
      * Updates UI by refreshing personListPanel
      */
-    public void setTagColor(boolean isOn, String tagString, String color) {
+    public synchronized void setTagColor(boolean isOn, String tagString, String color) {
         Set<Tag> tag = new HashSet<>(addressBook.getTagList());
         addressBook.setTags(tag, isOn, tagString, color);
         indicateAddressBookChanged();

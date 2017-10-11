@@ -78,22 +78,6 @@ public class AddressBookTest {
         assertEquals(addressBookAHash, addressBookBHash);
     }
 
-    @Test
-    public void tagColors() {
-        addressBook.onTagColors();
-        for (ReadOnlyPerson person : addressBook.getPersonList()) {
-            for (Tag tag : person.getTags()) {
-                assertFalse(tag.getTagColor().equals("dcdcdc"));
-            }
-        }
-        addressBook.offTagColors();
-        for (ReadOnlyPerson person : addressBook.getPersonList()) {
-            for (Tag tag : person.getTags()) {
-                assertTrue(tag.getTagColor().equals("dcdcdc"));
-            }
-        }
-    }
-
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
