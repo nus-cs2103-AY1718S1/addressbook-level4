@@ -57,18 +57,23 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Format without phone labelling: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Format with phone labelling: `add n/NAME p/H: (Home number) HP: (HandPhone number) O: (Office number) e/EMAIL a/ADDRESS [t/TAG]...` +
 Shorthand: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+A person can choose whether to have labels assigned to their contact numbers
+Available labels for the contacts numbers are: +
+H: (Home number) HP: (HandPhone number) O: (Office number)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `a n/Jane Doe p/98761243 e/janed@example.com a/Jane street, block 456, #01-01`
-* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/HP: 1234567 t/criminal`
+* `a n/Jane Doe p/H: 98761243 e/janed@example.com a/Jane street, block 456, #01-01`
+* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/H: 1234567 t/criminal`
+* `add n/May Lee p/HP: 98765432 H:65667177 O: 3535353 e/johnd@example.com a/John street, block 123, #01-01`
 
 === Listing all persons : `list`
 
