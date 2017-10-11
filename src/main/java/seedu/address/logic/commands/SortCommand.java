@@ -11,6 +11,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
+    public static final String ARGUMENT_NAME = "name";
+    public static final String ARGUMENT_PHONE = "phone";
+    public static final String ARGUMENT_EMAIL = "email";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts Address Book contacts according to specified field.\n"
@@ -35,7 +38,7 @@ public class SortCommand extends Command {
 
         //lists all contacts after sorting
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        if (!("phone".equals(sortType))) {
+        if (!(ARGUMENT_PHONE.equals(sortType))) {
             return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, sortType));
         } else {
             return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, (sortType + " number")));
