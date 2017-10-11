@@ -39,6 +39,14 @@ public class UniquePropertyMap implements Iterable<Property> {
         internalMap.putAll(properties);
     }
 
+    public UniquePropertyMap(Set<Property> properties) throws DuplicatePropertyException {
+        requireAllNonNull(properties);
+
+        for (Property property: properties) {
+            add(property);
+        }
+    }
+
     /**
      * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
      * and change-insulated against the internal list.

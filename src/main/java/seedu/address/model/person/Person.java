@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,6 +16,7 @@ import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -41,13 +42,20 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
 
-        HashMap<String, Property> properties = new HashMap<>();
-        properties.put("n", name);
-        properties.put("p", phone);
-        properties.put("e", email);
-        properties.put("a", address);
+        // HashMap<String, Property> properties = new HashMap<>();
+        Set<Property> properties = new HashSet<>();
+        properties.add(name);
+        properties.add(phone);
+        properties.add(email);
+        properties.add(address);
         this.properties = new SimpleObjectProperty<>();
-        setProperties(properties);
+        try {
+            setProperties(properties);
+        } catch (DuplicatePropertyException e) {
+            // TODO: Better error handling
+            e.printStackTrace();
+            System.err.println("This should not happen");
+        }
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -134,7 +142,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Replaces this person's properties with the properties in the argument tag set.
      */
-    public void setProperties(HashMap<String, Property> replacement) {
+    public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
         properties.set(new UniquePropertyMap(replacement));
     }
 
