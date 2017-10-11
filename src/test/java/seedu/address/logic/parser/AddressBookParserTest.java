@@ -65,18 +65,13 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-<<<<<<< HEAD
         DeleteCommand commandUsingAlias = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), commandUsingAlias);
-
-=======
         ArrayList<Index> indices = new ArrayList<>();
-
         indices.add(INDEX_FIRST_PERSON);
+      
         assertEquals(new DeleteCommand(indices), command);
->>>>>>> d5c83beec11faa7780163193bd4985696be0542f
+        assertEquals(new DeleteCommand(indices), commandUsingAlias);
     }
 
     @Test
