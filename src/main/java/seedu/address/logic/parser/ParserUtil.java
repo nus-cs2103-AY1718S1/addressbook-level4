@@ -10,6 +10,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
+import seedu.address.model.event.EventVenue;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -89,5 +92,32 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventName> parseEventName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new EventName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventTime> parseTime(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new EventTime(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventVenue> parseVenue(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new EventVenue(name.get())) : Optional.empty();
     }
 }
