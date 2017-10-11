@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Sorts list according to sort type entered.
@@ -26,11 +26,11 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         try {
             model.sort(sortType);
         } catch (DuplicatePersonException dpe) {
-
+            throw new CommandException(MESSAGE_USAGE); //It will never reach here.
         }
 
         //lists all contacts after sorting
