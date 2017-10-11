@@ -56,6 +56,8 @@ public abstract class AddressBookGuiTest {
         FxToolkit.showStage();
 
         mainWindowHandle = new MainWindowHandle(stage);
+        // Login is required to test main GUIs in the address book
+        mainWindowHandle.login();
         mainWindowHandle.focus();
     }
 
