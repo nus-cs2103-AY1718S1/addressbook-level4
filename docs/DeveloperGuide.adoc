@@ -745,9 +745,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
 
-|`* *` |user |rename existing tag |update my relationship with contact
+|`* *` |user |rename any field |update my relationship with contact
 
 |`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
+
+|`* *` |user |find my contact's address on google map |locate my contact
+
+|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact 
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
