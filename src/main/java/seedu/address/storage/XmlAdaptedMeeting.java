@@ -62,7 +62,7 @@ public class XmlAdaptedMeeting {
         final NameMeeting name = new NameMeeting(this.name);
         final Place place = new Place(this.place);
         //convert String date to Long Date
-        DateFormat df = new SimpleDateFormat("ddMMyyyy");
+        DateFormat df = new SimpleDateFormat("ddMMyyyy HH:mm");
         Date newDate = new Date();
         try {
             newDate = df.parse(this.date);
