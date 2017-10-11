@@ -6,7 +6,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.Place;
-import seedu.address.model.meeting.Name;
+import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
@@ -22,7 +22,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 
 public class EditMeetingCommand extends UndoableCommand {
@@ -36,7 +35,6 @@ public class EditMeetingCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_DATE + "DATE] "
-            + "[" + PREFIX_TIME + "TIME] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -54,7 +52,7 @@ public class EditMeetingCommand extends UndoableCommand {
      * @param index of the meeting in the filtered Meeting list to edit
      * @param editMeetingDescriptor details to edit the meeting with
      */
-    public EditMeetingCommand(Index index, EditMeetingDescriptor editMeetinbgDescriptor) {
+    public EditMeetingCommand(Index index, EditMeetingDescriptor editMeetingDescriptor) {
         requireNonNull(index);
         requireNonNull(editMeetingDescriptor);
 
@@ -92,7 +90,7 @@ public class EditMeetingCommand extends UndoableCommand {
                                               EditMeetingDescriptor editMeetingDescriptor) {
         assert meetingToEdit != null;
 
-        Name updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
+        NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
         Date updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
         //Set<Tag> updatedTags = editMeetingDescriptor.getTags().orElse(meetingToEdit.getTags());
@@ -123,10 +121,9 @@ public class EditMeetingCommand extends UndoableCommand {
      * corresponding field value of the meeting.
      */
     public static class EditMeetingDescriptor {
-        private Name name;
+        private NameMeeting name;
         private Date date;
         private Place place;
-        private Set<Tag> tags;
 
         public EditMeetingDescriptor() {
         }
@@ -135,20 +132,19 @@ public class EditMeetingCommand extends UndoableCommand {
             this.name = toCopy.name;
             this.date = toCopy.date;
             this.place = toCopy.place;
-            this.tags = toCopy.tags;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.date, this.place, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.date, this.place);
         }
-        public void setName(Name name) {
+        public void setNameMeeting(NameMeeting name) {
             this.name = name;
         }
 
-        public Optional<Name> getName() {
+        public Optional<NameMeeting> getName() {
             return Optional.ofNullable(name);
         }
 
@@ -164,14 +160,6 @@ public class EditMeetingCommand extends UndoableCommand {
 
         public Optional<Place> getPlace() {
             return Optional.ofNullable(place);
-        }
-
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
-        }
-
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
         }
 
         @Override
@@ -191,8 +179,7 @@ public class EditMeetingCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getDate().equals(e.getDate())
-                    && getPlace().equals(e.getPlace())
-                    && getTags().equals(e.getTags());
+                    && getPlace().equals(e.getPlace());
         }
     }
 }

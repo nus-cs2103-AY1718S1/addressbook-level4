@@ -120,6 +120,16 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
-
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        return tagSet;
+    }
 
 }
