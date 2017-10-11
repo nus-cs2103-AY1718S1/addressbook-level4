@@ -1,0 +1,40 @@
+= Mingrui - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Rolodex
+Rolodex is a desktop Address Book application for computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+Rolodex is an extension of AddressBook - Level 4, which is a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+= {empty}
+=== Enhancement Added: Add a drop down list for command input
+
+==== External behavior
+
+
+==== Justification
+
+When users forget the command formats, they can easily view them in the drop down list, without having to go to the help page.
+
+==== Implementation
+
+
+
+= {empty}
+=== Enhancement Proposed: Enable auto-completion in the command line
+
+Update the drop-down list as the user type in the command, to suggest possible command that the user wants to type.
+
+=== Other contributions
+
+* Updated the General Documentation (Pull requests https://github.com[#7])
+* Added abbreviations for commands (Pull requests https://github.com[#10])
+
+= {empty}
+== Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
+
+{Optionally (not graded), you may include other projects in your portfolio.}
