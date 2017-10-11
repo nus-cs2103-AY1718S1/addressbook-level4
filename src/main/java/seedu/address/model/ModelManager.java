@@ -14,6 +14,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.LoginAppRequestEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.UserNotFoundException;
+import seedu.address.logic.Password;
+import seedu.address.logic.Username;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -31,6 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final UserPrefs userPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.userPrefs = userPrefs;
     }
 
     public ModelManager() {
@@ -108,6 +115,25 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tag);
     }
 
+    //@@author jelneo
+    /**
+     * Authenticates user
+     * @throws UserNotFoundException if username and password does not match those in the user preference file
+     * @throws IllegalValueException if username and password does not meet username and password requirements
+     */
+    public void authenticateUser(Username username, Password password) throws UserNotFoundException,
+            IllegalValueException {
+        Username fileUsername = new Username(userPrefs.getAdminUsername());
+        Password filePassword = new Password(userPrefs.getAdminPassword());
+        if (fileUsername.equals(username) && filePassword.equals(password)) {
+            raise(new LoginAppRequestEvent(true));
+        } else {
+            raise(new LoginAppRequestEvent(false));
+            throw new UserNotFoundException();
+        }
+    }
+
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**

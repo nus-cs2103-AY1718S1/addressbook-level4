@@ -10,6 +10,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Password;
+import seedu.address.logic.Username;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
@@ -112,5 +114,29 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author jelneo
+    /**
+     * Parses {@code username} into a {@code Username} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the username does not meet length requirement and/or contains illegal characters
+     */
+    public static Username parseUsername(String username) throws IllegalValueException {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        return new Username(trimmedUsername);
+    }
+
+    /**
+     * Parses {@code password} into a {@code Password} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the password does not meet length requirement and/or contains illegal characters
+
+     */
+    public static Password parsePassword(String password) throws IllegalValueException {
+        requireNonNull(password);
+        String trimmedPassword = password.trim();
+        return new Password(trimmedPassword);
     }
 }
