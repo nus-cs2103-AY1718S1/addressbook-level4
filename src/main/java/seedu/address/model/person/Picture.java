@@ -3,13 +3,14 @@ package seedu.address.model.person;
 public class Picture {
 
     // Placeholder image url
-    public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir") +
-            "/src/main/resources/contact_images/placeholder_person.jpg";
+    public static final String PLACEHOLDER_IMAGE = "placeholder_person.jpg";
+    public static final String BASE_URL = System.getProperty("user.dir") +
+            "/src/main/resources/contact_images/";
 
     private String pictureUrl;
 
     public Picture() {
-        this.pictureUrl = PLACEHOLDER_IMAGE;
+        this.pictureUrl = BASE_URL + PLACEHOLDER_IMAGE;
     }
 
     public String getPictureUrl() {
@@ -17,6 +18,7 @@ public class Picture {
     }
 
     public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+        this.pictureUrl = BASE_URL + pictureUrl;
     }
+
 }
