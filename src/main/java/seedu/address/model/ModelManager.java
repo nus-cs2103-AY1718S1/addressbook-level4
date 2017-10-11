@@ -64,6 +64,11 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    @Override
+    public ReadOnlyTaskBook getTaskBook() {
+        return taskBook;
+    }
+
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
