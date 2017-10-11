@@ -5,7 +5,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.IllegalFormatException;
 
 /**
  * Helper functions for handling strings.
@@ -70,6 +69,14 @@ public class StringUtil {
         }
     }
 
+    /**
+     * Returns true if {@code s} represents alphabets
+     * e.g. abc, asfa, gg, ..., <br>
+     * Will return false for any other non-alphabet string input
+     * e.g. empty string, " abc " (untrimmed), "1 a" (contains number)
+     * Will return false if the input string case does not match the string stored (case sensitive)
+     * @throws NullPointerException if {@code s} is null.
+     */
     public static boolean isLettersOnly(String s) {
         requireNonNull(s);
 

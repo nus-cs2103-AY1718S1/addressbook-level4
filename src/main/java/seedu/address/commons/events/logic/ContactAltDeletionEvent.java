@@ -1,6 +1,5 @@
 package seedu.address.commons.events.logic;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**

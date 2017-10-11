@@ -44,6 +44,11 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    /**
+     * Parses a String of alphabets into a {@code trimmedString} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
     public static String parseString(String str) throws IllegalValueException {
         String trimmedString = str.trim();
         if (!StringUtil.isLettersOnly(trimmedString)) {

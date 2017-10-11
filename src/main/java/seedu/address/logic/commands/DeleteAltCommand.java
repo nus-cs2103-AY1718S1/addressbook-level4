@@ -1,15 +1,15 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.logic.ContactAltDeletionEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-import java.util.List;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -44,9 +44,9 @@ public class DeleteAltCommand extends UndoableCommand {
             if (p.getName().toString().contains(targetName)) {
                 index = lastShownList.indexOf(p);
                 break;
-            }
-            else
+            } else {
                 index = -1;
+            }
         }
 
         if (index >= lastShownList.size() || index == -1) {
@@ -60,22 +60,6 @@ public class DeleteAltCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-
-        // obtain person to delete through name
-//        ReadOnlyPerson personToDelete2;
-//
-//        for (ReadOnlyPerson p: lastShownList) {
-//            if (p.getName().toString().contains(targetName)) {
-//                personToDelete2 = p;
-//                try {
-//                    model.deletePerson(personToDelete2);
-//                } catch (PersonNotFoundException pnfe) {
-//                    assert false : "The target person cannot be missing";
-//                }
-//
-//                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete2));
-//            }
-//        }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
