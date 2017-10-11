@@ -842,26 +842,26 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to delete tag
-2.  AddressBook shows a list of tags
-3.  User requests to delete a specific tag in the list
-4.  AddressBook deletes the tag from every person in the address book
+1.  User requests to delete a specific tag by name
+2.  AddressBook deletes the tag from every person in the address book
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
+* 1a. The tag does not exist.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 1a1. AddressBook shows an error message.
+Use case ends.
+
+* 1b. The tag is not a valid tag.
 +
-Use case resumes at step 2.
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Edit contact details
@@ -915,6 +915,26 @@ Use case ends.
 ** 5b1. AddressBook shows an error message.
 +
 Use case resumes at step 4.
+
+[discrete]
+=== Use case: Backup data
+
+*MSS*
+
+1.  User requests to backup data
+2.  AddressBook backs up the data to the hard drive
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook fails to save the data.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Restore backup

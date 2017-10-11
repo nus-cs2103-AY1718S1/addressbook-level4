@@ -144,6 +144,28 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `f watson` +
 Returns `John Watson`
 
+=== Locating persons by tags: `filter`
+
+Shorthand Alias: `ft`
+Finds persons who are tagged with any of the given tags from the current list. +
+Format: `filter TAG [MORE_TAGS]`
+
+****
+* The search is case insensitive. e.g `FRIENDS` will match `friends`
+* The order of the keywords does not matter. e.g. `friends family` will match `family friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one tag will be returned (i.e. `OR` search). e.g. `family friends` will return persons who are tagged with family or friends
+* The filter is done on the current list. Successive `filter` makes the list smaller and smaller
+****
+
+Examples:
+
+* `filter family` +
+Returns `Alice` and `Bob` provided that Alice and Bob has the family tag
+* `filter family friends` +
+Returns any person tagged with `family` or `friends`
+
 === Deleting a person : `delete`
 
 Shorthand Alias: `d`
@@ -168,6 +190,24 @@ Deletes the 1st person in the results of the `find` command.
 `d 4` +
 Deletes the 4th person in the address book.
 
+=== Deleting a tag : `deletetag`
+
+Shorthand Alias: `dt`
+Deletes the specified tag from the address book. +
+Format: `deletetag TAGNAME`
+
+****
+* Deletes the tag with the specified `TAGNAME`.
+* The tag name *must be alphanumeric* friend, class1, 123, ...
+****
+
+Examples:
+
+* `deletetag buddy` +
+Deletes the tag `buddy` from all contacts in the address book.
+* `dt class2101` +
+Deletes the tag `class2101` from all contacts in the address book.
+
 === Selecting a person : `select`
 
 Shorthand Alias: `s`
@@ -191,6 +231,12 @@ Selects the 1st person in the results of the `find` command.
 * `list` +
 `s 7` +
 Selects the 7th person in the address book.
+
+=== Creating a backup : `backup`
+
+Shorthand Alias: `b`
+Creates a backup file to store the data in address book. +
+Format: `backup`
 
 === Listing entered commands : `history`
 
