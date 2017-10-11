@@ -19,6 +19,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
  */
 public class StatusBarFooter extends UiPart<Region> {
 
+    public static final int TOTAL_PERSONS_INITIAL = 0;
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
 
