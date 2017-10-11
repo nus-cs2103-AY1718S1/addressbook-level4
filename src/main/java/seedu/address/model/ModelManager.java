@@ -3,6 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,7 +16,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -73,10 +80,24 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Removes given tag from given the indexes of the target persons shown in the last person listing.
+     */
     @Override
-    public synchronized void removeTag(Tag tag) {
-        addressBook.removeTagFromAll(tag);
-        indicateAddressBookChanged();
+    public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
+            DuplicatePersonException {
+        for (int i = 0; i < targetIndexes.size(); i++) {
+            int targetIndex = targetIndexes.get(i).getZeroBased();
+            ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+            newTags.remove(toRemove);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+            indicateAddressBookChanged();
+        }
     }
 
     @Override
@@ -86,6 +107,25 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+
+        if (filteredPersons.size() == 0) {
+            return false;
+        }
+        contactList.addAll(filteredPersons);
+
+        Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
+
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            assert false : "AddressBooks should not have duplicate persons";
+        }
+        return true;
     }
 
     //=========== Filtered Person List Accessors =============================================================
