@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Finds and lists all persons in address book whose Tags contains any of the argument keywords.
@@ -18,7 +18,7 @@ public class FindTagCommand extends Command {
 
     private final TagContainsKeywordsPredicate tags;
 
-    public FindTagCommand(TagContainsKeywordsPredicate arg) {this.tags = arg;}
+    public FindTagCommand(TagContainsKeywordsPredicate arg) { this.tags = arg; }
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -31,5 +31,6 @@ public class FindTagCommand extends Command {
                 || (other instanceof FindTagCommand // instanceof handles nulls
                 && this.tags.equals(((FindTagCommand) other).tags)); // state check
     }
+
 }
 
