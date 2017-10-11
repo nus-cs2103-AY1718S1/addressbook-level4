@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.SortUtil.setupArguments;
 
 import java.util.ArrayList;
@@ -25,9 +26,15 @@ public class ListCommandParser {
         }
 
         String[] keywords = trimmedArgs.split("\\s+");
+        List<String> dataKeywords = new ArrayList<>();
         List<SortArgument> sortArgumentList = new ArrayList<>();
 
-        setupArguments(keywords, new ArrayList<>(), sortArgumentList);
+        setupArguments(keywords, dataKeywords, sortArgumentList);
+        
+        if (!dataKeywords.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        }
 
         return new ListCommand(sortArgumentList);
     }
