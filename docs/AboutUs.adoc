@@ -5,8 +5,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
@@ -24,7 +22,7 @@ image::jiahao.jpg[width="150", align="left"]
 {empty}[http://github.com/inGall[github]] [<<inGall#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: In charge of Model
 
 '''
 
@@ -33,7 +31,15 @@ image::ChanQingHong.jpg[width="150", align="left"]
 {empty}[http://github.com/cqhchan[github]] [<<cqhchan#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: In charge of  UI
 
 '''
 
+=== Nguyen Duy Son
+image::duyson98.jpg[width="150", align="left"]
+{empty}[http://github.com/duyson98[github]] [<<duyson98#, portfolio>>]
+
+Role: Developer +
+Responsibilities: In charge of  Storage
+
+'''
