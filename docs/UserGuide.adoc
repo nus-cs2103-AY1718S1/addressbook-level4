@@ -152,22 +152,23 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Sorting persons : 'sort'
+=== Sorting persons : `sort`
 
 Sorts persons based on prefix specified in either ascending or descending order. +
-Format: 'sort [PREFIX/[r]]
+Format: `sort [PREFIX/[r]]`
 
 ****
 * Sorts persons by PREFIX
-* Adding the optional flag 'r' will sort persons in descending order
-* Persons are sorted by name by default (if no PREFIX is specified)
-* Persons are sorted in ascending order by default (if no 'r' flag is specified)
+* Adding the optional flag `r` will sort persons in descending order
+* Persons are sorted by name by default (if no `PREFIX` is specified)
+* Persons are sorted in ascending order by default (if no `r` flag is specified)
 ****
 
 Examples:
-* 'sort' +
-Sorts persons by name in ascending order.
-* 'sort p/r' +
+
+* `sort` +
+Sorts persons by name in ascending order. +
+* `sort p/r` +
 Sorts persons by phone in descending order.
 
 === Listing entered commands : `history`
@@ -261,6 +262,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Sort* : `sort [PREFIX/[r]]` +
+e.g. `sort p/r`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
