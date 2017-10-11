@@ -33,6 +33,7 @@ endif::[]
 
 == Acknowledgements
 
+* The original source of the code is taken from AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/[Software Engineering Education - FOSS Resources]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
