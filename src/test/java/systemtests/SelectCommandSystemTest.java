@@ -47,7 +47,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, middleIndex);
 
         /* Case: invalid index (size + 1) -> rejected */
-        int invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        int invalidIndex = getModel().getLatestPersonList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: select the current selected card -> selected */
@@ -62,7 +62,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: filtered person list, select index within bounds of address book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
-        assert validIndex.getZeroBased() < getModel().getFilteredPersonList().size();
+        assert validIndex.getZeroBased() < getModel().getLatestPersonList().size();
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 

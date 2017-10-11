@@ -91,7 +91,7 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getLatestPersonList());
 
         try {
             command.execute();
@@ -99,7 +99,7 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredList, actualModel.getLatestPersonList());
         }
     }
 
@@ -111,14 +111,14 @@ public class CommandTestUtil {
         final String[] splitName = person.getName().fullName.split("\\s+");
         model.updateFilteredPersonList(new PersonDataContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assert model.getFilteredPersonList().size() == 1;
+        assert model.getLatestPersonList().size() == 1;
     }
 
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
-        ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
+        ReadOnlyPerson firstPerson = model.getLatestPersonList().get(0);
         try {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
