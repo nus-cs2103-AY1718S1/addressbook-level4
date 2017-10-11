@@ -77,5 +77,8 @@ public interface Model {
      */
     void authenticateUser(Username username, Password password) throws UserNotFoundException, IllegalValueException;
 
-  void changeListTo(String listName);
+    /**
+     * Updates the list shown in Person List Panel to the requested list.
+     */
+    void changeListTo(String listName);
 }
