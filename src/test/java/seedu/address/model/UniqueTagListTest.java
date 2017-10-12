@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Rule;
@@ -22,6 +23,17 @@ public class UniqueTagListTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void testThrowDuplicateTagError() throws Exception{
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        thrown.expect(UniqueTagList.DuplicateTagException.class);
+
+        Iterator myIterator = TypicalPersons.ALICE.getTags().iterator();
+        uniqueTagList.add((Tag)myIterator.next());
+
+    }
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -108,5 +120,18 @@ public class UniqueTagListTest {
 
     }
 
+    public void testEquals(){
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
+        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
+
+        UniqueTagList uniqueTagListTwo = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
+        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
+
+        assertTrue(uniqueTagList.equals(uniqueTagListTwo));
+    }
 
 }
