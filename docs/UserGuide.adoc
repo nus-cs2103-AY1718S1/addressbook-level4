@@ -58,7 +58,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 +
 image::commandboxhelper.PNG[width="790"]
 +
-
 ====
 
 === Viewing help : `help`
