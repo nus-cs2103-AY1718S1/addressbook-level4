@@ -37,7 +37,9 @@ Speed up the use of the address book and make it easier for new users to learn t
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=undoredo]
++
 image::UiClassDiagram.png[width="800"]
++
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
