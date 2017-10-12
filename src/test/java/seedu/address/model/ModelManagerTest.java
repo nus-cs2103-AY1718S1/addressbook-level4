@@ -20,7 +20,7 @@ public class ModelManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredParcelList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredParcelList().remove(0);

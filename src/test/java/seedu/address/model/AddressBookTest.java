@@ -47,7 +47,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
+    public void resetData_withDuplicateParcels_throwsAssertionError() {
         // Repeat ALICE twice
         List<Parcel> newParcels = Arrays.asList(new Parcel(ALICE), new Parcel(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
@@ -58,7 +58,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getParcelList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getParcelList().remove(0);
     }
@@ -70,20 +70,20 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose parcels and tags lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
-        private final ObservableList<ReadOnlyParcel> persons = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyParcel> parcels = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyParcel> persons, Collection<? extends Tag> tags) {
-            this.persons.setAll(persons);
+        AddressBookStub(Collection<? extends ReadOnlyParcel> parcels, Collection<? extends Tag> tags) {
+            this.parcels.setAll(parcels);
             this.tags.setAll(tags);
         }
 
         @Override
         public ObservableList<ReadOnlyParcel> getParcelList() {
-            return persons;
+            return parcels;
         }
 
         @Override
