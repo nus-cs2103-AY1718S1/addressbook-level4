@@ -3,9 +3,12 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.sun.org.apache.regexp.internal.RE;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -107,6 +110,29 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    @Override
+    public void sortFilteredPersonList() {
+
+        Comparator<ReadOnlyPerson> personComparator
+                = new Comparator<ReadOnlyPerson>() {
+
+            public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+
+                String personName1 = person1.getName().toString();
+                String personName2 = person2.getName().toString();
+
+                //ascending order
+                return personName1.compareTo(personName2);
+
+                //descending order
+                //return personName2.compareTo(personName1);
+            }
+
+        };
+        
+        FXCollections.sort(filteredPersons, personComparator);
     }
 
     @Override

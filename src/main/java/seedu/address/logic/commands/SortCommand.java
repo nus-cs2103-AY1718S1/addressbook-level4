@@ -29,7 +29,8 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, filterType));
+        model.sortFilteredPersonList();
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
