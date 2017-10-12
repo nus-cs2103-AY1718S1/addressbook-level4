@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import seedu.address.commons.util.StringUtil;
+
 import java.util.Arrays;
 
 import java.util.List;
@@ -18,9 +20,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        String tag = Arrays.toString(person.getTags().toArray());
+        String tag = Arrays.toString(person.getTags().toArray())
+                .replaceAll("[\\[\\](),{}]","");
         return keywords.stream()
-                .anyMatch(keyword -> tag.contains(keyword));
+                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag, keyword));
     }
 
     @Override
