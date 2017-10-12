@@ -984,20 +984,6 @@ Mainstream Image Format
 JPEG, PNG, BMP
 ....
 
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
-
-[[hash-string]]
-Hash String
-
-....
-An encoded string that contains the parcel details of a particular parcel
-....
-
 [appendix]
 == Product Survey
 
