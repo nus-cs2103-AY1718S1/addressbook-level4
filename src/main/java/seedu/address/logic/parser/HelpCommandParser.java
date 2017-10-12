@@ -19,7 +19,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
      */
     @Override
     public HelpCommand parse(String args) throws ParseException {
-        if(args.trim().contains(" ")) {
+        if (args.trim().contains(" ")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 

@@ -30,7 +30,7 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        String commandResult = "";
+        String commandResult;
 
         switch(commandIdentifier.value) {
 

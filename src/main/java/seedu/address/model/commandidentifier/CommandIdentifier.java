@@ -20,9 +20,13 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
+/**
+ * Represents the argument that help command takes in.
+ * Guarantees: parameter is present and not null, parameter is validated.
+ */
 public class CommandIdentifier {
-    public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "Invalid command argument!\n"
-            + "The command argument should be one of the following (or their aliases):\n"
+    public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "The command argument should be one of the "
+            + "following (or their aliases):\n"
             + AddCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
@@ -57,12 +61,12 @@ public class CommandIdentifier {
      *
      * @throws IllegalValueException if the given tag name string is invalid.
      */
-    public CommandIdentifier(String commandWord) throws IllegalValueException {
-        requireNonNull(commandWord);
-        if (!isValidCommandIdentifier(commandWord) && !commandWord.equals("")) {
+    public CommandIdentifier(String commandIdentifier) throws IllegalValueException {
+        requireNonNull(commandIdentifier);
+        if (!isValidCommandIdentifier(commandIdentifier) && !commandIdentifier.equals("")) {
             throw new IllegalValueException(MESSAGE_COMMAND_WORD_CONSTRAINTS);
         }
-        this.value = commandWord;
+        this.value = commandIdentifier;
     }
 
     /**
