@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -47,5 +48,8 @@ public class RedoCommandTest {
         // single command in redoStack
         deleteFirstPerson(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in redoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
     }
 }
