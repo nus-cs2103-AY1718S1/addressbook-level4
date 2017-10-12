@@ -36,7 +36,7 @@ public class Event implements ReadOnlyEvent {
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
         this(source.getTitle(), source.getTiming(), source.getDescription(), source.getTags());
