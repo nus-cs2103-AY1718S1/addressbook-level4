@@ -6,11 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.StartUpPanelHandle;
+import seedu.address.logic.commands.LoginCommand;
 
 //@@author jelneo
 public class StartUpPanelTest extends GuiUnitTest {
     private static final String START_UP_MESSAGE = "Welcome to CodiiLog in using the command box above."
-            + "Format: login USERNAME PASSWORD";
+            + "Format: " + LoginCommand.MESSAGE_LOGIN_FORMAT;
     private StartUpPanel startUpPanel;
     private StartUpPanelHandle startUpPanelHandle;
 

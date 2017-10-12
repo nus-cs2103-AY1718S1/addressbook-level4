@@ -22,6 +22,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
 
 /**

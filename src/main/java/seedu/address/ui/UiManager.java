@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -130,10 +131,10 @@ public class UiManager extends ComponentManager implements Ui {
      */
     @Subscribe
     public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
-        // log in is successful
+        // login is successful
         if (event.getLoginStatus() == true) {
             logger.info("Login successful");
-            logInStatus = true;
+            LoginCommand.setLoginStatus(true);
             //show address book
             Platform.runLater(() -> mainWindow.fillInnerParts());
         }
