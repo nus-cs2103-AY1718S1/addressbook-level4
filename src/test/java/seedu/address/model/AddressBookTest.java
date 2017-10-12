@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.SIRISHA;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +52,7 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
-        List<Person> newBlacklistedPersons = Arrays.asList(new Person(ARCHANA));
+        List<Person> newBlacklistedPersons = Arrays.asList(new Person(SIRISHA));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         AddressBookStub newData = new AddressBookStub(newPersons, newBlacklistedPersons, newTags);
 
