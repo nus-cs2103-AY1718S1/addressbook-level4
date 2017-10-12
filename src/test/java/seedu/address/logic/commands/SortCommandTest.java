@@ -2,9 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.logic.commands.SortCommand.MESSAGE_ARGUMENTS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -18,19 +21,35 @@ import seedu.address.model.UserPrefs;
  */
 public class SortCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
+    private Model expectedModel;
+    private SortCommand sortCommand;
+    final String filterType = "name";
 
     @Test
-    public void execute() throws Exception {
-        final String filterType = "name";
+    public void execute_unsortedList_becomesSorted() {
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs());
 
-        assertCommandFailure(prepareCommand(filterType), model, String.format(MESSAGE_ARGUMENTS, filterType));
+        sortCommand = prepareCommand(filterType);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+
+    }
+
+    @Test
+    public void execute_filteredList_showsEverything() {
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs());
+        showFirstPersonOnly(model);
+
+        sortCommand = prepareCommand(filterType);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
+
     }
 
     @Test
     public void equals() {
 
-        final String filterType = "name";
         final SortCommand standardCommand = new SortCommand(filterType);
 
         // same filterTypes -> returns true

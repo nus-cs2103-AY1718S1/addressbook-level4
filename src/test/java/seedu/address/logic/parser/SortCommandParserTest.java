@@ -21,7 +21,8 @@ public class SortCommandParserTest {
         SortCommand expectedCommand = new SortCommand(validFilterType_Name);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // FilterType: Default
+        // FilterType: Default.
+        // TODO: Implement more sorting methods
         final String validFilterType_Default = "default";
         userInput = SortCommand.COMMAND_WORD + " " + validFilterType_Default;
         expectedCommand = new SortCommand(validFilterType_Default);
@@ -38,8 +39,7 @@ public class SortCommandParserTest {
         final String invalidFilterType = "abc";
         String userInput = SortCommand.COMMAND_WORD + " " + invalidFilterType;
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
-
-        // nothing at all
+        // FilterType is not name or default
         assertParseFailure(parser, userInput, expectedMessage);
     }
 }

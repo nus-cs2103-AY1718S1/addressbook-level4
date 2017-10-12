@@ -24,6 +24,7 @@ public class SortCommand extends Command {
 
     public SortCommand (String filterType){
         //Filter type can be null to signify default listing
+        //Todo: Allow sort to accept different parameters for filter types (eg. First Name, Last Name)
         this.filterType = filterType;
     }
 
