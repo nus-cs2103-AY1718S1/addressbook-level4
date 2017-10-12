@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.util.PersonSortingUtil.generateComparator;
 
 import java.util.Comparator;
 import java.util.List;
@@ -29,8 +30,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    private SortedList<ReadOnlyPerson> sortedPersons;
+    private final SortedList<ReadOnlyPerson> sortedPersons;
     private Comparator<ReadOnlyPerson> comparator;
+    private Predicate<ReadOnlyPerson> predicate;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -98,13 +100,14 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getLatestPersonList() {
-        return FXCollections.unmodifiableObservableList(sortedPersons);
+        return FXCollections.unmodifiableObservableList(sortedPersons.filtered(predicate));
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        this.predicate = predicate;
     }
 
     @Override
