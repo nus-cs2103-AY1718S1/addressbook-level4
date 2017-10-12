@@ -11,26 +11,26 @@ http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[S
 
 == Project Team
 
-=== John Doe
+=== Srivatsa
 image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<srivatsa#, portfolio>>]
 
 Role: Project Advisor
 
 '''
 
-=== John Roe
+=== Liu Hang
 image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/lejolly[github]] [<<liuhang#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: UI
 
 '''
 
-=== Johnny Doe
+=== Martyn
 image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/yijinl[github]] [<<martyn#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Data
@@ -39,7 +39,7 @@ Responsibilities: Data
 
 === Fong Wei Zheng
 image::m133225.jpg[width="150", align="left"]
-{empty}[https://github.com/fongwz[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/fongwz[github]] [<<weizheng#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
