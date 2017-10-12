@@ -133,6 +133,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedPerson)
+                throws DuplicateMeetingException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;

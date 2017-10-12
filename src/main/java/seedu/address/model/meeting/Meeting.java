@@ -68,7 +68,7 @@ public class Meeting implements ReadOnlyMeeting {
 
     public LocalDateTime getActualDate(String date){
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss z yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
         return localDateTime;
     }

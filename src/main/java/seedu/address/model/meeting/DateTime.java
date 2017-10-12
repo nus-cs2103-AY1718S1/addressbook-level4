@@ -33,14 +33,6 @@ public class DateTime {
         if (!isValidDateTime(date)) {
             throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
         }
-        SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy HH:mm");
-        Date newDate;
-        try{
-            newDate = df.parse(date);
-            date = newDate.toString();
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
         this.value = date;
     }
 

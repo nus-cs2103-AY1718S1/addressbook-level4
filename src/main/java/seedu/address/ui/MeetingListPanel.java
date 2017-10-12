@@ -16,7 +16,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MeetingPanelSelectionChangedEvent;
 import seedu.address.model.meeting.ReadOnlyMeeting;
-
+/**
+ * Panel containing the list of meetings.
+ */
 public class MeetingListPanel extends UiPart<Region> {
     private static final String FXML = "MeetingListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(MeetingListPanel.class);

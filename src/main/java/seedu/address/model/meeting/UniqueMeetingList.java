@@ -47,7 +47,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throw new DuplicateMeetingException();
         }
         internalList.add(new Meeting(toAdd));
-        internalList.sort((m1,m2)-> m1.getActualDate(m1.getDate().toString())
+        internalList.sort(( m1, m2 )-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
