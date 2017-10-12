@@ -163,6 +163,25 @@ public class MainWindow extends UiPart<Region> {
     }
     //@@author
 
+    /**
+     * Fills up the placeholders of PersonListPanel with the given list name.
+     * Should only display welcome page without contacts.
+     */
+    void fillInnerPartsWithIndicatedList(String listName) {
+
+        switch(listName) {
+
+        case "blacklist":
+            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
+            break;
+
+        default:
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        }
+
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
     void hide() {
         primaryStage.hide();
     }

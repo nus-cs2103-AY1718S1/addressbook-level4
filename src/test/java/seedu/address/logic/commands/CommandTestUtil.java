@@ -128,6 +128,17 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstBlacklistedPersonOnly(Model model) {
+        ReadOnlyPerson person = model.getAddressBook().getBlacklistedPersonList().get(0);
+        final String[] splitName = person.getName().fullName.split("\\s+");
+        model.updateFilteredBlacklistedPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredBlacklistedPersonList().size() == 1;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
