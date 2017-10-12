@@ -209,6 +209,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save a backup of the Address Book and restore from a backup file.
 
 === Common classes
 
