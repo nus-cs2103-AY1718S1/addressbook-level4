@@ -168,12 +168,12 @@ Locates the 2nd person's address in the address book.
 `select 1` +
 Locates the 1st person's address in the results of the `find` command.
 
-=== Getting email addresses : 'copy' [Coming in v2.0]
+=== Getting email addresses : `copy` [Coming in v2.0]
 
-Alias: 'c'
+Alias: `c`
 
 Outputs to console the email addresses of all person(s) selected by index number(s). +
-Format: 'copy INDEX [OTHER INDICES...]'
+Format: `copy INDEX [OTHER INDICES...]`
 
 ****
 * Copies email addresses of people at the specified `INDEX`.
@@ -184,10 +184,10 @@ Format: 'copy INDEX [OTHER INDICES...]'
 
 Examples:
 
-* 'copy 1' +
-Outputs the 1st person's email address in console: 'johndoe@example.com'
-* 'copy 1 4 5' +
-Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: 'a@a.com; d@d.com; e@e.com'
+* `copy 1` +
+Outputs the 1st person's email address in console: `johndoe@example.com`
+* `copy 1 4 5` +
+Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 
 === Listing entered commands : `history`
 
