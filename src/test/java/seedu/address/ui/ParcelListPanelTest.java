@@ -27,10 +27,10 @@ public class ParcelListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
-        uiPartRule.setUiPart(personListPanel);
+        ParcelListPanel parcelListPanel = new ParcelListPanel(TYPICAL_PERSONS);
+        uiPartRule.setUiPart(parcelListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
+        personListPanelHandle = new PersonListPanelHandle(getChildNode(parcelListPanel.getRoot(),
                 PersonListPanelHandle.PERSON_LIST_VIEW_ID));
     }
 

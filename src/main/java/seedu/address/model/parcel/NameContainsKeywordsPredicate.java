@@ -16,9 +16,9 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyParcel> 
     }
 
     @Override
-    public boolean test(ReadOnlyParcel person) {
+    public boolean test(ReadOnlyParcel parcel) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(parcel.getName().fullName, keyword));
     }
 
     @Override

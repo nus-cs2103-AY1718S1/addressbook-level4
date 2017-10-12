@@ -6,12 +6,12 @@ import seedu.address.ui.ParcelCard;
 /**
  * Represents a selection change in the Parcel List Panel
  */
-public class PersonPanelSelectionChangedEvent extends BaseEvent {
+public class ParcelPanelSelectionChangedEvent extends BaseEvent {
 
 
     private final ParcelCard newSelection;
 
-    public PersonPanelSelectionChangedEvent(ParcelCard newSelection) {
+    public ParcelPanelSelectionChangedEvent(ParcelCard newSelection) {
         this.newSelection = newSelection;
     }
 

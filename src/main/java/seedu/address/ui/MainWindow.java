@@ -41,7 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ParcelListPanel parcelListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -129,8 +129,8 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredParcelList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        parcelListPanel = new ParcelListPanel(logic.getFilteredParcelList());
+        personListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -205,8 +205,8 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public ParcelListPanel getParcelListPanel() {
+        return this.parcelListPanel;
     }
 
     void releaseResources() {

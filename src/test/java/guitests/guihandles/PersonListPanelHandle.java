@@ -8,7 +8,7 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.ui.ParcelCard;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code ParcelCard}.
+ * Provides a handle for {@code ParcelListPanel} containing the list of {@code ParcelCard}.
  */
 public class PersonListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
     public static final String PERSON_LIST_VIEW_ID = "#personListView";

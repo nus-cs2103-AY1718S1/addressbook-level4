@@ -14,39 +14,39 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ParcelPanelSelectionChangedEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of parcels.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class ParcelListPanel extends UiPart<Region> {
+    private static final String FXML = "ParcelListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ParcelListPanel.class);
 
     @FXML
-    private ListView<ParcelCard> personListView;
+    private ListView<ParcelCard> parcelListView;
 
-    public PersonListPanel(ObservableList<ReadOnlyParcel> personList) {
+    public ParcelListPanel(ObservableList<ReadOnlyParcel> parcelList) {
         super(FXML);
-        setConnections(personList);
+        setConnections(parcelList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyParcel> personList) {
+    private void setConnections(ObservableList<ReadOnlyParcel> parcelList) {
         ObservableList<ParcelCard> mappedList = EasyBind.map(
-                personList, (person) -> new ParcelCard(person, personList.indexOf(person) + 1));
-        personListView.setItems(mappedList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+                parcelList, (parcel) -> new ParcelCard(parcel, parcelList.indexOf(parcel) + 1));
+        parcelListView.setItems(mappedList);
+        parcelListView.setCellFactory(listView -> new ParcelListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        personListView.getSelectionModel().selectedItemProperty()
+        parcelListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in parcel list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new ParcelPanelSelectionChangedEvent(newValue));
                     }
                 });
     }
@@ -56,8 +56,8 @@ public class PersonListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            personListView.scrollTo(index);
-            personListView.getSelectionModel().clearAndSelect(index);
+            parcelListView.scrollTo(index);
+            parcelListView.getSelectionModel().clearAndSelect(index);
         });
     }
 
@@ -70,17 +70,17 @@ public class PersonListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ParcelCard}.
      */
-    class PersonListViewCell extends ListCell<ParcelCard> {
+    class ParcelListViewCell extends ListCell<ParcelCard> {
 
         @Override
-        protected void updateItem(ParcelCard person, boolean empty) {
-            super.updateItem(person, empty);
+        protected void updateItem(ParcelCard parcel, boolean empty) {
+            super.updateItem(parcel, empty);
 
-            if (empty || person == null) {
+            if (empty || parcel == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(person.getRoot());
+                setGraphic(parcel.getRoot());
             }
         }
     }
