@@ -109,14 +109,10 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
-        //Date of borrowing cannot be edited.
-        DateBorrow notUpdatedDateBorrow = personToEdit.getDateBorrow();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        Person editedPerson = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
                 updatedDebt, updatedTags);
-        editedPerson.setDateBorrow(notUpdatedDateBorrow);
-        return editedPerson;
     }
 
     @Override

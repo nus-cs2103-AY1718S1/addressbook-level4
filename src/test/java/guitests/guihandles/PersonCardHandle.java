@@ -18,7 +18,6 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String DISPLAY_POSTAL_CODE_FIELD_ID = "#displayPostalCode";
     private static final String DEBT_FIELD_ID = "#debt";
-    private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
     private static final String TAGS_FIELD_ID = "#tags";
 
@@ -29,7 +28,6 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label emailLabel;
     private final Label displayPostalCodeLabel;
     private final Label debtLabel;
-    private final Label postalCodeLabel;
     private final Label dateBorrowLabel;
     private final List<Label> tagLabels;
 
@@ -43,7 +41,6 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.displayPostalCodeLabel = getChildNode(DISPLAY_POSTAL_CODE_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
-        this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
