@@ -14,7 +14,7 @@ import seedu.address.model.parcel.Phone;
 public class SampleDataUtilTest {
 
     @Test
-    public void getSamplePersons() throws Exception {
+    public void getSampleParcels() throws Exception {
         Parcel[] parcels = SampleDataUtil.getSampleParcels();
         Parcel[] expectedParcels = new Parcel[]{
             new Parcel(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
@@ -35,11 +35,11 @@ public class SampleDataUtilTest {
 
         assertEquals(parcels.length, expectedParcels.length);
         for (int i = 0; i < parcels.length; i++) {
-            testPersonEqualExpectedPerson(parcels[i], expectedParcels[i]);
+            testParcelEqualExpectedParcel(parcels[i], expectedParcels[i]);
         }
     }
 
-    public void testPersonEqualExpectedPerson(Parcel parcel, Parcel expectedParcel) {
+    public void testParcelEqualExpectedParcel(Parcel parcel, Parcel expectedParcel) {
         assertEquals(parcel, expectedParcel);
     }
 
