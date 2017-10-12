@@ -1,8 +1,7 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +50,20 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
-        List<Person> newBlacklistedPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
+        List<Person> newBlacklistedPersons = Arrays.asList(new Person(ARCHANA));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        AddressBookStub newData = new AddressBookStub(newPersons, newBlacklistedPersons, newTags);
+
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+
+    @Test
+    public void resetData_withDuplicateBlacklistedPersons_throwsAssertionError() {
+        // Repeat ALICE twice
+        List<Person> newPersons = Arrays.asList(new Person(SIRISHA));
+        List<Person> newBlacklistedPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
+        List<Tag> newTags = new ArrayList<>(SIRISHA.getTags());
         AddressBookStub newData = new AddressBookStub(newPersons, newBlacklistedPersons, newTags);
 
         thrown.expect(AssertionError.class);
@@ -88,7 +99,7 @@ public class AddressBookTest {
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<?
                 extends ReadOnlyPerson> blacklistedPersons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
-            this.blackListedPersons.setAll(blackListedPersons);
+            this.blackListedPersons.setAll(blacklistedPersons);
             this.tags.setAll(tags);
         }
 

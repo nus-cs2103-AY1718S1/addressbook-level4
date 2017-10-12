@@ -128,15 +128,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_login() throws Exception {
-        Username username = new Username("username");
-        Password password = new Password("password");
-        LoginCommand command = (LoginCommand) parser.parseCommand(
-                LoginCommand.COMMAND_WORD + " " + username.toString() + " " + password.toString());
-        assertEquals(new LoginCommand(username, password), command);
-    }
-
-    @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
