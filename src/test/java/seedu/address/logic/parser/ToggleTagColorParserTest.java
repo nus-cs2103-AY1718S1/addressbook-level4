@@ -14,10 +14,10 @@ public class ToggleTagColorParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private ToggleTagColorParser parser = new ToggleTagColorParser();
-    
     @Test
     public void parseTestInputs() throws Exception {
+
+        ToggleTagColorParser parser = new ToggleTagColorParser();
 
         ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand(true, "", "");
         ToggleTagColorCommand expectedOff = new ToggleTagColorCommand(false, "", "");
