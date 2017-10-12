@@ -41,12 +41,12 @@ image::Ui_help.png[width="790"]
 * *`exit`* : exits the app
 .  The following is an example of a successful execution of commands.
 +
-image::Ui_success.png[width="790"]
+image::Ui_success.PNG[width="790"]
 +
 
 .  The following is an example of a unsuccessful execution of commands.
 +
-image::Ui_short_error.png[width="790"]
+image::Ui_short_error.PNG[width="790"]
 +
 .  Refer to the link:#features[Features] section below for details of each command.
 
