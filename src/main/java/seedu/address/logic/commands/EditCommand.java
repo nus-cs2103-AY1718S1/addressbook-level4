@@ -105,7 +105,7 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
-        Website updatedWebsite = personToEdit.getWebsite();
+        Website updatedWebsite = editPersonDescriptor.getWebsite().orElse(personToEdit.getWebsite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail,
@@ -201,7 +201,7 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setWebsite(Website website) {
-            if (website.value != null) {
+            if (website.hasWebsite()) {
                 this.website = website;
             }
         }
