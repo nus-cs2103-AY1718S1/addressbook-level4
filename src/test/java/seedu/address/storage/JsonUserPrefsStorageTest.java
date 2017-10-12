@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -101,7 +102,7 @@ public class JsonUserPrefsStorageTest {
         assertFalse(upUnderTest.equals(1));
 
         // null -> returns false
-        assertFalse(upUnderTest.equals(null));
+        assertNotNull(upUnderTest);
 
     }
 

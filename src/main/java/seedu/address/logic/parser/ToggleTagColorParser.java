@@ -10,10 +10,10 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
 
     private static final String RANDOM_KEY_WORD = "random";
     private static final String OFF_KEY_WORD = "off";
-    private boolean isOn;
 
     @Override
     public ToggleTagColorCommand parse(String userInput) throws ParseException {
+        boolean isOn;
         String cleanUserInput;
         cleanUserInput = userInput.trim();
         String[] args = cleanUserInput.split("\\s+");
