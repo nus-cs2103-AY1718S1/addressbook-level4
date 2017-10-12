@@ -216,7 +216,9 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    public EventListPanel getEventListPanel() { return this.eventListPanel; }
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
+    }
 
     void releaseResources() {
         browserPanel.freeResources();
