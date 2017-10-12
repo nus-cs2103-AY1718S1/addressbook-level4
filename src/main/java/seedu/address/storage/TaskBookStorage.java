@@ -31,16 +31,16 @@ public interface TaskBookStorage {
 
     /**
      * Saves the given {@link ReadOnlyTaskBook} to the storage.
-     * @param addressBook cannot be null.
+     * @param taskBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveTaskBook(ReadOnlyTaskBook addressBook) throws IOException;
+    void saveTaskBook(ReadOnlyTaskBook taskBook) throws IOException;
 
     /**
      * @see #saveTaskBook(ReadOnlyTaskBook)
      */
     void saveTaskBook(ReadOnlyTaskBook taskBook, String filePath) throws IOException;
 
-    void backupTaskBook(ReadOnlyTaskBook addressBook) throws IOException;
+    void backupTaskBook(ReadOnlyTaskBook taskBook) throws IOException;
 
 }

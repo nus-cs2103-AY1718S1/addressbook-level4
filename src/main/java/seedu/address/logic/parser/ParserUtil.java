@@ -53,6 +53,17 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> stringOptional} into an optional of the same type
+     * @param stringOptional , the optional passed in
+     * @return optional of String type
+     * @throws IllegalValueException
+     */
+    public static Optional<String> parseString(Optional<String> stringOptional) throws IllegalValueException {
+        requireNonNull(stringOptional);
+        return Optional.of(stringOptional.get());
+    }
+
+    /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
