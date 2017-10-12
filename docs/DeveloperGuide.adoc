@@ -745,13 +745,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |set the style and size of the font |customize to my preference
 
-|`* *` |user |have different input languages |input different languages to my contacts
+|`* *` |user |have different input languages |input different languages to my contacts.
 
 |`* *` |user |be able to open and close panels in UI |hide them when not needed.
 
-|`* *` |user |have important/favorite persons at top of the list |access to their details faster
+|`* *` |user |have important/favorite persons at top of the list |access to their details faster.
 
-|`* *` |user |to delete a group of people using tag |save time from deleting one by one
+|`* *` |user |to delete a group of people using tag |save time from deleting one by one.
 
 |`* *` |user |to see the different commands in a UI panel |refer to the command format conveniently
 
