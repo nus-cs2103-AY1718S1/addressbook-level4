@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,18 +15,26 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of persons that enforces uniqueness between its elements and sorted order (by full name),
+ * does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniquePersonList implements Iterable<Person> {
+public class SortedUniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+
+    /**
+     * Sorts the list of unique persons
+     */
+    public void sort() {
+        internalList.sort(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
+    }
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -36,7 +45,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Adds a person to the list.
+     * Adds a person to the list and sorts the updated list.
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
@@ -46,6 +55,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+        sort();
     }
 
     /**
@@ -68,6 +78,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, new Person(editedPerson));
+        sort();
     }
 
     /**
@@ -84,12 +95,13 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setPersons(SortedUniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
+        sort();
     }
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
-        final UniquePersonList replacement = new UniquePersonList();
+        final SortedUniquePersonList replacement = new SortedUniquePersonList();
         for (final ReadOnlyPerson person : persons) {
             replacement.add(new Person(person));
         }
@@ -111,8 +123,8 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                || (other instanceof SortedUniquePersonList // instanceof handles nulls
+                        && this.internalList.equals(((SortedUniquePersonList) other).internalList));
     }
 
     @Override
