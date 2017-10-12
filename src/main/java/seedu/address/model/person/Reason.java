@@ -9,6 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Reason {
 
+    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person reason can take any values, and it should not be blank";
 

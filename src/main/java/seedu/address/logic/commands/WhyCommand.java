@@ -7,6 +7,7 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Reason;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
@@ -24,7 +25,7 @@ public class WhyCommand extends Command {
     public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
+    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in \n%2$s";
 
     private final Index targetIndex;
 
@@ -47,6 +48,8 @@ public class WhyCommand extends Command {
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
         Name name = personToDelete.getName();
         Address address = personToDelete.getAddress();
-        return new CommandResult(String.format(SHOWING_WHY_MESSAGE, name, address));
+        String reason = personToDelete.getReason();
+        //return new CommandResult(String.format(SHOWING_WHY_MESSAGE, name, address));
+        return new CommandResult(reason);
     }
 }
