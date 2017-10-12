@@ -14,7 +14,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 public class EventBuilder {
 
     public static final String DEFAULT_EVENT_NAME = "Hack Your Way 2017";
-    public static final String DEFAULT_TIME = "12:00am";
+    public static final String DEFAULT_TIME = "25102010 12:00am";
     public static final String DEFAULT_VENUE = "123, Clementi West Ave 6, #08-123";
 
     private Event event;
@@ -61,13 +61,13 @@ public class EventBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Event} that we are building.
+     * Sets the {@code Date Time} of the {@code Event} that we are building.
      */
     public EventBuilder withDateTime(String time) {
         try {
             this.event.setDateTime(new EventTime(time));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Date & Time are expected to be unique.");
+            throw new IllegalArgumentException("Date and Time are expected to be unique.");
         }
         return this;
     }
