@@ -30,8 +30,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         this.backupFilePath = BACKUP_FILE_PREFIX + filePath;
     }
 
-    public String getAddressBookFilePath()
-    {
+    public String getAddressBookFilePath() {
         return filePath;
     }
 
