@@ -27,7 +27,6 @@ public class SwitchThemeCommand extends Command {
     public static final String MESSAGE_SWITCH_THEME_SUCCESS = "Switched Theme: %1$s";
 
     private final Index targetIndex;
-    private MainWindow mainWindow;
 
     public SwitchThemeCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
