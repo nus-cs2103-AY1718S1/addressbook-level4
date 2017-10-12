@@ -85,13 +85,13 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code PostalCode} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withPostalCode(String postalCode) {
         try {
             ParserUtil.parsePostalCode(Optional.of(postalCode)).ifPresent(descriptor::setPostalCode);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("postalcode is expected to be unique.");
+            throw new IllegalArgumentException("postal code is expected to be unique.");
         }
         return this;
     }
