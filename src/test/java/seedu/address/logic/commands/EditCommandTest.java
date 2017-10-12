@@ -10,9 +10,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
+import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -27,8 +27,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.EditParcelDescriptorBuilder;
+import seedu.address.testutil.ParcelBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -39,9 +39,9 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Parcel editedParcel = new PersonBuilder().build();
-        EditCommand.EditParcelDescriptor descriptor = new EditPersonDescriptorBuilder(editedParcel).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        Parcel editedParcel = new ParcelBuilder().build();
+        EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder(editedParcel).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
 
@@ -56,11 +56,11 @@ public class EditCommandTest {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredParcelList().size());
         ReadOnlyParcel lastPerson = model.getFilteredParcelList().get(indexLastPerson.getZeroBased());
 
-        PersonBuilder personInList = new PersonBuilder(lastPerson);
+        ParcelBuilder personInList = new ParcelBuilder(lastPerson);
         Parcel editedParcel = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
-        EditCommand.EditParcelDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+        EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
@@ -74,8 +74,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditCommand.EditParcelDescriptor());
-        ReadOnlyParcel editedPerson = model.getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL, new EditCommand.EditParcelDescriptor());
+        ReadOnlyParcel editedPerson = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedPerson);
 
@@ -88,10 +88,10 @@ public class EditCommandTest {
     public void execute_filteredList_success() throws Exception {
         showFirstPersonOnly(model);
 
-        ReadOnlyParcel personInFilteredList = model.getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Parcel editedParcel = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+        ReadOnlyParcel personInFilteredList = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        Parcel editedParcel = new ParcelBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL,
+                new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
 
@@ -103,9 +103,9 @@ public class EditCommandTest {
 
     @Test
     public void execute_duplicatePersonUnfilteredList_failure() {
-        Parcel firstParcel = new Parcel(model.getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        EditParcelDescriptor descriptor = new EditPersonDescriptorBuilder(firstParcel).build();
-        EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
+        Parcel firstParcel = new Parcel(model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased()));
+        EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder(firstParcel).build();
+        EditCommand editCommand = prepareCommand(INDEX_SECOND_PARCEL, descriptor);
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PARCEL);
     }
@@ -115,9 +115,9 @@ public class EditCommandTest {
         showFirstPersonOnly(model);
 
         // edit parcel in filtered list into a duplicate in address book
-        ReadOnlyParcel personInList = model.getAddressBook().getParcelList().get(INDEX_SECOND_PERSON.getZeroBased());
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder(personInList).build());
+        ReadOnlyParcel personInList = model.getAddressBook().getParcelList().get(INDEX_SECOND_PARCEL.getZeroBased());
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL,
+                new EditParcelDescriptorBuilder(personInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PARCEL);
     }
@@ -125,7 +125,7 @@ public class EditCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredParcelList().size() + 1);
-        EditCommand.EditParcelDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
@@ -138,23 +138,23 @@ public class EditCommandTest {
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showFirstPersonOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundIndex = INDEX_SECOND_PARCEL;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PARCEL, DESC_AMY);
 
         // same values -> returns true
         EditParcelDescriptor copyDescriptor = new EditCommand.EditParcelDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PARCEL, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -167,10 +167,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PARCEL, DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PARCEL, DESC_BOB)));
     }
 
     /**

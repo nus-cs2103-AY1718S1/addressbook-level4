@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
+import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -29,8 +29,8 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PARCEL);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, personToDelete);
 
@@ -52,8 +52,8 @@ public class DeleteCommandTest {
     public void execute_validIndexFilteredList_success() throws Exception {
         showFirstPersonOnly(model);
 
-        ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PARCEL);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, personToDelete);
 
@@ -68,7 +68,7 @@ public class DeleteCommandTest {
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstPersonOnly(model);
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundIndex = INDEX_SECOND_PARCEL;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().size());
 
@@ -79,14 +79,14 @@ public class DeleteCommandTest {
 
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PARCEL);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PARCEL);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PARCEL);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +31,9 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.parcel.NameContainsKeywordsPredicate;
 import seedu.address.model.parcel.Parcel;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.EditParcelDescriptorBuilder;
+import seedu.address.testutil.ParcelBuilder;
+import seedu.address.testutil.ParcelUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -43,8 +43,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Parcel parcel = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(parcel));
+        Parcel parcel = new ParcelBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(ParcelUtil.getAddCommand(parcel));
         assertEquals(new AddCommand(parcel), command);
     }
 
@@ -57,17 +57,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_PARCEL), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Parcel parcel = new PersonBuilder().build();
-        EditParcelDescriptor descriptor = new EditPersonDescriptorBuilder(parcel).build();
+        Parcel parcel = new ParcelBuilder().build();
+        EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder(parcel).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(parcel));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST_PARCEL.getOneBased() + " " + ParcelUtil.getParcelDetails(parcel));
+        assertEquals(new EditCommand(INDEX_FIRST_PARCEL, descriptor), command);
     }
 
     @Test
@@ -112,8 +112,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST_PARCEL), command);
     }
 
     @Test

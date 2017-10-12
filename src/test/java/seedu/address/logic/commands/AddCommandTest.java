@@ -24,7 +24,7 @@ import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.ParcelBuilder;
 
 public class AddCommandTest {
 
@@ -40,7 +40,7 @@ public class AddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Parcel validParcel = new PersonBuilder().build();
+        Parcel validParcel = new ParcelBuilder().build();
 
         CommandResult commandResult = getAddCommandForPerson(validParcel, modelStub).execute();
 
@@ -51,7 +51,7 @@ public class AddCommandTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Parcel validParcel = new PersonBuilder().build();
+        Parcel validParcel = new ParcelBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PARCEL);
@@ -61,8 +61,8 @@ public class AddCommandTest {
 
     @Test
     public void equals() {
-        Parcel alice = new PersonBuilder().withName("Alice").build();
-        Parcel bob = new PersonBuilder().withName("Bob").build();
+        Parcel alice = new ParcelBuilder().withName("Alice").build();
+        Parcel bob = new ParcelBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
