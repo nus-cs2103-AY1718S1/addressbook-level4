@@ -112,6 +112,24 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by address: `address`
+
+Finds persons whose address contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Geylang` will match `geylang`
+* Only full words will be matched e.g. `Gey` will not match `Geylang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Geylang` will return `Geylang Street 5`, `Geylang Street 2`
+****
+
+Examples:
+
+* `address Bukit` +
+Returns names of addresses containing `Bukit Batok` and `Bukit Timah`
+* `find street` +
+Returns any person having addresses with `street`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -163,6 +181,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
+
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
