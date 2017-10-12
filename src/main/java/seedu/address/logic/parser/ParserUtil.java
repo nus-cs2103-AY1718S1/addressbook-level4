@@ -76,16 +76,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> dateBorrow} into an {@code Optional<dateBorrow>}
-     * if {@code dateBorrow} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<DateBorrow> parseDateBorrow(Optional<String> dateBorrow) throws IllegalValueException {
-        requireNonNull(dateBorrow);
-        return dateBorrow.isPresent() ? Optional.of(new DateBorrow(dateBorrow.get())) : Optional.empty();
-    }
-
-    /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
