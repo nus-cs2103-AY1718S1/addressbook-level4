@@ -47,7 +47,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
 
-    void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
 
 }
