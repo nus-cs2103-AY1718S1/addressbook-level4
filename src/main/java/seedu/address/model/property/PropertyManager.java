@@ -105,6 +105,16 @@ public class PropertyManager {
         propertyValidationRegex.put(shortName, regex);
     }
 
+    /**
+     * Clears all properties stored in the {@link PropertyManager}.
+     */
+    public static void clearAllProperties() {
+        propertyShortNames.clear();
+        propertyFullNames.clear();
+        propertyConstraintMessages.clear();
+        propertyValidationRegex.clear();
+    }
+
     public static boolean containsShortName(String shortName) {
         return propertyShortNames.contains(shortName);
     }

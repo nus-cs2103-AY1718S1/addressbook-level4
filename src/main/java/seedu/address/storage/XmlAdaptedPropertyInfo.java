@@ -3,6 +3,8 @@ package seedu.address.storage;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 /**
  * JAXB-friendly adapted version of the {@link Property}, stores the general information of each property.
@@ -28,5 +30,9 @@ public class XmlAdaptedPropertyInfo {
         this.fullName = fullName;
         this.message = message;
         this.regex = regex;
+    }
+
+    public void toModelType() throws DuplicatePropertyException {
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
     }
 }
