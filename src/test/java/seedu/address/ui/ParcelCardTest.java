@@ -53,7 +53,7 @@ public class ParcelCardTest extends GuiUnitTest {
         assertTrue(parcelCard.equals(parcelCard));
 
         // null -> returns false
-        assertFalse(parcelCard.equals(null));
+        assertFalse(parcelCard != null);
 
         // different types -> returns false
         assertFalse(parcelCard.equals(0));

@@ -17,6 +17,7 @@ public class PostalCodeTest {
         assertFalse(PostalCode.isValidPostalCode("ss000000")); // prepended by two 's'
         assertFalse(PostalCode.isValidPostalCode("s00000")); // shorter than 6 digits
         assertFalse(PostalCode.isValidPostalCode("s0000000")); // longer than 6 digits
+        assertFalse(PostalCode.isValidPostalCode("s#!@a11")); // random characters in 6 digits
 
         // valid postal code
         assertTrue(PostalCode.isValidPostalCode("s000000"));
