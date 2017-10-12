@@ -39,12 +39,21 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        System.out.println(argumentMultimap.getValue(prefix).isPresent());
-     //   if (ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent()) {
-       //     Name findName = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(args.trim().toString())));
-        }
 
+        try {
+            if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+                return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get().toString())));
+            }
+
+            else if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+                return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(ParserUtil.parseName(argMultimap.getValue(PREFIX_EMAIL)).get().toString())));
+            }
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(args)));
+    }
 
 
 

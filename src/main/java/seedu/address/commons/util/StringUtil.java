@@ -15,14 +15,14 @@ public class StringUtil {
      * Returns true if the {@code sentence} contains the {@code word}.
      *   Ignores case, but a full word match is required.
      *   <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       containsNameIgnoreCase("ABc def", "abc") == true
+     *       containsNameIgnoreCase("ABc def", "DEF") == true
+     *       containsNameIgnoreCase("ABc def", "AB") == false //not a full word match
      *       </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsWordIgnoreCase(String sentence, String word) {
+    public static boolean containsNameIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 
@@ -38,6 +38,35 @@ public class StringUtil {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code emailsentence} contains the {@code email}.
+     *   Ignores case, but a full word match is required.
+     *   <br>examples:<pre>
+     *       containsEmailgnoreCase("abc@example.com", "e/example") == true
+     *       containsEmailgnoreCase(("abc@example.com", "example") == false
+     *       containsEmailgnoreCase(("abc@example.com", "e/EXAMPLE") == true//Case insensitive
+     *       </pre>
+     * @param emailSentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a email domain with .com
+     */
+    public static boolean containsEmailIgnoreCase(String emailSentence, String word) {
+        requireNonNull(emailSentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String preppedEmailSentence = emailSentence.substring(emailSentence.indexOf('@') + 1);
+
+
+        if (preppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase())) {
+            return true;
+        }
+
         return false;
     }
 
