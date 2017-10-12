@@ -3,8 +3,10 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -37,6 +39,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> oldPersonList = model.getFilteredPersonList();
         try {
             for (Tag tag : tagsToRemove) {
                 model.removeTag(tag);
@@ -45,6 +48,10 @@ public class RemoveTagCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
+        }
+        List<ReadOnlyPerson> newPersonList = model.getFilteredPersonList();
+        if (oldPersonList.equals(newPersonList)) {
+            return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
         }
 
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));

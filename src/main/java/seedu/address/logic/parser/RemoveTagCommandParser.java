@@ -28,7 +28,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
         }
 
-        String[] tagKeywords = trimmedArgs.toLowerCase().split("\\s+");
+        String[] tagKeywords = trimmedArgs.split("\\s+");
 
         for (int i = 0; i < tagKeywords.length; i++) {
             try {
