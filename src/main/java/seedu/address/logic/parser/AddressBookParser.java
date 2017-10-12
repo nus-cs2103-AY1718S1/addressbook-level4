@@ -17,6 +17,8 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -48,44 +50,64 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
+        case AddCommand.COMMAND_ALIAS:
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        case EditCommand.COMMAND_ALIAS:
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        case SelectCommand.COMMAND_ALIAS:
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
+        case DeleteCommand.COMMAND_ALIAS:
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case ClearCommand.COMMAND_ALIAS:
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        case FindCommand.COMMAND_ALIAS:
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        case ListCommand.COMMAND_ALIAS:
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        case RemoveTagCommand.COMMAND_WORD:
+            return new RemoveTagCommand(arguments);
+
+        case HistoryCommand.COMMAND_ALIAS:
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
+        //no shortcut for exit
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
+        //no shortcut for help
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case UndoCommand.COMMAND_ALIAS:
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
+        case RedoCommand.COMMAND_ALIAS:
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
+        case RemarkCommand.COMMAND_WORD:
+            return new RemarkCommandParser().parse(arguments);
+
         default:
+
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+
         }
     }
 
