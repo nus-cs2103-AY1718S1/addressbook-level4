@@ -378,7 +378,7 @@ Coming in v2.0
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` (`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague pic/C:\Users\User\Documents\mypic.jpg`
 * *Clear* : `clear` (`clr`)
-* *Delete* : `delete INDEX` (`del INDEX`) or `delete selected` + 
+* *Delete* : `delete INDEX` (`del INDEX`) or `delete selected` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pic/PICTUREPATH] [link/LINK]... [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
@@ -387,8 +387,7 @@ e.g. `find James Jake`
 * *List* : `list` (`ls`)
 * *Help* : `help`
 * *Select* : `select INDEX` (also `select me`) +
-e.g.: 
-`select 2`, `select all` +
+e.g.: `select 2`, `select all` +
 `select me`
 * *Group* : `group n/NAME INDEX...` +
 e.g.: `group n/Family 2 3`
