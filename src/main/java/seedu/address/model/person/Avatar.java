@@ -3,14 +3,15 @@ package seedu.address.model.person;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
+import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Avatar {
 
     public final static String DEFAULT_AVATAR_IMAGE_PATH = "/images/generic_avatar.png";
+    public final static String AVATARS_DIRECTORY = "/images/avatars/";
     public final static String MESSAGE_AVATAR_CONSTRAINTS = "File path provided must point to a valid, readable image.";
 
     private String avatarFilePath;
@@ -25,8 +26,8 @@ public class Avatar {
     }
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
-        if(validFile(avatarFilePath)) {
-            this.avatarFilePath = avatarFilePath;
+        this.avatarFilePath = AVATARS_DIRECTORY + avatarFilePath;
+        if(validFile(this.avatarFilePath)) {
             Image imgObj = new Image(this.avatarFilePath);
             this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
         } else {
@@ -43,7 +44,7 @@ public class Avatar {
     }
 
     public boolean validFile(String avatarFilePath) {
-        File f = new File(avatarFilePath);
+        File f = new File(MainApp.class.getResource(avatarFilePath).getFile());
         if (f.exists() && f.canRead()) {
             return true;
         }

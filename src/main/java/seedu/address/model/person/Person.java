@@ -42,6 +42,19 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
+    public Person(Name name, Phone phone, Email email, Address address, Avatar avatar, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        // Use default avatar image
+        System.out.println("Storing custom image at path: " + avatar.getAvatarFilePath());
+        this.avatar = new SimpleObjectProperty<>(avatar);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
