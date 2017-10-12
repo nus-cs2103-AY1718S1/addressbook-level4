@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -56,8 +56,9 @@ Format: `help`
 
 === Adding a person: `add`
 
+`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -65,7 +66,7 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager pr/L p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
@@ -74,8 +75,9 @@ Format: `list`
 
 === Editing a person : `edit`
 
+`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -212,6 +214,62 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Sorting all entries : `sort`
+
+`Coming in v2.0` +
+Sorts list by name or priority. +
+Format: `sort [NAME_OR_PRIORITY]`
+
+Examples:
+* `sort name`
+
+* `sort priority`
+
+=== Adding notes to persons : `note`
+
+`Coming in v2.0` +
+Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
+Format: `note [PERSON] [STRING]`
+
+Examples:
+* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
+
+=== View all persons with a specific tag : `tag`
+
+`Coming in v2.0` +
+Displays a list of all persons with a specific tag. +
+Format: `tag [TAG]`
+
+Examples:
+* `tag friend`
+
+=== View all persons from a specific company : `company`
+
+`Coming in v2.0` +
+Displays a list of all persons from a specific company. +
+Format: `company [COMPANY]`
+
+Examples:
+* `company ABC Foods`
+
+=== View a person's address on Google Maps within the app : `address`
+
+`Coming in v2.0` +
+Searches for the person's address on Google Maps and displays the result within the app. +
+Format: `address [PERSON]`
+
+Examples:
+* `address John Doe`
+
+=== Send an email to a person : `email`
+
+`Coming in v2.0` +
+Opens the user's default email client loaded with the person's email in the To: field. +
+Format: `email [PERSON]`
+
+Examples:
+* `email John Doe`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -234,8 +292,8 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/ABC Foods po/CEO pr/HIGH t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -250,3 +308,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Sort* : `sort`
+* *Note* : `note`
+* *View tag* : `tag`
+* *View company* : `company`
+* *View address* : `address`
+* *Email* : `email`
