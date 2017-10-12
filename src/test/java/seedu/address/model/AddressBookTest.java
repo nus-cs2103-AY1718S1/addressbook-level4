@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
 import static seedu.address.testutil.TypicalEvents.EVENT2;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
