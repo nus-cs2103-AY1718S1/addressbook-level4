@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueParcelList persons;
+    private final UniqueParcelList parcels;
     private final UniqueTagList tags;
 
     /*
@@ -35,14 +35,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniqueParcelList();
+        parcels = new UniqueParcelList();
         tags = new UniqueTagList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Parcels and Tags in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -51,8 +51,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<? extends ReadOnlyParcel> persons) throws DuplicateParcelException {
-        this.persons.setParcels(persons);
+    public void setParcels(List<? extends ReadOnlyParcel> parcels) throws DuplicateParcelException {
+        this.parcels.setParcels(parcels);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -65,13 +65,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         try {
-            setPersons(newData.getPersonList());
+            setParcels(newData.getParcelList());
         } catch (DuplicateParcelException e) {
-            assert false : "AddressBooks should not have duplicate persons";
+            assert false : "AddressBooks should not have duplicate parcels";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
-        syncMasterTagListWith(persons);
+        syncMasterTagListWith(parcels);
     }
 
     //// parcel-level operations
@@ -83,13 +83,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateParcelException if an equivalent parcel already exists.
      */
-    public void addPerson(ReadOnlyParcel p) throws DuplicateParcelException {
+    public void addParcel(ReadOnlyParcel p) throws DuplicateParcelException {
         Parcel newParcel = new Parcel(p);
         syncMasterTagListWith(newParcel);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any parcel
         // in the parcel list.
-        persons.add(newParcel);
+        parcels.add(newParcel);
     }
 
     /**
@@ -102,7 +102,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @see #syncMasterTagListWith(Parcel)
      */
-    public void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedReadOnlyParcel)
+    public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedReadOnlyParcel)
             throws DuplicateParcelException, ParcelNotFoundException {
         requireNonNull(editedReadOnlyParcel);
 
@@ -111,7 +111,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any parcel
         // in the parcel list.
-        persons.setParcel(target, editedParcel);
+        parcels.setParcel(target, editedParcel);
     }
 
     /**
@@ -120,8 +120,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - points to a Tag object in the master list
      */
     private void syncMasterTagListWith(Parcel parcel) {
-        final UniqueTagList personTags = new UniqueTagList(parcel.getTags());
-        tags.mergeFrom(personTags);
+        final UniqueTagList parcelTags = new UniqueTagList(parcel.getTags());
+        tags.mergeFrom(parcelTags);
 
         // Create map with values = tag object references in the master list
         // used for checking parcel tag references
@@ -130,26 +130,26 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         // Rebuild the list of parcel tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        parcelTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         parcel.setTags(correctTagReferences);
     }
 
     /**
-     * Ensures that every tag in these persons:
+     * Ensures that every tag in these parcels:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
      *  @see #syncMasterTagListWith(Parcel)
      */
-    private void syncMasterTagListWith(UniqueParcelList persons) {
-        persons.forEach(this::syncMasterTagListWith);
+    private void syncMasterTagListWith(UniqueParcelList parcels) {
+        parcels.forEach(this::syncMasterTagListWith);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws ParcelNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyParcel key) throws ParcelNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeParcel(ReadOnlyParcel key) throws ParcelNotFoundException {
+        if (parcels.remove(key)) {
             return true;
         } else {
             throw new ParcelNotFoundException();
@@ -166,13 +166,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return parcels.asObservableList().size() + " parcels, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getPersonList() {
-        return persons.asObservableList();
+    public ObservableList<ReadOnlyParcel> getParcelList() {
+        return parcels.asObservableList();
     }
 
     @Override
@@ -184,13 +184,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
+                && this.parcels.equals(((AddressBook) other).parcels)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(parcels, tags);
     }
 }

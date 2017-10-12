@@ -49,7 +49,7 @@ public class SampleDataUtil {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Parcel sampleParcel : getSamplePersons()) {
-                sampleAb.addPerson(sampleParcel);
+                sampleAb.addParcel(sampleParcel);
             }
             return sampleAb;
         } catch (DuplicateParcelException e) {

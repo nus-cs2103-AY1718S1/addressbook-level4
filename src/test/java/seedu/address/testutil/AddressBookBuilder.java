@@ -28,7 +28,7 @@ public class AddressBookBuilder {
      */
     public AddressBookBuilder withPerson(ReadOnlyParcel person) {
         try {
-            addressBook.addPerson(person);
+            addressBook.addParcel(person);
         } catch (DuplicateParcelException dpe) {
             throw new IllegalArgumentException("parcel is expected to be unique.");
         }

@@ -67,7 +67,7 @@ public class TypicalPersons {
         AddressBook ab = new AddressBook();
         for (ReadOnlyParcel person : getTypicalPersons()) {
             try {
-                ab.addPerson(person);
+                ab.addParcel(person);
             } catch (DuplicateParcelException e) {
                 assert false : "not possible";
             }

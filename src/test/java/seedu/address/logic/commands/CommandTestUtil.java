@@ -107,7 +107,7 @@ public class CommandTestUtil {
      * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
      */
     public static void showFirstPersonOnly(Model model) {
-        ReadOnlyParcel person = model.getAddressBook().getPersonList().get(0);
+        ReadOnlyParcel person = model.getAddressBook().getParcelList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 

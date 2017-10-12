@@ -29,7 +29,7 @@ public class AddressBookTest {
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getParcelList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
@@ -60,7 +60,7 @@ public class AddressBookTest {
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
+        addressBook.getParcelList().remove(0);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<ReadOnlyParcel> getPersonList() {
+        public ObservableList<ReadOnlyParcel> getParcelList() {
             return persons;
         }
 

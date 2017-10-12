@@ -36,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(this.addressBook.getParcelList());
     }
 
     public ModelManager() {
@@ -61,13 +61,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deletePerson(ReadOnlyParcel target) throws ParcelNotFoundException {
-        addressBook.removePerson(target);
+        addressBook.removeParcel(target);
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addPerson(ReadOnlyParcel person) throws DuplicateParcelException {
-        addressBook.addPerson(person);
+        addressBook.addParcel(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -77,7 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicateParcelException, ParcelNotFoundException {
         requireAllNonNull(target, editedPerson);
 
-        addressBook.updatePerson(target, editedPerson);
+        addressBook.updateParcel(target, editedPerson);
         indicateAddressBookChanged();
     }
 

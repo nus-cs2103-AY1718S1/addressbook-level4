@@ -86,7 +86,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a duplicate parcel except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
-        // AddressBook#addPerson(ReadOnlyParcel)
+        // AddressBook#addParcel(ReadOnlyParcel)
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -122,12 +122,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: filters the parcel list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
-                < getModel().getAddressBook().getPersonList().size();
+                < getModel().getAddressBook().getParcelList().size();
         assertCommandSuccess(IDA);
 
         /* Case: add to empty address book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == 0;
+        assert getModel().getAddressBook().getParcelList().size() == 0;
         assertCommandSuccess(ALICE);
 
         /* Case: add a parcel with tags, command with parameters in random order -> added */

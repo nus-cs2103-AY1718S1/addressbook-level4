@@ -115,7 +115,7 @@ public class EditCommandTest {
         showFirstPersonOnly(model);
 
         // edit parcel in filtered list into a duplicate in address book
-        ReadOnlyParcel personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyParcel personInList = model.getAddressBook().getParcelList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
@@ -140,7 +140,7 @@ public class EditCommandTest {
         showFirstPersonOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());

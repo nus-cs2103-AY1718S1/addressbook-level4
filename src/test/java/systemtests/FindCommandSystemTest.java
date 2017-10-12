@@ -82,7 +82,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find same persons in address book after deleting 1 of them -> 1 parcel found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assert !getModel().getAddressBook().getPersonList().contains(BENSON);
+        assert !getModel().getAddressBook().getParcelList().contains(BENSON);
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL);
@@ -143,7 +143,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find parcel in empty address book -> 0 persons found */
         executeCommand(ClearCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == 0;
+        assert getModel().getAddressBook().getParcelList().size() == 0;
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, DANIEL);

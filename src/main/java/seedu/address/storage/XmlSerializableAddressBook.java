@@ -39,12 +39,12 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
-        parcels.addAll(src.getPersonList().stream().map(XmlAdaptedParcel::new).collect(Collectors.toList()));
+        parcels.addAll(src.getParcelList().stream().map(XmlAdaptedParcel::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getPersonList() {
+    public ObservableList<ReadOnlyParcel> getParcelList() {
         final ObservableList<ReadOnlyParcel> persons = this.parcels.stream().map(p -> {
             try {
                 return p.toModelType();

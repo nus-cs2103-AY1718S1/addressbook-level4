@@ -73,14 +73,14 @@ public class XmlAddressBookStorageTest {
         assertEquals(original, new AddressBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addPerson(new Parcel(HOON));
-        original.removePerson(new Parcel(ALICE));
+        original.addParcel(new Parcel(HOON));
+        original.removeParcel(new Parcel(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Save and read without specifying file path
-        original.addPerson(new Parcel(IDA));
+        original.addParcel(new Parcel(IDA));
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -97,7 +97,7 @@ public class XmlAddressBookStorageTest {
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
         thrown.expect(UnsupportedOperationException.class);
-        addressBook.getPersonList().remove(0);
+        addressBook.getParcelList().remove(0);
     }
 
     @Test

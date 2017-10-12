@@ -40,7 +40,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Parcel parcelInList = new Parcel(model.getAddressBook().getPersonList().get(0));
+        Parcel parcelInList = new Parcel(model.getAddressBook().getParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 

@@ -35,20 +35,20 @@ public class TestUtil {
      * Returns the middle index of the parcel in the {@code model}'s parcel list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getPersonList().size() / 2);
+        return Index.fromOneBased(model.getAddressBook().getParcelList().size() / 2);
     }
 
     /**
      * Returns the last index of the parcel in the {@code model}'s parcel list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getPersonList().size());
+        return Index.fromOneBased(model.getAddressBook().getParcelList().size());
     }
 
     /**
      * Returns the parcel in the {@code model}'s parcel list at {@code index}.
      */
     public static ReadOnlyParcel getPerson(Model model, Index index) {
-        return model.getAddressBook().getPersonList().get(index.getZeroBased());
+        return model.getAddressBook().getParcelList().get(index.getZeroBased());
     }
 }

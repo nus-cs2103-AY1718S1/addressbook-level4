@@ -57,7 +57,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        invalidIndex = getModel().getAddressBook().getPersonList().size();
+        invalidIndex = getModel().getAddressBook().getParcelList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: filtered parcel list, select index within bounds of address book and parcel list -> selected */
@@ -87,7 +87,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == 0;
+        assert getModel().getAddressBook().getParcelList().size() == 0;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
