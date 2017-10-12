@@ -38,6 +38,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== V2.0 Features
+
+Focused on increasing ease of use for addressbook
+
+[NOTE]
+====
+Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists.
+====
+
+
 == Features
 
 ====
@@ -47,6 +57,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in `SQUARE_BRACKETS` are optional.
 * Items with `...` after them can have multiple instances.
 * Parameters can be in any order.
+* Features with *Admin* in their description require admin permissions.
 ====
 
 === Viewing help : `help`
@@ -221,9 +232,31 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Group feature
+
+--TODO
+
+=== Facebook Integration
+
+--TODO +
+--v2.0
+
+=== Google Integration
+
+--TODO
+
+=== LinkedIn Integration
+
+--TODO +
+--v2.0
+
+=== Database Importing
+
+--TODO
+
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+*Admin:* Clears all entries from the address book. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -231,15 +264,35 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Autocomplete commands
+
+Automatically completes the command you are typing +
+Format: type the start of the command wanted --TODO
+
+=== Command shortcuts
+
+--TODO +
+--Add to each feature?
+
+=== Admin permissions
+
+--TODO +
+--v2.0?
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+*Admin:* You can also export a backup of the data to any directory using --TODO
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+*Q*: Why do I need admin to access some of the features? +
+*A*: This is in place to protect the content of the address book from misuse as well as adding another layer of protection from user error.
 
 == Command Summary
 
