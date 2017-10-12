@@ -12,6 +12,9 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -101,14 +104,22 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
-            initHistory();
-            historySnapshot.next();
-            // process result of the command
-            commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
-
+            String commandText = commandTextField.getText();
+            if (commandText.contains(LoginCommand.COMMAND_WORD) || commandText.contains(ExitCommand.COMMAND_WORD)
+                    || commandText.contains(HelpCommand.COMMAND_WORD)|| LoginCommand.isLoggedIn()) {
+                CommandResult commandResult = logic.execute(commandTextField.getText());
+                initHistory();
+                historySnapshot.next();
+                // process result of the command
+                commandTextField.setText("");
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+            } else {
+                // commands that are not permitted before login
+                // this includes unknown commands
+                setStyleToIndicateCommandFailure();
+                raise(new NewResultAvailableEvent(LoginCommand.MESSAGE_LOGIN_REQUEST, true));
+            }
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
