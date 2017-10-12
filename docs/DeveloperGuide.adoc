@@ -727,7 +727,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new parcel |
 
-|`* * *` |user |delete a parcel |remove entries that I no longer need
+|`* * *` |user |delete a parcel |
 
 |`* * *` |user |find a parcel by name |locate details of parcels without having to go through the entire list
 
@@ -775,7 +775,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |lazy user |to be notified of the most optimal path of completing my deliveries based on travelling distance |
 
-|`* *` |user |filter tasks according to location |be notified of tasks I have at a specific location
+|`* *` |user |filter tasks according to location |be notified of deliveries I have at a specific location
 
 |`* *` |forgetful user |view daily deliveries |keep track of daily deliveries
 
