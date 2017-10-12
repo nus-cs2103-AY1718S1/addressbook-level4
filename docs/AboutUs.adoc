@@ -19,12 +19,12 @@ Role: Team lead
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Xu Yiqing
+image::eeching.png[width="150", align="left"]
+{empty}[https://github.com/eeching[github]]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer +
+Responsibilities: Model
 
 '''
 
