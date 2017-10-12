@@ -15,6 +15,7 @@ import seedu.address.logic.parser.SortArgument;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
+    public static final String COMMAND_WORD_ABBREV = "l";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
             + "Displays all persons in the address book, "

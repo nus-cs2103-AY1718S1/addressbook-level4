@@ -1,0 +1,5 @@
+{
+  "appTitle" : "Rolodex",
+  "logLevel" : "INFO",
+  "userPrefsFilePath" : "preferences.json"
+}

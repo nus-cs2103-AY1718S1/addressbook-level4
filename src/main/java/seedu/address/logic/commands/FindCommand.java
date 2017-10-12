@@ -17,6 +17,8 @@ import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD_ABBREV = "f";
+    public static final String COMMAND_WORD_ALT = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names roughly match any of "
             + "the specified keywords (case-insensitive) "

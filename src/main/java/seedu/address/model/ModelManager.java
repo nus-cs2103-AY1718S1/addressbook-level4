@@ -5,7 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.util.PersonSortingUtil.generateComparator;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -17,9 +19,11 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.parser.SortArgument;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -90,6 +94,19 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
+        for (ReadOnlyPerson person: addressBook.getPersonList()) {
+            Person newPerson = new Person(person);
+
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(person, newPerson);
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================
