@@ -227,6 +227,15 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Back up of data : `backup`
+
+Address book data can be stored in a back up file when necessary. This is good in case any the existing address book is corrupted. +
+Format: `backup`
+
+=== Facebook Search (coming in V2.0)
+
+Query Facebook using list of emails from address book.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -250,3 +259,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Backup* : `backup`
