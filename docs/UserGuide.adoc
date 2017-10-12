@@ -222,6 +222,11 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Autocomplete
+
+Address book comes with tab autocompletion which unix users will be familiar with. +
+To make use of this feature, simply key in the first few characters of the command you with to enter and press the `Tab` key. Address book will then fill in the rest of the command for you.
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
