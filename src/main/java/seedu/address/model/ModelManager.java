@@ -136,22 +136,22 @@ public class ModelManager extends ComponentManager implements Model {
 
 
             Iterator<Tag> it = oldTags.iterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 Tag checkTag = it.next();
                 String current = checkTag.tagName;
                 String toCheck = tag.tagName;
-                if(!current.equals(toCheck)) {
+                if (!current.equals(toCheck)) {
                     newTags.add(checkTag);
                 }
             }
 
-            if(!(newTags.size() == oldTags.size())){
+            if (!(newTags.size() == oldTags.size())) {
                 toUpdate.setTags(newTags);
                 addressBook.updatePerson(toDelete, toUpdate);
                 tagExist = true;
             }
         }
-        if(!tagExist){
+        if (!tagExist) {
             throw new PersonNotFoundException();
         }
     }
