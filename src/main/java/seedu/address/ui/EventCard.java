@@ -43,7 +43,7 @@ public class EventCard extends UiPart<Region> {
     @javafx.fxml.FXML
     private HBox cardPane;
     @FXML
-    private Label id;
+    private Label idEvent;
     @FXML
     private Label name;
     @FXML
@@ -55,7 +55,7 @@ public class EventCard extends UiPart<Region> {
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
         this.event = event;
-        id.setText(displayedIndex + ". ");
+        idEvent.setText(displayedIndex + ". ");
         bindListeners(event);
     }
 
@@ -97,7 +97,7 @@ public class EventCard extends UiPart<Region> {
 
         // state check
         EventCard card = (EventCard) other;
-        return id.getText().equals(card.id.getText())
+        return idEvent.getText().equals(card.idEvent.getText())
                 && event.equals(card.event);
     }
 

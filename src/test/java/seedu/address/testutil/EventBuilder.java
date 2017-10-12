@@ -48,7 +48,6 @@ public class EventBuilder {
         }
         return this;
     }
-    
     /**
      * Sets the {@code Address} of the {@code Event} that we are building.
      */
