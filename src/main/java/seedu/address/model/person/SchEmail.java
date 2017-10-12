@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class SchEmail {
 
     public static final String MESSAGE_SCH_EMAIL_CONSTRAINTS =
-            "Person emails should be 2 alphanumeric/period strings separated by '@'";
+            "School emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String SCH_EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
     public final String value;
