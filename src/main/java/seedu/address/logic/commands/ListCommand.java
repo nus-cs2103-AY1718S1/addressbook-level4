@@ -19,7 +19,7 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
             + "Displays all persons in the address book, "
-            + "sorted by the specified sort order or the last known sort order." + "\n"
+            + "sorted by the specified sort order or the default sort order." + "\n"
             + "Parameters: " + MESSAGE_SORT_USAGE + "\n"
             + "Example: " + COMMAND_WORD + " "
             + SORT_ARGUMENT_NAME_DEFAULT +  " " + SORT_ARGUMENT_PHONE_DESCENDING;

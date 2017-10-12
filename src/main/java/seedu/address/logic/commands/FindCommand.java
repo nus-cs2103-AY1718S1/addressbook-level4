@@ -24,7 +24,7 @@ public class FindCommand extends Command {
             + "the specified keywords (case-insensitive) "
             + "or whose tags contains the specified keywords (case-sensitive), "
             + "and displays them as a list with index numbers, "
-            + "sorted by the specified sort order or the last known sort order.\n"
+            + "sorted by the specified sort order or the default sort order.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]..." + MESSAGE_SORT_USAGE + "\n"
             + "Example: " + COMMAND_WORD + " alice bobby charlie "
             + SORT_ARGUMENT_PHONE_DEFAULT + " " + SORT_ARGUMENT_NAME_DESCENDING;
