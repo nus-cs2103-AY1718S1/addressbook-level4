@@ -12,14 +12,14 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Wyn K Heng
-{empty}[https://github.com/wynkheng[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/wynkheng[github]] [<<wyn#, portfolio>>]
 
 Role: Developer
 
 '''
 
 === Alpheus Lim Wei Xiang
-{empty}[http://github.com/ALim95[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/ALim95[github]] [<<alpheus#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: UI
@@ -27,7 +27,7 @@ Responsibilities: UI
 '''
 
 === Deepak Buddha
-{empty}[http://github.com/deep4k[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/deep4k[github]] [<<deepak#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Data
@@ -35,7 +35,7 @@ Responsibilities: Data
 '''
 
 === Azizi Azfar
-{empty}[http://github.com/aziziazfar[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/aziziazfar[github]] [<<azizi#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Dev Ops + Threading
