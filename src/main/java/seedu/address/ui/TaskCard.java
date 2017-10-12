@@ -19,7 +19,7 @@ public class TaskCard extends UiPart<Region> {
 
     private static final String FXML = "TaskListCard.fxml";
     private static ArrayList<String> colors = new ArrayList<String>(
-            Arrays.asList("Tomato", "Orange", "DodgerBlue", "MediumSeaGreen", "SlateBlue", "Violate", "Maroon"));
+            Arrays.asList("Tomato", "Orange", "DodgerBlue", "MediumSeaGreen", "SlateBlue", "Violet", "Maroon"));
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     /**
