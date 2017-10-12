@@ -4,9 +4,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PARCEL_SUCCESS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalParcels.getTypicalParcels;
 
 import org.junit.Test;
 
@@ -23,11 +23,11 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select the first card in the parcel list, command with leading spaces and trailing spaces
          * -> selected
          */
-        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + "   ";
-        assertCommandSuccess(command, INDEX_FIRST_PERSON);
+        String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased() + "   ";
+        assertCommandSuccess(command, INDEX_FIRST_PARCEL);
 
         /* Case: select the last card in the parcel list -> selected */
-        Index personCount = Index.fromOneBased(getTypicalPersons().size());
+        Index personCount = Index.fromOneBased(getTypicalParcels().size());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
         assertCommandSuccess(command, personCount);
 
@@ -56,7 +56,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered parcel list, select index within bounds of address book but out of bounds of parcel list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
         invalidIndex = getModel().getAddressBook().getParcelList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
@@ -88,7 +88,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getParcelList().size() == 0;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased(),
 				MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
     }
 
@@ -108,7 +108,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
 				MESSAGE_SELECT_PARCEL_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getParcelListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

@@ -6,9 +6,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TestUtil.getParcel;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -32,8 +32,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first parcel in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        ReadOnlyParcel deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PARCEL.getOneBased() + "       ";
+        ReadOnlyParcel deletedPerson = removePerson(expectedModel, INDEX_FIRST_PARCEL);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
@@ -60,15 +60,15 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered parcel list, delete index within bounds of address book and parcel list -> deleted */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_PERSON;
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
+        Index index = INDEX_FIRST_PARCEL;
         assertTrue(index.getZeroBased() < getModel().getFilteredParcelList().size());
         assertCommandSuccess(index);
 
         /* Case: filtered parcel list, delete index within bounds of address book but out of bounds of parcel list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getParcelList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
@@ -76,11 +76,11 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* --------------------- Performing delete operation while a parcel card is selected ------------------------ */
 
         /* Case: delete the selected parcel -> parcel list panel selects the parcel before the deleted parcel */
-        showAllPersons();
+        showAllParcels();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
+        selectParcel(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedPerson);
@@ -117,7 +117,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * @return the removed parcel
      */
     private ReadOnlyParcel removePerson(Model model, Index index) {
-        ReadOnlyParcel targetPerson = getPerson(model, index);
+        ReadOnlyParcel targetPerson = getParcel(model, index);
         try {
             model.deleteParcel(targetPerson);
         } catch (ParcelNotFoundException pnfe) {

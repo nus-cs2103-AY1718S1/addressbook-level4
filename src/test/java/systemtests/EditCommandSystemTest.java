@@ -25,10 +25,10 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalParcels.AMY;
+import static seedu.address.testutil.TypicalParcels.BOB;
+import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
@@ -47,8 +47,8 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.ParcelBuilder;
+import seedu.address.testutil.ParcelUtil;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
@@ -61,10 +61,10 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> edited
          */
-        Index index = INDEX_FIRST_PERSON;
+        Index index = INDEX_FIRST_PARCEL;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
-        Parcel editedParcel = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Parcel editedParcel = new ParcelBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedParcel);
 
@@ -77,7 +77,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updateParcel(
-                getModel().getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased()), editedParcel);
+                getModel().getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased()), editedParcel);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a parcel with new values same as existing values -> edited */
@@ -86,33 +86,33 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_FIRST_PARCEL;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        ReadOnlyParcel personToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
-        editedParcel = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build();
+        ReadOnlyParcel parcelToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
+        editedParcel = new ParcelBuilder(parcelToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedParcel);
 
         /* Case: clear tags -> cleared */
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_FIRST_PARCEL;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
-        editedParcel = new PersonBuilder(personToEdit).withTags().build();
+        editedParcel = new ParcelBuilder(parcelToEdit).withTags().build();
         assertCommandSuccess(command, index, editedParcel);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered parcel list, edit index within bounds of address book and parcel list -> edited */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        index = INDEX_FIRST_PERSON;
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
+        index = INDEX_FIRST_PARCEL;
         assertTrue(index.getZeroBased() < getModel().getFilteredParcelList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
-        personToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
-        editedParcel = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
+        parcelToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
+        editedParcel = new ParcelBuilder(parcelToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedParcel);
 
         /* Case: filtered parcel list, edit index within bounds of address book but out of bounds of parcel list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showParcelsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getParcelList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
@@ -122,9 +122,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: selects first card in the parcel list, edit a parcel -> edited, card selection remains unchanged but
          * browser url changes
          */
-        showAllPersons();
-        index = INDEX_FIRST_PERSON;
-        selectPerson(index);
+        showAllParcels();
+        index = INDEX_FIRST_PARCEL;
+        selectParcel(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
@@ -151,33 +151,33 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased(),
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid name -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_NAME_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased() + INVALID_NAME_DESC,
                 Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHONE_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased() + INVALID_PHONE_DESC,
                 Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_EMAIL_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased() + INVALID_EMAIL_DESC,
                 Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_ADDRESS_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased() + INVALID_ADDRESS_DESC,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased() + INVALID_TAG_DESC,
                 Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a parcel with new values same as another parcel's values -> rejected */
-        executeCommand(PersonUtil.getAddCommand(BOB));
+        executeCommand(ParcelUtil.getAddCommand(BOB));
         assertTrue(getModel().getAddressBook().getParcelList().contains(BOB));
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_FIRST_PARCEL;
         assertFalse(getModel().getFilteredParcelList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
@@ -190,37 +190,37 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyPerson, Index)} except that
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyParcel, Index)} except that
      * the browser url and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
      * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyParcel, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyParcel editedPerson) {
-        assertCommandSuccess(command, toEdit, editedPerson, null);
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyParcel editedParcel) {
+        assertCommandSuccess(command, toEdit, editedParcel, null);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
      * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
      * 2. Asserts that the model related components are updated to reflect the parcel at index {@code toEdit} being
-     * updated to values specified {@code editedPerson}.<br>
+     * updated to values specified {@code editedParcel}.<br>
      * @param toEdit the index of the current model's filtered list.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyParcel editedPerson,
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyParcel editedParcel,
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
             expectedModel.updateParcel(
-                    expectedModel.getFilteredParcelList().get(toEdit.getZeroBased()), editedPerson);
+                    expectedModel.getFilteredParcelList().get(toEdit.getZeroBased()), editedParcel);
             expectedModel.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         } catch (DuplicateParcelException | ParcelNotFoundException e) {
             throw new IllegalArgumentException(
-                    "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
+                    "editedParcel is a duplicate in expectedModel, or it isn't found in the model.");
         }
 
         assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedPerson), expectedSelectedCardIndex);
+                String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel), expectedSelectedCardIndex);
     }
 
     /**
