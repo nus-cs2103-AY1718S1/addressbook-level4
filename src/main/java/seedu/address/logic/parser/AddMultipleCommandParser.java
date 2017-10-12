@@ -27,7 +27,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Comment;
 import seedu.address.model.tag.Tag;
+import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new AddMultipleCommand object
@@ -68,7 +70,8 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
                     Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
                     Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
                     Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-                    ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
+                    Comment comment = new Comment(""); // add command does not allow adding comments straight away
+                    ReadOnlyPerson person = new Person(name, phone, email, address, comment, tagList);
                     
                     personsList.add(person);
                 } catch (IllegalValueException ive) {
