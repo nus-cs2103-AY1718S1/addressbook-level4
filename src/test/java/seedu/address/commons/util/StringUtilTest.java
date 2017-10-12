@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.util.StringUtil.levenshteinDistance;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
@@ -153,6 +155,27 @@ public class StringUtilTest {
     public void getDetails_nullGiven_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         StringUtil.getDetails(null);
+    }
+
+    //---------------- Tests for levenshteinDistance --------------------------------------
+    
+    @Test
+    public void testlevenshteinDistance() {
+        // Assert additions and deletions
+        assert levenshteinDistance("Bobby", "Bob") == 2;
+        assert levenshteinDistance("Alex", "Alexander") == 5;
+        assert levenshteinDistance("Alex", "Alxe") == 2;
+        
+        // Assert substitutions
+        assert levenshteinDistance(KEYWORD_MATCHING_MEIER, "Meyer") == 1;
+        assert levenshteinDistance("Bazinga", "Bazingy") == 1;
+        assert levenshteinDistance("Whoop", "Vroom") == 3;
+        assert levenshteinDistance("substitution", "gajgbzbabzil") == "substitution".length();
+        
+        // Assert case-insensitivity
+        assert levenshteinDistance("aaa", "AAA") == 0;
+        assert levenshteinDistance("Alex", "alex") == 0;
+        assert levenshteinDistance("ALEX", "alex") == 0;
     }
 
 
