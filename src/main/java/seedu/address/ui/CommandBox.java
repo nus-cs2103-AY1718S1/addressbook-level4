@@ -106,7 +106,7 @@ public class CommandBox extends UiPart<Region> {
         try {
             String commandText = commandTextField.getText();
             if (commandText.contains(LoginCommand.COMMAND_WORD) || commandText.contains(ExitCommand.COMMAND_WORD)
-                    || commandText.contains(HelpCommand.COMMAND_WORD)|| LoginCommand.isLoggedIn()) {
+                    || commandText.contains(HelpCommand.COMMAND_WORD) || LoginCommand.isLoggedIn()) {
                 CommandResult commandResult = logic.execute(commandTextField.getText());
                 initHistory();
                 historySnapshot.next();
