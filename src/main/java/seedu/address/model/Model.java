@@ -36,6 +36,9 @@ public interface Model {
     /** Adds the given meeting */
     void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException;
 
+    /** Deletes the given meeting */
+    void deleteMeeting(ReadOnlyMeeting target) throws MeetingNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

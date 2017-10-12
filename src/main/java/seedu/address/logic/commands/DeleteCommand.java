@@ -25,9 +25,7 @@ public class DeleteCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
-    }
+    public DeleteCommand(Index targetIndex) { this.targetIndex = targetIndex; }
 
 
     @Override

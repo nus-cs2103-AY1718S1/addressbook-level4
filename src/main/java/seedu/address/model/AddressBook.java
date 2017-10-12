@@ -204,6 +204,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    public boolean removeMeeting(ReadOnlyMeeting key) throws MeetingNotFoundException {
+        if (meetings.remove(key)) {
+            return true;
+        } else {
+            throw new MeetingNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
