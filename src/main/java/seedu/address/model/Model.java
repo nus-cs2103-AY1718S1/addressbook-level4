@@ -3,9 +3,11 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 
 /**
  * The API of the Model component.
@@ -35,6 +37,12 @@ public interface Model {
      */
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * @throws TagNotFoundException if the tag is not found in tag list of address book
+     * @throws IllegalValueException if the input value is not alphanumeric
+     */
+    void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException, PersonNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

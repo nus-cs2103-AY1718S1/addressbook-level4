@@ -132,6 +132,22 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Removing a tag: `remove`
+
+Removes the specific tag from the address book. +
+Format: `remove TAG`
+
+****
+* Removes the tag with the specific name `TAG`.
+* The name refers to the name of tag, or more specifically, the words in the colored rectangles under the person's name.
+* The name *must be alphanumeric* `a-z, A-Z, 0-9`
+****
+
+Example:
+
+* `remove friend` +
+Removes the tag `friend` from all the persons in the address book.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -241,6 +257,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Remove* : `remove TAG` +
+e.g. `remove friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`

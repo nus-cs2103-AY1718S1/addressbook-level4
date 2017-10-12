@@ -171,10 +171,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws TagNotFoundException
      * @throws IllegalValueException
      */
-    public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
+    public void removeTag(String tagGettingRemoved) throws TagNotFoundException,
+            IllegalValueException, PersonNotFoundException {
         Tag tagToRemove = tags.removeTag(tagGettingRemoved);
         for (Person person: persons) {
+            Person temp = person;
             person.removeTag(tagToRemove);
+            persons.setPerson(temp, person);
         }
     }
 
