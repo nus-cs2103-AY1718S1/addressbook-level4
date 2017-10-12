@@ -20,10 +20,9 @@ public class LoginCommand extends Command {
     public static final String MESSAGE_LOGIN_FORMAT = COMMAND_WORD + " USERNAME PASSWORD";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " USERNAME PASSWORD\nExample: "
             + COMMAND_WORD + " JohnDoe hiIAmJohnDoe123";
-
+    private static boolean isLoggedIn = false;
     private final Username username;
     private final Password password;
-    private static boolean isLoggedIn = false;
 
     public LoginCommand(Username username, Password password) {
         this.username = username;
