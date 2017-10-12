@@ -103,7 +103,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered person list, edit index within bounds of address book and person list -> edited */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showPersonsWithName(KEYWORD_MATCHING_MEIER.concat("bb"));
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getLatestPersonList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
@@ -114,7 +114,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showPersonsWithName(KEYWORD_MATCHING_MEIER.concat("aa"));
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD_ABBREV + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

@@ -57,6 +57,7 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
+        Arrays.stream(keywords).map(word -> word.concat("aa"));
         modelManager.updateFilteredPersonList(new PersonDataContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
