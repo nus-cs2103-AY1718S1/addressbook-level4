@@ -19,14 +19,14 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         String[] args = cleanUserInput.split("\\s+");
         try {
             switch (args[0]) {
-                case RANDOM_KEY_WORD:
-                    isOn = true;
-                    break;
-                case OFF_KEY_WORD:
-                    isOn = false;
-                    break;
-                default:
-                    return new ToggleTagColorCommand(true, args[0], args[1]);
+            case RANDOM_KEY_WORD:
+                isOn = true;
+                break;
+            case OFF_KEY_WORD:
+                isOn = false;
+                break;
+            default:
+                return new ToggleTagColorCommand(true, args[0], args[1]);
             }
             return new ToggleTagColorCommand(isOn, "", "");
         } catch (ArrayIndexOutOfBoundsException exp) {
