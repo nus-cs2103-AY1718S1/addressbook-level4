@@ -9,9 +9,16 @@ import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.Password;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.Username;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -19,15 +26,19 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String USERNAME = "loanShark97";
+    private static final String PASSWORD = "hitMeUp123";
+    private static LoginCommand loginCommand;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
+    private Model model;
 
     @Before
     public void setUp() {
-        Model model = new ModelManager();
+        model = new ModelManager();
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -39,7 +50,27 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+        simulateLogin();
     }
+
+    //@@author jelneo
+    /**
+     * Logs in to admin user account so that other GUI tests can test the main GUIs in the address book
+     */
+    public void simulateLogin() {
+        try {
+            Username username = new Username(USERNAME);
+            Password password = new Password(PASSWORD);
+            loginCommand = new LoginCommand(username, password);
+            loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+            loginCommand.execute();
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
+    }
+    //@@author
 
     @Test
     public void commandBox_startingWithSuccessfulCommand() {
