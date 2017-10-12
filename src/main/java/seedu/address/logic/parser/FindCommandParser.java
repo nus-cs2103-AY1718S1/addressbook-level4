@@ -35,6 +35,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindSpecificCommand
+     * and returns an FindSpecificCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public FindSpecificCommand parseSpecific(String args) throws ParseException {
 
         String trimmedArgs = args.trim();
@@ -43,9 +48,9 @@ public class FindCommandParser implements Parser<FindCommand> {
          * Used for initial separation of prefix and args.
          */
 
-        final Pattern FINDS_PREFIX_FORMAT = Pattern.compile("(?<prefix>\\w/)(?<arguments>.*)");
+        final Pattern prefixFormat = Pattern.compile("(?<prefix>\\w/)(?<arguments>.*)");
 
-        final Matcher matcher = FINDS_PREFIX_FORMAT.matcher(trimmedArgs);
+        final Matcher matcher = prefixFormat.matcher(trimmedArgs);
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindSpecificCommand.MESSAGE_USAGE));
         }
@@ -55,14 +60,13 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] keyWords = arguments.split("\\s+");
 
-        if (prefix.equals("n/")){
+        if (prefix.equals("n/")) {
             return new FindSpecificCommand(new NameContainsKeywordsPredicate(Arrays.asList(keyWords)));
-        }
-        else if (prefix.equals("p/")){
+        } else if (prefix.equals("p/")) {
             return new FindSpecificCommand(new PhoneContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
-        }
-        else if (prefix.equals("t/"))
+        } else if (prefix.equals("t/")) {
             return new FindSpecificCommand(new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
+        }
 
         return null;
     }

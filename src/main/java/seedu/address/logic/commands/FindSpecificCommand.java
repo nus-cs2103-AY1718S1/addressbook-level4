@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
 
-import seedu.address.model.person.PhoneContainsSpecifiedKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book who contain any of the specified argument keywords.

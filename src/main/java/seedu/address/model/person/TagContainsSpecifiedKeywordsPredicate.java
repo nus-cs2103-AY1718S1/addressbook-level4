@@ -1,9 +1,9 @@
 package seedu.address.model.person;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import seedu.address.model.tag.Tag;
 
@@ -23,7 +23,7 @@ public class TagContainsSpecifiedKeywordsPredicate implements Predicate<ReadOnly
         Set<Tag> tags = person.getTags();
         List<Tag> tagList = tags.stream().collect(Collectors.toList()); // Converts Set to List
 
-       return keywords.stream()
+        return keywords.stream()
                 .anyMatch(keyword -> tagList.stream().anyMatch(tagname -> keyword.contains(tagname.toString())) & true);
     }
 
