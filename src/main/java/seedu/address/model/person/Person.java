@@ -149,7 +149,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     }
 
     @Override
-    public int compareTo(Person o){
+    public int compareTo(Person o) {
 
         return this.getName().toString().compareToIgnoreCase(o.getName().toString());
     }
