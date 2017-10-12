@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @XmlElement
-    private List<XmlAdaptedParcel> persons;
+    private List<XmlAdaptedParcel> parcels;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -30,7 +30,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableAddressBook() {
-        persons = new ArrayList<>();
+        parcels = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
@@ -39,13 +39,13 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedParcel::new).collect(Collectors.toList()));
+        parcels.addAll(src.getPersonList().stream().map(XmlAdaptedParcel::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
     @Override
     public ObservableList<ReadOnlyParcel> getPersonList() {
-        final ObservableList<ReadOnlyParcel> persons = this.persons.stream().map(p -> {
+        final ObservableList<ReadOnlyParcel> persons = this.parcels.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
