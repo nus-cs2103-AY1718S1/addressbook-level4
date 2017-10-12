@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalParcels;
 
 /**
  * A GUI Test class for AddressBook.
@@ -64,7 +64,7 @@ public abstract class AddressBookGuiTest {
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        return TypicalParcels.getTypicalAddressBook();
     }
 
     protected CommandBoxHandle getCommandBox() {
