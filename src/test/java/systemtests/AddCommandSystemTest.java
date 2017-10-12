@@ -81,7 +81,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a duplicate parcel -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND;
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /* Case: add a duplicate parcel except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
@@ -89,7 +89,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // AddressBook#addParcel(ReadOnlyParcel)
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /* Case: add a parcel with all fields same as another parcel in the address book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)

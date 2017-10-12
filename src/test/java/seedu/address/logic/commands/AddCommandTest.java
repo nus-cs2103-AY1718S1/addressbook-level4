@@ -54,7 +54,7 @@ public class AddCommandTest {
         Parcel validParcel = new PersonBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         getAddCommandForPerson(validParcel, modelStub).execute();
     }

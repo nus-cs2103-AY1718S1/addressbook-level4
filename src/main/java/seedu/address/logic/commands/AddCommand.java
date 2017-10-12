@@ -35,15 +35,15 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New parcel added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This parcel already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PARCEL = "This parcel already exists in the address book";
 
     private final Parcel toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyParcel}
      */
-    public AddCommand(ReadOnlyParcel person) {
-        toAdd = new Parcel(person);
+    public AddCommand(ReadOnlyParcel parcel) {
+        toAdd = new Parcel(parcel);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AddCommand extends UndoableCommand {
             model.addParcel(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateParcelException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_PARCEL);
         }
 
     }

@@ -27,7 +27,7 @@ public abstract class UndoableCommand extends Command {
     /**
      * Reverts the AddressBook to the state before this command
      * was executed and updates the filtered parcel list to
-     * show all persons.
+     * show all parcels.
      */
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
@@ -37,7 +37,7 @@ public abstract class UndoableCommand extends Command {
 
     /**
      * Executes the command and updates the filtered parcel
-     * list to show all persons.
+     * list to show all parcels.
      */
     protected final void redo() {
         requireNonNull(model);

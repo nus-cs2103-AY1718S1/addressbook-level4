@@ -4,30 +4,31 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditCommand.EditParcelDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
- * A utility class to help with building EditPersonDescriptor objects.
+ * A utility class to help with building EditParcelDescriptor objects.
  */
 public class EditPersonDescriptorBuilder {
 
-    private EditPersonDescriptor descriptor;
+    private EditParcelDescriptor descriptor;
 
     public EditPersonDescriptorBuilder() {
-        descriptor = new EditPersonDescriptor();
+        descriptor = new EditParcelDescriptor();
     }
 
-    public EditPersonDescriptorBuilder(EditPersonDescriptor descriptor) {
-        this.descriptor = new EditPersonDescriptor(descriptor);
+    public EditPersonDescriptorBuilder(EditCommand.EditParcelDescriptor descriptor) {
+        this.descriptor = new EditParcelDescriptor(descriptor);
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code parcel}'s details
+     * Returns an {@code EditParcelDescriptor} with fields containing {@code parcel}'s details
      */
     public EditPersonDescriptorBuilder(ReadOnlyParcel person) {
-        descriptor = new EditPersonDescriptor();
+        descriptor = new EditParcelDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
@@ -36,7 +37,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Name} of the {@code EditParcelDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withName(String name) {
         try {
@@ -48,7 +49,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Phone} of the {@code EditParcelDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withPhone(String phone) {
         try {
@@ -60,7 +61,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Email} of the {@code EditParcelDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         try {
@@ -72,7 +73,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Address} of the {@code EditParcelDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         try {
@@ -84,7 +85,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditParcelDescriptor}
      * that we are building.
      */
     public EditPersonDescriptorBuilder withTags(String... tags) {
@@ -96,7 +97,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    public EditPersonDescriptor build() {
+    public EditCommand.EditParcelDescriptor build() {
         return descriptor;
     }
 }

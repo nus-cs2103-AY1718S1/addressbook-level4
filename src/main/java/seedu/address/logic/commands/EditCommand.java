@@ -46,23 +46,23 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Parcel: %1$s";
+    public static final String MESSAGE_EDIT_PARCEL_SUCCESS = "Edited Parcel: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This parcel already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PARCEL = "This parcel already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditParcelDescriptor editParcelDescriptor;
 
     /**
      * @param index of the parcel in the filtered parcel list to edit
-     * @param editPersonDescriptor details to edit the parcel with
+     * @param editParcelDescriptor details to edit the parcel with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditParcelDescriptor editParcelDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editParcelDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editParcelDescriptor = new EditParcelDescriptor(editParcelDescriptor);
     }
 
     @Override
@@ -73,33 +73,33 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
         }
 
-        ReadOnlyParcel personToEdit = lastShownList.get(index.getZeroBased());
-        Parcel editedParcel = createEditedPerson(personToEdit, editPersonDescriptor);
+        ReadOnlyParcel parcelToEdit = lastShownList.get(index.getZeroBased());
+        Parcel editedParcel = createEditedParcel(parcelToEdit, editParcelDescriptor);
 
         try {
-            model.updateParcel(personToEdit, editedParcel);
+            model.updateParcel(parcelToEdit, editedParcel);
         } catch (DuplicateParcelException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_PARCEL);
         } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("The target parcel cannot be missing");
         }
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedParcel));
+        return new CommandResult(String.format(MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel));
     }
 
     /**
-     * Creates and returns a {@code Parcel} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Parcel} with the details of {@code parcelToEdit}
+     * edited with {@code editParcelDescriptor}.
      */
-    private static Parcel createEditedPerson(ReadOnlyParcel personToEdit,
-											 EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Parcel createEditedParcel(ReadOnlyParcel parcelToEdit,
+                                             EditParcelDescriptor editParcelDescriptor) {
+        assert parcelToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editParcelDescriptor.getName().orElse(parcelToEdit.getName());
+        Phone updatedPhone = editParcelDescriptor.getPhone().orElse(parcelToEdit.getPhone());
+        Email updatedEmail = editParcelDescriptor.getEmail().orElse(parcelToEdit.getEmail());
+        Address updatedAddress = editParcelDescriptor.getAddress().orElse(parcelToEdit.getAddress());
+        Set<Tag> updatedTags = editParcelDescriptor.getTags().orElse(parcelToEdit.getTags());
 
         return new Parcel(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
@@ -119,23 +119,23 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+                && editParcelDescriptor.equals(e.editParcelDescriptor);
     }
 
     /**
      * Stores the details to edit the parcel with. Each non-empty field value will replace the
      * corresponding field value of the parcel.
      */
-    public static class EditPersonDescriptor {
+    public static class EditParcelDescriptor {
         private Name name;
         private Phone phone;
         private Email email;
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditParcelDescriptor() {}
 
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditParcelDescriptor(EditParcelDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
@@ -198,12 +198,12 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditParcelDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditParcelDescriptor e = (EditParcelDescriptor) other;
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
