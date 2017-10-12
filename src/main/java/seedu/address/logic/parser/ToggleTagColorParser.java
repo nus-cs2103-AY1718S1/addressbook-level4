@@ -12,6 +12,8 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
     private static final String OFF_KEY_WORD = "off";
     private static final String MESSAGE_INVALID_COMMAND = "Invalid tagcolor command."
             + "\n"
+            + "tc: Shorthand equivalent for tagcolor."
+            + "\n"
             + "tagcolor: TagColor sets color for AddressBook"
             + "\n"
             + "Parameters: tagcolor random/off || tagcolor TAGNAME COLOR";

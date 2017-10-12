@@ -13,6 +13,7 @@ import seedu.address.model.tag.Tag;
 public class ToggleTagColorCommand extends Command {
 
     public static final String COMMAND_WORD = "tagcolor";
+    public static final String COMMAND_ALIAS = "tc";
     public static final String MESSAGE_SUCCESS = "tagColor set to ";
     public static final String NO_SUCH_TAG_MESSAGE = "No such tag";
 
