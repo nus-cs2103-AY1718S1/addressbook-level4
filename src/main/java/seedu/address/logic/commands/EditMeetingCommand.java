@@ -1,5 +1,14 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
+
+import java.util.List;
+import java.util.Optional;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -12,15 +21,9 @@ import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 
-import java.util.List;
-import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
-
+/**
+ * Edits the details of an existing meeting in the address book.
+ */
 public class EditMeetingCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editmeeting";

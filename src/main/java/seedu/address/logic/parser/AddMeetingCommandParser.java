@@ -5,8 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-//import java.util.Set;
-import java.util.Date;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -16,7 +14,6 @@ import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
-
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
 

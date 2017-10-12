@@ -10,7 +10,6 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 
