@@ -57,7 +57,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(new Phone("Not Set"));
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
 
     /**
