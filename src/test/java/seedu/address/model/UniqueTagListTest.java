@@ -1,10 +1,12 @@
 package seedu.address.model;
 
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Rule;
@@ -17,14 +19,24 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.address.testutil.TypicalPersons;
 
 
-
 public class UniqueTagListTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+    public void testThrowDuplicateTagError() throws Exception {
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+        thrown.expect(UniqueTagList.DuplicateTagException.class);
+
+        Iterator myIterator = TypicalPersons.ALICE.getTags().iterator();
+        uniqueTagList.add((Tag) myIterator.next());
+
+    }
+
+    @Test
+    public void asObservableListModifyListThrowsUnsupportedOperationException() {
         UniqueTagList uniqueTagList = new UniqueTagList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueTagList.asObservableList().remove(0);
@@ -108,5 +120,31 @@ public class UniqueTagListTest {
 
     }
 
+    @Test
+    public void testEquals() {
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
+
+        UniqueTagList uniqueTagListTwo = new UniqueTagList();
+        uniqueTagListTwo.setTags(TypicalPersons.ALICE.getTags());
+
+        UniqueTagList uniqueTagListThree = new UniqueTagList();
+        uniqueTagListThree.setTags(TypicalPersons.BOB.getTags());
+
+        // same object -> returns true
+        assertTrue(uniqueTagList.equals(uniqueTagList));
+
+        // copy of object -> returns true
+        assertTrue(uniqueTagList.equals(uniqueTagListTwo));
+
+        // different types -> returns false
+        assertFalse(uniqueTagList.equals(1));
+
+        // null -> returns false
+        assertNotNull(uniqueTagList);
+
+        // different sets -> returns false
+        assertFalse(uniqueTagList.equals(uniqueTagListThree));
+    }
 
 }
