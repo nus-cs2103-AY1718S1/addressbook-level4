@@ -229,11 +229,6 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @FXML
-    private void handleHistory() throws CommandException, ParseException {
-        logic.execute("history");
-    }
-
-    @FXML
     private void handleUndo() throws CommandException, ParseException {
         logic.execute("undo");
     }

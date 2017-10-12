@@ -26,7 +26,6 @@
       <Menu mnemonicParsing="false" text="Commands">
          <items>
             <MenuItem mnemonicParsing="false" onAction="#handleList" text="List" />
-            <MenuItem mnemonicParsing="false" onAction="#handleHistory" text="History" />
             <MenuItem mnemonicParsing="false" onAction="#handleUndo" text="Undo" />
             <MenuItem mnemonicParsing="false" onAction="#handleRedo" text="Redo" />
             <MenuItem mnemonicParsing="false" onAction="#handleClear" text="Clear" />
