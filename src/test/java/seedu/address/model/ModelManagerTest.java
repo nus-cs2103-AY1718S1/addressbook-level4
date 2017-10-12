@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalAddressBook;
 
 import java.util.Arrays;
 
@@ -24,6 +26,17 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    @Test
+    public void sortFilteredPersonList_sortListSuccess() {
+        UserPrefs userPrefs = new UserPrefs();
+        AddressBook unSortedTypicalPersons = getUnsortedTypicalAddressBook();
+        AddressBook sortedTypicalPersons = getSortedTypicalAddressBook();
+        ModelManager modelManager1 = new ModelManager(unSortedTypicalPersons, userPrefs);
+        ModelManager modelManager2 = new ModelManager(sortedTypicalPersons, userPrefs);
+        modelManager1.sortFilteredPersonList();
+        assertTrue(modelManager1.equals(modelManager2));
     }
 
     @Test

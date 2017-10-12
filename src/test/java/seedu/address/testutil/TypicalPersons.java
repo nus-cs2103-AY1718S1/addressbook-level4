@@ -71,11 +71,11 @@ public class TypicalPersons {
     private TypicalPersons() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical persons in sorted order.
      */
-    public static AddressBook getTypicalAddressBook() {
+    public static AddressBook getSortedTypicalAddressBook() {
         AddressBook ab = new AddressBook();
-        for (ReadOnlyPerson person : getTypicalPersons()) {
+        for (ReadOnlyPerson person : getSortedTypicalPersons()) {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
@@ -85,7 +85,26 @@ public class TypicalPersons {
         return ab;
     }
 
-    public static List<ReadOnlyPerson> getTypicalPersons() {
+    /**
+     * Returns an {@code AddressBook} with all the typical persons in unsorted order.
+     */
+    public static AddressBook getUnsortedTypicalAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getUnsortedTypicalPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
+    public static List<ReadOnlyPerson> getUnsortedTypicalPersons() {
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, DANIEL, CARL, GEORGE, FIONA, ELLE));
+    }
+
+    public static List<ReadOnlyPerson> getSortedTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }
