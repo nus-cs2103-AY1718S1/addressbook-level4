@@ -11,36 +11,41 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Vivek
-image::damithc.jpg[width="150", align="left"]
-{empty}[https://github.com/vivekscl[github]] [<<vivek#, portfolio>>]
+image::viveklakshmanan.png[width="150", align="left"]
+{empty}[https://github.com/vivekscl[github]]
 
-Role: Project Advisor
+Role: Scheduling and Tasking +
+Responsibilities: Ensures that team is on track with completing the current week's milestones. Also in charge
+of the Model component.
 
 '''
 
 === Tao Jiashu
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/taojiashu[github]] [<<jiashu#, portfolio>>]
+image::taojiashu.png[width="150", align="left"]
+{empty}[http://github.com/taojiashu[github]]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Integration and Code Quality +
+Responsibilities: Ensures that code is up to standard and makes sure the software passes all integration tests.
+Also in charge of Storage component.
 
 '''
 
 === Jacob
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/jacoblipech[github]] [<<johndoe#, portfolio>>]
+image::jacoblipech.png[width="150", align="left"]
+{empty}[http://github.com/jacoblipech[github]]
 
-Role: Developer +
-Responsibilities: Data
+Role: Documentation and Intellij Expert +
+Responsibilities: Ensures all changes to UniCity is documented in good quality and helps out
+with any Intellij issues. Also in charge of the UI component.
 
 '''
 
 === Lee Ying Zheng
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+image::leeyingzheng.png[width="150", align="left"]
+{empty}[http://github.com/m133225[github]]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Testing and Java 8 Expert +
+Responsibilities: Ensures every update passes all tests and helps out with any Java 8 issues. Also
+in charge of the Logic component.
 
 '''
