@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
@@ -124,5 +125,12 @@ public class CommandTestUtil {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
+    }
+
+    /**
+     * Updates {@code model}'s latest list to show only the first person in the {@code model}'s address book.
+     */
+    public static void sortAllPersons(Model model, SortArgument argument) {
+        model.updateSortComparator(Arrays.asList(argument));
     }
 }

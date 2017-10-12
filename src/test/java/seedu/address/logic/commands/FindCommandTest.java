@@ -4,6 +4,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.logic.commands.CommandTestUtil.sortAllPersons;
+import static seedu.address.logic.parser.CliSyntax.POSSIBLE_SORT_ARGUMENTS;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_EMAIL_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_EMAIL_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_EMAIL_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DESCENDING;
+import static seedu.address.logic.parser.SortUtil.setupArguments;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -13,11 +28,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.SortArgument;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -72,13 +90,106 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
+    @Test
+    public void execute_multipleKeywordsSortedByNameDefault_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_NAME_DEFAULT);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByNameDescending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_NAME_DESCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA, ELLE, CARL));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByNameAscending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_NAME_ASCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByPhoneDefault_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_PHONE_DEFAULT);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, CARL));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByPhoneDescending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_PHONE_DESCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA, ELLE));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByPhoneAscending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_PHONE_ASCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, CARL));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByEmailDefault_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_EMAIL_DEFAULT);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA, ELLE));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByEmailDescending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_EMAIL_DESCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, CARL));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByEmailAscending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_EMAIL_ASCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA, ELLE));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByAddressDefault_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_ADDRESS_DEFAULT);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA, ELLE, CARL));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByAddressDescending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_ADDRESS_DESCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_multipleKeywordsSortedByAddressAscending_showsMultiplePersonsSorted() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_ADDRESS_ASCENDING);
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA, ELLE, CARL));
+    }
+
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) {
-        FindCommand command =
-                new FindCommand(new PersonDataContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))),
-                        new ArrayList<>());
+
+        String[] keywords = userInput.split("\\s+");
+        List<String> findKeywordList = new ArrayList<>();
+        List<SortArgument> sortKeywordList = new ArrayList<>();
+
+        try {
+            setupArguments(keywords, findKeywordList, sortKeywordList);
+        } catch (ParseException e) {
+            throw new AssertionError("Unable to parse arguments.", e);
+        }
+        FindCommand command = new FindCommand(
+                new PersonDataContainsKeywordsPredicate(findKeywordList), sortKeywordList);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
