@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
 //@@author khooroko
@@ -51,8 +50,6 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedPostalCode;
     private String lastRememberedDebt;
     private List<String> lastRememberedTags;
-
-    private ReadOnlyPerson lastRememberedSelectedPerson;
 
     public InfoPanelHandle(Node infoPanelNode) {
         super(infoPanelNode);
@@ -128,4 +125,32 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 .map(Label::getText)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Remember the details of the person that was last selected
+     */
+    public void rememberSelectedPersonDetails() {
+        lastRememberedAddress = getAddress();
+        lastRememberedDebt = getDebt();
+        lastRememberedEmail = getEmail();
+        lastRememberedName = getName();
+        lastRememberedPhone = getPhone();
+        lastRememberedPostalCode = getPostalCode();
+        lastRememberedTags = getTags();
+    }
+
+    /**
+     * Returns true if the selected {@code Person} is different from the value remembered by the most recent
+     * {@code rememberSelectedPersonDetails()} call.
+     */
+    public boolean isSelectedPersonChanged() {
+        return !getName().equals(lastRememberedName)
+                || !getAddress().equals(lastRememberedAddress)
+                || !getPhone().equals(lastRememberedPhone)
+                || !getDebt().equals(lastRememberedDebt)
+                || !getEmail().equals(lastRememberedEmail)
+                || !getPostalCode().equals(lastRememberedPostalCode)
+                || !getTags().equals(lastRememberedTags);
+    }
+
 }

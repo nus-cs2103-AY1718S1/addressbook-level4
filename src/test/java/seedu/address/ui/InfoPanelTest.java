@@ -1,12 +1,14 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,15 +40,33 @@ public class InfoPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default info panel
-        assertEquals(infoPanelHandle.getAddress(),MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getAddressField(),MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDebt(),MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDebtField(),MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDisplayPostalCode(),MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDisplayPostalCodeField(),MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getAddress(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getAddressField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getDebt(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getDebtField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPostalCode(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPostalCodeField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getName(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getEmail(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getEmailField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPhone(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPhoneField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getTags(), new ArrayList<>());
 
-        // associated web page of a person
+        // associated info of a person
         postNow(selectionChangedEventStub);
+        assertEquals(infoPanelHandle.getAddress(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getAddressField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getDebt(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getDebtField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPostalCode(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPostalCodeField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getName(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getEmail(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getEmailField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPhone(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getPhoneField(), MESSAGE_EMPTY_STRING);
+        assertEquals(infoPanelHandle.getTags(), new ArrayList<>());
     }
 
     /**
