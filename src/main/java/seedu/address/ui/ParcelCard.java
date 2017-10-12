@@ -14,9 +14,9 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 /**
  * An UI component that displays information of a {@code Parcel}.
  */
-public class PersonCard extends UiPart<Region> {
+public class ParcelCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "ParcelListCard.fxml";
     private static String[] colors = { "#cc4f4f", "#57b233", "#2696b5", "#5045c6", "#7739ba", "#b534a1", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -29,7 +29,7 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final ReadOnlyParcel person;
+    public final ReadOnlyParcel parcel;
 
     @FXML
     private HBox cardPane;
@@ -46,34 +46,34 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyParcel person, int displayedIndex) {
+    public ParcelCard(ReadOnlyParcel parcel, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.parcel = parcel;
         id.setText(displayedIndex + ". ");
-        initTags(person);
-        bindListeners(person);
+        initTags(parcel);
+        bindListeners(parcel);
     }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Parcel} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyParcel person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
+    private void bindListeners(ReadOnlyParcel parcel) {
+        name.textProperty().bind(Bindings.convert(parcel.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(parcel.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(parcel.addressProperty()));
+        email.textProperty().bind(Bindings.convert(parcel.emailProperty()));
+        parcel.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            initTags(person);
+            initTags(parcel);
         });
     }
 
     /**
      * Initializes tags and sets their style based on their tag label
      */
-    private void initTags(ReadOnlyParcel person) {
-        person.getTags().forEach(tag -> {
+    private void initTags(ReadOnlyParcel parcel) {
+        parcel.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
@@ -96,13 +96,13 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof ParcelCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        ParcelCard card = (ParcelCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+                && parcel.equals(card.parcel);
     }
 }

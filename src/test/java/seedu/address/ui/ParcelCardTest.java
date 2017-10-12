@@ -19,15 +19,15 @@ public class ParcelCardTest extends GuiUnitTest {
     public void display() {
         // no tags
         Parcel parcelWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(parcelWithNoTags, 1);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, parcelWithNoTags, 1);
+        ParcelCard parcelCard = new ParcelCard(parcelWithNoTags, 1);
+        uiPartRule.setUiPart(parcelCard);
+        assertCardDisplay(parcelCard, parcelWithNoTags, 1);
 
         // with tags
         Parcel parcelWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(parcelWithTags, 2);
-        uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, parcelWithTags, 2);
+        parcelCard = new ParcelCard(parcelWithTags, 2);
+        uiPartRule.setUiPart(parcelCard);
+        assertCardDisplay(parcelCard, parcelWithTags, 2);
 
         // changes made to Parcel reflects on card
         guiRobot.interact(() -> {
@@ -37,43 +37,43 @@ public class ParcelCardTest extends GuiUnitTest {
             parcelWithTags.setPhone(ALICE.getPhone());
             parcelWithTags.setTags(ALICE.getTags());
         });
-        assertCardDisplay(personCard, parcelWithTags, 2);
+        assertCardDisplay(parcelCard, parcelWithTags, 2);
     }
 
     @Test
     public void equals() {
         Parcel parcel = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(parcel, 0);
+        ParcelCard parcelCard = new ParcelCard(parcel, 0);
 
         // same parcel, same index -> returns true
-        PersonCard copy = new PersonCard(parcel, 0);
-        assertTrue(personCard.equals(copy));
+        ParcelCard copy = new ParcelCard(parcel, 0);
+        assertTrue(parcelCard.equals(copy));
 
         // same object -> returns true
-        assertTrue(personCard.equals(personCard));
+        assertTrue(parcelCard.equals(parcelCard));
 
         // null -> returns false
-        assertFalse(personCard.equals(null));
+        assertFalse(parcelCard.equals(null));
 
         // different types -> returns false
-        assertFalse(personCard.equals(0));
+        assertFalse(parcelCard.equals(0));
 
         // different parcel, same index -> returns false
         Parcel differentParcel = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentParcel, 0)));
+        assertFalse(parcelCard.equals(new ParcelCard(differentParcel, 0)));
 
         // same parcel, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(parcel, 1)));
+        assertFalse(parcelCard.equals(new ParcelCard(parcel, 1)));
     }
 
     /**
-     * Asserts that {@code personCard} displays the details of {@code expectedPerson} correctly and matches
+     * Asserts that {@code parcelCard} displays the details of {@code expectedPerson} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(PersonCard personCard, ReadOnlyParcel expectedPerson, int expectedId) {
+    private void assertCardDisplay(ParcelCard parcelCard, ReadOnlyParcel expectedPerson, int expectedId) {
         guiRobot.pauseForHuman();
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());
+        PersonCardHandle personCardHandle = new PersonCardHandle(parcelCard.getRoot());
 
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
