@@ -23,7 +23,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
-    private ObjectProperty<DisplayPostalCode> displayPostalCode;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
 
@@ -40,7 +39,6 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
-        this.displayPostalCode = new SimpleObjectProperty<>(new DisplayPostalCode(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         // protect internal tags from changes in the arg list
@@ -117,18 +115,13 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public ObjectProperty<PostalCode> postalCodeProperty() {
+        return postalCode;
+    }
+
+    @Override
     public PostalCode getPostalCode() {
         return postalCode.get();
-    }
-
-    @Override
-    public ObjectProperty<DisplayPostalCode> displayPostalCodeProperty() {
-        return displayPostalCode;
-    }
-
-    @Override
-    public DisplayPostalCode getDisplayPostalCode() {
-        return displayPostalCode.get();
     }
 
     public void setDebt(Debt debt) {
@@ -191,7 +184,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, displayPostalCode, debt, tags);
+        return Objects.hash(name, phone, email, address, postalCode, debt, tags);
     }
 
     @Override
