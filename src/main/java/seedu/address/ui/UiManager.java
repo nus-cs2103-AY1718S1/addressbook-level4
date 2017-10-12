@@ -19,7 +19,6 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
-import sun.rmi.runtime.Log;
 
 /**
  * The manager of the UI component.
