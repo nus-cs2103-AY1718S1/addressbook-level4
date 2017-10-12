@@ -38,6 +38,10 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 
+    public void setFocus() {
+        commandTextField.requestFocus();
+    }
+
     /**
      * Handles the key press event, {@code keyEvent}.
      */
