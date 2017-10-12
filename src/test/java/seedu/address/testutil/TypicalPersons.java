@@ -18,6 +18,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.property.PropertyManager;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -57,6 +58,10 @@ public class TypicalPersons {
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+
+    static {
+        PropertyManager.initializePropertyManager();
+    }
 
     private TypicalPersons() {} // prevents instantiation
 
