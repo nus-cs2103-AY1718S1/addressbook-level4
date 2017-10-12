@@ -7,8 +7,6 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.model.Model;
@@ -69,6 +67,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find tag in address book, keyword is same as tag but of different case -> 1 person found */
         command = FindTagCommand.COMMAND_WORD + " FaMiLy";
+        ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -103,15 +102,6 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         command = FindTagCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
-        /* Case: find while a person is selected -> selected card deselected */
-        showAllPersons();
-        selectPerson(Index.fromOneBased(1));
-        assert !getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName);
-        command = FindTagCommand.COMMAND_WORD + " colleague";
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardDeselected();
 
         /* Case: find tag in empty address book -> 0 persons found */
         executeCommand(ClearCommand.COMMAND_WORD);
