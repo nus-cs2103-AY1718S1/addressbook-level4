@@ -70,7 +70,7 @@ public class EditCommand extends UndoableCommand {
         List<ReadOnlyParcel> lastShownList = model.getFilteredParcelList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
         }
 
         ReadOnlyParcel personToEdit = lastShownList.get(index.getZeroBased());
