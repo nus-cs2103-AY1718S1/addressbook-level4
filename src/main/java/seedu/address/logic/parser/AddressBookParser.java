@@ -98,6 +98,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case ToggleTagColorCommand.COMMAND_WORD:
+        case ToggleTagColorCommand.COMMAND_ALIAS:
             return new ToggleTagColorParser().parse(arguments);
 
         case RemarkCommand.COMMAND_WORD:
