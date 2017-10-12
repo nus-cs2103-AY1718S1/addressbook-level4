@@ -125,7 +125,7 @@ public class CommandBoxHelper extends UiPart<Region> {
             if (checkSubset(SelectCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue(SelectCommand.COMMAND_WORD + "\n");
             } else {
-                helperText.setValue(SelectCommand.COMMAND_WORD);
+                helperText.setValue("");
             }
             break;
         case 'u':

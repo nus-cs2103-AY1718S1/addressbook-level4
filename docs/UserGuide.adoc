@@ -50,6 +50,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+====
+*Command Helper*
+
+* When you start typing in the command line, a helper box appears to show you the list of commands available.
+* e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
++
+image::commandboxhelper.PNG[width="790"]
++
+====
+
 === Viewing help : `help`
 
 Format: `help`

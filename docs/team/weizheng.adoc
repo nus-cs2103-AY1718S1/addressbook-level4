@@ -1,0 +1,46 @@
+= Fong Wei Zheng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: OurAb
+OurAb is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Command Box Helper
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+* When you start typing in the command line, a helper box appears to show you the list of commands available.
+* e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
++
+image::commandboxhelper.PNG[width="790"]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Speed up the use of the address book and make it easier for new users to learn the commands quickly.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+image::UiClassDiagram.png[width="800"]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+=== Other contributions
+
+* Updated the GUI color scheme (Alternating tag colours and different command line colour)
