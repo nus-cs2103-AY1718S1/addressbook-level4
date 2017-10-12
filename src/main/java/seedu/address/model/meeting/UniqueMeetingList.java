@@ -10,7 +10,6 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 
@@ -47,7 +46,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throw new DuplicateMeetingException();
         }
         internalList.add(new Meeting(toAdd));
-        internalList.sort((m1,m2)-> m1.getActualDate(m1.getDate().toString())
+        internalList.sort(( m1, m2 )-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 

@@ -157,7 +157,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyMeeting);
 
         Meeting editedMeeting = new Meeting(editedReadOnlyMeeting);
-//        syncMasterTagListWith(editedMeeting);
+        // syncMasterTagListWith(editedMeeting);
         // TODO: the tags master list will be updated even though the below line fails.
         meetings.setMeeting(target, editedMeeting);
     }
