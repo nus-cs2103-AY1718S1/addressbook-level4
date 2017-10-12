@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/TheHommes/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -72,6 +72,23 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorts the list : `sort`
+
+Sorts the list based on given keyword +
+Format: `sort KEYWORD`
+
+****
+* Sorts the list based on their name, phone, email, or address.
+* The keyword is case-insensitive.
+****
+
+Examples:
+
+* `sort name` +
+Sorts the list in alphabetical order of their name.
+* `sort phone` +
+Sorts the list in numerical order of their phone.
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -101,7 +118,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Ha` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
