@@ -20,8 +20,8 @@ public class ToggleTagColorParserTest {
     public void parseTestInputs() throws Exception {
 
         ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand(true, "", "");
-        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand(false,"","");
-        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand(true,"Test","Test2");
+        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand(false, "", "");
+        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand(true, "Test", "Test2");
 
 
         // Random keyword produces ToggleTagColorCommand(true, "", "")
