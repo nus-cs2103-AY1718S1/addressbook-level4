@@ -24,6 +24,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class InfoPanel extends UiPart<Region> {
 
     private static final String FXML = "InfoPanel.fxml";
+    public static final String MESSAGE_INFO_ADDRESS_FIELD = "Address: ";
+    public static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
+    public static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
+    public static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
+    public static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -66,11 +71,11 @@ public class InfoPanel extends UiPart<Region> {
      * @param person the selected person to display the full info of.
      */
     private void loadPersonInfo(ReadOnlyPerson person) {
-        phoneField.setText("HP: ");
-        addressField.setText("Address: ");
-        emailField.setText("Email: ");
-        postalCodeField.setText("S");
-        debtField.setText("Debt: $");
+        phoneField.setText(MESSAGE_INFO_PHONE_FIELD);
+        addressField.setText(MESSAGE_INFO_ADDRESS_FIELD);
+        emailField.setText(MESSAGE_INFO_EMAIL_FIELD);
+        postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
+        debtField.setText(MESSAGE_INFO_DEBT_FIELD);
         bindListeners(person);
     }
 

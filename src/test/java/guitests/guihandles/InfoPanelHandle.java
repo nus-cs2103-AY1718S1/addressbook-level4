@@ -7,8 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
 
 //@@author khooroko
 /**

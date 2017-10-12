@@ -1,20 +1,16 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.InfoPanelHandle;
-import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -40,33 +36,34 @@ public class InfoPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default info panel
-        assertEquals(infoPanelHandle.getAddress(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getAddressField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDebt(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDebtField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPostalCode(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPostalCodeField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getName(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getEmail(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getEmailField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPhone(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPhoneField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getTags(), new ArrayList<>());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddress());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddressField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebt());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebtField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCode());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCodeField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getName());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmail());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmailField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhone());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhoneField());
+        assertEquals(new ArrayList<>(), infoPanelHandle.getTags());
 
         // associated info of a person
         postNow(selectionChangedEventStub);
-        assertEquals(infoPanelHandle.getAddress(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getAddressField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDebt(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getDebtField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPostalCode(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPostalCodeField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getName(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getEmail(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getEmailField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPhone(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getPhoneField(), MESSAGE_EMPTY_STRING);
-        assertEquals(infoPanelHandle.getTags(), new ArrayList<>());
+//        assertEquals(ALICE.getName().toString(), infoPanelHandle.getName());
+//        assertEquals(ALICE.getPhone().toString(), infoPanelHandle.getPhone());
+//        assertEquals(MESSAGE_INFO_PHONE_FIELD, infoPanelHandle.getPhoneField());
+//        assertEquals(ALICE.getEmail().toString(), infoPanelHandle.getEmail());
+//        assertEquals(MESSAGE_INFO_EMAIL_FIELD, infoPanelHandle.getEmailField());
+//        assertEquals(ALICE.getAddress().toString(), infoPanelHandle.getAddress());
+//        assertEquals(MESSAGE_INFO_ADDRESS_FIELD, infoPanelHandle.getAddressField());
+//        assertEquals(ALICE.getPostalCode().toString(), infoPanelHandle.getPostalCode());
+//        assertEquals(MESSAGE_INFO_POSTAL_CODE_FIELD, infoPanelHandle.getPostalCodeField());
+//        assertEquals(ALICE.getDebt().toString(), infoPanelHandle.getDebt());
+//        assertEquals(MESSAGE_INFO_DEBT_FIELD, infoPanelHandle.getDebtField());
+//        assertEquals(ALICE.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()), infoPanelHandle.getTags());
+        assertInfoDisplaysPerson(ALICE, infoPanelHandle);
     }
 
     /**
