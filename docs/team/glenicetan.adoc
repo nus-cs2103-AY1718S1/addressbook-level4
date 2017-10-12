@@ -12,11 +12,11 @@ Immunity Book is a newly conceptualised contact book that is secure, efficient a
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
+#Start of Backup [from: User Guide]#
 
 include::../UserGuide.adoc[tag=undoredo]
 
-#End of Extract#
+#End of Backup#
 
 ---
 
@@ -29,13 +29,13 @@ include::../UserGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=improving-each-component]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add command `backup`
 
 {Explain similar to the Undo/Redo feature above.}
 
