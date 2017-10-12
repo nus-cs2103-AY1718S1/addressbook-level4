@@ -168,6 +168,27 @@ Locates the 2nd person's address in the address book.
 `select 1` +
 Locates the 1st person's address in the results of the `find` command.
 
+=== Getting email addresses : 'copy' [Coming in v2.0]
+
+Alias: 'c'
+
+Outputs to console the email addresses of all person(s) selected by index number(s). +
+Format: 'copy INDEX [OTHER INDICES...]'
+
+****
+* Copies email addresses of people at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
+****
+
+Examples:
+
+* 'copy 1' +
+Outputs the 1st person's email address in console: 'johndoe@example.com'
+* 'copy 1 4 5' +
+Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: 'a@a.com; d@d.com; e@e.com'
+
 === Listing entered commands : `history`
 
 Alias: `his`
@@ -236,7 +257,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Alias: `c`
+Alias: `x`
 
 Clears all entries from the address book. +
 Format: `clear`
