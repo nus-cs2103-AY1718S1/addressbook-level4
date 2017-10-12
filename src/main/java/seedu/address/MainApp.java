@@ -15,8 +15,10 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -52,10 +54,6 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
     protected Stage primaryStage;
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
 
     @Override
     public void init() throws Exception {
@@ -205,6 +203,31 @@ public class MainApp extends Application {
         }
         Platform.exit();
         System.exit(0);
+    }
+
+    @Subscribe
+    public void handleOpenAddressBookRequestEvent(OpenAddressBookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        try {
+            // change addressbook file path
+            setAddressBookFilePath(event.getFilePath());
+
+            init();
+            start(this.primaryStage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setAddressBookFilePath(String addressBookFilePath) {
+        try {
+            userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
+            userPrefs.setAddressBookFilePath(addressBookFilePath);
+            JsonUtil.saveJsonFile(userPrefs, "preferences.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Subscribe

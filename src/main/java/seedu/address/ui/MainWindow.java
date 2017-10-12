@@ -21,6 +21,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.OpenAddressBookRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -219,9 +220,7 @@ public class MainWindow extends UiPart<Region> {
         // Show open file dialog
         File file = fileChooser.showOpenDialog(new Stage());
 
-        if (file != null) {
-            mainApp.start(mainApp.getPrimaryStage());
-        }
+        raise(new OpenAddressBookRequestEvent(file.getPath()));
     }
 
     /**
