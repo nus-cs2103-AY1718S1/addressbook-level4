@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= The Myth's Book - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,6 +13,20 @@ endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+The Myth's Book is an address book dedicated for university students to store useful information such
+as the phone numbers and emails of the people around them. The Myth's Book is a `Command Line Input` based
+software which helps caters to students who are efficient and comfortable in typing out command line inputs to
+manipulate with information of their contacts in the address book.
+
+== About
+
+Feeling lost when using The Myth's Book? Don't worry. This user guide will provide information to help you
+understand the features and commands of the software.
+This user guide will teach you on how to use The Myth's Book effectively and allow
+you to manipulate the necessary information of your contacts efficiently.
 
 == Quick Start
 
