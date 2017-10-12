@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstParcel;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
@@ -42,11 +42,11 @@ public class RedoCommandTest {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         // multiple commands in redoStack
-        deleteFirstPerson(expectedModel);
+        deleteFirstParcel(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack
-        deleteFirstPerson(expectedModel);
+        deleteFirstParcel(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack

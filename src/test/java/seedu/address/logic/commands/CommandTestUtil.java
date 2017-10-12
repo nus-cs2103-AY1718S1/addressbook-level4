@@ -106,9 +106,9 @@ public class CommandTestUtil {
     /**
      * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
      */
-    public static void showFirstPersonOnly(Model model) {
-        ReadOnlyParcel person = model.getAddressBook().getParcelList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
+    public static void showFirstParcelOnly(Model model) {
+        ReadOnlyParcel parcel = model.getAddressBook().getParcelList().get(0);
+        final String[] splitName = parcel.getName().fullName.split("\\s+");
         model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredParcelList().size() == 1;
@@ -117,10 +117,10 @@ public class CommandTestUtil {
     /**
      * Deletes the first parcel in {@code model}'s filtered list from {@code model}'s address book.
      */
-    public static void deleteFirstPerson(Model model) {
-        ReadOnlyParcel firstPerson = model.getFilteredParcelList().get(0);
+    public static void deleteFirstParcel(Model model) {
+        ReadOnlyParcel firstParcel = model.getFilteredParcelList().get(0);
         try {
-            model.deleteParcel(firstPerson);
+            model.deleteParcel(firstParcel);
         } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("Parcel in filtered list must exist in model.", pnfe);
         }

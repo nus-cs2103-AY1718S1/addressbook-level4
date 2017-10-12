@@ -32,31 +32,31 @@ public class AddCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullParcel_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+    public void execute_parcelAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingParcelAdded modelStub = new ModelStubAcceptingParcelAdded();
         Parcel validParcel = new ParcelBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validParcel, modelStub).execute();
+        CommandResult commandResult = getAddCommandForParcel(validParcel, modelStub).execute();
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validParcel), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validParcel), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validParcel), modelStub.parcelsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
+    public void execute_duplicateParcel_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateParcelException();
         Parcel validParcel = new ParcelBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
-        getAddCommandForPerson(validParcel, modelStub).execute();
+        getAddCommandForParcel(validParcel, modelStub).execute();
     }
 
     @Test
@@ -86,7 +86,7 @@ public class AddCommandTest {
     /**
      * Generates a new AddCommand with the details of the given parcel.
      */
-    private AddCommand getAddCommandForPerson(Parcel parcel, Model model) {
+    private AddCommand getAddCommandForParcel(Parcel parcel, Model model) {
         AddCommand command = new AddCommand(parcel);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
@@ -138,7 +138,7 @@ public class AddCommandTest {
     /**
      * A Model stub that always throw a DuplicateParcelException when trying to add a parcel.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateParcelException extends ModelStub {
         @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             throw new DuplicateParcelException();
@@ -153,12 +153,12 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the parcel being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Parcel> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingParcelAdded extends ModelStub {
+        final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
 
         @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
-            personsAdded.add(new Parcel(parcel));
+            parcelsAdded.add(new Parcel(parcel));
         }
 
         @Override

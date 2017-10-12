@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
@@ -53,21 +53,21 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredParcelList().size());
-        ReadOnlyParcel lastPerson = model.getFilteredParcelList().get(indexLastPerson.getZeroBased());
+        Index indexLastParcel = Index.fromOneBased(model.getFilteredParcelList().size());
+        ReadOnlyParcel lastParcel = model.getFilteredParcelList().get(indexLastParcel.getZeroBased());
 
-        ParcelBuilder personInList = new ParcelBuilder(lastPerson);
-        Parcel editedParcel = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
+        Parcel editedParcel = parcelInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
+        EditCommand editCommand = prepareCommand(indexLastParcel, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateParcel(lastPerson, editedParcel);
+        expectedModel.updateParcel(lastParcel, editedParcel);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -75,9 +75,9 @@ public class EditCommandTest {
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL, new EditCommand.EditParcelDescriptor());
-        ReadOnlyParcel editedPerson = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        ReadOnlyParcel editedParcel = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -86,10 +86,10 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() throws Exception {
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
-        ReadOnlyParcel personInFilteredList = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
-        Parcel editedParcel = new ParcelBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
+        ReadOnlyParcel parcelInFilteredList = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        Parcel editedParcel = new ParcelBuilder(parcelInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL,
                 new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
@@ -102,7 +102,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonUnfilteredList_failure() {
+    public void execute_duplicateParcelUnfilteredList_failure() {
         Parcel firstParcel = new Parcel(model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased()));
         EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder(firstParcel).build();
         EditCommand editCommand = prepareCommand(INDEX_SECOND_PARCEL, descriptor);
@@ -111,19 +111,19 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonFilteredList_failure() {
-        showFirstPersonOnly(model);
+    public void execute_duplicateParcelFilteredList_failure() {
+        showFirstParcelOnly(model);
 
         // edit parcel in filtered list into a duplicate in address book
-        ReadOnlyParcel personInList = model.getAddressBook().getParcelList().get(INDEX_SECOND_PARCEL.getZeroBased());
+        ReadOnlyParcel parcelInList = model.getAddressBook().getParcelList().get(INDEX_SECOND_PARCEL.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL,
-                new EditParcelDescriptorBuilder(personInList).build());
+                new EditParcelDescriptorBuilder(parcelInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PARCEL);
     }
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
+    public void execute_invalidParcelIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredParcelList().size() + 1);
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
@@ -136,8 +136,8 @@ public class EditCommandTest {
      * but smaller than size of address book
      */
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
-        showFirstPersonOnly(model);
+    public void execute_invalidParcelIndexFilteredList_failure() {
+        showFirstParcelOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PARCEL;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().size());

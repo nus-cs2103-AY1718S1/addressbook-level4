@@ -28,7 +28,7 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newPerson_success() throws Exception {
+    public void execute_newParcel_success() throws Exception {
         Parcel validParcel = new ParcelBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -39,7 +39,7 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void execute_duplicateParcel_throwsCommandException() {
         Parcel parcelInList = new Parcel(model.getAddressBook().getParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInList, model), model, AddCommand.MESSAGE_DUPLICATE_PARCEL);
     }

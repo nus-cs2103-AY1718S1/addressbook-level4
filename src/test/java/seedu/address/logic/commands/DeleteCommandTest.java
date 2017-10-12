@@ -4,7 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
@@ -29,13 +29,13 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        ReadOnlyParcel parcelToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PARCEL);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, parcelToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteParcel(personToDelete);
+        expectedModel.deleteParcel(parcelToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
@@ -50,23 +50,23 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
-        ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        ReadOnlyParcel parcelToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PARCEL);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, parcelToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteParcel(personToDelete);
-        showNoPerson(expectedModel);
+        expectedModel.deleteParcel(parcelToDelete);
+        showNoParcel(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PARCEL;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -111,7 +111,7 @@ public class DeleteCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoPerson(Model model) {
+    private void showNoParcel(Model model) {
         model.updateFilteredParcelList(p -> false);
 
         assert model.getFilteredParcelList().isEmpty();

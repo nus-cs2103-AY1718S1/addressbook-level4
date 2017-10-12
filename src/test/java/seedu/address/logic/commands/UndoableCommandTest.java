@@ -2,8 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstParcel;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -24,12 +24,12 @@ public class UndoableCommandTest {
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        deleteFirstParcel(expectedModel);
         assertEquals(expectedModel, model);
 
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
-        // undo() should cause the model's filtered list to show all persons
+        // undo() should cause the model's filtered list to show all parcels
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertEquals(expectedModel, model);
@@ -37,11 +37,11 @@ public class UndoableCommandTest {
 
     @Test
     public void redo() {
-        showFirstPersonOnly(model);
+        showFirstParcelOnly(model);
 
-        // redo() should cause the model's filtered list to show all persons
+        // redo() should cause the model's filtered list to show all parcels
         dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        deleteFirstParcel(expectedModel);
         assertEquals(expectedModel, model);
     }
 
@@ -55,11 +55,11 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(0);
+            ReadOnlyParcel parcelToDelete = model.getFilteredParcelList().get(0);
             try {
-                model.deleteParcel(personToDelete);
+                model.deleteParcel(parcelToDelete);
             } catch (ParcelNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                fail("Impossible: parcelToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }
