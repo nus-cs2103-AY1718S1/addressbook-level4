@@ -37,7 +37,7 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
-    Model model;
+    private Model model;
 
     @Before
     public void setUp() {
