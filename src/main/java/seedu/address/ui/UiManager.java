@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -39,11 +40,14 @@ public class UiManager extends ComponentManager implements Ui {
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
+    private boolean logInStatus;
+
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.logInStatus = false;
     }
 
     @Override
@@ -134,6 +138,18 @@ public class UiManager extends ComponentManager implements Ui {
             LoginCommand.setLoginStatus(true);
             //show address book
             Platform.runLater(() -> mainWindow.fillInnerParts());
+        }
+    }
+
+    /**
+     * Handles change internal list event.
+     * Displays the list that user requested(e.g mainlist, blacklist etc)
+     */
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (logInStatus) {
+            mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
         }
     }
 }

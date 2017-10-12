@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Debt> debt;
+    private ObjectProperty<DateBorrow> dateBorrow;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -39,6 +40,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.debt = new SimpleObjectProperty<>(debt);
+        this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -49,6 +51,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
                 source.getDebt(), source.getTags());
+        this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
     }
 
     public void setName(Name name) {
@@ -107,7 +110,6 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author khooroko
     public void setPostalCode(PostalCode postalCode) {
         this.postalCode.set(requireNonNull(postalCode));
     }
@@ -134,6 +136,21 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Debt getDebt() {
         return debt.get();
+    }
+
+    //@@author lawwman
+    public void setDateBorrow(DateBorrow dateBorrow) {
+        this.dateBorrow.set(requireNonNull(dateBorrow));
+    }
+
+    @Override
+    public ObjectProperty<DateBorrow> dateBorrowProperty() {
+        return dateBorrow;
+    }
+
+    @Override
+    public DateBorrow getDateBorrow() {
+        return dateBorrow.get();
     }
 
     //@@author
