@@ -145,28 +145,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given person {@code target} in the blacklist with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
-     *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
-     * @see #syncMasterTagListWith(Person)
-     */
-    public void updateBlacklistedPerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedReadOnlyPerson);
-
-        Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        blacklistedPersons.setPerson(target, editedPerson);
-    }
-
-    /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
