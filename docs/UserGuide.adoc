@@ -239,7 +239,7 @@ Shorthand Format: `c`
 
 === Set Tag Color Mode : `tagcolor`
 
-Sets random colors to tags or remove colors. +
+Sets random colors to tags OR remove colors. +
 Format: `tagcolor` random/off
 
 Sets a color to a specific tag type. +
