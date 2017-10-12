@@ -86,6 +86,10 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
+==== Using Git
+
+We use https://git-scm.com/[Git] as our version control software (VCS). See <<UsingGit#, UsingGit.adoc>> if you find any difficulty when using Git.
+
 == Design
 
 === Architecture
