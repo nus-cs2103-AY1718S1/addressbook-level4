@@ -8,10 +8,10 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Name;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -34,7 +34,8 @@ public class WhyCommandTest {
         Address address = person.getAddress();
         //CommandResult result = new WhyCommand(INDEX_FIRST_PERSON).execute();
         //assertEquals(String.format(SHOWING_WHY_MESSAGE, name, address), result.feedbackToUser);
-        assertEquals(String.format(SHOWING_WHY_MESSAGE, name, address), String.format(SHOWING_WHY_MESSAGE, name, address));
+        assertEquals(String.format(SHOWING_WHY_MESSAGE, name, address),
+                String.format(SHOWING_WHY_MESSAGE, name, address));
     }
 
 }
