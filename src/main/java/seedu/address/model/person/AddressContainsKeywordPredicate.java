@@ -24,4 +24,9 @@ public class AddressContainsKeywordPredicate implements Predicate<ReadOnlyPerson
                 && this.keyword.equals(((AddressContainsKeywordPredicate) other).keyword)); // state check
     }
 
+    @Override
+    public int hashCode() {
+        return keyword.hashCode();
+    }
+
 }

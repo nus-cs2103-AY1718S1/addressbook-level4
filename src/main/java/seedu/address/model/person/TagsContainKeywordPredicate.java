@@ -30,4 +30,9 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
     private boolean personTagsContainKeyword(ReadOnlyPerson person, String keyword) {
         return person.getTags().stream().anyMatch(tag -> tag.tagName.contains(keyword));
     }
+
+    @Override
+    public int hashCode() {
+        return keyword.hashCode();
+    }
 }

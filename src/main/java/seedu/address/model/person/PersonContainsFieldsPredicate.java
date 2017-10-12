@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -8,10 +9,10 @@ import java.util.stream.Collectors;
  * Tests that a {@code ReadOnlyPerson}'s {@code tags} matches all the predicates given.
  */
 public class PersonContainsFieldsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<Predicate> predicates;
+    private final Set<Predicate> predicates;
 
     public PersonContainsFieldsPredicate(List<Predicate> predicates) {
-        this.predicates = predicates;
+        this.predicates = predicates.stream().collect(Collectors.toSet());
     }
 
     @Override
@@ -36,17 +37,6 @@ public class PersonContainsFieldsPredicate implements Predicate<ReadOnlyPerson> 
      * and have the same number of predicates
      */
     public boolean checkEquality(PersonContainsFieldsPredicate other) {
-        List<Predicate> copyList = other.predicates.stream().collect(Collectors.toList());
-
-        //TODO: Remove this nest
-        for (Predicate p1: other.predicates) {
-            for (Predicate p : predicates) {
-                if (p.equals(p1)) {
-                    copyList.remove(p1);
-                    break;
-                }
-            }
-        }
-        return copyList.size() == 0;
+        return predicates.equals(other.predicates);
     }
 }

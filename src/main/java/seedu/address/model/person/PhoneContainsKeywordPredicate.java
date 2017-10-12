@@ -24,4 +24,9 @@ public class PhoneContainsKeywordPredicate implements Predicate<ReadOnlyPerson> 
                 && this.keyword.equals(((PhoneContainsKeywordPredicate) other).keyword)); // state check
     }
 
+    @Override
+    public int hashCode() {
+        return keyword.hashCode();
+    }
+
 }

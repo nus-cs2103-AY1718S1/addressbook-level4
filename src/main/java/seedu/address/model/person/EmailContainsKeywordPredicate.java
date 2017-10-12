@@ -24,4 +24,9 @@ public class EmailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> 
                 && this.keyword.equals(((EmailContainsKeywordPredicate) other).keyword)); // state check
     }
 
+    @Override
+    public int hashCode() {
+        return keyword.hashCode();
+    }
+
 }

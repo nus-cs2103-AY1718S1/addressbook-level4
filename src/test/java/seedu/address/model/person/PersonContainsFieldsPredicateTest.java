@@ -32,11 +32,20 @@ public class PersonContainsFieldsPredicateTest {
                         new AddressContainsKeywordPredicate("address"),
                         new NameContainsKeywordPredicate("name")));
 
+        PersonContainsFieldsPredicate fourthPredicate =
+                new PersonContainsFieldsPredicate(Arrays.asList(
+                        new PhoneContainsKeywordPredicate("234"),
+                        new PhoneContainsKeywordPredicate("234"),
+                        new AddressContainsKeywordPredicate("address"),
+                        new NameContainsKeywordPredicate("name")));
+
+
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
         assertTrue(firstPredicate.equals(secondPredicate));
+        assertTrue(secondPredicate.equals(firstPredicate));
 
         // different types -> returns false
         assertFalse(firstPredicate.equals(1));
@@ -46,6 +55,10 @@ public class PersonContainsFieldsPredicateTest {
 
         // different filter -> returns false
         assertFalse(firstPredicate.equals(thirdPredicate));
+
+        //same function
+        assertTrue(thirdPredicate.equals(fourthPredicate));
+        assertTrue(fourthPredicate.equals(thirdPredicate));
     }
 
     @Test
