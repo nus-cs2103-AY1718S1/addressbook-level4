@@ -158,20 +158,20 @@ public class StringUtilTest {
     }
 
     //---------------- Tests for levenshteinDistance --------------------------------------
-    
+
     @Test
     public void testlevenshteinDistance() {
         // Assert additions and deletions
         assert levenshteinDistance("Bobby", "Bob") == 2;
         assert levenshteinDistance("Alex", "Alexander") == 5;
         assert levenshteinDistance("Alex", "Alxe") == 2;
-        
+
         // Assert substitutions
         assert levenshteinDistance(KEYWORD_MATCHING_MEIER, "Meyer") == 1;
         assert levenshteinDistance("Bazinga", "Bazingy") == 1;
         assert levenshteinDistance("Whoop", "Vroom") == 3;
         assert levenshteinDistance("substitution", "gajgbzbabzil") == "substitution".length();
-        
+
         // Assert case-insensitivity
         assert levenshteinDistance("aaa", "AAA") == 0;
         assert levenshteinDistance("Alex", "alex") == 0;
