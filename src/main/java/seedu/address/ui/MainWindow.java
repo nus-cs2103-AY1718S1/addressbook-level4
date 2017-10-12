@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
@@ -193,10 +194,17 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the theme window.
+     */
     @FXML
     public void handleThemes() {
         ThemesWindow themesWindow = new ThemesWindow();
         themesWindow.show();
+    }
+
+    public void handleChangeTheme(String theme) {
+        getRoot().getStylesheets().add("/view/" + theme);
     }
 
     void show() {
@@ -229,5 +237,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowThemesEvent(ShowThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleThemes();
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme(event.theme);
     }
 }
