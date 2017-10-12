@@ -3,10 +3,8 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.awt.Color;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -23,8 +21,6 @@ import seedu.address.commons.util.CollectionUtil;
  */
 public class UniqueTagList implements Iterable<Tag> {
 
-    private static Random random = new Random(123);
-    private static boolean tagColorOn;
     private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
     /**
      * Constructs empty TagList.
@@ -55,27 +51,49 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Replaces the Tags in this list with those in the argument tag list.
      */
+    public void setTags(Set<Tag> tags, boolean isOn, String tagString, String color) {
+
+        requireAllNonNull(tags);
+
+        if (isOn) {
+            setColor(tags, tagString, color);
+        } else if (!isOn) {
+            setOffColor(tags);
+        }
+        assert CollectionUtil.elementsAreUnique(internalList);
+        internalList.setAll(tags);
+    }
     public void setTags(Set<Tag> tags) {
         requireAllNonNull(tags);
-        if (!tagColorOn) {
-            for (Tag tag : tags) {
-                tag.setTagColor("#dcdcdc");
-                tagColorOn = false;
-            }
-        } else {
-            for (Tag tag : tags) {
-                if (tag.getTagColor() == null || tag.getTagColor().equals("#dcdcdc")) {
-                    float r = random.nextFloat();
-                    float g = random.nextFloat();
-                    float b = random.nextFloat();
-                    Color randomColor = new Color(r, g, b);
-                    tag.setTagColor(convertColorToHexadecimal(randomColor));
-                }
-                tagColorOn = true;
-            }
-        }
         internalList.setAll(tags);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    private void setOffColor(Set<Tag> tags) {
+        for (Tag tag : tags) {
+            tag.setOffColor();
+        }
+    }
+
+    private void setColor(Set<Tag> tags, String tagString, String color) {
+        if (hasAssigned(tagString, color)) {
+            for (Tag tag : tags) {
+                if (tag.tagName.equals(tagString)) {
+                    tag.setColor(color);
+                }
+            }
+        } else {
+            setRandomColor(tags);
+        }
+    }
+
+    private void setRandomColor(Set<Tag> tags) {
+        for (Tag tag : tags) {
+            tag.setRandomColor();
+        }
+    }
+    private boolean hasAssigned(String tagString, String color) {
+        return !"".equals(tagString) && !"".equals(color);
     }
 
     /**
@@ -151,14 +169,6 @@ public class UniqueTagList implements Iterable<Tag> {
         return internalList.hashCode();
     }
 
-    public void setTagsColorOn() {
-        tagColorOn = true;
-    }
-
-    public void setTagsColorOff() {
-        tagColorOn = false;
-    }
-
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
@@ -167,26 +177,4 @@ public class UniqueTagList implements Iterable<Tag> {
             super("Operation would result in duplicate tags");
         }
     }
-
-    /**
-     * Converts a color to hexadecimal string
-     *
-     */
-    private static String convertColorToHexadecimal(Color color) {
-        String hex = Integer.toHexString(color.getRGB() & 0xffffff);
-        if (hex.length() < 6) {
-            if (hex.length() == 5) {
-                hex = "0" + hex;
-            }
-            if (hex.length() == 4) {
-                hex = "00" + hex;
-            }
-            if (hex.length() == 3) {
-                hex = "000" + hex;
-            }
-        }
-        hex = "#" + hex;
-        return hex;
-    }
-
 }

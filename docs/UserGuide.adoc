@@ -237,15 +237,25 @@ Clears all entries from the address book. +
 Format: `clear`
 Shorthand Format: `c`
 
-=== Toggle Tag Color Mode : `tagcolor`
+=== Set Tag Color Mode : `tagcolor`
 
-Changes tag color mode to on/off. +
-Format: `tagcolor On / tagcolor Off`
+Sets random colors to all tags OR remove colors. +
+Format: `tagcolor random/off` +
+Shorthand Format: `tc random/off`
+
+Sets a color to a specific tag type. +
+Format: `tagcolor TAGNAME COLOR` +
+Shorthand Format: `tc TAGNAME COLOR`
 
 [NOTE]
 ====
-Tag color is not fixed. (i.e. when tag color is offed and on again, the color is different)
+Only certain colors can be specified.  +
+To see all the colors that can be specified, refer from +
+https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor +
+and input the color name in english or in hexadecimal form
 ====
+
+
 
 === Adding/Removing Remarks to a person : `remark`
 
@@ -269,6 +279,78 @@ Examples:
 Adds a remark 'Loves coffee' to the 1st person in the list.
 * `remark 1 r/` +
 Clears the existing remark for the 1st person in the list.
+
+=== Customizing Tag Colors : [In Progress]
+****
+* Allows the user to customize a tag's color
+****
+
+=== Deleting all persons with a particular tag : [In Progress]
+****
+* Delete all contacts with a particular tag
+* Basic Error catching: Throws error when tag is not present
+* Potential Upgrades:
+1. Input many tags & delete all persons with that tag
+****
+
+=== Setting Appointments : [Coming in v2.0]
+****
+* Adds/Removes an appointment a person has with the user of MedNus
+* The index refers to the index number shown in the last person listing. +
+The index *must be a positive integer* 1, 2, 3, ...
+* Basic Error catching: When adding appointment, any existing appointments will output an error, +
+prompting the user to remove the appointment first
+* Potential Upgrades: Setting multiple appointments is possible
+****
+
+=== Displaying Appointments : [Coming in v2.0]
+****
+* Displays a list of appointments the Medical Professional has that are upcoming
+* Potential Upgrades: +
+1. Input an integer that limits the maximum number of searches displayed
+2. Auto displays a list of x number of appointments upon starting up MedNus
+3. Highlights the list if appointments are lesser than x days away
+****
+
+=== Adding a Tag to a Person : [Coming in v2.0]
+****
+* Allows the user to add a tag to a person
+* The index refers to the index number shown in the last person listing. +
+The index *must be a positive integer* 1, 2, 3, ...
+* Basic Error catching: Throws error when Person is not present
+* Potential Upgrades:
+1. Adding multiple tags
+2. Customising colors while adding tags
+****
+
+=== Deleting a Person's Tag : [Coming in v2.0]
+****
+* Allows the user to delete a person's Tag
+* The index refers to the index number shown in the last person listing. +
+The index *must be a positive integer* 1, 2, 3, ...
+* Basic Error catching: Throws error when tag is not present
+* Potential Upgrades:
+1. Mass delete tag instead of just a single person
+2. Input many tags & delete all tags with that name
+****
+
+=== Replace Browser Pane : [Coming in v2.0]
+****
+* Replace Browser Pane to an application that is more fitting for a Medical Professional
+* Potential Replacements:
+1. Calendar to mark out all appointments
+2. A View which shows a patient's summarised medical records when looking them up. +
+ Impementation: Use External Medical APIs +
+ https://www.programmableweb.com/category/medical/apis?category=19994
+****
+
+=== Patient's Condition Tag: [Coming in v2.0]
+****
+* Stores the patient's condition as a specialized Tag
+* Potential distinction between a specialized tag and normal tag:
+1. Browser bar goes to a known medical site, showing potential cures for the +
+described condition
+****
 
 === Exiting the program : `exit`
 

@@ -56,16 +56,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setTags(Set<Tag> tags, boolean isOn, String tagString, String color) {
+        this.tags.setTags(tags, isOn, tagString, color);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
-    }
-
-    public void onTagColors() {
-        tags.setTagsColorOn();
-    }
-
-    public void offTagColors() {
-        tags.setTagsColorOff();
     }
 
     /**
@@ -78,7 +74,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
-
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }

@@ -8,22 +8,36 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
 
+    private static final String RANDOM_KEY_WORD = "random";
+    private static final String OFF_KEY_WORD = "off";
+    private static final String MESSAGE_INVALID_COMMAND = "Invalid tagcolor command."
+            + "\n"
+            + "tc: Shorthand equivalent for tagcolor."
+            + "\n"
+            + "tagcolor: TagColor sets color for AddressBook"
+            + "\n"
+            + "Parameters: tagcolor random/off || tagcolor TAGNAME COLOR";
+
     @Override
     public ToggleTagColorCommand parse(String userInput) throws ParseException {
         boolean isOn;
         String cleanUserInput;
         cleanUserInput = userInput.trim();
-        switch (cleanUserInput) {
-        case "on":
-            isOn = true;
-            break;
-        case "off":
-            isOn = false;
-            break;
-        default:
-            throw new ParseException("Invalid tagcolor command.");
+        String[] args = cleanUserInput.split("\\s+");
+        try {
+            switch (args[0]) {
+            case RANDOM_KEY_WORD:
+                isOn = true;
+                break;
+            case OFF_KEY_WORD:
+                isOn = false;
+                break;
+            default:
+                return new ToggleTagColorCommand(true, args[0], args[1]);
+            }
+            return new ToggleTagColorCommand(isOn, "", "");
+        } catch (ArrayIndexOutOfBoundsException exp) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND);
         }
-        return new ToggleTagColorCommand(isOn);
     }
-
 }

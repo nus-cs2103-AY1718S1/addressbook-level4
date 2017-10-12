@@ -2,6 +2,10 @@ package seedu.address.model;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +15,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.testutil.TypicalPersons;
+
+
 
 public class UniqueTagListTest {
 
@@ -31,21 +37,76 @@ public class UniqueTagListTest {
         uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
-        assertTrue(uniqueTagList.contains(new Tag("Test1")));
-        assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa")));
+
+        //Check contains tags
+        assertFalse(uniqueTagList.contains(new Tag("friends", "")));
+        assertFalse(uniqueTagList.contains(new Tag("aaaaaaaa", "")));
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertTrue(tag.getTagColor().equals("#dcdcdc"));
+            assertTrue("grey".equals(tag.getTagColor()));
         }
 
-        uniqueTagList.setTagsColorOn();
         uniqueTagList = new UniqueTagList();
         uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
         uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
         uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
         for (Tag tag : uniqueTagList.asObservableList()) {
-            assertFalse(tag.getTagColor().equals("#dcdcdc"));
+            assertTrue("grey".equals(tag.getTagColor()));
         }
+
+        Tag tag = new Tag("friends", "blue");
+
+        //Test random color
+        tag.setRandomColor();
+        assertFalse("blue".equals(tag.getTagColor()));
+
+        //Test set color
+        tag.setColor("blue");
+        assertTrue("blue".equals(tag.getTagColor()));
+
+        //Test off color
+        tag.setOffColor();
+        assertTrue("grey".equals(tag.getTagColor()));
+
+
+        //New tagList
+        uniqueTagList = new UniqueTagList();
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Set<Tag> tags = new HashSet<>(model.getAddressBook().getTagList());
+
+        //Set all to random colors
+        uniqueTagList.setTags(tags, true, "", "");
+
+        for (Tag tag1 : tags) {
+            assertFalse("grey".equals(tag1.getTagColor()));
+        }
+
+        uniqueTagList = new UniqueTagList();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Set<Tag> tags1 = new HashSet<>(model.getAddressBook().getTagList());
+
+        //Set all to grey
+        uniqueTagList.setTags(tags1, false, "", "");
+
+        for (Tag tag1 : tags) {
+            assertTrue("grey".equals(tag1.getTagColor()));
+        }
+
+        uniqueTagList = new UniqueTagList();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Set<Tag> tags2 = new HashSet<>(model.getAddressBook().getTagList());
+
+        //Set friends to blue
+        uniqueTagList.setTags(tags, true, "friends", "blue");
+
+        for (Tag tagtest : tags2) {
+            if ("friends".equals(tagtest.tagName)) {
+                assertTrue("blue".equals(tagtest.getTagColor()));
+            }
+        }
+
     }
+
+
 }
