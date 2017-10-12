@@ -727,11 +727,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |favourite a contact |it is convenient for me to access
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`**` |user |know which contact I have not viewed for a specified period of time |delete those obsolete contacts
+
+|`**` |user |upload pictures for my contact |I can store memories with my friend
 
 |`**` |user |know the crash report so that when the addressbook crashes |restore backup
 
@@ -739,9 +743,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`**` |user |delete contacts by tag |remove them at one go
 
-|`**` |user | use autocomplete |save typing time
+|`**` |user |import contacts using another xml file |add more contacts at one go
 
-|`*` |user |be able to export my addressbook information  |so that I can import it into another device.
+|`**` |user |use autocomplete |save typing time
+
+|`**` |user |use Facebook to search by email|add my friends to social media easily
+
+|`*` |user |be able to export my addressbook information  |I can import it into another device
 
 |`*` |user |have tag coloring |find the category of contacts I am looking for
 
