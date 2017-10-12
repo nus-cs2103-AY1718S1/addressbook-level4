@@ -21,7 +21,7 @@ Responsibilities:
 '''
 
 === Oscar Wang
-image::oscar_wang.jpg[width="150", align="left"]
+image::oscarwang.jpg[width="150", align="left"]
 {empty}[https://github.com/OscarWang114[github]] [<<oscarwang#, portfolio>>]
 
 Role: Developer +
