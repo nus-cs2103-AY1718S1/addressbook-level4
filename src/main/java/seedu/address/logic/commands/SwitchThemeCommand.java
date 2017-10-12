@@ -1,15 +1,10 @@
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.ui.MainWindow;
-import seedu.address.ui.UiManager;
 
 /**
  * Switches the current theme to a theme identified using it's index from the themes list in address book.
