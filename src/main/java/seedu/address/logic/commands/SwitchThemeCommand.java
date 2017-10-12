@@ -2,14 +2,16 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Switches the current theme to a theme identified using it's index from the themes list in address book.
  */
-public class SwitchThemeCommand extends Command {
+public class SwitchThemeCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "switchtheme";
     public static final String COMMAND_ALIAS = "st";
@@ -29,7 +31,7 @@ public class SwitchThemeCommand extends Command {
 
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         ArrayList<String> themesList = model.getThemesList();
 
@@ -38,6 +40,8 @@ public class SwitchThemeCommand extends Command {
         }
 
         String themeToChange = themesList.get(targetIndex.getZeroBased());
+
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent(themeToChange));
 
         return new CommandResult(String.format(MESSAGE_SWITCH_THEME_SUCCESS, themeToChange));
     }
