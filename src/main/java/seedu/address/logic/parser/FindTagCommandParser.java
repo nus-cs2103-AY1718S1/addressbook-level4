@@ -12,7 +12,7 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
 /**
  * Parses input arguments and creates a new FindTagCommand object
  */
-public class FindTagParser implements Parser<FindTagCommand> {
+public class FindTagCommandParser implements Parser<FindTagCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindTagCommand
      * and returns an FindTagCommand object for execution.
@@ -30,4 +30,5 @@ public class FindTagParser implements Parser<FindTagCommand> {
 
         return new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(tags)));
     }
+
 }

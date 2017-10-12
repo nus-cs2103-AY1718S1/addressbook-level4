@@ -94,4 +94,5 @@ public class FindTagCommandTest {
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
+
 }
