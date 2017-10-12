@@ -30,8 +30,7 @@ public class StringUtil {
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        String preppedSentence = sentence;
-        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+        String[] wordsInPreppedSentence = sentence.split("\\s+");
 
         for (String wordInSentence: wordsInPreppedSentence) {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
@@ -58,17 +57,37 @@ public class StringUtil {
 
         String preppedWord = word.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(preppedWord.split("\\d{3,}").length == 1, "Word parameter should be a single word");
 
         String preppedEmailSentence = emailSentence.substring(emailSentence.indexOf('@') + 1);
         String finalPreppedEmailSentence = preppedEmailSentence.substring(0,preppedEmailSentence.indexOf('.'));
 
+        return finalPreppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase());
 
-        if (finalPreppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase())) {
-            return true;
-        }
+    }
 
-        return false;
+
+    /**
+     * Returns true if the {@code emailsentence} contains the {@code email}.
+     *   Ignores case, but a full word match is required.
+     *   <br>examples:<pre>
+     *       containsEmailgnoreCase("abc@example.com", "e/example") == true
+     *       containsEmailgnoreCase(("abc@example.com", "example") == false
+     *       containsEmailgnoreCase(("abc@example.com", "e/EXAMPLE") == true//Case insensitive
+     *       </pre>
+     * @param phoneSentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a email domain with .com
+     */
+    public static boolean containsPhoneIgnoreCase(String phoneSentence, String word) {
+        requireNonNull(phoneSentence);
+        requireNonNull(word);
+
+        String preppedPhone = word.trim();
+        checkArgument(!preppedPhone.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedPhone.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        return phoneSentence.equalsIgnoreCase(preppedPhone);
+
     }
 
     /**

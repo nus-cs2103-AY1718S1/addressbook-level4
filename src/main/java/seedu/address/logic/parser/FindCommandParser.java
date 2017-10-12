@@ -54,6 +54,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 predicate = new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
             }
 
+            else if ( argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            predicate = new PhoneContainsKeywordsPredicate(Arrays.asList(keywords));
+        }
+
             return new FindCommand(predicate);
 
 
