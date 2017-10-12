@@ -1,3 +1,4 @@
+
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -5,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -71,7 +73,10 @@ public class RemarkCommand extends UndoableCommand {
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
-
+    /**
+     * @param personToEdit
+     * @return
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
