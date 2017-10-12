@@ -12,7 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -24,7 +24,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyParcel> filteredPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -60,20 +60,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    public synchronized void deletePerson(ReadOnlyParcel target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+    public synchronized void addPerson(ReadOnlyParcel person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+    public void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
@@ -84,16 +84,16 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Filtered Parcel List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
      * {@code addressBook}
      */
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    public ObservableList<ReadOnlyParcel> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public void updateFilteredPersonList(Predicate<ReadOnlyParcel> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }

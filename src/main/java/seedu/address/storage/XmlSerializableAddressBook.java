@@ -11,7 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,8 +44,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
+    public ObservableList<ReadOnlyParcel> getPersonList() {
+        final ObservableList<ReadOnlyParcel> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {

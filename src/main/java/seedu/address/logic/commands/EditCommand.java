@@ -21,7 +21,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parcel;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -67,13 +67,13 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyParcel> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        ReadOnlyParcel personToEdit = lastShownList.get(index.getZeroBased());
         Parcel editedParcel = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
@@ -91,7 +91,7 @@ public class EditCommand extends UndoableCommand {
      * Creates and returns a {@code Parcel} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Parcel createEditedPerson(ReadOnlyPerson personToEdit,
+    private static Parcel createEditedPerson(ReadOnlyParcel personToEdit,
 											 EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 

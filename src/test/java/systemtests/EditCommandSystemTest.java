@@ -43,7 +43,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parcel;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -88,7 +88,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        ReadOnlyPerson personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        ReadOnlyParcel personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
         editedParcel = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedParcel);
 
@@ -193,9 +193,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyPerson, Index)} except that
      * the browser url and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyPerson, Index)
+     * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyParcel, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyPerson editedPerson) {
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyParcel editedPerson) {
         assertCommandSuccess(command, toEdit, editedPerson, null);
     }
 
@@ -207,7 +207,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @param toEdit the index of the current model's filtered list.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyPerson editedPerson,
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyParcel editedPerson,
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {

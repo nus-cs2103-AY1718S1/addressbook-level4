@@ -15,10 +15,10 @@ import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 
 public class ParcelListPanelTest extends GuiUnitTest {
-    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
+    private static final ObservableList<ReadOnlyParcel> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
@@ -38,7 +38,7 @@ public class ParcelListPanelTest extends GuiUnitTest {
     public void display() {
         for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
             personListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
-            ReadOnlyPerson expectedPerson = TYPICAL_PERSONS.get(i);
+            ReadOnlyParcel expectedPerson = TYPICAL_PERSONS.get(i);
             PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
 
             assertCardDisplaysPerson(expectedPerson, actualCard);

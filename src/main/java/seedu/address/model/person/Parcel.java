@@ -16,7 +16,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Parcel in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Parcel implements ReadOnlyPerson {
+public class Parcel implements ReadOnlyParcel {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
@@ -39,9 +39,9 @@ public class Parcel implements ReadOnlyPerson {
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyParcel.
      */
-    public Parcel(ReadOnlyPerson source) {
+    public Parcel(ReadOnlyParcel source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getTags());
     }
@@ -125,8 +125,8 @@ public class Parcel implements ReadOnlyPerson {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+                || (other instanceof ReadOnlyParcel // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyParcel) other));
     }
 
     @Override

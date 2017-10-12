@@ -48,7 +48,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -62,7 +62,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        ReadOnlyPerson toAdd = AMY;
+        ReadOnlyParcel toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
@@ -86,7 +86,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a duplicate person except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
-        // AddressBook#addPerson(ReadOnlyPerson)
+        // AddressBook#addPerson(ReadOnlyParcel)
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
@@ -196,16 +196,16 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * the browser url and selected card remains unchanged.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(ReadOnlyPerson toAdd) {
+    private void assertCommandSuccess(ReadOnlyParcel toAdd) {
         assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
      * instead.
-     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
+     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyParcel)
      */
-    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
+    private void assertCommandSuccess(String command, ReadOnlyParcel toAdd) {
         Model expectedModel = getModel();
         try {
             expectedModel.addPerson(toAdd);
@@ -221,7 +221,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyParcel)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);

@@ -13,7 +13,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parcel;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -45,7 +45,7 @@ public class XmlAdaptedPerson {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedPerson(ReadOnlyPerson source) {
+    public XmlAdaptedPerson(ReadOnlyParcel source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;

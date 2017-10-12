@@ -21,7 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
@@ -97,7 +97,7 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public void addPerson(ReadOnlyParcel person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
 
@@ -113,24 +113,24 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        public void deletePerson(ReadOnlyParcel target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+        public void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
 
         @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        public ObservableList<ReadOnlyParcel> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public void updateFilteredPersonList(Predicate<ReadOnlyParcel> predicate) {
             fail("This method should not be called.");
         }
     }
@@ -140,7 +140,7 @@ public class AddCommandTest {
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public void addPerson(ReadOnlyParcel person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
         }
 
@@ -157,7 +157,7 @@ public class AddCommandTest {
         final ArrayList<Parcel> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public void addPerson(ReadOnlyParcel person) throws DuplicatePersonException {
             personsAdded.add(new Parcel(person));
         }
 

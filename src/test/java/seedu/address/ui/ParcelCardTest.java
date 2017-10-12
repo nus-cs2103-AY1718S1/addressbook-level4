@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
 import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.testutil.PersonBuilder;
 
 public class ParcelCardTest extends GuiUnitTest {
@@ -70,7 +70,7 @@ public class ParcelCardTest extends GuiUnitTest {
      * Asserts that {@code personCard} displays the details of {@code expectedPerson} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(PersonCard personCard, ReadOnlyPerson expectedPerson, int expectedId) {
+    private void assertCardDisplay(PersonCard personCard, ReadOnlyParcel expectedPerson, int expectedId) {
         guiRobot.pauseForHuman();
 
         PersonCardHandle personCardHandle = new PersonCardHandle(personCard.getRoot());

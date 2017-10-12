@@ -11,7 +11,7 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -51,7 +51,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
+    public void setPersons(List<? extends ReadOnlyParcel> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
 
@@ -83,7 +83,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+    public void addPerson(ReadOnlyParcel p) throws DuplicatePersonException {
         Parcel newParcel = new Parcel(p);
         syncMasterTagListWith(newParcel);
         // TODO: the tags master list will be updated even though the below line fails.
@@ -93,8 +93,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * Replaces the given person {@code target} in the list with {@code editedReadOnlyParcel}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyParcel}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
@@ -102,11 +102,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @see #syncMasterTagListWith(Parcel)
      */
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
+    public void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedReadOnlyParcel)
             throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedReadOnlyPerson);
+        requireNonNull(editedReadOnlyParcel);
 
-        Parcel editedParcel = new Parcel(editedReadOnlyPerson);
+        Parcel editedParcel = new Parcel(editedReadOnlyParcel);
         syncMasterTagListWith(editedParcel);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
@@ -148,7 +148,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+    public boolean removePerson(ReadOnlyParcel key) throws PersonNotFoundException {
         if (persons.remove(key)) {
             return true;
         } else {
@@ -171,7 +171,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
+    public ObservableList<ReadOnlyParcel> getPersonList() {
         return persons.asObservableList();
     }
 

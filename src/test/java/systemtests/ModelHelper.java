@@ -6,19 +6,19 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import seedu.address.model.Model;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyParcel;
 
 /**
  * Contains helper methods to set up {@code Model} for testing.
  */
 public class ModelHelper {
-    private static final Predicate<ReadOnlyPerson> PREDICATE_MATCHING_NO_PERSONS = unused -> false;
+    private static final Predicate<ReadOnlyParcel> PREDICATE_MATCHING_NO_PERSONS = unused -> false;
 
     /**
      * Updates {@code model}'s filtered list to display only {@code toDisplay}.
      */
-    public static void setFilteredList(Model model, List<ReadOnlyPerson> toDisplay) {
-        Optional<Predicate<ReadOnlyPerson>> predicate =
+    public static void setFilteredList(Model model, List<ReadOnlyParcel> toDisplay) {
+        Optional<Predicate<ReadOnlyParcel>> predicate =
                 toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
         model.updateFilteredPersonList(predicate.orElse(PREDICATE_MATCHING_NO_PERSONS));
     }
@@ -26,14 +26,14 @@ public class ModelHelper {
     /**
      * @see ModelHelper#setFilteredList(Model, List)
      */
-    public static void setFilteredList(Model model, ReadOnlyPerson... toDisplay) {
+    public static void setFilteredList(Model model, ReadOnlyParcel... toDisplay) {
         setFilteredList(model, Arrays.asList(toDisplay));
     }
 
     /**
-     * Returns a predicate that evaluates to true if this {@code ReadOnlyPerson} equals to {@code other}.
+     * Returns a predicate that evaluates to true if this {@code ReadOnlyParcel} equals to {@code other}.
      */
-    private static Predicate<ReadOnlyPerson> getPredicateMatching(ReadOnlyPerson other) {
+    private static Predicate<ReadOnlyParcel> getPredicateMatching(ReadOnlyParcel other) {
         return person -> person.equals(other);
     }
 }
