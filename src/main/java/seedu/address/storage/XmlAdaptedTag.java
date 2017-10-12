@@ -31,7 +31,6 @@ public class XmlAdaptedTag {
     public XmlAdaptedTag(Tag source) {
         tagName = source.tagName;
         tagColor = source.getTagColor();
-        System.out.println("this is called " + tagColor);
     }
 
     /**
