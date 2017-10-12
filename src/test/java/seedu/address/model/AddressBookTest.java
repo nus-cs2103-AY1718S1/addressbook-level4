@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalEvents.Event1;
-import static seedu.address.testutil.TypicalEvents.Event2;
+import static seedu.address.testutil.TypicalEvents.EVENT1;
+import static seedu.address.testutil.TypicalEvents.EVENT2;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -56,7 +56,7 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        List<Event> newEvents = Arrays.asList(new Event(Event1), new Event(Event2));
+        List<Event> newEvents = Arrays.asList(new Event(EVENT1), new Event(EVENT2));
         AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags);
 
         thrown.expect(AssertionError.class);
@@ -90,7 +90,8 @@ public class AddressBookTest {
         private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
 
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
+                        Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.events.setAll(events);

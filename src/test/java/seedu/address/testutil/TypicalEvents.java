@@ -25,15 +25,19 @@ import seedu.address.model.person.exceptions.DuplicateEventException;
  */
 public class TypicalEvents {
 
-    public static final ReadOnlyEvent Event1 = new EventBuilder().withEventName("HHN 6001").withDateTime("221215 8:30am")
+    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withEventName("HHN 6001")
+            .withDateTime("221215 8:30am")
             .withVenue("123, Sentosa, #08-111").build();
-    public static final ReadOnlyEvent Event2 = new EventBuilder().withEventName("ZoukOut 6001").withDateTime("251217 10:30pm")
+    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withEventName("ZoukOut 6001")
+            .withDateTime("251217 10:30pm")
             .withVenue("123, Clarke Quay #01-111").build();
 
     // Manually added
-    public static final ReadOnlyEvent EventM1 = new EventBuilder().withEventName("Volleyball Tour 17").withDateTime("251217 8:30am")
+    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withEventName("Volleyball Tour 17")
+            .withDateTime("251217 8:30am")
             .withVenue("OCBC ARENA Hall 3, #01-111").build();
-    public static final ReadOnlyEvent EventM2 = new EventBuilder().withEventName("Meeting with Jason").withDateTime("251116 2:30pm")
+    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withEventName("Meeting with Jason")
+            .withDateTime("251116 2:30pm")
             .withVenue("123, Sheraton Towers , #06-111").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
@@ -62,6 +66,6 @@ public class TypicalEvents {
     }
 
     public static List<ReadOnlyEvent> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(Event1, Event2));
+        return new ArrayList<>(Arrays.asList(EVENT1, EVENT2));
     }
 }
