@@ -17,6 +17,12 @@ public class XmlAdaptedPropertyInfo {
     @XmlElement
     private String regex;
 
+    /**
+     * Constructs an XmlAdaptedTag.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedPropertyInfo() {}
+
     public XmlAdaptedPropertyInfo(String shortName, String fullName, String message, String regex) {
         this.shortName = shortName;
         this.fullName = fullName;

@@ -54,7 +54,7 @@ public class Person implements ReadOnlyPerson {
         } catch (DuplicatePropertyException e) {
             // TODO: Better error handling
             e.printStackTrace();
-            System.err.println("This should not happen");
+            System.err.println("This should never happen.");
         }
 
         // protect internal tags from changes in the arg list
