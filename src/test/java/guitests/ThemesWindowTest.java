@@ -15,14 +15,14 @@ public class ThemesWindowTest extends AddressBookGuiTest {
             + "tests on headless mode. See UsingGradle.adoc on how to do so.";
 
     @Test
-    public void openHelpWindow() {
+    public void openThemesWindow() {
         //use command box
         runCommand(ThemeListCommand.COMMAND_WORD);
         assertThemesWindowOpen();
     }
 
     /**
-     * Asserts that the help window is open, and closes it after checking.
+     * Asserts that the themes window is open, and closes it after checking.
      */
     private void assertThemesWindowOpen() {
         assertTrue(ERROR_MESSAGE, ThemesWindowHandle.isWindowPresent());
