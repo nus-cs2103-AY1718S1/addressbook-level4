@@ -18,12 +18,12 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  *
  * Supports a minimal set of list operations.
  *
- * @see Person#equals(Object)
+ * @see Parcel#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniquePersonList implements Iterable<Person> {
+public class UniquePersonList implements Iterable<Parcel> {
 
-    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Parcel> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
@@ -45,7 +45,7 @@ public class UniquePersonList implements Iterable<Person> {
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
         }
-        internalList.add(new Person(toAdd));
+        internalList.add(new Parcel(toAdd));
     }
 
     /**
@@ -67,7 +67,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
 
-        internalList.set(index, new Person(editedPerson));
+        internalList.set(index, new Parcel(editedPerson));
     }
 
     /**
@@ -91,7 +91,7 @@ public class UniquePersonList implements Iterable<Person> {
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         final UniquePersonList replacement = new UniquePersonList();
         for (final ReadOnlyPerson person : persons) {
-            replacement.add(new Person(person));
+            replacement.add(new Parcel(person));
         }
         setPersons(replacement);
     }
@@ -104,7 +104,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<Parcel> iterator() {
         return internalList.iterator();
     }
 

@@ -5,16 +5,16 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Parcel's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Parcel names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
-     * Person names should only contain alphanumeric characters and spaces, and it should not be blank
+     * Parcel names should only contain alphanumeric characters and spaces, and it should not be blank
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";

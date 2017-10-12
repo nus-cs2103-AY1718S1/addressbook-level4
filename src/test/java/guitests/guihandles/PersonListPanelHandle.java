@@ -28,7 +28,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
         List<PersonCard> personList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (personList.size() != 1) {
-            throw new AssertionError("Person list size expected 1.");
+            throw new AssertionError("Parcel list size expected 1.");
         }
 
         return new PersonCardHandle(personList.get(0).getRoot());
@@ -62,7 +62,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
         Optional<PersonCard> matchingCard = cards.stream().filter(card -> card.person.equals(person)).findFirst();
 
         if (!matchingCard.isPresent()) {
-            throw new IllegalArgumentException("Person does not exist.");
+            throw new IllegalArgumentException("Parcel does not exist.");
         }
 
         guiRobot.interact(() -> {
@@ -87,7 +87,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
                 .filter(card -> card.person.equals(person))
                 .map(card -> new PersonCardHandle(card.getRoot()))
                 .findFirst();
-        return handle.orElseThrow(() -> new IllegalArgumentException("Person does not exist."));
+        return handle.orElseThrow(() -> new IllegalArgumentException("Parcel does not exist."));
     }
 
     /**

@@ -9,44 +9,44 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import org.junit.Test;
 
 import guitests.guihandles.PersonCardHandle;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Parcel;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
-public class PersonCardTest extends GuiUnitTest {
+public class ParcelCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(personWithNoTags, 1);
+        Parcel parcelWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        PersonCard personCard = new PersonCard(parcelWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithNoTags, 1);
+        assertCardDisplay(personCard, parcelWithNoTags, 1);
 
         // with tags
-        Person personWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(personWithTags, 2);
+        Parcel parcelWithTags = new PersonBuilder().build();
+        personCard = new PersonCard(parcelWithTags, 2);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithTags, 2);
+        assertCardDisplay(personCard, parcelWithTags, 2);
 
-        // changes made to Person reflects on card
+        // changes made to Parcel reflects on card
         guiRobot.interact(() -> {
-            personWithTags.setName(ALICE.getName());
-            personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
-            personWithTags.setPhone(ALICE.getPhone());
-            personWithTags.setTags(ALICE.getTags());
+            parcelWithTags.setName(ALICE.getName());
+            parcelWithTags.setAddress(ALICE.getAddress());
+            parcelWithTags.setEmail(ALICE.getEmail());
+            parcelWithTags.setPhone(ALICE.getPhone());
+            parcelWithTags.setTags(ALICE.getTags());
         });
-        assertCardDisplay(personCard, personWithTags, 2);
+        assertCardDisplay(personCard, parcelWithTags, 2);
     }
 
     @Test
     public void equals() {
-        Person person = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(person, 0);
+        Parcel parcel = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(parcel, 0);
 
-        // same person, same index -> returns true
-        PersonCard copy = new PersonCard(person, 0);
+        // same parcel, same index -> returns true
+        PersonCard copy = new PersonCard(parcel, 0);
         assertTrue(personCard.equals(copy));
 
         // same object -> returns true
@@ -58,12 +58,12 @@ public class PersonCardTest extends GuiUnitTest {
         // different types -> returns false
         assertFalse(personCard.equals(0));
 
-        // different person, same index -> returns false
-        Person differentPerson = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentPerson, 0)));
+        // different parcel, same index -> returns false
+        Parcel differentParcel = new PersonBuilder().withName("differentName").build();
+        assertFalse(personCard.equals(new PersonCard(differentParcel, 0)));
 
-        // same person, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(person, 1)));
+        // same parcel, different index -> returns false
+        assertFalse(personCard.equals(new PersonCard(parcel, 1)));
     }
 
     /**

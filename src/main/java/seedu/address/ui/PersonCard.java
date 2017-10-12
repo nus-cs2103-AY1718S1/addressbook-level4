@@ -12,7 +12,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Parcel}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -55,7 +55,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * Binds the individual UI elements to observe their respective {@code Parcel} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {

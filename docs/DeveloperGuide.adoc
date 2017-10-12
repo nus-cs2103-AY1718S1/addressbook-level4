@@ -176,7 +176,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a parcel) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
@@ -262,18 +262,18 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th parcel in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new parcel.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the parcel was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
@@ -320,7 +320,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
-**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Pros:** Will use less memory (e.g. for `delete`, just save the parcel being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
@@ -487,7 +487,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all parcels in the list.
 +
 ****
 * Hints
@@ -509,9 +509,9 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/parcel/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a parcel, and link:{repoURL}/src/main/java/seedu/address/model/parcel/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each parcel, and remove the `tag` from each parcel.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -521,7 +521,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different tags inside parcel cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
 +
 **Before**
 +
@@ -574,8 +574,8 @@ image::getting-started-ui-status-after.png[width="500"]
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of parcels when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of parcels whenever there are new changes to the addressbook.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
@@ -600,15 +600,15 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a parcel specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first parcel to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first parcel.
 
 ==== Step-by-step Instructions
 
@@ -642,7 +642,7 @@ for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each parcel later.
 
 **Main:**
 
@@ -654,11 +654,11 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/parcel/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/parcel/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -666,12 +666,12 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/parcel/ReadOnlyPerson.java[`ReadOnlyPerson`].
 
 **Main:**
 
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
+. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/parcel/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/parcel/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the parcel will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
@@ -680,7 +680,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 **Main:**
 
 . Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/parcel/ReadOnlyPerson.java[`ReadOnlyPerson`].
 
 **Tests:**
 
@@ -696,14 +696,14 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
+. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `parcelWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/parcel/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
 
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a parcel.
 
 **Tests:**
 
@@ -725,17 +725,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |onging user |have a backup of my addressbook data |restore my addressbook if the storage file becomes corrupted
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new parcel |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a parcel |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a parcel by name |locate details of parcels without having to go through the entire list
 
 |`* * *` |user |add a new location |store important locations and establishments
 
 |`* * *` |user |filter contacts by tags |view specific contacts that are assigned with specific tags
 
-|`* * *` |user |the browser to automatically search for the address of the selected person in Google Maps | so that I can automatically get information on how to get to an address automatically, on click.
+|`* * *` |user |the browser to automatically search for the address of the selected parcel in Google Maps | so that I can automatically get information on how to get to an address automatically, on click.
 
 |`* * *` |user who travels a lot |to know the shortest distance from one contact's address to another |
 
@@ -763,7 +763,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have the option of adding a birthday to a contact |store the addresses of my contacts
 
-|`* *` |forgetful user |be reminded of a person's birthday (if valid) |in case I forget the date
+|`* *` |forgetful user |be reminded of a parcel's birthday (if valid) |in case I forget the date
 
 |`* *` |thoughtful user |view the birthdays of my contacts in sorted order |know whose birthday is coming up
 
@@ -791,7 +791,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user involved in many group projects or activities |create telegram group chats of contacts tagged with the same tag |add contacts into a group chat easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many parcels in the address book |sort parcels by name |locate a parcel easily
 |=======================================================================
 
 {More to be added}
@@ -802,14 +802,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete parcel
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list parcels
+2.  AddressBook shows a list of parcels
+3.  User requests to delete a specific parcel in the list
+4.  AddressBook deletes the parcel
 +
 Use case ends
 
@@ -828,24 +828,24 @@ Use case ends
 Use case resumes at step 2
 
 [discrete]
-=== Use case: Add person by prompt
+=== Use case: Add parcel by prompt
 
 *MSS*
 
-1.  User requests to add persons without further details
-2.  AddressBook prompts user to input name of person of person to add
-3.  User inputs name of person as requested
-4.  AddressBook prompts user to input phone number of person to add
+1.  User requests to add parcels without further details
+2.  AddressBook prompts user to input name of parcel of parcel to add
+3.  User inputs name of parcel as requested
+4.  AddressBook prompts user to input phone number of parcel to add
 5.  User inputs phone number as requested
-6.  AddressBook prompts user to input email of person to add
+6.  AddressBook prompts user to input email of parcel to add
 7.  User inputs email as requested
-8.  AddressBook prompts user to input address of person to add
+8.  AddressBook prompts user to input address of parcel to add
 9.  User inputs address as requested
-10.  AddressBook prompts user to input tags of person to add
+10.  AddressBook prompts user to input tags of parcel to add
 11.  User inputs tags as requested (optional)
-12.  AddressBook prompts user to input birthday of person to add
+12.  AddressBook prompts user to input birthday of parcel to add
 13.  User inputs birthday as requested
-14.  AddressBook adds person (optional)
+14.  AddressBook adds parcel (optional)
 +
 Use case ends
 
@@ -896,7 +896,7 @@ Use case resumes at step 12
 Use case resumes at step 14
 
 [none]
-* 14a. AddressBook shows error message if same person found
+* 14a. AddressBook shows error message if same parcel found
 +
 Use case ends
 
@@ -906,9 +906,9 @@ Use case ends
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to upload image of a specific person in the list
+1.  User requests to list parcels
+2.  AddressBook shows a list of parcels
+3.  User requests to upload image of a specific parcel in the list
 4.  AddressBook prompts for location of image
 5.  User inputs file path
 6.  AddressBook updates image
@@ -951,9 +951,9 @@ Use case ends
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to select specific person
+1.  User requests to list parcels
+2.  AddressBook shows a list of parcels
+3.  User requests to select specific parcel
 4.  AddressBook prompts for which details to not encode
 5.  User inputs flags of details to not encode
 6.  AddressBook returns encoded string
@@ -979,10 +979,10 @@ Use case resumes at step 4
 
 *MSS*
 
-1.  User requests to decode person details
+1.  User requests to decode parcel details
 2.  AddressBook shows decoded details and prompts user on whether to save contact
 4.  User accepts save
-5.  AddressBook saves decoded person's contact
+5.  AddressBook saves decoded parcel's contact
 +
 Use case ends
 
@@ -1006,7 +1006,7 @@ Use case ends
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 parcels without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Each Command should take at most 1 second to finish execution.
 .  Should be able to handle any valid or invalid user input.
@@ -1048,7 +1048,7 @@ A contact detail that is not meant to be shared with others
 Hash String
 
 ....
-An encoded string that contains the contact details of a particular person
+An encoded string that contains the contact details of a particular parcel
 ....
 
 [appendix]

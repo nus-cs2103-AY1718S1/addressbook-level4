@@ -10,7 +10,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * A utility class for Person.
+ * A utility class for Parcel.
  */
 public class PersonUtil {
 

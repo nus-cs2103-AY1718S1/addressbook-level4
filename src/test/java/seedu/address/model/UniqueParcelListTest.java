@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.UniquePersonList;
 
-public class UniquePersonListTest {
+public class UniqueParcelListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

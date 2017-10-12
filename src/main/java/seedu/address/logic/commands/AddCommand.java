@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Parcel;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -37,13 +37,13 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private final Parcel toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
     public AddCommand(ReadOnlyPerson person) {
-        toAdd = new Person(person);
+        toAdd = new Parcel(person);
     }
 
     @Override

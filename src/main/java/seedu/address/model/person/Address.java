@@ -5,13 +5,13 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's address in the address book.
+ * Represents a Parcel's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, cannot be blank and must end with 'S' or 's' appended "
+            "Parcel addresses can take any values, cannot be blank and must end with 'S' or 's' appended "
                     + "with 6 digits seperated from the rest of the address by one or multiple space(s)";
 
     /*

@@ -24,7 +24,7 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Parcel} to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withPerson(ReadOnlyPerson person) {
         try {

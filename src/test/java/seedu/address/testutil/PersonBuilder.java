@@ -6,14 +6,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Parcel;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
- * A utility class to help with building Person objects.
+ * A utility class to help with building Parcel objects.
  */
 public class PersonBuilder {
 
@@ -23,7 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String DEFAULT_TAGS = "friends";
 
-    private Person person;
+    private Parcel parcel;
 
     public PersonBuilder() {
         try {
@@ -32,9 +32,9 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.parcel = new Parcel(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
         } catch (IllegalValueException ive) {
-            throw new AssertionError("Default person's values are invalid.");
+            throw new AssertionError("Default parcel's values are invalid.");
         }
     }
 
@@ -42,15 +42,15 @@ public class PersonBuilder {
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
     public PersonBuilder(ReadOnlyPerson personToCopy) {
-        this.person = new Person(personToCopy);
+        this.parcel = new Parcel(personToCopy);
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Parcel} that we are building.
      */
     public PersonBuilder withName(String name) {
         try {
-            this.person.setName(new Name(name));
+            this.parcel.setName(new Name(name));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
@@ -58,11 +58,11 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Parcel} that we are building.
      */
     public PersonBuilder withTags(String ... tags) {
         try {
-            this.person.setTags(SampleDataUtil.getTagSet(tags));
+            this.parcel.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }
@@ -70,11 +70,11 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Sets the {@code Address} of the {@code Parcel} that we are building.
      */
     public PersonBuilder withAddress(String address) {
         try {
-            this.person.setAddress(new Address(address));
+            this.parcel.setAddress(new Address(address));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
@@ -82,11 +82,11 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Phone} of the {@code Parcel} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
         try {
-            this.person.setPhone(new Phone(phone));
+            this.parcel.setPhone(new Phone(phone));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
         }
@@ -94,19 +94,19 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Email} of the {@code Parcel} that we are building.
      */
     public PersonBuilder withEmail(String email) {
         try {
-            this.person.setEmail(new Email(email));
+            this.parcel.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
         return this;
     }
 
-    public Person build() {
-        return this.person;
+    public Parcel build() {
+        return this.parcel;
     }
 
 }

@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class PostalCode {
 
     public static final String MESSAGE_POSTAL_CODE_CONSTRAINTS =
-            "Person's postal code should start with 'S' or 's' appended with 6 digits";
+            "Parcel's postal code should start with 'S' or 's' appended with 6 digits";
 
     /*
      * Postal Code should contain 's' or 'S' appended with  6 digits, and it should not be blank
