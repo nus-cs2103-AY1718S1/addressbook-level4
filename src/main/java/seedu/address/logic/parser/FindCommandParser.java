@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -12,7 +10,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindSpecificCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.PersonContainsSpecifiedKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsSpecifiedKeywordsPredicate;
+import seedu.address.model.person.TagContainsSpecifiedKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -56,14 +55,16 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] keyWords = arguments.split("\\s+");
 
-        if (prefix.equals(PREFIX_PHONE)){
-            return new FindSpecificCommand(new PersonContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
+        if (prefix.equals("n/")){
+            return new FindSpecificCommand(new NameContainsKeywordsPredicate(Arrays.asList(keyWords)));
         }
-        else if (prefix.equals(PREFIX_TAG)){
-            return new FindSpecificCommand(new PersonContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
+        else if (prefix.equals("p/")){
+            return new FindSpecificCommand(new PhoneContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
         }
+        else if (prefix.equals("t/"))
+            return new FindSpecificCommand(new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
 
-        return new FindSpecificCommand(new PersonContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
+        return null;
     }
 
 }
