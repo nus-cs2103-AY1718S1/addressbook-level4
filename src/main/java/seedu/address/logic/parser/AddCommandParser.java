@@ -46,9 +46,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyParcel person = new Parcel(name, phone, email, address, tagList);
+            ReadOnlyParcel parcel = new Parcel(name, phone, email, address, tagList);
 
-            return new AddCommand(person);
+            return new AddCommand(parcel);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
