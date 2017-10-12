@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.TaskBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -74,6 +75,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate the model has changed */
+    private void indicateTaskBookChanged() {
+        raise(new TaskBookChangedEvent(taskBook));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -91,7 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addTask(ReadOnlyTask task) throws DuplicateTaskException {
         taskBook.addTask(task);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        indicateAddressBookChanged();
+        indicateTaskBookChanged();
     }
 
     @Override
