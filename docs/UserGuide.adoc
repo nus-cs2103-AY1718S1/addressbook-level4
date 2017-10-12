@@ -143,10 +143,9 @@ Format: `hide INDEX`
 Examples:
 
 * `hide 2`
-Deletes the 2nd person in the address book.
+Hides the 2nd person in the address book.
 
-
-=== Deleting a person : `delete`
+=== Deleting person(s) : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -154,14 +153,15 @@ Format: `delete INDEX`
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *can be a positive integer* 1, 2, 3, ...
+* The index *can be multiple integers with a space in between* 1 2 3 ...
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 2 3 4` +
+Deletes the 2nd, 3rd and 4th person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
