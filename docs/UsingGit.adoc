@@ -1,0 +1,28 @@
+= Using Git
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+
+https://git-scm.com/[Git] is a popular distributed version control software (VCS). It is used to track changes in
+computer files and coordinating work on those files among multiple people. It is primarily used for source code
+management in software development,but it can be used to keep track of changes in any set of files.
+
+== Why Git?
+
+https://en.wikipedia.org/wiki/Linus_Torvalds[Linus Torvalds] created Git in 2005 and he once wrote in the `README` file:
+
+****
+The name "git" was given by Linus Torvalds when he wrote the very first version. He described the tool as "the stupid
+content tracker" and the name as (depending on your way):
+
+- random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact that
+it is a mispronunciation of "get" may or may not be relevant.
+- stupid. contemptible and despicable. simple. Take your pick from the dictionary of slang.
+- "global information tracker": you're in a good mood, and it actually works for you. Angels sing, and a light suddenly fills the room.
+- "g*dd*mn idiotic truckload of sh*t": when it breaks
+****
+
