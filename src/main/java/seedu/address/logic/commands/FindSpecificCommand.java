@@ -11,7 +11,7 @@ public class FindSpecificCommand extends Command {
     public static final String COMMAND_WORD = "finds";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "the specified keywords (non case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " p/91234567";
 
