@@ -16,6 +16,7 @@ image::damithc.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<srivatsa#, portfolio>>]
 
 Role: Project Advisor
+Responsibilities: Model
 
 '''
 
@@ -24,21 +25,21 @@ image::liuhang0213.jp1g[width="150", align="left"]
 {empty}[http://github.com/liuhang0213[github]] [<<liuhang#, portfolio>>]
 
 Role: Developer +
-Storage
+Responsibilities: Storage
 
 '''
 
 === Martyn
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<martyn#, portfolio>>]
+image::martyn-wong.jpg[width="150", align="left"]
+{empty}[http://github.com/martyn-wong[github]] [<<martyn#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Logic
 
 '''
 
 === Fong Wei Zheng
-image::m133225.jpg[width="150", align="left"]
+image::fongwz.jpg[width="150", align="left"]
 {empty}[https://github.com/fongwz[github]] [<<weizheng#, portfolio>>]
 
 Role: Developer +
