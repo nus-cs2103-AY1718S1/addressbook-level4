@@ -1,10 +1,13 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -41,6 +44,20 @@ public class FindCommandParserTest {
         // multiple whitespaces between keywords
         assertParseSuccess(parser,
                 " \n n/Alice a/Big Road\n  \ne/email@email.com\t t/friend   p/111\t", expectedFindCommand);
+    }
+
+    @Test
+    public void unknown_prefix() {
+        try {
+            Method m = parser.getClass().getDeclaredMethod("valueAndPrefixIntoPredicate", String.class, Prefix.class);
+            m.setAccessible(true);
+            Predicate p =
+                    (Predicate) m.invoke(parser, "UNKNOWN_PREFIX", new Prefix("UNKNOWN"));
+            assertEquals(p, new NameContainsKeywordPredicate("UNKNOWN_PREFIX"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert false;
+        }
     }
 
 }

@@ -30,7 +30,7 @@ public class RemarkCommand extends UndoableCommand {
         + PREFIX_REMARK + "Likes to swim.";
 
     private static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    private static final String MESSAGE_DELETE_REMARK_SUCESS = "Removed remark from Person: %1$s";
+    private static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
     private static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
@@ -79,7 +79,7 @@ public class RemarkCommand extends UndoableCommand {
         if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
         } else {
-            return String.format(MESSAGE_DELETE_REMARK_SUCESS, personToEdit);
+            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
         }
     }
 
