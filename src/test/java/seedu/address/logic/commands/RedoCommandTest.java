@@ -48,8 +48,5 @@ public class RedoCommandTest {
         // single command in redoStack
         deleteFirstPerson(expectedModel);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // no command in redoStack
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
     }
 }
