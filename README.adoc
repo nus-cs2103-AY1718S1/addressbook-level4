@@ -1,4 +1,4 @@
-= Project LISA: Levels Integrated Secretarial Agent
+= LISA: Levels Integrated Secretarial Agent
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
