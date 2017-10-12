@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-OurAb is being developed developed by the https://github.com/orgs/CS2103AUG2017-F09-B4/people[F09-B4] team. +
+NetworkAB is an addressbook developed by team https://github.com/orgs/CS2103AUG2017-F09-B4/people[F09-B4], modified from AddressBook - Level 4 developed by https://github.com/se-edu/addressbook-level4[se-edu]. +
 {empty} +
 We are a team based in the http://www.nus.edu.sg/[National University of Singapore], with students from +
 http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[School of Computer Engineering].
@@ -12,10 +12,11 @@ http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[S
 == Project Team
 
 === Srivatsa
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<srivatsa#, portfolio>>]
+image::sri-vatsa.jpg[width="150", align="left"]
+{empty}[https://github.com/Sri-vatsa[github]] [<<srivatsa#, portfolio>>]
 
-Role: Project Advisor
+Role: Developer +
+Responsibilities: Model
 
 '''
 
