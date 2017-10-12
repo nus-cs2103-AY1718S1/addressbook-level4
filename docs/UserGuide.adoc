@@ -152,6 +152,11 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Remarking a person : `remark`
+
+Add a remark to a person in the contact list. +
+Format: `edit INDEX [r/REMARK]`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
