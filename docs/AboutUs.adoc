@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::EricLoh.jpg[width="150", align="left"]
 {empty}[https://github.com/Ericloh[github]] [<<ericloh#, portfolio>>]
 
-Role: Developer +
+Role: Developer + Integration + Deliverables and Deadlines
 Responsibilities: UI
 
 '''
@@ -32,7 +32,7 @@ Responsibilities: Logic
 image::jeremylong.JPG[width="150", align="left"]
 {empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
 
-Role: Developer + Testing + Integration + Deliverables and Deadlines + Documentation +
+Role: Developer + Testing + Documentation
 Responsibilities: Storage
 
 '''
