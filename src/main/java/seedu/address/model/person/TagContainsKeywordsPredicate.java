@@ -6,11 +6,13 @@ import java.util.List;
 
 import java.util.function.Predicate;
 
+
 import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the keywords given.
  */
+
 public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
@@ -23,7 +25,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         String tag = Arrays.toString(person.getTags().toArray())
                 .replaceAll("[\\[\\](),{}]", "");
         return keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag, keyword));
     }
 
     @Override
@@ -34,4 +36,3 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 }
-
