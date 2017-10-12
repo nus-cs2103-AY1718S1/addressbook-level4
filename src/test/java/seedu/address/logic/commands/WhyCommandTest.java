@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
