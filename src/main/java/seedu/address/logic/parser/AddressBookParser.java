@@ -55,7 +55,7 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        CommandType commandType = getCommandType(commandWord);
+        CommandType commandType = getCommandType(commandWord.toLowerCase());
 
         switch (commandType) {
 
