@@ -52,22 +52,19 @@ public class FindTagCommandTest {
         // different types -> returns false
         assertFalse(findFirstCommand.equals(1));
 
-        // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
-
         // different person -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void executeZeroKeywordsNoPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindTagCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void executeMultipleKeywordsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindTagCommand command = prepareCommand("family colleague owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, CARL, DANIEL));
