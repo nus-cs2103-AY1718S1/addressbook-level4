@@ -12,7 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import org.junit.Test;
 
 public class CliSyntaxTest {
-    
+
     @Test
     public void assertValidSortArgument() {
         assert isValidSortArgument(new SortArgument(PREFIX_NAME.toString()));

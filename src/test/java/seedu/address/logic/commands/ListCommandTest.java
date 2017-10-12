@@ -88,84 +88,84 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void executeListIsNotFilteredShowsSameList() {
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
+    public void executeListIsFilteredShowsEverything() {
         showFirstPersonOnly(model);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByNameDefault_showsSorted() {
+    public void executeListIsSortedByNameDefaultShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_NAME_DEFAULT);
         assertCommandSuccess(listCommandNameDefault, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByNameDescending_showsSorted() {
+    public void executeListIsSortedByNameDescendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_NAME_DESCENDING);
         assertCommandSuccess(listCommandNameDescending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByNameAscending_showsSorted() {
+    public void executeListIsSortedByNameAscendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_NAME_ASCENDING);
         assertCommandSuccess(listCommandNameAscending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByPhoneDefault_showsSorted() {
+    public void executeListIsSortedByPhoneDefaultShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_PHONE_DEFAULT);
         assertCommandSuccess(listCommandPhoneDefault, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByPhoneDescending_showsSorted() {
+    public void executeListIsSortedByPhoneDescendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_PHONE_DESCENDING);
         assertCommandSuccess(listCommandPhoneDescending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByPhoneAscending_showsSorted() {
+    public void executeListIsSortedByPhoneAscendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_PHONE_ASCENDING);
         assertCommandSuccess(listCommandPhoneAscending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByEmailDefault_showsSorted() {
+    public void executeListIsSortedByEmailDefaultShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_EMAIL_DEFAULT);
         assertCommandSuccess(listCommandEmailDefault, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByEmailDescending_showsSorted() {
+    public void executeListIsSortedByEmailDescendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_EMAIL_DESCENDING);
         assertCommandSuccess(listCommandEmailDescending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByEmailAscending_showsSorted() {
+    public void executeListIsSortedByEmailAscendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_EMAIL_ASCENDING);
         assertCommandSuccess(listCommandEmailAscending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByAddressDefault_showsSorted() {
+    public void executeListIsSortedByAddressDefaultShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_ADDRESS_DEFAULT);
         assertCommandSuccess(listCommandAddressDefault, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByAddressDescending_showsSorted() {
+    public void executeListIsSortedByAddressDescendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_ADDRESS_DESCENDING);
         assertCommandSuccess(listCommandAddressDescending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsSortedByAddressAscending_showsSorted() {
+    public void executeListIsSortedByAddressAscendingShowsSorted() {
         sortAllPersons(expectedModel, SORT_ARGUMENT_ADDRESS_ASCENDING);
         assertCommandSuccess(listCommandAddressAscending, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }

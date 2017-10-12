@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
@@ -162,20 +163,21 @@ public class StringUtilTest {
     @Test
     public void testlevenshteinDistance() {
         // Assert additions and deletions
-        assert levenshteinDistance("Bobby", "Bob") == 2;
-        assert levenshteinDistance("Alex", "Alexander") == 5;
-        assert levenshteinDistance("Alex", "Alxe") == 2;
+        assertEquals(levenshteinDistance("Bobby", "Bob"), 2);
+        assertEquals(levenshteinDistance("Bobby", "Bob"), 2);
+        assertEquals(levenshteinDistance("Alex", "Alexander"), 5);
+        assertEquals(levenshteinDistance("Alex", "Alxe"), 2);
 
         // Assert substitutions
-        assert levenshteinDistance(KEYWORD_MATCHING_MEIER, "Meyer") == 1;
-        assert levenshteinDistance("Bazinga", "Bazingy") == 1;
-        assert levenshteinDistance("Whoop", "Vroom") == 3;
-        assert levenshteinDistance("substitution", "gajgbzbabzil") == "substitution".length();
+        assertEquals(levenshteinDistance(KEYWORD_MATCHING_MEIER, "Meyer") , 1);
+        assertEquals(levenshteinDistance("Bazinga", "Bazingy"), 1);
+        assertEquals(levenshteinDistance("Whoop", "Vroom"), 3);
+        assertEquals(levenshteinDistance("substitution", "gajgbzbabzil"), "substitution".length());
 
         // Assert case-insensitivity
-        assert levenshteinDistance("aaa", "AAA") == 0;
-        assert levenshteinDistance("Alex", "alex") == 0;
-        assert levenshteinDistance("ALEX", "alex") == 0;
+        assertEquals(levenshteinDistance("aaa", "AAA"), 0);
+        assertEquals(levenshteinDistance("Alex", "alex"), 0);
+        assertEquals(levenshteinDistance("ALEX", "alex"), 0);
     }
 
 

@@ -207,7 +207,7 @@ public class Person implements ReadOnlyPerson {
      * Returns the compareTo integer value for a specified sortArgument.
      * @param otherPerson to be compared to
      * @param sortArgument sortArgument formatted field of the person to be compared
-     * @return object.compareTo(other) value for the two persons or 
+     * @return object.compareTo(other) value for the two persons or
      * object.hashCode().compareTo(other.hashCode()) if sort argument is invalid.
      */
     @Override

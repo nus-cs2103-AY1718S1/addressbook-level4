@@ -18,8 +18,6 @@ import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DESCENDIN
 
 import java.util.List;
 
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**

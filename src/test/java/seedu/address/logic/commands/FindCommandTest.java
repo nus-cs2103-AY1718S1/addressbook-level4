@@ -74,98 +74,98 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void executeZeroKeywordsNoPersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void executeMultipleKeywordsMultiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByNameDefault_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByNameDefaultShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_NAME_DEFAULT);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByNameDescending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByNameDescendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_NAME_DESCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA, ELLE, CARL));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByNameAscending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByNameAscendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_NAME_ASCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByPhoneDefault_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByPhoneDefaultShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_PHONE_DEFAULT);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, CARL));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByPhoneDescending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByPhoneDescendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_PHONE_DESCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA, ELLE));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByPhoneAscending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByPhoneAscendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_PHONE_ASCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, CARL));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByEmailDefault_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByEmailDefaultShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_EMAIL_DEFAULT);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA, ELLE));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByEmailDescending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByEmailDescendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_EMAIL_DESCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, CARL));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByEmailAscending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByEmailAscendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_EMAIL_ASCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA, ELLE));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByAddressDefault_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByAddressDefaultShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_ADDRESS_DEFAULT);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA, ELLE, CARL));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByAddressDescending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByAddressDescendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_ADDRESS_DESCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleKeywordsSortedByAddressAscending_showsMultiplePersonsSorted() {
+    public void executeMultipleKeywordsSortedByAddressAscendingShowsMultiplePersonsSorted() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz " + SORT_ARGUMENT_ADDRESS_ASCENDING);
         assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA, ELLE, CARL));
