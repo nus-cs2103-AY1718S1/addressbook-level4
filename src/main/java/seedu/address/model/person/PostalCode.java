@@ -1,15 +1,15 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's postal code in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPostalCode(String)}
  */
 public class PostalCode {
-    public static final String MESSAGE_POSTAL_CODE_CONSTRAINTS =
+    public static final String MESSAGE_POSTALCODE_CONSTRAINTS =
             "Postal code can only be 6 digits";
     public static final String POSTAL_CODE_VALIDATION_REGEX = "\\d{6}";
 
@@ -23,7 +23,7 @@ public class PostalCode {
         requireNonNull(postalCode);
         String trimmedPostalCode = postalCode.trim();
         if (!isValidPostalCode(trimmedPostalCode)) {
-            throw new IllegalValueException(MESSAGE_POSTAL_CODE_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_POSTALCODE_CONSTRAINTS);
         }
         this.value = trimmedPostalCode;
     }
