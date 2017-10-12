@@ -26,14 +26,14 @@ public class TagCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     
     private final Index[] indices;
-    private final Set<Tag> tags;
+    private final Set<Tag> newTags;
     
     public TagCommand(Index[] indices, Set<Tag> tagList) {
         requireNonNull(indices);
         requireNonNull(tagList);
         
         this.indices = indices;
-        tags = tagList;
+        newTags = tagList;
     }
 
     @Override
@@ -48,10 +48,11 @@ public class TagCommand extends UndoableCommand {
             ReadOnlyPerson personToEdit = lastShownList.get(currentIndex.getZeroBased());
 
             Set<Tag> oldTags = personToEdit.getTags();
-            tags.addAll(oldTags);
+            Set<Tag> allTags = newTags;
+            allTags.addAll(oldTags);
 
             EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-            editPersonDescriptor.setTags(tags);
+            editPersonDescriptor.setTags(allTags);
             Person editedPerson = EditCommand.createEditedPerson(personToEdit, editPersonDescriptor);
 
             try {
@@ -61,6 +62,8 @@ public class TagCommand extends UndoableCommand {
             } catch (PersonNotFoundException pnfe) {
                 throw new AssertionError("The target person cannot be missing");
             }
+            
+            allTags.removeAll(oldTags);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_TAG_PERSONS_SUCCESS);
@@ -70,6 +73,6 @@ public class TagCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TagCommand // instanceof handles nulls
-                && tags.equals(((TagCommand) other).tags));
+                && newTags.equals(((TagCommand) other).newTags));
     }
 }
