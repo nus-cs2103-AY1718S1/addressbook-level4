@@ -19,8 +19,9 @@ import seedu.address.model.UserPrefs;
  */
 public class StorageManager extends ComponentManager implements Storage {
 
-    private static final String BACKUP_FILE_PREFIX = "addr_backup_";
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
+    private static final String READ_FILE_MESSAGE = "Attempting to read to data file: ";
+    private static final String WRITE_FILE_MESSAGE = "Attempting to write to data file: ";
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
@@ -63,7 +64,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
+        logger.fine(READ_FILE_MESSAGE + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
 
@@ -74,16 +75,14 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
-        logger.fine("Attempting to write to data file: " + filePath);
+        logger.fine(WRITE_FILE_MESSAGE + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        String backupFilePath = BACKUP_FILE_PREFIX + addressBookStorage.getAddressBookFilePath() + ".xml";
-        saveAddressBook(addressBook, backupFilePath);
+        addressBookStorage.backupAddressBook(addressBook);
     }
-
 
     @Override
     @Subscribe

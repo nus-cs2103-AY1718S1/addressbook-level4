@@ -18,6 +18,8 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
 
+    // Creates a new folder for all backup data
+    private static final String BACKUP_FILE_PREFIX = "backup_";
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
@@ -76,7 +78,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        // See https://github.com/se-edu/addressbook-level4/issues/708
+        String backupFilePath = BACKUP_FILE_PREFIX + getAddressBookFilePath();
+        saveAddressBook(addressBook, backupFilePath);
     }
 
 }
