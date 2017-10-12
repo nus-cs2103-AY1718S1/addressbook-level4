@@ -2,13 +2,14 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.model.person.Person;
 import seedu.address.commons.events.BaseEvent;
+import seedu.address.model.person.ReadOnlyPerson;
 
 
 public class LocateCommandEvent extends BaseEvent{
 
-    private Person person;
+    private ReadOnlyPerson person;
 
-    public LocateCommandEvent(Person person){
+    public LocateCommandEvent(ReadOnlyPerson person){
         this.person = person;
     }
 
@@ -17,7 +18,7 @@ public class LocateCommandEvent extends BaseEvent{
         return this.getClass().getSimpleName();
     }
 
-    public Person getPerson() {
+    public ReadOnlyPerson getPerson() {
         return person;
     }
 }
