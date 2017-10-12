@@ -104,7 +104,6 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
