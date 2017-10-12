@@ -55,7 +55,7 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane parcelListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -130,7 +130,7 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         parcelListPanel = new ParcelListPanel(logic.getFilteredParcelList());
-        personListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
+        parcelListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
