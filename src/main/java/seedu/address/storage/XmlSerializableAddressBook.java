@@ -21,7 +21,7 @@ import seedu.address.model.tag.Tag;
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedParcel> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
 
@@ -39,7 +39,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
      */
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
-        persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        persons.addAll(src.getPersonList().stream().map(XmlAdaptedParcel::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 

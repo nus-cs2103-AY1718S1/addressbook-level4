@@ -19,7 +19,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Parcel.
  */
-public class XmlAdaptedPerson {
+public class XmlAdaptedParcel {
 
     @XmlElement(required = true)
     private String name;
@@ -34,18 +34,18 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedParcel.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedParcel() {}
 
 
     /**
      * Converts a given Parcel into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedParcel
      */
-    public XmlAdaptedPerson(ReadOnlyParcel source) {
+    public XmlAdaptedParcel(ReadOnlyParcel source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
