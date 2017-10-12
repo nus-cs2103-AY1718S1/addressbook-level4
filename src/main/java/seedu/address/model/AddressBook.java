@@ -179,7 +179,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void sort() {
         persons.sort();
-     }
+    }
 
     //// tag-level operations
 
