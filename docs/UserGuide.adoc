@@ -72,6 +72,7 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
 === Sorts the list : `sort`
 
 Sorts the list based on given keyword +
@@ -88,7 +89,7 @@ Examples:
 Sorts the list in alphabetical order of their name.
 * `sort phone` +
 Sorts the list in numerical order of their phone.
-
+// end::sort[]
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
