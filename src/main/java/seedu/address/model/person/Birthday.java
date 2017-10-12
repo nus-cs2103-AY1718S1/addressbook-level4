@@ -24,11 +24,11 @@ public class Birthday {
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        String TrimmedBirthday= birthday.trim();
-        if (!isValidBirthday(TrimmedBirthday)) {
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
-        this.value = TrimmedBirthday;
+        this.value = trimmedBirthday;
     }
 
     /**
