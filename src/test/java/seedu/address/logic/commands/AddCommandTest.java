@@ -105,6 +105,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -121,6 +126,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -133,7 +143,23 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void changeListTo(String string) {
             fail("This method should not be called.");
         }
 
@@ -159,6 +185,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            throw new DuplicatePersonException();
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
@@ -172,6 +203,11 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            personsAdded.add(new Person(person));
+        }
+
+        @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             personsAdded.add(new Person(person));
         }
 
