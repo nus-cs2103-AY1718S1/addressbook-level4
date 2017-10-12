@@ -18,7 +18,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
 public class ParcelListPanelTest extends GuiUnitTest {
-    private static final ObservableList<ReadOnlyParcel> TYPICAL_PERSONS =
+    private static final ObservableList<ReadOnlyParcel> TYPICAL_PARCELS =
             FXCollections.observableList(getTypicalParcels());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PARCEL);
@@ -27,7 +27,7 @@ public class ParcelListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        ParcelListPanel parcelListPanel = new ParcelListPanel(TYPICAL_PERSONS);
+        ParcelListPanel parcelListPanel = new ParcelListPanel(TYPICAL_PARCELS);
         uiPartRule.setUiPart(parcelListPanel);
 
         parcelListPanelHandle = new ParcelListPanelHandle(getChildNode(parcelListPanel.getRoot(),
@@ -36,12 +36,12 @@ public class ParcelListPanelTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
-            parcelListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
-            ReadOnlyParcel expectedPerson = TYPICAL_PERSONS.get(i);
+        for (int i = 0; i < TYPICAL_PARCELS.size(); i++) {
+            parcelListPanelHandle.navigateToCard(TYPICAL_PARCELS.get(i));
+            ReadOnlyParcel expectedParcel = TYPICAL_PARCELS.get(i);
             ParcelCardHandle actualCard = parcelListPanelHandle.getParcelCardHandle(i);
 
-            assertCardDisplaysParcel(expectedPerson, actualCard);
+            assertCardDisplaysParcel(expectedParcel, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }

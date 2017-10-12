@@ -67,10 +67,10 @@ public class ParcelCardTest extends GuiUnitTest {
     }
 
     /**
-     * Asserts that {@code parcelCard} displays the details of {@code expectedPerson} correctly and matches
+     * Asserts that {@code parcelCard} displays the details of {@code expectedParcel} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(ParcelCard parcelCard, ReadOnlyParcel expectedPerson, int expectedId) {
+    private void assertCardDisplay(ParcelCard parcelCard, ReadOnlyParcel expectedParcel, int expectedId) {
         guiRobot.pauseForHuman();
 
         ParcelCardHandle parcelCardHandle = new ParcelCardHandle(parcelCard.getRoot());
@@ -79,6 +79,6 @@ public class ParcelCardTest extends GuiUnitTest {
         assertEquals(Integer.toString(expectedId) + ". ", parcelCardHandle.getId());
 
         // verify parcel details are displayed correctly
-        assertCardDisplaysParcel(expectedPerson, parcelCardHandle);
+        assertCardDisplaysParcel(expectedParcel, parcelCardHandle);
     }
 }
