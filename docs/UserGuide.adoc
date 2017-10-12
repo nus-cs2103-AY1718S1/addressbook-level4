@@ -112,6 +112,36 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by names or phone numbers or tags: `finds`
+
+Finds persons who contain any of the given keywords. +
+Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
+
+****
+* The search for name is case insensitive. e.g `hans` will match `Hans`
+* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
+* The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
+* Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `finds n/John` +
+Returns `john` and `John Doe`
+* `finds n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `finds p/91234567` +
+Returns any person having phone number `91234567` exactly
+* `finds p/91234567 12345678` +
+Returns any person having phone number `91234567` or `12345678` exactly
+* `finds t/[friends]` +
+Returns any person having tag `[friends]` exactly
+* `finds t/[friends] [colleagues]` +
+Returns any person having tags `[friends]` or `[colleagues]` exactly
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
