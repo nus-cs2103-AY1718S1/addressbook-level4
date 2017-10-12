@@ -215,43 +215,30 @@ public class Person implements ReadOnlyPerson {
     public int compareTo(ReadOnlyPerson otherPerson, SortArgument sortArgument) {
         if (sortArgument.equals(SORT_ARGUMENT_NAME_DEFAULT)) {
             return getName().compareTo(otherPerson.getName());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_DEFAULT)) {
             return getPhone().compareTo(otherPerson.getPhone());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_EMAIL_DEFAULT)) {
             return getEmail().compareTo(otherPerson.getEmail());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_DEFAULT)) {
             return getAddress().compareTo(otherPerson.getAddress());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_NAME_DESCENDING)) {
             return otherPerson.getName().compareTo(getName());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_DESCENDING)) {
             return otherPerson.getPhone().compareTo(getPhone());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_EMAIL_DESCENDING)) {
             return otherPerson.getEmail().compareTo(getEmail());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_DESCENDING)) {
             return otherPerson.getAddress().compareTo(getAddress());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_NAME_ASCENDING)) {
             return getName().compareTo(otherPerson.getName());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_ASCENDING)) {
             return getPhone().compareTo(otherPerson.getPhone());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_EMAIL_ASCENDING)) {
             return getEmail().compareTo(otherPerson.getEmail());
-
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_ASCENDING)) {
             return getAddress().compareTo(otherPerson.getAddress());
-
         } else {
             return 0;
-
         }
     }
 
