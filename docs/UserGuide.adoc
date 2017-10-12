@@ -55,6 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
+* You can use the arrow keys to select commands that are displayed and press tab to make it autofill for you in the command line `Coming in v2.0`
 +
 image::commandboxhelper.PNG[width="790"]
 +
@@ -260,3 +261,14 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Features coming in v2.0
+
+* *Enhanced tag* - see more in-depth details of a tag
+* *Address book letters* - user is able to view contacts by starting letter, similar to current address books
+* *Sort by tag*
+* *Finding linkedin contacts*
+* *Remarks feature*
+* *Find nearest meeting location* - finds a common meeting point based on users' addresses
+* *Add meeting time* - Adds a meeting time to the contacts that is removed automatically when the time is reached
+* *Retrieve meeting of the day* - Shows all current meetings for today that have been scheduled
