@@ -72,6 +72,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorting all persons : `sort`
+
+Sorts all persons in the address book by their names alphabetically. +
+Format: `sort`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
