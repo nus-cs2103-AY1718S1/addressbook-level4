@@ -72,6 +72,18 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
+=== Listing all persons in order: `sort`
+
+Shows a list of all persons in the address book by the indicated format. Currently only supports name. +
++ Available FILTERTYPES: name
+Format: `list FILTERTYPE`
+
+Examples:
+
+* 'sort name'
+// end::sort[]
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +

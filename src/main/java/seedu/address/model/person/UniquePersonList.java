@@ -97,9 +97,11 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    /**
+     * Sorts the internal list by order of a comparator, which by default sorts by name.
+     */
     public void sortPersons() {
-        Comparator<ReadOnlyPerson> personComparator
-                = new Comparator<ReadOnlyPerson>() {
+        Comparator<ReadOnlyPerson> personComparator = new Comparator<ReadOnlyPerson>() {
 
             public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
 

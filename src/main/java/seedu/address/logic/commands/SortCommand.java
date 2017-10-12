@@ -10,7 +10,9 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "s";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the address book in ascending order by an indicated format. NAME or DEFAULT only."
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Sorts the address book in ascending order by an indicated format. "
+            + "Currently supports NAME only. "
             + "Parameters: "
             + COMMAND_WORD
             + " [name/email/phone/address/tag]\n"
@@ -22,7 +24,7 @@ public class SortCommand extends Command {
 
     private String filterType;
 
-    public SortCommand (String filterType){
+    public SortCommand (String filterType) {
         //Filter type can be null to signify default listing
         //Todo: Allow sort to accept different parameters for filter types (eg. First Name, Last Name)
         this.filterType = filterType;

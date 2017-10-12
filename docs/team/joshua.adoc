@@ -17,6 +17,8 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 include::../UserGuide.adoc[tag=remark]
 
+include::../UserGuide.adoc[tag=sort]
+
 #End of Extract#
 
 ---
@@ -30,7 +32,7 @@ include::../UserGuide.adoc[tag=remark]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=remark]
+include::../DeveloperGuide.adoc[tag=undoredo]
 
 #End of Extract#
 
@@ -39,6 +41,12 @@ include::../DeveloperGuide.adoc[tag=remark]
 === Enhancement Proposed: Add command `remark`
 
 The remark command allows additional information to be displayed on a person's card.
+
+=== Enhancement Proposed: Add command `sort`
+
+The sort command would allow the user to display their list of contacts in an order that they prefer. Some users may want to
+view their contacts in order by First Name, Last Name, Email Address, Address or simply by the date they added the contact.
+
 
 === Other contributions
 
