@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
@@ -36,6 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
 
     /**
@@ -49,6 +51,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
+
         this.userPrefs = userPrefs;
     }
 
@@ -79,8 +83,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removeBlacklistedPerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        addressBook.addBlacklistedPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -134,6 +151,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     //@@author
+
+    @Override
+    public void changeListTo(String listName) {
+        raise(new ChangeInternalListEvent(listName));
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -145,10 +168,25 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
+    }
+
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredBlacklistedPersons.setPredicate(predicate);
     }
 
     @Override
@@ -166,7 +204,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons);
     }
 
 }

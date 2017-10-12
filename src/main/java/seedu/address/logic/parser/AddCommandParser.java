@@ -54,6 +54,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Debt debt = ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
+            //DateBorrow field is created within Person class
             ReadOnlyPerson person = new Person(name, phone, email, address, postalCode, debt, tagList);
 
             return new AddCommand(person);
