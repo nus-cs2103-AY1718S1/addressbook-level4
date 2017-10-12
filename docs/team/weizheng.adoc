@@ -12,7 +12,7 @@ OurAb is a desktop address book application used for teaching Software Engineeri
 
 ==== External behavior
 
-#Start of Extract [from: [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc [User Guide]]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[From: User Guide]]#
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
@@ -34,14 +34,13 @@ Speed up the use of the address book and make it easier for new users to learn t
 #Start of Extract [from: Developer Guide]#
 
 image::UiClassDiagram.png[width="800"]
+
+#End of Extract#
+
 ---
 
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Proposed:
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
+* Updated the GUI color scheme (Alternating tag colours and different command line colour)
