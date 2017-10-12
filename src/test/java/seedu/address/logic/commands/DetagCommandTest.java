@@ -53,7 +53,7 @@ public class DetagCommandTest {
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();
 
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = fromOneBased(model.getFilteredPersonList().size() + 1);
         Index[] indicesOutOfBound = {outOfBoundIndex};
         DetagCommand detagCommand = prepareCommand(indicesOutOfBound, tag);
 
@@ -81,9 +81,6 @@ public class DetagCommandTest {
 
         // different types -> returns false
         assertFalse(detagFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(detagFirstCommand.equals(null));
 
         // different person -> returns false
         assertFalse(detagFirstCommand.equals(detagFourthCommand));
