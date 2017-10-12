@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-F11-B2/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main
 
 By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
@@ -72,6 +72,18 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
+=== Listing all persons in order: `sort`
+
+Shows a list of all persons in the address book by the indicated format. Currently only supports name. +
++ Available FILTERTYPES: name
+Format: `list FILTERTYPE`
+
+Examples:
+
+* 'sort name'
+// end::sort[]
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -111,6 +123,28 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+// tag::filtercommand[]
+=== Locating persons by tags: `filter`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `FrIendS`
+* The order of the keywords does not matter. e.g. `Friends owesmoney` will match `owesmoney friends`
+* Only the tags are searched.
+* Only full tags will be matched e.g. `money` will not match `owesmoney`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesmoney` will return `owesmoney`, `friends`
+****
+
+Examples:
+
+* `filter friends` +
+Returns `john` with tags `[friends][owesmoney]` and `John Doe` with tags `[others][friends]`
+* `filter friends owesmoney others` +
+Returns any person having tags `friends`, `owesmoney`, or `others`
+// end::filtercommand[]
 
 === Deleting a person : `delete`
 

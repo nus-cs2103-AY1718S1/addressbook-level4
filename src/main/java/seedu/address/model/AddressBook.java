@@ -55,6 +55,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void sortPersons() {
+        this.persons.sortPersons();
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
