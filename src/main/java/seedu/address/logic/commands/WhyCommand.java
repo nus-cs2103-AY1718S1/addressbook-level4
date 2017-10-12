@@ -10,7 +10,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
-
 /**
  * Format full help instructions for every command for display.
  */
@@ -25,7 +24,7 @@ public class WhyCommand extends Command {
     public static final String MESSAGE_WHY_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    public static final String SHOWING_WHY_MESSAGE = "Because %1$s %2$s";
+    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
 
     private final Index targetIndex;
 
