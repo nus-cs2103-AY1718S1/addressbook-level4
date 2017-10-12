@@ -23,6 +23,34 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Clicks the List Button using the menu bar in {@code MainWindow}.
+     */
+    public void listUsingMenu() {
+        clickOnMenuItemsSequentially("Commands", "List");
+    }
+
+    /**
+     * Clicks the Undo Button using the menu bar in {@code MainWindow}.
+     */
+    public void undoUsingMenu(){
+        clickOnMenuItemsSequentially("Commands", "Undo");
+    }
+
+    /**
+     * Clicks the Redo Button using the menu bar in {@code MainWindow}.
+     */
+    public void redoUsingMenu(){
+        clickOnMenuItemsSequentially("Commands", "Redo");
+    }
+
+    /**
+     * Clicks the Clear Button using the menu bar in {@code MainWindow}.
+     */
+    public void clearUsingMenu(){
+        clickOnMenuItemsSequentially("Commands", "Clear");
+    }
+
+    /**
      * Opens the {@code HelpWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.
      */
