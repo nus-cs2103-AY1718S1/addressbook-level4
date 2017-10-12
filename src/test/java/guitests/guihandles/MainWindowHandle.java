@@ -29,15 +29,13 @@ public class MainWindowHandle extends StageHandle {
     private MainMenuHandle mainMenu;
     private BrowserPanelHandle browserPanel;
     private ModelManager modelManager;
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
 
     public MainWindowHandle(Stage stage) {
         super(stage);
 
         modelManager = new ModelManager();
         try {
-            login();
+            simulateLogin();
             Platform.runLater(() -> {
                 personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
                 resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
@@ -57,11 +55,11 @@ public class MainWindowHandle extends StageHandle {
     /**
      * Logs into admin user account so that other GUI tests can test the main GUIs in the address book
      */
-    public void login() throws IllegalValueException, CommandException {
+    public void simulateLogin() throws IllegalValueException, CommandException {
         Username username = new Username(ADMIN_USERNAME);
         Password password = new Password(ADMIN_PASSWORD);
         LoginCommand loginCommand = new LoginCommand(username, password);
-        loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        loginCommand.setData(modelManager, new CommandHistory(), new UndoRedoStack());
         loginCommand.execute();
     }
     //@@author
