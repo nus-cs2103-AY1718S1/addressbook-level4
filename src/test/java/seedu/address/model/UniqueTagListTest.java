@@ -119,18 +119,31 @@ public class UniqueTagListTest {
 
     }
 
+    @Test
     public void testEquals() {
         UniqueTagList uniqueTagList = new UniqueTagList();
         uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
-        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
-        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
 
         UniqueTagList uniqueTagListTwo = new UniqueTagList();
-        uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
-        uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
-        uniqueTagList.setTags(TypicalPersons.CARL.getTags());
+        uniqueTagListTwo.setTags(TypicalPersons.ALICE.getTags());
 
+        UniqueTagList uniqueTagListThree = new UniqueTagList();
+        uniqueTagListThree.setTags(TypicalPersons.BOB.getTags());
+
+        // same object -> returns true
+        assertTrue(uniqueTagList.equals(uniqueTagList));
+
+        // copy of object -> returns true
         assertTrue(uniqueTagList.equals(uniqueTagListTwo));
+
+        // different types -> returns false
+        assertFalse(uniqueTagList.equals(1));
+
+        // null -> returns false
+        assertFalse(uniqueTagList.equals(null));
+
+        // different sets -> returns false
+        assertFalse(uniqueTagList.equals(uniqueTagListThree));
     }
 
 }
