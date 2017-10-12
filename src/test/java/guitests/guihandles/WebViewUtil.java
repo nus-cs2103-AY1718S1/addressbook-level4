@@ -3,7 +3,6 @@ package guitests.guihandles;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import guitests.GuiRobot;
 import javafx.scene.web.WebView;
 
 /**

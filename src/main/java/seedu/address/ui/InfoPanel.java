@@ -19,7 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
 /**
- * The Browser Panel of the App.
+ * The Info Panel of the App.
  */
 public class InfoPanel extends UiPart<Region> {
 
@@ -40,7 +40,9 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
-    private Label displayPostalCode;
+    private Text postalCodeField;
+    @FXML
+    private Label postalCode;
     @FXML
     private Text emailField;
     @FXML
@@ -67,6 +69,7 @@ public class InfoPanel extends UiPart<Region> {
         phoneField.setText("HP: ");
         addressField.setText("Address: ");
         emailField.setText("Email: ");
+        postalCodeField.setText("S");
         debtField.setText("Debt: $");
         bindListeners(person);
     }
@@ -79,12 +82,12 @@ public class InfoPanel extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        displayPostalCode.textProperty().bind(Bindings.convert(person.displayPostalCodeProperty()));
+        postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         //person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initTags(person);
+        tags.getChildren().clear();
+        initTags(person);
         //});
     }
 
@@ -123,6 +126,27 @@ public class InfoPanel extends UiPart<Region> {
                 ((Label) node).setText("");
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof InfoPanel)) {
+            return false;
+        }
+
+        InfoPanel infoPanel = (InfoPanel) other;
+        return name.getText().equals(infoPanel.name.getText())
+                && phone.getText().equals(infoPanel.phone.getText())
+                && address.getText().equals(infoPanel.address.getText())
+                && postalCode.getText().equals(infoPanel.postalCode.getText())
+                && debt.getText().equals(infoPanel.debt.getText())
+                && email.getText().equals(infoPanel.email.getText());
     }
 
     @Subscribe

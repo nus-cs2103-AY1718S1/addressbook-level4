@@ -1,48 +1,58 @@
 package guitests.guihandles;
 
-import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.GuiRobot;
-import javafx.concurrent.Worker;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.PersonBuilder;
 
+//@@author khooroko
 /**
  * A handler for the {@code InfoPanel} of the UI.
  */
 public class InfoPanelHandle extends NodeHandle<Node> {
     public static final String INFO_PANEL_ID = "#infoPanel";
+
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
-    private static final String DISPLAY_POSTAL_CODE_FIELD_ID = "#displayPostalCode";
+    private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String DEBT_FIELD_ID = "#debt";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
     private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
-    private static final String DISPLAY_POSTAL_CODE_FIELD_FIELD_ID = "#displayPostalCodeField";
+    private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
 
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
-    private final Label displayPostalCodeLabel;
+    private final Label postalCodeLabel;
     private final Label debtLabel;
     private final List<Label> tagLabels;
     private final Text addressText;
     private final Text phoneText;
     private final Text emailText;
-    private final Text displayPostalCodeText;
+    private final Text postalCodeText;
     private final Text debtText;
+
+    private String lastRememberedName;
+    private String lastRememberedAddress;
+    private String lastRememberedPhone;
+    private String lastRememberedEmail;
+    private String lastRememberedPostalCode;
+    private String lastRememberedDebt;
+    private List<String> lastRememberedTags;
+
+    private ReadOnlyPerson lastRememberedSelectedPerson;
 
     public InfoPanelHandle(Node infoPanelNode) {
         super(infoPanelNode);
@@ -51,7 +61,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
-        this.displayPostalCodeLabel = getChildNode(DISPLAY_POSTAL_CODE_FIELD_ID);
+        this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -64,7 +74,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.addressText = getChildNode(ADDRESS_FIELD_FIELD_ID);
         this.phoneText = getChildNode(PHONE_FIELD_FIELD_ID);
         this.emailText = getChildNode(EMAIL_FIELD_FIELD_ID);
-        this.displayPostalCodeText = getChildNode(DISPLAY_POSTAL_CODE_FIELD_FIELD_ID);
+        this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
     }
 
@@ -88,8 +98,8 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return debtLabel.getText();
     }
 
-    public String getDisplayPostalCode() {
-        return  displayPostalCodeLabel.getText();
+    public String getPostalCode() {
+        return  postalCodeLabel.getText();
     }
 
     public String getAddressField() {
@@ -104,8 +114,8 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return emailText.getText();
     }
 
-    public String getDisplayPostalCodeField() {
-        return displayPostalCodeText.getText();
+    public String getPostalCodeField() {
+        return postalCodeText.getText();
     }
 
     public String getDebtField() {

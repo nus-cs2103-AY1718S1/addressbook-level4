@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
       <children>
          <Label fx:id="name" alignment="TOP_LEFT" prefHeight="200.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
@@ -31,7 +31,8 @@
          </TextFlow>
          <TextFlow prefHeight="100.0" prefWidth="400.0">
             <children>
-               <Label fx:id="displayPostalCode" styleClass="window_small_label" text="\$postalCode" />
+               <Text fx:id="postalCodeField" fill="gray" styleClass="window_small_label" text="S" />
+               <Label fx:id="postalCode" styleClass="window_small_label" text="\$postalCode" />
             </children>
          </TextFlow>
          <TextFlow prefHeight="100.0" prefWidth="400.0">

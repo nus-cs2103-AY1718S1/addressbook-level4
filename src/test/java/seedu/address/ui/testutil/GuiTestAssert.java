@@ -51,7 +51,7 @@ public class GuiTestAssert {
         assertEquals(expectedInfo.getEmail(), actualInfo.getEmail());
         assertEquals(expectedInfo.getName(), actualInfo.getName());
         assertEquals(expectedInfo.getPhone(), actualInfo.getPhone());
-        assertEquals(expectedInfo.getDisplayPostalCode(), actualInfo.getDisplayPostalCode());
+        assertEquals(expectedInfo.getPostalCode(), actualInfo.getPostalCode());
         assertEquals(expectedInfo.getDebt(), actualInfo.getDebt());
         assertEquals(expectedInfo.getTags(), actualInfo.getTags());
     }
@@ -64,7 +64,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPhone().value, actualInfo.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
-        assertEquals(expectedPerson.getDisplayPostalCode().value, actualInfo.getDisplayPostalCode());
+        assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
         assertEquals(expectedPerson.getDebt().value, actualInfo.getDebt());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualInfo.getTags());

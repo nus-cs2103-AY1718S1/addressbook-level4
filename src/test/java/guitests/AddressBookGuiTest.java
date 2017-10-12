@@ -81,7 +81,7 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected InfoPanelHandle getBrowserPanel() {
+    protected InfoPanelHandle getInfoPanel() {
         return mainWindowHandle.getInfoPanel();
     }
 
