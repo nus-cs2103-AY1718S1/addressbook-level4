@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,6 +26,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagColor;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -131,6 +135,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTagColorPair(Set<Tag> tagList, TagColor color) throws IllegalValueException {
             fail("This method should not be called.");
         }
     }

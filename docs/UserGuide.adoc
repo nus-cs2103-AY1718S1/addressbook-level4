@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Weaver - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,9 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W13-B2`      Since: `Aug 2017`      Licence: `MIT`
+
+image::Present.png[width="790"]
 
 == Quick Start
 
@@ -33,7 +35,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/13.10.1997` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -57,15 +59,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/DATE_OF_BIRTH [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/13.10.1997`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/13.10.1997 t/criminal`
 
 === Listing all persons : `list`
 
@@ -75,7 +77,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/DATE_OF_BIRTH] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -111,6 +113,49 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by tag: `find/t`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `find/t KEYWORD [MORE_KEYWORDS]`
+
+[TIP]
+Make sure there are no whitespaces between `find` and `/t`!
+
+****
+* Given three samples `John Doe` with tag `Friends`, `Hans Gruber` with tag `Friends`, and `Bo Yang` with tag `Colleagues`
+* The search is case insensitive. e.g `friends` will match `Friends`
+* All the tags are searched.
+* Only full words will be matched e.g. `Friend` will not match `Friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends` will return `John Doe`, `Hans Gruber`
+****
+
+Examples:
+
+* `find/t friends` +
+Returns `John Doe` and `Hans Gruber`
+* `find/t friends colleagues` +
+Returns any person having tags `Friends` or `Colleagues`
+
+image::Search.png[width="600"]
+
+=== Searching a person : `search`
+
+Lists persons with the given name and Date Of Birth.
+Format: `search NAME DATE_OF_BIRTH`
+
+
+****
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of keywords matter. e.g. in `search Hans 13.10.1997` Hans and 13.10.1997 cannot be interchanged
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching both name and Date Of Birth will be returned.
+****
+
+Examples:
+
+* `search John 13.10.1997` +
+Returns persons with name `John` and Date of Birth `13.10.1997`.
 
 === Deleting a person : `delete`
 
@@ -151,6 +196,24 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Remarking a person : `remark`
+
+Remarks the person identified by the index number. +
+Format: `remark INDEX /r REMARK`
+
+****
+* Remarks the person identified by the index number.
+* The content of remark is specified in REMARK.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`remark 2 /r Likes to swim` +
+Remarks the 2nd person with "Likes to swim".
+
 
 === Listing entered commands : `history`
 
@@ -212,6 +275,29 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Customize tags' color : `color`
+
+Change the color of one or more than one tags. +
+Format: `color [c/COLOR] [t/TAG]...`
+****
+* The default color of tags is blue.
+* You can change the color of more than one tag at a time
+* The colors supported are: blue, red, green and yellow
+* You cannot change the color of a non existing tag.
+****
+
+Examples:
+
+* `color c/red t/friends`
+
+* `color c/red t/friends t/family t/colleagues`
+
+* `color t/friend c/invalid_color` +
+The `color` command fails as `invalid_color` is not supported.
+
+* `color t/not_existing_tag c/yellow` +
+The `color` command fails as `not_existing_tag` does not exit in current database.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -221,6 +307,16 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
+
+=== Coming in V2.0
+
+image::EmailThem.png[width="600"]
+
+* Add a notification system to notify users about upcoming birthdays +
+* Send Email Intents to contacts +
+* Social Integration +
+* Have a favourites list +
+* Be able to view contacts frequently viewed +
 
 === Saving the data
 
@@ -234,15 +330,17 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/DATE_OF_BIRTH [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/13.10.1997 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/DATE_OF_BIRTH] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by Tags* : `find/t KEYWORD [MORE_KEYWORDS]` +
+e.g. `find/t friends family`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

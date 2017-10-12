@@ -5,52 +5,46 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+But we have renamed the application so that it evokes a positive appeal among others.We have named our product as 'Weaver' +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team of four members based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+Each of us are Year two Computer Science students pursuing an undergraduate degree here at NUS.
+Our TeamID is W13-B2.
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Ronak Lakhotia
+image::ronaklakhotia.png[width="150", align="left"]
+{empty}[https://github.com/RonakLakhotia[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Co-ordination and Testing +
+Responsibilities: Overall co-ordination of the project is taken care of.Ensures that any code pushed to the team repositiory is tested and passes all test cases.Also suggests modifications to be made in the features.Also in charge of Logic Component of the project.
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Chen Xiaoman
+image::chenxiaoman.png[width="150", align="left"]
+{empty}[https://github.com/ChenXiaoman[github]]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Scheduling and Tracking +
+Responsibilities: Ensure that all deadlines and Deliverables are met on time.Send out timely reminders to the other team members to finish the assigned task.Make sure that all work is done in the correct format.In addition,in charge of Model Component of project.
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Yang Minxing
+image::yangminxing.png[width="150", align="left"]
+{empty}[https://github.com/yangminxingnus[github]]
 
-Role: Developer +
-Responsibilities: UI
+Role: In charhe of Storage and UI +
+Responsibilities: Ensure that the interface of the Application is of good quality.Be well werse with JAVAFX in particular.As for main components,in charge of storage therby by overlooking the changes made to storage component.
+
+'''
+
+=== Pei Jun Wei
+image::pjunwei.png[width="150", align="left"]
+{empty}[https://github.com/pjunwei95[github]]
+
+Role: Code Quality,Integration and Documentation +
+Responsibilities: Ensure the code quality of the SUT is maintained at all times.Ensure that the code is not broken at any given time.In charge of documentation as well.Makes sure that the User Guide and Developer Guide are updated from time to time.
 
 '''

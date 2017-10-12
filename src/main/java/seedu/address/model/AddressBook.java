@@ -10,12 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagColor;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -162,6 +165,72 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     * Update the tag color pair in storage
+     * @param modifyingTagList tags that need to be changed color
+     * @param color
+     * @throws IllegalValueException
+     */
+    public void updateTagColorPair(Set<Tag> modifyingTagList, TagColor color) throws IllegalValueException {
+        // Set the list of tags to new list of tags
+        setTags(getUpdatedTagColorPair(modifyingTagList, tags.toSet(), color));
+
+        updateTagColorInEveryPerson(modifyingTagList, color);
+
+        // Sync the updated tag list
+        syncMasterTagListWith(persons);
+
+        resetData(this);
+    }
+
+    /**
+     * Get a list of given tags with updated color
+     * @param modifyingTagList
+     * @param existingTagList
+     * @param color
+     * @return list of updated tags
+     * @throws IllegalValueException
+     */
+    private Set<Tag> getUpdatedTagColorPair(Set<Tag> modifyingTagList, Set<Tag> existingTagList, TagColor color)
+            throws IllegalValueException {
+        // To store updated list of tags
+        Set<Tag> updatedTags = new HashSet<>();
+
+        for (Tag existingTag: existingTagList) {
+            for (Tag modifyingTag: modifyingTagList) {
+
+                // Check whether a tag needs to be changed its color
+                if (modifyingTag.equals(existingTag)) {
+
+                    // Change the color of the tag
+                    updatedTags.add(new Tag(modifyingTag.tagName, color.tagColorName));
+
+                }
+            }
+
+            // This tag doesn't need to be changed
+            if (!updatedTags.contains(existingTag)) {
+                // Remain unchanged
+                updatedTags.add(existingTag);
+            }
+        }
+
+        return updatedTags;
+
+    }
+
+    /**
+     * Update tag and color pair in every person
+     */
+    private void updateTagColorInEveryPerson(Set<Tag> modifyingTagList, TagColor tagColor)
+            throws IllegalValueException {
+        for (Person person : persons) {
+            Set<Tag> updatedTagList = getUpdatedTagColorPair(modifyingTagList, person.getTags(), tagColor);
+            person.setTags(updatedTagList);
+        }
+    }
+
+
     //// util methods
 
     @Override
@@ -193,4 +262,5 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+
 }

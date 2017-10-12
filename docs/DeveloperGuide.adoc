@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Weaver - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W13-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -721,20 +721,86 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |edit the existing information stored in the database|the information can be up-to-date
 
-|`* * *` |user |add a new person |
+|`* * *` |user |undo a command | correct the mistake I made accidentally
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |import information from FaceBook |save me the effort to add friends' information
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add date of birth of a person |remember the birthday of my friends
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |see person's social media page in AddressBook|check persons's social media page easily and directly in one app
+
+|`* * *` |user added many tags to persons|customize tag colour|visualize different tag by its color
+
+|`* * *` |user added many tags to persons|customize tag colour|visualize different tag by its color
+
+|`* * *` |user |be able to view photos of my contacts in the address book | recognize contacts more easily
+
+|`* * *` |user |be able to find persons based on name and Date of Birth | we can narrow the scope when users have same names
+
+|`* * *` |user |add a remark for somebody | customize the descriptions
+
+|`* * *` |user |directly contact a person by email, by clicking on email button | have instant access to communication
+
+|`* * *`|user |confirm before clearing |not clear the contents accidentally
+
+|`* * *`|user |edit a person |modify an address conveniently
+
+|`* *` |user |view a more attractive icon for the AddressBook | the AddressBook has a better appeal
+
+|`* *` |user |view the details of a person on Facebook by clicking on the name | get more information of the person
+
+|`* *` |user |want a better name for my Application | have a more appealing name for my application
+
+|`* *` |user |want to get notifications about birthdays/events coming up | be aware of important events in the coming week
+
+|`* *` |users with many person in address book |view all the tags by a single command| have an idea of the different associations I have with my contacts
+
+|`* *` |user |share the contact information in my addressbook to others' |share contact infomation conveniently
+
+|`* *` |user |have shortcuts for each command |don't have to type the whole command each time
+
+|`* *` |user |have a copy button for each category of information |copy and paste information easily
+
+|`* *` |user |be able to customize the color set of user interface|customize the display as I like
+
+|`* *` |user |be able to display person according to frequency I access their contacts|access the contacts that are more possible for me to access easily
+
+|`* *` |user |be able to delete tags|delete wrong tags
+
+|`* *` |user |be able to move the windows and tables in the user interface around|choose the combination of positions of windows as I like
+
+|`* *` |user |be able to click on contact to open windows to display and modify their information|look through and modify their information easily
+
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *`|user |see a history bar |keep track of my previous searches
+
+|`* *`|user |see random people on the front page |get in touch with old friends
+
+|`* *`|user with frequent contacts |have a favourites list |find them easily
+
+|`*` |user |sort persons by date of birth |see a list of people from youngest to oldest or oldest to youngest
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |find all the friends or other relationships I have | have a good idea of the type of relationships I have with the contacts of my address book
+
+|`*` |user |be able to move the windows and tables in the user interface around|choose the combination of positions of windows as I like
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`|user |be notified of birthdays |send them well wishes
+
+|`*`|user |delete people with a specific tag |clean up my list
+
+|`*`|user |log in |access privately
+
+|`*`|user |customise the display |view the list to my preference
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,7 +833,207 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+
+=== Use case: Email Intents
+
+*MSS*
+
+1. User clicks on email button.
+2. AddressBook opens up the Gmail webpage.
+3. The email address of the person to be contacted is already filled in.
+4. User types in the message and sends the email.
++
+Use case ends.
+
+=== Use case: Social Integration
+
+*MSS*
+
+1. User clicks on the button, 'Social Media'.
+2. AddressBook sends an intent to FaceBook where the homepage of the person's account is displayed.
+3. User gets all the required information
++
+Use case ends.
+
+*EXTENSIONS*
+
+[none]
+* 2a. The person does not have a FaceBook account.
++
+Use case ends.
+=======
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit information of a specific person in the list
+4.  AddressBook edits the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Remark person
+
+*MSS*
+
+1.  User requests the list of person.
+2.  AddressBook shows the list of person.
+3.  User requests to remark persons by specifying index and remark
+4.  AddressBook remarks the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The index is illegal.
++
+Use case ends. AddressBook shows an error message.
+
+[discrete]
+=== Use case: Change color of a tag
+
+*MSS*
+
+1.  User requests to change a tag to another color
+2.  AddressBook changes the color of the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given tag does not exist.
+
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The given color is not available.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show the list of persons by frequency
+*MSS*
+
+1.  User requests to show a list of person that is mostly accessed by keying in "list freq" keyword
+2.  AddressBook shows this list of person in descending frequency order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete a tag
+*MSS*
+
+1.  User requests to show one of a person using find command
+2.  AddressBook shows this person
+3.  User requests to delete one of this person's tag by specifying a index of tag
+4.  AddressBook deletes the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Confirmation before clearing
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to clear the list
+4.  AddressBook shows a message for confirmation
+5.  User confirms clearing the list
+6.  AddressBook clears the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 5a. User chooses to cancel.
++
+Use case ends.
+
+* 5b. The given input is invalid.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+[discrete]
+=== Use case: Random person at front page
+
+*MSS*
+
+1.  AddressBook shows a random person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows a message to prompt adding new contacts.
++
+Use case ends.
+
+=======
 
 [appendix]
 == Non Functional Requirements
@@ -775,6 +1041,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on both 32-bit and 64-bit environment.
+.  Should have enough security features to protect data of a user.
+.  The user guide should be clear and easy to understand by new users.
+.  The system should be usable by a novice.
+.  The project is open-source and available on GitHub.
+.  Should secure contact information safely.
+.  Should be able to open the application in 2 seconds.
+.  The application should provide several aesthetic designed color sets.
+.  Should respond within two seconds.
 
 {More to be added}
 
@@ -795,6 +1070,12 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[Environment-bit]]
+Environment Bit
+
+....
+32/64 bits refer to the number of bits that compose a data element
+....
 [appendix]
 == Product Survey
 
