@@ -7,7 +7,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-F11-B2/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main/tree/master
 
 After studying this code and completing the corresponding exercises, you should be able to,
 
