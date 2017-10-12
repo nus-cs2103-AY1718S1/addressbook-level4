@@ -23,7 +23,7 @@ public class LocateCommand extends Command{
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Address searched as showed";
+    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Showing the address of person ";
 
     private final Index targetIndex;
 
@@ -43,6 +43,6 @@ public class LocateCommand extends Command{
         ReadOnlyPerson personToSearchAddress = lastShownList.get(targetIndex.getZeroBased());
 
         EventsCenter.getInstance().post(new LocateCommandEvent(personToSearchAddress));
-        return new CommandResult(MESSAGE_LOCATE_PERSON_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, personToSearchAddress));
     }
 }
