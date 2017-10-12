@@ -237,7 +237,7 @@ public class Person implements ReadOnlyPerson {
         } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_ASCENDING)) {
             return getAddress().compareTo(otherPerson.getAddress());
         } else {
-            return hashCode() - otherPerson.hashCode();
+            return compareTo(otherPerson);
         }
     }
 
