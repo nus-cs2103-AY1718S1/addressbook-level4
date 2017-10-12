@@ -90,6 +90,6 @@ public class Tag {
      *
      */
     private static String convertColorToHexadecimal(Color color) {
-       return String.format("#%06x", color.getRGB() & 0x00FFFFFF);
+        return String.format("#%06x", color.getRGB() & 0x00FFFFFF);
     }
 }
