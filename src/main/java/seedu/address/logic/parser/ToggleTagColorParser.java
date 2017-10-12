@@ -29,7 +29,11 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
             }
             return new ToggleTagColorCommand(isOn, "", "");
         } catch (ArrayIndexOutOfBoundsException exp) {
-            throw new ParseException("Invalid tagcolor command.");
+            throw new ParseException("Invalid tagcolor command."
+                    + "\n"
+                    + "tagcolor: TagColor sets color for AddressBook"
+                    + "\n"
+                    + "Parameters: tagcolor random/off || tagcolor TAGNAME COLOR");
         }
     }
 }
