@@ -93,8 +93,8 @@ public class PersonCard extends UiPart<Region> {
             File picFile = new File(person.getPicture().getPictureUrl());
             FileInputStream fileStream = new FileInputStream(picFile);
             Image personPicture = new Image(fileStream);
-            picture.setFitHeight(100);
-            picture.setFitWidth(100);
+            picture.setFitHeight(person.getPicture().PIC_HEIGHT);
+            picture.setFitWidth(person.getPicture().PIC_WIDTH);
             picture.setImage(personPicture);
             cardPane.getChildren().add(picture);
         } catch (Exception e) {
@@ -117,7 +117,7 @@ public class PersonCard extends UiPart<Region> {
                 Image newPicture = new Image(fileStream);
                 picture.setImage(newPicture);
             } catch (Exception e) {
-                System.out.println(e + "No file valid chosen");
+                System.out.println(e + "Invalid File");
             }
         } else {
             System.out.println("Invalid File");
