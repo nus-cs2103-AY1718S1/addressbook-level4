@@ -27,33 +27,33 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedParcel}.
      */
-    public static void assertCardDisplaysPerson(ReadOnlyParcel expectedPerson, ParcelCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().toString(), actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+    public static void assertCardDisplaysParcel(ReadOnlyParcel expectedParcel, ParcelCardHandle actualCard) {
+        assertEquals(expectedParcel.getName().fullName, actualCard.getName());
+        assertEquals(expectedParcel.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedParcel.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedParcel.getAddress().toString(), actualCard.getAddress());
+        assertEquals(expectedParcel.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
     /**
-     * Asserts that the list in {@code parcelListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code parcelListPanelHandle} displays the details of {@code parcels} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(ParcelListPanelHandle parcelListPanelHandle, ReadOnlyParcel... persons) {
-        for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], parcelListPanelHandle.getParcelCardHandle(i));
+    public static void assertListMatching(ParcelListPanelHandle parcelListPanelHandle, ReadOnlyParcel... parcels) {
+        for (int i = 0; i < parcels.length; i++) {
+            assertCardDisplaysParcel(parcels[i], parcelListPanelHandle.getParcelCardHandle(i));
         }
     }
 
     /**
-     * Asserts that the list in {@code parcelListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code parcelListPanelHandle} displays the details of {@code parcels} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(ParcelListPanelHandle parcelListPanelHandle, List<ReadOnlyParcel> persons) {
-        assertListMatching(parcelListPanelHandle, persons.toArray(new ReadOnlyParcel[0]));
+    public static void assertListMatching(ParcelListPanelHandle parcelListPanelHandle, List<ReadOnlyParcel> parcels) {
+        assertListMatching(parcelListPanelHandle, parcels.toArray(new ReadOnlyParcel[0]));
     }
 
     /**

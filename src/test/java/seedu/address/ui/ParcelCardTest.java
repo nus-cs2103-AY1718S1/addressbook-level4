@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalParcels.ALICE;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysParcel;
 
 import org.junit.Test;
 
@@ -79,6 +79,6 @@ public class ParcelCardTest extends GuiUnitTest {
         assertEquals(Integer.toString(expectedId) + ". ", parcelCardHandle.getId());
 
         // verify parcel details are displayed correctly
-        assertCardDisplaysPerson(expectedPerson, parcelCardHandle);
+        assertCardDisplaysParcel(expectedPerson, parcelCardHandle);
     }
 }

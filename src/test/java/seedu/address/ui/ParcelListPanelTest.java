@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalParcels;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysParcel;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
@@ -41,7 +41,7 @@ public class ParcelListPanelTest extends GuiUnitTest {
             ReadOnlyParcel expectedPerson = TYPICAL_PERSONS.get(i);
             ParcelCardHandle actualCard = parcelListPanelHandle.getParcelCardHandle(i);
 
-            assertCardDisplaysPerson(expectedPerson, actualCard);
+            assertCardDisplaysParcel(expectedPerson, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
         }
     }
