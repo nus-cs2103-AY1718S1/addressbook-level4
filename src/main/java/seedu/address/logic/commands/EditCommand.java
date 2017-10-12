@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -43,7 +44,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG] "
+            + "[" + PREFIX_DELTAG + "TAG_TO_DELETE] ...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -101,7 +103,20 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = personToEdit.getTags();
+
+        if (editPersonDescriptor.getTagsToDel().isPresent()) {
+            for (Tag tag : editPersonDescriptor.getTagsToDel().get()) {
+                if (tag.getTagName().equals("all")) {
+                    updatedTags.clear();
+                }
+            }
+            updatedTags.removeAll(editPersonDescriptor.getTagsToDel().get());
+        }
+
+        if (editPersonDescriptor.getTags().isPresent()) {
+            updatedTags.addAll(editPersonDescriptor.getTags().get());
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
@@ -134,6 +149,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Tag> tagsToDel;
 
         public EditPersonDescriptor() {}
 
@@ -143,13 +159,15 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.tagsToDel = toCopy.tagsToDel;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(
+                    this.name, this.phone, this.email, this.address, this.tags, this.tagsToDel);
         }
 
         public void setName(Name name) {
@@ -190,6 +208,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setTagsToDel(Set<Tag> tagsToDel) {
+            this.tagsToDel = tagsToDel;
+        }
+
+        public Optional<Set<Tag>> getTagsToDel() {
+            return Optional.ofNullable(tagsToDel);
         }
 
         @Override
