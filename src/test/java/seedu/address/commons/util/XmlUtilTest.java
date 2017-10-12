@@ -18,7 +18,6 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestUtil;
 
 public class XmlUtilTest {
-
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
