@@ -15,6 +15,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
+
     public static final String SHORTHAND_COMMAND_WORD = "s";
 
 

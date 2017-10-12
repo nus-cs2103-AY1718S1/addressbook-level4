@@ -9,6 +9,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+
     public static final String SHORTHAND_COMMAND_WORD = "f";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
