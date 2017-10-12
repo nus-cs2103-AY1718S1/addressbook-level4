@@ -792,6 +792,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |see the number of connections made by person |see the people with most connections
 
 |`*` |user |add a person with incomplete details |add a person and fill incomplete entries later
+|=======================================================================
 
 {More to be added}
 
