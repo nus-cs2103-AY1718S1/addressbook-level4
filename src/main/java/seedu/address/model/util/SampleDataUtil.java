@@ -18,7 +18,7 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
-    public static Parcel[] getSamplePersons() {
+    public static Parcel[] getSampleParcels() {
         try {
             return new Parcel[] {
                 new Parcel(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
@@ -48,12 +48,12 @@ public class SampleDataUtil {
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
-            for (Parcel sampleParcel : getSamplePersons()) {
+            for (Parcel sampleParcel : getSampleParcels()) {
                 sampleAb.addParcel(sampleParcel);
             }
             return sampleAb;
         } catch (DuplicateParcelException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+            throw new AssertionError("sample data cannot contain duplicate parcels", e);
         }
     }
 

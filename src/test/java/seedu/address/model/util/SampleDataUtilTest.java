@@ -15,7 +15,7 @@ public class SampleDataUtilTest {
 
     @Test
     public void getSamplePersons() throws Exception {
-        Parcel[] parcels = SampleDataUtil.getSamplePersons();
+        Parcel[] parcels = SampleDataUtil.getSampleParcels();
         Parcel[] expectedParcels = new Parcel[]{
             new Parcel(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Address("Blk 29 Lor 30 Geylang, #06-40 s398362"), getTagSet("friends")),
