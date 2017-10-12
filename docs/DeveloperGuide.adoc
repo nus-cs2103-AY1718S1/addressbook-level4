@@ -1,4 +1,3 @@
-
 = AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
