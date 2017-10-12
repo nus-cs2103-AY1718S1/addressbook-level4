@@ -4,11 +4,19 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.Email;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.UniquePropertyMap;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -17,12 +25,11 @@ import seedu.address.model.tag.UniqueTagList;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {
-
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<UniquePropertyMap> properties;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -34,6 +41,22 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+
+        // HashMap<String, Property> properties = new HashMap<>();
+        Set<Property> properties = new HashSet<>();
+        properties.add(name);
+        properties.add(phone);
+        properties.add(email);
+        properties.add(address);
+        this.properties = new SimpleObjectProperty<>();
+        try {
+            setProperties(properties);
+        } catch (DuplicatePropertyException e) {
+            // TODO: Better error handling
+            e.printStackTrace();
+            System.err.println("This should not happen");
+        }
+
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -102,6 +125,27 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    @Override
+    public ObjectProperty<UniquePropertyMap> properties() {
+        return properties;
+    }
+
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Property> getProperties() {
+        return Collections.unmodifiableSet(properties.get().toSet());
+    }
+
+    /**
+     * Replaces this person's properties with the properties in the argument tag set.
+     */
+    public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
+        properties.set(new UniquePropertyMap(replacement));
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -139,5 +183,4 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-
 }

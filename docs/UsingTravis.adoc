@@ -70,6 +70,7 @@ If you are the only one with write access to the repo, you can use your own acco
 Our GitHub Pages is built by a https://github.com/team2103bot[robot].
 +
 --
+
 * Add a description for the token. (e.g. `Travis CI - deploy docs to gh-pages`)
 * Check the `public_repo` checkbox.
 * Click `Generate Token` and copy your new personal access token.
@@ -104,6 +105,24 @@ Similarly, make sure you *do not print `$GITHUB_TOKEN` to the logs* in Travis sc
    Suggested change: Remove the codacy badge from `README`.
 .  Wait for Travis CI to finish running the build on your new commit.
 .  Go to the URL `\https://<your-username-or-organization-name>.github.io/addressbook-level4/`. You should see your `README` file displayed.
+
+== Enabling build notification
+
+.  Ensure that you have followed the steps above to set up Travis CI.
+.  Create a Slack workspace at https://slack.com/create[here].
+.  Find https://slack.com/apps/A0F81FP4N-travis-ci[Travis CI] from https://slack.com/apps[Slack App Repository].
+.  Install the Travis CI integration to your workspace created in Step 2.
+.  You should be able to get the WebHook key from the integration setting page.
+.  It is not secured to put the plaintext of your WebHook in your `.travis.yml` file, otherwise, everyone will be able to push messages to your Slack workspace. Thus, we need to encrypt the key.
+.  Follow the instructions https://docs.travis-ci.com/user/encryption-keys/[here] to encrypt your key using the CLI client provided by https://travis-ci.org/[Travis CI].
+.  In the end, there should a few new lines added to your `.travis.yml` file. It looks like this
+
+[source,yaml]
+----
+notifications:
+  slack:
+    secure: <your_encrypted_webhook_key_here>
+----
 
 == Repository-wide checks
 
