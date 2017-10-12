@@ -725,11 +725,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |onging user |have a backup of my addressbook data |restore my addressbook if the storage file becomes corrupted
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new parcel |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a parcel |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a parcel by name |locate details of persons without having to go through the entire list
 
 |`* * *` |user |add a new location |store important locations and establishments
 
@@ -740,6 +740,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user who travels a lot |to know the shortest distance from one contact's address to another |
 
 |`* * *` |user who travels a lot |set a reference location |find the shortest distance from my reference location to a contact's location
+
+|`* * *` |delivery company |be able to keep track of my deliveries |deliver the packages on time
+
+|`* * *` |delivery company |be alerted for any deliveries to be done today |deliver the packages on time
+
+|`* * *` |delivery company |sort my deliveries by dead |know which packages are more urgent to handle
+
+|`* * *` |delivery man|generate deliver route based on my list of deliveries |know schedule for the day
+
+|`* * *` |delivery company |add a list of deliveries in one shot using Comma Separated Values |conveniently parse information from other sources
+
+|`* * *` |delivery company |add deliveries individually |
+
+|`* * *` |delivery company |check for deliveries close to deadline |better prepare for busy periods
+
+|`* * *` |delivery company |archive completed deliveries |refer to them in the future
 
 |`* *` |user |add profile pictures to contacts |
 
