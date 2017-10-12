@@ -36,7 +36,6 @@ Speed up the use of the address book and make it easier for new users to learn t
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
 +
 image::UiClassDiagram.png[width="800"]
 +
