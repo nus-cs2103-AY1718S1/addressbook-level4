@@ -33,18 +33,18 @@ public class PropertyManager {
     // Records whether has been initialized before.
     private static boolean initialized = false;
 
-    /**
+    /*
      * Makes use of static initialization block to guarantee all pre-loaded properties are included.
      */
     static {
-        initializePropertyManager();
+        // initializePropertyManager();
     }
 
     /**
      * Util for initialization of default pre-loaded properties. This method should not be called if there is
      * existing data loaded from local storage file.
      */
-    private static void initializePropertyManager() {
+    public static void initializePropertyManager() {
         if (!initialized) {
             try {
                 // Adds name as a pre-loaded property.
@@ -68,7 +68,7 @@ public class PropertyManager {
                         "Person addresses can take any values, and it should not be blank",
                         "[^\\s].*");
             } catch (DuplicatePropertyException dpe) {
-                throw new RuntimeException("PropertyManager cannot be initialized. Stopping the application.");
+                throw new AssertionError("PreLoaded properties cannot be invalid", dpe);
             }
 
             initialized = true;
