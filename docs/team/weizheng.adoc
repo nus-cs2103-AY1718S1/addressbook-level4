@@ -12,7 +12,7 @@ OurAb is a desktop address book application used for teaching Software Engineeri
 
 ==== External behavior
 
-#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[From: User Guide]]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
@@ -31,7 +31,7 @@ Speed up the use of the address book and make it easier for new users to learn t
 
 ==== Implementation
 
-#Start of Extract [from: Developer Guide]#
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]#
 
 image::UiClassDiagram.png[width="800"]
 
