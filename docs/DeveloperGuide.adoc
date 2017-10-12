@@ -982,8 +982,8 @@ Use case resumes at step 4
 
 1.  User requests to decode parcel details
 2.  AddressBook shows decoded details and prompts user on whether to save parcel
-4.  User accepts save
-5.  AddressBook saves decoded parcel's contact
+3.  User accepts save
+4.  AddressBook saves decoded parcel's contact
 +
 Use case ends
 
