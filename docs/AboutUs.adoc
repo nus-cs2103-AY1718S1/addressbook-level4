@@ -5,7 +5,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
@@ -22,8 +21,8 @@ Responsibilities: UI
 '''
 
 === Cheng Jin Ting
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+image::JT.jpg[width="150", align="left"]
+{empty}[http://github.com/jin-ting[github]] [<<JinTing#, portfolio>>]
 
 Role: User Guide + Scheduling
 
@@ -32,8 +31,8 @@ Responsibilities: Model
 '''
 
 === Calvin Tantio
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+image::ct15.png[width="150", align="left"]
+{empty}[https://github.com/ct15[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer Guide + Code Quality
 
@@ -42,8 +41,8 @@ Responsibilities: Logic
 '''
 
 === Chung Tin Long
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+image::icehawk.jpg[width="150", align="left"]
+{empty}[https://github.com/icehawker[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer Guide
 
