@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<AddressBook>
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
@@ -54,4 +54,30 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
     </persons>
-</addressbook>
+    <properties>
+        <property>
+            <shortName>p</shortName>
+            <fullName>phone</fullName>
+            <message>Phone numbers can only contain numbers, and should be at least 3 digits long</message>
+            <regex>\d{3,}</regex>
+        </property>
+        <property>
+            <shortName>a</shortName>
+            <fullName>address</fullName>
+            <message>Person addresses can take any values, and it should not be blank</message>
+            <regex>[^\s].*</regex>
+        </property>
+        <property>
+            <shortName>e</shortName>
+            <fullName>email</fullName>
+            <message>Person emails should be 2 alphanumeric/period strings separated by '@'</message>
+            <regex>[\w\.]+@[\w\.]+</regex>
+        </property>
+        <property>
+            <shortName>n</shortName>
+            <fullName>name</fullName>
+            <message>Person names should only contain alphanumeric characters and spaces, and it should not be blank</message>
+            <regex>[\p{Alnum}][\p{Alnum} ]*</regex>
+        </property>
+    </properties>
+</AddressBook>

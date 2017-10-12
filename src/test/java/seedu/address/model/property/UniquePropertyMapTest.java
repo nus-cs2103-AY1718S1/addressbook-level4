@@ -20,6 +20,7 @@ public class UniquePropertyMapTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
+        PropertyManager.initializePropertyManager();
         mySet = new HashSet<>();
         mySet.add(new Property("a", "some address"));
         mySet.add(new Property("p", "12345678"));

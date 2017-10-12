@@ -12,19 +12,22 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
+@XmlRootElement(name = "AddressBook")
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
-
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private XmlAdaptedPropertyManager properties;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -33,6 +36,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        properties = new XmlAdaptedPropertyManager();
     }
 
     /**
@@ -49,7 +53,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
-            } catch (IllegalValueException | PropertyNotFoundException e) {
+            } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;
@@ -72,4 +76,12 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    /**
+     * Initialize the {@link PropertyManager} by clearing all existing properties and load information about new
+     * properties from the storage file.
+     */
+    public void initializePropertyManager() {
+        PropertyManager.clearAllProperties();
+        properties.initializeProperties();
+    }
 }
