@@ -5,6 +5,5 @@
 <?import javafx.scene.text.Text?>
 
 <StackPane alignment="BOTTOM_CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-  <Text>Hello</Text>
   <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..." />
 </StackPane>
