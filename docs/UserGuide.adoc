@@ -123,7 +123,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `find e/yahoo` +
 Returns person with email of `[yahoo.com]` domain
 
-=== Deleting persons by range : `delete`
+=== Deleting person(s) : `delete`
 
 Alias: `d`
 
