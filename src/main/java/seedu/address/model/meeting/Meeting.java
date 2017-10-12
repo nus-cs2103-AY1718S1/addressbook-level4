@@ -3,9 +3,9 @@ package seedu.address.model.meeting;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
+//import java.text.DateFormat;
+//import java.text.ParseException;
+//import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -66,7 +66,7 @@ public class Meeting implements ReadOnlyMeeting {
         return date.get();
     }
 
-    public LocalDateTime getActualDate(String date){
+    public LocalDateTime getActualDate(String date) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);

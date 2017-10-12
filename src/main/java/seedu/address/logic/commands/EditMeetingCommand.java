@@ -147,7 +147,9 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setDate(DateTime date) { this.date = date; }
+        public void setDate(DateTime date) {
+            this.date = date;
+        }
 
         public Optional<DateTime> getDate() {
             return Optional.ofNullable(date);
