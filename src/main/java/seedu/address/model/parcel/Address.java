@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
@@ -41,7 +41,7 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid person address.
+     * Returns true if a given string is a valid parcel address.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);

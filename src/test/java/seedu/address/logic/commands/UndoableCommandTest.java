@@ -12,8 +12,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyParcel;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -46,7 +46,7 @@ public class UndoableCommandTest {
     }
 
     /**
-     * Deletes the first person in the model's filtered list.
+     * Deletes the first parcel in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {

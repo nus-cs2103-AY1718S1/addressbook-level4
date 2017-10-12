@@ -8,12 +8,12 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Parcel;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.Email;
+import seedu.address.model.parcel.Name;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -57,9 +57,9 @@ public class XmlAdaptedPerson {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Parcel object.
+     * Converts this jaxb-friendly adapted parcel object into the model's Parcel object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted parcel
      */
     public Parcel toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();

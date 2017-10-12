@@ -21,8 +21,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.NameContainsKeywordsPredicate;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -53,7 +53,7 @@ public class FindCommandTest {
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different parcel -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 

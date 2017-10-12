@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import java.util.Set;
 
@@ -36,7 +36,7 @@ public interface ReadOnlyParcel {
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the parcel as text, showing all contact details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();

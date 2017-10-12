@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.ui.PersonCard;
 
 /**
@@ -55,7 +55,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the listview to display and select the parcel.
      */
     public void navigateToCard(ReadOnlyParcel person) {
         List<PersonCard> cards = getRootNode().getItems();
@@ -73,14 +73,14 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Returns the person card handle of a person associated with the {@code index} in the list.
+     * Returns the parcel card handle of a parcel associated with the {@code index} in the list.
      */
     public PersonCardHandle getPersonCardHandle(int index) {
         return getPersonCardHandle(getRootNode().getItems().get(index).person);
     }
 
     /**
-     * Returns the {@code PersonCardHandle} of the specified {@code person} in the list.
+     * Returns the {@code PersonCardHandle} of the specified {@code parcel} in the list.
      */
     public PersonCardHandle getPersonCardHandle(ReadOnlyParcel person) {
         Optional<PersonCardHandle> handle = getRootNode().getItems().stream()

@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.ReadOnlyParcel;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicatePersonException;
 
 /**
  * A utility class containing a list of {@code Parcel} objects to be used in tests.

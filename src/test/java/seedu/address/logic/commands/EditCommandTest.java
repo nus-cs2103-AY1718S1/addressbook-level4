@@ -25,8 +25,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -114,7 +114,7 @@ public class EditCommandTest {
     public void execute_duplicatePersonFilteredList_failure() {
         showFirstPersonOnly(model);
 
-        // edit person in filtered list into a duplicate in address book
+        // edit parcel in filtered list into a duplicate in address book
         ReadOnlyParcel personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());

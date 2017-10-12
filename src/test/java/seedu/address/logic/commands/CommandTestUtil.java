@@ -15,9 +15,9 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyParcel;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.NameContainsKeywordsPredicate;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -85,7 +85,7 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book and the filtered parcel list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
@@ -104,7 +104,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
      */
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyParcel person = model.getAddressBook().getPersonList().get(0);
@@ -115,7 +115,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first parcel in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
         ReadOnlyParcel firstPerson = model.getFilteredPersonList().get(0);

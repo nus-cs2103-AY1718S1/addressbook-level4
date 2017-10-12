@@ -15,7 +15,7 @@ import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 public class ParcelListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyParcel> TYPICAL_PERSONS =

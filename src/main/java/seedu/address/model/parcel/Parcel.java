@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -116,7 +116,7 @@ public class Parcel implements ReadOnlyParcel {
     }
 
     /**
-     * Replaces this person's tags with the tags in the argument tag set.
+     * Replaces this parcel's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));

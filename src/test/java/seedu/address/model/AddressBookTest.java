@@ -16,8 +16,8 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {

@@ -3,12 +3,12 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Parcel;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.Email;
+import seedu.address.model.parcel.Name;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 

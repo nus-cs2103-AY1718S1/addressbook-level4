@@ -20,10 +20,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyParcel;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -79,7 +79,7 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different parcel -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -136,7 +136,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicatePersonException when trying to add a parcel.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
@@ -151,7 +151,7 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the parcel being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Parcel> personsAdded = new ArrayList<>();

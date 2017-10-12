@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
@@ -31,7 +31,7 @@ public class Phone {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid parcel phone number.
      */
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);

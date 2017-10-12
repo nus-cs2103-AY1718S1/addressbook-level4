@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
@@ -10,8 +10,8 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -28,7 +28,7 @@ public class UniquePersonList implements Iterable<Parcel> {
     private final ObservableList<ReadOnlyParcel> mappedList = EasyBind.map(internalList, (person) -> person);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent parcel as the given argument.
      */
     public boolean contains(ReadOnlyParcel toCheck) {
         requireNonNull(toCheck);
@@ -36,9 +36,9 @@ public class UniquePersonList implements Iterable<Parcel> {
     }
 
     /**
-     * Adds a person to the list.
+     * Adds a parcel to the list.
      *
-     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicatePersonException if the parcel to add is a duplicate of an existing parcel in the list.
      */
     public void add(ReadOnlyParcel toAdd) throws DuplicatePersonException {
         requireNonNull(toAdd);
@@ -49,9 +49,9 @@ public class UniquePersonList implements Iterable<Parcel> {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     * Replaces the parcel {@code target} in the list with {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicatePersonException if the replacement is equivalent to another existing parcel in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
@@ -71,9 +71,9 @@ public class UniquePersonList implements Iterable<Parcel> {
     }
 
     /**
-     * Removes the equivalent person from the list.
+     * Removes the equivalent parcel from the list.
      *
-     * @throws PersonNotFoundException if no such person could be found in the list.
+     * @throws PersonNotFoundException if no such parcel could be found in the list.
      */
     public boolean remove(ReadOnlyParcel toRemove) throws PersonNotFoundException {
         requireNonNull(toRemove);

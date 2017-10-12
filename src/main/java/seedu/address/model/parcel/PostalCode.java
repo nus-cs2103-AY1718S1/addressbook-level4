@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
@@ -36,7 +36,7 @@ public class PostalCode {
     }
 
     /**
-     * Returns true if a given string is a valid person name.
+     * Returns true if a given string is a valid parcel name.
      */
     public static boolean isValidPostalCode(String test) {
         return test.matches(POSTAL_CODE_VALIDATION_REGEX);

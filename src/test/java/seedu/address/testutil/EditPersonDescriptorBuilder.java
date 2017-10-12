@@ -6,7 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -24,7 +24,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
+     * Returns an {@code EditPersonDescriptor} with fields containing {@code parcel}'s details
      */
     public EditPersonDescriptorBuilder(ReadOnlyParcel person) {
         descriptor = new EditPersonDescriptor();

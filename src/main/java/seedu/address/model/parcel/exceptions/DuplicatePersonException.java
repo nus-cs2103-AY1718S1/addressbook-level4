@@ -1,4 +1,4 @@
-package seedu.address.model.person.exceptions;
+package seedu.address.model.parcel.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 

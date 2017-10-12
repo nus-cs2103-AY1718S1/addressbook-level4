@@ -10,11 +10,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Parcel;
-import seedu.address.model.person.ReadOnlyParcel;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.UniquePersonList;
+import seedu.address.model.parcel.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -74,30 +74,30 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
-    //// person-level operations
+    //// parcel-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a parcel to the address book.
+     * Also checks the new parcel's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the parcel to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicatePersonException if an equivalent parcel already exists.
      */
     public void addPerson(ReadOnlyParcel p) throws DuplicatePersonException {
         Parcel newParcel = new Parcel(p);
         syncMasterTagListWith(newParcel);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // This can cause the tags master list to have additional tags that are not tagged to any parcel
+        // in the parcel list.
         persons.add(newParcel);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedReadOnlyParcel}.
+     * Replaces the given parcel {@code target} in the list with {@code editedReadOnlyParcel}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyParcel}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
+     * @throws DuplicatePersonException if updating the parcel's details causes the parcel to be equivalent to
+     *      another existing parcel in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
      * @see #syncMasterTagListWith(Parcel)
@@ -109,8 +109,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         Parcel editedParcel = new Parcel(editedReadOnlyParcel);
         syncMasterTagListWith(editedParcel);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        // This can cause the tags master list to have additional tags that are not tagged to any parcel
+        // in the parcel list.
         persons.setPerson(target, editedParcel);
     }
 

@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
@@ -31,7 +31,7 @@ public class Email {
     }
 
     /**
-     * Returns if a given string is a valid person email address.
+     * Returns if a given string is a valid parcel email address.
      */
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);

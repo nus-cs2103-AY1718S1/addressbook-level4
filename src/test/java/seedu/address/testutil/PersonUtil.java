@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.person.ReadOnlyParcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
 
 /**
  * A utility class for Parcel.
@@ -15,14 +15,14 @@ import seedu.address.model.person.ReadOnlyParcel;
 public class PersonUtil {
 
     /**
-     * Returns an add command string for adding the {@code person}.
+     * Returns an add command string for adding the {@code parcel}.
      */
     public static String getAddCommand(ReadOnlyParcel person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
     /**
-     * Returns the part of command string for the given {@code person}'s details.
+     * Returns the part of command string for the given {@code parcel}'s details.
      */
     public static String getPersonDetails(ReadOnlyParcel person) {
         StringBuilder sb = new StringBuilder();
