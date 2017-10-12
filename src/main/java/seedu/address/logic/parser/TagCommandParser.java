@@ -14,7 +14,7 @@ import seedu.address.model.tag.Tag;
 
 public class TagCommandParser implements Parser<TagCommand> {
 
-    public static final String TAG_SEPARATOR_REGEX = ",";
+    public static final String SEPARATOR_REGEX = ",";
 
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
@@ -34,11 +34,10 @@ public class TagCommandParser implements Parser<TagCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
-
         return new TagCommand(parsedIndices, tagList);
     }
 
     private String[] splitIndices(ArgumentMultimap argMultimap) {
-        return argMultimap.getPreamble().split(TAG_SEPARATOR_REGEX);
+        return argMultimap.getPreamble().split(SEPARATOR_REGEX);
     }
 }
