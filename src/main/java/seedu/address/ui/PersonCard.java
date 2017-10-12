@@ -93,7 +93,7 @@ public class PersonCard extends UiPart<Region> {
             File picFile = new File(person.getPicture().getPictureUrl());
             FileInputStream fileStream = new FileInputStream(picFile);
             Image personPicture = new Image(fileStream);
-            picture.setFitHeight(120);
+            picture.setFitHeight(100);
             picture.setFitWidth(100);
             picture.setImage(personPicture);
             cardPane.getChildren().add(picture);

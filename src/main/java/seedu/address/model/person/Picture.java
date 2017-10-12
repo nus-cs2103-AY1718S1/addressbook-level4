@@ -3,7 +3,7 @@ package seedu.address.model.person;
 public class Picture {
 
     // Placeholder image url
-    public static final String PLACEHOLDER_IMAGE = "placeholder_person.jpg";
+    public static final String PLACEHOLDER_IMAGE = "placeholder_person.png";
     public static final String BASE_URL = System.getProperty("user.dir") +
             "/src/main/resources/contact_images/";
 
