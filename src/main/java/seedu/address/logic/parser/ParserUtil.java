@@ -106,7 +106,7 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+            tagSet.add(new Tag(tagName, Tag.DEFAULT_COLOR));
         }
         return tagSet;
     }

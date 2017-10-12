@@ -1,8 +1,6 @@
 package seedu.address.model;
 
-import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -76,22 +74,6 @@ public class AddressBookTest {
         int addressBookAHash = new AddressBook().hashCode();
         int addressBookBHash = new AddressBook().hashCode();
         assertEquals(addressBookAHash, addressBookBHash);
-    }
-
-    @Test
-    public void tagColors() {
-        addressBook.onTagColors();
-        for (ReadOnlyPerson person : addressBook.getPersonList()) {
-            for (Tag tag : person.getTags()) {
-                assertFalse(tag.getTagColor().equals("dcdcdc"));
-            }
-        }
-        addressBook.offTagColors();
-        for (ReadOnlyPerson person : addressBook.getPersonList()) {
-            for (Tag tag : person.getTags()) {
-                assertTrue(tag.getTagColor().equals("dcdcdc"));
-            }
-        }
     }
 
     /**

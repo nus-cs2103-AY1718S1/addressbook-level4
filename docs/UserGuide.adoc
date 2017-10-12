@@ -237,15 +237,23 @@ Clears all entries from the address book. +
 Format: `clear`
 Shorthand Format: `c`
 
-=== Toggle Tag Color Mode : `tagcolor`
+=== Set Tag Color Mode : `tagcolor`
 
-Changes tag color mode to on/off. +
-Format: `tagcolor On / tagcolor Off`
+Sets random colors to tags OR remove colors. +
+Format: `tagcolor` random/off
+
+Sets a color to a specific tag type. +
+Format: `tagcolor TAGNAME COLOR` +
 
 [NOTE]
 ====
-Tag color is not fixed. (i.e. when tag color is offed and on again, the color is different)
+Only certain colors can be specified.  +
+To see all the colors that can be specified, refer from +
+https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor +
+and input the color name in english or in hexadecimal form
 ====
+
+
 
 === Adding/Removing Remarks to a person : `remark`
 
