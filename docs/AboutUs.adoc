@@ -20,7 +20,7 @@ Role: Project Advisor
 '''
 
 === Liu Hang
-image::lh.jpeg[width="150", align="left"]
+image::liuhang0213.jp1g[width="150", align="left"]
 {empty}[http://github.com/liuhang0213[github]] [<<liuhang#, portfolio>>]
 
 Role: Developer +
