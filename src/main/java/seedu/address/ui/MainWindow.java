@@ -43,6 +43,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
+    private ResultDisplay resultDisplay;
     private Config config;
     private UserPrefs prefs;
 
@@ -131,10 +132,14 @@ public class MainWindow extends UiPart<Region> {
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             switch (event.getCode()) {
             case ESCAPE:
+            case LEFT:
                 personListPanel.setFocus();
                 break;
             case ENTER:
                 commandBox.setFocus();
+                break;
+            case RIGHT:
+                resultDisplay.setFocus();
                 break;
             default:
             }
@@ -151,7 +156,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
