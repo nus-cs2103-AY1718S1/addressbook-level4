@@ -172,6 +172,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public ArrayList<String> getThemesList() {
         return themes;
+    }
       
     /** Ensures that every person in the AddressBook
      *  is sorted in an alphabetical order.
