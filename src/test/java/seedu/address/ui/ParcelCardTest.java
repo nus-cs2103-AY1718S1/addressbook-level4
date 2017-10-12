@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import org.junit.Test;
@@ -11,20 +11,20 @@ import org.junit.Test;
 import guitests.guihandles.ParcelCardHandle;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.ParcelBuilder;
 
 public class ParcelCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-        Parcel parcelWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        Parcel parcelWithNoTags = new ParcelBuilder().withTags(new String[0]).build();
         ParcelCard parcelCard = new ParcelCard(parcelWithNoTags, 1);
         uiPartRule.setUiPart(parcelCard);
         assertCardDisplay(parcelCard, parcelWithNoTags, 1);
 
         // with tags
-        Parcel parcelWithTags = new PersonBuilder().build();
+        Parcel parcelWithTags = new ParcelBuilder().build();
         parcelCard = new ParcelCard(parcelWithTags, 2);
         uiPartRule.setUiPart(parcelCard);
         assertCardDisplay(parcelCard, parcelWithTags, 2);
@@ -42,7 +42,7 @@ public class ParcelCardTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        Parcel parcel = new PersonBuilder().build();
+        Parcel parcel = new ParcelBuilder().build();
         ParcelCard parcelCard = new ParcelCard(parcel, 0);
 
         // same parcel, same index -> returns true
@@ -59,7 +59,7 @@ public class ParcelCardTest extends GuiUnitTest {
         assertFalse(parcelCard.equals(0));
 
         // different parcel, same index -> returns false
-        Parcel differentParcel = new PersonBuilder().withName("differentName").build();
+        Parcel differentParcel = new ParcelBuilder().withName("differentName").build();
         assertFalse(parcelCard.equals(new ParcelCard(differentParcel, 0)));
 
         // same parcel, different index -> returns false

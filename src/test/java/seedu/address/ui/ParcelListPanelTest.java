@@ -2,8 +2,8 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
+import static seedu.address.testutil.TypicalParcels.getTypicalParcels;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
@@ -19,9 +19,9 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 
 public class ParcelListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyParcel> TYPICAL_PERSONS =
-            FXCollections.observableList(getTypicalPersons());
+            FXCollections.observableList(getTypicalParcels());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PARCEL);
 
     private ParcelListPanelHandle parcelListPanelHandle;
 
@@ -51,7 +51,7 @@ public class ParcelListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        ParcelCardHandle expectedCard = parcelListPanelHandle.getParcelCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        ParcelCardHandle expectedCard = parcelListPanelHandle.getParcelCardHandle(INDEX_SECOND_PARCEL.getZeroBased());
         ParcelCardHandle selectedCard = parcelListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }
