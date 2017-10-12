@@ -81,6 +81,7 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setScene(scene);
 
         setAccelerators();
+        setKeyListeners();
         registerAsAnEventHandler(this);
     }
 
@@ -118,6 +119,23 @@ public class MainWindow extends UiPart<Region> {
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
+            }
+        });
+    }
+
+    /**
+     * Set key listeners for handling keyboard shortcuts.
+     */
+    private void setKeyListeners() {
+        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            switch (event.getCode()) {
+            case ESCAPE:
+                personListPanel.setFocus();
+                break;
+            case ENTER:
+                break;
+            default:
+                break;
             }
         });
     }
