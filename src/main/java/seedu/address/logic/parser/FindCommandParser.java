@@ -10,13 +10,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AddressContainsKeywordPredicate;
@@ -33,7 +29,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 
 
-   private static List<Prefix> prefixList = Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_EMPTY);
+    private static List<Prefix> prefixList =
+            Arrays.asList(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_EMPTY);
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -41,12 +38,13 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
+        //replace new line character
+        String trimmedArgs = args.trim().replace("\n", "").replace("\r", "");
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-        return new FindCommand(inputIntoPredicate(args));
+        return new FindCommand(inputIntoPredicate(trimmedArgs));
     }
 
     /**
@@ -54,14 +52,22 @@ public class FindCommandParser implements Parser<FindCommand> {
      * returns {@code PersonContainsFieldsPredicate} that matches the requirements of the input
      */
     private PersonContainsFieldsPredicate inputIntoPredicate(String userInput) {
-
+        String trimmedArgs = userInput.trim();
+        //we input white space infront so that ArgumentMultimap will be able to identify
+        //first argument without prefix as a name
+        //ie find alex
+        String formattedText = " " + trimmedArgs;
         ArgumentMultimap argumentMultimap =
-                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(formattedText,
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         List<Predicate> predicateList = new ArrayList<>();
         for (Prefix prefix : prefixList) {
             for (String value : argumentMultimap.getAllValues(prefix)) {
-                predicateList.add(valueAndPrefixIntoPredicate(value, prefix));
+                if (!value.equals("")) {
+                    predicateList.add(valueAndPrefixIntoPredicate(value.trim(), prefix));
+
+                }
             }
         }
         return new PersonContainsFieldsPredicate(predicateList);

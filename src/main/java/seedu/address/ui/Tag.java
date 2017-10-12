@@ -6,11 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+import javax.print.attribute.standard.NumberUp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -41,7 +45,8 @@ public class Tag extends UiPart<Label> {
     @FXML
     private void handleClick(MouseEvent event) {
         try {
-            CommandResult commandResult = logic.execute("find t/" + value);
+            CommandResult commandResult =
+                    logic.execute(FindCommand.COMMAND_WORD + " " + CliSyntax.PREFIX_TAG_STRING + value);
             // process result of the command
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
@@ -50,7 +55,18 @@ public class Tag extends UiPart<Label> {
             // handle command failure
             logger.info("Invalid tag find: " + value);
             raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (NullPointerException ne) {
+            logger.info("Address Book Logic not initialised");
+            assert false;
         }
+    }
+
+    public String getText() {
+        return value;
+    }
+
+    public Label getLabel() {
+        return tag;
     }
 
 }

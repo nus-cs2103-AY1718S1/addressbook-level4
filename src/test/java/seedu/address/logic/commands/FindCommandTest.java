@@ -100,7 +100,7 @@ public class FindCommandTest {
     @Test
     public void execute_multipleKeywordsCaseInsensitive_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindCommand command = prepareCommand("n/meieR a/clEmenti n/BeNsOn");
+        FindCommand command = prepareCommand("meieR a/clEmenti n/BeNsOn");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
