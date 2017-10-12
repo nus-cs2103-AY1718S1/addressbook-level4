@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
@@ -16,10 +17,12 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
+import seedu.address.commons.events.ui.LocateCommandEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private LocateCommandEvent locatePersonStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
@@ -27,6 +30,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     @Before
     public void setUp() {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        locatePersonStub = new LocateCommandEvent(ALICE);
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -47,5 +51,13 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+
+        //associate web page pf a person whose address needs to be known
+        postNow(locatePersonStub);
+        URL expectedMapUrl = new URL(GOOGLE_MAP_URL_PREFIX
+                + ALICE.getAddress().value.replaceAll(" ", "+").substring(0,2));
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedMapUrl, browserPanelHandle.getLoadedUrl().toString().substring(0, GOOGLE_MAP_URL_PREFIX.length()+1));
     }
 }
