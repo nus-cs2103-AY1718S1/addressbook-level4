@@ -13,9 +13,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
     public static final String PANE_COLOR_EVEN = "#E25555";
     public static final String PANE_COLOR_ODD = "#e04545";
+
+    private static final String FXML = "PersonListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -28,7 +29,7 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     private String color;
-    
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -103,5 +104,13 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * To check if the HBoxColor is correct
+     *
+     */
+    public String getHBoxColor() {
+        return this.color;
     }
 }
