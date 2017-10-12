@@ -70,25 +70,6 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: find same tag in address book after deleting 1 of them -> 1 person found */
-        executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assert !getModel().getAddressBook().getPersonList().contains(BENSON);
-        command = FindTagCommand.COMMAND_WORD + " " + "family";
-        expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, CARL);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
         /* Case: find tag in address book, keyword is same as tag but of different case -> 1 person found */
         command = FindTagCommand.COMMAND_WORD + " FaMiLy";
         assertCommandSuccess(command, expectedModel);
