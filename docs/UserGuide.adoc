@@ -55,6 +55,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
++
+image::commandboxhelper.PNG[width="790"]
++
+
 ====
 
 === Viewing help : `help`
