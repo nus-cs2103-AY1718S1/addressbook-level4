@@ -198,10 +198,8 @@ public class Person implements ReadOnlyPerson {
             return c;
         } else if ((c = getEmail().compareTo(otherPerson.getEmail())) != 0) {
             return c;
-        } else if ((c = getAddress().compareTo(otherPerson.getAddress())) != 0) {
-            return c;
         } else {
-            return 0;
+            return getAddress().compareTo(otherPerson.getAddress());
         }
     }
 
