@@ -52,6 +52,7 @@ public class CommandBox extends UiPart<Region> {
     private static final int PHONE = 2;
     private static final int ADDRESS = 3;
     private static final int TAG = 4;
+    private static final int FONT_SIZE = 5;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -111,6 +112,7 @@ public class CommandBox extends UiPart<Region> {
         prefixList.add(CliSyntax.PREFIX_PHONE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_ADDRESS.getPrefix());
         prefixList.add(CliSyntax.PREFIX_TAG.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
     }
 
     /**
@@ -196,7 +198,12 @@ public class CommandBox extends UiPart<Region> {
                     index = tagList.get(j);
                     configActiveTag(index, index + prefixList.get(TAG));
                 }
+            }
 
+            //font size
+            if (text.contains(prefixList.get(FONT_SIZE))) {
+                index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
+                configActiveTag(index, prefixList.get(FONT_SIZE));
             }
         }
     }

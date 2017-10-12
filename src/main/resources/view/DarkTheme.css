@@ -205,11 +205,39 @@
     -fx-background-color: black;
 }
 
-.keyword-label {
+.keyword-label-default {
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
+
+.keyword-label-xsmall {
+        -fx-font-family: "Segoe UI Light";
+        -fx-font-size: x-small;
+        -fx-text-fill: white;
+}
+
+.keyword-label-small {
+        -fx-font-family: "Segoe UI Light";
+        -fx-font-size: small;
+        -fx-text-fill: white;
+}
+
+.keyword-label-large {
+        -fx-font-family: "Segoe UI Light";
+        -fx-font-size: x-large;
+        -fx-text-fill: white;
+}
+
+.keyword-label-xlarge {
+        -fx-font-family: "Segoe UI Light";
+        -fx-font-size: xx-large;
+        -fx-text-fill: white;
+}
+
+
+
+
 
 /*
  * Metro style Push Button
@@ -343,11 +371,36 @@
     -fx-text-fill: white;
 }
 
-#commandText {
+#commandTextDefault {
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
+
+#commandTextXsmall{
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: x-small;
+    -fx-text-fill: white;
+}
+
+#commandTextSmall{
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: small;
+    -fx-text-fill: white;
+}
+
+#commandTextLarge{
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: x-large;
+    -fx-text-fill: white;
+}
+
+#commandTextXLarge{
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: xx-large;
+    -fx-text-fill: white;
+}
+
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
