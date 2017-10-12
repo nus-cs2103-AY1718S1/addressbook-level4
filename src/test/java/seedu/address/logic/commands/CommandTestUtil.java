@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -20,12 +21,15 @@ import seedu.address.model.event.TitleContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
+
+    //====== Person =========================================================================================
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
@@ -58,6 +62,25 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    //====== Events =========================================================================================
+
+    public static final String VALID_TITLE_MIDTERM = "CS2106 Mid-term Examination";
+    public static final String VALID_TITLE_SOCCER = "Soccer Game with the boys";
+    public static final String VALID_TITLE_PRESENTATION = "Quarterly Annual Finance Presentation";
+
+    public static final String VALID_TIMING_MIDTERM = "1830-1930";
+    public static final String VALID_TIMING_SOCCER = "1930-2100";
+    public static final String VALID_TIMING_PRESENTATION = "1300-1430";
+
+    public static final String VALID_DESCRIPTION_MIDTERM = "MPSH-2A, Seat 727";
+    public static final String VALID_DESCRIPTION_SOCCER = "Bring the ball pump and drinks";
+
+    public static final String VALID_TAG_IMPORTANT = "important";
+    public static final String VALID_TAG_LEISURE = "leisure";
+
+    public static final EditEventCommand.EditEventDescriptor DESC_MIDTERM;
+    public static final EditEventCommand.EditEventDescriptor DESC_SOCCER;
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -65,6 +88,11 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM)
+                .withDescription(VALID_DESCRIPTION_MIDTERM).withTags(VALID_TAG_IMPORTANT).build();
+        DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER).withTiming(VALID_TIMING_SOCCER)
+                .withDescription(VALID_DESCRIPTION_SOCCER).withTags(VALID_TAG_LEISURE).build();
     }
 
     /**
