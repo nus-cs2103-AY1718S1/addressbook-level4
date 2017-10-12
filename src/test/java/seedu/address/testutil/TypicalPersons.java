@@ -2,14 +2,24 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_CEDAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_DELON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CEDAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_DELON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CEDAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DELON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_CEDAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_DELON;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FATTIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MUSHROOM;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +28,9 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+
+
+
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -55,6 +68,16 @@ public class TypicalPersons {
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
+    public static final ReadOnlyPerson CEDAR = new PersonBuilder().withName(VALID_NAME_CEDAR)
+            .withPhone(VALID_PHONE_CEDAR)
+            .withEmail(VALID_EMAIL_CEDAR).withAddress(VALID_ADDRESS_CEDAR).withTags(VALID_TAG_FRIEND, VALID_TAG_FATTIE)
+            .build();
+    public static final ReadOnlyPerson DELON = new PersonBuilder().withName(VALID_NAME_DELON)
+            .withPhone(VALID_PHONE_DELON)
+            .withEmail(VALID_EMAIL_DELON).withAddress(VALID_ADDRESS_DELON).withTags(VALID_TAG_FRIEND,
+                    VALID_TAG_FATTIE, VALID_TAG_MUSHROOM)
+            .build();
+
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -76,6 +99,6 @@ public class TypicalPersons {
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, CEDAR, DELON, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

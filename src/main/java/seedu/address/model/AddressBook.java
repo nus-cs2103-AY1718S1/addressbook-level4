@@ -10,11 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -160,6 +162,23 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+
+    /**
+     * Remove a Tag from tags and everyone with the tag.
+     * @param tagGettingRemoved
+     * @throws TagNotFoundException
+     * @throws IllegalValueException
+     */
+    public void removeTag(String tagGettingRemoved) throws TagNotFoundException,
+            IllegalValueException, PersonNotFoundException {
+        Tag tagToRemove = tags.removeTag(tagGettingRemoved);
+        for (Person person: persons) {
+            Person temp = person;
+            person.removeTag(tagToRemove);
+            persons.setPerson(temp, person);
+        }
     }
 
     //// util methods
