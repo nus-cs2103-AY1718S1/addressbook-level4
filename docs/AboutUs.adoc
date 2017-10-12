@@ -29,7 +29,7 @@ Responsibilities: Model
 '''
 
 === Ng Zu Yao
-image::ngzuyao.jpg[width="150", align="left"]
+image::ngzuyao.png[width="150", align="left"]
 {empty}[https://github.com/ngzuyao[github]]
 
 Role: Developer
