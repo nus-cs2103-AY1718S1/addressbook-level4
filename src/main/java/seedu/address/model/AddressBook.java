@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -64,6 +65,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setEvents(List<? extends ReadOnlyEvent> events) {
+        this.events.setEvents(events);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -78,6 +83,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
+
+        setEvents(newData.getEventList());
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -193,6 +200,37 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         events.add(newEvent);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        if (events.remove(key)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+
+    /**
+     * Replaces the given event {@code target} in the list with {@code editedReadOnlyEvent}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyEvent}.
+     *                                  another existing event in the list.
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
+            throws EventNotFoundException {
+        requireNonNull(editedReadOnlyEvent);
+        Event editedEvent = new Event(editedReadOnlyEvent);
+        // TODO: create master list for event tags
+        // syncMasterTagListWith(editedEvent);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        events.setEvent(target, editedEvent);
     }
 
     //// tag-level operations

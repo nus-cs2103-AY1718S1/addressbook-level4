@@ -3,11 +3,13 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * A list of events that does not allow nulls.
@@ -30,53 +32,48 @@ public class EventList implements Iterable<Event> {
         internalList.add(new Event(toAdd));
     }
 
-    //    /**
-    //     * Replaces the person {@code target} in the list with {@code editedEvent}.
-    //     *
-    //     * @throws DuplicateEventException if the replacement is equivalent to another existing person in the list.
-    //     * @throws EventNotFoundException  if {@code target} could not be found in the list.
-    //     */
-    //    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-    //            throws DuplicateEventException, EventNotFoundException {
-    //        requireNonNull(editedEvent);
-    //
-    //        int index = internalList.indexOf(target);
-    //        if (index == -1) {
-    //            throw new EventNotFoundException();
-    //        }
-    //
-    //        if (!target.equals(editedEvent) && internalList.contains(editedEvent)) {
-    //            throw new DuplicateEventException();
-    //        }
-    //
-    //        internalList.set(index, new Event(editedEvent));
-    //    }
-    //
-    //    /**
-    //     * Removes the equivalent person from the list.
-    //     *
-    //     * @throws EventNotFoundException if no such person could be found in the list.
-    //     */
-    //    public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
-    //        requireNonNull(toRemove);
-    //        final boolean personFoundAndDeleted = internalList.remove(toRemove);
-    //        if (!personFoundAndDeleted) {
-    //            throw new EventNotFoundException();
-    //        }
-    //        return personFoundAndDeleted;
-    //    }
-    //
-    //    public void setEvents(UniqueEventList replacement) {
-    //        this.internalList.setAll(replacement.internalList);
-    //    }
-    //
-    //    public void setEvents(List<? extends ReadOnlyEvent> persons) throws DuplicateEventException {
-    //        final UniqueEventList replacement = new UniqueEventList();
-    //        for (final ReadOnlyEvent person : persons) {
-    //            replacement.add(new Event(person));
-    //        }
-    //        setEvents(replacement);
-    //    }
+    /**
+     * Replaces the event {@code target} in the list with {@code editedEvent}.
+     *
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws EventNotFoundException {
+        requireNonNull(editedEvent);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new EventNotFoundException();
+        }
+
+        internalList.set(index, new Event(editedEvent));
+    }
+
+    /**
+     * Removes the equivalent person from the list.
+     *
+     * @throws EventNotFoundException if no such person could be found in the list.
+     */
+    public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
+        requireNonNull(toRemove);
+        final boolean eventFoundAndDeleted = internalList.remove(toRemove);
+        if (!eventFoundAndDeleted) {
+            throw new EventNotFoundException();
+        }
+        return eventFoundAndDeleted;
+    }
+
+    public void setEvents(EventList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setEvents(List<? extends ReadOnlyEvent> persons) {
+        final EventList replacement = new EventList();
+        for (final ReadOnlyEvent person : persons) {
+            replacement.add(new Event(person));
+        }
+        setEvents(replacement);
+    }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

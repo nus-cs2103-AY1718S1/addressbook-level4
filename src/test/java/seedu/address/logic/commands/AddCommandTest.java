@@ -139,6 +139,27 @@ public class AddCommandTest {
         public void addEvent(ReadOnlyEvent event) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void deleteEvent(ReadOnlyEvent event) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+            fail("This method should not be called.");
+        }
     }
 
     /**

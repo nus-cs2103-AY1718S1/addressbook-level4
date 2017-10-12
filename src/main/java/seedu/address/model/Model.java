@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -16,6 +17,11 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -63,5 +69,29 @@ public interface Model {
      * Adds the given event
      */
     void addEvent(ReadOnlyEvent event);
+
+    /**
+     * Deletes the given event.
+     */
+    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+
+    /**
+     * Replaces the given event {@code target} with {@code editedPerson}.
+     *
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     */
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException;
+
+    /**
+     * Returns an unmodifiable view of the filtered event list
+     */
+    ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 
 }
