@@ -3,7 +3,11 @@ package seedu.address.model.meeting;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
@@ -48,21 +52,6 @@ public class Meeting implements ReadOnlyMeeting {
         return name.get();
     }
 
-    /*public void setTime(LocalTime time) {
-        this.time.set(requireNonNull(time));
-    }
-
-    @Override
-    public ObjectProperty<LocalTime> timeProperty() {
-        return time;
-    }
-
-    @Override
-    public LocalTime getTime() {
-        return time.get();
-    }
-    */
-
     public void setDateTime(DateTime date) {
         this.date.set(requireNonNull(date));
     }
@@ -75,6 +64,13 @@ public class Meeting implements ReadOnlyMeeting {
     @Override
     public DateTime getDate() {
         return date.get();
+    }
+
+    public LocalDateTime getActualDate(String date){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss z yyyy");
+        LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+        return localDateTime;
     }
 
     public void setPlace(Place place) {
