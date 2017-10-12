@@ -109,24 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateSortComparator(List<SortArgument> sortArguments) {
-        comparator = (person1, person2) -> {
-            // default case for empty arguments
-            if (sortArguments == null || sortArguments.isEmpty()) {
-                return person1.compareTo(person2);
-
-            } else {
-                int c = 0;
-                for (SortArgument sortArgument : sortArguments) {
-                    if (c != 0) {
-                        return c;
-                    } else {
-                        c = person1.compareTo(person2, sortArgument);
-                    }
-                }
-                return c;
-
-            }
-        };
+        comparator = generateComparator(sortArguments);
         sortedPersons.setComparator(comparator);
     }
 
