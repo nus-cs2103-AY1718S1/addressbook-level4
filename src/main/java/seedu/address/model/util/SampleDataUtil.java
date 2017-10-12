@@ -50,10 +50,13 @@ public class SampleDataUtil {
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
+
+            // Initialize the PropertyManager by adding all the preLoaded properties.
+            PropertyManager.initializePropertyManager();
+
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
-            PropertyManager.initializePropertyManager();
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
