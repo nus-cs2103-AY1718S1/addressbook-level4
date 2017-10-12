@@ -86,9 +86,6 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
-        case SwitchThemeCommand.COMMAND_WORD: case SwitchThemeCommand.COMMAND_ALIAS:
-            return new SwitchThemeCommandParser().parse(arguments);
-
         case ThemeListCommand.COMMAND_WORD: case ThemeListCommand.COMMAND_ALIAS:
             return new ThemeListCommand();
 
