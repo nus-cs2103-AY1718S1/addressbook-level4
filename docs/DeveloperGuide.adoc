@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bamboo - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -755,7 +755,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |organised user |delete a group |remove groups that are no longer needed
 
-|'* * *' |organised user |list groups |see all groups that I have
+|`* * *` |organised user |list groups |see all groups that I have
 
 |`* * *` |forgetful user |add a person's photo |remember a person's face
 
