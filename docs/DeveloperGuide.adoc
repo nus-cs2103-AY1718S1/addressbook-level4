@@ -727,45 +727,41 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new parcel |
 
-|`* * *` |user |delete a parcel |remove entries that I no longer need
+|`* * *` |user |delete a parcel |
 
 |`* * *` |user |find a parcel by name |locate details of parcels without having to go through the entire list
 
-|`* * *` |user |add a new location |store important locations and establishments
-
-|`* * *` |user |filter contacts by tags |view specific contacts that are assigned with specific tags
+|`* * *` |user |filter parcels by tags |view specific parcels that are assigned with specific tags
 
 |`* * *` |user |the browser to automatically search for the address of the selected parcel in Google Maps | so that I can automatically get information on how to get to an address automatically, on click.
 
-|`* * *` |user who travels a lot |to know the shortest distance from one contact's address to another |
+|`* * *` |delivery man who travels a lot |to know the shortest distance from one contact's address to another |
 
-|`* * *` |user who travels a lot |set a reference location |find the shortest distance from my reference location to a contact's location
+|`* * *` |delivery man who travels a lot |set a reference location |find the shortest distance from my reference location to a parcel's delivery location
 
-|`* *` |user |add profile pictures to contacts |
+|`* * *` |delivery company |be able to keep track of my deliveries |deliver the packages on time
 
-|`* *` |user |have a default picture for contacts without profile pictures |know which contact does not have a profile picture
+|`* * *` |delivery company |be alerted for any deliveries to be done today |deliver the packages on time
 
-|`* *` |user |update the profile pictures of contacts |
+|`* * *` |delivery company |sort my deliveries by date |know which packages are more urgent to handle
+
+|`* * *` |delivery man|generate deliver route based on my list of deliveries |know schedule for the day
+
+|`* * *` |delivery company |add a list of deliveries in one shot using Comma Separated Values |conveniently parse information from other sources
+
+|`* * *` |delivery company |add deliveries individually |
+
+|`* * *` |delivery company |check for deliveries close to deadline |better prepare for busy periods
+
+|`* * *` |delivery company |archive completed deliveries |refer to them in the future
 
 |`* *` |new user |to have an autocomplete for the commands |I do not need to remember the format of commands
 
-|`* *` |secretive user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |user |store the sender and receiver addresses |use these addresses as destinations/sources of my deliveries
 
-|`* *` |lazy user |filter contacts by distance from my reference location |see a list of contacts that are at a specific radial distance from me
+|`* *` |lazy user |send and receive parcel details to and from other companies |minimize the amount of data inputs
 
-|`* *` |user |store my work and home addresses |use these addresses as destinations/sources of my journeys
-
-|`* *` |lazy user |send and receive contact details to and from my friends |minimize the amount of data inputs
-
-|`* *` |careful user |specify the type contact details I send to friends |protect my privacy
-
-|`* *` |user |import profile pictures of contacts from their social media |upload profile pictures of contacts easily
-
-|`* *` |user |have the option of adding a birthday to a contact |store the addresses of my contacts
-
-|`* *` |forgetful user |be reminded of a parcel's birthday (if valid) |in case I forget the date
-
-|`* *` |thoughtful user |view the birthdays of my contacts in sorted order |know whose birthday is coming up
+|`* *` |forgetful user |be reminded of a parcel's delivery date (if valid) |in case I forget the date
 
 |`* *` |user |share details with contacts with a specific tag |minimize chance of someone else seeing them by accident
 
@@ -777,19 +773,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |assign an expiry date to tasks |tasks are deleted automatically
 
-|`* *` |lazy user |to be notified of the most optimal path of completing my tasks based on travelling distance |
+|`* *` |lazy user |to be notified of the most optimal path of completing my deliveries based on travelling distance |
 
-|`* *` |user |add and remove events |keep track of events happening near me
+|`* *` |user |filter tasks according to location |be notified of deliveries I have at a specific location
 
-|`* *` |user |filter tasks according to location |be notified of tasks I have at a specific (contact) location
-
-|`* *` |forgetful user |view daily tasks |keep track of daily tasks
+|`* *` |forgetful user |view daily deliveries |keep track of daily deliveries
 
 |`* *` |user |retrieve my exact location on my device |remember the current address and store my location
 
 |`*` |new user |input instructions into a chatbot interface |I do not need to remember the format of commands
-
-|`*` |user involved in many group projects or activities |create telegram group chats of contacts tagged with the same tag |add contacts into a group chat easily
 
 |`*` |user with many parcels in the address book |sort parcels by name |locate a parcel easily
 |=======================================================================
