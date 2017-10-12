@@ -24,19 +24,17 @@ public class FindCommandParser implements Parser<FindCommand> {
         String trimmedArgs = args.trim();
 
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         String[] keywords = trimmedArgs.split("\\s+");
         List<String> dataKeywords = new ArrayList<>();
         List<SortArgument> sortArgumentList = new ArrayList<>();
 
-        setupArguments(keywords, dataKeywords, sortArgumentList);
+        setupArguments(keywords, dataKeywords, sortArgumentList, FindCommand.MESSAGE_USAGE);
 
         if (dataKeywords.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         return new FindCommand(new PersonDataContainsKeywordsPredicate(dataKeywords), sortArgumentList);

@@ -18,6 +18,7 @@ import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DESCENDIN
 
 import java.util.List;
 
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -46,19 +47,17 @@ public class SortUtil {
      */
     public static void setupArguments(String[] keywords,
                                       List<String> dataKeywordList,
-                                      List<SortArgument> sortArgumentList)
+                                      List<SortArgument> sortArgumentList,
+                                      String errorMessage)
             throws ParseException {
         for (String keyword : keywords) {
             SortArgument sortArgument = new SortArgument(keyword);
             if (!POSSIBLE_SORT_ARGUMENTS.contains(sortArgument) && sortArgumentList.isEmpty()) {
                 dataKeywordList.add(keyword);
-
             } else if (!POSSIBLE_SORT_ARGUMENTS.contains(sortArgument) && !sortArgumentList.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, errorMessage));
             } else {
                 sortArgumentList.add(sortArgument);
-
             }
         }
     }

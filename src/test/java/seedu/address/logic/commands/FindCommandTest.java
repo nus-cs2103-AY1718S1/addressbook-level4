@@ -181,7 +181,7 @@ public class FindCommandTest {
         List<SortArgument> sortKeywordList = new ArrayList<>();
 
         try {
-            setupArguments(keywords, findKeywordList, sortKeywordList);
+            setupArguments(keywords, findKeywordList, sortKeywordList, FindCommand.MESSAGE_USAGE);
         } catch (ParseException e) {
             throw new AssertionError("Unable to parse arguments.", e);
         }
