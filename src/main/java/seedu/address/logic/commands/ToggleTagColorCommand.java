@@ -8,12 +8,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 
 /**
- *  Changes tag color mode in address book
+ *  Changes tag color in address book
  */
 public class ToggleTagColorCommand extends Command {
 
     public static final String COMMAND_WORD = "tagcolor";
-    public static final String MESSAGE_SUCCESS = "TagColor set to ";
+    public static final String MESSAGE_SUCCESS = "tagColor set to ";
+    public static final String NO_SUCH_TAG_MESSAGE = "No such tag";
 
     private final Logger logger = LogsCenter.getLogger(ToggleTagColorCommand.class);
 
@@ -28,15 +29,20 @@ public class ToggleTagColorCommand extends Command {
         this.color = color;
     }
 
+    /**
+     * Sets all tag color on/off, OR sets a specific tag string to a specific color
+     * @throws CommandException if tagcolor command has the wrong number of parameters
+     *
+     */
     @Override
     public CommandResult execute() throws CommandException {
         model.setTagColor(toSet, tag, color);
         model.resetData(model.getAddressBook());
-        logger.fine("Tag color set to " + (toSet ? "random" : "off"));
+        logger.fine(MESSAGE_SUCCESS + (toSet ? "random" : "off"));
         if (!"".equals(tag) && !(containsTag(model.getAddressBook().getTagList(), tag))) {
-            message = "No such tag";
+            message = NO_SUCH_TAG_MESSAGE;
         } else if (tagCustomized(tag, color)) {
-            message = tag + " tag set to " + color;
+            message = tag + " " + MESSAGE_SUCCESS + color;
         } else {
             message = String.format("%s%s", MESSAGE_SUCCESS, toSet ? "random" : "off");
         }
@@ -55,6 +61,9 @@ public class ToggleTagColorCommand extends Command {
                 && (this.toSet == (((ToggleTagColorCommand) other).toSet)); // state check
     }
 
+    /**
+     * Returns true if user specified a tag string and color
+     */
     private boolean tagCustomized(String tag, String color) {
         return !"".equals(tag) && !"".equals(color);
     }
