@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -8,15 +13,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
 /**
  * Remove same tags from a list of people
  */
-public class DetagCommand extends UndoableCommand{
+public class DetagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "detag";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tags from multiple people.";
@@ -43,7 +43,7 @@ public class DetagCommand extends UndoableCommand{
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for(Index targetIndex: indices) {
+        for (Index targetIndex: indices) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }

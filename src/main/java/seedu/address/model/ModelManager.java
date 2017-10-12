@@ -88,7 +88,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void deleteTag(Index[] indices, Tag oldTag) throws PersonNotFoundException, DuplicatePersonException {
-        for(int i = 0; i<indices.length; i++) {
+        for (int i = 0; i < indices.length; i++) {
             Index index = indices[i];
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(index.getOneBased());
 
@@ -103,7 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void addTag(Index[] indices, Tag newTag) throws PersonNotFoundException, DuplicatePersonException {
-        for(int i = 0; i<indices.length; i++) {
+        for (int i = 0; i < indices.length; i++) {
             Index index = indices[i];
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(index.getOneBased());
 

@@ -1,21 +1,22 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.Set;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DetagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
 /**
  * Parse the given input and creates a DetagCommand object
  */
-public class DetagCommandParser implements Parser<DetagCommand>{
+public class DetagCommandParser implements Parser<DetagCommand> {
 
     public static final String INDEX_SEPARATOR_REGEX = ",";
 
