@@ -10,6 +10,14 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
 
     private static final String RANDOM_KEY_WORD = "random";
     private static final String OFF_KEY_WORD = "off";
+    private static final String MESSAGE_INVALID_COMMAND = "Invalid tagcolor command."
+            + "\n"
+            + "tc: Shorthand equivalent for tagcolor."
+            + "\n"
+            + "tagcolor: TagColor sets color for AddressBook"
+            + "\n"
+            + "Parameters: tagcolor random/off || tagcolor TAGNAME COLOR";
+
     @Override
     public ToggleTagColorCommand parse(String userInput) throws ParseException {
         boolean isOn;
@@ -29,11 +37,7 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
             }
             return new ToggleTagColorCommand(isOn, "", "");
         } catch (ArrayIndexOutOfBoundsException exp) {
-            throw new ParseException("Invalid tagcolor command."
-                    + "\n"
-                    + "tagcolor: TagColor sets color for AddressBook"
-                    + "\n"
-                    + "Parameters: tagcolor random/off || tagcolor TAGNAME COLOR");
+            throw new ParseException(MESSAGE_INVALID_COMMAND);
         }
     }
 }
