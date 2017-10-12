@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.swing.text.html.Option;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -50,6 +52,17 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> stringOptional} into an optional of the same type
+     * @param stringOptional , the optional passed in
+     * @return optional of String type
+     * @throws IllegalValueException
+     */
+    public static Optional<String> parseString(Optional<String> stringOptional) throws IllegalValueException {
+        requireNonNull(stringOptional);
+        return Optional.of(stringOptional.get());
     }
 
     /**
