@@ -1,7 +1,6 @@
 package systemtests;
 
 import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.CARL;
 
@@ -9,10 +8,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.*;
 import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 
@@ -84,14 +80,14 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         /* Case: find same tag in address book after deleting 1 of them -> 1 person found */
 		executeCommand(DeleteCommand.COMMAND_WORD + " 1");
 		assert !getModel().getAddressBook().getPersonList().contains(BENSON);
-		command = FindTagCommand.COMMAND_WORD + " " + "friends";
+		command = FindTagCommand.COMMAND_WORD + " " + "family";
 		expectedModel = getModel();
-		ModelHelper.setFilteredList(expectedModel, ALICE);
+		ModelHelper.setFilteredList(expectedModel, CARL);
 		assertCommandSuccess(command, expectedModel);
 		assertSelectedCardUnchanged();
 
         /* Case: find tag in address book, keyword is same as tag but of different case -> 1 person found */
-		command = FindTagCommand.COMMAND_WORD + " FriEndS";
+		command = FindTagCommand.COMMAND_WORD + " FaMiLy";
 		assertCommandSuccess(command, expectedModel);
 		assertSelectedCardUnchanged();
 
@@ -108,7 +104,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 		assertSelectedCardUnchanged();
 
         /* Case: find tag not in address book -> 0 persons found */
-		command = FindTagCommand.COMMAND_WORD + " Mark";
+		command = FindTagCommand.COMMAND_WORD + " Handsome";
 		assertCommandSuccess(command, expectedModel);
 		assertSelectedCardUnchanged();
 
@@ -127,22 +123,16 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 		assertCommandSuccess(command, expectedModel);
 		assertSelectedCardUnchanged();
 
-        /* Case: find tags of person in address book -> 0 persons found */
-		List<Tag> tags = new ArrayList<>(DANIEL.getTags());
-		command = FindTagCommand.COMMAND_WORD + " " + tags.get(0).tagName;
-		assertCommandSuccess(command, expectedModel);
-		assertSelectedCardUnchanged();
-
         /* Case: find while a person is selected -> selected card deselected */
 		showAllPersons();
 		selectPerson(Index.fromOneBased(1));
 		assert !getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName);
-		command = FindTagCommand.COMMAND_WORD + " owesMoney";
+		command = FindTagCommand.COMMAND_WORD + " colleague";
 		ModelHelper.setFilteredList(expectedModel, DANIEL);
 		assertCommandSuccess(command, expectedModel);
 		assertSelectedCardDeselected();
 
-        /* Case: find person in empty address book -> 0 persons found */
+        /* Case: find tag in empty address book -> 0 persons found */
 		executeCommand(ClearCommand.COMMAND_WORD);
 		assert getModel().getAddressBook().getPersonList().size() == 0;
 		command = FindTagCommand.COMMAND_WORD + " " + "owesMoney";
