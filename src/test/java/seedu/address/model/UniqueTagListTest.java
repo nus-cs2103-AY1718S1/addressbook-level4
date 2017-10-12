@@ -18,20 +18,19 @@ import seedu.address.model.tag.UniqueTagList;
 import seedu.address.testutil.TypicalPersons;
 
 
-
 public class UniqueTagListTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testThrowDuplicateTagError() throws Exception{
+    public void testThrowDuplicateTagError() throws Exception {
         UniqueTagList uniqueTagList = new UniqueTagList();
         uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
         thrown.expect(UniqueTagList.DuplicateTagException.class);
 
         Iterator myIterator = TypicalPersons.ALICE.getTags().iterator();
-        uniqueTagList.add((Tag)myIterator.next());
+        uniqueTagList.add((Tag) myIterator.next());
 
     }
 
@@ -120,7 +119,7 @@ public class UniqueTagListTest {
 
     }
 
-    public void testEquals(){
+    public void testEquals() {
         UniqueTagList uniqueTagList = new UniqueTagList();
         uniqueTagList.setTags(TypicalPersons.ALICE.getTags());
         uniqueTagList.setTags(TypicalPersons.BENSON.getTags());
