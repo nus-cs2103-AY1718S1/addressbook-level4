@@ -836,6 +836,86 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+=== Use case: Edit a person's details
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit the details of a specific person in the list
+4. AddressBook updates details of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify field to edit.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. User updates valid field with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Undo last undoable command
+
+*MSS*
+
+1. User requests to undo last undoable command
+2. AddressBook undoes the last undoable command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The `undo` command is the first command.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo most recent undone command
+
+*MSS*
+
+1. User requests to redo most recently undone command
+2. AddressBook redoes the last undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The `redo` command is the first command
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
 === Use case: Add a relationship between two persons
 
 *MSS*
@@ -906,8 +986,11 @@ Use case resumes at step 6.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should be able to give a response within 1 second
+.  Should be able to hide personal information
+.  Should be simple enough for a novice to utilise and navigate
+.  Data should only be read and modified by authorized party
+.  Should be easily maintained by other programmers
 
 [appendix]
 == Glossary
