@@ -89,7 +89,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getParcelList().size() == 0;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased(),
-				MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
+                MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
     }
 
     /**
@@ -107,7 +107,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
-				MESSAGE_SELECT_PARCEL_SUCCESS, expectedSelectedCardIndex.getOneBased());
+                MESSAGE_SELECT_PARCEL_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getParcelListPanel().getSelectedCardIndex();
 
         executeCommand(command);
