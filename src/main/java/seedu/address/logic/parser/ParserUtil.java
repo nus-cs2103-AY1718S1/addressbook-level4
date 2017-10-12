@@ -13,7 +13,6 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DateBorrow;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;

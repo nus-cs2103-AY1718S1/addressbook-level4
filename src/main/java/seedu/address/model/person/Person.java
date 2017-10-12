@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -147,13 +146,19 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author lawwman
-    public void setDateBorrow(DateBorrow dateBorrow) { this.dateBorrow.set(requireNonNull(dateBorrow));}
+    public void setDateBorrow(DateBorrow dateBorrow) {
+        this.dateBorrow.set(requireNonNull(dateBorrow));
+    }
 
     @Override
-    public ObjectProperty<DateBorrow> dateBorrowProperty() { return dateBorrow;}
+    public ObjectProperty<DateBorrow> dateBorrowProperty() {
+        return dateBorrow;
+    }
 
     @Override
-    public DateBorrow getDateBorrow() { return dateBorrow.get();}
+    public DateBorrow getDateBorrow() {
+        return dateBorrow.get();
+    }
 
     //@@author
     /**
