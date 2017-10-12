@@ -24,8 +24,8 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_DATE_TIME + "DATE & TIME "
             + PREFIX_ADDRESS + "VENUE "
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE_TIME + "251217 8:30pm "
+            + PREFIX_NAME + "John Doe birthday "
+            + PREFIX_DATE_TIME + "25122017 08:30pm "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";

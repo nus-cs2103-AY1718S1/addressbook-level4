@@ -70,6 +70,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces all events in this list with those in the argument event list.
+     */
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
+
+    /**
      * Replaces all tags in this list with those in the argument tag list.
      */
     public void setTags(Set<Tag> tags) {
@@ -86,6 +93,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
+        try {
+            setEvents(newData.getEventList());
+        } catch (DuplicateEventException de) {
+            assert false : "AddressBooks should not have duplicate events";
+        }
+
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);

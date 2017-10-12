@@ -114,8 +114,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
-        addressBook.removeEvent(target);
+    public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        addressBook.removeEvent(event);
         indicateAddressBookChanged();
     }
 
