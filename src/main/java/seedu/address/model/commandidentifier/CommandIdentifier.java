@@ -68,7 +68,7 @@ public class CommandIdentifier {
     /**
      * Returns true if a given string is a valid existing command word.
      */
-    private boolean isValidCommandIdentifier(String test) {
+    public static boolean isValidCommandIdentifier(String test) {
         return COMMAND_VALIDATION_LIST.contains(test);
     }
 

@@ -14,11 +14,11 @@ public class HelpCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    @Test
-    public void execute_help_success() {
-        CommandResult result = new HelpCommand().execute();
-        assertEquals(SHOWING_HELP_MESSAGE, result.feedbackToUser);
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);
-        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
-    }
+//    @Test
+//    public void execute_help_success() {
+//        CommandResult result = new HelpCommand().execute();
+//        assertEquals(SHOWING_HELP_MESSAGE, result.feedbackToUser);
+//        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);
+//        assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
+//    }
 }
