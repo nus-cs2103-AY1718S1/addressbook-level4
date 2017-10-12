@@ -17,7 +17,7 @@ public class FilterCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
     private final TagContainsKeywordsPredicate predicate;
-    
+
     public FilterCommand(TagContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }

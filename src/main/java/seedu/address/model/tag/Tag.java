@@ -54,7 +54,7 @@ public class Tag {
     public String toString() {
         return '[' + tagName + ']';
     }
-    
+
     /**
      * Format state as text for viewing.
      */
