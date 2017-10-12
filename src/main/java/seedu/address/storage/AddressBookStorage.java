@@ -46,4 +46,11 @@ public interface AddressBookStorage {
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
+    /**
+     * Restores an earlier version of address book from local storage
+     * @throws IOException if there was any problem reading the file
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     */
+    Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException;
+
 }
