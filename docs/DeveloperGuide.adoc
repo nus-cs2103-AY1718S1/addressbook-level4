@@ -887,7 +887,7 @@ Use case resumes at step 8
 [none]
 ** 11a1. AddressBook shows an error message
 +
-Use case resumes at step 80
+Use case resumes at step 10
 
 * 13a. The user does not input a tag
 +
@@ -944,60 +944,6 @@ Use case resumes at step 4
 
 1.  User requests to set reference location
 2.  AddressBook updates reference location
-+
-Use case ends
-
-[discrete]
-=== Use case: Generate encoded parcel details
-
-*MSS*
-
-1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
-3.  User requests to select specific parcel
-4.  AddressBook prompts for which details to not encode
-5.  User inputs flags of details to not encode
-6.  AddressBook returns encoded string
-+
-Use case ends
-
-*Extensions*
-
-[none]
-* 2a. The list is empty
-+
-Use case ends
-
-* 6a. The flags given are invalid.
-+
-[none]
-** 6a1. AddressBook shows an error message
-+
-Use case resumes at step 4
-
-[discrete]
-=== Use case: Generate decoded contact details
-
-*MSS*
-
-1.  User requests to decode parcel details
-2.  AddressBook shows decoded details and prompts user on whether to save parcel
-3.  User accepts save
-4.  AddressBook saves decoded parcel's contact
-+
-Use case ends
-
-*Extensions*
-
-[none]
-* 4a. User rejects save
-+
-Use case ends
-
-* 2a. Encoded details are invalid
-+
-[none]
-** 2a1. AddressBook shows an error message.
 +
 Use case ends
 
