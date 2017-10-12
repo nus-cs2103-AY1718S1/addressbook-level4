@@ -1,6 +1,7 @@
 package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
@@ -10,6 +11,28 @@ import java.io.StringWriter;
  * Helper functions for handling strings.
  */
 public class StringUtil {
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "abc") == true
+     *       containsWordIgnoreCase("ABc def", "EF") == true
+     *       containsWordIgnoreCase("ABc def", "AB") == true
+     *       </pre>
+     * @param sentence cannot be null
+     * @param phrase cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsStringIgnoreCase(String sentence, String phrase) {
+        requireNonNull(sentence);
+        requireNonNull(phrase);
+
+        String preppedWord = phrase.trim();
+        checkArgument(!preppedWord.isEmpty(), "Search phrase parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Search phrase parameter should be a single word");
+
+        return sentence.toLowerCase().contains(phrase.toLowerCase());
+    }
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -35,6 +58,36 @@ public class StringUtil {
 
         for (String wordInSentence: wordsInPreppedSentence) {
             if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {@code sentence} contains the {@code word}.
+     *   Ignores case.
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("ABc def", "abc") == true
+     *       containsWordIgnoreCase("ABc def", "EF") == false // no word starts with ef
+     *       containsWordIgnoreCase("ABc def", "aB") == true
+     *       </pre>
+     * @param sentence cannot be null
+     * @param phrase cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsWordsStartWithString(String sentence, String phrase) {
+        requireNonNull(sentence);
+        requireNonNull(phrase);
+
+        String preppedWord = phrase.trim();
+        checkArgument(!preppedWord.isEmpty(), "Search phrase parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Search phrase parameter should be a single word");
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        for (String wordInSentence: wordsInPreppedSentence) {
+            if (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase())) {
                 return true;
             }
         }
