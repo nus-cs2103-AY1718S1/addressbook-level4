@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 
+/**
+ * Controller for a theme page
+ */
 public class ThemesWindow extends UiPart<Region> {
 
     public static final String THEMES_FILE_PATH = "/docs/Themes.html";
