@@ -30,11 +30,11 @@ Responsibilities: Logic
 '''
 
 === Mavis Toh
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/mavistoh[github]] [<<johndoe#, portfolio>>]
+image::mavistoh.jpg[width="150", align="left"]
+{empty}[http://github.com/mavistoh[github]] [<<mavistoh#, portfolio>>]
 
-Role: +
-Responsibilities:
+Role: Team Member 3 +
+Responsibilities: Model
 
 '''
 
