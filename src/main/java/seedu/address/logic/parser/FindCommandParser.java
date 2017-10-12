@@ -10,10 +10,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.*;
@@ -24,6 +24,9 @@ import seedu.address.model.tag.Tag;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+
+
+    public Predicate<ReadOnlyPerson> predicate;
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -40,19 +43,21 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
 
-        try {
+
+        String keywords =args.trim().substring(args.indexOf('/'));
             if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-                return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get().toString())));
+
+                predicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
             }
 
             else if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-                return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(ParserUtil.parseName(argMultimap.getValue(PREFIX_EMAIL)).get().toString())));
+                predicate = new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
             }
 
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(args)));
+            return new FindCommand(predicate);
+
+
+
     }
 
 

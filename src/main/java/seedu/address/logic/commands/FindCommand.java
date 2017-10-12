@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ReadOnlyPerson;
+
+import java.util.function.Predicate;
 
 import static seedu.address.logic.parser.CliSyntax.*;
 
@@ -24,9 +27,9 @@ public class FindCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + "  "  + PREFIX_EMAIL + "google";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final Predicate<ReadOnlyPerson> predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindCommand(Predicate<ReadOnlyPerson>predicate) {
         this.predicate = predicate;
     }
 

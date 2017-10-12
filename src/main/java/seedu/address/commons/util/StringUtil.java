@@ -61,9 +61,10 @@ public class StringUtil {
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
         String preppedEmailSentence = emailSentence.substring(emailSentence.indexOf('@') + 1);
+        String finalPreppedEmailSentence = preppedEmailSentence.substring(0,preppedEmailSentence.indexOf('.'));
 
 
-        if (preppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase())) {
+        if (finalPreppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase())) {
             return true;
         }
 
