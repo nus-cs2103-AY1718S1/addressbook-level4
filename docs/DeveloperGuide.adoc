@@ -733,15 +733,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |sort persons by desired attribute |list persons in desired order
 
-|`* * *` |user |see when a person was added |list persons by date added 
+|`* * *` |user |see when a person was added |list persons by date added
 
 |`* * *` |user |redo a previous command |repeatedly launch frequent commands
 
-|`* * *` |lazy user |type shorthand commands |save time 
+|`* * *` |lazy user |type shorthand commands |save time
 
 |`* * *` |lazy user |mark a person as "Favourite" |always find "Favourited" contacts easily
 
-|`* * *` |impatient user |delete multiple persons |save time 
+|`* * *` |impatient user |delete multiple persons |save time
 
 |`* * *` |organised user |create a group |organise persons by groups
 
