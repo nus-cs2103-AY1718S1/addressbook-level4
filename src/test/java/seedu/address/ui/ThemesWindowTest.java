@@ -27,7 +27,7 @@ public class ThemesWindowTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        URL expectedHelpPage = ThemesWindow.class.getResource(THEMES_FILE_PATH);
-        assertEquals(expectedHelpPage, themesWindowHandle.getLoadedUrl());
+        URL expectedThemesPage = ThemesWindow.class.getResource(THEMES_FILE_PATH);
+        assertEquals(expectedThemesPage, themesWindowHandle.getLoadedUrl());
     }
 }
