@@ -1,18 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.Test;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
-
-import java.util.Set;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.index.Index.fromOneBased;
@@ -22,6 +9,20 @@ import static seedu.address.logic.commands.DetagCommand.MESSAGE_DETAG_PERSONS_SU
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Set;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains integration tests (Interaction with the Model) and unit tests for {@code DetagCommand}.
@@ -33,7 +34,7 @@ public class DetagCommandTest {
     private final Index[] indices2 = {fromOneBased(4), fromOneBased(5)};
 
     @Test
-    public void execute_ValidIndex_success() throws Exception {
+    public void executeValidIndexSuccess() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();
@@ -47,7 +48,7 @@ public class DetagCommandTest {
     }
 
     @Test
-    public void execute_InvalidIndex_throwsCommandException() throws Exception {
+    public void executeInvalidIndexThrowsCommandException() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();
