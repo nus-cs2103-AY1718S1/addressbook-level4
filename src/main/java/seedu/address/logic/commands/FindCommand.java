@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DEFAULT;
 import static seedu.address.logic.parser.SortUtil.MESSAGE_SORT_USAGE;
 
 import java.util.List;
@@ -22,7 +24,8 @@ public class FindCommand extends Command {
             + "and displays them as a list with index numbers, "
             + "sorted by the specified sort order or the last known sort order.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]..." + MESSAGE_SORT_USAGE + "\n"
-            + "Example: " + COMMAND_WORD + " alice bobby charlie p/ n/desc";
+            + "Example: " + COMMAND_WORD + " alice bobby charlie "
+            + SORT_ARGUMENT_PHONE_DEFAULT + " " + SORT_ARGUMENT_NAME_DESCENDING;
 
     private final PersonDataContainsKeywordsPredicate predicate;
     private final List<SortArgument> sortArguments;
