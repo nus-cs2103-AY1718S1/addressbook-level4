@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -33,6 +35,8 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -126,10 +130,11 @@ public class AddressBookParserTest {
     
     @Test
     public void parseCommand_tagCommand_returnsTagCommand() throws Exception {
-        String tag = "t/foo";
-        TagCommand command = (TagCommand) parser.parseCommand(TagCommand.COMMAND_WORD + " " +
-                INDEX_FIRST_PERSON.getOneBased() + ", " + INDEX_SECOND_PERSON.getOneBased() + " " + tag);
-        assertEquals(new TagCommand([]));
+        String tag = "foo";
+        Set<Tag> tagList = SampleDataUtil.getTagSet(tag);
+        Index[] indices = {INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        TagCommand command = (TagCommand) parser.parseCommand(PersonUtil.getTagCommand(indices, tag));
+        assertEquals(new TagCommand(indices, tagList), command);
     }
 
     @Test

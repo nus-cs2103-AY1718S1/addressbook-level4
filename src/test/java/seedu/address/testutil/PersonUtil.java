@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.TagCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -19,6 +21,17 @@ public class PersonUtil {
      */
     public static String getAddCommand(ReadOnlyPerson person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+    }
+
+    /**
+     * Returns a tag command string for adding the {@code tag}.
+     */
+    public static String getTagCommand(Index[] indices, String tag) {
+        String indexList = "";
+        for (Index index : indices) {
+            indexList += index.getOneBased() + ", ";
+        }
+        return TagCommand.COMMAND_WORD + " " + indexList + " " + PREFIX_TAG + tag;
     }
 
     /**
