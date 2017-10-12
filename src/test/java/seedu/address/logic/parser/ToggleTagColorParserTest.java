@@ -11,11 +11,11 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class ToggleTagColorParserTest {
 
-    private ToggleTagColorParser parser = new ToggleTagColorParser();
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private ToggleTagColorParser parser = new ToggleTagColorParser();
+    
     @Test
     public void parseTestInputs() throws Exception {
 
