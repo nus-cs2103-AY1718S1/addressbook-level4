@@ -24,16 +24,16 @@ image::NgSuli.jpeg[width="150", align="left"]
 {empty}[http://github.com/NgSuli[github]] [<<Melanie#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Logic
 
 '''
 
 === Ma Junting
 image::majunting.jpeg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<Junting#, portfolio>>]
+{empty}[http://github.com/majunting[github]] [<<Junting#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model
 
 '''
 
