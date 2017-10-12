@@ -17,7 +17,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.NameContainsKeywordsPredicate;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -121,7 +121,7 @@ public class CommandTestUtil {
         ReadOnlyParcel firstPerson = model.getFilteredPersonList().get(0);
         try {
             model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("Parcel in filtered list must exist in model.", pnfe);
         }
     }

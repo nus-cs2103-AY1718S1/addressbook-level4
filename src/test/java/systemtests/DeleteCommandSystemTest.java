@@ -19,7 +19,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -120,7 +120,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         ReadOnlyParcel targetPerson = getPerson(model, index);
         try {
             model.deletePerson(targetPerson);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         }
         return targetPerson;

@@ -13,7 +13,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
 public class UndoableCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -58,7 +58,7 @@ public class UndoableCommandTest {
             ReadOnlyParcel personToDelete = model.getFilteredPersonList().get(0);
             try {
                 model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
+            } catch (ParcelNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
             }
             return new CommandResult("");

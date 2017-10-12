@@ -11,7 +11,7 @@ import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
-import seedu.address.model.parcel.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -52,7 +52,7 @@ public class SampleDataUtil {
                 sampleAb.addPerson(sampleParcel);
             }
             return sampleAb;
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateParcelException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
     }

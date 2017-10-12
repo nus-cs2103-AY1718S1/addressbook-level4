@@ -10,7 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 
 /**
  * Adds a parcel to the address book.
@@ -52,7 +52,7 @@ public class AddCommand extends UndoableCommand {
         try {
             model.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateParcelException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

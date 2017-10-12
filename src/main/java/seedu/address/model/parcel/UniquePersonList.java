@@ -10,8 +10,8 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.parcel.exceptions.DuplicatePersonException;
-import seedu.address.model.parcel.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -38,12 +38,12 @@ public class UniquePersonList implements Iterable<Parcel> {
     /**
      * Adds a parcel to the list.
      *
-     * @throws DuplicatePersonException if the parcel to add is a duplicate of an existing parcel in the list.
+     * @throws DuplicateParcelException if the parcel to add is a duplicate of an existing parcel in the list.
      */
-    public void add(ReadOnlyParcel toAdd) throws DuplicatePersonException {
+    public void add(ReadOnlyParcel toAdd) throws DuplicateParcelException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateParcelException();
         }
         internalList.add(new Parcel(toAdd));
     }
@@ -51,20 +51,20 @@ public class UniquePersonList implements Iterable<Parcel> {
     /**
      * Replaces the parcel {@code target} in the list with {@code editedPerson}.
      *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing parcel in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateParcelException if the replacement is equivalent to another existing parcel in the list.
+     * @throws ParcelNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicateParcelException, ParcelNotFoundException {
         requireNonNull(editedPerson);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new ParcelNotFoundException();
         }
 
         if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateParcelException();
         }
 
         internalList.set(index, new Parcel(editedPerson));
@@ -73,13 +73,13 @@ public class UniquePersonList implements Iterable<Parcel> {
     /**
      * Removes the equivalent parcel from the list.
      *
-     * @throws PersonNotFoundException if no such parcel could be found in the list.
+     * @throws ParcelNotFoundException if no such parcel could be found in the list.
      */
-    public boolean remove(ReadOnlyParcel toRemove) throws PersonNotFoundException {
+    public boolean remove(ReadOnlyParcel toRemove) throws ParcelNotFoundException {
         requireNonNull(toRemove);
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
-            throw new PersonNotFoundException();
+            throw new ParcelNotFoundException();
         }
         return personFoundAndDeleted;
     }
@@ -88,7 +88,7 @@ public class UniquePersonList implements Iterable<Parcel> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setPersons(List<? extends ReadOnlyParcel> persons) throws DuplicatePersonException {
+    public void setPersons(List<? extends ReadOnlyParcel> persons) throws DuplicateParcelException {
         final UniquePersonList replacement = new UniquePersonList();
         for (final ReadOnlyParcel person : persons) {
             replacement.add(new Parcel(person));

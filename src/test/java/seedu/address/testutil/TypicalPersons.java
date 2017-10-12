@@ -17,7 +17,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 
 /**
  * A utility class containing a list of {@code Parcel} objects to be used in tests.
@@ -68,7 +68,7 @@ public class TypicalPersons {
         for (ReadOnlyParcel person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
-            } catch (DuplicatePersonException e) {
+            } catch (DuplicateParcelException e) {
                 assert false : "not possible";
             }
         }
