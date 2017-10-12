@@ -39,11 +39,14 @@ public class UiManager extends ComponentManager implements Ui {
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
+    private boolean logInStatus;
+
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.logInStatus = false;
     }
 
     @Override
@@ -131,6 +134,7 @@ public class UiManager extends ComponentManager implements Ui {
         // log in is successful
         if (event.getLoginStatus() == true) {
             logger.info("Login successful");
+            logInStatus = true;
             //show address book
             Platform.runLater(() -> mainWindow.fillInnerParts());
         }
@@ -143,6 +147,8 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
+        if(logInStatus) {
+            mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
+        }
     }
 }
