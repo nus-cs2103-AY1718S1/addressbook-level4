@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.awt.*;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
