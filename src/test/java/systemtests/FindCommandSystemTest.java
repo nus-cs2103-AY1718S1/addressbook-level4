@@ -100,33 +100,33 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find parcel in address book, name is substring of keyword -> 0 persons found */
+        /* Case: find parcel in address book, name is substring of keyword -> 0 parcels found */
         command = FindCommand.COMMAND_WORD + " Meiers";
         ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find parcel not in address book -> 0 persons found */
+        /* Case: find parcel not in address book -> 0 parcels found */
         command = FindCommand.COMMAND_WORD + " Mark";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of parcel in address book -> 0 persons found */
+        /* Case: find phone number of parcel in address book -> 0 parcels found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of parcel in address book -> 0 persons found */
+        /* Case: find address of parcel in address book -> 0 parcels found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of parcel in address book -> 0 persons found */
+        /* Case: find email of parcel in address book -> 0 parcels found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of parcel in address book -> 0 persons found */
+        /* Case: find tags of parcel in address book -> 0 parcels found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
@@ -141,7 +141,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
-        /* Case: find parcel in empty address book -> 0 persons found */
+        /* Case: find parcel in empty address book -> 0 parcels found */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getParcelList().size() == 0;
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;

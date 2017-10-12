@@ -33,14 +33,14 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the first parcel in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PARCEL.getOneBased() + "       ";
-        ReadOnlyParcel deletedPerson = removePerson(expectedModel, INDEX_FIRST_PARCEL);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedPerson);
+        ReadOnlyParcel deletedParcel = removeParcel(expectedModel, INDEX_FIRST_PARCEL);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the last parcel in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
-        assertCommandSuccess(lastPersonIndex);
+        Index lastParcelIndex = getLastIndex(modelBeforeDeletingLast);
+        assertCommandSuccess(lastParcelIndex);
 
         /* Case: undo deleting the last parcel in the list -> last parcel restored */
         command = UndoCommand.COMMAND_WORD;
@@ -49,13 +49,13 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: redo deleting the last parcel in the list -> last parcel deleted again */
         command = RedoCommand.COMMAND_WORD;
-        removePerson(modelBeforeDeletingLast, lastPersonIndex);
+        removeParcel(modelBeforeDeletingLast, lastParcelIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: delete the middle parcel in the list -> deleted */
-        Index middlePersonIndex = getMidIndex(getModel());
-        assertCommandSuccess(middlePersonIndex);
+        Index middleParcelIndex = getMidIndex(getModel());
+        assertCommandSuccess(middleParcelIndex);
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
@@ -82,8 +82,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectParcel(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedPerson);
+        deletedParcel = removeParcel(expectedModel, selectedIndex);
+        expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
@@ -116,14 +116,14 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * Removes the {@code ReadOnlyParcel} at the specified {@code index} in {@code model}'s address book.
      * @return the removed parcel
      */
-    private ReadOnlyParcel removePerson(Model model, Index index) {
-        ReadOnlyParcel targetPerson = getParcel(model, index);
+    private ReadOnlyParcel removeParcel(Model model, Index index) {
+        ReadOnlyParcel targetParcel = getParcel(model, index);
         try {
-            model.deleteParcel(targetPerson);
+            model.deleteParcel(targetParcel);
         } catch (ParcelNotFoundException pnfe) {
-            throw new AssertionError("targetPerson is retrieved from model.");
+            throw new AssertionError("targetParcel is retrieved from model.");
         }
-        return targetPerson;
+        return targetParcel;
     }
 
     /**
@@ -133,8 +133,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        ReadOnlyParcel deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedPerson);
+        ReadOnlyParcel deletedParcel = removeParcel(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);

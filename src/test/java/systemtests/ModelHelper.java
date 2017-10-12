@@ -12,7 +12,7 @@ import seedu.address.model.parcel.ReadOnlyParcel;
  * Contains helper methods to set up {@code Model} for testing.
  */
 public class ModelHelper {
-    private static final Predicate<ReadOnlyParcel> PREDICATE_MATCHING_NO_PERSONS = unused -> false;
+    private static final Predicate<ReadOnlyParcel> PREDICATE_MATCHING_NO_PARCELS = unused -> false;
 
     /**
      * Updates {@code model}'s filtered list to display only {@code toDisplay}.
@@ -20,7 +20,7 @@ public class ModelHelper {
     public static void setFilteredList(Model model, List<ReadOnlyParcel> toDisplay) {
         Optional<Predicate<ReadOnlyParcel>> predicate =
                 toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
-        model.updateFilteredParcelList(predicate.orElse(PREDICATE_MATCHING_NO_PERSONS));
+        model.updateFilteredParcelList(predicate.orElse(PREDICATE_MATCHING_NO_PARCELS));
     }
 
     /**
@@ -34,6 +34,6 @@ public class ModelHelper {
      * Returns a predicate that evaluates to true if this {@code ReadOnlyParcel} equals to {@code other}.
      */
     private static Predicate<ReadOnlyParcel> getPredicateMatching(ReadOnlyParcel other) {
-        return person -> person.equals(other);
+        return parcel -> parcel.equals(other);
     }
 }
