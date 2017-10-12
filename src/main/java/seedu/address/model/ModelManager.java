@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +13,16 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyMeeting> filteredMeetings;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredMeetings = new FilteredList<>(this.addressBook.getMeetingList());
     }
 
     public ModelManager() {
@@ -73,12 +83,44 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException {
+        addressBook.addMeeting(meeting);
+        updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteMeeting(ReadOnlyMeeting target) throws MeetingNotFoundException {
+        addressBook.removeMeeting(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+    @Override
+    public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedMeeting)
+            throws DuplicateMeetingException, MeetingNotFoundException {
+        requireAllNonNull(target, editedMeeting);
+
+        addressBook.updateMeeting(target, editedMeeting);
+        indicateAddressBookChanged();
+    }
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = newPerson.getTags();
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -96,6 +138,21 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyMeeting> getFilteredMeetingList() {
+        return FXCollections.unmodifiableObservableList(filteredMeetings);
+    }
+
+    @Override
+    public void updateFilteredMeetingList(Predicate<ReadOnlyMeeting> predicate) {
+        requireNonNull(predicate);
+        filteredMeetings.setPredicate(predicate);
     }
 
     @Override

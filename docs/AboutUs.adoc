@@ -11,19 +11,20 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Nelson Quek Yee Jiel
+image::nelsonqyj.png[width="150", align="left"]
+{empty}[http://www.comp.nus.edu.sg/~nelsonqyj[homepage]] [https://github.com/nelsonqyj[github]] [<<nelsonqyj#, portfolio>>]
 
-Role: Project Advisor
+Role: Member +
+Responsibilities: LOGIC
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Melvin Leo
+image::melvinleo.jpg[width="150", align="left"]
+{empty}[https://github.com/Melvin-leo[github]] [<<Melvin-leo#, portfolio>>]
 
-Role: Team Lead +
+Role: Developer +
 Responsibilities: UI
 
 '''
