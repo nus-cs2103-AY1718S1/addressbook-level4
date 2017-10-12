@@ -12,7 +12,7 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.UniquePersonList;
+import seedu.address.model.parcel.UniqueParcelList;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
+    private final UniqueParcelList persons;
     private final UniqueTagList tags;
 
     /*
@@ -35,7 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        persons = new UniqueParcelList();
         tags = new UniqueTagList();
     }
 
@@ -52,7 +52,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     public void setPersons(List<? extends ReadOnlyParcel> persons) throws DuplicateParcelException {
-        this.persons.setPersons(persons);
+        this.persons.setParcels(persons);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -111,7 +111,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any parcel
         // in the parcel list.
-        persons.setPerson(target, editedParcel);
+        persons.setParcel(target, editedParcel);
     }
 
     /**
@@ -140,7 +140,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - points to a Tag object in the master list
      *  @see #syncMasterTagListWith(Parcel)
      */
-    private void syncMasterTagListWith(UniquePersonList persons) {
+    private void syncMasterTagListWith(UniqueParcelList persons) {
         persons.forEach(this::syncMasterTagListWith);
     }
 

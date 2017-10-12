@@ -2,6 +2,7 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,18 +15,18 @@ import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of parcels that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
  * @see Parcel#equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniquePersonList implements Iterable<Parcel> {
+public class UniqueParcelList implements Iterable<Parcel> {
 
     private final ObservableList<Parcel> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
-    private final ObservableList<ReadOnlyParcel> mappedList = EasyBind.map(internalList, (person) -> person);
+    private final ObservableList<ReadOnlyParcel> mappedList = EasyBind.map(internalList, (parcel) -> parcel);
 
     /**
      * Returns true if the list contains an equivalent parcel as the given argument.
@@ -49,25 +50,25 @@ public class UniquePersonList implements Iterable<Parcel> {
     }
 
     /**
-     * Replaces the parcel {@code target} in the list with {@code editedPerson}.
+     * Replaces the parcel {@code target} in the list with {@code editedParcel}.
      *
      * @throws DuplicateParcelException if the replacement is equivalent to another existing parcel in the list.
      * @throws ParcelNotFoundException if {@code target} could not be found in the list.
      */
-    public void setPerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
+    public void setParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
             throws DuplicateParcelException, ParcelNotFoundException {
-        requireNonNull(editedPerson);
+        requireNonNull(editedParcel);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new ParcelNotFoundException();
         }
 
-        if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
+        if (!target.equals(editedParcel) && internalList.contains(editedParcel)) {
             throw new DuplicateParcelException();
         }
 
-        internalList.set(index, new Parcel(editedPerson));
+        internalList.set(index, new Parcel(editedParcel));
     }
 
     /**
@@ -77,23 +78,23 @@ public class UniquePersonList implements Iterable<Parcel> {
      */
     public boolean remove(ReadOnlyParcel toRemove) throws ParcelNotFoundException {
         requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove);
-        if (!personFoundAndDeleted) {
+        final boolean parcelFoundAndDeleted = internalList.remove(toRemove);
+        if (!parcelFoundAndDeleted) {
             throw new ParcelNotFoundException();
         }
-        return personFoundAndDeleted;
+        return parcelFoundAndDeleted;
     }
 
-    public void setPersons(UniquePersonList replacement) {
+    public void setParcels(UniqueParcelList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setPersons(List<? extends ReadOnlyParcel> persons) throws DuplicateParcelException {
-        final UniquePersonList replacement = new UniquePersonList();
-        for (final ReadOnlyParcel person : persons) {
-            replacement.add(new Parcel(person));
+    public void setParcels(List<? extends ReadOnlyParcel> parcels) throws DuplicateParcelException {
+        final UniqueParcelList replacement = new UniqueParcelList();
+        for (final ReadOnlyParcel parcel : parcels) {
+            replacement.add(new Parcel(parcel));
         }
-        setPersons(replacement);
+        setParcels(replacement);
     }
 
     /**
@@ -111,8 +112,8 @@ public class UniquePersonList implements Iterable<Parcel> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                || (other instanceof UniqueParcelList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueParcelList) other).internalList));
     }
 
     @Override
