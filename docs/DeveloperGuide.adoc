@@ -994,9 +994,10 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to delete multiple contacts with command: del >1
-2.  BlueBird prompts user to enter multiple names to delete: del name1 name2 .. etc
-3.  BlueBird displays message for successfully removing contact(s) from memory
+1.  User requests to delete multiple contacts with command: delete >1
+2.  BlueBird prompts user to enter multiple names to delete: delete name1 name2 .. etc
+3.  User inputs command to delete multiple contacts
+4.  BlueBird displays message for successfully removing contact(s) from memory
 +
 Use case ends.
 
