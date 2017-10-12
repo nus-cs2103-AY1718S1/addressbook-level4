@@ -8,7 +8,8 @@ import guitests.guihandles.TagHandle;
 
 public class TagTest extends GuiUnitTest {
 
-    public final String TAG_STUB = "TAG";
+    public static final String TAG_STUB = "TAG";
+
     @Test
     public void display() {
         Tag tag = new Tag(TAG_STUB);
