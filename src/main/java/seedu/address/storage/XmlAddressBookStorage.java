@@ -19,7 +19,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 public class XmlAddressBookStorage implements AddressBookStorage {
 
     // Creates a new folder for all backup data
-    private static final String BACKUP_FILE_PREFIX = "backup_";
+    private static final String BACKUP_FILE_PREFIX = "backup/";
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
