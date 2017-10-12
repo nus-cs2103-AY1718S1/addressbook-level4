@@ -14,7 +14,7 @@ public class RedoCommand extends Command {
 
     public static final String COMMAND_WORD = "redo";
     public static final String COMMAND_ALIAS = "r";
-    public static final String MESSAGE_SUCCESS = "Redo success!";
+    public static final String MESSAGE_SUCCESS = "Redone: %1$s";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
     @Override
@@ -25,8 +25,9 @@ public class RedoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        undoRedoStack.popRedo().redo();
-        return new CommandResult(MESSAGE_SUCCESS);
+        UndoableCommand command = undoRedoStack.popRedo();
+        command.redo();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, command.getCommandText()));
     }
 
     @Override
