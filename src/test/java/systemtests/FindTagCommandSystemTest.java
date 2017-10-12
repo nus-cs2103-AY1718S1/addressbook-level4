@@ -5,8 +5,14 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.*;
+
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
@@ -31,9 +37,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: mixed case command word
-         * -> 2 persons found
-         */
+        /* Case: mixed case command word -> 2 persons found*/
         command = "FiNdtaG owesMoney";
         assertCommandSuccess(command, expectedModel);
 

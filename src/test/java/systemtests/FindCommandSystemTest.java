@@ -40,9 +40,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: mixed case command word -> rejected */
+        /* Case: mixed case command word -> 2 persons found */
         command = "FiNd Meier";
-        //assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
         assertCommandSuccess(command, expectedModel);
 
         /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
