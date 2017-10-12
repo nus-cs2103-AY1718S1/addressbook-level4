@@ -745,9 +745,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
 
-|`* *` |user |rename existing tag |update my relationship with contact
+|`* *` |user |rename any field |update my relationship with contact
+
+|`* *` |user |view the location of an address on google maps |make plans to travel there
 
 |`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
+
+|`* *` |user |find my contact's address on google map |locate my contact
+
+|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -810,9 +816,7 @@ Use case resumes at step 2.
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
 3.  User requests to add remark to a specific person in the list
-4.  AddressBook deletes the person
-5.  AddressBook adds remark to contact
-6.  AddressBook shows successful message regarding adding of remark
+4.  AddressBook successfully adds remark to contact
 +
 Use case ends.
 
@@ -837,9 +841,10 @@ Use case resumes at step 2.
 1. User requests to list persons
 2. AddressBook shows a list of persons
 3. User requests to rename the tag and key in the new input
-4. AddressBook replace the name of the existing to the newer version
-5. AddressBook prompt user to confirm the changes
-6. AddressBook shows a sucessful message regarding the replacement
+4. AddressBook prompts user to confirm the changes
+5. User confirms changes
+6. AddressBook successfully replaces the name of the existing tag to the newer version
++
 Use case ends.
 
 **Extensions**
@@ -848,10 +853,10 @@ Use case ends.
 
 > Use case ends
 
-4a. The given tag is invalid
+3a. The given tag is invalid
 
-> 4a1. AddressBook shows an error message
-  Use case resumes at step 3
+> 3a1. AddressBook shows an error message
+  Use case resumes at step 2
 
 5a. User disconfirm the changes
 

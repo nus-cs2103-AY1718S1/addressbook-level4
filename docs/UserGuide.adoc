@@ -26,7 +26,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UI_Map.PNG[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -101,59 +101,60 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by any field : `find`
 
 Alias: `f`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds person based on the searched  field. +
+Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS] or  [t/TAG]`
+
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain
+* Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find e/yahoo` +
+Returns person with email of `[yahoo.com]` domain
 
-=== Deleting a person : `delete`
+=== Deleting person(s) : `delete`
 
 Alias: `d`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [OTHER INDICES]...`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the people at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 1 2` +
+Deletes the 1st and 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Locating a person's address : `locate` [Coming in v2.0]
 
-Alias: `s`
+Alias: `lc`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Locates the address of the person identified by the index number used in the last person listing. +
+Format: `locate INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google Maps web page of the address at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -161,11 +162,11 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
+`locate 2` +
+Locates the 2nd person's address in the address book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Locates the 1st person's address in the results of the `find` command.
 
 === Listing entered commands : `history`
 
