@@ -8,6 +8,30 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
+=== Enhancement Added: Filter Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filtercommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows for a user to search for contacts through the matching of tags as opposed to by name.
+
+==== Implementation
+
+---
+The implementation is similar to the `find` command.
+
+---
+
 === Enhancement Added: Command Aliases
 
 ==== External behavior
@@ -23,28 +47,13 @@ include::../UserGuide.adoc[tag=commandaliases]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+This allows a user to use short form commands rather than the actual full command name.
 
-==== Implementation
+=== Enhancement Proposed: To be updated
 
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-#End of Extract#
-
----
-
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
+{to be updated}
 
 === Other contributions
 
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
