@@ -37,12 +37,12 @@ Responsibilities: Data
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Tan Zhen Yong
+image::xenonym.jpg[width="150", align="left"]
+{empty}[http://github.com/Xenonym[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Team Lead +
+Responsibilities: Storage, Code Quality
 
 '''
 
