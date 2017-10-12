@@ -15,8 +15,8 @@ public class RemoveCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "remove";
     public static final String COMMAND_ALIAS = "rm";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes the specified tag from everyone " +
-            "in the address book.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Removes the specified tag from everyone in the address book.\n"
             + "Parameters: [TAG]\n"
             + "Example: " + COMMAND_WORD + " friends";
 
