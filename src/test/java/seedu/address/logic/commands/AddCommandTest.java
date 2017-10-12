@@ -97,7 +97,7 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(ReadOnlyParcel person) throws DuplicateParcelException {
+        public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             fail("This method should not be called.");
         }
 
@@ -113,24 +113,24 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePerson(ReadOnlyParcel target) throws ParcelNotFoundException {
+        public void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
+        public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
                 throws DuplicateParcelException {
             fail("This method should not be called.");
         }
 
         @Override
-        public ObservableList<ReadOnlyParcel> getFilteredPersonList() {
+        public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyParcel> predicate) {
+        public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
             fail("This method should not be called.");
         }
     }
@@ -140,7 +140,7 @@ public class AddCommandTest {
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyParcel person) throws DuplicateParcelException {
+        public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
             throw new DuplicateParcelException();
         }
 
@@ -157,8 +157,8 @@ public class AddCommandTest {
         final ArrayList<Parcel> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyParcel person) throws DuplicateParcelException {
-            personsAdded.add(new Parcel(person));
+        public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            personsAdded.add(new Parcel(parcel));
         }
 
         @Override

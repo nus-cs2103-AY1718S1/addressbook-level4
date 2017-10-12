@@ -12,7 +12,7 @@ import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PARCELS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -21,28 +21,28 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /** Deletes the given parcel. */
-    void deletePerson(ReadOnlyParcel target) throws ParcelNotFoundException;
+    void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
 
     /** Adds the given parcel */
-    void addPerson(ReadOnlyParcel person) throws DuplicateParcelException;
+    void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException;
 
     /**
-     * Replaces the given parcel {@code target} with {@code editedPerson}.
+     * Replaces the given parcel {@code target} with {@code editedParcel}.
      *
      * @throws DuplicateParcelException if updating the parcel's details causes the parcel to be equivalent to
      *      another existing parcel in the list.
      * @throws ParcelNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
+    void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
             throws DuplicateParcelException, ParcelNotFoundException;
 
     /** Returns an unmodifiable view of the filtered parcel list */
-    ObservableList<ReadOnlyParcel> getFilteredPersonList();
+    ObservableList<ReadOnlyParcel> getFilteredParcelList();
 
     /**
      * Updates the filter of the filtered parcel list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<ReadOnlyParcel> predicate);
+    void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
 
 }

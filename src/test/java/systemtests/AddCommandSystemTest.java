@@ -74,7 +74,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
-        model.addPerson(toAdd);
+        model.addParcel(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
@@ -121,7 +121,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: filters the parcel list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
-        assert getModel().getFilteredPersonList().size()
+        assert getModel().getFilteredParcelList().size()
                 < getModel().getAddressBook().getParcelList().size();
         assertCommandSuccess(IDA);
 
@@ -208,7 +208,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, ReadOnlyParcel toAdd) {
         Model expectedModel = getModel();
         try {
-            expectedModel.addPerson(toAdd);
+            expectedModel.addParcel(toAdd);
         } catch (DuplicateParcelException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }

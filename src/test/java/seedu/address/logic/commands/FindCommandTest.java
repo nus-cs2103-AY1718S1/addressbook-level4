@@ -92,7 +92,7 @@ public class FindCommandTest {
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedList, model.getFilteredParcelList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
 }

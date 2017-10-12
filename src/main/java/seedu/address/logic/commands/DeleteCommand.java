@@ -32,7 +32,7 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyParcel> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyParcel> lastShownList = model.getFilteredParcelList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -41,7 +41,7 @@ public class DeleteCommand extends UndoableCommand {
         ReadOnlyParcel personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.deletePerson(personToDelete);
+            model.deleteParcel(personToDelete);
         } catch (ParcelNotFoundException pnfe) {
             assert false : "The target parcel cannot be missing";
         }

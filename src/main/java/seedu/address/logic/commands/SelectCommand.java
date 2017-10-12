@@ -32,7 +32,7 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyParcel> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyParcel> lastShownList = model.getFilteredParcelList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

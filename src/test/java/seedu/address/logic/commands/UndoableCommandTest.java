@@ -55,9 +55,9 @@ public class UndoableCommandTest {
 
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
-            ReadOnlyParcel personToDelete = model.getFilteredPersonList().get(0);
+            ReadOnlyParcel personToDelete = model.getFilteredParcelList().get(0);
             try {
-                model.deletePerson(personToDelete);
+                model.deleteParcel(personToDelete);
             } catch (ParcelNotFoundException pnfe) {
                 fail("Impossible: personToDelete was retrieved from model.");
             }

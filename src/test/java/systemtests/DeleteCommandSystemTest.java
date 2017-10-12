@@ -62,7 +62,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered parcel list, delete index within bounds of address book and parcel list -> deleted */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredParcelList().size());
         assertCommandSuccess(index);
 
         /* Case: filtered parcel list, delete index within bounds of address book but out of bounds of parcel list
@@ -119,7 +119,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private ReadOnlyParcel removePerson(Model model, Index index) {
         ReadOnlyParcel targetPerson = getPerson(model, index);
         try {
-            model.deletePerson(targetPerson);
+            model.deleteParcel(targetPerson);
         } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         }

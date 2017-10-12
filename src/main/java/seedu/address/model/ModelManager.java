@@ -24,7 +24,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyParcel> filteredPersons;
+    private final FilteredList<ReadOnlyParcel> filteredParcels;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -36,7 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getParcelList());
+        filteredParcels = new FilteredList<>(this.addressBook.getParcelList());
     }
 
     public ModelManager() {
@@ -60,24 +60,24 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(ReadOnlyParcel target) throws ParcelNotFoundException {
+    public synchronized void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException {
         addressBook.removeParcel(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(ReadOnlyParcel person) throws DuplicateParcelException {
-        addressBook.addParcel(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public synchronized void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
+        addressBook.addParcel(parcel);
+        updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(ReadOnlyParcel target, ReadOnlyParcel editedPerson)
+    public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
             throws DuplicateParcelException, ParcelNotFoundException {
-        requireAllNonNull(target, editedPerson);
+        requireAllNonNull(target, editedParcel);
 
-        addressBook.updateParcel(target, editedPerson);
+        addressBook.updateParcel(target, editedParcel);
         indicateAddressBookChanged();
     }
 
@@ -88,14 +88,14 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code addressBook}
      */
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
+        return FXCollections.unmodifiableObservableList(filteredParcels);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyParcel> predicate) {
+    public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredParcels.setPredicate(predicate);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredParcels.equals(other.filteredParcels);
     }
 
 }

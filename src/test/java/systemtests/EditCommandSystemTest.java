@@ -24,7 +24,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -76,8 +76,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo editing the last parcel in the list -> last parcel edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updatePerson(
-                getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedParcel);
+        model.updateParcel(
+                getModel().getFilteredParcelList().get(INDEX_FIRST_PERSON.getZeroBased()), editedParcel);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a parcel with new values same as existing values -> edited */
@@ -88,7 +88,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        ReadOnlyParcel personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        ReadOnlyParcel personToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
         editedParcel = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, index, editedParcel);
 
@@ -103,9 +103,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered parcel list, edit index within bounds of address book and parcel list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        assertTrue(index.getZeroBased() < getModel().getFilteredParcelList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
-        personToEdit = getModel().getFilteredPersonList().get(index.getZeroBased());
+        personToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
         editedParcel = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedParcel);
 
@@ -142,7 +142,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        invalidIndex = getModel().getFilteredParcelList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -178,7 +178,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getAddressBook().getParcelList().contains(BOB));
         index = INDEX_FIRST_PERSON;
-        assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
+        assertFalse(getModel().getFilteredParcelList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
@@ -211,9 +211,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
         try {
-            expectedModel.updatePerson(
-                    expectedModel.getFilteredPersonList().get(toEdit.getZeroBased()), editedPerson);
-            expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            expectedModel.updateParcel(
+                    expectedModel.getFilteredParcelList().get(toEdit.getZeroBased()), editedPerson);
+            expectedModel.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         } catch (DuplicateParcelException | ParcelNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
@@ -249,7 +249,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
         executeCommand(command);
-        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        expectedModel.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {

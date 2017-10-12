@@ -91,7 +91,7 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<ReadOnlyParcel> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyParcel> expectedFilteredList = new ArrayList<>(actualModel.getFilteredParcelList());
 
         try {
             command.execute();
@@ -99,7 +99,7 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredList, actualModel.getFilteredParcelList());
         }
     }
 
@@ -109,18 +109,18 @@ public class CommandTestUtil {
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyParcel person = model.getAddressBook().getParcelList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assert model.getFilteredPersonList().size() == 1;
+        assert model.getFilteredParcelList().size() == 1;
     }
 
     /**
      * Deletes the first parcel in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
-        ReadOnlyParcel firstPerson = model.getFilteredPersonList().get(0);
+        ReadOnlyParcel firstPerson = model.getFilteredParcelList().get(0);
         try {
-            model.deletePerson(firstPerson);
+            model.deleteParcel(firstPerson);
         } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("Parcel in filtered list must exist in model.", pnfe);
         }

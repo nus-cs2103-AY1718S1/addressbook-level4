@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +67,7 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyParcel> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyParcel> lastShownList = model.getFilteredParcelList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -77,13 +77,13 @@ public class EditCommand extends UndoableCommand {
         Parcel editedParcel = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
-            model.updatePerson(personToEdit, editedParcel);
+            model.updateParcel(personToEdit, editedParcel);
         } catch (DuplicateParcelException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (ParcelNotFoundException pnfe) {
             throw new AssertionError("The target parcel cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedParcel));
     }
 
