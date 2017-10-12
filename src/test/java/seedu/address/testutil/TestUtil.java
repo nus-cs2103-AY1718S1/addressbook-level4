@@ -48,7 +48,7 @@ public class TestUtil {
     /**
      * Returns the parcel in the {@code model}'s parcel list at {@code index}.
      */
-    public static ReadOnlyParcel getPerson(Model model, Index index) {
+    public static ReadOnlyParcel getParcel(Model model, Index index) {
         return model.getAddressBook().getParcelList().get(index.getZeroBased());
     }
 }

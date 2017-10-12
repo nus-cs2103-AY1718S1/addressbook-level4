@@ -12,34 +12,34 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 /**
  * A utility class to help with building EditParcelDescriptor objects.
  */
-public class EditPersonDescriptorBuilder {
+public class EditParcelDescriptorBuilder {
 
     private EditParcelDescriptor descriptor;
 
-    public EditPersonDescriptorBuilder() {
+    public EditParcelDescriptorBuilder() {
         descriptor = new EditParcelDescriptor();
     }
 
-    public EditPersonDescriptorBuilder(EditCommand.EditParcelDescriptor descriptor) {
+    public EditParcelDescriptorBuilder(EditCommand.EditParcelDescriptor descriptor) {
         this.descriptor = new EditParcelDescriptor(descriptor);
     }
 
     /**
      * Returns an {@code EditParcelDescriptor} with fields containing {@code parcel}'s details
      */
-    public EditPersonDescriptorBuilder(ReadOnlyParcel person) {
+    public EditParcelDescriptorBuilder(ReadOnlyParcel parcel) {
         descriptor = new EditParcelDescriptor();
-        descriptor.setName(person.getName());
-        descriptor.setPhone(person.getPhone());
-        descriptor.setEmail(person.getEmail());
-        descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setName(parcel.getName());
+        descriptor.setPhone(parcel.getPhone());
+        descriptor.setEmail(parcel.getEmail());
+        descriptor.setAddress(parcel.getAddress());
+        descriptor.setTags(parcel.getTags());
     }
 
     /**
      * Sets the {@code Name} of the {@code EditParcelDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withName(String name) {
+    public EditParcelDescriptorBuilder withName(String name) {
         try {
             ParserUtil.parseName(Optional.of(name)).ifPresent(descriptor::setName);
         } catch (IllegalValueException ive) {
@@ -51,7 +51,7 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Phone} of the {@code EditParcelDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
+    public EditParcelDescriptorBuilder withPhone(String phone) {
         try {
             ParserUtil.parsePhone(Optional.of(phone)).ifPresent(descriptor::setPhone);
         } catch (IllegalValueException ive) {
@@ -63,7 +63,7 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Email} of the {@code EditParcelDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
+    public EditParcelDescriptorBuilder withEmail(String email) {
         try {
             ParserUtil.parseEmail(Optional.of(email)).ifPresent(descriptor::setEmail);
         } catch (IllegalValueException ive) {
@@ -75,7 +75,7 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Address} of the {@code EditParcelDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withAddress(String address) {
+    public EditParcelDescriptorBuilder withAddress(String address) {
         try {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
@@ -88,7 +88,7 @@ public class EditPersonDescriptorBuilder {
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditParcelDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
+    public EditParcelDescriptorBuilder withTags(String... tags) {
         try {
             descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {

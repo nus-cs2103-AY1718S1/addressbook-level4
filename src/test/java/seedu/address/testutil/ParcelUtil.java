@@ -12,25 +12,25 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 /**
  * A utility class for Parcel.
  */
-public class PersonUtil {
+public class ParcelUtil {
 
     /**
      * Returns an add command string for adding the {@code parcel}.
      */
-    public static String getAddCommand(ReadOnlyParcel person) {
-        return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+    public static String getAddCommand(ReadOnlyParcel parcel) {
+        return AddCommand.COMMAND_WORD + " " + getParcelDetails(parcel);
     }
 
     /**
      * Returns the part of command string for the given {@code parcel}'s details.
      */
-    public static String getPersonDetails(ReadOnlyParcel person) {
+    public static String getParcelDetails(ReadOnlyParcel parcel) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + person.getAddress().toString() + " ");
-        person.getTags().stream().forEach(
+        sb.append(PREFIX_NAME + parcel.getName().fullName + " ");
+        sb.append(PREFIX_PHONE + parcel.getPhone().value + " ");
+        sb.append(PREFIX_EMAIL + parcel.getEmail().value + " ");
+        sb.append(PREFIX_ADDRESS + parcel.getAddress().toString() + " ");
+        parcel.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();

@@ -9,7 +9,7 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code AddressBook ab = new AddressBookBuilder().withParcel("John", "Doe").withTag("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -26,9 +26,9 @@ public class AddressBookBuilder {
     /**
      * Adds a new {@code Parcel} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(ReadOnlyParcel person) {
+    public AddressBookBuilder withParcel(ReadOnlyParcel parcel) {
         try {
-            addressBook.addParcel(person);
+            addressBook.addParcel(parcel);
         } catch (DuplicateParcelException dpe) {
             throw new IllegalArgumentException("parcel is expected to be unique.");
         }

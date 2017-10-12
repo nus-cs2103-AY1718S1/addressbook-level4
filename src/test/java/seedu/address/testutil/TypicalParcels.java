@@ -22,52 +22,52 @@ import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 /**
  * A utility class containing a list of {@code Parcel} objects to be used in tests.
  */
-public class TypicalPersons {
+public class TypicalParcels {
 
-    public static final ReadOnlyParcel ALICE = new PersonBuilder().withName("Alice Pauline")
+    public static final ReadOnlyParcel ALICE = new ParcelBuilder().withName("Alice Pauline")
             .withAddress("6, Jurong West Ave 1, #08-111 S649520").withEmail("alice@example.com")
             .withPhone("85355255")
             .withTags("friends").build();
-    public static final ReadOnlyParcel BENSON = new PersonBuilder().withName("Benson Meier")
+    public static final ReadOnlyParcel BENSON = new ParcelBuilder().withName("Benson Meier")
             .withAddress("336, Clementi Ave 2, #02-25 s120336")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
-    public static final ReadOnlyParcel CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
+    public static final ReadOnlyParcel CARL = new ParcelBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("18 Marina Blvd, S018980").build();
-    public static final ReadOnlyParcel DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
+    public static final ReadOnlyParcel DANIEL = new ParcelBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("59 Namly Garden S267387").build();
-    public static final ReadOnlyParcel ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final ReadOnlyParcel ELLE = new ParcelBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("2 Finlayson Green, S049247").build();
-    public static final ReadOnlyParcel FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final ReadOnlyParcel FIONA = new ParcelBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("48 Upper Dickson Rd S207502").build();
-    public static final ReadOnlyParcel GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final ReadOnlyParcel GEORGE = new ParcelBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("Block 532 HDB Upper Cross Street s050532").build();
 
     // Manually added
-    public static final ReadOnlyParcel HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final ReadOnlyParcel HOON = new ParcelBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@example.com").withAddress("522 Hougang Ave 6 s530522").build();
-    public static final ReadOnlyParcel IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final ReadOnlyParcel IDA = new ParcelBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("3 River Valley Rd, S179024").build();
 
     // Manually added - Parcel's details found in {@code CommandTestUtil}
-    public static final ReadOnlyParcel AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+    public static final ReadOnlyParcel AMY = new ParcelBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final ReadOnlyParcel BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+    public static final ReadOnlyParcel BOB = new ParcelBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalParcels() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical parcels.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
-        for (ReadOnlyParcel person : getTypicalPersons()) {
+        for (ReadOnlyParcel parcel : getTypicalParcels()) {
             try {
-                ab.addParcel(person);
+                ab.addParcel(parcel);
             } catch (DuplicateParcelException e) {
                 assert false : "not possible";
             }
@@ -75,7 +75,7 @@ public class TypicalPersons {
         return ab;
     }
 
-    public static List<ReadOnlyParcel> getTypicalPersons() {
+    public static List<ReadOnlyParcel> getTypicalParcels() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

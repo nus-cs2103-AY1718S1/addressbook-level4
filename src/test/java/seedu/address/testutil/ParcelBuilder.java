@@ -15,7 +15,7 @@ import seedu.address.model.util.SampleDataUtil;
 /**
  * A utility class to help with building Parcel objects.
  */
-public class PersonBuilder {
+public class ParcelBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
@@ -25,7 +25,7 @@ public class PersonBuilder {
 
     private Parcel parcel;
 
-    public PersonBuilder() {
+    public ParcelBuilder() {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
@@ -39,16 +39,16 @@ public class PersonBuilder {
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     * Initializes the ParcelBuilder with the data of {@code parcelToCopy}.
      */
-    public PersonBuilder(ReadOnlyParcel personToCopy) {
-        this.parcel = new Parcel(personToCopy);
+    public ParcelBuilder(ReadOnlyParcel parcelToCopy) {
+        this.parcel = new Parcel(parcelToCopy);
     }
 
     /**
      * Sets the {@code Name} of the {@code Parcel} that we are building.
      */
-    public PersonBuilder withName(String name) {
+    public ParcelBuilder withName(String name) {
         try {
             this.parcel.setName(new Name(name));
         } catch (IllegalValueException ive) {
@@ -60,7 +60,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Parcel} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public ParcelBuilder withTags(String ... tags) {
         try {
             this.parcel.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
@@ -72,7 +72,7 @@ public class PersonBuilder {
     /**
      * Sets the {@code Address} of the {@code Parcel} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
+    public ParcelBuilder withAddress(String address) {
         try {
             this.parcel.setAddress(new Address(address));
         } catch (IllegalValueException ive) {
@@ -84,7 +84,7 @@ public class PersonBuilder {
     /**
      * Sets the {@code Phone} of the {@code Parcel} that we are building.
      */
-    public PersonBuilder withPhone(String phone) {
+    public ParcelBuilder withPhone(String phone) {
         try {
             this.parcel.setPhone(new Phone(phone));
         } catch (IllegalValueException ive) {
@@ -96,7 +96,7 @@ public class PersonBuilder {
     /**
      * Sets the {@code Email} of the {@code Parcel} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
+    public ParcelBuilder withEmail(String email) {
         try {
             this.parcel.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
