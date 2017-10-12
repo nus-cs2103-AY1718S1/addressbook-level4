@@ -6,7 +6,6 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,8 +13,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -33,11 +30,13 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void sortPersons_CorrectlySortsInternalList() {
+    public void sortPersons_correctlySortsInternalList() {
         UniquePersonList uniquePersonList1 = new UniquePersonList();
         UniquePersonList uniquePersonList2 = new UniquePersonList();
-        List<ReadOnlyPerson> newPersons = Arrays.asList(new Person(DANIEL), new Person(CARL), new Person(BENSON), new Person(ALICE));
-        List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE), new Person(BENSON), new Person(CARL), new Person(DANIEL));
+        List<ReadOnlyPerson> newPersons = Arrays.asList(new Person(DANIEL),
+                new Person(CARL), new Person(BENSON), new Person(ALICE));
+        List<ReadOnlyPerson> sortedList = Arrays.asList(new Person(ALICE),
+                new Person(BENSON), new Person(CARL), new Person(DANIEL));
         try {
             uniquePersonList1.setPersons(newPersons);
             uniquePersonList1.sortPersons();

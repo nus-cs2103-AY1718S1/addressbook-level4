@@ -4,8 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.logic.commands.SortCommand.MESSAGE_ARGUMENTS;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalAddressBook;
 
@@ -24,7 +22,7 @@ public class SortCommandTest {
     private Model model;
     private Model expectedModel;
     private SortCommand sortCommand;
-    final String filterType = "name";
+    private final String filterType = "name";
 
     @Test
     public void execute_unsortedList_becomesSorted() {

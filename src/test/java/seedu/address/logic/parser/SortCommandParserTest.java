@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.SortCommand;
 
 public class SortCommandParserTest {
@@ -16,21 +15,21 @@ public class SortCommandParserTest {
     public void parse_valid_arguments() throws Exception {
 
         // FilterType: Name
-        final String validFilterType_Name = "name";
-        String userInput = SortCommand.COMMAND_WORD + " " + validFilterType_Name;
-        SortCommand expectedCommand = new SortCommand(validFilterType_Name);
+        final String validFilterTypeName = "name";
+        String userInput = SortCommand.COMMAND_WORD + " " + validFilterTypeName;
+        SortCommand expectedCommand = new SortCommand(validFilterTypeName);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // FilterType: Default.
         // TODO: Implement more sorting methods
-        final String validFilterType_Default = "default";
-        userInput = SortCommand.COMMAND_WORD + " " + validFilterType_Default;
-        expectedCommand = new SortCommand(validFilterType_Default);
+        final String validFilterTypeDefault = "default";
+        userInput = SortCommand.COMMAND_WORD + " " + validFilterTypeDefault;
+        expectedCommand = new SortCommand(validFilterTypeDefault);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // No filterType argument: Should set to default
         userInput = SortCommand.COMMAND_WORD;
-        expectedCommand = new SortCommand(validFilterType_Default);
+        expectedCommand = new SortCommand(validFilterTypeDefault);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

@@ -123,8 +123,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_sort() throws Exception {
         final String filterType = "name";
-        SortCommand command = (SortCommand) parser.parseCommand(SortCommand.COMMAND_WORD + " " +
-            filterType);
+        SortCommand command = (SortCommand) parser.parseCommand(SortCommand.COMMAND_WORD + " "
+                + filterType);
         assertEquals(new SortCommand(filterType), command);
     }
 

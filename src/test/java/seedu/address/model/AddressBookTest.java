@@ -3,8 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalPersons;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalPersons;
+import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalPersons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,14 +61,14 @@ public class AddressBookTest {
     }
 
     @Test
-    public void sortPersonList_modifyList_Success() {
+    public void sortPersonList_modifyList_success() {
         try {
             AddressBook newData = new AddressBook();
             newData.setPersons(getSortedTypicalPersons());
             addressBook.setPersons(getUnsortedTypicalPersons());
             addressBook.sortPersons();
             assertEquals(addressBook, newData);
-        } catch (DuplicatePersonException dpe){
+        } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
         }
     }
