@@ -103,7 +103,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public String getReason(){
+    public String getReason() {
         Address a = this.getAddress();
         Name n = this.getName();
         this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
