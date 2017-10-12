@@ -31,7 +31,7 @@
       <FlowPane fx:id="tags" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="displayPostalCode" styleClass="cell_small_label" text="\$displayPostalCode" />
+      <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode" />
       <Label fx:id="debt" styleClass="cell_small_label" text="\$debt" />
       <Label fx:id="dateBorrow" styleClass="cell_small_label" text="\$dateBorrow" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
