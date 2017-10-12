@@ -315,7 +315,7 @@
     -fx-text-fill: #F70D1A;
 }
 
-#commandTextField {
+#commandTextField, #searchTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;
@@ -325,6 +325,7 @@
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
+
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
