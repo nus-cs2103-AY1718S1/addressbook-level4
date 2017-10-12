@@ -8,7 +8,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.ParcelCardHandle;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.testutil.PersonBuilder;
@@ -73,12 +73,12 @@ public class ParcelCardTest extends GuiUnitTest {
     private void assertCardDisplay(ParcelCard parcelCard, ReadOnlyParcel expectedPerson, int expectedId) {
         guiRobot.pauseForHuman();
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(parcelCard.getRoot());
+        ParcelCardHandle parcelCardHandle = new ParcelCardHandle(parcelCard.getRoot());
 
         // verify id is displayed correctly
-        assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
+        assertEquals(Integer.toString(expectedId) + ". ", parcelCardHandle.getId());
 
         // verify parcel details are displayed correctly
-        assertCardDisplaysPerson(expectedPerson, personCardHandle);
+        assertCardDisplaysPerson(expectedPerson, parcelCardHandle);
     }
 }

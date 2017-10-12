@@ -12,22 +12,22 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
-    private static final String TOTAL_PERSONS_ID = "#totalPersons";
+    private static final String TOTAL_PARCELS_ID = "#totalParcels";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
-    private final StatusBar totalPersonsNode;
+    private final StatusBar totalParcelsNode;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
-    private String lastRememberedTotalPersons;
+    private String lastRememberedTotalParcels;
 
     public StatusBarFooterHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
-        this.totalPersonsNode = getChildNode(TOTAL_PERSONS_ID);
+        this.totalParcelsNode = getChildNode(TOTAL_PARCELS_ID);
     }
 
     /**
@@ -45,10 +45,10 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Returns the text of the sync total persons portion of the status bar.
+     * Returns the text of the sync total parcels portion of the status bar.
      */
-    public String getTotalPersons() {
-        return totalPersonsNode.getText();
+    public String getTotalParcels() {
+        return totalParcelsNode.getText();
     }
 
     /**
@@ -83,17 +83,17 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
 
     /**
-     * Remembers the content of the sync total persons portion of the status bar.
+     * Remembers the content of the sync total parcels portion of the status bar.
      */
-    public void rememberTotalPersons() {
-        lastRememberedTotalPersons = getTotalPersons();
+    public void rememberTotalParcels() {
+        lastRememberedTotalParcels = getTotalParcels();
     }
 
     /**
-     * Returns true if the current content of total persons is different from the value remembered by the most recent
-     * {@code rememberTotalPersons()} call.
+     * Returns true if the current content of total parcels is different from the value remembered by the most recent
+     * {@code rememberTotalParcels()} call.
      */
-    public boolean isTotalPersonsChanged() {
-        return !lastRememberedTotalPersons.equals(getTotalPersons());
+    public boolean isTotalParcelsChanged() {
+        return !lastRememberedTotalParcels.equals(getTotalParcels());
     }
 }

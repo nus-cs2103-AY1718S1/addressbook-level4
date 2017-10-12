@@ -10,8 +10,8 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ParcelListPanelHandle;
+import guitests.guihandles.ParcelCardHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -23,23 +23,23 @@ public class ParcelListPanelTest extends GuiUnitTest {
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
-    private PersonListPanelHandle personListPanelHandle;
+    private ParcelListPanelHandle parcelListPanelHandle;
 
     @Before
     public void setUp() {
         ParcelListPanel parcelListPanel = new ParcelListPanel(TYPICAL_PERSONS);
         uiPartRule.setUiPart(parcelListPanel);
 
-        personListPanelHandle = new PersonListPanelHandle(getChildNode(parcelListPanel.getRoot(),
-                PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        parcelListPanelHandle = new ParcelListPanelHandle(getChildNode(parcelListPanel.getRoot(),
+                ParcelListPanelHandle.PARCEL_LIST_VIEW_ID));
     }
 
     @Test
     public void display() {
         for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
-            personListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
+            parcelListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
             ReadOnlyParcel expectedPerson = TYPICAL_PERSONS.get(i);
-            PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
+            ParcelCardHandle actualCard = parcelListPanelHandle.getParcelCardHandle(i);
 
             assertCardDisplaysPerson(expectedPerson, actualCard);
             assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
@@ -51,8 +51,8 @@ public class ParcelListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        PersonCardHandle expectedCard = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        PersonCardHandle selectedCard = personListPanelHandle.getHandleToSelectedCard();
+        ParcelCardHandle expectedCard = parcelListPanelHandle.getParcelCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        ParcelCardHandle selectedCard = parcelListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }
 }

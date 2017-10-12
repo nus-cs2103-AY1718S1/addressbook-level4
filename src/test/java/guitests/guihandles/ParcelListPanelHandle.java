@@ -10,28 +10,28 @@ import seedu.address.ui.ParcelCard;
 /**
  * Provides a handle for {@code ParcelListPanel} containing the list of {@code ParcelCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+public class ParcelListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
+    public static final String PARCEL_LIST_VIEW_ID = "#parcelListView";
 
-    private Optional<ParcelCard> lastRememberedSelectedPersonCard;
+    private Optional<ParcelCard> lastRememberedSelectedParcelCard;
 
-    public PersonListPanelHandle(ListView<ParcelCard> personListPanelNode) {
-        super(personListPanelNode);
+    public ParcelListPanelHandle(ListView<ParcelCard> parcelListPanelNode) {
+        super(parcelListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code PersonCardHandle}.
+     * Returns a handle to the selected {@code ParcelCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
-    public PersonCardHandle getHandleToSelectedCard() {
-        List<ParcelCard> personList = getRootNode().getSelectionModel().getSelectedItems();
+    public ParcelCardHandle getHandleToSelectedCard() {
+        List<ParcelCard> parcelList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (personList.size() != 1) {
+        if (parcelList.size() != 1) {
             throw new AssertionError("Parcel list size expected 1.");
         }
 
-        return new PersonCardHandle(personList.get(0).getRoot());
+        return new ParcelCardHandle(parcelList.get(0).getRoot());
     }
 
     /**
@@ -57,9 +57,9 @@ public class PersonListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
     /**
      * Navigates the listview to display and select the parcel.
      */
-    public void navigateToCard(ReadOnlyParcel person) {
+    public void navigateToCard(ReadOnlyParcel parcel) {
         List<ParcelCard> cards = getRootNode().getItems();
-        Optional<ParcelCard> matchingCard = cards.stream().filter(card -> card.parcel.equals(person)).findFirst();
+        Optional<ParcelCard> matchingCard = cards.stream().filter(card -> card.parcel.equals(parcel)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("Parcel does not exist.");
@@ -75,17 +75,17 @@ public class PersonListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
     /**
      * Returns the parcel card handle of a parcel associated with the {@code index} in the list.
      */
-    public PersonCardHandle getPersonCardHandle(int index) {
-        return getPersonCardHandle(getRootNode().getItems().get(index).parcel);
+    public ParcelCardHandle getParcelCardHandle(int index) {
+        return getParcelCardHandle(getRootNode().getItems().get(index).parcel);
     }
 
     /**
-     * Returns the {@code PersonCardHandle} of the specified {@code parcel} in the list.
+     * Returns the {@code ParcelCardHandle} of the specified {@code parcel} in the list.
      */
-    public PersonCardHandle getPersonCardHandle(ReadOnlyParcel person) {
-        Optional<PersonCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.parcel.equals(person))
-                .map(card -> new PersonCardHandle(card.getRoot()))
+    public ParcelCardHandle getParcelCardHandle(ReadOnlyParcel parcel) {
+        Optional<ParcelCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.parcel.equals(parcel))
+                .map(card -> new ParcelCardHandle(card.getRoot()))
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("Parcel does not exist."));
     }
@@ -100,28 +100,28 @@ public class PersonListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
     /**
      * Remembers the selected {@code ParcelCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
+    public void rememberSelectedParcelCard() {
         List<ParcelCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedPersonCard = Optional.empty();
+            lastRememberedSelectedParcelCard = Optional.empty();
         } else {
-            lastRememberedSelectedPersonCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedParcelCard = Optional.of(selectedItems.get(0));
         }
     }
 
     /**
      * Returns true if the selected {@code ParcelCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * {@code rememberSelectedParcelCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
+    public boolean isSelectedParcelCardChanged() {
         List<ParcelCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedPersonCard.isPresent();
+            return lastRememberedSelectedParcelCard.isPresent();
         } else {
-            return !lastRememberedSelectedPersonCard.isPresent()
-                    || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedParcelCard.isPresent()
+                    || !lastRememberedSelectedParcelCard.get().equals(selectedItems.get(0));
         }
     }
 
