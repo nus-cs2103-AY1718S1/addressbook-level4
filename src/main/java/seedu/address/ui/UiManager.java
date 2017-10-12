@@ -17,7 +17,9 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
+import sun.rmi.runtime.Log;
 
 /**
  * The manager of the UI component.
@@ -127,9 +129,10 @@ public class UiManager extends ComponentManager implements Ui {
      */
     @Subscribe
     public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
-        // log in is successful
+        // login is successful
         if (event.getLoginStatus() == true) {
             logger.info("Login successful");
+            LoginCommand.setLoginStatus(true);
             //show address book
             Platform.runLater(() -> mainWindow.fillInnerParts());
         }
