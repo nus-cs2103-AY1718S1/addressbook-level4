@@ -10,6 +10,7 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
 
     private static final String RANDOM_KEY_WORD = "random";
     private static final String OFF_KEY_WORD = "off";
+
     private static final String MESSAGE_INVALID_COMMAND = "Invalid tagcolor command."
             + "\n"
             + "tc: Shorthand equivalent for tagcolor."
@@ -39,5 +40,19 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
         } catch (ArrayIndexOutOfBoundsException exp) {
             throw new ParseException(MESSAGE_INVALID_COMMAND);
         }
+    }
+
+    /**
+     * Returns the Random Key Word
+     */
+    public String getRandomKeyWord() {
+        return RANDOM_KEY_WORD;
+    }
+
+    /**
+     * Returns the Off Key Word
+     */
+    public String getOffKeyWord() {
+        return OFF_KEY_WORD;
     }
 }

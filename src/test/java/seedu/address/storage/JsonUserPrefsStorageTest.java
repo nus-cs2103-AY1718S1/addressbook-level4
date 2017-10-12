@@ -2,6 +2,8 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,6 +79,52 @@ public class JsonUserPrefsStorageTest {
         UserPrefs actual = readUserPrefs("ExtraValuesUserPref.json").get();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testUserPrefsGetAddressBookName() {
+        UserPrefs upUnderTest = getTypicalUserPrefs();
+        assertTrue("TypicalAddressBookName".equals(upUnderTest.getAddressBookName()));
+    }
+
+    @Test
+    public void testUserPrefsEquals() {
+        UserPrefs upUnderTest = getTypicalUserPrefs();
+        UserPrefs copyOfUpUnderTest = getTypicalUserPrefs();
+
+        //Return true if same object
+        assertTrue(upUnderTest.equals(upUnderTest));
+
+        //Return true if same instance
+        assertTrue(upUnderTest.equals(copyOfUpUnderTest));
+
+        // different types -> returns false
+        assertFalse(upUnderTest.equals(1));
+
+        // null -> returns false
+        assertNotNull(upUnderTest);
+
+    }
+
+    @Test
+    public void testUserPrefsHashCode() {
+        UserPrefs upUnderTest = getTypicalUserPrefs();
+        int firstHashCode = upUnderTest.hashCode();
+
+        UserPrefs upUnderTestTwo = new UserPrefs();
+        upUnderTestTwo.setGuiSettings(5000, 300, 200, 100);
+        upUnderTestTwo.setAddressBookFilePath("addressbookDIFF.xml");
+        upUnderTestTwo.setAddressBookName("TypicalAddressBookNameDIFF");
+        int secondHashCode = upUnderTestTwo.hashCode();
+
+        UserPrefs upUnderTestThree = getTypicalUserPrefs();
+        int thirdHashCode = upUnderTestThree.hashCode();
+
+        // Different user pref generates different hash
+        assertFalse(firstHashCode == secondHashCode);
+
+        // Same user pref generates same hash
+        assertTrue(firstHashCode == thirdHashCode);
     }
 
     private UserPrefs getTypicalUserPrefs() {
