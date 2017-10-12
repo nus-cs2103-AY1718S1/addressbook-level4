@@ -31,7 +31,7 @@ Responsibilities: Model
 
 === Lu Lechuan
 image::lulechuan.png[width="150", align="left"]
-{empty}[https://github.com/lulechuan]
+{empty}[https://github.com/lulechuan[github]]
 
 Role: Developer
 
