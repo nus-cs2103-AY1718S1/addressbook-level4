@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -730,6 +730,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
 |`* * *` |careless user| undo/redo previous command |
+
+|`* * *` |user |add/delete tags without overriting/rewriting the entire tag list |
 
 |`* *` |user | search with partial keyword | find details I'm not sure of
 
