@@ -941,12 +941,14 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Hide Selected Contacts
+=== Use case: Hide Selected Contact(s)
 
 *MSS*
 
 1.  User requests to hide a contact with the command: hide
 2.  BlueBird displays message for successfully hiding contact(s) from view
+3.  User requests to display list of hidden contact(s) with command: hiddenList
+4.  BlueBird shows the list of hidden contact(s)
 +
 Use Case ends.
 
