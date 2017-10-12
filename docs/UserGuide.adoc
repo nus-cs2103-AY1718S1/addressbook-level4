@@ -124,6 +124,28 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::filtercommand[]
+=== Locating persons by tags: `filter`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `FrIendS`
+* The order of the keywords does not matter. e.g. `Friends owesmoney` will match `owesmoney friends`
+* Only the tags are searched.
+* Only full tags will be matched e.g. `money` will not match `owesmoney`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesmoney` will return `owesmoney`, `friends`
+****
+
+Examples:
+
+* `filter friends` +
+Returns `john` with tags `[friends][owesmoney]` and `John Doe` with tags `[others][friends]`
+* `filter friends owesmoney others` +
+Returns any person having tags `friends`, `owesmoney`, or `others`
+// end::filtercommand[]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
