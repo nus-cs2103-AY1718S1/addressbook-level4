@@ -84,6 +84,10 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.backupAddressBook(addressBook);
     }
 
+    public Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException {
+        return addressBookStorage.restoreAddressBook();
+    }
+
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
