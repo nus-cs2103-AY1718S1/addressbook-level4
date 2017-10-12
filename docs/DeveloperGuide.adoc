@@ -760,7 +760,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete person using index
+
+*MSS*
+
+1.  User requests to delete a specific person
+2.  AddressBook deletes the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given name is absent.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete person using index
 
 *MSS*
 
@@ -848,43 +868,6 @@ Use case ends.
 +
 [none]
 ** 1a1. AddressBook shows a empty list.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Delete confirmation
-
-*MSS*
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook displays a dialogue window asking user to confirm deletion
-5.  User confirms deletion request
-6.  AddressBook deletes the person
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. The given index is invalid.
-+
-[none]
-** 1a1. AddressBook shows an error message.
-+
-Use case ends.
-
-[none]
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
-
-[none]
-* 5a. User cancels deletion.
 +
 Use case ends.
 
