@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.util.PersonSortingUtil.generateComparator;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +34,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final SortedList<ReadOnlyPerson> sortedPersons;
-    private Comparator<ReadOnlyPerson> comparator;
     private Predicate<ReadOnlyPerson> predicate;
 
     /**
@@ -129,8 +127,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateSortComparator(List<SortArgument> sortArguments) {
-        comparator = generateComparator(sortArguments);
-        sortedPersons.setComparator(comparator);
+        sortedPersons.setComparator(generateComparator(sortArguments));
     }
 
     @Override
