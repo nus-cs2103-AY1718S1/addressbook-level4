@@ -53,6 +53,6 @@ public class Website {
     }
 
     public boolean hasWebsite() {
-        return !value.equalsIgnoreCase(WEBSITE_NULL);
+        return !(value == WEBSITE_NULL);
     }
 }
