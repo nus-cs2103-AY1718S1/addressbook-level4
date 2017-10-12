@@ -106,6 +106,13 @@ public class PropertyManager {
         propertyFullNames.clear();
         propertyConstraintMessages.clear();
         propertyValidationRegex.clear();
+
+        /*
+         * This is for defensive programming purpose. Whenever you want to clear all properties in the
+         * PropertyManager, it must have been initialized with preLoaded properties, or load properties
+         * from the local storage file.
+         */
+        initialized = true;
     }
 
     public static boolean containsShortName(String shortName) {
