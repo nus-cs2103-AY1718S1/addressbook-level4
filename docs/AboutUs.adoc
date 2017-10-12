@@ -28,11 +28,20 @@ Responsibilities: Model
 
 '''
 
+=== Ng Zu Yao
+image::ngzuyao.jpg[width="150", align="left"]
+{empty}[https://github.com/ngzuyao[github]]
+
+Role: Developer
+Responsibilities: Ui
+
+'''
 
 === Lu Lechuan
 image::lulechuan.jpg[width="150", align="left"]
 {empty}[https://github.com/lulechuan[github]]
 
 Role: Developer
+Responsibilities: Logic
 
 '''
