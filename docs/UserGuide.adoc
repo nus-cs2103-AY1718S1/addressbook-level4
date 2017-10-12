@@ -73,6 +73,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Listing all blacklisted persons : `blacklist`
+
+Shows a list of all blacklisted persons in the address book. +
+Format: `blacklist`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -133,6 +138,46 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Banning a person : `ban`
+
+Adds the specified person from current records to blacklist. +
+Format: 'ban INDEX'
+
+****
+* Bans the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`ban 2` +
+Adds the 2nd person in the address book to blacklist.
+* `find Betsy` +
+`ban 1` +
+Adds the 1st person in the results of the `find` command to blacklist.
+
+=== Unbanning a person : `unban`
+
+Removes the specified person from blacklist. +
+Format: 'unban INDEX'
+
+****
+* Unbans the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `blacklist` +
+`unban 2` +
+Removes the 2nd person from blacklist.
+* `find Betsy` +
+`unban 1` +
+Removes the 1st person in the results of the `find` command from blacklist.
 
 === Selecting a person : `select`
 
