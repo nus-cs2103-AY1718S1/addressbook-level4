@@ -24,12 +24,12 @@ public class SortCommandParser implements Parser<SortCommand> {
         filterType = argMultimap.getPreamble();
 
         if (filterType.equals("sort")) {
-            //No arguments, set to default
+            // No arguments, set to default
             filterType = "default";
         }
 
         if (!(filterType.equals("name") || filterType.equals("default"))) {
-            //Use ParserUtil to filter later?
+            // Use ParserUtil to filter later?
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 

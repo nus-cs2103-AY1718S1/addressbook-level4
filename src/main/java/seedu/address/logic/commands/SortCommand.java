@@ -25,8 +25,8 @@ public class SortCommand extends Command {
     private String filterType;
 
     public SortCommand (String filterType) {
-        //Filter type can be null to signify default listing
-        //Todo: Allow sort to accept different parameters for filter types (eg. First Name, Last Name)
+        // Filter type can be null to signify default listing
+        // Todo: Allow sort to accept different parameters for filter types (eg. First Name, Last Name)
         this.filterType = filterType;
     }
 
@@ -43,12 +43,12 @@ public class SortCommand extends Command {
             return true;
         }
 
-        //instanceOf handles nulls
+        // instanceOf handles nulls
         if (!(other instanceof SortCommand)) {
             return false;
         }
 
-        //state check
+        // state check
         SortCommand e = (SortCommand) other;
         return filterType.equals(e.filterType);
     }
