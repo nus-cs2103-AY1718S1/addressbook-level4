@@ -61,10 +61,10 @@ public class HelpCommandTest {
     }
 
     /**
-     * Generates a new HelpCommand with the details of the given person.
+     * Generates a new HelpCommand with the given {@code commandIdentifier}.
      */
-    private HelpCommand getHelpCommand(String parameter) {
-        return new HelpCommand(CommandIdentifierUtils.createCommandIdentifier(parameter));
+    private HelpCommand getHelpCommand(String commandIdentifier) {
+        return new HelpCommand(CommandIdentifierUtils.createCommandIdentifier(commandIdentifier));
     }
 }
 
