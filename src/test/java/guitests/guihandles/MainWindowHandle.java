@@ -1,7 +1,5 @@
 package guitests.guihandles;
 
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -11,9 +9,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.Username;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 
 /**
  * Provides a handle for {@code MainWindow}.
