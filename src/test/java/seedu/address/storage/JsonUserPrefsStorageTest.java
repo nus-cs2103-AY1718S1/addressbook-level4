@@ -91,6 +91,9 @@ public class JsonUserPrefsStorageTest {
         UserPrefs upUnderTest = getTypicalUserPrefs();
         UserPrefs copyOfUpUnderTest = getTypicalUserPrefs();
 
+        //Return true if same object
+        assertTrue(upUnderTest.equals(upUnderTest));
+
         //Return true if same instance
         assertTrue(upUnderTest.equals(copyOfUpUnderTest));
 
