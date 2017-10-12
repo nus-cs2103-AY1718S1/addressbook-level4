@@ -725,8 +725,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
-|`* * *` |frequent user |save contacts locally |don't have to load files each time I exit and re-open the application
-
 |`* * *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
 
 |`* * *` |heavy user |select a person by index |select the correct person by index if I have multiple person with same name
@@ -745,7 +743,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |experienced user |input commands using a shortened form |be more efficient when using the application
 
-|`* * *` |travelling user |load my contacts from file |use the app on all my devices
+|`* * *` |travelling user |save and load my contacts from file |use the app on all my devices
 
 |`* * *` |user |save the date of birth of my contacts |know when the birthdays of my contacts are
 
@@ -781,7 +779,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `BlueBird` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -789,9 +787,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  BlueBird shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  BlueBird deletes the person
 +
 Use case ends.
 
@@ -805,23 +803,23 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. BlueBird shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
 === Use case: Select person
 
-*Precondition: Person in question should be saved with 'add' in addressbook*
+*Precondition: Person in question should be saved with 'add' in BlueBird*
 
 *Guarantees: Person in question will be displayed with all fields visible*
 
 *MSS*
 
 1.  User requests to 'find' a specific person by name
-2.  AddressBook shows a list of persons with name entered
+2.  BlueBird shows a list of persons with name entered
 3.  User selects the index of specific person
-4.  AddressBook shows full contact details of person
+4.  BlueBird shows full contact details of person
 +
 Use case ends.
 
@@ -831,7 +829,7 @@ Use case ends.
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message
+** 3a1. BlueBird shows an error message
 +
 Use case resumes at step 2.
 
@@ -843,7 +841,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to see command history
-2.  AddressBook lists the commands entered in reverse order
+2.  BlueBird lists the commands entered in reverse order
 3.  User views previous commands
 +
 Use case ends.
@@ -863,8 +861,7 @@ Use case ends.
 *MSS*
 
 1.  User enters 'help' command
-2.  AddressBook shows the instructions of the command entered
-3.  User views help window
+2.  BlueBird displays the User Guide on a new window
 +
 Use case ends.
 
@@ -887,15 +884,15 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to find one or more person(s) in AddressBook
-2.  AddressBook shows a list of persons with the name(s) specified by user
+1.  User requests to find one or more person(s) in BlueBird
+2.  BlueBird shows a list of persons with the name(s) specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. 0 person found
+* 2a. BlueBird found 0 person with the name
 +
 Use case ends.
 
@@ -905,8 +902,7 @@ Use case ends.
 *MSS*
 
 1.  User input command to add person
-2.  AddressBook adds the person
-3.  AddressBook displays message for successfully adding a person along with the person's details
+2.  BlueBird adds the person and displays message for successfully adding a person along with the person's details
 +
 Use case ends.
 
@@ -916,14 +912,14 @@ Use case ends.
 * 1a. User input command wrongly
 +
 [none]
-** 1a1. AddressBook shows an invalid format message and displays the right format to user
+** 1a1. BlueBird shows an invalid format message and displays the right format to user
 +
 Use case resumes at step 1.
 
-* 1b. User added a person already present in AddressBook
+* 1b. User tries to add a person already present in BlueBird
 +
 [none]
-** 1b1. AddressBook shows duplicate person error message
+** 1b1. BlueBird shows duplicate person error message
 +
 Use case resumes at step 1.
 
@@ -933,28 +929,26 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests for a list of person(s) with a specified tag
-2.  AddressBook shows a list of person(s) with the tag specified by user
+2.  BlueBird shows a list of person(s) with the tag specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. 0 person with such tag
+* 2a. BlueBird found 0 person with specified tag
 +
 Use case ends.
 
 [discrete]
-=== Use case: Hide Selected Contacts
+=== Use case: Hide Selected Contact(s)
 
 *MSS*
 
-1.  User requests to a contact with the command: hide
-2.  With hide, AddressBook does not show hidden contacts
-3.  Hidden contacts will not show even when search command is invoked
-4.  User can check what he has hidden with: check hidden
-5.  User can undo hidden contacts with command: unhide
-6.  AddressBook displays message for successfully hiding contact(s) from view.
+1.  User requests to hide a contact with the command: hide
+2.  BlueBird displays message for successfully hiding contact(s) from view
+3.  User requests to display list of hidden contact(s) with command: hiddenList
+4.  BlueBird shows the list of hidden contact(s)
 +
 Use Case ends.
 
@@ -979,24 +973,19 @@ Use case ends.
 Use case ends.
 
 [none]
-* 3a. AddressBook will show contacts that user has hidden in chronological order (reverse from present)
-+
-Use case ends.
-
-[none]
-* 4a. User can undo hiding, similar to extension steps 1a, 1b, 1c, with command: unhide
+* 1d. User can undo hiding, similar to extension steps 1a, 1b, 1c, with command: unhide
 +
 Use case ends.
 
 [discrete]
 === Use case: Sort Contacts by Tag
 
-*Precondition: Some contacts in user's AddressBook memory has to already have tags under their contact details.*
+*Precondition: Some contacts in user's BlueBird memory has to already have tags under their contact details.*
 
 *MSS*
 
 1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
-2.  AddressBook displays contacts that have the respective tag(s) under contact details as initially edited by user
+2.  BlueBird displays contacts that have the respective tag(s) under contact details as initially edited by user
 +
 Use case ends.
 
@@ -1005,10 +994,10 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to delete multiple contacts with command: del >1
-2.  AddressBook prompts user to enter multiple names to delete: del name1 name2 .. etc
-3.  Or user can choose to select names from AddressBook GUI to delete
-4.  AddressBook displays message for successfully removing contact(s) from memory
+1.  User requests to delete multiple contacts with command: delete >1
+2.  BlueBird prompts user to enter multiple names to delete: delete name1 name2 .. etc
+3.  User inputs command to delete multiple contacts
+4.  BlueBird displays message for successfully removing contact(s) from memory
 +
 Use case ends.
 
@@ -1018,10 +1007,10 @@ Use case ends.
 * 2a. If there is no such contact or if user inputs the spelling of the name incorrectly
 +
 [none]
-** 2a1. AddressBook will check which name is non-existent (due to incorrect spelling or actually non-existent)
+** 2a1. BlueBird will check which name is non-existent (due to incorrect spelling or actually non-existent)
 +
 [none]
-** 2a2. AddressBook will prompt user to check accuracy of that particular contact name and re-enter if necessary
+** 2a2. BlueBird will prompt user to check accuracy of that particular contact name and re-enter if necessary
 +
 [none]
 ** 2a3. If not, enter null
@@ -1033,23 +1022,23 @@ Use case ends.
 
 *MSS*
 
-1. User starts AddressBook
+1. User starts BlueBird
 2. User request to deletes the wrong person from List
-3. AddressBook removes person
+3. BlueBird removes person
 4. User request to undo his action
-5. AddressBook reverses the delete command
+5. BlueBird reverses the delete command
 6. User decides to delete person again, redo action
-7. AddressBook reapplies delete command
+7. BlueBird reapplies delete command
 +
 Use case ends
 
 *Extensions*
 
 [none]
-* 2a. User requests person that is not inside the AddressBook
+* 2a. User requests person that is not inside the BlueBird
 +
 [none]
-** 2a1. AddressBook displays error message
+** 2a1. BlueBird displays error message
 +
 Use case resumes at step 1.
 
@@ -1058,12 +1047,12 @@ Use case resumes at step 1.
 
 *MSS*
 
-1. User requests to add a person into AddressBook
-2. AddressBook adds new person into List
+1. User requests to add a person into BlueBird
+2. BlueBird adds new person into List
 3. User requests to edit a person
-4. User provides index of person to be edited to AddressBook
-5. AddressBook returns person's details for user to edit
-6. AddressBook stores new details under person
+4. User provides index of person to be edited to BlueBird
+5. BlueBird returns person's details for user to edit
+6. BlueBird stores new details under person
 +
 Use case ends.
 
@@ -1073,20 +1062,20 @@ Use case ends.
 * 1a. User input command wrongly
 +
 [none]
-** 1a1. AddressBook shows an error message
+** 1a1. BlueBird shows an error message
 +
 Use case resumes at step 1.
-* 1b. User added a person already present in AddressBook
+* 1b. User added a person already present in BlueBird
 +
 [none]
-** 1b1. AddressBook shows duplicate person error message
+** 1b1. BlueBird shows duplicate person error message
 +
 Use case resumes at step 1.
 
 * 4a. User provided index that is larger than size of last updated list
 +
 [none]
-** 4a1. AddressBook shows undoable command error message
+** 4a1. BlueBird shows undoable command error message
 +
 Use case resumes at step 4.
 
@@ -1095,11 +1084,11 @@ Use case resumes at step 4.
 
 *MSS*
 
-1. User has a file of contacts from AddressBook
-2. User opens AddressBook on a different device
+1. User has a file of contacts from BlueBird
+2. User opens BlueBird on a different device
 3. User loads file of contacts onto new device
-4. AddressBooks updates list
-5. User has a List of persons from previous AddressBook
+4. BlueBird updates list
+5. User has a List of persons from previous BlueBird
 +
 Use case ends.
 
@@ -1113,7 +1102,6 @@ Use case ends.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
    able to accomplish most of the tasks faster using commands than using the mouse.
 .  System should be able to respond in 0.5s.
-.  Project V2.0 should be an incremental improvement of the given addressbook-level 4 application
 .  The software should work without requiring an installer.
 .  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
    is not allowed.

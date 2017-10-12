@@ -1,4 +1,4 @@
-= Bluebird v1.0
+= Bluebird
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
