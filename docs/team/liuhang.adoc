@@ -1,0 +1,43 @@
+= Liu Hang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: OurAb
+OurAb is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Backup and restoring data
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+* When the addressbook is loaded when the application starts, a backup copy will be saved in another folder.
++
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To ensure safety of data in case of runtime exceptions or crashes
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+image::StorageClassDiagram.png[width="800"]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed
+
+=== Other contributions
+
