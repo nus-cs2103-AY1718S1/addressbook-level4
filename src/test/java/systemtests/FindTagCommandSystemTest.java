@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
@@ -15,7 +16,6 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 
 public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
@@ -41,7 +41,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         command = "FiNdtaG owesMoney";
         assertCommandSuccess(command, expectedModel);
 
-		/* Case: find person where person list is not displaying the person we are finding -> 1 person found */
+        /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
         command = FindTagCommand.COMMAND_WORD + " family";
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
