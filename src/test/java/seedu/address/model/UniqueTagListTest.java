@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -35,7 +36,7 @@ public class UniqueTagListTest {
     }
 
     @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+    public void asObservableListModifyListThrowsUnsupportedOperationException() {
         UniqueTagList uniqueTagList = new UniqueTagList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueTagList.asObservableList().remove(0);
@@ -140,7 +141,7 @@ public class UniqueTagListTest {
         assertFalse(uniqueTagList.equals(1));
 
         // null -> returns false
-        assertFalse(uniqueTagList.equals(null));
+        assertNotNull(uniqueTagList);
 
         // different sets -> returns false
         assertFalse(uniqueTagList.equals(uniqueTagListThree));
