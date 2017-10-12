@@ -109,7 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Latest Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
