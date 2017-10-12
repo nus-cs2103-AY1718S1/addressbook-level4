@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bluebird - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -797,7 +797,7 @@ Use case ends.
 
 *Extensions*
 
--[none]
+[none]
 * 2a. The list is empty.
 +
 Use case ends.
@@ -828,7 +828,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 3a. The given index is invalid.
+* 3a. The given index is invalid
 +
 [none]
 ** 3a1. AddressBook shows an error message
@@ -851,7 +851,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The list is empty
 +
 Use case ends.
 
@@ -913,17 +913,17 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. User input command wrongly.
+* 1a. User input command wrongly
 +
 [none]
-** 1a1. AddressBook shows an invalid format message and displays the right format to user.
+** 1a1. AddressBook shows an invalid format message and displays the right format to user
 +
 Use case resumes at step 1.
 
-* 1b. User added a person already present in AddressBook.
+* 1b. User added a person already present in AddressBook
 +
 [none]
-** 1b1. AddressBook shows duplicate person error message.
+** 1b1. AddressBook shows duplicate person error message
 +
 Use case resumes at step 1.
 
@@ -991,12 +991,12 @@ Use case ends.
 [discrete]
 === Use case: Sort Contacts by Tag
 
-*Precondition: Some contacts in user's AddressBook memory has to already have tags under their contact details. Tags could be dates, association/organisation names etc.
+*Precondition: Some contacts in user's AddressBook memory has to already have tags under their contact details.*
 
 *MSS*
 
 1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
-2.  AddressBook displays contacts that have the respective tag(s) under their contact details as initially edited by user.
+2.  AddressBook displays contacts that have the respective tag(s) under contact details as initially edited by user
 +
 Use case ends.
 
@@ -1004,10 +1004,11 @@ Use case ends.
 === Use case: Delete Multiple Contacts at Once
 
 *MSS*
+
 1.  User requests to delete multiple contacts with command: del >1
-2.  AddressBook prompts user to enter multiple names to delete: del name1 name2 .. etc.
+2.  AddressBook prompts user to enter multiple names to delete: del name1 name2 .. etc
 3.  Or user can choose to select names from AddressBook GUI to delete
-4.  AddressBook displays message for successfully removing contact(s) from memory.
+4.  AddressBook displays message for successfully removing contact(s) from memory
 +
 Use case ends.
 
@@ -1020,10 +1021,85 @@ Use case ends.
 ** 2a1. AddressBook will check which name is non-existent (due to incorrect spelling or actually non-existent)
 +
 [none]
-** 2a2. AddressBook will prompt user to check accuracy of that particular contact name and re-enter if necessary.
+** 2a2. AddressBook will prompt user to check accuracy of that particular contact name and re-enter if necessary
 +
 [none]
-** 2a3. If not, enter null.
+** 2a3. If not, enter null
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo/Undo previous command
+
+*MSS*
+
+1. User starts AddressBook
+2. User request to deletes the wrong person from List
+3. AddressBook removes person
+4. User request to undo his action
+5. AddressBook reverses the delete command
+6. User decides to delete person again, redo action
+7. AddressBook reapplies delete command
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. User requests person that is not inside the AddressBook
++
+[none]
+** 2a1. AddressBook displays error message
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Editing a person's details
+
+*MSS*
+
+1. User requests to add a person into AddressBook
+2. AddressBook adds new person into List
+3. User requests to edit a person
+4. User provides index of person to be edited to AddressBook
+5. AddressBook returns person's details for user to edit
+6. AddressBook stores new details under person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input command wrongly
++
+[none]
+** 1a1. AddressBook shows an error message
++
+Use case resumes at step 1.
+* 1b. User added a person already present in AddressBook
++
+[none]
+** 1b1. AddressBook shows duplicate person error message
++
+Use case resumes at step 1.
+
+* 4a. User provided index that is larger than size of last updated list
++
+[none]
+** 4a1. AddressBook shows undoable command error message
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Load contacts from saved file.
+
+*MSS*
+
+1. User has a file of contacts from AddressBook
+2. User opens AddressBook on a different device
+3. User loads file of contacts onto new device
+4. AddressBooks updates list
+5. User has a List of persons from previous AddressBook
 +
 Use case ends.
 
@@ -1034,7 +1110,15 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse.
+.  System should be able to respond in 0.5s.
+.  Project V2.0 should be an incremental improvement of the given addressbook-level 4 application
+.  The software should work without requiring an installer.
+.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
+   is not allowed.
+.  Should have a minimum of font size 12 in all window sizes for visibility.
+.  Project code should follow link:#oop[OOP].
 
 {More to be added}
 
@@ -1059,33 +1143,39 @@ A contact detail that is not meant to be shared with others
 OOP
 
 ....
-Object-oriented programming (OOP) is a programming language model organized around
-objects rather than "actions" and data rather than logic.
+Object-oriented programming (OOP) is a programming language model organized around objects rather than "actions" and
+data rather than logic
 ....
 
 [[ide]]
 IDE
 
 ....
-An integrated development environment (IDE) is a software application that provides
-comprehensive facilities to computer programmers for software development
+An integrated development environment (IDE) is a software application that provides comprehensive facilities to computer
+programmers for software development
 ....
 
 [[api]]
 API
 
 ....
-An Application Programming Interface (API) specifies the interface through which
-other programs can interact with a software component. It is a contract between the
-component and its clients.
+An Application Programming Interface (API) specifies the interface through which other programs can interact with a
+software component
 ....
 
 [[ci]]
 CI
 
 ....
-Continuous Integration (CI) is an extreme application of build automation in
-which integration, building, and testing happens automatically after each code change
+Continuous Integration (CI) is an extreme application of build automation in which integration, building, and testing
+happens automatically after each code change
+....
+
+[[jdk]]
+JDK
+
+....
+The Java Development Kit (JDK) is a software development environment used for developing Java applications and applets
 ....
 
 [[index]]
@@ -1100,6 +1190,61 @@ Help window
 
 ....
 A web-based window displaying the user-guide within the application
+....
+
+[[pr]]
+PR
+
+....
+Pull Request(PR) is an online submission of committed changes on GitHub
+....
+
+[[xml]]
+XML
+
+....
+XML is a metalanguage which allows users to define their own customized markup languages,especially in order to display
+documents on the Internet
+....
+
+[[jar]]
+JAR
+
+....
+A JAR (Java ARchive) is a package file format typically used to aggregate many Java class files and associated metadata
+and resources (text, images, etc.) into one file for distribution
+....
+
+[[ui]]
+UI
+
+....
+User Interface(UI) is the window displayed to the user when interacting with the application
+....
+
+[[gui]]
+GUI
+
+....
+The graphical user interface (GUI) is a type of user interface that allows users to interact with electronic devices
+through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed
+command labels or text navigation
+....
+
+[[mss]]
+MSS
+
+....
+The Main Success Scenario (MSS) describes the most straightforward interaction for a given use case, which assumes that
+nothing goes wrong
+....
+
+[[asciidoc]]
+asciidoc
+
+....
+asciidoc is a markup language, which is a system for annotating a document in a way that is syntactically
+distinguishable from the text
 ....
 
 [appendix]
