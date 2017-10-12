@@ -124,6 +124,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -132,6 +142,9 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        public void sort(String sortType) throws DuplicatePersonException {//this method is intentionally left empty
         }
     }
 
