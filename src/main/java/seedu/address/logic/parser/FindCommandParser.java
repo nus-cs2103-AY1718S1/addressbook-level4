@@ -27,29 +27,33 @@ public class FindCommandParser implements Parser<FindCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
         requireNonNull(args);
-            ArgumentMultimap argMultimap =
-                    ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-            if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-            }
+        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
 
+
+        if (ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent()) {
+            Name findName = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(findName.toString())));
+        }
 
 
     }
 
         /*
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+
          try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
@@ -69,14 +73,10 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
-        }
 
         return new EditCommand(index, editPersonDescriptor);
 */
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-    }
+
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
