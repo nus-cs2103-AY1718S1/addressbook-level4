@@ -45,7 +45,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyParcel> getParcelList() {
-        final ObservableList<ReadOnlyParcel> persons = this.parcels.stream().map(p -> {
+        final ObservableList<ReadOnlyParcel> parcels = this.parcels.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
@@ -54,7 +54,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(persons);
+        return FXCollections.unmodifiableObservableList(parcels);
     }
 
     @Override

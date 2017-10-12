@@ -62,15 +62,15 @@ public class XmlAdaptedParcel {
      * @throws IllegalValueException if there were any data constraints violated in the adapted parcel
      */
     public Parcel toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
+        final List<Tag> parcelTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
+            parcelTags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-        final Set<Tag> tags = new HashSet<>(personTags);
+        final Set<Tag> tags = new HashSet<>(parcelTags);
         return new Parcel(name, phone, email, address, tags);
     }
 }
