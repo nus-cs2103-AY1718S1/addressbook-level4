@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -27,8 +28,11 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-    /** Change tag of given person */
-    void changeTag(Tag oldTag, Tag newTag)throws PersonNotFoundException, DuplicatePersonException;
+    /** Delete tag of given person */
+    void deleteTag(Index[] indices, Tag tag)throws PersonNotFoundException, DuplicatePersonException;
+
+    /** Add tag of given person */
+    void addTag(Index[] indices, Tag tag)throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
