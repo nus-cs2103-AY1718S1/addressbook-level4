@@ -43,14 +43,14 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        try{
+        try {
             deleteTemporary(this.addressBook);
-        }catch (IllegalValueException e){
+        } catch (IllegalValueException e) {
             logger.warning("Invalid tag provided by program");
-        }catch (PersonNotFoundException e){
+        } catch (PersonNotFoundException e) {
             logger.warning("no such person found");
         }
-}
+    }
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
@@ -76,11 +76,11 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTemporary(AddressBook addressBook) throws IllegalValueException, PersonNotFoundException {
         UniquePersonList personsList = addressBook.getUniquePersonList();
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
             Person person = itr.next();
             Set<Tag> tags = person.getTags();
             Tag tempTag = new Tag("temporary");
-            if(tags.contains(tempTag)){
+            if (tags.contains(tempTag)) {
                 itr.remove();
             }
         }
