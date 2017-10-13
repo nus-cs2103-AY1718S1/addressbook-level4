@@ -46,8 +46,10 @@ public class Tutorial {
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, false));
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FIVE, false));
         tutorialSteps.add(new TutSteps(TutorialMessages.STEP_SIX, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_SEVEN, false, "delete 6"));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_EIGHT, true, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_SEVEN, false, TutorialMessages.COMMAND_ADD_USAGE));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_EIGHT, false, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_NINE, true, "delete 6"));
+        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_CONCLUSION, false));
         tutorialSteps.add(new TutSteps("Last step", false));
     }
 
@@ -55,7 +57,7 @@ public class Tutorial {
      * Executes the current tutorial's step.
      */
     public void executeStep(TutSteps currentStep) throws CommandException, ParseException {
-        commandBox.setInputText(currentStep.getCommandInput());
+        commandBox.setPromptText(currentStep.getCommandInput());
         switch (currentStep.getStepNumber()) {
         case 0:
             commandBox.tutorialHighlight();

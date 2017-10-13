@@ -152,6 +152,10 @@ public class CommandBox extends UiPart<Region> {
         this.commandTextField.setText(toInput);
     }
 
+    public void setPromptText(String toPrompt) {
+        this.commandTextField.setPromptText(toPrompt);
+    }
+
     public void tutorialHighlight() {
         this.commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
     }
