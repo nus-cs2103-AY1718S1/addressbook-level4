@@ -38,16 +38,14 @@ public class RemoveTagCommandTest {
     public void execute_multipleKeywords_multipleTagsRemoved() throws Exception {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS);
-//        List<ReadOnlyPerson> expectedModel = model.getFilteredPersonList();
         RemoveTagCommand command = prepareCommand(prepareTagList("colleagues criminal"));
-        assertCommandSuccess(command, model, expectedMessage,expectedModel);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_tagsNotExist_noTagsRemoved() throws Exception {
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_TAG_NOT_REMOVED);
         RemoveTagCommand command = prepareCommand(prepareTagList("nothing"));
-//        List<ReadOnlyPerson> expectedModel = model.getFilteredPersonList();
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
