@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+;
+import static org.junit.Assert.assertTrue;;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
@@ -17,10 +14,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -31,55 +26,65 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class TagCommandTest {
-    private static final String INVALID_TAG = "#friend";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Index[] indices;
     private Set<Tag> tags;
 
-    /*@Test
+    @Test
     public void execute_unfilteredList_success() throws Exception {
         indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
-
-        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS);
         TagCommand tagCommand = prepareCommand(indices, tags);
-        for (Index index : indices) {
-            ReadOnlyPerson lastPerson = model.getFilteredPersonList().get();
 
-            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-            expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-        }
-
-        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
-    }*/
-    
-    /*@Test
-    public void execute_filteredList_success() throws Exception {
-        
-    }*/
-
-    @Test
-    public void execute_unFilteredList_success() throws Exception {
-        indices = new Index[]{INDEX_FIRST_PERSON};
-        TagCommand tagCommand = prepareCommand(indices, tags);
+        //testing for change in person tags in first index
         ReadOnlyPerson personInUnfilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        tags.addAll(personInUnfilteredList.getTags());
-        //ReadOnlyPerson editedPersonTwo = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        tags = combineTags(personInUnfilteredList, VALID_TAG_FRIEND);
         Person editedPerson = new PersonBuilder(personInUnfilteredList).build();
         model.updatePersonTags(editedPerson, tags);
 
-        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPersonOne);
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPersonOne);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
+
+        //testing for change in person tags in second index
+        ReadOnlyPerson personInUnfilteredListTwo = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        tags = combineTags(personInUnfilteredListTwo, VALID_TAG_FRIEND);
+        Person editedPersonTwo = new PersonBuilder(personInUnfilteredListTwo).build();
+        model.updatePersonTags(editedPersonTwo, tags);
+
+        Model expectedModelTwo = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModelTwo.updatePerson(model.getFilteredPersonList().get(1), editedPersonTwo);
+
+        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModelTwo);
     }
+
+    @Test
+    public void execute_filteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        indices = new Index[]{INDEX_FIRST_PERSON};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand tagCommand = prepareCommand(indices, tags);
+
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        tags = combineTags(personInFilteredList, VALID_TAG_FRIEND);
+        Person editedPerson = new PersonBuilder(personInFilteredList).build();
+        model.updatePersonTags(editedPerson, tags);
+
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
+    } 
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
@@ -116,5 +121,17 @@ public class TagCommandTest {
         TagCommand tagCommand = new TagCommand(indices, tagList);
         tagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return tagCommand;
+    }
+
+    /**
+     * Returns a combined set of tags from old tags of a {@code person} and {@code newTags}
+     */
+    private Set<Tag> combineTags(ReadOnlyPerson person, String... newTags) throws Exception {
+        Set<Tag> allTags = new HashSet<>();
+        for (String tag : newTags) {
+            allTags = SampleDataUtil.getTagSet(tag);
+        }
+        allTags.addAll(person.getTags());
+        return allTags;
     }
 }
