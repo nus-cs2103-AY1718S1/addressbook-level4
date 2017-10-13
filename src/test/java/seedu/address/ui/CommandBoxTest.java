@@ -19,26 +19,28 @@ import seedu.address.logic.Username;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
-    private static final String USERNAME = "loanShark97";
-    private static final String PASSWORD = "hitMeUp123";
     private static LoginCommand loginCommand;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
-    private Model model;
+    private ModelManager model;
+    private String adminUsername;
+    private String adminPassword;
+
 
     @Before
     public void setUp() {
         model = new ModelManager();
+        adminUsername = model.getUsernameFromUserPref();
+        adminPassword = model.getPasswordFromUserPref();
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -59,8 +61,8 @@ public class CommandBoxTest extends GuiUnitTest {
      */
     public void simulateLogin() {
         try {
-            Username username = new Username(USERNAME);
-            Password password = new Password(PASSWORD);
+            Username username = new Username(adminUsername);
+            Password password = new Password(adminPassword);
             loginCommand = new LoginCommand(username, password);
             loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
             loginCommand.execute();
