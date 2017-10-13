@@ -120,14 +120,14 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         for (Node node : pane.getChildren()) {
-            if (node instanceof Label) {
-                ((Label) node).setText("");
+            if (node instanceof Label) { (
+                    (Label) node).setText("");
             } else if (node instanceof TextFlow) {
                 for (Node subNode : ((TextFlow) node).getChildren()) {
-                    if (subNode instanceof Text) {
-                        ((Text) subNode).setText("");
-                    } else if (subNode instanceof Label) {
-                        ((Label) subNode).setText("");
+                    if (subNode instanceof Text) { (
+                            (Text) subNode).setText("");
+                    } else if (subNode instanceof Label) { (
+                            (Label) subNode).setText("");
                     }
                 }
             }
