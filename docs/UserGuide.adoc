@@ -276,6 +276,31 @@ Function can be found from the new `options` feature.
 Show google maps data based on person's address. +
 Function will be found from the new `options` feature.
 
+==== Themes selection for myBook interface from `options`
+
+Allows user to select from a range of user interface themes +
+Function will be found from the new `options` feature.
+
+==== Close panels in UI from `Button`
+
+Allows user to open or close panels in UI when not needed +
+Functions will be found from the new `Button` feature
+
+=== Set important contacts from `important command`
+
+Allows user to set important contacts to always appear at the top of the list +
+Function will be found from the new `important` command feature
+
+=== Deleting a group of persons from improved `delete command`
+
+Allows user to delete a group of people through name  or tags +
+Functions will be found from improved `delete` command
+
+=== Display all tags from `new UI panel`
+
+ All the tags in user myBook App will be displayed in a new UI panel +
+ Functions wll be found from `new UI panel`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -292,6 +317,10 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by names or phone numbers or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
+e.g. `finds n/James Jake`
+e.g  `finds p/98765432`
+e.g. `finds t/[Friends] [colleagues]`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
