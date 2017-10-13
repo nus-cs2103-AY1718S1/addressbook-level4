@@ -84,7 +84,7 @@ public class TagCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
-    } 
+    }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
@@ -92,7 +92,7 @@ public class TagCommandTest {
         indices = new Index[]{outOfBoundIndex, INDEX_FIRST_PERSON};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
         TagCommand tagCommand = prepareCommand(indices, tags);
-        
+
         assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
