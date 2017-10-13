@@ -283,6 +283,56 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void handleValidRightKeyPressPrefixRandom() {
+        //The Add Command hack accounts for missing prefix or jump in prefix.
+        //This functionality will be tested in this test
+
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString = "add";
+
+        guiRobot.write("add");
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Assume user skips the input of phone prefix : p/
+        guiRobot.write(" ");
+        guiRobot.write(STRING_EMAIL);
+        guiRobot.write("jeremylsw@u.nus.edu");
+        testString += " " + STRING_EMAIL + "jeremylsw@u.nus.edu";
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Add command hack will detect missing p/ and concatenate it
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_PHONE;
+        assertTrue((testString).equals(mySandBox.getText()));
+        //Ensure caret positioning
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Assume user jumps straight to tags, missing out address and bloodtype prefixes
+        guiRobot.write(" ");
+        guiRobot.write(STRING_TAG);
+        guiRobot.write(" ");
+        guiRobot.write(STRING_TAG);
+        testString += " " + STRING_TAG + " " + STRING_TAG;
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Subsequent concatenation will detect missing address and bloodtype prefixes and fix it
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_ADDRESS + " " + STRING_BLOODTYPE;
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Final assurance that caret is at far right
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+    }
+
+    @Test
     public void testGetTextField() {
         TextField myTextField = commandBoxForTesting.getCommandTextField();
         guiRobot.write("Same TextField Test");
