@@ -73,7 +73,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** delete temporary persons on start up of the app */
-    public synchronized void deleteTemporary(AddressBook addressBook) throws IllegalValueException, PersonNotFoundException {
+    public synchronized void deleteTemporary(AddressBook addressBook) throws IllegalValueException,
+                                                                                PersonNotFoundException {
         UniquePersonList personsList = addressBook.getUniquePersonList();
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
         while (itr.hasNext()) {
