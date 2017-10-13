@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
@@ -15,18 +16,31 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Tags multiple people in the address book with a single tag.
+ */
 public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple people using the same tag. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple people using the same tag "
+            + "by the index number used in the last person listing. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "Parameters: INDICES (must be positive integers and may be one or more) "
+            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Example: " + COMMAND_WORD + " 1, 2, 3 "
+            + PREFIX_TAG + "friend";
 
-    public static final String MESSAGE_TAG_PERSONS_SUCCESS = "New tags added";
+    public static final String MESSAGE_TAG_PERSONS_SUCCESS = "Tag added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index[] indices;
     private final Set<Tag> newTags;
 
+    /**
+     * @param indices of the people in the filtered person list to tag
+     * @param tagList list of tags to tag the people with
+     */
     public TagCommand(Index[] indices, Set<Tag> tagList) {
         requireNonNull(indices);
         requireNonNull(tagList);
@@ -61,6 +75,11 @@ public class TagCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_TAG_PERSONS_SUCCESS);
     }
 
+    /**
+     * Combines the given old and new tags of a particular person
+     * @param oldTags old tags that were used to tag a person
+     * @return a set of combined tags with old and new tags
+     */
     private Set<Tag> getTagList(Set<Tag> oldTags) {
         Set<Tag> allTags = new HashSet<>();
         allTags.addAll(oldTags);
