@@ -24,12 +24,12 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class InfoPanel extends UiPart<Region> {
 
     private static final String FXML = "InfoPanel.fxml";
-    public static final String MESSAGE_INFO_ADDRESS_FIELD = "Address: ";
-    public static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
-    public static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
-    public static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
-    public static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
-    public static final String MESSAGE_INFO_DATE_BORROW = "Date borrowed: ";
+    private static final String MESSAGE_INFO_ADDRESS_FIELD = "Address: ";
+    private static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
+    private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
+    private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
+    private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
+    private static final String MESSAGE_INFO_DATE_BORROW = "Date borrowed: ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -62,7 +62,7 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label dateBorrow;
     @FXML
-    public FlowPane tags;
+    private FlowPane tags;
 
     public InfoPanel() {
         super(FXML);
@@ -120,15 +120,15 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         for (Node node : pane.getChildren()) {
-            if(node instanceof Label) {
+            if (node instanceof Label) {
                 ((Label) node).setText("");
             }
-            if(node instanceof TextFlow) {
+            if (node instanceof TextFlow) {
                 for (Node subNode : ((TextFlow) node).getChildren()) {
-                    if(subNode instanceof Text) {
+                    if (subNode instanceof Text) {
                         ((Text) subNode).setText("");
                     }
-                    if(subNode instanceof Label) {
+                    if (subNode instanceof Label) {
                         ((Label) subNode).setText("");
                     }
                 }
