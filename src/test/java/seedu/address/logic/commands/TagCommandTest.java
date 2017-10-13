@@ -34,13 +34,14 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class TagCommandTest {
+    private static final String INVALID_TAG = "#friend";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Index[] indices;
     private Set<Tag> tags;
 
-   /* @Test
-    public void execute_noDuplicateIndexUnfilteredList_success() throws Exception {
+    /*@Test
+    public void execute_unfilteredList_success() throws Exception {
         indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
 
@@ -55,6 +56,27 @@ public class TagCommandTest {
 
         assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
     }*/
+    
+    /*@Test
+    public void execute_filteredList_success() throws Exception {
+        
+    }*/
+
+    @Test
+    public void execute_noFieldSpecifiedUnfilteredList_success() throws Exception {
+        indices = new Index[]{INDEX_FIRST_PERSON};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand tagCommand = prepareCommand(indices, tags);
+        ReadOnlyPerson editedPersonOne = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        //ReadOnlyPerson editedPersonTwo = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPersonOne);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPersonOne);
+
+        assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
+    }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
@@ -62,6 +84,7 @@ public class TagCommandTest {
         indices = new Index[]{outOfBoundIndex, INDEX_FIRST_PERSON};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
         TagCommand tagCommand = prepareCommand(indices, tags);
+        
         assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
