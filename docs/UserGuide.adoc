@@ -220,6 +220,21 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Adding social media accounts to contacts
+
+==== To add a Facebook account:
+
+To be updated.
+
+==== To add a Instagram account:
+
+To be updated.
+
+==== To add a Twitter account:
+
+To be updated.
+
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
