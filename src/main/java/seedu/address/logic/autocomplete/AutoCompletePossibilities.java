@@ -23,5 +23,7 @@ public class AutoCompletePossibilities {
         possibilities = commandParser.parseForCommands(stub);
     }
 
-    public List<String> getPossibilities() { return possibilities; };
+    public List<String> getPossibilities() {
+        return possibilities;
+    }
 }

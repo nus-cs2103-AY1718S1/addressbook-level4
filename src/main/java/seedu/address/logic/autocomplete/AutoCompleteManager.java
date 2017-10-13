@@ -1,7 +1,6 @@
 package seedu.address.logic.autocomplete;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Manages cache and memoization for autocomplete possibilities.
