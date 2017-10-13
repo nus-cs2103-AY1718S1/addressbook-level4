@@ -74,6 +74,7 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        // backwards compatibility fix for pre-v1.1
         final Remark remark = new Remark(this.remark == null ? "" : this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, remark, tags);
