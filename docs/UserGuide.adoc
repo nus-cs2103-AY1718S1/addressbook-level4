@@ -298,6 +298,10 @@ There is no need to save manually.
 
 === Suggestions when typing a name in find command
 
+=== Group contacts by their courses of study
+
+=== Memories
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
