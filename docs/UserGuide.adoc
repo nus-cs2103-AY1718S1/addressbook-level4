@@ -78,6 +78,19 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+
+=== Adding a temporary person:
+
+Adds a temporary person to the address book which will be deleted the next time address book opens +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/temporary [t/TAG]...`
+
+[TIP]
+User can supply the temporary tag before or after any other tag
+
+Examples:
+
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/temporary t/criminal`
+
 === Adding a picture: `GUI button`
 
 Adds a person to the address book +
@@ -90,6 +103,7 @@ Examples:
 
 image::add_person1.png[width="400"]
 image::add_person2.png[width="400"]
+
 
 === Listing all persons : `list`
 

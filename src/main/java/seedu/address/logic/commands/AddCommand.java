@@ -7,10 +7,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Adds a person to the address book.
@@ -37,7 +39,9 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-
+    public static final String MESSAGE_TEMPORARY_PERSON = "Warning: This contact will expire during "
+                                                           + "the next application start up";
+    public static final String MESSAGE_TEMPORARY_TAG_EXCEPTION = "Temporary tag cannot be created";
     private final Person toAdd;
 
     /**
@@ -52,9 +56,16 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
+            Tag tempTag = new Tag("temporary");
+            if (toAdd.getTags().contains(tempTag)) {
+                String successMessage = String.format(MESSAGE_SUCCESS, toAdd);
+                return new CommandResult(successMessage, MESSAGE_TEMPORARY_PERSON);
+            }
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (IllegalValueException e) {
+            throw new CommandException(MESSAGE_TEMPORARY_TAG_EXCEPTION);
         }
 
     }
