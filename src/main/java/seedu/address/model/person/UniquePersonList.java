@@ -133,6 +133,7 @@ public class UniquePersonList implements Iterable<Person> {
                 return o1.getName().fullName.compareTo(o2.getName().fullName);
             }
         });
+    }
 
     /**
      * find search through list of persons and tags, remove tag
