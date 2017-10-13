@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +39,8 @@ public class EditCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
+            + "Existing values excluding tags will be overwritten by the input values.\n"
+            + "Input tag values will be added to existing tag values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + " [NAME] "
             + PREFIX_PHONE + " [PHONE] "
@@ -78,6 +80,9 @@ public class EditCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+         if (editedPerson.equals(personToEdit) ) {
+             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+         }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -97,15 +102,42 @@ public class EditCommand extends UndoableCommand {
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
                                              EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
+        Name currentName = personToEdit.getName(), newName, updatedName;
+        Phone currentPhone = personToEdit.getPhone(), newPhone, updatedPhone;
+        Email currentEmail = personToEdit.getEmail(), newEmail, updatedEmail;
+        Address currentAddress = personToEdit.getAddress(), newAddress, updatedAddress;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Set<Tag> currentTags = personToEdit.getTags();
+
+        newName = editPersonDescriptor.getName().orElse(currentName);
+        updatedName = newName.equals(currentName) ? currentName : newName;
+
+        newPhone = editPersonDescriptor.getPhone().orElse(currentPhone);
+        updatedPhone = newPhone.equals(currentPhone) ? currentPhone : newPhone;
+
+        newEmail = editPersonDescriptor.getEmail().orElse(currentEmail);
+        updatedEmail = newEmail.equals(currentEmail) ? currentEmail : newEmail;
+
+        newAddress = editPersonDescriptor.getAddress().orElse(currentAddress);
+        updatedAddress = newAddress.equals(currentAddress) ? currentAddress : newAddress;
+
         Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
+
         FavouriteStatus updatedFavouriteStatus =
                 personToEdit.getFavouriteStatus(); // edit command does not allow editing favourite status
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(currentTags);
+
+        Iterator<Tag> it = currentTags.iterator();
+        if (!updatedTags.equals(currentTags)) {
+            while (it.hasNext()) {
+                Tag currentTag = it.next();
+                if (!updatedTags.contains(currentTag)) {
+                    updatedTags.add(currentTag);
+                }
+            }
+        }
+
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedRemark, updatedFavouriteStatus, updatedTags);
