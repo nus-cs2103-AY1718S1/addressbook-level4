@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -17,8 +18,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import javax.imageio.ImageIO;
 
 
 /**
@@ -47,9 +46,9 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     @FXML
-    private HBox cardPane;
+    private ImageView picture;
     @FXML
-    public ImageView picture;
+    private HBox cardPane;
     @FXML
     private Label name;
     @FXML
@@ -88,6 +87,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initializes image for every person in person card
+     */
     private void initImage() {
         try {
             File picFile = new File(person.getPicture().getPictureUrl());

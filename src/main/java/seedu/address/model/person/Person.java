@@ -105,10 +105,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Picture> pictureProperty() { return picture; }
-    @Override
-    public Picture getPicture() { return picture.get(); };
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
 
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
