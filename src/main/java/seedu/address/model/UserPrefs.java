@@ -9,13 +9,23 @@ import seedu.address.commons.core.GuiSettings;
  */
 public class UserPrefs {
 
-    private static Aliases aliases = new Aliases();
+    private static UserPrefs instance;
+
+    private Aliases aliases = new Aliases();
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
+        if (instance == null) {
+            instance = this;
+        }
+
         this.setGuiSettings(500, 500, 0, 0);
+    }
+
+    public static UserPrefs getInstance() {
+        return instance;
     }
 
     public GuiSettings getGuiSettings() {
@@ -46,7 +56,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public static Aliases getAliases() {
+    public Aliases getAliases() {
         return aliases;
     }
 

@@ -37,7 +37,8 @@ public class AliasesTest {
 
         aliases.addAlias(LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD);
         aliases.addAlias(ADD_COMMAND_ALIAS, AddCommand.COMMAND_WORD);
-        assertEquals(new TreeSet<String>(Arrays.asList(LIST_COMMAND_ALIAS, ADD_COMMAND_ALIAS)), aliases.getAllAliases());
+        assertEquals(new TreeSet<String>(
+                Arrays.asList(LIST_COMMAND_ALIAS, ADD_COMMAND_ALIAS)), aliases.getAllAliases());
     }
 
     @Test

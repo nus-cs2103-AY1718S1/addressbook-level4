@@ -218,7 +218,7 @@ public class ParserUtil {
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        Aliases aliases = UserPrefs.getAliases();
+        Aliases aliases = UserPrefs.getInstance().getAliases();
         String aliasedCommand = aliases.getCommand(commandWord);
         if (aliasedCommand != null) {
             commandWord = aliasedCommand;

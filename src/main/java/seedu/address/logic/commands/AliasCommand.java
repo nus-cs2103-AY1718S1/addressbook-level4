@@ -42,7 +42,7 @@ public class AliasCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
-        Aliases aliases = UserPrefs.getAliases();
+        Aliases aliases = UserPrefs.getInstance().getAliases();
 
         if (isDelete) {
             aliases.removeAlias(alias);
