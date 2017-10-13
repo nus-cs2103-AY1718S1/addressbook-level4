@@ -17,3 +17,22 @@ image::9gates.png[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: Documentation, Peer Review, In charge of mainly Logic
+
+'''
+
+=== Ko Szu Yuan
+image::kosyoz.png[width="150", align="left"]
+{empty}[http://github.com/kosyoz[github]][portfolio]
+
+Role: In charge of UI Component
+
+'''
+
+=== Jackie Tan
+image::freesoup.png[width="150", align="left"]
+{empty}[http://github.com/freesoup[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Documentation, In charge of Model, Code Quality
+
+'''
