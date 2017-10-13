@@ -29,7 +29,7 @@ public class LocateCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
+    public void executeValidIndexUnfilteredListSuccess() throws Exception {
         ReadOnlyPerson personToLocate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         LocateCommand locateCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -40,7 +40,7 @@ public class LocateCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         LocateCommand LocateCommand = prepareCommand(outOfBoundIndex);
 
@@ -49,7 +49,7 @@ public class LocateCommandTest {
 
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void executeInvalidIndexFilteredListThrowsCommandException() {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
