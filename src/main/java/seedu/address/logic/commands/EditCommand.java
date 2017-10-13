@@ -82,8 +82,8 @@ public class EditCommand extends UndoableCommand {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (editedPerson.equals(personToEdit)) {
-             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-         }
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
