@@ -22,7 +22,7 @@ import seedu.address.model.UserPrefs;
  */
 public class AliasCommandTest {
 
-    public static final String LIST_COMMAND_ALIAS = "show";
+    private static final String LIST_COMMAND_ALIAS = "show";
 
     private Model model;
     private AliasCommand aliasCommand;
