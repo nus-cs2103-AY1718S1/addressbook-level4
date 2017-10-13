@@ -51,7 +51,7 @@ public class RemarkCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
+        
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
@@ -67,7 +67,7 @@ public class RemarkCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        //model.updateFilteredListToShowAll();
+
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
@@ -78,10 +78,10 @@ public class RemarkCommand extends UndoableCommand {
      * @return String that shows whether add or delete was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remark.value.isEmpty()) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        if (!(remark.value.isEmpty())) {
+            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit.toString());
         } else {
-            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
+            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit.toString());
         }
     }
 
