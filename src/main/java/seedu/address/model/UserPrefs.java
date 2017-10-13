@@ -1,8 +1,6 @@
 package seedu.address.model;
 
-import java.util.Map;
 import java.util.Objects;
-import java.util.TreeMap;
 
 import seedu.address.commons.core.GuiSettings;
 
@@ -11,21 +9,13 @@ import seedu.address.commons.core.GuiSettings;
  */
 public class UserPrefs {
 
-    private static Map<String, String> aliases;
+    private static Aliases aliases = new Aliases();
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
-
-        if (aliases == null) {
-            initialiseAliases();
-        }
-    }
-
-    private static void initialiseAliases() {
-        aliases = new TreeMap<>();
     }
 
     public GuiSettings getGuiSettings() {
@@ -56,16 +46,8 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public static Map<String, String> getAliases() {
+    public static Aliases getAliases() {
         return aliases;
-    }
-
-    public static void addAlias(String alias, String command) {
-        aliases.put(alias, command);
-    }
-
-    public static void deleteAlias(String alias) {
-        aliases.remove(alias);
     }
 
     @Override

@@ -5,7 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -32,6 +31,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -218,12 +218,12 @@ public class ParserUtil {
         String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        Map<String, String> aliases = UserPrefs.getAliases();
-        if (aliases != null && aliases.get(commandWord) != null) {
-            commandWord = aliases.get(commandWord);
+        Aliases aliases = UserPrefs.getAliases();
+        String aliasedCommand = aliases.getCommand(commandWord);
+        if (aliasedCommand != null) {
+            commandWord = aliasedCommand;
         }
 
-        String[] ret = {commandWord, arguments};
-        return ret;
+        return new String[] {commandWord, arguments};
     }
 }

@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
-import java.util.Map;
-
+import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -43,18 +42,19 @@ public class AliasCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() {
+        Aliases aliases = UserPrefs.getAliases();
+
         if (isDelete) {
-            UserPrefs.deleteAlias(alias);
+            aliases.removeAlias(alias);
             return new CommandResult(String.format(MESSAGE_DELETE_SUCCESS, alias));
         } else if (command != null) {
-            UserPrefs.addAlias(alias, command);
+            aliases.addAlias(alias, command);
             return new CommandResult(String.format(MESSAGE_ADD_SUCCESS, alias, command));
         } else {
             StringBuilder output = new StringBuilder();
 
-            Map<String, String> aliases = UserPrefs.getAliases();
-            for (String alias : aliases.keySet()) {
-                String command = aliases.get(alias);
+            for (String alias : aliases.getAllAliases()) {
+                String command = aliases.getCommand(alias);
                 output.append(String.format("%1$s=%2$s\n", alias, command));
             }
             return new CommandResult(String.format(MESSAGE_LIST_SUCCESS, output));

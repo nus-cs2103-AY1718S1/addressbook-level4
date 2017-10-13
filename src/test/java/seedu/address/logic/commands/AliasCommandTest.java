@@ -44,7 +44,7 @@ public class AliasCommandTest {
                 model
         );
 
-        assertTrue(UserPrefs.getAliases().get(LIST_COMMAND_ALIAS) == ListCommand.COMMAND_WORD);
+        assertTrue(UserPrefs.getAliases().getCommand(LIST_COMMAND_ALIAS) == ListCommand.COMMAND_WORD);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class AliasCommandTest {
                 model
         );
 
-        assertNull(UserPrefs.getAliases().get(LIST_COMMAND_ALIAS));
+        assertNull(UserPrefs.getAliases().getCommand(LIST_COMMAND_ALIAS));
     }
 
     @Test
