@@ -825,76 +825,77 @@ Use case resumes at step 2
 *MSS*
 
 1.  User requests to add parcels without further details
-2.  AddressBook prompts user to input name of parcel of parcel to add
-3.  User inputs name of parcel as requested
-4.  AddressBook prompts user to input phone number of parcel to add
-5.  User inputs phone number as requested
-6.  AddressBook prompts user to input email of parcel to add
-7.  User inputs email as requested
-8.  AddressBook prompts user to input address of parcel to add
-9.  User inputs address as requested
-10.  AddressBook prompts user to input tags of parcel to add
-11.  User inputs tags as requested (optional)
-12.  AddressBook prompts user to input birthday of parcel to add
-13.  User inputs birthday as requested
-14.  AddressBook adds parcel (optional)
+2.  AddressBook prompts user to input parcel identification number of parcel to add
+3.  User inputs identification number as requested
+4.  AddressBook prompts user to input name of recipient of parcel to add
+5.  User inputs name of recipient as requested
+6.  AddressBook prompts user to input phone number of recipient of parcel to add
+7.  User inputs phone number as requested
+8.  AddressBook prompts user to input email of recipient of parcel to add
+9.  User inputs email as requested
+10.  AddressBook prompts user to input delivery address of parcel to add
+11.  User inputs address as requested
+12.  AddressBook prompts user to input tags of parcel to add
+13.  User inputs tags as requested [optional]
+14.  AddressBook adds parcel
 +
 Use case ends
 
 *Extensions*
 
 [none]
-* 3a. The user does not input a name
+* 3a. The user does not input a parcel identification number
 +
 [none]
 ** 3a1. AddressBook shows an error message
 +
 Use case resumes at step 2
 
-* 5a. The user does not input a valid phone number
+[none]
+* 5a. The user does not input a name
 +
 [none]
 ** 5a1. AddressBook shows an error message
 +
 Use case resumes at step 4
 
-[none]
-* 7a. The user does not input a valid email
+* 7a. The user does not input a valid phone number
 +
 [none]
 ** 7a1. AddressBook shows an error message
 +
 Use case resumes at step 6
 
-* 9a. The user does not input a valid address
+[none]
+* 9a. The user does not input a valid email
 +
 [none]
 ** 9a1. AddressBook shows an error message
 +
 Use case resumes at step 8
 
-* 11a. The user does not input a tag
+* 11a. The user does not input a valid address
 +
 [none]
-** 11a1. AddressBook shows that no tag has been entered
+** 11a1. AddressBook shows an error message
 +
-Use case resumes at step 12
+Use case resumes at step 10
 
-* 13a. The user does not input a birthday
+* 13a. The user does not input a tag
 +
 [none]
-** 13a1. AddressBook shows that no birthday has been entered
+** 13a1. AddressBook shows that no tag has been entered
 +
 Use case resumes at step 14
 
 [none]
-* 14a. AddressBook shows error message if same parcel found
+* 14. AddressBook shows error message if same parcel found
 +
 Use case ends
 
 
 [discrete]
-=== Use case: Upload image of Person from local files
+=== Use case: Upload image of Parcel from local files
 
 *MSS*
 
@@ -938,60 +939,6 @@ Use case resumes at step 4
 +
 Use case ends
 
-[discrete]
-=== Use case: Generate encoded contact details
-
-*MSS*
-
-1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
-3.  User requests to select specific parcel
-4.  AddressBook prompts for which details to not encode
-5.  User inputs flags of details to not encode
-6.  AddressBook returns encoded string
-+
-Use case ends
-
-*Extensions*
-
-[none]
-* 2a. The list is empty
-+
-Use case ends
-
-* 6a. The flags given are invalid.
-+
-[none]
-** 6a1. AddressBook shows an error message
-+
-Use case resumes at step 4
-
-[discrete]
-=== Use case: Generate decoded contact details
-
-*MSS*
-
-1.  User requests to decode parcel details
-2.  AddressBook shows decoded details and prompts user on whether to save contact
-4.  User accepts save
-5.  AddressBook saves decoded parcel's contact
-+
-Use case ends
-
-*Extensions*
-
-[none]
-* 4a. User rejects save
-+
-Use case ends
-
-* 2a. Encoded details are invalid
-+
-[none]
-** 2a1. AddressBook shows an error message.
-+
-Use case ends
-
 {More to be added}
 
 [appendix]
@@ -1027,20 +974,6 @@ Mainstream Image Format
 
 ....
 JPEG, PNG, BMP
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
-
-[[hash-string]]
-Hash String
-
-....
-An encoded string that contains the contact details of a particular parcel
 ....
 
 [appendix]
