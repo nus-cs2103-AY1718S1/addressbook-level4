@@ -16,7 +16,8 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removetag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag\n"
+            + "Parameters: TAG (must be a string)";
 
     public static final String MESSAGE_SUCCESS = "Tag removed";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -28,7 +29,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * Creates an RemoveTagCommand to remove the specified {@code Tag}
      */
     public RemoveTagCommand (String tag) {
-        toRemove = tag.trim();
+        this.toRemove = tag;
     }
 
     @Override

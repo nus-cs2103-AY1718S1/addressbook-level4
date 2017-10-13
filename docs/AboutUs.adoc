@@ -19,3 +19,11 @@ Role: In charge of UI Component
 
 '''
 
+=== Jackie Tan
+image::freesoup.png[width="150", align="left"]
+{empty}[http://github.com/freesoup[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Documentation, In charge of Model, Code Quality
+
+'''
