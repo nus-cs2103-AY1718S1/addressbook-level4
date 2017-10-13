@@ -6,8 +6,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.FavouriteStatus;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -20,7 +20,8 @@ public class FavouriteCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "fav";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Favourites/Unfavourites the person identified by the index number used in the last person listing if he is currently unfavourited/favourited.\n"
+            + ": Favourites/Unfavourites the person identified by the index number"
+            + " used in the last person listing if he is currently unfavourited/favourited.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -46,8 +47,10 @@ public class FavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToToggleFavourite = lastShownList.get(targetIndex.getZeroBased());
         boolean newFavouriteStatus = !personToToggleFavourite.getStatus();
-        Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(), personToToggleFavourite.getPhone(), personToToggleFavourite.getEmail(),
-                personToToggleFavourite.getAddress(), personToToggleFavourite.getRemark(), new FavouriteStatus(newFavouriteStatus), personToToggleFavourite.getTags());
+        Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(), 
+                personToToggleFavourite.getPhone(), personToToggleFavourite.getEmail(),
+                personToToggleFavourite.getAddress(), personToToggleFavourite.getRemark(),
+                new FavouriteStatus(newFavouriteStatus), personToToggleFavourite.getTags());
 
         try {
             model.updatePerson(personToToggleFavourite, favouriteToggledPerson);

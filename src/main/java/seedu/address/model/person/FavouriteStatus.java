@@ -9,14 +9,14 @@ import static java.util.Objects.requireNonNull;
 public class FavouriteStatus {
 
     public boolean isFavourite;
-    
+
     public FavouriteStatus(boolean isFavourite) {
         requireNonNull(isFavourite);
         this.isFavourite = isFavourite;
     }
-    
-    public boolean getStatus() { 
-        return isFavourite; 
+
+    public boolean getStatus() {
+        return isFavourite;
     }
 
     @Override
