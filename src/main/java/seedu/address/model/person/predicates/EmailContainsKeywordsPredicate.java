@@ -19,7 +19,7 @@ public class EmailContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword));
+                .anyMatch(keyword -> person.getEmail().value.contains(keyword));
     }
 
     @Override

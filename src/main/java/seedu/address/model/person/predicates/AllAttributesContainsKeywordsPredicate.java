@@ -18,14 +18,12 @@ public class AllAttributesContainsKeywordsPredicate implements Predicate<ReadOnl
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword)) ||
-                keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword)) ||
-                keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword)) ||
-                keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        return keywords.stream().anyMatch(keyword -> person.getEmail().value.contains(keyword)) ||
+                keywords.stream().anyMatch(keyword ->
+                        StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword)) ||
+                keywords.stream().anyMatch(keyword -> person.getPhone().value.contains(keyword)) ||
+                keywords.stream().anyMatch(keyword ->
+                        StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
     }
 
     @Override
