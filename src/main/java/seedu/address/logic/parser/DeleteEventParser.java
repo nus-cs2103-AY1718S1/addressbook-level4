@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new DeleteEventCommand object
  */
-public class DeleteEventParser {
+public class DeleteEventParser implements Parser<DeleteEventCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteEventCommand
