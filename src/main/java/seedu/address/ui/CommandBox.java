@@ -83,10 +83,9 @@ public class CommandBox extends UiPart<Region> {
                 //If only add is present, concat prefix name string
                 if (isAdd()) {
                     finalText = concatPrefix(PREFIX_NAME);
-                }
-                //Checks if necessary prefixes are present
-                //Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
-                else if (!containsName()) {
+                } else if (!containsName()) {
+                    //Checks if necessary prefixes are present
+                    //Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
                     finalText = concatPrefix(PREFIX_NAME);
                 } else if (!containsPhone()) {
                     finalText = concatPrefix(PREFIX_PHONE);
@@ -127,8 +126,8 @@ public class CommandBox extends UiPart<Region> {
      * Checks if the commandTextField all prefixes excluding tag
      */
     private boolean containsAllCompulsoryPrefix() {
-        return containsAddress() && containsEmail() && containsBloodtype() &&
-                containsName() && containsPhone();
+        return containsAddress() && containsEmail() && containsBloodtype()
+                && containsName() && containsPhone();
     }
 
     /**
