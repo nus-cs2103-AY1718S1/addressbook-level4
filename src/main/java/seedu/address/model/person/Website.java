@@ -11,7 +11,7 @@ public class Website {
             "Website should contain a prefix of http://www https://www.";
     public static final String WEBSITE_VALIDATION_REGEX =
             "https?://(www\\.)?[-a-z0-9]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)";
-    public static final String WEBSITE_EXAMPLE = "http://www.website.com";
+    public static final String WEBSITE_EXAMPLE = "https://www.website.com/";
     public static final String WEBSITE_NULL = null; // no website
     public final String value;
 
