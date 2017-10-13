@@ -145,6 +145,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> mainWindow.fillInnerPartsWithIndicatedList(event.getListName()));
+        mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
     }
 }
