@@ -133,19 +133,19 @@
 
 .window_big_label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 52px;
+    -fx-font-size: 32px;
     -fx-text-fill: #fffef7;
 }
 
 .window_small_label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 36px;
+    -fx-font-size: 15px;
     -fx-text-fill: #fffef7;
 }
 
 .window_small_text {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 20px;
+    -fx-font-size: 15px;
     -fx-text-fill: gray;
 }
 
