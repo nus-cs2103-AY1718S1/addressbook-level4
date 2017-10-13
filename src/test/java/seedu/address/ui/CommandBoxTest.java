@@ -187,7 +187,7 @@ public class CommandBoxTest extends GuiUnitTest {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
 
         //Test variations of "add" and "a" are valid & Case insensitive
-        //Mainly testing all code in CommandBox:IsAdd()
+        //Mainly testing all combinations of "add"
         guiRobot.write("Add");
         assertTrue("Add".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
@@ -217,6 +217,11 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(" A".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
         assertTrue((" A " + STRING_NAME).equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write(" A      ");
+        assertTrue(" A      ".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue((" A       " + STRING_NAME).equals(mySandBox.getText()));
         //Ensure that caret is set to far right after each concatenation
         assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
         assertNotNull(mySandBox.getCaretPosition());
