@@ -10,12 +10,12 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -48,12 +48,12 @@
   </StackPane>
    <StackPane prefHeight="42.0" prefWidth="690.0" styleClass="pane-with-border">
       <children>
-         <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="188.0" promptText="Search person ..." style="-fx-background-color: dimgrey;" styleClass="pane-with-border" StackPane.alignment="CENTER_LEFT">
+         <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="188.0" promptText="Search person ..." style="-fx-background-color: dimgrey;" StackPane.alignment="CENTER_LEFT">
             <StackPane.margin>
                <Insets left="130.0" />
             </StackPane.margin>
          </TextField>
-         <MenuButton fx:id="sortMenu" mnemonicParsing="false" style="-fx-background-color: dimgrey;" text="Sort By:" textFill="WHITE" StackPane.alignment="CENTER_LEFT">
+         <MenuButton fx:id="sortMenu" mnemonicParsing="false" text="Sort By:" textFill="WHITE" StackPane.alignment="CENTER_LEFT">
             <StackPane.margin>
                <Insets left="20.0" />
             </StackPane.margin></MenuButton>

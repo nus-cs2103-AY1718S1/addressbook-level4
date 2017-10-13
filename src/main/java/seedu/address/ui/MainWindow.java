@@ -247,17 +247,18 @@ public class MainWindow extends UiPart<Region> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         if (MainApp.isFirstTimeOpen()) {
-            initTutorial(commandBox, resultDisplay);
+            initTutorial(commandBox, resultDisplay, sortMenu, searchField);
         }
     }
 
     /**
      * Initiates the tutorial if the program is opened for the first time.
      *
-     * @param commandBox
      */
-    private void initTutorial(CommandBox commandBox, ResultDisplay resultDisplay) {
-        Tutorial newTutorial = new Tutorial(commandBox, personListPanel, resultDisplay, tutorialText, logic);
+    private void initTutorial(CommandBox commandBox, ResultDisplay resultDisplay, MenuButton sortMenu,
+                              TextField searchField) {
+        Tutorial newTutorial = new Tutorial(commandBox, personListPanel, resultDisplay, sortMenu, searchField,
+                tutorialText, logic);
         browserPlaceholder.getChildren().remove(browserPanel.getRoot());
         ArrayList<TutSteps> tutSteps = newTutorial.getTutorialSteps();
         tutorialText.setText(TutorialMessages.STEP_INTRO);
