@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
 
 import java.util.ArrayList;
@@ -51,26 +52,18 @@ public class InfoPanelTest extends GuiUnitTest {
 
         // associated info of a person
         postNow(selectionChangedEventStub);
-//        assertEquals(ALICE.getName().toString(), infoPanelHandle.getName());
-//        assertEquals(ALICE.getPhone().toString(), infoPanelHandle.getPhone());
-//        assertEquals(MESSAGE_INFO_PHONE_FIELD, infoPanelHandle.getPhoneField());
-//        assertEquals(ALICE.getEmail().toString(), infoPanelHandle.getEmail());
-//        assertEquals(MESSAGE_INFO_EMAIL_FIELD, infoPanelHandle.getEmailField());
-//        assertEquals(ALICE.getAddress().toString(), infoPanelHandle.getAddress());
-//        assertEquals(MESSAGE_INFO_ADDRESS_FIELD, infoPanelHandle.getAddressField());
-//        assertEquals(ALICE.getPostalCode().toString(), infoPanelHandle.getPostalCode());
-//        assertEquals(MESSAGE_INFO_POSTAL_CODE_FIELD, infoPanelHandle.getPostalCodeField());
-//        assertEquals(ALICE.getDebt().toString(), infoPanelHandle.getDebt());
-//        assertEquals(MESSAGE_INFO_DEBT_FIELD, infoPanelHandle.getDebtField());
-//        assertEquals(ALICE.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()), infoPanelHandle.getTags());
-        assertInfoDisplaysPerson(ALICE, infoPanelHandle);
+        assertInfoDisplay(infoPanel, ALICE);
+
+        // associated info of next person
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1));
+        postNow(selectionChangedEventStub);
+        assertInfoDisplay(infoPanel, BOB);
     }
 
     /**
-     * Asserts that {@code infoPanel} displays the details of {@code expectedPerson} correctly and matches
-     * {@code expectedId}.
+     * Asserts that {@code infoPanel} displays the details of {@code expectedPerson} correctly.
      */
-    private void assertInfoDisplay(InfoPanel infoPanel, ReadOnlyPerson expectedPerson, int expectedId) {
+    private void assertInfoDisplay(InfoPanel infoPanel, ReadOnlyPerson expectedPerson) {
         guiRobot.pauseForHuman();
 
         InfoPanelHandle personInfoHandle = new InfoPanelHandle(infoPanel.getRoot());

@@ -28,13 +28,13 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
 
-    private final Label nameLabel;
-    private final Label addressLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
-    private final Label postalCodeLabel;
-    private final Label debtLabel;
-    private final List<Label> tagLabels;
+    private Label nameLabel;
+    private Label addressLabel;
+    private Label phoneLabel;
+    private Label emailLabel;
+    private Label postalCodeLabel;
+    private Label debtLabel;
+    private List<Label> tagLabels;
     private final Text addressText;
     private final Text phoneText;
     private final Text emailText;

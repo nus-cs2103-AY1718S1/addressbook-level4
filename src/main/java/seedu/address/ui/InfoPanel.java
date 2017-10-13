@@ -57,7 +57,7 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label debt;
     @FXML
-    private FlowPane tags;
+    public FlowPane tags;
 
     public InfoPanel() {
         super(FXML);
@@ -70,7 +70,7 @@ public class InfoPanel extends UiPart<Region> {
      * Loads the full info of the person
      * @param person the selected person to display the full info of.
      */
-    private void loadPersonInfo(ReadOnlyPerson person) {
+    public void loadPersonInfo(ReadOnlyPerson person) {
         phoneField.setText(MESSAGE_INFO_PHONE_FIELD);
         addressField.setText(MESSAGE_INFO_ADDRESS_FIELD);
         emailField.setText(MESSAGE_INFO_EMAIL_FIELD);
@@ -90,10 +90,9 @@ public class InfoPanel extends UiPart<Region> {
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
-        //person.tagProperty().addListener((observable, oldValue, newValue) -> {
+        //TODO: fix tag colours. person.tagProperty().addListener((observable, oldValue, newValue) -> {
         tags.getChildren().clear();
         initTags(person);
-        //});
     }
 
     /**
@@ -106,7 +105,7 @@ public class InfoPanel extends UiPart<Region> {
             tagLabel.setStyle("-fx-font-size:" + "24px");
             tags.getChildren().add(tagLabel);
         });
-        logger.finest("All tags for " + person.getName().toString() + " initialized");
+        logger.finest("All tags for " + person.getName().toString() + " initialized in info");
     }
 
     /**
@@ -114,6 +113,9 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         for (Node node : pane.getChildren()) {
+            if(node instanceof Label) {
+                ((Label) node).setText("");
+            }
             if(node instanceof TextFlow) {
                 for (Node subNode : ((TextFlow) node).getChildren()) {
                     if(subNode instanceof Text) {
@@ -123,12 +125,6 @@ public class InfoPanel extends UiPart<Region> {
                         ((Label) subNode).setText("");
                     }
                 }
-            }
-            if(node instanceof Text) {
-                ((Text) node).setText("");
-            }
-            if(node instanceof Label) {
-                ((Label) node).setText("");
             }
         }
     }
@@ -151,7 +147,8 @@ public class InfoPanel extends UiPart<Region> {
                 && address.getText().equals(infoPanel.address.getText())
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
-                && email.getText().equals(infoPanel.email.getText());
+                && email.getText().equals(infoPanel.email.getText())
+                && tags.equals(infoPanel.tags);
     }
 
     @Subscribe

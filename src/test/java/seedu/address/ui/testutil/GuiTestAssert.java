@@ -43,18 +43,6 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
-    /**
-     * Asserts that {@code actualInfo} displays the same values as {@code expectedInfo}.
-     */
-    public static void assertInfoEquals(InfoPanelHandle expectedInfo, InfoPanelHandle actualInfo) {
-        assertEquals(expectedInfo.getAddress(), actualInfo.getAddress());
-        assertEquals(expectedInfo.getEmail(), actualInfo.getEmail());
-        assertEquals(expectedInfo.getName(), actualInfo.getName());
-        assertEquals(expectedInfo.getPhone(), actualInfo.getPhone());
-        assertEquals(expectedInfo.getPostalCode(), actualInfo.getPostalCode());
-        assertEquals(expectedInfo.getDebt(), actualInfo.getDebt());
-        assertEquals(expectedInfo.getTags(), actualInfo.getTags());
-    }
 
     /**
      * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
