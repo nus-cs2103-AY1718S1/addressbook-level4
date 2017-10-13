@@ -23,6 +23,14 @@
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
+      <Menu mnemonicParsing="false" text="Commands">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#handleList" text="List" />
+            <MenuItem mnemonicParsing="false" onAction="#handleUndo" text="Undo" />
+            <MenuItem mnemonicParsing="false" onAction="#handleRedo" text="Redo" />
+            <MenuItem mnemonicParsing="false" onAction="#handleClear" text="Clear" />
+         </items>
+      </Menu>
   </MenuBar>
 
   <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
@@ -55,4 +63,3 @@
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
    <PasswordField text="Type your password here" />
 </VBox>
-
