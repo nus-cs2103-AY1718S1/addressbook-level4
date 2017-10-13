@@ -5,22 +5,36 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+
 /**
  * Map of aliases to their commands
  */
 public class Aliases {
 
-    private final Map<String, String> map;
+    private final Map<String, String> map = new HashMap<>();
 
     /*
-     * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * We initialise the map with aliases for frequently used commands. Users can add other aliases themselves.
      */
     {
-        map = new HashMap<String, String>();
+        map.put("a", AddCommand.COMMAND_WORD);
+        map.put("d", DeleteCommand.COMMAND_WORD);
+        map.put("e", EditCommand.COMMAND_WORD);
+        map.put("f", FindCommand.COMMAND_WORD);
+        map.put("h", HelpCommand.COMMAND_WORD);
+        map.put("l", ListCommand.COMMAND_WORD);
+        map.put("r", RedoCommand.COMMAND_WORD);
+        map.put("s", SelectCommand.COMMAND_WORD);
+        map.put("u", UndoCommand.COMMAND_WORD);
     }
 
     /**
