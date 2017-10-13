@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -158,8 +159,17 @@ public class InfoPanel extends UiPart<Region> {
                 && address.getText().equals(infoPanel.address.getText())
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
-                && email.getText().equals(infoPanel.email.getText());
-        //TODO: find a way to .equals the tags
+                && email.getText().equals(infoPanel.email.getText())
+                && tags.getChildrenUnmodifiable()
+                        .stream()
+                        .map(Label.class::cast)
+                        .map(Label::getText)
+                        .collect(Collectors.toList())
+                        .equals(infoPanel.tags.getChildrenUnmodifiable()
+                                .stream()
+                                .map(Label.class::cast)
+                                .map(Label::getText)
+                                .collect(Collectors.toList()));
     }
 
     @Subscribe
