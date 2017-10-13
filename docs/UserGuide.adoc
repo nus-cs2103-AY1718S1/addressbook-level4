@@ -292,6 +292,10 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by names or phone numbers or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
+e.g. `finds n/James Jake`
+e.g  `finds p/98765432`
+e.g. `finds t/[Friends] [colleagues]`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
