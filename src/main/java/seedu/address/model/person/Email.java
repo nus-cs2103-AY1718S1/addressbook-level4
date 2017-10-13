@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -13,6 +11,7 @@ public class Email {
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
+    public static final String EMAIL_NOT_SET_DEFAULT = "Not Set";
 
     public final String value;
 
@@ -22,19 +21,22 @@ public class Email {
      * @throws IllegalValueException if given email address string is invalid.
      */
     public Email(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+        if (email == null) {
+            this.value = EMAIL_NOT_SET_DEFAULT;
+        } else {
+            String trimmedEmail = email.trim();
+            if (!isValidEmail(trimmedEmail)) {
+                throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+            }
+            this.value = trimmedEmail;
         }
-        this.value = trimmedEmail;
     }
 
     /**
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidEmail(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX);
+        return test.matches(EMAIL_VALIDATION_REGEX) || test.equals(EMAIL_NOT_SET_DEFAULT);
     }
 
     @Override
