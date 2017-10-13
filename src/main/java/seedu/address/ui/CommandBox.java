@@ -29,27 +29,15 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
-    private int numOfSpaces = 0;
-    private int maskFromIndex = 0;
-    private boolean isMaskIndexFound = false;
-    private String passwordFromInput = "";
-    private int inputLength = 0;
-    private int prevInputLength = 0;
 
     @FXML
     private TextField commandTextField;
-
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
-            setStyleToDefault();
-            if (commandTextField.getText().contains(LoginCommand.COMMAND_WORD)) {
-                //handlePasswordMasking();
-            }
-        });
+        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -109,73 +97,6 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setText(text);
         commandTextField.positionCaret(commandTextField.getText().length());
     }
-
-//    //@@author jelneo
-//    private String handlePasswordMasking() {
-//        String currentInput = commandTextField.getText();
-////        logger.info("current in:" + currentInput + "-");
-//        numOfSpaces = getNumOfSpaces(currentInput);
-//        // prevent re-execution of after two spaces are found in input
-//        logger.info("numspace"+String.valueOf(numOfSpaces));
-//        // there are two spaces in a valid login command input
-//        // e.g. login[SPACE]username[SPACE]password
-//        prevInputLength = inputLength;
-//        inputLength = currentInput.length();
-//
-//        int currentMaskFromIndex = currentInput.indexOf(" ", currentInput.indexOf(" ") + 1) + 1;
-//        if (maskFromIndex == 0) {
-//            maskFromIndex = currentMaskFromIndex;
-//        }
-//
-//        // user backspace till after 2nd space
-//        logger.info("curr in len:" + inputLength + " pre in len:" + prevInputLength);
-//        if (!passwordFromInput.isEmpty() && inputLength < prevInputLength) {
-//            logger.info("sfef " + currentMaskFromIndex + inputLength);
-//            passwordFromInput = passwordFromInput.substring(0, inputLength - currentMaskFromIndex);
-//            maskFromIndex--;
-//        }
-//
-//        // user backspace till 2nd space or delete 2nd space
-//        if (passwordFromInput.isEmpty() && prevInputLength != 0) {
-//            passwordFromInput = "";
-//            maskFromIndex = 0;
-//            inputLength = 0;
-//            prevInputLength = 0;
-//        }
-//
-//        logger.info("last char:"+String.valueOf(currentInput.charAt(currentInput.length() - 1)));
-//        if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' ' && currentInput.charAt(currentInput.length() - 1) != '*') {
-//            //mask the input from second space onwards
-//
-//            // recalculate index to mask from if user re-enters password
-//            if (currentMaskFromIndex <= maskFromIndex) {
-//                logger.info("mask frm index:" + String.valueOf(maskFromIndex));
-//                isMaskIndexFound = true;
-//                logger.info("maskfrom: " + maskFromIndex + " caret: " + String.valueOf(inputLength));
-//                logger.info("to replace: " + commandTextField.getText(maskFromIndex, inputLength));
-//
-//                passwordFromInput += commandTextField.getText(maskFromIndex, inputLength);
-//                commandTextField.replaceText(maskFromIndex, currentInput.length(), "*");
-//                maskFromIndex++;
-//            }
-//        }
-//        logger.info("password:" + passwordFromInput + "!");
-//        return passwordFromInput;
-//    }
-//
-//    /**
-//     * Returns an integer that represents the number of spaces in a given string
-//     */
-//    private int getNumOfSpaces(String currentInput) {
-//        int count = 0;
-//        for (int i = 0; i < currentInput.length(); i++ ) {
-//            if (currentInput.charAt(i) == ' ') {
-//                count++;
-//            }
-//        }
-//        return count;
-//    }
-//    //@@author
 
     /**
      * Handles the Enter button pressed event.

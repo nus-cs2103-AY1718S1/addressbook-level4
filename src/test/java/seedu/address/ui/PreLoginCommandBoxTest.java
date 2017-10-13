@@ -23,6 +23,7 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 //@@author jelneo
@@ -35,16 +36,16 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
 
     private CommandBoxHandle commandBoxHandle;
     private ModelManager model;
-    private String adminUsername;
-    private String adminPassword;
+    private String admin_username;
+    private String admin_password;
 
     @Before
     public void setUp() {
         model = new ModelManager();
 
         Logic logic = new LogicManager(model);
-        adminUsername = model.getUsernameFromUserPref();
-        adminPassword = model.getPasswordFromUserPref();
+        admin_username = model.getUsernameFromUserPref();
+        admin_password = model.getPasswordFromUserPref();
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
@@ -66,9 +67,9 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
         assertBehaviorForSuccessfulCommand(HelpCommand.COMMAND_WORD);
 
         // login command with successful login
-        commandBoxHandle.run(LoginCommand.COMMAND_WORD + " " + adminUsername + " " + adminPassword);
-        assertBehaviorForSuccessfulCommand(LoginCommand.COMMAND_WORD + " "
-                + adminUsername + " " + adminPassword);
+        commandBoxHandle.run(LoginCommand.COMMAND_WORD + " " + admin_username + " " + admin_password);
+        assertBehaviorForSuccessfulCommand(LoginCommand.COMMAND_WORD + " " +
+                admin_username + " " + admin_password);
     }
 
     @Test

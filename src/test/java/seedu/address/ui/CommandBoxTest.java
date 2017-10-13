@@ -19,6 +19,7 @@ import seedu.address.logic.Username;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
@@ -32,15 +33,15 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private CommandBoxHandle commandBoxHandle;
     private ModelManager model;
-    private String adminUsername;
-    private String adminPassword;
+    private String admin_username;
+    private String admin_password;
 
 
     @Before
     public void setUp() {
         model = new ModelManager();
-        adminUsername = model.getUsernameFromUserPref();
-        adminPassword = model.getPasswordFromUserPref();
+        admin_username = model.getUsernameFromUserPref();
+        admin_password = model.getPasswordFromUserPref();
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -61,8 +62,8 @@ public class CommandBoxTest extends GuiUnitTest {
      */
     public void simulateLogin() {
         try {
-            Username username = new Username(adminUsername);
-            Password password = new Password(adminPassword);
+            Username username = new Username(admin_username);
+            Password password = new Password(admin_password);
             loginCommand = new LoginCommand(username, password);
             loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
             loginCommand.execute();
