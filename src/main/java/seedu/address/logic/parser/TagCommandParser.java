@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -40,7 +38,7 @@ public class TagCommandParser implements Parser<TagCommand> {
             for (int i = 0; i < numberOfIndices; i++) {
                 parsedIndices[i] = ParserUtil.parseIndex(splitIndices[i]);
             }
-            tagList = parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG));
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
@@ -55,19 +53,4 @@ public class TagCommandParser implements Parser<TagCommand> {
     private String[] splitIndices(ArgumentMultimap argMultimap) {
         return argMultimap.getPreamble().split(SEPARATOR_REGEX);
     }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, an exception will be thrown.
-     */
-    private Set<Tag> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return ParserUtil.parseTags(tagSet);
-    }
-
 }
