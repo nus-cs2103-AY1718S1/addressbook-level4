@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -49,15 +48,5 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
-
-        //associate web page pf a person whose address needs to be known
-    /*    postNow(locatePersonStub);
-        URL expectedMapUrl = new URL(GOOGLE_MAP_URL_PREFIX
-                + ALICE.getAddress().value.replaceAll(" ", "+").substring(0, 2));
-
-        //waitUntilBrowserLoaded(browserPanelHandle);
-      //  assertEquals(expectedMapUrl.toString(),
-               browserPanelHandle.getLoadedUrl().toString().substring(0, GOOGLE_MAP_URL_PREFIX.length() + 1));
-     */
     }
 }
