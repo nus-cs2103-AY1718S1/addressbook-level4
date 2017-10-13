@@ -23,9 +23,9 @@ public class EventTime {
     public final String value;
 
     /**
-     * Validates given address.
+     * Validates given date/time.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given date/time string is invalid.
      */
     public EventTime(String time) throws IllegalValueException {
         requireNonNull(time);
