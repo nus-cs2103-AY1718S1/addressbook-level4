@@ -32,21 +32,21 @@ public class MainMenuHandle extends NodeHandle<Node> {
     /**
      * Clicks the Undo Button using the menu bar in {@code MainWindow}.
      */
-    public void undoUsingMenu(){
+    public void undoUsingMenu() {
         clickOnMenuItemsSequentially("Commands", "Undo");
     }
 
     /**
      * Clicks the Redo Button using the menu bar in {@code MainWindow}.
      */
-    public void redoUsingMenu(){
+    public void redoUsingMenu() {
         clickOnMenuItemsSequentially("Commands", "Redo");
     }
 
     /**
      * Clicks the Clear Button using the menu bar in {@code MainWindow}.
      */
-    public void clearUsingMenu(){
+    public void clearUsingMenu() {
         clickOnMenuItemsSequentially("Commands", "Clear");
     }
 
