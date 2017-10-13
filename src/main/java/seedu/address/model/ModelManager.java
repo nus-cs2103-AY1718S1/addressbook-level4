@@ -100,7 +100,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags) throws PersonNotFoundException, DuplicatePersonException {
+    public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             if (person.equals(addressBook.getPersonList().get(i))) {
 
