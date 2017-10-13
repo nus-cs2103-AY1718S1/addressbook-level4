@@ -348,10 +348,6 @@
     -fx-text-fill: gray;
 }
 
-#keyboardImage {
-    -fx-image: url("../images/keyboard.png");
-}
-
 .command-pane {
     -fx-background-color: #ffffff;
     -fx-background-radius: 18 18 18 18;

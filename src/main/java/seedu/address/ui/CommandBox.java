@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -26,20 +28,35 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private Image keyboardDefault;
+    private Image keyboardError;
 
     @FXML
     private TextField commandTextField;
+
+    @FXML
+    private ImageView keyboardIcon;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        loadKeyboardIcons();
+        keyboardIcon.setImage(keyboardDefault);
         historySnapshot = logic.getHistorySnapshot();
     }
 
     public void setFocus() {
         commandTextField.requestFocus();
+    }
+
+    /**
+     * Load images for keyboard icons in the command box.
+     */
+    private void loadKeyboardIcons() {
+        keyboardDefault = new Image(getClass().getResourceAsStream("/images/keyboard.png"));
+        keyboardError = new Image(getClass().getResourceAsStream("/images/keyboardError.png"));
     }
 
     /**
@@ -137,6 +154,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setStyleToDefault() {
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        keyboardIcon.setImage(keyboardDefault);
     }
 
     /**
@@ -150,6 +168,7 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+        keyboardIcon.setImage(keyboardError);
     }
 
 }
