@@ -18,7 +18,7 @@ public class Remark {
      *
      */
     public Remark(String remark) {
-        requireNonNull(remark);
+      //  requireNonNull(remark);
         this.value = remark;
     }
 
