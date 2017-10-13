@@ -116,4 +116,10 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    /*
+    sorts alphabetically
+     */
+    public void sort() {
+        addressBook.sort();
+    }
 }
