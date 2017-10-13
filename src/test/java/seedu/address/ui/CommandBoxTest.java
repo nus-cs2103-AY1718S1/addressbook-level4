@@ -143,7 +143,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPressRightCaretWithinText(){
+    public void handleInvalidRightKeyPress(){
         //Test to ensure add command hack does not trigger as long as
         //caret is within the text
 
@@ -171,6 +171,50 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.RIGHT);
         assertTrue("Add n/".equals(mySandBox.getText()));
 
+    }
+
+    @Test
+    public void handleValidRightKeyPressWithAddOnly(){
+        //Test to ensure add command hack triggers as long as
+        //caret is at the end of the text
+
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 1: Test variations of "add" and "a" are valid & Case insensitive
+        //Mainly testing all code in CommandBox:IsAdd()
+        guiRobot.write("Add");
+        assertTrue("Add".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("Add n/".equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write("aDd ");
+        assertTrue("aDd ".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("aDd  n/".equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write(" add");
+        assertTrue(" add".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue(" add n/".equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write("A");
+        assertTrue("A".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("A n/".equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write("a ");
+        assertTrue("a ".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("a  n/".equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write(" A");
+        assertTrue(" A".equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue(" A n/".equals(mySandBox.getText()));
+        //Ensure that caret is set to far right after each concatenation
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
     }
 
     @Test

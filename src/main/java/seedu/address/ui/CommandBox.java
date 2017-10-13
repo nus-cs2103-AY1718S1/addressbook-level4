@@ -117,7 +117,10 @@ public class CommandBox extends UiPart<Region> {
         boolean perfectAdd = commandTextField.getText().equalsIgnoreCase("add");
         boolean spacedEndAdd = commandTextField.getText().equalsIgnoreCase("add ");
         boolean spacedStartAdd = commandTextField.getText().equalsIgnoreCase(" add");
-        return perfectAdd || spacedEndAdd || spacedStartAdd;
+        boolean perfectA = commandTextField.getText().equalsIgnoreCase("a");
+        boolean spacedEndA = commandTextField.getText().equalsIgnoreCase("a ");
+        boolean spacedStartA = commandTextField.getText().equalsIgnoreCase(" a");
+        return perfectAdd || spacedEndAdd || spacedStartAdd || perfectA || spacedEndA || spacedStartA;
     }
 
     /**
