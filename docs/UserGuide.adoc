@@ -39,6 +39,31 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== What's New in Version 1.2
+
+=== Autocomplete
+
+`Tab` key now automatically completes your incomplete command stub.
+Use it to automatically generate a command 'skeleton' from an incomplete command word input.
+Future enhancements will allow autocompletion of names, addresses and more.
+
+Examples:
+
+* `c` becomes `clear` after pressing `Tab` once
+* nothing happens to `b` (no command starting with letter `b`)
+* `h` becomes `history`, and then `help` if you press `Tab` again
+
+=== Remarks
+
+A person can have an optional property known as remark now.
+Add a remark or modify the remark of an existing person through `remark` command.
+
+Examples:
+
+* `list` +
+`remark 1 r/Likes to swim` +
+Attaches `Likes to swim` as remark to first person on the list.
+
 == Features
 
 ====
@@ -49,6 +74,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
+
+=== Editing a person's remark: `remark`
+
+Edits the remark of the person identified by the index number used in the last person listing. +
+Existing remark will be overwritten by the input. +
+Format: `remark INDEX r/REMARK`
+
+Examples:
 
 === Viewing help : `help`
 
@@ -258,6 +291,16 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Autocomplete
+
+Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input.
+
+Examples:
+
+* `c` becomes `clear` after pressing `Tab` once
+* nothing happens to `b` (no command starting with letter `b`)
+* `h` becomes `history`, and then `help` if you press `Tab` again
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -265,13 +308,11 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *RemoveTag* : `removetag TAGNAME` +
-e.g `removetag friends`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -283,6 +324,10 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark` +
+e.g. `remark 4 r/Sneezes a lot`
+* *RemoveTag* : `removetag TAGNAME` +
+e.g `removetag friends`
 
 == Command Shortcut Summary
 * *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`

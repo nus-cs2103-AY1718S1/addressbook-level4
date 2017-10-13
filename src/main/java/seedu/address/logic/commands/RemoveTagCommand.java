@@ -15,6 +15,7 @@ import seedu.address.model.tag.Tag;
 public class RemoveTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removetag";
+    public static final String COMMAND_USAGE = COMMAND_WORD + " ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag\n"
             + "Parameters: TAG (must be a string)";

@@ -11,6 +11,15 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
+=== Huang Chi Ying
+image::9gates.png[width="150", align="left"]
+{empty}[http://github.com/john19950730[github]]
+
+Role: Developer +
+Responsibilities: Documentation, Peer Review, In charge of mainly Logic
+
+'''
+
 === Ko Szu Yuan
 image::kosyoz.png[width="150", align="left"]
 {empty}[http://github.com/kosyoz[github]][portfolio]

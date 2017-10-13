@@ -26,6 +26,8 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private ListElementPointer autoCompleteSnapshot;
+    private boolean isAutoCompletePossibilitiesUpToDate = false;
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +38,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
     }
 
     /**
@@ -55,8 +58,18 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            // As tab will shift focus away from the text box,
+            // consuming it causes the text box to remain focused
+            keyEvent.consume();
+            autoCompleteCommand();
+            break;
         default:
             // let JavaFx handle the keypress
+
+            // There has been a key press event that is not consumed (special)
+            // autocomplete possibilities is likely outdated
+            isAutoCompletePossibilitiesUpToDate = false;
         }
     }
 
@@ -87,12 +100,45 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Autocompletes the command in the textbox from incomplete input,
+     * and if command is already complete change to next possible command
+     */
+    private void autoCompleteCommand() {
+        assert autoCompleteSnapshot != null;
+        if (!isAutoCompletePossibilitiesUpToDate) {
+            // Update the autocomplete possibilities only when textbox is changed by non-shortcut user key press
+            // Autocomplete support only for commands at the moment, only updarte when only 1 word in textbox
+            if (commandTextField.getText().split(" ").length == 1) {
+                initAutoComplete();
+            }
+        }
+        // loop back to the start (original user input) if all autocomplete options are exhausted
+        if (!autoCompleteSnapshot.hasPrevious()) {
+            autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+            replaceText(autoCompleteSnapshot.current());
+        } else {
+            replaceTextAndSelectAllForward(autoCompleteSnapshot.previous());
+        }
+    }
+
+    /**
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
      */
     private void replaceText(String text) {
         commandTextField.setText(text);
         commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    /**
+     * Sets {@code CommandBox}'s text field with {@code text},
+     * selects all text beyond previous caret position,
+     * and positions the caret to the end of the {@code text}.
+     */
+    private void replaceTextAndSelectAllForward(String text) {
+        int oldCaretPosition = commandTextField.getCaretPosition();
+        commandTextField.setText(text);
+        commandTextField.selectRange(oldCaretPosition, commandTextField.getText().length());
     }
 
     /**
@@ -126,6 +172,12 @@ public class CommandBox extends UiPart<Region> {
         // add an empty string to represent the most-recent end of historySnapshot, to be shown to
         // the user if she tries to navigate past the most-recent end of the historySnapshot.
         historySnapshot.add("");
+    }
+
+    private void initAutoComplete() {
+        logic.updateAutoCompletePossibilities(commandTextField.getText());
+        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+        isAutoCompletePossibilitiesUpToDate = true;
     }
 
     /**
