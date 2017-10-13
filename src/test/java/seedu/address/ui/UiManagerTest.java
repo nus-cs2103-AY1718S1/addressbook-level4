@@ -1,10 +1,7 @@
 package seedu.address.ui;
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
