@@ -62,10 +62,10 @@ public class SortCommandParser implements Parser<SortCommand> {
             field = prefix.toString();
 
             if (s.equals(SortCommand.REVERSE_ORDER)) {
-                isReverseOrder = new Boolean(true);
+                isReverseOrder = Boolean.TRUE;
                 return;
             } else {
-                isReverseOrder = new Boolean(false);
+                isReverseOrder = Boolean.FALSE;
                 return;
 
             }
