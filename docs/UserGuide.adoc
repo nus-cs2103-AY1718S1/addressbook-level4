@@ -246,12 +246,12 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 
-=== Extra `options` menu
+=== Extra `options` menu (NEW)
 
 Each user will have an extra list of options to choose from beside their name. +
 Icon is similar to a down arrow.
 
-=== Delete function from `options`
+=== Delete function from `options`(NEW)
 
 Deletes the specified person from the address book. +
 Function can be found from the new `options` feature.
