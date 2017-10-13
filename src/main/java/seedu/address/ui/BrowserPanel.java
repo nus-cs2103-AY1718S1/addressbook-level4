@@ -78,7 +78,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleLocateCommandEvent(LocateCommandEvent event){
+    private void handleLocateCommandEvent(LocateCommandEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocationPage(event.getPerson());
     }
