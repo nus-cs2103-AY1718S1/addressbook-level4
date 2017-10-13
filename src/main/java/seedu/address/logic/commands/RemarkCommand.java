@@ -23,11 +23,11 @@ public class RemarkCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a remark to the person identified by the index number used in the last person listing."
-            + "Existing remark will be overwritten by the input.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + PREFIX_REMARK + "REMARK\n"
-            + "Example: " + COMMAND_WORD + " 1"
-            + PREFIX_REMARK + "Likes to drink coffee";
+            + " Existing remark will be overwritten by the input.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_REMARK + " [REMARK]\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_REMARK + "Likes to drink coffee.";
 
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
     public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
