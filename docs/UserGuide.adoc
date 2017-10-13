@@ -112,16 +112,27 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Advance finding (NEW): `finds`
+
+Finds persons whose names contain any of the given keywords. +
+Format: `finds [OPTIONS]/KEYWORD `
+
+****
+* The search is allows searching of user details based on additional details
+* Supports finding based on phone numbers and tags.
+****
+
+Examples:
+
+* `finds p\91168888` +
+Returns person with phone number `91168888`
+* `finds t\friends` +
+Returns any person with `friends` tag
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
-
-=== Deleting a person in other way: 'click on the arrow'
-
-Deletes the specified person from the address book. +
-Delete the person by clicking arrow beside of username
-select "Deletes" to remove person from the list
 
 ****
 
@@ -233,6 +244,24 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+
+=== Extra `options` menu
+
+Each user will have an extra list of options to choose from beside their name. +
+Icon is similar to a down arrow.
+
+=== Delete function from `options`
+
+Deletes the specified person from the address book. +
+Function can be found from the new `options` feature.
+
+=== Coming soon in v2.0
+
+==== GoogleMap function from `options`
+
+Show google maps data based on person's address. +
+Function will be found from the new `options` feature.
 
 == FAQ
 
