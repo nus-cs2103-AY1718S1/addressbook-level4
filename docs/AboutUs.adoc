@@ -17,4 +17,10 @@ image::kaihsien.jpg[width="150", align="left"]
 
 Role: Developer
 
+== Jeremy Chan
+image::jeremy.png[width="150", align="left"]
+{empty}[https://github.com/Jemereny]
+
+Role: Developer
+
 '''

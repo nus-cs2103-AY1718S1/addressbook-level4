@@ -10,6 +10,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_WEBSITE = Website.WEBSITE_EXAMPLE;
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
 
@@ -34,9 +36,10 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Website defaultWebsite = new Website(DEFAULT_WEBSITE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultRemark, defaultTags);
+                    defaultAddress, defaultRemark, defaultWebsite, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -114,6 +117,18 @@ public class PersonBuilder {
      */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Website} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withWebsite(String website) {
+        try {
+            this.person.setWebsite(new Website(website));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("website is expected to be unique.");
+        }
         return this;
     }
 
