@@ -9,12 +9,7 @@ import static seedu.address.logic.commands.DetagCommand.MESSAGE_DETAG_PERSONS_SU
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.io.IOException;
 import java.util.Set;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import org.junit.Test;
 
@@ -32,20 +27,6 @@ import seedu.address.model.tag.Tag;
  * Contains integration tests (Interaction with the Model) and unit tests for {@code DetagCommand}.
  */
 public class DetagCommandTest {
-    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private static void setupLogger() {
-        LogManager.getLogManager().reset();
-        logger.setLevel(Level.ALL);
-        FileHandler fh = null;
-        try {
-            fh = new FileHandler("logfile.txt");
-            fh.setLevel(Level.FINE);
-            logger.addHandler(fh);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "FILE logging can't be created.", e);
-        }
-    }
-
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final Index[] indices1 = {fromOneBased(1), fromOneBased(2), fromOneBased(3)};
     private final Index[] indices2 = {fromOneBased(4), fromOneBased(5)};
