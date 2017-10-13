@@ -10,7 +10,7 @@ import seedu.address.logic.parser.AutoCompleteCommandParser;
  */
 public class AutoCompletePossibilities {
     private List<String> possibilities;
-    private AutoCompleteCommandParser commandParser;
+    private final AutoCompleteCommandParser commandParser;
 
     /** Default constructor */
     public AutoCompletePossibilities() {
@@ -19,8 +19,7 @@ public class AutoCompletePossibilities {
     }
 
     /** Generates a list of possible autocomplete options based on an incomplete user input */
-    public AutoCompletePossibilities(String stub) {
-        this();
+    public void updatePossibilities(String stub) {
         possibilities = commandParser.parseForCommands(stub);
     }
 

@@ -27,6 +27,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
     private ListElementPointer autoCompleteSnapshot;
+    private boolean isAutoCompletePossibilitiesUpToDate = false;
 
     @FXML
     private TextField commandTextField;
@@ -37,6 +38,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
     }
 
     /**
@@ -64,12 +66,10 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             // let JavaFx handle the keypress
-            // Update the autocomplete possibilities only when textbox is changed by non-shortcut user key press
-            // Autocomplete support only for commands at the moment, only update when only 1 word in textbox
-            if (commandTextField.getText().split(" ").length == 1) {
-                initAutoComplete();
-            }
 
+            // There has been a key press event that is not consumed (special)
+            // autocomplete possibilities is likely outdated
+            isAutoCompletePossibilitiesUpToDate = false;
         }
     }
 
@@ -105,11 +105,20 @@ public class CommandBox extends UiPart<Region> {
      */
     private void autoCompleteCommand() {
         assert autoCompleteSnapshot != null;
-        if (!autoCompleteSnapshot.hasNext()) {
-            autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+        if (!isAutoCompletePossibilitiesUpToDate) {
+            // Update the autocomplete possibilities only when textbox is changed by non-shortcut user key press
+            // Autocomplete support only for commands at the moment, only updarte when only 1 word in textbox
+            if (commandTextField.getText().split(" ").length == 1) {
+                initAutoComplete();
+            }
         }
-
-        replaceTextAndSelectAllForward(autoCompleteSnapshot.next());
+        // loop back to the start (original user input) if all autocomplete options are exhausted
+        if (!autoCompleteSnapshot.hasPrevious()) {
+            autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+            replaceText(autoCompleteSnapshot.current());
+        } else {
+            replaceTextAndSelectAllForward(autoCompleteSnapshot.previous());
+        }
     }
 
     /**
@@ -127,8 +136,9 @@ public class CommandBox extends UiPart<Region> {
      * and positions the caret to the end of the {@code text}.
      */
     private void replaceTextAndSelectAllForward(String text) {
+        int oldCaretPosition = commandTextField.getCaretPosition();
         commandTextField.setText(text);
-        commandTextField.selectRange(commandTextField.getText().length(), commandTextField.getCaretPosition());
+        commandTextField.selectRange(oldCaretPosition, commandTextField.getText().length());
     }
 
     /**
@@ -187,10 +197,6 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
-    }
-
-    private void updateAutoCompletePossibilities(String stub) {
-        logic.updateAutoCompletePossibilities(stub);
     }
 
 }

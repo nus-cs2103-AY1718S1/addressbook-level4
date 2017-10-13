@@ -48,13 +48,20 @@ public class AutoCompleteCommandParser {
      */
     public List<String> parseForCommands(String stub) {
         final LinkedList<String> possibleCommands = new LinkedList<String>();
-        possibleCommands.add(stub);
+        // empty string will match everything,
+        // short circuit method to prevent greedy matching
+        if (stub.equals("")) {
+            possibleCommands.add(stub);
+            return possibleCommands;
+        }
 
         for (CommandWordUsageTuple commandTuple : COMMAND_WORDS_LIST) {
             if (startWithSameLetters(stub, commandTuple.getCommandWord())) {
                 possibleCommands.add(commandTuple.getCommandUsage());
             }
         }
+
+        possibleCommands.add(stub);
 
         return possibleCommands;
     }
@@ -66,7 +73,11 @@ public class AutoCompleteCommandParser {
      * @return true if commandWord contains stub as the first few letters
      */
     private boolean startWithSameLetters(String stub, String commandWord) {
-        return stub.equals(commandWord.substring(0, stub.length()));
+        if (stub.length() <= commandWord.length()) {
+            return stub.equals(commandWord.substring(0, stub.length()));
+        } else {
+            return false;
+        }
     }
 
 }
