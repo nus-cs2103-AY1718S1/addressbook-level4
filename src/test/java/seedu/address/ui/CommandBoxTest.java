@@ -254,6 +254,56 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void handleValidRightKeyPressLenAboveThree() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString = "";
+        String backupTestString = "";
+
+        guiRobot.write("Add");
+        testString += "Add";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        guiRobot.write("a");
+        testString = "a" + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.push(KeyCode.RIGHT);
+        backupTestString = testString;
+        testString += " " + STRING_PHONE;
+        assertFalse(testString.equals(mySandBox.getText()));
+        testString = backupTestString;
+        mySandBox.positionCaret(1);
+        guiRobot.write(" ");
+        testString = Character.toString(testString.charAt(0))
+                + " " + testString.substring(1);
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        guiRobot.write("    ");
+        testString = "    " + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_PHONE;
+        testString += " " + STRING_EMAIL;
+        testString += " " + STRING_ADDRESS;
+        testString += " " + STRING_BLOODTYPE;
+        testString += " " + STRING_TAG;
+        testString += " " + STRING_TAG;
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+
+    }
+
+    @Test
     public void handleInvalidRightKeyPress() {
         //Test to ensure add command hack does not trigger as long as
         //caret is within the text
