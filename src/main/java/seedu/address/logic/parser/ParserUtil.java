@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DeadLine;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -102,6 +103,30 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    //@@author lawwman
+    /**
+     * Parses a {@code Optional<String> deadLine} into an {@code Optional<DeadLine>} if {@code DeadLine}
+     * is present.
+     * Meant for parsing for Add command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DeadLine> parseDeadLine(Optional<String> deadLine) throws IllegalValueException {
+        requireNonNull(deadLine);
+        return deadLine.isPresent() ? Optional.of(new DeadLine(deadLine.get()))
+                : Optional.of(new DeadLine(DeadLine.NO_DEAD_LINE_SET));
+    }
+    /**
+     * Parses a {@code Optional<String> deadLine} into an {@code Optional<DeadLine>} if {@code DeadLine}
+     * is present.
+     * Meant for parsing for Edit command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DeadLine> parseDeadLineForEdit(Optional<String> deadLine)
+            throws IllegalValueException {
+        requireNonNull(deadLine);
+        return deadLine.isPresent() ? Optional.of(new DeadLine(deadLine.get())) : Optional.empty();
     }
 
     /**

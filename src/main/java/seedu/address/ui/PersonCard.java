@@ -52,6 +52,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label dateBorrow;
     @FXML
+    private Label deadLine;
+    @FXML
     private Label email;
     @FXML
     private FlowPane tags;
@@ -77,6 +79,7 @@ public class PersonCard extends UiPart<Region> {
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
+        deadLine.textProperty().bind(Bindings.convert(person.deadLineProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);

@@ -34,6 +34,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setPostalCode(person.getPostalCode());
         descriptor.setDebt(person.getDebt());
+        descriptor.setDeadLine(person.getDeadLine());
         descriptor.setTags(person.getTags());
     }
 
@@ -103,6 +104,18 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withPostalCode(String postalCode) {
         try {
             ParserUtil.parsePostalCode(Optional.of(postalCode)).ifPresent(descriptor::setPostalCode);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("postal code is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code PostalCode} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDeadLine(String deadLine) {
+        try {
+            ParserUtil.parseDeadLine(Optional.of(deadLine)).ifPresent(descriptor::setDeadLine);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("postal code is expected to be unique.");
         }

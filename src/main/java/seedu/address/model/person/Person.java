@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
+    private ObjectProperty<DeadLine> deadLine;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -32,8 +33,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
-                  Debt debt, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, debt, tags);
+                  Debt debt, DeadLine deadLine, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, postalCode, debt, deadLine, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -41,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
+        this.deadLine = new SimpleObjectProperty<>(deadLine);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -50,7 +52,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getDebt(), source.getTags());
+                source.getDebt(), source.getDeadLine(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
     }
 
@@ -151,6 +153,17 @@ public class Person implements ReadOnlyPerson {
     @Override
     public DateBorrow getDateBorrow() {
         return dateBorrow.get();
+    }
+
+    //@@author lawwman
+    public void setDeadLine(DeadLine deadLine) { this.deadLine.set(requireNonNull(deadLine)); }
+
+    @Override
+    public ObjectProperty<DeadLine> deadLineProperty() { return deadLine; }
+
+    @Override
+    public DeadLine getDeadLine() {
+        return deadLine.get();
     }
 
     //@@author
