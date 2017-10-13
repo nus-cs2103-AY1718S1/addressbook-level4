@@ -29,7 +29,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedEvent> events;
-
+    @XmlElement
     private XmlAdaptedPropertyManager properties;
 
 
