@@ -113,6 +113,22 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Adding multiple fields for contacts [Coming in v2.0]
+
+Edits an existing person in the address book. +
+Format: `addf INDEX [p/PHONE]`
+
+****
+* Adds another field for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `addf 1 p/87654321` +
+Adds the phone number 87654321 to the first person.
+
+
 === Locating contacts: `find`
 
 ==== To find a contact by name:
