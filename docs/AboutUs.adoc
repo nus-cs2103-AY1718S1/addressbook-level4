@@ -37,12 +37,12 @@ Responsibilities: Logic
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Vanessa Lim
+image::vanessalimshimin.jpg[width="150", align="left"]
+{empty}[http://github.com/vmlimshimin[github]] [<<vanessalim#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Storage
 
 '''
 
