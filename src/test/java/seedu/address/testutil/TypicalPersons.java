@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -23,6 +26,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * A utility class containing a list of {@code Person} objects to be used in tests.
  */
 public class TypicalPersons {
+
+    public static final Index INDEX_FIRST_PERSON = Index.fromOneBased(1);
+    public static final Index INDEX_SECOND_PERSON = Index.fromOneBased(2);
+    public static final Index INDEX_THIRD_PERSON = Index.fromOneBased(3);
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
@@ -41,7 +48,7 @@ public class TypicalPersons {
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").build();
+            .withEmail("anna@example.com").withAddress("4th street").withComment("Likes Tetris").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import sun.security.x509.AVA;
 
 /**
  * Represents a Person in the address book.
@@ -22,18 +23,38 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Avatar> avatar;
+    private ObjectProperty<Comment> comment;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
+     * A default avatar image is stored
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        // Use default avatar image
+        this.avatar = new SimpleObjectProperty<>(new Avatar());
+        this.comment = new SimpleObjectProperty<>(comment);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Avatar avatar, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        // Use default avatar image
+        System.out.println("Storing custom image at path: " + avatar.getAvatarFilePath());
+        this.avatar = new SimpleObjectProperty<>(avatar);
+        this.comment = new SimpleObjectProperty<>(comment);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,7 +63,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(),
                 source.getTags());
     }
 
@@ -102,6 +123,28 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() { return avatar; };
+
+    @Override
+    public Avatar getAvatar() { return avatar.get(); }
+
+    public void setAvatar(Avatar avatar) { this.avatar.set(requireNonNull(avatar)); }
+
+    public void setComment(Comment comment) {
+        this.comment.set(requireNonNull(comment));
+    }
+
+    @Override
+    public ObjectProperty<Comment> commentProperty() {
+        return comment;
+    }
+
+    @Override
+    public Comment getComment() {
+        return comment.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -132,7 +175,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, comment, tags);
     }
 
     @Override

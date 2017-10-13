@@ -35,6 +35,11 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if(event.isError()) {
+            resultDisplay.setStyle("-fx-text-fill: red;");
+        } else {
+            resultDisplay.setStyle("-fx-text-fill: white;");
+        }
         Platform.runLater(() -> displayed.setValue(event.message));
     }
 
