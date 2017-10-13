@@ -13,6 +13,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.SchEmail;
+import seedu.address.model.person.Website;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -25,26 +26,32 @@ public class SampleDataUtil {
             return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new SchEmail("e0011223@u.nus.edu"),
+                    new Website("https://www.facebook.com/alexYeoh"),
                     new Address("Blk 30 Geylang Street 29, #06-40"), new Birthday("12/11/1998"),
                     getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new SchEmail("e3445566@u.ntu.edu"),
+                    new Website("https://www.facebook.com/berniceYu"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new Birthday("17/04/1950"),
                     getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new SchEmail("charlotte@u.ntu.edu"),
+                    new Website("https://www.facebook.com/charlotteO"),
                     new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new Birthday("05/03/2001"),
                     getTagSet("neighbours")),
                 new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                     new SchEmail("david_li@u.nus.edu"),
+                    new Website("https://www.facebook.com/davidLi"),
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new Birthday("06/07/1982"),
                     getTagSet("family")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                     new SchEmail("irfan_ibrahim@u.ntu.edu"),
+                    new Website("https://www.facebook.com/irfanIbra"),
                     new Address("Blk 47 Tampines Street 20, #17-35"), new Birthday("10/12/2005"),
                     getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new SchEmail("roy_99@vjc.com.sg"),
+                    new Website("https://www.facebook.com/royBala"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), new Birthday("22/09/1975"),
                     getTagSet("colleagues"))
             };
