@@ -42,7 +42,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Features
 *Information on each of the commands*
 
-*22 different types of commands available for a more user-friendly environment.
+* 22 different types of commands available for a more user-friendly environment.
 * Each of the command has at least one synonyms/aliases.
 ** This allows the user to have a variety of choices of commands instead of having to remember or to execute the `help`
 window every time one forgets it.
