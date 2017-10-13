@@ -51,7 +51,7 @@
     </StackPane>
       <VBox fx:id="eventList" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <StackPane fx:id="eventListPanelPlaceholder" prefHeight="400.0" prefWidth="750.0" />
+            <StackPane fx:id="eventListPanelPlaceholder" />
          </children>
       </VBox>
   </SplitPane>
