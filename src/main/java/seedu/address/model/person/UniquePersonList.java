@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -122,8 +123,8 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    /*
-    * sorts list alphabetically
+    /**
+     * sorts list alphabetically
      */
     public void sort() {
         Collections.sort(internalList, new Comparator<Person>() {
@@ -132,5 +133,13 @@ public class UniquePersonList implements Iterable<Person> {
                 return o1.getName().fullName.compareTo(o2.getName().fullName);
             }
         });
+
+    /**
+     * find search through list of persons and tags, remove tag
+     */
+    public void removeTag(String str) {
+        for (Person p : internalList) {
+            p.removeTag(str);
+        }
     }
 }
