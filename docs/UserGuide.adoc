@@ -171,7 +171,7 @@ Deletes the 1st person in the results of the `find` command.
 ==== To delete multiple persons:
 
 Deletes the specified person from the address book. +
-Format: `deletem INDEX...`
+Format: `delete INDEX...`
 
 ****
 * Deletes the persons at the specified `INDEX`.
@@ -183,7 +183,7 @@ Format: `deletem INDEX...`
 Examples:
 
 * `list` +
-`deletem 8 7` +
+`delete 8 7` +
 Deletes the 8th and 7th person in the address book.
 
 ==== To delete contacts with a certain tag [Coming in v2.0]:
@@ -224,15 +224,16 @@ Selects the 1st person in the results of the `find` command.
 
 ==== To add a Facebook account:
 
-To be updated.
+Adds a Facebook account
+Format: `addfacebook`
 
 ==== To add a Instagram account:
 
-To be updated.
+Format: `addinstagram`
 
 ==== To add a Twitter account:
 
-To be updated.
+Format: `addtwitter`
 
 
 === Listing entered commands : `history`
