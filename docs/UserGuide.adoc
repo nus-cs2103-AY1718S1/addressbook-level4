@@ -68,10 +68,31 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+// tag::list[]
 === Listing all persons : `list` or `l`
 
-Shows a list of all persons in the address book. +
-Format: `list` or `l`
+Shows a list of all persons in the address book, sorted by the specified sort order or default sort order. +
+Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]`
+
+****
+* `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
+ `e/asc` `a/asc`, delimited by spaces, in no particular fixed order.
+* The sort argument prefix for sorting by [underline]#name# is `n/`.
+* The sort argument prefix for sorting by [underline]#phone# is `p/`.
+* The sort argument prefix for sorting by [underline]#email# is `e/`.
+* The sort argument prefix for sorting by [underline]#address# is `a/`.
+* The sort argument postfix `desc` denotes that the sort field is to be sorted in descending lexicographical order.
+* The sort argument postfix `asc` denotes that the sort field is to be sorted in ascending lexicographical order.
+* Sort arguments without a postfix are sorted by ascending lexicographical order.
+* The order of the `SORT_ARGUMENTS` are left-prioritized.
+****
+
+Examples:
+
+* `list` or `l` displays all persons by the default sort order.
+* `l n/desc` displays all persons sorted by descending name.
+* `list p/ a/desc` or `list p/asc a/desc` displays all persons sorted by ascending phone, then by descending address.
+// end::list[]
 
 === Editing a person : `edit` or `e`
 
@@ -98,9 +119,9 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons in address book: `find` or `f` or `search`
 
 Finds persons in the address book. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-        or `f KEYWORD [MORE_KEYWORDS]`
-        or `search KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+        or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+        or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
 
 ****
 * Only the [underline]#name# and [underline]#tags# are searched.
@@ -125,6 +146,33 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns any person having tag `School`
 * `find School werk` +
 Returns any person having tag `School` or tag `werk`
+
+****
+* `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
+ `e/asc` `a/asc`, delimited by spaces, in no particular fixed order.
+* The sort argument prefix for sorting by [underline]#name# is `n/`.
+* The sort argument prefix for sorting by [underline]#phone# is `p/`.
+* The sort argument prefix for sorting by [underline]#email# is `e/`.
+* The sort argument prefix for sorting by [underline]#address# is `a/`.
+* The sort argument postfix `desc` denotes that the sort field is to be sorted in descending lexicographical order.
+* The sort argument postfix `asc` denotes that the sort field is to be sorted in ascending lexicographical order.
+* Sort arguments without a postfix are sorted by ascending lexicographical order.
+* The order of the `SORT_ARGUMENTS` are left-prioritized.
+* Sort arguments *do not count as search arguments*.
+****
+
+Examples:
+
+* `find John p/` or `find jhon p/asc` +
+Returns `john` and `John Doe`, sorted by ascending phone number.
+* `search Betsy Tim John n/ p/desc` +
+Returns any person having names `Betsy`, `Tim`, or `John`, sorted by name then by descending phone if names are equal.
+* `find School a/desc` +
+Returns any person having tag `School`, sorted by descending address.
+* `find School werk e/` +
+Returns any person having tag `School` or tag `werk`, sorted by email.
+* `find e/ p/desc` +
+Returns an error (do not count as search arguments).
 // end::find[]
 
 === Deleting a person : `delete` or `d`

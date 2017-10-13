@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.SortUtil.setupArguments;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -20,14 +22,22 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] dataKeywords = trimmedArgs.split("\\s+");
+        String[] keywords = trimmedArgs.split("\\s+");
+        List<String> dataKeywords = new ArrayList<>();
+        List<SortArgument> sortArgumentList = new ArrayList<>();
 
-        return new FindCommand(new PersonDataContainsKeywordsPredicate(Arrays.asList(dataKeywords)));
+        setupArguments(keywords, dataKeywords, sortArgumentList, FindCommand.MESSAGE_USAGE);
+
+        if (dataKeywords.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        return new FindCommand(new PersonDataContainsKeywordsPredicate(dataKeywords), sortArgumentList);
     }
 
 }
