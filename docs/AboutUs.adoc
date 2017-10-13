@@ -11,6 +11,14 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
+=== Ko Szu Yuan
+image::kosyoz.png[width="150", align="left"]
+{empty}[http://github.com/kosyoz[github]][portfolio]
+
+Role: In charge of UI Component
+
+'''
+
 === Jackie Tan
 image::freesoup.png[width="150", align="left"]
 {empty}[http://github.com/freesoup[github]] [<<johndoe#, portfolio>>]
