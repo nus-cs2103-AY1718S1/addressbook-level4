@@ -81,21 +81,19 @@ public class CommandBox extends UiPart<Region> {
             } else { //If caret is at the end, deploy hack that makes user life easy for add command
                 String finalText;
                 //If only add is present, concat prefix name string
-                if (isAdd()) {
+                //Checks if necessary prefixes are present
+                //Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
+                if (!containsName() && addPollSuccessful()) {
                     finalText = concatPrefix(PREFIX_NAME);
-                } else if (!containsName()) {
-                    //Checks if necessary prefixes are present
-                    //Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
-                    finalText = concatPrefix(PREFIX_NAME);
-                } else if (!containsPhone()) {
+                } else if (!containsPhone() && addPollSuccessful()) {
                     finalText = concatPrefix(PREFIX_PHONE);
-                } else if (!containsEmail()) {
+                } else if (!containsEmail() && addPollSuccessful()) {
                     finalText = concatPrefix(PREFIX_EMAIL);
-                } else if (!containsAddress()) {
+                } else if (!containsAddress() && addPollSuccessful()) {
                     finalText = concatPrefix(PREFIX_ADDRESS);
-                } else if (!containsBloodtype()) {
+                } else if (!containsBloodtype() && addPollSuccessful()) {
                     finalText = concatPrefix(PREFIX_BLOODTYPE);
-                } else if (containsAllCompulsoryPrefix()) {
+                } else if (containsAllCompulsoryPrefix() && addPollSuccessful()) {
                     finalText = concatPrefix(PREFIX_TAG);
                 } else {
                     break;
@@ -110,16 +108,17 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Checks if the commandTextField has the word "add" only
+     * Polls the input statement to check if sentence starts with " add " or " a "
+     * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
      */
-    private boolean isAdd() {
-        boolean perfectAdd = commandTextField.getText().equalsIgnoreCase("add");
-        boolean spacedEndAdd = commandTextField.getText().equalsIgnoreCase("add ");
-        boolean spacedStartAdd = commandTextField.getText().equalsIgnoreCase(" add");
-        boolean perfectA = commandTextField.getText().equalsIgnoreCase("a");
-        boolean spacedEndA = commandTextField.getText().equalsIgnoreCase("a ");
-        boolean spacedStartA = commandTextField.getText().equalsIgnoreCase(" a");
-        return perfectAdd || spacedEndAdd || spacedStartAdd || perfectA || spacedEndA || spacedStartA;
+    private boolean addPollSuccessful() {
+        String stringToEvaluate = "";
+        int pollingCount = 0;
+        //Keep polling and remove all empty blankspaces
+        while (stringToEvaluate.charAt(pollingCount) == ' '){
+            stringToEvaluate += stringToEvaluate.charAt(pollingCount);
+        }
+
     }
 
     /**
