@@ -13,11 +13,11 @@ Our TeamID is F10-B3.
 == Project Team
 
 === Benjamin Ang
-image::damithc.jpg[width="150", align="left"]
+image::nuse0032202.png[width="150", align="left"]
 {empty}[https://github.com/NUSe0032202[github]] [<<benang#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Model; Documentation; Integration
+Role: Team Member +
+Responsibilities: Command
 
 '''
 
