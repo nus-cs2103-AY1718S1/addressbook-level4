@@ -52,6 +52,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane searchBoxPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -140,6 +143,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        SearchBox searchBox = new SearchBox(logic);
+        searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
     }
 
     void hide() {
