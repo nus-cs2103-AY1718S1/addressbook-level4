@@ -38,12 +38,12 @@ public class TagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Index[] indices;
     private Set<Tag> tags;
-    
+
    /* @Test
     public void execute_noDuplicateIndexUnfilteredList_success() throws Exception {
         indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
-        
+
         String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS);
         TagCommand tagCommand = prepareCommand(indices, tags);
         for (Index index : indices) {
@@ -75,7 +75,7 @@ public class TagCommandTest {
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-        
+
         indices = new Index[]{outOfBoundIndex};
         tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
         TagCommand tagCommand = prepareCommand(indices, tags);

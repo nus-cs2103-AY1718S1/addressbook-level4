@@ -130,7 +130,7 @@ public class AddCommandTest {
             throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
-        
+
         @Override
         public void updatePersonTags(ReadOnlyPerson person, Set<Tag> tagSet)
                 throws PersonNotFoundException, DuplicatePersonException {

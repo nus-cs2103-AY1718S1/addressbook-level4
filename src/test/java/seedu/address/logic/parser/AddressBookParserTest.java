@@ -127,7 +127,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
-    
+
     @Test
     public void parseCommand_tagCommand_returnsTagCommand() throws Exception {
         String tag = "foo";

@@ -98,16 +98,16 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updatePerson(oldPerson, newPerson);
         }
     }
-    
+
     @Override
     public void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             if (person.equals(addressBook.getPersonList().get(i))) {
-                
+
                 ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
                 Person newPerson = new Person(oldPerson);
                 newPerson.setTags(newTags);
-                
+
                 addressBook.updatePerson(oldPerson, newPerson);
                 indicateAddressBookChanged();
             }

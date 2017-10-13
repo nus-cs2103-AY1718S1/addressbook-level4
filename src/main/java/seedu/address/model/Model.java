@@ -30,7 +30,7 @@ public interface Model {
 
     /** Change tag of given person */
     void changeTag(Tag oldTag, Tag newTag)throws PersonNotFoundException, DuplicatePersonException;
-    
+
     /** Updates tags of a given person */
     void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags) throws PersonNotFoundException, DuplicatePersonException;
 

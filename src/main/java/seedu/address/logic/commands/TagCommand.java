@@ -18,19 +18,19 @@ import seedu.address.model.tag.Tag;
 public class TagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tag";
-    
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Tags multiple people using the same tag. ";
-    
+
     public static final String MESSAGE_TAG_PERSONS_SUCCESS = "New tags added";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    
+
     private final Index[] indices;
     private final Set<Tag> newTags;
-    
+
     public TagCommand(Index[] indices, Set<Tag> tagList) {
         requireNonNull(indices);
         requireNonNull(tagList);
-        
+
         this.indices = indices;
         newTags = tagList;
     }
@@ -43,7 +43,7 @@ public class TagCommand extends UndoableCommand {
             if (currentIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            
+
             ReadOnlyPerson personToEdit = lastShownList.get(currentIndex.getZeroBased());
             Set<Tag> oldTags = personToEdit.getTags();
             Set<Tag> allTags = getTagList(oldTags);
@@ -60,12 +60,12 @@ public class TagCommand extends UndoableCommand {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_TAG_PERSONS_SUCCESS);
     }
-    
+
     private Set<Tag> getTagList(Set<Tag> oldTags) {
         Set<Tag> allTags = new HashSet<>();
         allTags.addAll(oldTags);
         allTags.addAll(newTags);
-        
+
         return allTags;
     }
 

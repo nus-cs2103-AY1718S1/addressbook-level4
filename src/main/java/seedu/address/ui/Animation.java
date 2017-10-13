@@ -6,11 +6,11 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 
 public class Animation {
-    
+
     public Animation() {
-        
+   
     }
-    
+
     public static void fadeIn(ObservableList<Node> tags) {
         for (Node tag : tags) {
             tag.setVisible(true);
