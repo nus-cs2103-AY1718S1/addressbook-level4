@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
+import java.util.function.Predicate;
+
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.function.Predicate;
+
 
 /**
  * Finds and lists all persons in address book whose name, address, email and phone number
