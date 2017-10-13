@@ -15,7 +15,9 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::choonheng.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
+Role: Project Advisor +
+Responsibilities: Dev Ops + Integration
+
 
 '''
 
@@ -24,16 +26,16 @@ image::honghwee.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Code quality + Assist Members
 
 '''
 
-=== J Wei Ren Kai
+=== Wei Ren Kai
 image::renkai.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Data + Testing
 
 '''
 
@@ -41,16 +43,8 @@ Responsibilities: Data
 image::meiyi.jpg[width="150", align="left"]
 {empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Documentation +
+Responsibilities: Scheduling
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
