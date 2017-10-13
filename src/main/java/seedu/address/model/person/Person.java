@@ -117,7 +117,6 @@ public class Person implements ReadOnlyPerson {
     public Remark getRemark() {
         return remark.get();
     }
-
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
