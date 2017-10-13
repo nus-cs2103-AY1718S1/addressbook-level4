@@ -143,6 +143,11 @@ Removes a tag from every person in the list in the address book. +
 Format: `removetag TAGNAME`
 
 ****
+Option to remove a tag for selected people coming soon in V2.0
+
+****
+
+****
 * Deletes every tag that matches the TAGNAME.
 * The tag must exist in any person.
 ****
@@ -265,6 +270,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *RemoveTag* : `removetag TAGNAME` +
+e.g `removetag friends`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
