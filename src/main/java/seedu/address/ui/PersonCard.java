@@ -39,6 +39,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label comment;
+    @FXML
     private FlowPane tags;
     @FXML
     private ImageView avatar;
@@ -63,6 +65,7 @@ public class PersonCard extends UiPart<Region> {
         if (person.getAvatar().avatarImageProperty() != null) {
             avatar.imageProperty().bind(person.getAvatar().avatarImageProperty());
         }
+        comment.textProperty().bind(Bindings.convert(person.commentProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

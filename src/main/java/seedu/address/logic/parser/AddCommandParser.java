@@ -10,6 +10,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Comment;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,9 +43,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+
+            Comment comment = new Comment(""); // add command does not allow adding comments straight away
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, avatar, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, comment, avatar, tagList);
+
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

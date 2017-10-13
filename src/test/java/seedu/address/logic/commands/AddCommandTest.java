@@ -25,6 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.tag.Tag;
 
 public class AddCommandTest {
 
@@ -130,7 +131,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredListToShowAll() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+        
+        @Override
+        public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
     }

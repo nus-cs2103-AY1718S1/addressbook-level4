@@ -10,6 +10,13 @@ import javax.xml.bind.annotation.XmlMimeType;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Comment;
 import seedu.address.model.tag.Tag;
 import sun.security.x509.AVA;
 
@@ -24,6 +31,8 @@ public class XmlAdaptedPerson {
     private String phone;
     @XmlElement(required = true)
     private String email;
+    @XmlElement(required = true)
+    private String comment;
     @XmlElement(required = true)
     private String address;
 
@@ -51,6 +60,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         avatar = source.getAvatar().getAvatarFilePath();
+        comment = source.getComment().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -77,7 +87,8 @@ public class XmlAdaptedPerson {
         } else {
             avatar = new Avatar();
         }
+        final Comment comment = new Comment(this.comment);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, comment, tags);
     }
 }

@@ -1,0 +1,6 @@
+n/Alice Pauline p/85355255 e/alice@example.com a/123, Jurong West Ave 6, #08-111 t/friends
+n/Benson Meier p/a98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney
+n/Carl Kurz p/95352563 e/heinz@example.com a/wall street
+n/Hoon Meier p/8482424 e/stefan@example.com a/little india
+n/Amy Bee p/11111111 e/amy@example.com a/Block 312, Amy Street 1 t/friend
+n/Bob Choo p/22222222 e/bob@example.com a/Block 123, Bobby Street 3 t/husband t/friend
