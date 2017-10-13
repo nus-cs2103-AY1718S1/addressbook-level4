@@ -308,9 +308,10 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` or `search KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake Jhon`
-* *List* : `list` or `l`
+* *Find* : `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
+e.g. `find James Jake Jhon` or `find friends n/desc`
+* *List* : `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]`
+e.g. `list` or `list n/desc`
 * *Help* : `help` or `h`
 * *Select* : `select INDEX` or `s INDEX` +
 e.g.`select 2`
