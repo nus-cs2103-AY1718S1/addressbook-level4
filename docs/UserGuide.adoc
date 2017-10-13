@@ -92,9 +92,9 @@ Edits the phone number and email address of the 1st parcel to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd parcel to be `Betsy Crower` and clears all existing tags.
 
-=== Locating parcel by name: `find`
+=== Locating parcels by name: `find`
 
-Finds parcel whose names contain any of the given keywords. +
+Finds parcels whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****

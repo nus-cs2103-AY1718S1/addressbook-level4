@@ -2,14 +2,14 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.tag.Tag;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ *     {@code AddressBook ab = new AddressBookBuilder().withParcel("John", "Doe").withTag("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -24,13 +24,13 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Parcel} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(ReadOnlyPerson person) {
+    public AddressBookBuilder withParcel(ReadOnlyParcel parcel) {
         try {
-            addressBook.addPerson(person);
-        } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("person is expected to be unique.");
+            addressBook.addParcel(parcel);
+        } catch (DuplicateParcelException dpe) {
+            throw new IllegalArgumentException("parcel is expected to be unique.");
         }
         return this;
     }

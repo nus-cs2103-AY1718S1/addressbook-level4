@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.MessageFormat;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -44,7 +43,7 @@ public class TestLogger {
      */
     public void attachLogCapturer(Level level) {
         logCapturingStream = new ByteArrayOutputStream();
-        customLogHandler = new StreamHandler(logCapturingStream, new testLogFormatter());
+        customLogHandler = new StreamHandler(logCapturingStream, new TestLogFormatter());
         customLogHandler.setLevel(level);
         logger.addHandler(customLogHandler);
     }
@@ -73,15 +72,11 @@ public class TestLogger {
     /**
      * Custom Formatter for formatting log messages in TestLogger
      */
-    public class testLogFormatter extends Formatter {
+    public class TestLogFormatter extends Formatter {
 
-        /**
-         * @see java.util.logging.Formatter#format(java.util.logging.LogRecord)
-         */
         @Override
         public String format(final LogRecord record) {
-            MessageFormat messageFormat = new MessageFormat("{0} - {1}\n");
-            return messageFormat.format(new Object[] {record.getLevel(), record.getMessage()});
+            return String.format("%s - %s\n", record.getLevel(), record.getMessage());
         }
 
     }

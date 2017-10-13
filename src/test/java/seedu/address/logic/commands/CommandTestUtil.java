@@ -15,10 +15,10 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.parcel.NameContainsKeywordsPredicate;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
+import seedu.address.testutil.EditParcelDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -53,14 +53,14 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditCommand.EditParcelDescriptor DESC_AMY;
+    public static final EditCommand.EditParcelDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+        DESC_AMY = new EditParcelDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
+        DESC_BOB = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
@@ -85,13 +85,13 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book and the filtered parcel list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyParcel> expectedFilteredList = new ArrayList<>(actualModel.getFilteredParcelList());
 
         try {
             command.execute();
@@ -99,30 +99,30 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredList, actualModel.getFilteredParcelList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
      */
-    public static void showFirstPersonOnly(Model model) {
-        ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+    public static void showFirstParcelOnly(Model model) {
+        ReadOnlyParcel parcel = model.getAddressBook().getParcelList().get(0);
+        final String[] splitName = parcel.getName().fullName.split("\\s+");
+        model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assert model.getFilteredPersonList().size() == 1;
+        assert model.getFilteredParcelList().size() == 1;
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first parcel in {@code model}'s filtered list from {@code model}'s address book.
      */
-    public static void deleteFirstPerson(Model model) {
-        ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
+    public static void deleteFirstParcel(Model model) {
+        ReadOnlyParcel firstParcel = model.getFilteredParcelList().get(0);
         try {
-            model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+            model.deleteParcel(firstParcel);
+        } catch (ParcelNotFoundException pnfe) {
+            throw new AssertionError("Parcel in filtered list must exist in model.", pnfe);
         }
     }
 }

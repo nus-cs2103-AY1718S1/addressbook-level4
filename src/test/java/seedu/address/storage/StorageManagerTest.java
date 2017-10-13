@@ -4,14 +4,11 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Optional;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -187,18 +184,6 @@ public class StorageManagerTest {
             throw new IOException("dummy exception");
         }
 
-    }
-
-    public class testLogFormatter extends Formatter {
-
-        /**
-         * @see java.util.logging.Formatter#format(java.util.logging.LogRecord)
-         */
-        @Override
-        public String format(final LogRecord record) {
-            return MessageFormat.format("{0} - {1}", record.getLevel(), record.getMessage(),
-                    record.getParameters());
-        }
     }
 
 }

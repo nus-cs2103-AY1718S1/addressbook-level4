@@ -41,7 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ParcelListPanel parcelListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -55,7 +55,7 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane parcelListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -129,14 +129,14 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        parcelListPanel = new ParcelListPanel(logic.getFilteredParcelList());
+        parcelListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                                                                logic.getFilteredPersonList().size());
+                                                                logic.getFilteredParcelList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -205,8 +205,8 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public ParcelListPanel getParcelListPanel() {
+        return this.parcelListPanel;
     }
 
     void releaseResources() {

@@ -3,16 +3,16 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PARCELS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -20,29 +20,29 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Deletes the given person. */
-    void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    /** Deletes the given parcel. */
+    void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
 
-    /** Adds the given person */
-    void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    /** Adds the given parcel */
+    void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given parcel {@code target} with {@code editedParcel}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateParcelException if updating the parcel's details causes the parcel to be equivalent to
+     *      another existing parcel in the list.
+     * @throws ParcelNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException, ParcelNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered parcel list */
+    ObservableList<ReadOnlyParcel> getFilteredParcelList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered parcel list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
 
 }
