@@ -30,7 +30,9 @@ public class RedoCommandTest {
     @Before
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandOne.setCommandText("delete 1");
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandTwo.setCommandText("delete 1");
     }
 
     @Test
@@ -43,11 +45,11 @@ public class RedoCommandTest {
 
         // multiple commands in redoStack
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(redoCommand, model, String.format(RedoCommand.MESSAGE_SUCCESS, "delete 1"), expectedModel);
 
         // single command in redoStack
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(redoCommand, model, String.format(RedoCommand.MESSAGE_SUCCESS, "delete 1"), expectedModel);
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);

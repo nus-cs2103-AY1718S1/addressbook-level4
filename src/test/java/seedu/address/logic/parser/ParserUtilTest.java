@@ -24,6 +24,7 @@ import seedu.address.model.property.Address;
 import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
+import seedu.address.model.property.PropertyManager;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -41,6 +42,10 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    static {
+        PropertyManager.initializePropertyManager();
+    }
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();

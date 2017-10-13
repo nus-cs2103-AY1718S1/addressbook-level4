@@ -14,6 +14,8 @@ public abstract class Command {
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
+    private String commandText;
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -39,5 +41,16 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
+    }
+
+    public final String getCommandText() {
+        return commandText;
+    }
+
+    /**
+     * Store the raw user input {@code commandText} in the command for future reference
+     */
+    public final void setCommandText(String commandText) {
+        this.commandText = commandText;
     }
 }

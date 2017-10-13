@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -15,6 +16,11 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
 public class PropertyManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @BeforeClass
+    public static void setUp() {
+        PropertyManager.initializePropertyManager();
+    }
 
     @Test
     public void preLoadedProperty_checkInitializationSuccessful() {

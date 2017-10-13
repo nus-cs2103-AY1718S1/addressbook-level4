@@ -27,7 +27,7 @@ Role: Developer
 '''
 
 === Low Weng Fei
-image::sample_teammate_photo.png[width="150", align="left"]
+image::low5545.jpeg[width="150", align="left"]
 {empty}[https://github.com/low5545[github]]
 
 Role: Developer

@@ -34,9 +34,10 @@ public class PropertyManager {
     private static boolean initialized = false;
 
     /**
-     * Makes use of static initialization block to guarantee all pre-loaded properties are included.
+     * Util for initialization of default pre-loaded properties. This method should not be called if there is
+     * existing data loaded from local storage file.
      */
-    static {
+    public static void initializePropertyManager() {
         if (!initialized) {
             try {
                 // Adds name as a pre-loaded property.
@@ -60,7 +61,7 @@ public class PropertyManager {
                         "Person addresses can take any values, and it should not be blank",
                         "[^\\s].*");
             } catch (DuplicatePropertyException dpe) {
-                throw new RuntimeException("PropertyManager cannot be initialized. Stopping the application.");
+                throw new AssertionError("PreLoaded properties cannot be invalid", dpe);
             }
 
             initialized = true;
@@ -97,6 +98,23 @@ public class PropertyManager {
         propertyValidationRegex.put(shortName, regex);
     }
 
+    /**
+     * Clears all properties stored in the {@link PropertyManager}.
+     */
+    public static void clearAllProperties() {
+        propertyShortNames.clear();
+        propertyFullNames.clear();
+        propertyConstraintMessages.clear();
+        propertyValidationRegex.clear();
+
+        /*
+         * This is for defensive programming purpose. Whenever you want to clear all properties in the
+         * PropertyManager, it must have been initialized with preLoaded properties, or load properties
+         * from the local storage file.
+         */
+        initialized = true;
+    }
+
     public static boolean containsShortName(String shortName) {
         return propertyShortNames.contains(shortName);
     }
@@ -111,5 +129,9 @@ public class PropertyManager {
 
     public static String getPropertyValidationRegex(String shortName) {
         return propertyValidationRegex.get(shortName);
+    }
+
+    public static HashSet<String> getAllShortNames() {
+        return propertyShortNames;
     }
 }

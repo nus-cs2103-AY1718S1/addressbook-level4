@@ -3,6 +3,7 @@ package seedu.address.model.property;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -13,6 +14,11 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
 public class PropertyTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @BeforeClass
+    public static void setUp() {
+        PropertyManager.initializePropertyManager();
+    }
 
     @Test
     public void createProperty_preLoadedProperty_successfulCreation() throws Exception {
