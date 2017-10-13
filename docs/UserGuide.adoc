@@ -117,7 +117,14 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
+=== Deleting a person in other way: 'click on the arrow'
+
+Deletes the specified person from the address book. +
+Delete the person by clicking arrow beside of username
+select "Deletes" to remove person from the list
+
 ****
+
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
