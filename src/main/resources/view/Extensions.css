@@ -1,3 +1,20 @@
+.menu-personcard {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+	-fx-mark-color: grey;
+	-fx-pref-width: 120px;
+	-fx-text-alignment: right;
+}
+
+.menu-personcard:showing {
+    -fx-mark-color: white;
+}
+
+.menu-item:focused, .menu-item:hovered {
+    -fx-background-color: #808080;
+}
 
 .error {
     -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */

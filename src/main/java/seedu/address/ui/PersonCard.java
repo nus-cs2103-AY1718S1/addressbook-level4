@@ -5,9 +5,13 @@ import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -28,6 +32,8 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private final int displayedIndex;
+    private final Logic logic;
 
     @FXML
     private HBox cardPane;
@@ -43,10 +49,14 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private MenuButton optionsButton;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, Logic logic, int displayedIndex) {
         super(FXML);
         this.person = person;
+        this.displayedIndex = displayedIndex;
+        this.logic = logic;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -78,6 +88,27 @@ public class PersonCard extends UiPart<Region> {
 
         return tagColors.get(tagValue);
     }
+
+    /**
+     * Menu list option: Delete
+     * Handle Delete user
+     */
+    @FXML
+    public void handleDelete() throws CommandException, ParseException {
+        String commandString = "delete " + this.displayedIndex;
+        this.logic.execute(commandString);
+
+    }
+
+    /**
+     * Menu list option: GoogleMap
+     * Display google map on main viewport
+     */
+    @FXML
+    public void handleGoogleMap() {
+        ReadOnlyPerson testing = this.person;
+    }
+
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
