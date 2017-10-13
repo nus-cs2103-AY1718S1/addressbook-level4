@@ -54,6 +54,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+
+=== Logging into the address book application : `login`
+
+Logs into the address book. +
+Format: `login USERNAME PASSWORD`
+
+Examples:
+
+* `login userAcc_123 pa$$_Word!@#&`
+* `login batMan_111 (Batcave.327+-)`
+
 === Viewing help : `help`
 
 Format: `help`
@@ -267,6 +278,8 @@ To quickly revert address book data to the state of last use:
 
 == Command Summary
 
+* *Login* `login USERNAME PASSWORD` +
+e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 t/friend t/colleague`
 * *Clear* : `clear`
