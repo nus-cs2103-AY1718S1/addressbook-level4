@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -32,5 +32,4 @@ public class FavouriteCommandTest {
         favouriteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return favouriteCommand;
     }
-
 }
