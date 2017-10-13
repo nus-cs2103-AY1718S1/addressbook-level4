@@ -81,13 +81,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void deleteTag(Index[] indices, Tag oldTag) throws PersonNotFoundException, DuplicatePersonException {
+    public synchronized void deleteTag(Index[] indices, Tag oldTag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < indices.length; i++) {
             Index index = indices[i];
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(index.getOneBased());
@@ -99,10 +98,11 @@ public class ModelManager extends ComponentManager implements Model {
 
             addressBook.updatePerson(oldPerson, newPerson);
         }
+        indicateAddressBookChanged();
     }
 
     @Override
-    public void addTag(Index[] indices, Tag newTag) throws PersonNotFoundException, DuplicatePersonException {
+    public synchronized void addTag(Index[] indices, Tag newTag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < indices.length; i++) {
             Index index = indices[i];
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(index.getOneBased());
@@ -114,6 +114,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             addressBook.updatePerson(oldPerson, newPerson);
         }
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================

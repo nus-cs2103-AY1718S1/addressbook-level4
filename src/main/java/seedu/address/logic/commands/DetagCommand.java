@@ -20,7 +20,7 @@ public class DetagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "detag";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tags from multiple people.";
-    public static final String MESSAGE_DETAG_PERSONS_SUCCESS = "Old tags removed.";
+    public static final String MESSAGE_DETAG_PERSONS_SUCCESS = "Removed tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_MISSING_TAG = "One or more person(s) don't has this tag";
     private final Index[] indices;
@@ -58,7 +58,7 @@ public class DetagCommand extends UndoableCommand {
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_DETAG_PERSONS_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_DETAG_PERSONS_SUCCESS, tag.toString()));
     }
 
     @Override

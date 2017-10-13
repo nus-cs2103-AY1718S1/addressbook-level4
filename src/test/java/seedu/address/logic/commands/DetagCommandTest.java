@@ -7,10 +7,14 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.DetagCommand.MESSAGE_DETAG_PERSONS_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.io.IOException;
 import java.util.Set;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import org.junit.Test;
 
@@ -28,6 +32,19 @@ import seedu.address.model.tag.Tag;
  * Contains integration tests (Interaction with the Model) and unit tests for {@code DetagCommand}.
  */
 public class DetagCommandTest {
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static void setupLogger() {
+        LogManager.getLogManager().reset();
+        logger.setLevel(Level.ALL);
+        FileHandler fh = null;
+        try {
+            fh = new FileHandler("logfile.txt");
+            fh.setLevel(Level.FINE);
+            logger.addHandler(fh);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "FILE logging can't be created.", e);
+        }
+    }
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final Index[] indices1 = {fromOneBased(1), fromOneBased(2), fromOneBased(3)};
@@ -43,7 +60,7 @@ public class DetagCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deleteTag(indices1, tag);
-        assertCommandSuccess(detagCommand, model, String.format(MESSAGE_DETAG_PERSONS_SUCCESS),
+        assertCommandSuccess(detagCommand, model, String.format(MESSAGE_DETAG_PERSONS_SUCCESS, tag),
                 expectedModel);
     }
 
@@ -63,14 +80,14 @@ public class DetagCommandTest {
     @Test
     public void equals() throws Exception {
         ReadOnlyPerson personFirst = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ReadOnlyPerson personFourth = model.getFilteredPersonList().get(INDEX_FOURTH_PERSON.getZeroBased());
         Set<Tag> tagList1 = personFirst.getTags();
-        Set<Tag> tagList2 = personFourth.getTags();
         Tag tag1 = tagList1.iterator().next();
-        Tag tag2 = tagList2.iterator().next();
+        Tag tag2 = setupTestTag(tag1);
+
+        assertFalse(tag1.equals(tag2));
 
         DetagCommand detagFirstCommand = new DetagCommand(indices1, tag1);
-        DetagCommand detagFourthCommand = new DetagCommand(indices2, tag2);
+        DetagCommand detagSecondCommand = new DetagCommand(indices2, tag2);
 
         // same object -> returns true
         assertTrue(detagFirstCommand.equals(detagFirstCommand));
@@ -83,7 +100,22 @@ public class DetagCommandTest {
         assertFalse(detagFirstCommand.equals(1));
 
         // different person -> returns false
-        assertFalse(detagFirstCommand.equals(detagFourthCommand));
+        assertFalse(detagFirstCommand.equals(detagSecondCommand));
+    }
+
+    /**
+     * Return a different tag of a person other than First Person in the model
+     * @param tagBase
+     * @return
+     */
+    private Tag setupTestTag(Tag tagBase) {
+        for (ReadOnlyPerson personNext : model.getFilteredPersonList()) {
+            Set<Tag> tagList = personNext.getTags();
+            Tag tag = tagList.iterator().next();
+            if(!tag.equals(tagBase))
+                return tag;
+        }
+        return null;
     }
 
     /**
