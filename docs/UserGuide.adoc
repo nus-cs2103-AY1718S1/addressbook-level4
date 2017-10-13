@@ -296,6 +296,45 @@ Examples:
 * `import /Users/seedu/Documents/exportData.xml` +
 imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
+== Facebook Integration [Coming in v2.0]:
+
+=== Connecting to Facebook: `connectfacebook`
+
+Synchronizes your AddressBook with your personal Facebook account. +
+Format: `connectfacebook`
+
+****
+* Launches a Facebook authorization page in the browser
+****
+
+=== Adding all Facebook Friends: `addallfacebookfriends`
+
+Adds all your Facebook friends into your AddressBook. +
+Format: `addallfacebookfriends`
+
+****
+* First ensures that Facebook has already been connected
+* Adds all the friends to AddressBook
+****
+
+
+=== Adding a Facebook contact: `addfacebookcontact`
+
+Searches for a specific Facebook User to add to AddressBook. +
+Format: `addfacebookcontact USER_NAME`
+
+****
+* First ensures that Facebook has already been connected
+* Searches Facebook database for User
+* Prompts user to choose which contact to add
+* Adds that contact to AddressBook
+****
+
+Examples:
+
+* `addfacebookcontact Barack Obama` +
+adds Facebook User named 'Barack Obama' to AddressBook
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -327,7 +366,6 @@ There is no need to synchronize manually.
 
 Stops synchronizing of contact information with any previously configured cloud accounts. +
 Format: `unsync`
-
 
 == FAQ
 
