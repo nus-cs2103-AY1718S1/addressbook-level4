@@ -13,6 +13,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Phone2;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -25,6 +26,8 @@ public class XmlAdaptedPerson {
     private String name;
     @XmlElement(required = true)
     private String phone;
+    @XmlElement(required = true)
+    private String phone2;
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
@@ -48,6 +51,7 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
+        phone2 = source.getPhone2().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
         tagged = new ArrayList<>();
@@ -68,9 +72,10 @@ public class XmlAdaptedPerson {
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
+        final Phone2 phone2 = new Phone2(this.phone2);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, phone2, email, address, tags);
     }
 }

@@ -21,6 +21,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Phone2;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,6 +33,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -97,11 +99,13 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Phone2 updatePhone2 = editPersonDescriptor.getPhone2().orElse(personToEdit.getPhone2());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+
+        return new Person(updatedName, updatedPhone, updatePhone2, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
@@ -129,6 +133,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
+        private Phone2 phone2;
         private Email email;
         private Address address;
         private Set<Tag> tags;
@@ -138,6 +143,7 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
+            this.phone2 = toCopy.phone2;
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
@@ -147,7 +153,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.phone2, this.email, this.address, this.tags);
         }
 
         public void setName(Name name) {
@@ -159,11 +165,17 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setPhone(Phone phone) {
-            this.phone = phone;
-        }
+            this.phone = phone; }
+
+        public void setPhone2(Phone2 phone2) {
+            this.phone2 = phone2; }
 
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
+        }
+
+        public Optional<Phone2> getPhone2() {
+            return Optional.ofNullable(phone2);
         }
 
         public void setEmail(Email email) {
@@ -207,6 +219,7 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
+                    && getPhone2().equals(e.getPhone2())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
