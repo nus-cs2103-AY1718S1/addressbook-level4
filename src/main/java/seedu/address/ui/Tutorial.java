@@ -64,6 +64,9 @@ public class Tutorial {
             unhighlightAll();
             personListPanel.tutorialHighlight();
             break;
+        case 3:
+            unhighlightAll();
+
         default:
             unhighlightAll();
         }

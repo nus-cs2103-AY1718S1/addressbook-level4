@@ -1,11 +1,11 @@
-= Bluebird v1.0
+= Bluebird
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/CS2103AUG2017-T15-B4/addressbook-level4[image:https://travis-ci.org/CS2103AUG2017-T15-B4/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/deep4k/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/5k3felo8xbeeskny?svg=true[Build status]]
-https://coveralls.io/repos/github/CS2103AUG2017-T15-B4/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T15-B4/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/deep4k/addressbook-level4?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=deep4k/addressbook-level4&amp;utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/cd0bd54a699f4266b56c0297560c686a[Codacy Badge]]
+https://travis-ci.org/CS2103AUG2017-T15-B4/main[image:https://travis-ci.org/CS2103AUG2017-T15-B4/main.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/deep4k/main[image:https://ci.appveyor.com/api/projects/status/t9vialwj2uf9t5ub?svg=true[Build status]]
+https://coveralls.io/repos/github/CS2103AUG2017-T15-B4/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T15-B4/main/badge.svg?branch=master[Coverage Status]]
+https://www.codacy.com/app/deep4k/main/dashboard[image:https://api.codacy.com/project/badge/Grade/e465693d0a7549f9bc73ed44344ebd5c[Codacy Badge]]
 
 ifdef::env-github[]
 image::docs/images/bluebird_window.png[width="600"]
@@ -32,6 +32,6 @@ endif::[]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
-* Built upon the addressbook-level 4 application by _SE-EDU_ team.
+* Built upon the addressbook-level 4 application by _SE-EDU_ team , for National University of Singapore(NUS) module CS2103.
 
 == Licence : link:LICENSE[MIT]

@@ -13,6 +13,8 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
+    private final SearchFieldHandle searchField;
+    private final SortMenuHandle sortMenu;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -27,6 +29,8 @@ public class MainWindowHandle extends StageHandle {
         } else {
             browserPanel = null;
         }
+        searchField = new SearchFieldHandle(getChildNode(SearchFieldHandle.SEARCH_FIELD_ID));
+        sortMenu = new SortMenuHandle(getChildNode(SortMenuHandle.SORT_MENU_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -51,5 +55,13 @@ public class MainWindowHandle extends StageHandle {
 
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
+    }
+
+    public SearchFieldHandle getSearchField() {
+        return searchField;
+    }
+
+    public SortMenuHandle getSortMenu() {
+        return sortMenu;
     }
 }

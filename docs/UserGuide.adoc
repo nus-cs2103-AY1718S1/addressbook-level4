@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/TheHommes/addressbook-level4
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -72,6 +72,25 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
+=== Sorts the list : `sort`
+
+Sorts the list based on given keyword +
+Format: `sort KEYWORD`
+
+****
+* Sorts the list based on their name, phone, email, or address.
+* The keyword is case-insensitive.
+****
+
+Examples:
+
+* `sort name` +
+Sorts the list in alphabetical order of their name.
+* `sort phone` +
+Sorts the list in numerical order of their phone.
+// end::sort[]
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -101,7 +120,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Ha` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -112,7 +131,23 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Hiding a person: `hide`
+
+Hide specified person according to index from the address book. +
+Format: `hide INDEX`
+
+****
+* Hides the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The indext *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `hide 2`
+Hides the 2nd person in the address book.
+
+=== Deleting person(s) : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -120,14 +155,15 @@ Format: `delete INDEX`
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *can be a positive integer* 1, 2, 3, ...
+* The index *can be multiple integers with a space in between* 1 2 3 ...
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 2 3 4` +
+Deletes the 2nd, 3rd and 4th person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
