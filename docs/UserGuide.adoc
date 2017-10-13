@@ -39,7 +39,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== What's New in Version 1.2
+== What's New in Version 1.1
 
 === Autocomplete
 
