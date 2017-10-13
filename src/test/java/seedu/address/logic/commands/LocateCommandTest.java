@@ -16,8 +16,9 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+
 
 
 
@@ -43,9 +44,9 @@ public class LocateCommandTest {
     @Test
     public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        LocateCommand LocateCommand = prepareCommand(outOfBoundIndex);
+        LocateCommand locateCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(LocateCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(locateCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
 
@@ -57,9 +58,9 @@ public class LocateCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        LocateCommand LocateCommand = prepareCommand(outOfBoundIndex);
+        LocateCommand locateCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(LocateCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(locateCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
