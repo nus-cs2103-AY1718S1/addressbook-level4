@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
@@ -24,10 +25,11 @@ public class PersonListPanelTest extends GuiUnitTest {
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
     private PersonListPanelHandle personListPanelHandle;
+    private PersonListPanel personListPanel;
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
+        personListPanel = new PersonListPanel(TYPICAL_PERSONS);
         uiPartRule.setUiPart(personListPanel);
 
         personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
@@ -54,5 +56,11 @@ public class PersonListPanelTest extends GuiUnitTest {
         PersonCardHandle expectedCard = personListPanelHandle.getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
         PersonCardHandle selectedCard = personListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
+    }
+
+    @Test
+    public void setFocus() {
+        personListPanel.setFocus();
+        assertTrue(personListPanelHandle.isFocused());
     }
 }
