@@ -179,54 +179,6 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
-    @Test
-    public void handleValidRightKeyPressWithAddOnly() {
-        //Test to ensure add command hack triggers as long as
-        //caret is at the end of the text
-
-        TextField mySandBox = commandBoxForTesting.getCommandTextField();
-
-        //Test variations of "add" and "a" are valid & Case insensitive
-        //Mainly testing all combinations of "add"
-        guiRobot.write("Add");
-        assertTrue("Add".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue(("Add " + STRING_NAME).equals(mySandBox.getText()));
-        mySandBox.clear();
-        guiRobot.write("aDd ");
-        assertTrue("aDd ".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue(("aDd  " + STRING_NAME).equals(mySandBox.getText()));
-        mySandBox.clear();
-        guiRobot.write(" add");
-        assertTrue(" add".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue((" add " + STRING_NAME).equals(mySandBox.getText()));
-        mySandBox.clear();
-        guiRobot.write("A");
-        assertTrue("A".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue(("A " + STRING_NAME).equals(mySandBox.getText()));
-        mySandBox.clear();
-        guiRobot.write("a ");
-        assertTrue("a ".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue(("a  " + STRING_NAME).equals(mySandBox.getText()));
-        mySandBox.clear();
-        guiRobot.write(" A");
-        assertTrue(" A".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue((" A " + STRING_NAME).equals(mySandBox.getText()));
-        mySandBox.clear();
-        guiRobot.write(" A      ");
-        assertTrue(" A      ".equals(mySandBox.getText()));
-        guiRobot.push(KeyCode.RIGHT);
-        assertTrue((" A       " + STRING_NAME).equals(mySandBox.getText()));
-        //Ensure that caret is set to far right after each concatenation
-        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
-        assertNotNull(mySandBox.getCaretPosition());
-        assertFalse(mySandBox.getCaretPosition() == 0);
-    }
 
     @Test
     public void handleValidRightKeyPressPrefixInOrder() {
