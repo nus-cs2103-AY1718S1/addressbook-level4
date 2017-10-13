@@ -31,7 +31,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
+        descriptor.setSchEmail(person.getSchEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setBirthday(person.getBirthday());
         descriptor.setTags(person.getTags());
     }
 
@@ -72,6 +74,18 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code SchEmail} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withSchEmail(String schEmail) {
+        try {
+            ParserUtil.parseSchEmail(Optional.of(schEmail)).ifPresent(descriptor::setSchEmail);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("school email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
@@ -83,6 +97,17 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
