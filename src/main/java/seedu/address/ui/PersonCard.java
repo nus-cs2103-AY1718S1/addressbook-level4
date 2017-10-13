@@ -59,12 +59,22 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            person.getTags().forEach(tag -> {
+                Label tagLabel = new Label(tag.tagName);
+                tagLabel.setVisible(false);
+                tags.getChildren().add(tagLabel);
+                Animation.fadeIn(tags.getChildren());
+            });
         });
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setVisible(false);
+            tags.getChildren().add(tagLabel);
+            Animation.fadeIn(tags.getChildren());
+        });
     }
 
     @Override

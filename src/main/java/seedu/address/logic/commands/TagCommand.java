@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -46,10 +47,8 @@ public class TagCommand extends UndoableCommand {
             }
             
             ReadOnlyPerson personToEdit = lastShownList.get(currentIndex.getZeroBased());
-
             Set<Tag> oldTags = personToEdit.getTags();
-            Set<Tag> allTags = newTags;
-            allTags.addAll(oldTags);
+            Set<Tag> allTags = getTagList(oldTags);
 
             EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
             editPersonDescriptor.setTags(allTags);
@@ -62,11 +61,18 @@ public class TagCommand extends UndoableCommand {
             } catch (PersonNotFoundException pnfe) {
                 throw new AssertionError("The target person cannot be missing");
             }
-            
             allTags.removeAll(oldTags);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_TAG_PERSONS_SUCCESS);
+    }
+    
+    private Set<Tag> getTagList(Set<Tag> oldTags) {
+        Set<Tag> allTags = new HashSet<>();
+        allTags.addAll(oldTags);
+        allTags.addAll(newTags);
+        
+        return allTags;
     }
 
     @Override
