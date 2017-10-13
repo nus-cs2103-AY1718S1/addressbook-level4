@@ -103,11 +103,11 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
-        FavouriteStatus updatedFavouriteStatus = 
+        FavouriteStatus updatedFavouriteStatus =
                 personToEdit.getFavouriteStatus(); // edit command does not allow editing favourite status
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, 
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedRemark, updatedFavouriteStatus, updatedTags);
     }
 

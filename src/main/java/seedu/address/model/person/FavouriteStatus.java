@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class FavouriteStatus {
 
-    public boolean isFavourite;
+    public final boolean isFavourite;
 
     public FavouriteStatus(boolean isFavourite) {
         requireNonNull(isFavourite);

@@ -38,7 +38,7 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        
+
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -47,14 +47,14 @@ public class FavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToToggleFavourite = lastShownList.get(targetIndex.getZeroBased());
         boolean newFavouriteStatus = !personToToggleFavourite.getStatus();
-        Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(), 
+        Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(),
                 personToToggleFavourite.getPhone(), personToToggleFavourite.getEmail(),
                 personToToggleFavourite.getAddress(), personToToggleFavourite.getRemark(),
                 new FavouriteStatus(newFavouriteStatus), personToToggleFavourite.getTags());
 
         try {
             model.updatePerson(personToToggleFavourite, favouriteToggledPerson);
-        } catch (DuplicatePersonException dpe) { 
+        } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
@@ -63,7 +63,11 @@ public class FavouriteCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(favouriteToggledPerson));
     }
 
-    private String generateSuccessMessage(Person favouriteToggledPerson) {
+    /**
+     * @param favouriteToggledPerson
+     * @return String that shows whether person was favourited or unfavourited
+     */
+    private String generateSuccessMessage(ReadOnlyPerson favouriteToggledPerson) {
         if (favouriteToggledPerson.getStatus() == true) {
             return String.format(MESSAGE_FAVOURITED_PERSON, favouriteToggledPerson);
         } else {
