@@ -9,8 +9,8 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;

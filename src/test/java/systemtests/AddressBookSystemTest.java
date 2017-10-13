@@ -2,8 +2,6 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
@@ -17,8 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
