@@ -210,6 +210,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         events.add(newEvent);
     }
 
+    /**
+     * Sorts the events according to time
+     */
+    public void sortEventList() {
+        events.sortEvents();
+    }
+
 
     /*****************************************************
      * Tag-level operations

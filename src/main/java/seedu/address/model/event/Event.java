@@ -57,7 +57,6 @@ public class Event implements ReadOnlyEvent {
     public EventTime getTime() {
         return time.get();
     }
-
     @Override
     public ObjectProperty<EventTime> timeProperty() {
         return time;

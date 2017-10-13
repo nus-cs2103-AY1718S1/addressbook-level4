@@ -34,6 +34,8 @@ public interface Model {
     /** Removes the specific tag (from all persons with that tag) */
     void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Sorts the events list according to date/time */
+    void sortEventList();
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

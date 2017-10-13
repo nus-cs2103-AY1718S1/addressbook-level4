@@ -90,6 +90,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void sortEventList() {
+        addressBook.sortEventList();
+        indicateAddressBookChanged();
+    }
+
     /**
      * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
      * TODO: Further investigate potential problems with this method.

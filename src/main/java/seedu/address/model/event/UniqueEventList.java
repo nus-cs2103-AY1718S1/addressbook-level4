@@ -2,6 +2,7 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class UniqueEventList implements Iterable<Event> {
 
 
     private final ObservableList<Event> internalList = FXCollections.observableArrayList();
+    private final ObservableList<LocalDateTime> internalSortedList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
 
@@ -40,9 +42,9 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Adds a person to the list.
+     * Adds an event to the list.
      *
-     * @throws DuplicateEventException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicateEventException if the person to add is a duplicate of an existing event in the list.
      */
     public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
         requireNonNull(toAdd);
@@ -51,6 +53,19 @@ public class UniqueEventList implements Iterable<Event> {
         }
         internalList.add(new Event(toAdd));
     }
+
+    /**
+     * Sorts the events based on time
+     *
+     */
+    public void sortEvents() {
+        if (internalList.isEmpty()) {
+            throw new IllegalStateException("List is empty");
+        }
+        internalList.sort((e1, e2) -> (e1.getTime().toString().substring(0, 7)
+                .compareTo(e2.getTime().toString().substring(0, 7))));
+    }
+
     /**
      * Replaces the person {@code target} in the list with {@code editedEvent}.
      *
