@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -121,20 +123,36 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
         int totalSize = addressBook.getPersonList().size();
+        Boolean tagExist = false;
 
         for (int i = 0; i < totalSize; i++) {
             ReadOnlyPerson toDelete = addressBook.getPersonList().get(i);
             Person toUpdate = new Person(toDelete);
 
-            Set<Tag> newTags = toUpdate.getTags();
-            newTags.remove(tag);
-            toUpdate.setTags(newTags);
-
-            addressBook.updatePerson(toDelete, toUpdate);
+            Set<Tag> oldTags = toDelete.getTags();
+            Set<Tag> newTags = new HashSet<>();
 
 
+            Iterator<Tag> it = oldTags.iterator();
+            while (it.hasNext()) {
+                Tag checkTag = it.next();
+                String current = checkTag.tagName;
+                String toCheck = tag.tagName;
+                if (!current.equals(toCheck)) {
+                    newTags.add(checkTag);
+                }
+            }
+
+            if (!(newTags.size() == oldTags.size())) {
+                toUpdate.setTags(newTags);
+                addressBook.updatePerson(toDelete, toUpdate);
+                tagExist = true;
+            }
+        }
+        if (!tagExist) {
+            throw new PersonNotFoundException();
         }
     }
 

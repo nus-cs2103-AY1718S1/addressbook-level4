@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Remark> remark;
     private ObjectProperty<FavouriteStatus> favouriteStatus;
     private SimpleBooleanProperty status;
 
@@ -31,12 +32,13 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, FavouriteStatus favouriteStatus, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, FavouriteStatus favouriteStatus, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
         this.favouriteStatus = new SimpleObjectProperty<>(favouriteStatus);
         this.status = new SimpleBooleanProperty(favouriteStatus.getStatus());
         // protect internal tags from changes in the arg list
@@ -47,7 +49,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavouriteStatus(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(), source.getFavouriteStatus(),
                 source.getTags());
     }
 
@@ -107,6 +109,19 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
     public void setFavouriteStatus(FavouriteStatus favouriteStatus) {
         this.favouriteStatus.set(requireNonNull(favouriteStatus));
     }
