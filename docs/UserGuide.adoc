@@ -148,6 +148,7 @@ Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
 ****
+
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -256,6 +257,24 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+
+=== Extra `options` menu (NEW)
+
+Each user will have an extra list of options to choose from beside their name. +
+Icon is similar to a down arrow.
+
+=== Delete function from `options`(NEW)
+
+Deletes the specified person from the address book. +
+Function can be found from the new `options` feature.
+
+=== Coming soon in v2.0
+
+==== GoogleMap function from `options`
+
+Show google maps data based on person's address. +
+Function will be found from the new `options` feature.
 
 == FAQ
 
