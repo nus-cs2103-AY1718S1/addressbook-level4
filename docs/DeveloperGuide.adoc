@@ -256,7 +256,6 @@ public class ListCommand extends Command {
 }
 ----
 
-
 With the extra layer, the commands that are undoable are implemented this way:
 [source,java]
 ----
