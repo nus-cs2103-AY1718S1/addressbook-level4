@@ -67,10 +67,55 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Favoriting a person: `fav`
+
+Adds a person into a list of favorite contacts. +
+Format: `fav INDEX`
+
+****
+* Adds the person as a favorite contact at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`fav 2` +
+Adds the 2nd person in the address book as a favorite contact.
+* `find Betsy` +
+`fav 1` +
+Adds the 1st person in the results of the `find` command as a favorite contact.
+
+=== Unfavoriting a person: `unfav`
+
+Removes a person from the list of favorite contacts. +
+Format: `unfav INDEX`
+
+****
+* Removes the person from the list of favorite contacts at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`unfav 2` +
+Removes the 2nd person in the address book from the list of favorite contacts.
+* `find Betsy` +
+`unfav 1` +
+Removes the 1st person in the results of the `find` command from the list of favorite contacts.
+
+=== Listing all persons: `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Listing all favorite persons: `listfav`
+
+Shows a list of all favorite contacts in the address book. +
+Format: `listfav`
 
 === Sorting persons [Coming in v2.0]: `sort`
 
@@ -261,6 +306,34 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+=== Adding display photo for a person: `addphoto` [Coming in v2.0]
+
+Adds a display photo for a person. +
+Format: `addphoto INDEX FILE_PATH`
+
+****
+* Adds a display photo for the person at the specified `INDEX`, using the file at the location specified by `FILE_PATH`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The input `FILE_PATH` must be an absolute file path, e.g.
+* `/Users/seedu/Pictures/photo.jpg` for macOS and Linux
+* `c:\Users\seedu\Pictures\photo.jpg` for Windows
+****
+
+Examples:
+
+* `list` +
+`addphoto 2 /Users/seedu/Pictures/photo.jpg` +
+Adds the specified display photo for the 2nd person in the address book.
+* `find Betsy` +
+`addphoto 1 /Users/seedu/Pictures/betsy.jpg` +
+Adds the specified display photo for the 1st person in the results of the `find` command.
+
+[NOTE]
+====
+If the person already has an existing display photo, issuing this command will update it to the new photo specified.
+====
 
 === Exporting contact data: `export`
 
