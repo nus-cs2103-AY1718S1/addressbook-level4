@@ -180,7 +180,7 @@ public abstract class AddressBookSystemTest {
 
     /**
      * Asserts that the info panel and the selected card in the person list panel remain unchanged.
-     * @see InfoPanelHandle#isSelectedPersonChanged() 
+     * @see InfoPanelHandle#isSelectedPersonChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
