@@ -16,8 +16,8 @@ import seedu.address.model.ModelManager;
  */
 public class MainWindowHandle extends StageHandle {
 
-    private static final String ADMIN_USERNAME = "loanShark97";
-    private static final String ADMIN_PASSWORD = "hitMeUp123";
+    private final String admin_username;
+    private final String admin_password;
     private PersonListPanelHandle personListPanel;
     private ResultDisplayHandle resultDisplay;
     private CommandBoxHandle commandBox;
@@ -30,6 +30,8 @@ public class MainWindowHandle extends StageHandle {
         super(stage);
 
         modelManager = new ModelManager();
+        admin_username = modelManager.getUsernameFromUserPref();
+        admin_password = modelManager.getPasswordFromUserPref();
         try {
             simulateLogin();
             Platform.runLater(() -> {
@@ -52,8 +54,8 @@ public class MainWindowHandle extends StageHandle {
      * Logs into admin user account so that other GUI tests can test the main GUIs in the address book
      */
     public void simulateLogin() throws IllegalValueException, CommandException {
-        Username username = new Username(ADMIN_USERNAME);
-        Password password = new Password(ADMIN_PASSWORD);
+        Username username = new Username(admin_username);
+        Password password = new Password(admin_password);
         LoginCommand loginCommand = new LoginCommand(username, password);
         loginCommand.setData(modelManager, new CommandHistory(), new UndoRedoStack());
         loginCommand.execute();

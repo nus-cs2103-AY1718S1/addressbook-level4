@@ -140,14 +140,22 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void authenticateUser(Username username, Password password) throws UserNotFoundException,
             IllegalValueException {
-        Username fileUsername = new Username(userPrefs.getAdminUsername());
-        Password filePassword = new Password(userPrefs.getAdminPassword());
+        Username fileUsername = new Username(getUsernameFromUserPref());
+        Password filePassword = new Password(getPasswordFromUserPref());
         if (fileUsername.equals(username) && filePassword.equals(password)) {
             raise(new LoginAppRequestEvent(true));
         } else {
             raise(new LoginAppRequestEvent(false));
             throw new UserNotFoundException();
         }
+    }
+
+    public String getUsernameFromUserPref() {
+        return userPrefs.getAdminUsername();
+    }
+
+    public String getPasswordFromUserPref() {
+        return userPrefs.getAdminPassword();
     }
 
     //@@author

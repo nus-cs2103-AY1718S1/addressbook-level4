@@ -26,19 +26,22 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
-    private static final String USERNAME = "loanShark97";
-    private static final String PASSWORD = "hitMeUp123";
     private static LoginCommand loginCommand;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
-    private Model model;
+    private ModelManager model;
+    private String admin_username;
+    private String admin_password;
+
 
     @Before
     public void setUp() {
         model = new ModelManager();
+        admin_username = model.getUsernameFromUserPref();
+        admin_password = model.getPasswordFromUserPref();
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -59,8 +62,8 @@ public class CommandBoxTest extends GuiUnitTest {
      */
     public void simulateLogin() {
         try {
-            Username username = new Username(USERNAME);
-            Password password = new Password(PASSWORD);
+            Username username = new Username(admin_username);
+            Password password = new Password(admin_password);
             loginCommand = new LoginCommand(username, password);
             loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
             loginCommand.execute();
