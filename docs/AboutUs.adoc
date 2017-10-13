@@ -8,7 +8,7 @@ AddressBook was developed by the https://github.com/CS2103AUG2017-T11-B3[CS2103A
 of the module, CS2103T taught at the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 We would like to thank the https://se-edu.github.io/docs/Team.html[se-edu] Teaching team including our Professor,
 http://www.comp.nus.edu.sg/~damithch/[Damith] and all the tutors for giving us the original codebase to
-work with.
+work with and the constant support.
 
 == Project Team
 
@@ -17,7 +17,7 @@ image::raisa2010.png[width="150", height="150", align="left"]
 {empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead
-Responsibilities: Documentation + UI
+{empty} Responsibilities: Documentation + UI
 
 '''
 
@@ -26,7 +26,7 @@ image::tpq95.png[width="150", height="150", align="left"]
 {empty}[http://github.com/tpq95[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Tester
-Responsibilities: Model
+{empty} Responsibilities: Model
 
 '''
 
@@ -35,7 +35,7 @@ image::tby1994.png[width="120", height="150" align="left"]
 {empty}[http://github.com/tby1994[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Integration Manager
-Responsibilities: Scheduling and Tracking + Logic
+{empty}Responsibilities: Scheduling and Tracking + Logic
 
 '''
 
@@ -44,6 +44,6 @@ image::eryao95.png[width="120", height="150" align="left"]
 {empty}[http://github.com/eryao95[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Quality Manager
-Responsibilities: Deadlines and Deliverables + Storage
+{empty}Responsibilities: Deadlines and Deliverables + Storage
 
 '''
