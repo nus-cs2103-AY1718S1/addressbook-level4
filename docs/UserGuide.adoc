@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= KayPoh! - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -50,13 +50,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help: `help`
 
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the address book. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -67,7 +67,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons: `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
@@ -93,7 +93,7 @@ lists all contacts in the address book, sorted by name
 `sort tag` +
 lists all the contacts that contain the keyword `bob`, sorted based on their tags.
 
-=== Editing a person : `edit`
+=== Editing a person: `edit`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -182,7 +182,7 @@ Examples:
 * `delete t/temp`
 Deletes all contacts with the tag `temp`
 
-=== Selecting a person : `select`
+=== Selecting a person: `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -202,7 +202,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands: `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -213,7 +213,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command: `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -239,7 +239,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command: `redo`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -296,13 +296,13 @@ Examples:
 * `import /Users/seedu/Documents/exportData.xml` +
 imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
-=== Clearing all entries : `clear`
+=== Clearing all entries: `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
 
 
-=== Exiting the program : `exit`
+=== Exiting the program: `exit`
 
 Exits the program. +
 Format: `exit`
