@@ -85,7 +85,6 @@ public class ModelManager extends ComponentManager implements Model {
                 itr.remove();
             }
         }
-        indicateAddressBookChanged();
     }
 
     @Override
