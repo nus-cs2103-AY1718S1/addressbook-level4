@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import seedu.address.model.tag.Tag;
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteTagCommand}.
  */
 public class DeleteTagCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validTagUnfilteredList_success() throws Exception {
