@@ -154,7 +154,7 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     private void listenCommandInputChanged() {
-        if(enableHighlight){
+        if (enableHighlight) {
             String allTextInput = commandTextField.getText();
             String[] inputArray = allTextInput.split(" ");
             int index = 0;
@@ -539,7 +539,9 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
+    /**
+     * Sets the command box to enable highlighting of command keywords
+     */
     public void setEnableHighlight(boolean enableHighlight) {
         this.enableHighlight = enableHighlight;
     }
