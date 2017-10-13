@@ -96,6 +96,19 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Parses the {@code tagsToDel} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withDelTags(String... tagsToDel) {
+        try {
+            descriptor.setTagsToDel(ParserUtil.parseTags(Arrays.asList(tagsToDel)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
     public EditPersonDescriptor build() {
         return descriptor;
     }
