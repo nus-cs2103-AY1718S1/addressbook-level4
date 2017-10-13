@@ -16,8 +16,8 @@ work with and the constant support.
 image::raisa2010.png[width="150", height="150", align="left"]
 {empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead
-{empty} Responsibilities: Documentation + UI
+Role: Team Lead +
+Responsibilities: Documentation + UI
 
 '''
 
@@ -25,8 +25,8 @@ Role: Team Lead
 image::tpq95.png[width="150", height="150", align="left"]
 {empty}[http://github.com/tpq95[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer + Tester
-{empty} Responsibilities: Model
+Role: Developer + Tester +
+Responsibilities: Model
 
 '''
 
@@ -34,8 +34,8 @@ Role: Developer + Tester
 image::tby1994.png[width="120", height="150" align="left"]
 {empty}[http://github.com/tby1994[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer + Code Integration Manager
-{empty}Responsibilities: Scheduling and Tracking + Logic
+Role: Developer + Code Integration Manager +
+Responsibilities: Scheduling and Tracking + Logic
 
 '''
 
@@ -43,7 +43,7 @@ Role: Developer + Code Integration Manager
 image::eryao95.png[width="120", height="150" align="left"]
 {empty}[http://github.com/eryao95[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer + Code Quality Manager
-{empty}Responsibilities: Deadlines and Deliverables + Storage
+Role: Developer + Code Quality Manager +
+Responsibilities: Deadlines and Deliverables + Storage
 
 '''
