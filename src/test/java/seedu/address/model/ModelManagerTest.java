@@ -41,7 +41,6 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(null));
 
         modelManager.deleteTemporary(addressBook);
-        
         //deleted temporary person inside modelManager -> returns true
         assertTrue(modelManager.getAddressBook().getPersonList().size() == 0);
 
