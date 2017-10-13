@@ -60,7 +60,7 @@ public class TagCommand extends UndoableCommand {
 
             ReadOnlyPerson personToEdit = lastShownList.get(currentIndex.getZeroBased());
             Set<Tag> oldTags = personToEdit.getTags();
-            Set<Tag> allTags = getTagList(oldTags);
+            Set<Tag> allTags = getTagList(oldTags, newTags);
 
             try {
                 model.updatePersonTags(personToEdit, allTags);
@@ -80,10 +80,10 @@ public class TagCommand extends UndoableCommand {
      * @param oldTags old tags that were used to tag a person
      * @return a set of combined tags with old and new tags
      */
-    private Set<Tag> getTagList(Set<Tag> oldTags) {
+    public Set<Tag> getTagList(Set<Tag> oldTags, Set<Tag> tagsToAdd) {
         Set<Tag> allTags = new HashSet<>();
         allTags.addAll(oldTags);
-        allTags.addAll(newTags);
+        allTags.addAll(tagsToAdd);
 
         return allTags;
     }

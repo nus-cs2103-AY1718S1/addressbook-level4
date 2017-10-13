@@ -20,6 +20,7 @@ import org.junit.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -63,12 +64,14 @@ public class TagCommandTest {
     }*/
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() throws Exception {
+    public void execute_unFilteredList_success() throws Exception {
         indices = new Index[]{INDEX_FIRST_PERSON};
-        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
         TagCommand tagCommand = prepareCommand(indices, tags);
-        ReadOnlyPerson editedPersonOne = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson personInUnfilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        tags.addAll(personInUnfilteredList.getTags());
         //ReadOnlyPerson editedPersonTwo = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(personInUnfilteredList).build();
+        model.updatePersonTags(editedPerson, tags);
 
         String expectedMessage = String.format(TagCommand.MESSAGE_TAG_PERSONS_SUCCESS, editedPersonOne);
 
