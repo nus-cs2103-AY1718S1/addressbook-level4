@@ -27,7 +27,7 @@ public class RemoveCommand extends UndoableCommand {
 
     /**
      *
-     * @param tag to be removed from the address book
+     * @param toRemove tag to be removed from the address book
      */
     public RemoveCommand(Tag toRemove)  {
         this.tag = toRemove;
