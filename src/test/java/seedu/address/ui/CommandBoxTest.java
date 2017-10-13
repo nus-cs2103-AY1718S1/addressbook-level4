@@ -160,8 +160,8 @@ public class CommandBoxTest extends GuiUnitTest {
         String testString = "";
 
         //Test 1: Test for single char
-        guiRobot.write("A");
-        testString += "A";
+        guiRobot.write(AddCommand.COMMAND_ALIAS);
+        testString += AddCommand.COMMAND_ALIAS;
         assertTrue(testString.equals(mySandBox.getText()));
         mySandBox.positionCaret(0);
         //Does not matter how many white spaces are added before or after
@@ -200,8 +200,8 @@ public class CommandBoxTest extends GuiUnitTest {
         //Test 3: Test for String with len 3
         mySandBox.clear();
         testString = "";
-        guiRobot.write("AdD");
-        testString += "AdD";
+        guiRobot.write(AddCommand.COMMAND_WORD);
+        testString += AddCommand.COMMAND_WORD;
         assertTrue(testString.equals(mySandBox.getText()));
         mySandBox.positionCaret(0);
         //Does not matter how many white spaces are added before or after
@@ -219,7 +219,7 @@ public class CommandBoxTest extends GuiUnitTest {
         mySandBox.clear();
         testString = "";
         guiRobot.write("b a");
-        testString += "b a";
+        testString += "b " + AddCommand.COMMAND_ALIAS;
         assertTrue(testString.equals(mySandBox.getText()));
         mySandBox.positionCaret(0);
         //Does not matter how many white spaces are added before or after
@@ -237,7 +237,7 @@ public class CommandBoxTest extends GuiUnitTest {
         mySandBox.clear();
         testString = "";
         guiRobot.write("a b");
-        testString += "a b";
+        testString += AddCommand.COMMAND_ALIAS + " b";
         assertTrue(testString.equals(mySandBox.getText()));
         mySandBox.positionCaret(0);
         //Does not matter how many white spaces are added before or after
