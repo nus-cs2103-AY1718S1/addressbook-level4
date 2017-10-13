@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
  * A handler for the {@code InfoPanel} of the UI.
  */
 public class InfoPanelHandle extends NodeHandle<Node> {
-    public static final String INFO_PANEL_ID = "#infoPanel";
+    public static final String INFO_PANEL_ID = "#infoPanelPlaceholder";
 
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
