@@ -217,6 +217,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Clearing command history : `clearhistory`
+
+Clears the command history. +
+Format: `clearhistory`
+
+[WARNING]
+====
+After the command history is cleared, you will not be able to undo any previous commands.
+====
+
 === Exiting the program : `exit`
 
 Exits the program. +
