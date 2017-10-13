@@ -21,15 +21,15 @@ public class PersonSortingUtil {
                 return person1.compareTo(person2);
 
             } else {
-                int c = 0;
+                int previousCompareValue = 0;
                 for (SortArgument sortArgument : sortArguments) {
-                    if (c != 0) {
-                        return c;
+                    if (previousCompareValue != 0) {
+                        return previousCompareValue;
                     } else {
-                        c = person1.compareTo(person2, sortArgument);
+                        previousCompareValue = person1.compareTo(person2, sortArgument);
                     }
                 }
-                return c;
+                return previousCompareValue;
 
             }
         };
