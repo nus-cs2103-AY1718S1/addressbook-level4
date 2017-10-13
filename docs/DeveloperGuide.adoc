@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T10-B4/main/tree/master //made edits, initially addressbook-level4 
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -729,12 +729,55 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |access the help function |use the address book more efficiently.
+
+|`* *` |user |add multiple contacts at once |save time in adding contacts to address book.
+
+|`* *` |user |delete multiple contacts at once |without having to clear the entire list.
+
+|`* *` |user |find a person’s contact details by specifying parameters other than name |person can still be found in event of naming mistake.
+
+|`* *` |user |find a person’s special dates by specifying his name |can prepare something special for him.
+
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |undo a command |get back the contact I just deleted 
+
+|`* *` |user |redo a command |do not have to retype the same command
+
+|`* *` |user |edit my contacts |update the information of my contacts
+
+|`*` |user |set certain contact details to be private |ensure their confidentiality.
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |advanced user |migrate contacts from address book to my email account |store their email address and send them email when necessary.
+
+|`*` |user |upload the faces of contacts |can identify them easily.
+
+|`*` |user |add contacts with the same name |add all my friends.
+
+|`*` |user |add more than 1 phone number |add multiple phone numbers.
+
+|`*` |user |add more than 1 email |save time adding emails for contacts with multiple emails.
+
+|`*` |user |create groups in the address book |categorise contacts into groups.
+
+|`*` |user |export all the contacts’ special dates to Google Calendar |keep track of all the special dates and my events on one platform.
+
+|`*` |new user |insert a few letters for the command and it will autofill |help me to better remember and use the commands.
+
+|`*` |user |insert a postal code for a contact’s address |address portion will be filled automatically, so that I can save time in keying in the entire address.
+
+|`*` |user |keep a recently deleted list of contacts deleted in the past 30 days |if I delete a contact by mistake, it can be retrieved.
+
+|`*` |user |move a contact from one group to another |save time copying and pasting contacts.
+
+|`*` |user |share a contact and all the parameters |other people can get the contact.
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,7 +810,54 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add person
+
+1. User requests to add a person by entering information.
+2. AddressBook adds the person.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Clear
+
+1. User requests to clear the AddressBook.
+2. AddressBook clears all the contacts.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Edit person
+
+1. User requests to edit a contact in the AddressBook by listing the required parameters.
+2. AddressBook edits the contact.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Find name
+
+1. User requests to find a contact by entering their name or part of their name.
+2. AddressBook returns the contact's details and the location on the list.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Help
+
+1. User requests to display description of every available command.
+2. AddressBook opens the help page.
++
+Use case ends.
+
+[discrete]
+=== Use Case: History
+
+1. User request to display previous commands.
+2. AddressBook displays a list of previously entered commands.
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +865,13 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  System should respond within 2 seconds
+.  Should have an easy to follow user guide
+.  System should be able to keep all private tagged information confidential.
+.  System should open the help page when user enters an invalid entry.
+.  System should be easy to maintain in event of malfunction.
+   
 
-{More to be added}
 
 [appendix]
 == Glossary
