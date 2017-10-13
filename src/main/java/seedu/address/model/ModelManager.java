@@ -84,7 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
             if (tags.contains(tempTag)) {
                 itr.remove();
             }
-        }i
+        }
     }
 
     @Override
