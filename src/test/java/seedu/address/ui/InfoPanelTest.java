@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -51,14 +53,23 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrow());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrowField());
         assertEquals(new ArrayList<>(), infoPanelHandle.getTags());
+        infoPanelHandle.rememberSelectedPersonDetails();
 
         // associated info of a person
         postNow(selectionChangedEventStub);
         assertInfoDisplay(infoPanel, ALICE);
+        assertTrue(infoPanelHandle.isSelectedPersonChanged());
+        infoPanelHandle.rememberSelectedPersonDetails();
+
+        // asserts that no change is registered when same person is clicked
+        postNow(selectionChangedEventStub);
+        assertInfoDisplay(infoPanel, ALICE);
+        assertFalse(infoPanelHandle.isSelectedPersonChanged());
 
         // associated info of next person
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1));
         postNow(selectionChangedEventStub);
+        assertTrue(infoPanelHandle.isSelectedPersonChanged());
         assertInfoDisplay(infoPanel, BOB);
     }
 
