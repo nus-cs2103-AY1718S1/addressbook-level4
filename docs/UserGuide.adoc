@@ -250,6 +250,12 @@ Enters the index of the person as shown in the last seen list, the name of the a
 and the estimate (the estimate >= 0 and <= 1). +
 Format: `Add CEstimate INDEX NAMEOFATTRIBUTE ESTIMATE`
 
+=== Delete confidence estimate for an attribute of a person
+
+Enters the index of the person as shown in the last seen list and the name of the attribute +
+of which the confidence estimate is to be deleted. +
+Format: `Delete CEstimate INDEX NAMEOFATTRIBUTE`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
