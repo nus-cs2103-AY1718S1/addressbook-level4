@@ -58,7 +58,8 @@ public class AddCommand extends UndoableCommand {
             model.addPerson(toAdd);
             Tag tempTag = new Tag("temporary");
             if(toAdd.getTags().contains(tempTag)){
-                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd), MESSAGE_TEMPORARY_PERSON);
+                String successMessage = String.format(MESSAGE_SUCCESS, toAdd);
+                return new CommandResult(successMessage, MESSAGE_TEMPORARY_PERSON);
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
