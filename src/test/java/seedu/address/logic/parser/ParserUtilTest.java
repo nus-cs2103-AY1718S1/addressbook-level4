@@ -24,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.SchEmail;
+import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 
 
@@ -33,6 +34,7 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_SCH_EMAIL = "rah!nus.com";
+    private static final String INVALID_WEBSITE = "gttpwww.";
     private static final String INVALID_BIRTHDAY = "2001/02/19";
     private static final String INVALID_TAG = "#friend";
 
@@ -41,6 +43,7 @@ public class ParserUtilTest {
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_SCH_EMAIL = "rachelwalker@u.nus.edu";
+    private static final String VALID_WEBSITE = "https://www.facebook.com/rachW";
     private static final String VALID_BIRTHDAY = "06/05/2003";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
@@ -217,6 +220,31 @@ public class ParserUtilTest {
         Optional<SchEmail> actualSchEmail = ParserUtil.parseSchEmail(Optional.of(VALID_SCH_EMAIL));
 
         assertEquals(expectedSchEmail, actualSchEmail.get());
+    }
+
+    @Test
+    public void parseWebsite_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseWebsite(null);
+    }
+
+    @Test
+    public void parseWebsite_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseWebsite(Optional.of(INVALID_WEBSITE));
+    }
+
+    @Test
+    public void parseWebsite_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseWebsite(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseWebsite_validValue_returnsWebsite() throws Exception {
+        Website expectedWebsite = new Website(VALID_WEBSITE);
+        Optional<Website> actualWebsite = ParserUtil.parseWebsite(Optional.of(VALID_WEBSITE));
+
+        assertEquals(expectedWebsite, actualWebsite.get());
     }
 
     @Test
