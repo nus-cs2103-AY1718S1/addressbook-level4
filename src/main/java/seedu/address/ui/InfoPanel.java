@@ -119,15 +119,21 @@ public class InfoPanel extends UiPart<Region> {
      * Sets all info fields to not display anything.
      */
     private void loadDefaultPage() {
-        for (Node node : pane.getChildren()) {
-                if (node instanceof Label) { (
-                    (Label) node).setText("");
+        Label label;
+        Text text;
+        for (Node node: pane.getChildren()) {
+            if (node instanceof Label) {
+                label = (Label) node;
+                label.setText("");
             } else if (node instanceof TextFlow) {
-                for (Node subNode : ((TextFlow) node).getChildren()) {
-                        if (subNode instanceof Text) { (
-                            (Text) subNode).setText("");
-                        } else if (subNode instanceof Label) { (
-                            (Label) subNode).setText("");
+                for (Node subNode: ((TextFlow) node).getChildren()) {
+                    if (subNode instanceof Text) {
+                        text = (Text) subNode;
+                        text.setText("");
+                    }
+                    if (subNode instanceof Label) {
+                        label = (Label) subNode;
+                        label.setText("");
                     }
                 }
             }
