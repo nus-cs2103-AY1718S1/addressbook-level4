@@ -2,13 +2,9 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
@@ -29,8 +25,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void find() {
-
-
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
          * -> 2 persons found
          */
@@ -119,29 +113,24 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find phone number of person in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of person in address book -> 1 persons found */
+        /* Case: find address of person in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of person in address book -> 1 persons found */
+        /* Case: find email of person in address book -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of person in address book -> 6 persons found */
+        /* Case: find tags of person in address book -> 0 persons found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
-        ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
 
         /* Case: find while a person is selected -> selected card deselected */
         showAllPersons();
@@ -174,7 +163,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
-     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
@@ -194,7 +182,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
-     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
