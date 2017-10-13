@@ -53,7 +53,7 @@ public class PartialFindCommandTest {
         // different person -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
-    
+
     /**
      * Parses {@code userInput} into a {@code PartialFindCommand}.
      */
