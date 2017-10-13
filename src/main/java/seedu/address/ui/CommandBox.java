@@ -30,6 +30,7 @@ import javafx.scene.text.Text;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.commons.events.ui.ColorKeywordEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -61,6 +62,7 @@ public class CommandBox extends UiPart<Region> {
     private HashMap<String, String> keywordColorMap;
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
+    private boolean enableHighlight = false;
 
     @FXML
     private TextField commandTextField;
@@ -152,60 +154,63 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     private void listenCommandInputChanged() {
-        String allTextInput = commandTextField.getText();
-        String[] inputArray = allTextInput.split(" ");
-        int index = 0;
+        if(enableHighlight){
+            String allTextInput = commandTextField.getText();
+            String[] inputArray = allTextInput.split(" ");
+            int index = 0;
 
-        configInActiveTag();
-        configInactiveKeyword();
+            configInActiveTag();
+            configInactiveKeyword();
 
-        for (int i = 0; i < inputArray.length; i++) {
-            String text = inputArray[i];
+            for (int i = 0; i < inputArray.length; i++) {
+                String text = inputArray[i];
 
-            //Command Keyword
-            if (i == 0 && validCommandKeyword(text)) {
-                configActiveKeyword(text);
-            }
+                //Command Keyword
+                if (i == 0 && validCommandKeyword(text)) {
+                    configActiveKeyword(text);
+                }
 
-            //Name
-            if (text.contains(prefixList.get(NAME))) {
-                index = allTextInput.indexOf(prefixList.get(NAME));
-                configActiveTag(index, prefixList.get(NAME));
-            }
+                //Name
+                if (text.contains(prefixList.get(NAME))) {
+                    index = allTextInput.indexOf(prefixList.get(NAME));
+                    configActiveTag(index, prefixList.get(NAME));
+                }
 
-            //Email
-            if (text.contains(prefixList.get(EMAIL))) {
-                index = allTextInput.indexOf(prefixList.get(EMAIL));
-                configActiveTag(index, prefixList.get(EMAIL));
-            }
+                //Email
+                if (text.contains(prefixList.get(EMAIL))) {
+                    index = allTextInput.indexOf(prefixList.get(EMAIL));
+                    configActiveTag(index, prefixList.get(EMAIL));
+                }
 
-            //Phone
-            if (text.contains(prefixList.get(PHONE))) {
-                index = allTextInput.indexOf(prefixList.get(PHONE));
-                configActiveTag(index, prefixList.get(PHONE));
-            }
+                //Phone
+                if (text.contains(prefixList.get(PHONE))) {
+                    index = allTextInput.indexOf(prefixList.get(PHONE));
+                    configActiveTag(index, prefixList.get(PHONE));
+                }
 
-            //Address
-            if (text.contains(prefixList.get(ADDRESS))) {
-                index = allTextInput.indexOf(prefixList.get(ADDRESS));
-                configActiveTag(index, prefixList.get(ADDRESS));
-            }
+                //Address
+                if (text.contains(prefixList.get(ADDRESS))) {
+                    index = allTextInput.indexOf(prefixList.get(ADDRESS));
+                    configActiveTag(index, prefixList.get(ADDRESS));
+                }
 
-            //Tag
-            if (text.contains(prefixList.get(TAG))) {
-                ArrayList<Integer> tagList = getTagIndexList(allTextInput);
-                for (int j = 0; j < tagList.size(); j++) {
-                    index = tagList.get(j);
-                    configActiveTag(index, index + prefixList.get(TAG));
+                //Tag
+                if (text.contains(prefixList.get(TAG))) {
+                    ArrayList<Integer> tagList = getTagIndexList(allTextInput);
+                    for (int j = 0; j < tagList.size(); j++) {
+                        index = tagList.get(j);
+                        configActiveTag(index, index + prefixList.get(TAG));
+                    }
+                }
+
+                //font size
+                if (text.contains(prefixList.get(FONT_SIZE))) {
+                    index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
+                    configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
-
-            //font size
-            if (text.contains(prefixList.get(FONT_SIZE))) {
-                index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
-                configActiveTag(index, prefixList.get(FONT_SIZE));
-            }
         }
+
     }
 
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
@@ -351,6 +356,12 @@ public class CommandBox extends UiPart<Region> {
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
+    }
+
+
+    @Subscribe
+    private void handleColorKeywordEvent(ColorKeywordEvent event) {
+        setEnableHighlight(event.isEnabled);
     }
 
     /**
@@ -529,4 +540,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    public void setEnableHighlight(boolean enableHighlight) {
+        this.enableHighlight = enableHighlight;
+    }
 }
