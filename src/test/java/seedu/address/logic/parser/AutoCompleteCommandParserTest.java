@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
@@ -31,15 +29,17 @@ public class AutoCompleteCommandParserTest {
     private final AutoCompleteCommandParser parser = new AutoCompleteCommandParser();
 
     @Test
-    public void parseAutoCompleteCommand_AllAlphabets() throws Exception {
+    public void parseAutoCompleteCommandAllAlphabets() throws Exception {
         assertEquals(parser.parseForCommands("a"), Arrays.asList(new String[] {AddCommand.COMMAND_USAGE, "a"}));
         assertEquals(parser.parseForCommands("b"), Arrays.asList(new String[] {"b"}));
         assertEquals(parser.parseForCommands("c"), Arrays.asList(new String[] {ClearCommand.COMMAND_USAGE, "c"}));
         assertEquals(parser.parseForCommands("d"), Arrays.asList(new String[] {DeleteCommand.COMMAND_USAGE, "d"}));
-        assertEquals(parser.parseForCommands("e"), Arrays.asList(new String[] {EditCommand.COMMAND_USAGE, ExitCommand.COMMAND_USAGE, "e"}));
+        assertEquals(parser.parseForCommands("e"),
+                Arrays.asList(new String[] {EditCommand.COMMAND_USAGE, ExitCommand.COMMAND_USAGE, "e"}));
         assertEquals(parser.parseForCommands("f"), Arrays.asList(new String[] {FindCommand.COMMAND_USAGE, "f"}));
         assertEquals(parser.parseForCommands("g"), Arrays.asList(new String[] {"g"}));
-        assertEquals(parser.parseForCommands("h"), Arrays.asList(new String[] {HelpCommand.COMMAND_USAGE, HistoryCommand.COMMAND_USAGE, "h"}));
+        assertEquals(parser.parseForCommands("h"),
+                Arrays.asList(new String[] {HelpCommand.COMMAND_USAGE, HistoryCommand.COMMAND_USAGE, "h"}));
         assertEquals(parser.parseForCommands("i"), Arrays.asList(new String[] {"i"}));
         assertEquals(parser.parseForCommands("j"), Arrays.asList(new String[] {"j"}));
         assertEquals(parser.parseForCommands("k"), Arrays.asList(new String[] {"k"}));
@@ -49,7 +49,8 @@ public class AutoCompleteCommandParserTest {
         assertEquals(parser.parseForCommands("o"), Arrays.asList(new String[] {"o"}));
         assertEquals(parser.parseForCommands("p"), Arrays.asList(new String[] {"p"}));
         assertEquals(parser.parseForCommands("q"), Arrays.asList(new String[] {"q"}));
-        assertEquals(parser.parseForCommands("r"), Arrays.asList(new String[] {RedoCommand.COMMAND_USAGE, RemoveTagCommand.COMMAND_USAGE, "r"}));
+        assertEquals(parser.parseForCommands("r"),
+                Arrays.asList(new String[] {RedoCommand.COMMAND_USAGE, RemoveTagCommand.COMMAND_USAGE, "r"}));
         assertEquals(parser.parseForCommands("s"), Arrays.asList(new String[] {SelectCommand.COMMAND_USAGE, "s"}));
         assertEquals(parser.parseForCommands("t"), Arrays.asList(new String[] {"t"}));
         assertEquals(parser.parseForCommands("u"), Arrays.asList(new String[] {UndoCommand.COMMAND_USAGE, "u"}));
