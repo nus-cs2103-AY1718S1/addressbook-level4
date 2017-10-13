@@ -58,8 +58,8 @@ public class BrowserPanelTest extends GuiUnitTest {
         URL expectedMapUrl = new URL(GOOGLE_MAP_URL_PREFIX
                 + ALICE.getAddress().value.replaceAll(" ", "+").substring(0, 2));
 
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedMapUrl,
+        //waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedMapUrl.toString(),
                 browserPanelHandle.getLoadedUrl().toString().substring(0, GOOGLE_MAP_URL_PREFIX.length() + 1));
     }
 }
