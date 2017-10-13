@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -41,6 +42,8 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    private static final String LIST_COMMAND_ALIAS = "show";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -194,33 +197,26 @@ public class ParserUtilTest {
 
     @Test
     public void parseCommand_validCommand_returnsCommand() throws Exception {
-        assertEquals(ParserUtil.parseCommand(Optional.of(AddCommand.COMMAND_WORD)),
-                Optional.of(AddCommand.COMMAND_WORD));
-        assertEquals(ParserUtil.parseCommand(Optional.of(ListCommand.COMMAND_WORD)),
-                Optional.of(ListCommand.COMMAND_WORD));
+        assertEquals(ParserUtil.parseCommand(AddCommand.COMMAND_WORD), AddCommand.COMMAND_WORD);
+        assertEquals(ParserUtil.parseCommand(ListCommand.COMMAND_WORD), ListCommand.COMMAND_WORD);
     }
 
     @Test
-    public void parseCommand_invalidCommand_returnsEmptyOptional() throws Exception {
-        assertFalse(ParserUtil.parseCommand(Optional.of("")).isPresent());
-        assertFalse(ParserUtil.parseCommand(Optional.of("invalid-command")).isPresent());
-    }
-
-    @Test
-    public void parseCommand_emptyCommand_returnsEmptyOptional() throws Exception {
-        assertFalse(ParserUtil.parseCommand(Optional.empty()).isPresent());
+    public void parseCommand_invalidCommand_returnsNull() throws Exception {
+        assertNull(ParserUtil.parseCommand(""));
+        assertNull(ParserUtil.parseCommand("invalid-command"));
     }
 
     @Test
     public void parseIconCode_validCommand_returnsCorrectIcon() throws Exception {
-        assertEquals(ParserUtil.parseIconCode(AddCommand.COMMAND_WORD).get(), Feather.FTH_PLUS);
-        assertEquals(ParserUtil.parseIconCode(ListCommand.COMMAND_WORD).get(), Feather.FTH_PAPER);
+        assertEquals(ParserUtil.parseIconCode(AddCommand.COMMAND_WORD), Feather.FTH_PLUS);
+        assertEquals(ParserUtil.parseIconCode(ListCommand.COMMAND_WORD), Feather.FTH_PAPER);
     }
 
     @Test
     public void parseIconCode_invalidCommand_returnsEmptyOptional() throws Exception {
-        assertFalse(ParserUtil.parseIconCode("").isPresent());
-        assertFalse(ParserUtil.parseIconCode("invalid-command").isPresent());
+        assertNull(ParserUtil.parseIconCode(""));
+        assertNull(ParserUtil.parseIconCode("invalid-command"));
     }
 
     @Test

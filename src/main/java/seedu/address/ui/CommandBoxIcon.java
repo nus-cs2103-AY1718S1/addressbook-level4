@@ -3,7 +3,6 @@ package seedu.address.ui;
 import static seedu.address.logic.parser.ParserUtil.parseCommandAndArguments;
 import static seedu.address.logic.parser.ParserUtil.parseIconCode;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.kordamp.ikonli.Ikon;
@@ -50,18 +49,17 @@ public class CommandBoxIcon extends UiPart<Region> {
         }
 
         String commandWord = command[0];
+        Ikon iconCode = parseIconCode(commandWord);
 
-        Optional<Ikon> iconCode = parseIconCode(commandWord);
-
-        if (!iconCode.isPresent()) {
+        if (iconCode == null) {
             icon.setVisible(false);
             return;
         }
 
-        icon.iconCodeProperty().set(iconCode.get());
+        icon.iconCodeProperty().set(iconCode);
         icon.setVisible(true);
         logger.info(LogsCenter.getEventHandlingLogMessage(event,
-                "CommandBoxIcon updated to " + iconCode.get().getDescription()));
+                "CommandBoxIcon updated to " + iconCode.getDescription()));
     }
 
 }

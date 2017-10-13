@@ -12,10 +12,9 @@ public class AliasCommand extends UndoableCommand {
     public static final String MESSAGE_ADD_SUCCESS = "The alias \"%1$s\" now points to \"%2$s\".";
     public static final String MESSAGE_LIST_SUCCESS = "Aliases:\n%1$s";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates or deletes an alias for other commands."
-            + "Parameters: [--delete|-d] COMMAND [OLD_COMMAND]\n"
-            + "Example: " + COMMAND_WORD + " create add\n"
-            + "         " + COMMAND_WORD + " --delete create";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates an alias for other commands."
+            + "Parameters: [ALIAS COMMAND]\n"
+            + "Example: " + COMMAND_WORD + " create add\n";
 
     private final String alias;
     private final String command;
@@ -52,8 +51,8 @@ public class AliasCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AliasCommand // instanceof handles nulls
-                && this.alias.equals(((AliasCommand) other).alias) // state check
-                && this.command.equals(((AliasCommand) other).command)); // state check
+                && (this.alias == null || this.alias.equals(((AliasCommand) other).alias)) // state check
+                && (this.command == null || this.command.equals(((AliasCommand) other).command))); // state check
     }
 
 }

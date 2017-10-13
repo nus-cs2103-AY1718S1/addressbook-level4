@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -57,6 +59,24 @@ public class ParserUtil {
      * Used for initial separation of command word and args.
      */
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    private static final Map<String, Ikon> Icons = new HashMap<>();
+    static {
+        Icons.put(MusicCommand.COMMAND_WORD, Feather.FTH_PLAY);
+        Icons.put(AddCommand.COMMAND_WORD, Feather.FTH_PLUS);
+        Icons.put(AliasCommand.COMMAND_WORD, Feather.FTH_LINK);
+        Icons.put(EditCommand.COMMAND_WORD, Feather.FTH_FILE_ADD);
+        Icons.put(SelectCommand.COMMAND_WORD, Feather.FTH_HEAD);
+        Icons.put(DeleteCommand.COMMAND_WORD, Feather.FTH_TRASH);
+        Icons.put(ClearCommand.COMMAND_WORD, Feather.FTH_CROSS);
+        Icons.put(FindCommand.COMMAND_WORD, Feather.FTH_SEARCH);
+        Icons.put(ListCommand.COMMAND_WORD, Feather.FTH_PAPER);
+        Icons.put(HistoryCommand.COMMAND_WORD, Feather.FTH_CLOCK);
+        Icons.put(ExitCommand.COMMAND_WORD, Feather.FTH_POWER);
+        Icons.put(HelpCommand.COMMAND_WORD, Feather.FTH_HELP);
+        Icons.put(UndoCommand.COMMAND_WORD, Feather.FTH_ARROW_LEFT);
+        Icons.put(RedoCommand.COMMAND_WORD, Feather.FTH_ARROW_RIGHT);
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -120,88 +140,37 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Optional<String> command} and returns itself if it is a valid command, if {@code command}
-     * is present. See header comment of this class regarding the use of {@code Optional} parameters.
+     * Parses {@code String command} and returns itself if it is a valid command.
      */
-    public static Optional<String> parseCommand(Optional<String> command) throws IllegalValueException {
+    public static String parseCommand(String command) {
         requireNonNull(command);
-        if (command.isPresent()) {
-            switch (command.get()) {
-            case AddCommand.COMMAND_WORD:
-            case AliasCommand.COMMAND_WORD:
-            case EditCommand.COMMAND_WORD:
-            case SelectCommand.COMMAND_WORD:
-            case DeleteCommand.COMMAND_WORD:
-            case ClearCommand.COMMAND_WORD:
-            case FindCommand.COMMAND_WORD:
-            case ListCommand.COMMAND_WORD:
-            case HistoryCommand.COMMAND_WORD:
-            case ExitCommand.COMMAND_WORD:
-            case HelpCommand.COMMAND_WORD:
-            case UndoCommand.COMMAND_WORD:
-            case RedoCommand.COMMAND_WORD:
-                return command;
-            default:
-                return Optional.empty();
-            }
+        switch (command) {
+        case AddCommand.COMMAND_WORD:
+        case AliasCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_WORD:
+            return command;
+        default:
+            return null;
         }
-        return Optional.empty();
     }
 
     /**
-     * Parses {@code Optional<String> command} and returns the corresponding {@code Optional<Ikon> icon}
+     * Parses {@code String command} and returns the corresponding {@code Ikon icon}
      * if valid.
      */
-    public static Optional<Ikon> parseIconCode(String command) {
+    public static Ikon parseIconCode(String command) {
         requireNonNull(command);
-
-        switch (command) {
-
-        case MusicCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_PLAY);
-
-        case AddCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_PLUS);
-
-        case AliasCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_LINK);
-
-        case EditCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_FILE_ADD);
-
-        case SelectCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_HEAD);
-
-        case DeleteCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_TRASH);
-
-        case ClearCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_CROSS);
-
-        case FindCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_SEARCH);
-
-        case ListCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_PAPER);
-
-        case HistoryCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_CLOCK);
-
-        case ExitCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_POWER);
-
-        case HelpCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_HELP);
-
-        case UndoCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_ARROW_LEFT);
-
-        case RedoCommand.COMMAND_WORD:
-            return Optional.of(Feather.FTH_ARROW_RIGHT);
-
-        default:
-            return Optional.empty();
-        }
+        return Icons.get(command);
     }
 
     /**

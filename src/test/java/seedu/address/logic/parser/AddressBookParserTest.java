@@ -30,13 +30,13 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsFieldsPredicate;
 import seedu.address.model.person.Remark;
-
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -66,6 +66,13 @@ public class AddressBookParserTest {
         AliasCommand command = (AliasCommand) parser.parseCommand(
                 AliasCommand.COMMAND_WORD + " show " + ListCommand.COMMAND_WORD);
         assertEquals(new AliasCommand("show", ListCommand.COMMAND_WORD), command);
+    }
+
+    @Test
+    public void parseCommand_unalias() throws Exception {
+        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(
+                UnaliasCommand.COMMAND_WORD + " show");
+        assertEquals(new UnaliasCommand("show"), command);
     }
 
     @Test

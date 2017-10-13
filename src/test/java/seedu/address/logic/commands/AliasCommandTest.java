@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -61,23 +60,6 @@ public class AliasCommandTest {
                         String.format("%1$s=%2$s\n", LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD)),
                 model
         );
-    }
-
-    @Test
-    public void execute_alias_deleteSuccess() throws Exception {
-        aliasCommand.execute();
-
-        Command aliasDeleteCommand = new AliasCommand(LIST_COMMAND_ALIAS, true);
-        aliasDeleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
-        assertCommandSuccess(
-                aliasDeleteCommand,
-                model,
-                String.format(AliasCommand.MESSAGE_DELETE_SUCCESS, LIST_COMMAND_ALIAS),
-                model
-        );
-
-        assertNull(UserPrefs.getInstance().getAliases().getCommand(LIST_COMMAND_ALIAS));
     }
 
     @Test

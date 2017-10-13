@@ -11,7 +11,7 @@ public class UserPrefs {
 
     private static UserPrefs instance;
 
-    private Aliases aliases = new Aliases();
+    private Aliases aliases;
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
@@ -57,6 +57,9 @@ public class UserPrefs {
     }
 
     public Aliases getAliases() {
+        if (aliases == null) {
+            aliases = new Aliases();
+        }
         return aliases;
     }
 
