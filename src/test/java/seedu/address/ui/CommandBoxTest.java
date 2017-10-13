@@ -22,9 +22,6 @@ import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
-    private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
-    private static final String COMMAND_THAT_FAILS = "invalid command";
-
     /* Prefix definitions */
     public static final Prefix PREFIX_NAME = new Prefix("n/");
     public static final Prefix PREFIX_PHONE = new Prefix("p/");
@@ -39,6 +36,9 @@ public class CommandBoxTest extends GuiUnitTest {
     public static final String STRING_ADDRESS = PREFIX_ADDRESS.toString();
     public static final String STRING_BLOODTYPE = PREFIX_BLOODTYPE.toString();
     public static final String STRING_TAG = PREFIX_TAG.toString();
+
+    private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
+    private static final String COMMAND_THAT_FAILS = "invalid command";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
