@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +39,8 @@ public class EditCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
+            + "Existing values excluding tags will be overwritten by the input values.\n"
+            + "Input tag values will be added to existing tag values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NAME + " [NAME] "
             + PREFIX_PHONE + " [PHONE] "
@@ -79,6 +81,10 @@ public class EditCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        if (editedPerson.equals(personToEdit)) {
+             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+         }
+
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -86,6 +92,7 @@ public class EditCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
@@ -98,6 +105,8 @@ public class EditCommand extends UndoableCommand {
                                              EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
+        Set<Tag> currentTags = personToEdit.getTags();
+
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
@@ -105,7 +114,17 @@ public class EditCommand extends UndoableCommand {
         Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
         FavouriteStatus updatedFavouriteStatus =
                 personToEdit.getFavouriteStatus(); // edit command does not allow editing favourite status
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(currentTags);
+
+        if (!updatedTags.equals(currentTags)) {
+            Iterator<Tag> it = currentTags.iterator();
+            while (it.hasNext()) {
+                Tag currentTag = it.next();
+                if (!updatedTags.contains(currentTag)) {
+                    updatedTags.add(currentTag);
+                }
+            }
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedRemark, updatedFavouriteStatus, updatedTags);
