@@ -22,8 +22,8 @@ Now with Ark, you no longer need to worry about late deliveries and route planni
 Leave the heavy thinking to us and just deliver away! +
 
 Ark is a delivery parcel manager with the ability to keep track of your delivery details.
-Such details include recipient's names, delivery due dates, locations, and tags.
-Ark is also able to help you plan out your delivery route based using google maps
+These details include recipient's names, delivery due dates, locations, and tags.
+Ark is also able to help you plan out your delivery route by using google maps
 to help you get from one destination to another. +
 
 == About
@@ -32,7 +32,7 @@ The user guide includes all of Arks functions and how to use them,
 as well as providing you examples for easy reference. +
 
 Ark assumes that you already have the postal codes of the delivery locations
-of every parcel and bases its route planning base on that.
+of every parcel and bases its route planning base on postal codes only.
 
 == Quick Start
 
@@ -251,9 +251,13 @@ Format: `exit`
 
 Ark comes with tab autocompletion which is able to complete a command for you
 without requiring you to type out the command fully. +
-To make use of this feature, simply key in the first few characters of the command you with to enter and press the `Tab` key.
+To make use of this feature, simply key in the first few characters of the command you with to enter and press the kbd:[Tab] key.
 Ark will then fill in the rest of the command for you.
-Then press `Enter` key to enter the command.
+Then press kbd:[Enter] key to enter the command.
+
+Examples:
+
+* `e` + kbd:[Tab] (auto-completes with `exit` in the command line input)
 
 === Saving the data
 
