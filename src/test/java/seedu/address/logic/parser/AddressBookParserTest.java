@@ -15,6 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.Password;
+import seedu.address.logic.Username;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
@@ -138,6 +140,13 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_login() throws Exception {
+        LoginCommand command = (LoginCommand) parser.parseCommand(
+                LoginCommand.COMMAND_WORD + " " + "JohnDoe" + " " + "hiIAmJohnDoe123");
+        assertEquals(new LoginCommand(new Username("JohnDoe"), new Password("hiIAmJohnDoe123")), command);
     }
 
     @Test
