@@ -317,8 +317,8 @@ Format: `addphoto INDEX FILE_PATH`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The input `FILE_PATH` must be an absolute file path, e.g.
-* `/Users/seedu/Pictures/photo.jpg` for macOS and Linux
-* `c:\Users\seedu\Pictures\photo.jpg` for Windows
+** `/Users/seedu/Pictures/photo.jpg` for macOS and Linux
+** `c:\Users\seedu\Pictures\photo.jpg` for Windows
 ****
 
 Examples:
