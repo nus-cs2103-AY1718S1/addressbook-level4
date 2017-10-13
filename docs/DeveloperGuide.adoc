@@ -978,6 +978,24 @@ Use case resumes at step 2.
 +
 Use case resumes at step 6.
 
+[discrete]
+=== Use case: Sort a list of persons
+
+*MSS*
+
+1.  User requests to sort a list persons
+2.  AddressBook sorts a list of persons alphanumerically by name
+3.  AddressBook shows all sorted persons in the sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
