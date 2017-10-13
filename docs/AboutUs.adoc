@@ -46,11 +46,11 @@ Responsibilities: Dev Ops + Threading
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Benjamin Ang
+image::nuse0032202.png[width="150", align="left"]
+{empty}[https://github.com/NUSe0032202[github]] [<<benang#, portfolio>>]
 
-Role: Developer +
-Responsibilities: UI
+Role: Team Member +
+Responsibilities: Command
 
 '''
