@@ -11,7 +11,7 @@ import seedu.address.model.tag.Tag;
 public class DeleteTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "tagDelete";
-    public static final String COMMAND_ALIAS = "t";
+    public static final String COMMAND_ALIAS = "td";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes all the tag specified in all person in the list.\n"
