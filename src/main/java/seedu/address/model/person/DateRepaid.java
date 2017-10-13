@@ -1,15 +1,25 @@
 package seedu.address.model.person;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateRepaid {
+
     public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
+    public static final String SIMPLE_DATE_FORMAT = "MM/DD/YY";
 
     public final String value;
 
     public DateRepaid() {
-        Date date = new Date();
+        DateFormat formatter = new SimpleDateFormat(SIMPLE_DATE_FORMAT);
+        Date date = null;
+        try {
+            date = formatter.parse("00/00/00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
         value = ft.format(date);
     }
@@ -31,8 +41,8 @@ public class DateRepaid {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DateBorrow // instanceof handles nulls
-                && this.value.equals(((DateBorrow) other).value)); // state check
+                || (other instanceof DateRepaid // instanceof handles nulls
+                && this.value.equals(((DateRepaid) other).value)); // state check
     }
 
     @Override
