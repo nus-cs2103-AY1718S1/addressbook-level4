@@ -244,6 +244,12 @@ entering this command and given a name. +
 The order of the names of people entered does not matter.
 Format: `Add Named Relationship NAME1 NAME 2 NAMEOFRELATIONSHIP`
 
+=== Add confidence estimate for an attribute of a person
+
+Enters the index of the person as shown in the last seen list, the name of the attribute +
+and the estimate (the estimate >= 0 and <= 1). +
+Format: `Add CEstimate INDEX NAMEOFATTRIBUTE ESTIMATE`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
