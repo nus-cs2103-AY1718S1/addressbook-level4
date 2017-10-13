@@ -63,19 +63,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
-                // As up and down buttons will alter the position of the caret,
-                // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
+        case UP:
+            // As up and down buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
 
-                navigateToPreviousInput();
-                break;
-            case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
-                break;
-            default:
-                // let JavaFx handle the keypress
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        default:
+            // let JavaFx handle the keypress
         }
     }
 
@@ -115,6 +115,10 @@ public class CommandBox extends UiPart<Region> {
     }
 
     //@@author jelneo
+
+    /**
+     * Masks password starting from second whitespace(if it exists) until the end of input
+     */
     private void handlePasswordMasking() {
         String currentInput = commandTextField.getText();
         numOfSpaces = getNumOfSpaces(currentInput);
@@ -138,8 +142,8 @@ public class CommandBox extends UiPart<Region> {
         }
         // starts masking password after the second whitespace and prevent the reading of the asterisk after replacing
         // a character in the command box text field with an asterisk
-        if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' ' &&
-                currentInput.charAt(currentInput.length() - 1) != BLACK_CIRCLE) {
+        if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
+                && currentInput.charAt(currentInput.length() - 1) != BLACK_CIRCLE) {
             maskPasswordInput(currentInput);
 
         }
@@ -197,10 +201,13 @@ public class CommandBox extends UiPart<Region> {
     private void handleCommandInputChanged() {
         try {
             String commandText = commandTextField.getText();
-            if (commandText.contains(LoginCommand.COMMAND_WORD) || commandText.contains(ExitCommand.COMMAND_WORD)
-                    || commandText.contains(HelpCommand.COMMAND_WORD) || LoginCommand.isLoggedIn()) {
+            boolean isCommandExecutableBeforeLogin = commandText.contains(LoginCommand.COMMAND_WORD)
+                    || commandText.contains(ExitCommand.COMMAND_WORD)
+                    || commandText.contains(HelpCommand.COMMAND_WORD);
+            // allows only help, exit and login commands to execute before login
+            // and all the other commands to execute after login
+            if (isCommandExecutableBeforeLogin || LoginCommand.isLoggedIn()) {
                 String currCommandInput = commandTextField.getText();
-//                logger.info(String.valueOf(LoginCommand.isLoggedIn()));
                 CommandResult commandResult;
                 if (currCommandInput.contains(LoginCommand.COMMAND_WORD)) {
                     commandResult = logic.execute(currCommandInput.substring(0,
