@@ -82,27 +82,27 @@ public class RemarkCommandTest {
     }
 
     @Test
-     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
-                Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-                RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, VALID_REMARK_BOB);
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, VALID_REMARK_BOB);
 
-                        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
 
-             /**
-       * Edit filtered list where index is larger than size of filtered list,
-       * but smaller than size of address book
-       */
-             @Test
-     public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
-                showFirstPersonOnly(model);
-                Index outOfBoundIndex = INDEX_SECOND_PERSON;
-                // ensures that outOfBoundIndex is still in bounds of address book list
-                        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+    /**
+   * Edit filtered list where index is larger than size of filtered list,
+   * but smaller than size of address book
+   * */
+    @Test
+    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-                        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, VALID_REMARK_BOB);
+        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, VALID_REMARK_BOB);
 
-                        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
