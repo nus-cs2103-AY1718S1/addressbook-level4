@@ -47,7 +47,7 @@ public class RemoveTagCommand extends UndoableCommand {
         }
 
         if (!isTagsExist(tagsToRemove)) {
-           return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
+            return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
         }
 
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
@@ -60,6 +60,10 @@ public class RemoveTagCommand extends UndoableCommand {
                 && tagsToRemove.equals(((RemoveTagCommand) other).tagsToRemove));
     }
 
+    /**
+     * @param tagKeywords
+     * @return true if keywords exist in current tag list
+     */
     public boolean isTagsExist(ArrayList<Tag> tagKeywords) {
         List<Tag> tagList = model.getAddressBook().getTagList();
         return tagKeywords.stream()
