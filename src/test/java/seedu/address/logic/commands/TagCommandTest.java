@@ -17,9 +17,9 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
+import seedu.address.commons.core.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
@@ -54,7 +54,8 @@ public class TagCommandTest {
         assertCommandSuccess(tagCommand, model, expectedMessage, expectedModel);
 
         //testing for change in person tags in second index
-        ReadOnlyPerson personInUnfilteredListTwo = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyPerson personInUnfilteredListTwo = model.getFilteredPersonList()
+                .get(INDEX_SECOND_PERSON.getZeroBased());
         tags = combineTags(personInUnfilteredListTwo, VALID_TAG_FRIEND);
         Person editedPersonTwo = new PersonBuilder(personInUnfilteredListTwo).build();
         model.updatePersonTags(editedPersonTwo, tags);
