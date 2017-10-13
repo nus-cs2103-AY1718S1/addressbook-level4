@@ -5,46 +5,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+Our TeamID is F10-B3.
 
 == Project Team
-
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
 
 === Benjamin Ang
 image::nuse0032202.png[width="150", align="left"]
@@ -52,5 +18,32 @@ image::nuse0032202.png[width="150", align="left"]
 
 Role: Team Member +
 Responsibilities: Command
+
+'''
+
+=== Lai Feng
+image::henryheyhey92.png[width="150", align="left"]
+{empty}[https://github.com/henryheyhey92[github]] [<<laifeng#, portfolio>>]
+
+Role: Team Lead +
+Responsibilities: UI; Testing; Scheduling
+
+'''
+
+=== Ng Ki Kan
+image::yijinl.jpg[width="150", align="left"]
+{empty}[https://github.com/KiKanNG[github]] [<<kikanng#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Storage; Code quality; Integration
+
+'''
+
+=== Ng Jin
+image::labradorites.png[width="150", align="left"]
+{empty}[https://github.com/Labradorites[github]] [<<jinng#, portfolio>>]
+
+Role: Team lead +
+Responsibilities: Logic; UI; Deliverables
 
 '''
