@@ -62,9 +62,9 @@ public class FavouriteCommand extends UndoableCommand {
 
     private String generateSuccessMessage(Person favouriteToggledPerson) {
         if (favouriteToggledPerson.getStatus() == true) {
-            return String.format(MESSAGE_FAVOURITED_PERSON);
+            return String.format(MESSAGE_FAVOURITED_PERSON, favouriteToggledPerson);
         } else {
-            return String.format(MESSAGE_UNFAVOURITED_PERSON);
+            return String.format(MESSAGE_UNFAVOURITED_PERSON, favouriteToggledPerson);
         }
     }
 
