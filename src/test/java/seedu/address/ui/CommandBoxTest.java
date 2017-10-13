@@ -159,7 +159,19 @@ public class CommandBoxTest extends GuiUnitTest {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
         String testString = "";
 
-        //Test 1: Test for single char
+        //Test 1: Test for empty String
+        guiRobot.write("         ");
+        testString = "         ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+        testString = "         ";
+        assertTrue(testString.equals(mySandBox.getText()));
+
+        //Test 2: Test for single char
+        mySandBox.clear();
+        testString = "";
         guiRobot.write(AddCommand.COMMAND_ALIAS);
         testString += AddCommand.COMMAND_ALIAS;
         assertTrue(testString.equals(mySandBox.getText()));
@@ -176,7 +188,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testString += " " + STRING_NAME;
         assertTrue(testString.equals(mySandBox.getText()));
 
-        //Test 2: Test for String with len 2
+        //Test 3: Test for String with len 2
         //String with len 2 will always fail. Even if first char is 'a', it is joined
         //with another char
         mySandBox.clear();
@@ -197,7 +209,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testString += " " + STRING_NAME;
         assertFalse(testString.equals(mySandBox.getText()));
 
-        //Test 3: Test for String with len 3
+        //Test 4: Test for String with len 3
         mySandBox.clear();
         testString = "";
         guiRobot.write(AddCommand.COMMAND_WORD);
