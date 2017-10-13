@@ -112,6 +112,15 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Searching all persons whose name starts with a certain alphabet: 'listalp'
+
+Finds persons whose names start with the given alphabet. +
+Format: 'listalp ALPHABET'
+
+****
+* The search is case sensitive.
+****
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
