@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -23,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<FavouriteStatus> favouriteStatus;
+    private SimpleBooleanProperty status;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -36,6 +38,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.favouriteStatus = new SimpleObjectProperty<>(favouriteStatus);
+        this.status = new SimpleBooleanProperty(favouriteStatus.getStatus());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -116,6 +119,16 @@ public class Person implements ReadOnlyPerson {
     @Override
     public FavouriteStatus getFavouriteStatus() {
         return favouriteStatus.get();
+    }
+
+    @Override
+    public SimpleBooleanProperty statusProperty() {
+        return status;
+    }
+
+    @Override
+    public boolean getStatus() {
+        return status.get();
     }
 
     /**

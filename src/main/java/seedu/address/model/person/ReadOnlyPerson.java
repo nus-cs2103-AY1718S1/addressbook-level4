@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,6 +23,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<FavouriteStatus> favouriteStatusProperty();
     FavouriteStatus getFavouriteStatus();
+    SimpleBooleanProperty statusProperty();
+    boolean getStatus();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 

@@ -14,6 +14,10 @@ public class FavouriteStatus {
         requireNonNull(isFavourite);
         this.isFavourite = isFavourite;
     }
+    
+    public boolean getStatus() { 
+        return isFavourite; 
+    }
 
     @Override
     public boolean equals(Object other) {
