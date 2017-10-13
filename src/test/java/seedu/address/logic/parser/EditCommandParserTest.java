@@ -144,7 +144,7 @@ public class EditCommandParserTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
                 .withSchEmail(VALID_SCH_EMAIL_AMY)
-                .withWebsite(WEBSITE_DESC_AMY)
+                .withWebsite(VALID_WEBSITE_AMY)
                 .withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
