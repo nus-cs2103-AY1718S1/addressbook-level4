@@ -62,22 +62,27 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
+    public void readAndSaveAndBackupAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         AddressBook original = getTypicalAddressBook();
+        AddressBook backup = original;
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+        xmlAddressBookStorage.backupAddressBook(backup);
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertEquals(backup, original);
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+        xmlAddressBookStorage.backupAddressBook(original);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertEquals(backup, original);
 
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
