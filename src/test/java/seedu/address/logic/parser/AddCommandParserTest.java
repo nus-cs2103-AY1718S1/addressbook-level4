@@ -184,6 +184,7 @@ public class AddCommandParserTest {
 
         //invalid birthday
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + SCH_EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + INVALID_BIRTHDAY_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
 
