@@ -5,6 +5,7 @@ import java.util.Set;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import sun.security.x509.AVA;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.
@@ -20,6 +21,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Avatar> avatarProperty();
+    Avatar getAvatar();
     ObjectProperty<Comment> commentProperty();
     Comment getComment();
     ObjectProperty<UniqueTagList> tagProperty();
