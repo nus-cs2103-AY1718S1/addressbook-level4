@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -28,6 +29,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_SCH_EMAIL + "SCHOOL EMAIL "
+            + PREFIX_WEBSITE + "WEBSITE "
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY]"
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -36,6 +38,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_SCH_EMAIL + "e0001111@u.nus.edu "
+            + PREFIX_WEBSITE + "https://www.facebook.com/johnDoe"
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_BIRTHDAY + "12/02/1998 "
             + PREFIX_TAG + "friends "
