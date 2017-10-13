@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
 public class Remark {
 
     public static final String MESSAGE_REMARK_CONSTRAINTS =
-            "Person remark can take any values, and it should not be blank";
+            "Person remark can take any values, and it can be blank";
 
 
     public final String value;
