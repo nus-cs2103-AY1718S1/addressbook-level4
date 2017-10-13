@@ -13,7 +13,7 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.model.person.Remark;
 
 /**
- * 
+ *
  */
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
