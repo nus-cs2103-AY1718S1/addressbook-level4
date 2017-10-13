@@ -13,7 +13,7 @@ work with.
 == Project Team
 
 === Raisa Kabir
-image::raisa.jpg[width="150", height="150", align="left"]
+image::raisa2010.png[width="150", height="150", align="left"]
 {empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead
@@ -22,7 +22,7 @@ Responsibilities: Documentation + UI
 '''
 
 === Tan Pei Quan
-image::tpq95.jpg[width="150", height="150", align="left"]
+image::tpq95.png[width="150", height="150", align="left"]
 {empty}[http://github.com/tpq95[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Tester
@@ -31,7 +31,7 @@ Responsibilities: Model
 '''
 
 === Tang Bo Yang
-image::tby1994.jpg[width="120", height="150" align="left"]
+image::tby1994.png[width="120", height="150" align="left"]
 {empty}[http://github.com/tby1994[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Integration Manager
@@ -40,7 +40,7 @@ Responsibilities: Scheduling and Tracking + Logic
 '''
 
 === Pang Er Yao
-image::eryao95.jpg[width="120", height="150" align="left"]
+image::eryao95.png[width="120", height="150" align="left"]
 {empty}[http://github.com/eryao95[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Quality Manager
