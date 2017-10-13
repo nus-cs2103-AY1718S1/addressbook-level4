@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -28,18 +27,15 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_TAG_NOT_REMOVED = "Tag(s) not removed";
 
     private final ArrayList<Tag> tagsToRemove;
-    private final int noTagsToRemove;
 
-    public RemoveTagCommand(ArrayList<Tag> tagsToRemove, int noTagsToRemove) {
+    public RemoveTagCommand(ArrayList<Tag> tagsToRemove) {
 
         this.tagsToRemove = tagsToRemove;
-        this.noTagsToRemove = noTagsToRemove;
 
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> oldPersonList = model.getFilteredPersonList();
         try {
             for (Tag tag : tagsToRemove) {
                 model.removeTag(tag);
@@ -49,9 +45,9 @@ public class RemoveTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-        List<ReadOnlyPerson> newPersonList = model.getFilteredPersonList();
-        if (oldPersonList.equals(newPersonList)) {
-            return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
+
+        if (!isTagsExist(tagsToRemove)) {
+           return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
         }
 
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
@@ -62,5 +58,11 @@ public class RemoveTagCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof RemoveTagCommand // instanceof handles nulls
                 && tagsToRemove.equals(((RemoveTagCommand) other).tagsToRemove));
+    }
+
+    public boolean isTagsExist(ArrayList<Tag> tagKeywords) {
+        List<Tag> tagList = model.getAddressBook().getTagList();
+        return tagKeywords.stream()
+                .anyMatch(keyword -> tagList.contains(keyword));
     }
 }

@@ -37,7 +37,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
                 throw new ParseException(ive.getMessage(), ive);
             }
         }
-        return new RemoveTagCommand(tagToRemove, tagToRemove.size());
+        return new RemoveTagCommand(tagToRemove);
     }
 
 
