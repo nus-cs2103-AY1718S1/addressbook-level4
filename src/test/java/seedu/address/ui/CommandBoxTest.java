@@ -109,6 +109,30 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void handleKeyPressControl() {
+        //Alt shifts the caret all the way right
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        //Setting up of sandbox environment for testing
+        guiRobot.write("Test");
+        assertTrue("Test".equals(mySandBox.getText()));
+
+        assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
+        //Caret shifted left -> Returns true
+        guiRobot.push(KeyCode.ALT);
+        //Ensure caret is at the left
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 4);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        //Push caret to right
+        guiRobot.push(KeyCode.CONTROL);
+        //Ensure caret is at the right
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertTrue(mySandBox.getCaretPosition() == 4);
+    }
+
+    @Test
     public void testGetTextField() {
         TextField myTextField = commandBoxForTesting.getCommandTextField();
         guiRobot.write("Same TextField Test");
