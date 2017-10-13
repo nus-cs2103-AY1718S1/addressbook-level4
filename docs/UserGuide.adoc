@@ -168,6 +168,24 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+==== To delete multiple persons:
+
+Deletes the specified person from the address book. +
+Format: `deletem INDEX...`
+
+****
+* Deletes the persons at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The indexes *must be listed in descending order* e.g. 8 7 6 ...
+****
+
+Examples:
+
+* `list` +
+`deletem 8 7` +
+Deletes the 8th and 7th person in the address book.
+
 ==== To delete contacts with a certain tag [Coming in v2.0]:
 
 Deletes all contacts that have a certain tag from the address book. +
