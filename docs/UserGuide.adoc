@@ -217,6 +217,37 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Add multiple contacts at once : `Add range` (Coming in v1.5)
+
+Add multiple contacts to addressBook at once. +
+Format: `Add [numberOfContacts] [Details]`
+
+=== Add photos : (Coming in v1.5)
+
+Add photos to contact details in addressBook. +
+
+=== Delete Tag : (Coming in v1.5)
+
+Delete specific tag from all contacts. +
+
+=== Clear Tag : (Coming in v1.5)
+
+Clear all tags from specific contact. +
+
+=== Retrieve : (Coming in v1.5)
+
+Retrieve recently deleted list for past 3 days/past 30 contacts.
+
+=== Moving contacts : `move` (Coming in v2.0)
+
+Move designated contacts from one group to another group. +
+Format: `move`
+
+=== Export contact data : `export` (Coming in v2.0)
+
+Export contact data from addressBook to google calendar. +
+Format: `export`
+
 === Exiting the program : `exit`
 
 Exits the program. +
