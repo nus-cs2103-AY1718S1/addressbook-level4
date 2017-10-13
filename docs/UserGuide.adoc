@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Ark - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -14,6 +14,26 @@ endif::[]
 
 By: `Team T16-B1`      Since: `Oct 2017`      Licence: `MIT`
 
+== Introduction
+Unable to keep track of all your deliveries?
+Unsure which parcel is a more urgent delivery?
+Did you ever wish there was a way you could easily plan your delivery route?
+Now with Ark, you no longer need to worry about late deliveries and route planning.
+Leave the heavy thinking to us and just deliver away! +
+
+Ark is a delivery parcel manager with the ability to keep track of your delivery details.
+Such details include recipient's names, delivery due dates, locations, and tags.
+Ark is also able to help you plan out your delivery route based using google maps
+to help you get from one destination to another. +
+
+== About
+This user guide gives you an overall view of the features of Ark and how to get started using Ark.
+The user guide includes all of Arks functions and how to use them,
+as well as providing you examples for easy reference. +
+
+Ark assumes that you already have the postal codes of the delivery locations
+of every parcel and bases its route planning base on that.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -22,8 +42,8 @@ By: `Team T16-B1`      Since: `Oct 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `ark.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Ark application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -32,10 +52,10 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all parcels
+* *`list`* : lists all parcels.
 * **`clear`**` : clears the list of parcels.
-* **`delete`**`3` : deletes the 3rd parcel shown in the current list
-* *`exit`* : exits the app
+* **`delete`**`3` : deletes the 3rd parcel shown in the current list.
+* *`exit`* : exits the app.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
@@ -45,8 +65,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add i/PARCEL_ID`, `PARCEL_ID` is a parameter which can be used as `add i/1110201700000001`.
-* Items in square brackets are optional e.g `i/PARCEL_ID [t/TAG]` can be used as `i/1110201700000001 t/friend` or as `i/1110201700000001`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items in square brackets are optional e.g `i/PARCEL_ID [t/TAG]` can be used as `i/1110201700000001 t/fragile` or as `i/1110201700000001`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
 * Parameters can be in any order e.g. if the command specifies `i/PARCEL_ID p/PHONE_NUMBER`, `p/PHONE_NUMBER i/PARCEL_ID` is also acceptable.
 ====
 
@@ -56,7 +76,7 @@ Format: `help`
 
 === Adding a parcel: `add`
 
-Adds a parcel to the address book +
+Adds a parcel to the Ark +
 Format: `add i/PARCEL_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -65,16 +85,16 @@ A parcel can have any number of tags (including 0)
 Examples:
 
 * `add i/11111111111 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121`
-* `add i/11111112222 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison S123123 p/1234567 t/criminal`
+* `add i/11111112222 n/Betsy Crowe t/friend e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile`
 
 === Listing all parcels : `list`
 
-Shows a list of all parcels in the address book. +
+Shows a list of all parcels in the Ark. +
 Format: `list`
 
 === Editing a parcel : `edit`
 
-Edits an existing parcel in the address book. +
+Edits an existing parcel in the Ark. +
 Format: `edit INDEX [i/PARCEL_ID] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -90,7 +110,7 @@ Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st parcel to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd parcel to be `Betsy Crower` and clears all existing tags.
+Edits the recipient's name of the 2nd parcel to be `Betsy Crower` and clears all existing tags.
 
 === Locating parcels by name: `find`
 
@@ -100,7 +120,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the recipients's name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -114,7 +134,7 @@ Returns any parcel belonging to people with names `Betsy`, `Tim`, or `John`
 
 === Deleting a parcel : `delete`
 
-Deletes the specified parcel from the address book. +
+Deletes the specified parcel from the Ark. +
 Format: `delete INDEX`
 
 ****
@@ -127,7 +147,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd parcel in the address book.
+Deletes the 2nd parcel in the Ark.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st parcel in the results of the `find` command.
@@ -137,8 +157,11 @@ Deletes the 1st parcel in the results of the `find` command.
 Selects the parcel identified by the index number used in the last parcel listing. +
 Format: `select INDEX`
 
+[TIP]
+A parcel can also be selected by mousing over and clicking on the parcel card in the parcel list.
+
 ****
-* Selects the parcel and loads the Google map page showing the location of the receiver of the parcel at the specified `INDEX`.
+* Selects the parcel and loads the Google map page showing the delivery location of the parcel at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -147,7 +170,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd parcel in the address book.
+Selects the 2nd parcel in the Ark.
 * `find Betsy` +
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
@@ -159,18 +182,20 @@ Format: `history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display
+the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the Ark to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Commands that can be undone: those commands that modify the Ark's content
+(`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -214,7 +239,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the Ark. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -224,8 +249,11 @@ Format: `exit`
 
 === Autocomplete
 
-Address book comes with tab autocompletion which unix users will be familiar with. +
-To make use of this feature, simply key in the first few characters of the command you with to enter and press the `Tab` key. Address book will then fill in the rest of the command for you.
+Address book comes with tab autocompletion which is able to complete a command for you
+without requiring you to type out the command fully. +
+To make use of this feature, simply key in the first few characters of the command you with to enter and press the `Tab` key.
+Address book will then fill in the rest of the command for you.
+Then press `Enter` key to enter the command.
 
 === Saving the data
 
@@ -265,7 +293,7 @@ e.g.`select 2`
 
 == Features Coming in v2.0
 
-In `Ark v2.0`, the delivery vendor will be able to do the following: +
+In `ARK v2.0`, the delivery vendor will be able to do the following: +
 
 * Add a new `Parcel`
 * Delete a `Parcel`
