@@ -156,7 +156,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
-      
         assertCommandSuccess(command, toAdd);
 
         /* Case: filters the person list before adding -> added */
@@ -242,7 +241,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + INVALID_TAG_DESC;
-      
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 

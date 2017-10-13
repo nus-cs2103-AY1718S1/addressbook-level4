@@ -139,7 +139,7 @@ public class EditCommandParserTest {
                 .withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-      
+
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

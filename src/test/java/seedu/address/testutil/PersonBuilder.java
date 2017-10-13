@@ -124,7 +124,7 @@ public class PersonBuilder {
             throw new IllegalArgumentException("school email is expected to be unique.");
         }
         return this;
-    }          
+    }
 
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.

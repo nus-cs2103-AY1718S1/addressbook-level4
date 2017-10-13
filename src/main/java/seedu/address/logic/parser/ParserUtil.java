@@ -80,7 +80,7 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-  
+
     /**
      * Parses a {@code Optional<String> schEmail} into an {@code Optional<SchEmail>} if {@code schEmail} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

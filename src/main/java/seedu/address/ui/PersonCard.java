@@ -49,7 +49,6 @@ public class PersonCard extends UiPart<Region> {
     private Label schEmail;
     @FXML
     private Label birthday;
-  
     @FXML
     private FlowPane tags;
 
