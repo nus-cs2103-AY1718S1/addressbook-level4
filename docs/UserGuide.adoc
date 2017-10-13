@@ -227,6 +227,23 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Features(Coming in v2.0)
+
+=== Add relationship
+
+Enters the indices of the two people in between whom the user wants to add an relationship +
+as seen in the last shown list. +
+Format: `Add Relationship NAME1 NAME2`
+
+=== Add named relationship between people
+
+Enters the indices of the two people in between whom the user wants to add an relationship +
+as seen in the last shown list and the name of the relationship. +
+If the relationship between these two people is not in the address book, one new relationship will be created upon +
+entering this command and given a name. +
+The order of the names of people entered does not matter.
+Format: `Add Named Relationship NAME1 NAME 2 NAMEOFRELATIONSHIP`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
