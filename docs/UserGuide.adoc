@@ -112,22 +112,35 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Advance finding (NEW): `finds`
+=== Locating persons by names or phone numbers or tags: `finds`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `finds [OPTIONS]/KEYWORD `
+Finds persons who contain any of the given keywords. +
+Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
 
 ****
-* The search is allows searching of user details based on additional details
-* Supports finding based on phone numbers and tags.
+* The search for name is case insensitive. e.g `hans` will match `Hans`
+* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
+* The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
+* Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `finds p\91168888` +
-Returns person with phone number `91168888`
-* `finds t\friends` +
-Returns any person with `friends` tag
+* `finds n/John` +
+Returns `john` and `John Doe`
+* `finds n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `finds p/91234567` +
+Returns any person having phone number `91234567` exactly
+* `finds p/91234567 12345678` +
+Returns any person having phone number `91234567` or `12345678` exactly
+* `finds t/[friends]` +
+Returns any person having tag `[friends]` exactly
+* `finds t/[friends] [colleagues]` +
+Returns any person having tags `[friends]` or `[colleagues]` exactly
 
 === Deleting a person : `delete`
 
