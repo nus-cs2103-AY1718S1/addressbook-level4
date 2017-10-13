@@ -93,8 +93,9 @@ public class DetagCommandTest {
         for (ReadOnlyPerson personNext : model.getFilteredPersonList()) {
             Set<Tag> tagList = personNext.getTags();
             Tag tag = tagList.iterator().next();
-            if(!tag.equals(tagBase))
+            if(!tag.equals(tagBase)) {
                 return tag;
+            }
         }
         return null;
     }
