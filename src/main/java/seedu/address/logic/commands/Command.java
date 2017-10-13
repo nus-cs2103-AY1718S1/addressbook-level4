@@ -15,11 +15,6 @@ public abstract class Command {
     protected UndoRedoStack undoRedoStack;
 
     /**
-     * Returns the keyword used to call the command
-     */
-    public abstract String getCommandWord();
-
-    /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
      * @param displaySize used to generate summary

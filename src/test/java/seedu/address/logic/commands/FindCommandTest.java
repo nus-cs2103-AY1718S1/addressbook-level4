@@ -112,12 +112,6 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList());
     }
 
-    @Test
-    public void get_commandWord() {
-        FindCommand command = prepareCommand("stub");
-        assertEquals(command.getCommandWord(), FindCommand.COMMAND_WORD);
-    }
-
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */

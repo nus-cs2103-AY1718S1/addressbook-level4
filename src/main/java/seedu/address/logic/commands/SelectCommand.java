@@ -50,7 +50,4 @@ public class SelectCommand extends Command {
                 && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

@@ -69,7 +69,4 @@ public class AliasCommand extends UndoableCommand {
                 && this.command.equals(((AliasCommand) other).command)); // state check
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

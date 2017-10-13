@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -41,10 +40,5 @@ public class ListCommandTest {
     public void execute_listIsFiltered_showsEverything() {
         showFirstPersonOnly(model);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-    @Test
-    public void get_commandWord() {
-        assertEquals(listCommand.getCommandWord(), ListCommand.COMMAND_WORD);
     }
 }

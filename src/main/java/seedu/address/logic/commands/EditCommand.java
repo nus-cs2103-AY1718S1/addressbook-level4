@@ -215,7 +215,4 @@ public class EditCommand extends UndoableCommand {
         }
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

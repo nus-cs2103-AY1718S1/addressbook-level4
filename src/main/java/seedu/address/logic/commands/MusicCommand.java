@@ -16,10 +16,6 @@ public class MusicCommand extends Command {
 
     private static MediaPlayer mediaPlayer;
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
     @Override
     public CommandResult execute() {
         int randomNum = 1 + (int) (Math.random() * 1);

@@ -21,7 +21,4 @@ public class HelpCommand extends Command {
         return new CommandResult(SHOWING_HELP_MESSAGE);
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

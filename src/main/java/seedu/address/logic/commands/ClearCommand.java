@@ -19,7 +19,4 @@ public class ClearCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

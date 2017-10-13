@@ -36,7 +36,4 @@ public class HistoryCommand extends Command {
         this.history = history;
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

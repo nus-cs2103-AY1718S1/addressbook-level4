@@ -34,7 +34,4 @@ public class UndoCommand extends Command {
         this.undoRedoStack = undoRedoStack;
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }

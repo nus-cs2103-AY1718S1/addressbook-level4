@@ -49,12 +49,6 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void get_commandWord() {
-        RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
-        assertEquals(standardCommand.getCommandWord(), RemarkCommand.COMMAND_WORD);
-    }
-
-    @Test
     public void generate_successMessage() {
         RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
         RemarkCommand deleteCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));

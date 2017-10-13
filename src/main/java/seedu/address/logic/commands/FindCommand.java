@@ -34,7 +34,4 @@ public class FindCommand extends Command {
                 && this.predicate.equals(((FindCommand) other).predicate)); // state check
     }
 
-    public String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }
