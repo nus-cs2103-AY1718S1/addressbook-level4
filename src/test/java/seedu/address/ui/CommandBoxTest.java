@@ -32,7 +32,13 @@ public class CommandBoxTest extends GuiUnitTest {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_BLOODTYPE = new Prefix("b/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
-    public static final Prefix PREFIX_REMARK = new Prefix("r/");
+
+    public static final String STRING_NAME = PREFIX_NAME.toString();
+    public static final String STRING_PHONE = PREFIX_PHONE.toString();
+    public static final String STRING_EMAIL = PREFIX_EMAIL.toString();
+    public static final String STRING_ADDRESS = PREFIX_ADDRESS.toString();
+    public static final String STRING_BLOODTYPE = PREFIX_BLOODTYPE.toString();
+    public static final String STRING_TAG = PREFIX_TAG.toString();
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -143,7 +149,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleInvalidRightKeyPress(){
+    public void handleInvalidRightKeyPress() {
         //Test to ensure add command hack does not trigger as long as
         //caret is within the text
 
@@ -174,47 +180,106 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleValidRightKeyPressWithAddOnly(){
+    public void handleValidRightKeyPressWithAddOnly() {
         //Test to ensure add command hack triggers as long as
         //caret is at the end of the text
 
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
 
-        //Test 1: Test variations of "add" and "a" are valid & Case insensitive
+        //Test variations of "add" and "a" are valid & Case insensitive
         //Mainly testing all code in CommandBox:IsAdd()
         guiRobot.write("Add");
         assertTrue("Add".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
-        assertTrue("Add n/".equals(mySandBox.getText()));
+        assertTrue(("Add " + STRING_NAME).equals(mySandBox.getText()));
         mySandBox.clear();
         guiRobot.write("aDd ");
         assertTrue("aDd ".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
-        assertTrue("aDd  n/".equals(mySandBox.getText()));
+        assertTrue(("aDd  " + STRING_NAME).equals(mySandBox.getText()));
         mySandBox.clear();
         guiRobot.write(" add");
         assertTrue(" add".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
-        assertTrue(" add n/".equals(mySandBox.getText()));
+        assertTrue((" add " + STRING_NAME).equals(mySandBox.getText()));
         mySandBox.clear();
         guiRobot.write("A");
         assertTrue("A".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
-        assertTrue("A n/".equals(mySandBox.getText()));
+        assertTrue(("A " + STRING_NAME).equals(mySandBox.getText()));
         mySandBox.clear();
         guiRobot.write("a ");
         assertTrue("a ".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
-        assertTrue("a  n/".equals(mySandBox.getText()));
+        assertTrue(("a  " + STRING_NAME).equals(mySandBox.getText()));
         mySandBox.clear();
         guiRobot.write(" A");
         assertTrue(" A".equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
-        assertTrue(" A n/".equals(mySandBox.getText()));
+        assertTrue((" A " + STRING_NAME).equals(mySandBox.getText()));
         //Ensure that caret is set to far right after each concatenation
         assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
+    }
+
+    @Test
+    public void handleValidRightKeyPressPrefixInOrder() {
+        //Add Command allows users to enter the prefix in any order
+        //The Add Command hack accounts for missing prefix or jump in prefix but for this test
+        //it will focus on testing under the assumption that the prefix in the right order: n p e a b t
+
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString = "add";
+
+        guiRobot.write("add");
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue((testString).equals(mySandBox.getText()));
+        //Even if user did not enter any input, p/ will be automatically added
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_PHONE;
+        assertTrue((testString).equals(mySandBox.getText()));
+        //Ensure that caret is set to far right after concatenation
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        //Ensure that hack does not run if caret is not at end of line
+        int currentCaretPosition = mySandBox.getCaretPosition();
+        mySandBox.positionCaret(currentCaretPosition - 1);
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue(testString.equals(mySandBox.getText()));
+        //Return caret back to original position
+        guiRobot.push(KeyCode.CONTROL);
+        //Simulate User Input
+        guiRobot.write("98765432");
+        testString += "98765432";
+        //Continue pushing
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_EMAIL;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_ADDRESS;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_BLOODTYPE;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+        //Ensure that even though there is a tag input, more tag are added if user requires
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+        //Final assurance that caret is at far right
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
     }
 
     @Test
