@@ -5,9 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
-import java.util.TreeSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,12 +33,14 @@ public class AliasesTest {
 
     @Test
     public void getAllAliases_withAliases_returnsAllAliases() {
-        assertEquals(new TreeSet<String>(), aliases.getAllAliases());
+        Set<String> allAliases = new HashSet<>(aliases.getAllAliases());
 
         aliases.addAlias(LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD);
         aliases.addAlias(ADD_COMMAND_ALIAS, AddCommand.COMMAND_WORD);
-        assertEquals(new TreeSet<String>(
-                Arrays.asList(LIST_COMMAND_ALIAS, ADD_COMMAND_ALIAS)), aliases.getAllAliases());
+        allAliases.add(LIST_COMMAND_ALIAS);
+        allAliases.add(ADD_COMMAND_ALIAS);
+
+        assertEquals(allAliases, aliases.getAllAliases());
     }
 
     @Test
@@ -60,9 +62,13 @@ public class AliasesTest {
 
     @Test
     public void removeAlias_validCommand_removesAlias() {
+        Set<String> allAliases = aliases.getAllAliases();
         aliases.addAlias(LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD);
+
         assertEquals(true, aliases.removeAlias(LIST_COMMAND_ALIAS));
-        assertEquals(new TreeSet<String>(), aliases.getAllAliases());
+        allAliases.remove(LIST_COMMAND_ALIAS);
+
+        assertEquals(allAliases, aliases.getAllAliases());
     }
 
     @Test
@@ -72,14 +78,20 @@ public class AliasesTest {
     }
 
     @Test
-    public void toString_emptyAliases_returnsEmptySet() {
-        assertEquals("{}", aliases.toString());
-    }
-
-    @Test
     public void toString_withAliases_returnsCorrectString() {
         aliases.addAlias(LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD);
-        assertEquals("{" + LIST_COMMAND_ALIAS + "=" + ListCommand.COMMAND_WORD + "}", aliases.toString());
+
+        StringBuilder string = new StringBuilder("{");
+        for (String alias : aliases.getAllAliases()) {
+            string.append(alias);
+            string.append("=");
+            string.append(aliases.getCommand(alias));
+            string.append(", ");
+        }
+        string.delete(string.length() - 2, string.length());
+        string.append("}");
+
+        assertEquals(string.toString(), aliases.toString());
     }
 
     @Test

@@ -31,6 +31,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Aliases;
@@ -65,6 +66,7 @@ public class ParserUtil {
         Icons.put(MusicCommand.COMMAND_WORD, Feather.FTH_PLAY);
         Icons.put(AddCommand.COMMAND_WORD, Feather.FTH_PLUS);
         Icons.put(AliasCommand.COMMAND_WORD, Feather.FTH_LINK);
+        Icons.put(UnaliasCommand.COMMAND_WORD, Feather.FTH_CROSS);
         Icons.put(EditCommand.COMMAND_WORD, Feather.FTH_FILE_ADD);
         Icons.put(SelectCommand.COMMAND_WORD, Feather.FTH_HEAD);
         Icons.put(DeleteCommand.COMMAND_WORD, Feather.FTH_TRASH);

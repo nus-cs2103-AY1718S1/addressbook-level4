@@ -48,14 +48,14 @@ public class UnaliasCommandTest {
     }
 
     @Test
-    public void execute_invalidAlias_throwsNoSuchElementException() throws Exception {
-        UnaliasCommand unaliasCommand = new UnaliasCommand(LIST_COMMAND_ALIAS);
+    public void execute_invalidAlias_fails() throws Exception {
+        UnaliasCommand unaliasCommand = new UnaliasCommand("invalid-alias");
         unaliasCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
         assertCommandFailure(
                 unaliasCommand,
                 model,
-                String.format(UnaliasCommand.MESSAGE_NO_SUCH_ALIAS, LIST_COMMAND_ALIAS)
+                String.format(UnaliasCommand.MESSAGE_NO_SUCH_ALIAS, "invalid-alias")
         );
     }
 

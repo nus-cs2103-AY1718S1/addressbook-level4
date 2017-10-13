@@ -25,7 +25,7 @@ public class Aliases {
     /*
      * We initialise the map with aliases for frequently used commands. Users can add other aliases themselves.
      */
-    {
+    public Aliases() {
         map.put("a", AddCommand.COMMAND_WORD);
         map.put("d", DeleteCommand.COMMAND_WORD);
         map.put("e", EditCommand.COMMAND_WORD);

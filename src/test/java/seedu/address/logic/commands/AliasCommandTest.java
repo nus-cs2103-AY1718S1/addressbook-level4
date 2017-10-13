@@ -12,6 +12,7 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.model.Aliases;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -53,11 +54,20 @@ public class AliasCommandTest {
         Command aliasListCommand = new AliasCommand();
         aliasListCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
+        Aliases aliases = UserPrefs.getInstance().getAliases();
+
+        StringBuilder string = new StringBuilder("");
+        for (String alias : aliases.getAllAliases()) {
+            string.append(alias);
+            string.append("=");
+            string.append(aliases.getCommand(alias));
+            string.append("\n");
+        }
+
         assertCommandSuccess(
                 aliasListCommand,
                 model,
-                String.format(AliasCommand.MESSAGE_LIST_SUCCESS,
-                        String.format("%1$s=%2$s\n", LIST_COMMAND_ALIAS, ListCommand.COMMAND_WORD)),
+                String.format(AliasCommand.MESSAGE_LIST_SUCCESS, string),
                 model
         );
     }

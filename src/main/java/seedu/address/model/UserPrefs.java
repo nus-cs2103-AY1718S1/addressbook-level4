@@ -25,6 +25,9 @@ public class UserPrefs {
     }
 
     public static UserPrefs getInstance() {
+        if (instance == null) {
+            return new UserPrefs();
+        }
         return instance;
     }
 

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.NoSuchElementException;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
@@ -25,13 +26,13 @@ public class UnaliasCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         Aliases aliases = UserPrefs.getInstance().getAliases();
 
         try {
             aliases.removeAlias(alias);
         } catch (NoSuchElementException e) {
-            return new CommandResult(String.format(MESSAGE_NO_SUCH_ALIAS, alias));
+            throw new CommandException(String.format(MESSAGE_NO_SUCH_ALIAS, alias));
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, alias));
