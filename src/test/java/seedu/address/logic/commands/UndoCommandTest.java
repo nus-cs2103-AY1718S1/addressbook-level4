@@ -33,6 +33,7 @@ public class UndoCommandTest {
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
 
+
     @Test
     public void execute() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
@@ -49,9 +50,15 @@ public class UndoCommandTest {
 
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        //need to refresh the Undo command since previously its step was reduced to 0
+        undoCommand = new UndoCommand();
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // no command in undoStack
+        // no command in undoStack. Refresh the undo command again
+        undoCommand = new UndoCommand();
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
+
 }

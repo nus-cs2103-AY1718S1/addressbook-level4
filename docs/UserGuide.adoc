@@ -179,12 +179,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the address book to the state before the _undoable_ commands were executed, specified by the the number of commands to undo +
+Format: `undo [STEPS]` +
+Alternative format: `undo all`, which undoes all changes made in current session.
+
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `remark` and `clear`).
 ====
 
 Examples:
@@ -199,9 +201,15 @@ Examples:
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
+`delete 2` +
+`delete 2` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo 2` (reverses the 2 delete commands)
+
+* `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665` +
+`delete 1` +
+`delete 2` +
+`undo all` (reverses both delete commands and add command)
 
 === Redoing the previously undone command : `redo`
 
