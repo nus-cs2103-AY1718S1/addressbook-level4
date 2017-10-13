@@ -3,6 +3,18 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.commons.util.StringUtil.levenshteinDistance;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_ADDRESS_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_EMAIL_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_EMAIL_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_EMAIL_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_ASCENDING;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DEFAULT;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DESCENDING;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +25,7 @@ import java.util.stream.Collectors;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -171,6 +184,63 @@ public class Person implements ReadOnlyPerson {
                 || isTagSetJointKeywordSet(keyWords);
     }
 
+    /**
+     * Returns the default compareTo integer value for comparing against another person
+     * @param otherPerson to be compare to
+     * @return object.compareTo(other) value for the two persons.
+     */
+    @Override
+    public int compareTo(ReadOnlyPerson otherPerson) {
+        int c;
+        if ((c = getName().compareTo(otherPerson.getName())) != 0) {
+            return c;
+        } else if ((c = getPhone().compareTo(otherPerson.getPhone())) != 0) {
+            return c;
+        } else if ((c = getEmail().compareTo(otherPerson.getEmail())) != 0) {
+            return c;
+        } else {
+            return getAddress().compareTo(otherPerson.getAddress());
+        }
+    }
+
+    /**
+     * Returns the compareTo integer value for a specified sortArgument.
+     * @param otherPerson to be compared to
+     * @param sortArgument sortArgument formatted field of the person to be compared
+     * @return object.compareTo(other) value for the two persons or the default
+     * person.compareTo(otherPerson) if sort argument is invalid.
+     */
+    @Override
+    public int compareTo(ReadOnlyPerson otherPerson, SortArgument sortArgument) {
+        if (sortArgument.equals(SORT_ARGUMENT_NAME_DEFAULT)) {
+            return getName().compareTo(otherPerson.getName());
+        } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_DEFAULT)) {
+            return getPhone().compareTo(otherPerson.getPhone());
+        } else if (sortArgument.equals(SORT_ARGUMENT_EMAIL_DEFAULT)) {
+            return getEmail().compareTo(otherPerson.getEmail());
+        } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_DEFAULT)) {
+            return getAddress().compareTo(otherPerson.getAddress());
+        } else if (sortArgument.equals(SORT_ARGUMENT_NAME_DESCENDING)) {
+            return otherPerson.getName().compareTo(getName());
+        } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_DESCENDING)) {
+            return otherPerson.getPhone().compareTo(getPhone());
+        } else if (sortArgument.equals(SORT_ARGUMENT_EMAIL_DESCENDING)) {
+            return otherPerson.getEmail().compareTo(getEmail());
+        } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_DESCENDING)) {
+            return otherPerson.getAddress().compareTo(getAddress());
+        } else if (sortArgument.equals(SORT_ARGUMENT_NAME_ASCENDING)) {
+            return getName().compareTo(otherPerson.getName());
+        } else if (sortArgument.equals(SORT_ARGUMENT_PHONE_ASCENDING)) {
+            return getPhone().compareTo(otherPerson.getPhone());
+        } else if (sortArgument.equals(SORT_ARGUMENT_EMAIL_ASCENDING)) {
+            return getEmail().compareTo(otherPerson.getEmail());
+        } else if (sortArgument.equals(SORT_ARGUMENT_ADDRESS_ASCENDING)) {
+            return getAddress().compareTo(otherPerson.getAddress());
+        } else {
+            return compareTo(otherPerson);
+        }
+    }
+
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -199,5 +269,4 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-
 }

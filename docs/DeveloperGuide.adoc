@@ -409,6 +409,86 @@ to the currently examined name word in which the contact will be added.
 **Cons:** Developers need to spend more work maintaining more components including storage.
 // end::findClose[]
 
+// tag::sorting[]
+=== Sorting mechanism
+The sorting mechanism is integrated into the `list` and `find` commands which resides in the application's `logic` component.
+It supports sorting in ascending or descending order of most fields of a person (e.g. [underline]#Name#, [underline]#Phone#).
+The sort commands update the state of the application at the model level, which resides in `ModelManager`,
+via the method `updateSortComparator`.
+
+The activity diagram for a sort can be loosely described as seen in the figure below:
+
+image::SortingActivityDiagram.png[width="800"]
+
+[NOTE]
+Sort arguments are case-sensitive.
+
+The case for a list command:
+
+1. A user executes a `list` command with sort arguments.
+2. The application checks for invalid sort arguments.
+4. The application model creates a comparator using the sort arguments, in order.
+5. The application displays the results in the specified sort order.
+
+The case for a find command:
+
+1. A user executes a `find` command.
+2. The application separates the command arguments into find data arguments and sort arguments.
+3. The application executes a search on the find arguments.
+4. The application model creates a comparator using the sort arguments, in order.
+5. The application displays the filtered results in the specified sort order.
+
+[NOTE]
+Find cannot work on name words matching sort arguments.
+
+The list command's `execute()` implementation before sorting implementation:
+[source,java]
+----
+@Override
+public CommandResult execute() {
+    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+The list command's `execute()` implementation after sorting implementation:
+
+[source,java]
+----
+@Override
+public CommandResult execute() {
+    model.updateSortComparator(sortArguments);
+    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+Notice that `model.updateSortComparator(sortArguments)` is added to the command logic. The update will give the model a
+comparator before executing a sort and filter which is handled by the event consumer.
+
+==== Design Considerations
+
+**Aspect:** Integrating sort +
+**Alternative 1 (current choice):** Integrate sort into existing commands. +
+**Pros:** User can quickly sort and list or find the data as specified without executing another separate command. +
+**Cons:** User might need to use the sort arguments for other purposes (e.g. `find n/` does not return anyone matching `n/`). +
+**Pros:** Adds onto existing functionality and reduces clutter and unnecessary creation of a new command. +
+**Cons:** Bad SLAP on a user level. +
+**Alternative 2:** Create a new `sort` command. +
+**Pros:** User can decide when to sort the current list view +
+**Cons:** User needs an additional step before sorting a list.
+
+---
+
+**Aspect:** Resetting sort comparator on `add` commands +
+**Alternative 1 (current choice):** Reset the current displayed list on an `add` command. +
+**Pros:** The displayed list always complies with the model comparator. +
+**Cons:** User might need to continue operating on the previous listing. +
+**Alternative 2:** Append added person to the current list view. +
+**Pros:** Users can immediately `edit` the person using the last listing index. +
+**Cons:** The displayed listing will not comply with the model comparator.
+// end::sorting[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
