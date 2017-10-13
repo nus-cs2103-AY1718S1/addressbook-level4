@@ -13,6 +13,9 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
+    public static final String PANE_COLOR_EVEN = "#E25555";
+    public static final String PANE_COLOR_ODD = "#e04545";
+
     private static final String FXML = "PersonListCard.fxml";
 
     /**
@@ -24,6 +27,8 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+
+    private String color;
 
     @FXML
     private HBox cardPane;
@@ -50,6 +55,12 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        setHBoxColor(displayedIndex);
+    }
+
+    private void setHBoxColor(int displayedIndex) {
+        color = displayedIndex % 2 == 0 ? PANE_COLOR_EVEN : PANE_COLOR_ODD;
+        cardPane.setStyle("-fx-background-color: " + color);
     }
 
     /**
@@ -93,5 +104,13 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * To check if the HBoxColor is correct
+     *
+     */
+    public String getHBoxColor() {
+        return this.color;
     }
 }
