@@ -17,6 +17,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -111,6 +112,24 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by phone: `findPhone`
+
+Finds persons whose names contain any of the given keywords. +
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the phone number is searched.
+* Numbers containing keywords will be matched e.g. `111` will match `911100`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `222 333` will return `0222`, `9333`
+****
+
+Examples:
+
+* `findPhone 000` +
+Returns `10001` and `191000`
+* `find 111 222 333` +
+Returns any person having names `1111`, `0222`, or `9333`
 
 === Deleting a person : `delete`
 
@@ -243,6 +262,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *FindByPhone* : `findPhone KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPhone 000 111`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -250,3 +271,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Coming soon in V2.0
+* * Add birthdays
+* * Customize UI colour theme
