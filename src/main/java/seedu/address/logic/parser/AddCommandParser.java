@@ -20,6 +20,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.FavouriteStatus;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -45,11 +46,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Remark remark = new Remark(""); // add command does not allow adding remarks straight away
             FavouriteStatus favouriteStatus = new FavouriteStatus(false); // add command does not allow setting person as favourite immediately
-            
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, favouriteStatus, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, remark, favouriteStatus, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

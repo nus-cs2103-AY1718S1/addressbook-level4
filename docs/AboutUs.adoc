@@ -28,7 +28,7 @@ Role: Project Advisor
 '''
 
 === Lim Yong Song
-image::limyongsong.jpg[width="150", align="left"]
+image::limyongsong.png[width="150", align="left"]
 {empty}[https://github.com/limyongsong[github]] [<<limyongsong#, portfolio>>]
 
 Role: Developer +
