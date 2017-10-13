@@ -57,6 +57,7 @@ public class CommandTestUtil {
     public static final String EMPTY_PHONE = null;
     public static final String EMPTY_EMAIL = null;
     public static final String EMPTY_ADDRESS = null;
+    public static final String EMPTY_WEBSITE = null;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

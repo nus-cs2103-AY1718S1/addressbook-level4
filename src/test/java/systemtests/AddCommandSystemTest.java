@@ -175,9 +175,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing website -> added */
+        // .withWebsite(null) as there is a default value inputted when creating person with personBuilder
         command = AddCommand.COMMAND_WORD + " n/Adeep" + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         toAdd = new PersonBuilder().withName("Adeep").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withWebsite(null).withTags(VALID_TAG_FRIEND).build();
         assertCommandSuccess(command, toAdd);
 
         /* Case: invalid keyword -> rejected */
