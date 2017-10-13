@@ -846,13 +846,6 @@ Use case ends.
 +
 Use case ends.
 
-*Extensions*
-
-[none]
-* 2a. User guide cannot be found.
-+
-Use case ends.
-
 [discrete]
 === Use case: Sort list
 
@@ -894,7 +887,6 @@ Use case resumes at step 2.
 .  A new user should be able to use the app with ease after 3 days of using it.
 .  AddressBook should continue to work offline or online.
 .  Should not use more than 100MB of link:#RAM[RAM].
-.  Should be able to work offline
 .  Should be free to download
 
 {More to be added}
