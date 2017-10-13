@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
@@ -146,6 +147,110 @@ public class CommandBoxTest extends GuiUnitTest {
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
         assertTrue(mySandBox.getCaretPosition() == 4);
+    }
+
+    @Test
+    public void handleValidRightKeyPressLenMaxThree() {
+        //This test focuses on ensuring that the key press works only for the add command
+        //and hack triggers only when "a" or "add" is detected at the front of the statement.
+        //Cases like "adda" "addy" "am" or "aa" will not trigger add command hack
+
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString = "";
+
+        //Test 1: Test for single char
+        guiRobot.write("A");
+        testString += "A";
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        //Does not matter how many white spaces are added before or after
+        guiRobot.write(" ");
+        testString = " " + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.write("      ");
+        testString += "      ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue(testString.equals(mySandBox.getText()));
+
+        //Test 2: Test for String with len 2
+        //String with len 2 will always fail. Even if first char is 'a', it is joined
+        //with another char
+        mySandBox.clear();
+        testString = "";
+        guiRobot.write("Ab");
+        testString += "Ab";
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        //Does not matter how many white spaces are added before or after
+        guiRobot.write(" ");
+        testString = " " + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.write("     ");
+        testString += "     ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+
+        //Test 3: Test for String with len 3
+        mySandBox.clear();
+        testString = "";
+        guiRobot.write("AdD");
+        testString += "AdD";
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        //Does not matter how many white spaces are added before or after
+        guiRobot.write(" ");
+        testString = " " + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.write("     ");
+        testString += "     ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue(testString.equals(mySandBox.getText()));
+
+        mySandBox.clear();
+        testString = "";
+        guiRobot.write("b a");
+        testString += "b a";
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        //Does not matter how many white spaces are added before or after
+        guiRobot.write(" ");
+        testString = " " + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.write("     ");
+        testString += "     ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+
+        mySandBox.clear();
+        testString = "";
+        guiRobot.write("a b");
+        testString += "a b";
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(0);
+        //Does not matter how many white spaces are added before or after
+        guiRobot.write(" ");
+        testString = " " + testString;
+        assertTrue(testString.equals(mySandBox.getText()));
+        mySandBox.positionCaret(testString.length());
+        guiRobot.write("     ");
+        testString += "     ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue(testString.equals(mySandBox.getText()));
     }
 
     @Test
