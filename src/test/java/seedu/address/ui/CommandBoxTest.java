@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -23,6 +24,15 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+
+    /* Prefix definitions */
+    public static final Prefix PREFIX_NAME = new Prefix("n/");
+    public static final Prefix PREFIX_PHONE = new Prefix("p/");
+    public static final Prefix PREFIX_EMAIL = new Prefix("e/");
+    public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
+    public static final Prefix PREFIX_BLOODTYPE = new Prefix("b/");
+    public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_REMARK = new Prefix("r/");
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -133,6 +143,37 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void handleKeyPressRightCaretWithinText(){
+        //Test to ensure add command hack does not trigger as long as
+        //caret is within the text
+
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        guiRobot.write("Add");
+        assertTrue("Add".equals(mySandBox.getText()));
+
+        //Caret shifted left -> Returns true
+        guiRobot.push(KeyCode.ALT);
+        //Ensure caret is at the left
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        //Try to trigger add hack - Nothing happens, Caret + 1
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("Add".equals(mySandBox.getText()));
+        assertTrue(mySandBox.getCaretPosition() == 1);
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("Add".equals(mySandBox.getText()));
+        assertTrue(mySandBox.getCaretPosition() == 2);
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("Add".equals(mySandBox.getText()));
+        assertTrue(mySandBox.getCaretPosition() == 3);
+
+        //Trigger add hack - n/ is concatenated
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue("Add n/".equals(mySandBox.getText()));
+
+    }
+
+    @Test
     public void testGetTextField() {
         TextField myTextField = commandBoxForTesting.getCommandTextField();
         guiRobot.write("Same TextField Test");
@@ -141,6 +182,7 @@ public class CommandBoxTest extends GuiUnitTest {
         //Other values -> Returns false
         assertNotNull(myTextField);
         assertFalse(myTextField.equals(1));
+
     }
 
     @Test
