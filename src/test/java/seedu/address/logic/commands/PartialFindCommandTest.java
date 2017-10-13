@@ -54,6 +54,9 @@ public class PartialFindCommandTest {
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
 
+    /**
+     * Parses {@code userInput} into a {@code FindCommand}.
+     */
     private PartialFindCommand prepareCommand(String userInput) {
         PartialFindCommand command =
                 new PartialFindCommand(new NameStartsWithKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
