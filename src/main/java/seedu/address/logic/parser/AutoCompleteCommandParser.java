@@ -36,8 +36,8 @@ public class AutoCompleteCommandParser {
         new CommandWordUsageTuple(ListCommand.COMMAND_WORD, ListCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_USAGE),
         new CommandWordUsageTuple(RemoveTagCommand.COMMAND_WORD, RemoveTagCommand.COMMAND_USAGE),
-        new CommandWordUsageTuple(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD),
-        new CommandWordUsageTuple(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD)
+        new CommandWordUsageTuple(SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_USAGE),
+        new CommandWordUsageTuple(UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_USAGE)
     });
 
     /**
