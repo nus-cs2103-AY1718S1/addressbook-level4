@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -44,6 +45,14 @@ public class SortCommandTest {
     }
 
     @Test
+    public void execute_catchEmptyListException() throws CommandException {
+        thrown.expect(CommandException.class);
+
+        ModelStubAcceptingPersonForSort modelStub = new ModelStubAcceptingPersonForSort();
+        getSortCommandForPerson("n/", false, modelStub).execute();
+    }
+
+    @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonForSort modelStub = new ModelStubAcceptingPersonForSort();
         populateModel(modelStub);
@@ -51,6 +60,34 @@ public class SortCommandTest {
         CommandResult commandResult = getSortCommandForPerson("n/", false, modelStub).execute();
 
         assertEquals(String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS), commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void testComparator() throws Exception {
+        ModelStubAcceptingPersonForSort modelStub = new ModelStubAcceptingPersonForSort();
+        populateModel(modelStub);
+
+        ArrayList<Person> expectedList = new ArrayList<>();
+        expectedList.add(validPerson1);
+        expectedList.add(validPerson2);
+        expectedList.add(validPerson3);
+
+        expectedList.sort((o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()));
+        getSortCommandForPerson("n/", false, modelStub).execute();
+        assertEquals(expectedList, modelStub.personsAdded);
+
+        expectedList.sort((o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(o2.getPhone().toString()));
+        getSortCommandForPerson("p/", false, modelStub).execute();
+        assertEquals(expectedList, modelStub.personsAdded);
+
+        expectedList.sort((o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(o2.getEmail().toString()));
+        getSortCommandForPerson("e/", false, modelStub).execute();
+        assertEquals(expectedList, modelStub.personsAdded);
+
+        expectedList.sort((o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(o2.getAddress().toString()));
+        getSortCommandForPerson("a/", false, modelStub).execute();
+        assertEquals(expectedList, modelStub.personsAdded);
+
     }
 
 
@@ -81,6 +118,7 @@ public class SortCommandTest {
         getAddCommandForPerson(validPerson2, modelStub).execute();
         getAddCommandForPerson(validPerson3, modelStub).execute();
     }
+
 
     /**
      * A default model stub that have all of the methods failing.
@@ -148,6 +186,10 @@ public class SortCommandTest {
 
         @Override
         public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
+            if (personsAdded.size() < 1) {
+                throw new EmptyListException();
+            }
+
             personsAdded.sort(sortType);
             if (isDescending) {
                 Collections.reverse(personsAdded);
@@ -164,5 +206,6 @@ public class SortCommandTest {
             return new AddressBook();
         }
     }
+
 
 }
