@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.Prefix;
@@ -110,15 +111,40 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Polls the input statement to check if sentence starts with " add " or " a "
      * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
+     * <p>
+     * Additional Note: Polling method accounts for blank spaces in front
      */
     private boolean addPollSuccessful() {
-        String stringToEvaluate = "";
-        int pollingCount = 0;
-        //Keep polling and remove all empty blankspaces
-        while (stringToEvaluate.charAt(pollingCount) == ' '){
-            stringToEvaluate += stringToEvaluate.charAt(pollingCount);
+        String stringToEvaluate = commandTextField.getText().trim();
+        if (stringToEvaluate.length() == 0) {
+            return false;
+        } else if (stringToEvaluate.length() == 1) {
+            return stringToEvaluate.equalsIgnoreCase(AddCommand.COMMAND_ALIAS);
+        } else if (stringToEvaluate.length() == 2) {
+            return false;
+        } else if (stringToEvaluate.length() == 3) {
+            return containsAInFirstTwoChar(stringToEvaluate)
+                    || stringToEvaluate.equalsIgnoreCase(AddCommand.COMMAND_WORD);
+        } else {
+            return containsAInFirstTwoChar(stringToEvaluate)
+                    || containsAddInFirstFourChar(stringToEvaluate);
         }
+    }
 
+    /**
+     * Checks if the first two elements of the string are "a "
+     */
+    private boolean containsAInFirstTwoChar(String stringToEvaluate) {
+        return (Character.toString(stringToEvaluate.charAt(0)).equalsIgnoreCase(AddCommand.COMMAND_ALIAS)
+                && Character.toString(stringToEvaluate.charAt(1)).equals(" "));
+    }
+
+    /**
+     * Checks if the first four elements of the string are "add "
+     */
+    private boolean containsAddInFirstFourChar(String stringToEvaluate) {
+        return (stringToEvaluate.substring(0, 3).equalsIgnoreCase(AddCommand.COMMAND_WORD)
+                && Character.toString(stringToEvaluate.charAt(3)).equals(" "));
     }
 
     /**
