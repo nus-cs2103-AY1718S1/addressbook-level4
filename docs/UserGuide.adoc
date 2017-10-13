@@ -57,7 +57,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR FILE PATH [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -66,6 +66,14 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+// tag::addwithavatar[]
+=== Adding a person with an avatar: `add i/`
+
+Adds a person to the address book with a custom avatar displayed +
+Default avatar folder: `./images/avatars` +
+Format: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/john_doe.png`
+// end::addwithavatar[]
 
 === Adding multiple persons: `multiple`
 
