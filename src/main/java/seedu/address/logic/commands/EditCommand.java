@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.SchEmail;
+import seedu.address.model.person.Website;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -46,6 +48,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_SCH_EMAIL + "SCHOOL EMAIL] "
+            + "[" + PREFIX_WEBSITE + "WEBSITE] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -106,12 +109,13 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         SchEmail updatedSchEmail = editPersonDescriptor.getSchEmail().orElse(personToEdit.getSchEmail());
+        Website updatedWebsite = editPersonDescriptor.getWebsite().orElse(personToEdit.getWebsite());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedSchEmail,
-                          updatedAddress, updatedBirthday, updatedTags);
+                        updatedWebsite, updatedAddress, updatedBirthday, updatedTags);
     }
 
     @Override
@@ -141,6 +145,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private SchEmail schEmail;
+        private Website website;
         private Address address;
         private Birthday birthday;
         private Set<Tag> tags;
@@ -152,6 +157,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.schEmail = toCopy.schEmail;
+            this.website = toCopy.website;
             this.address = toCopy.address;
             this.birthday = toCopy.birthday;
             this.tags = toCopy.tags;
@@ -162,7 +168,8 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
 
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.schEmail, this.address,
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.schEmail,
+                    this.website, this.address,
                     this.birthday, this.tags);
         }
 
@@ -196,6 +203,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<SchEmail> getSchEmail() {
             return Optional.ofNullable(schEmail);
+        }
+
+        public void setWebsite(Website website) {
+            this.website = website;
+        }
+
+        public Optional<Website> getWebsite() {
+            return Optional.ofNullable(website);
         }
 
         public void setAddress(Address address) {
@@ -241,6 +256,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getSchEmail().equals(e.getSchEmail())
+                    && getWebsite().equals(e.getWebsite())
                     && getAddress().equals(e.getAddress())
                     && getBirthday().equals(e.getBirthday())
                     && getTags().equals(e.getTags());

@@ -22,6 +22,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<SchEmail> schEmail;
+    private ObjectProperty<Website> website;
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<UniqueTagList> tags;
@@ -30,13 +31,15 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, SchEmail schEmail,
-                  Address address, Birthday birthday, Set<Tag> tags) {
+                  Website website, Address address,
+                  Birthday birthday, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, birthday, tags);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.schEmail = new SimpleObjectProperty<>(schEmail);
+        this.website = new SimpleObjectProperty<>(website);
         this.address = new SimpleObjectProperty<>(address);
         this.birthday = new SimpleObjectProperty<>(birthday);
         // protect internal tags from changes in the arg list
@@ -48,7 +51,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
 
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getSchEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getSchEmail(),
+                source.getWebsite(), source.getAddress(),
                 source.getBirthday(), source.getTags());
     }
 
@@ -106,6 +110,19 @@ public class Person implements ReadOnlyPerson {
     @Override
     public SchEmail getSchEmail() {
         return schEmail.get();
+    }
+    public void setWebsite(Website website) {
+        this.website.set(requireNonNull(website));
+    }
+
+    @Override
+    public ObjectProperty<Website> websiteProperty() {
+        return website;
+    }
+
+    @Override
+    public Website getWebsite() {
+        return website.get();
     }
 
     public void setAddress(Address address) {
@@ -168,7 +185,8 @@ public class Person implements ReadOnlyPerson {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
 
-        return Objects.hash(name, phone, email, schEmail, address, birthday, tags);
+        return Objects.hash(name, phone, email, schEmail, website,
+                address, birthday, tags);
     }
 
     @Override
