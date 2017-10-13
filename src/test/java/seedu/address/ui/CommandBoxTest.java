@@ -103,6 +103,8 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
         //Caret shifted left -> Returns true
         guiRobot.push(KeyCode.ALT);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 4);
         assertTrue(mySandBox.getCaretPosition() == 0);
     }
 
