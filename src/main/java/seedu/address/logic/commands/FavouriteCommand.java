@@ -47,7 +47,7 @@ public class FavouriteCommand extends UndoableCommand {
         ReadOnlyPerson personToToggleFavourite = lastShownList.get(targetIndex.getZeroBased());
         boolean newFavouriteStatus = !personToToggleFavourite.getStatus();
         Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(), personToToggleFavourite.getPhone(), personToToggleFavourite.getEmail(),
-                personToToggleFavourite.getAddress(), new FavouriteStatus(newFavouriteStatus), personToToggleFavourite.getTags());
+                personToToggleFavourite.getAddress(), personToToggleFavourite.getRemark(), new FavouriteStatus(newFavouriteStatus), personToToggleFavourite.getTags());
 
         try {
             model.updatePerson(personToToggleFavourite, favouriteToggledPerson);
