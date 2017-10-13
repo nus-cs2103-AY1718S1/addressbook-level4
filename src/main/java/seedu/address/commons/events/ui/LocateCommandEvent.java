@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
-public class LocateCommandEvent extends BaseEvent{
+public class LocateCommandEvent extends BaseEvent {
 
     private ReadOnlyPerson person;
 

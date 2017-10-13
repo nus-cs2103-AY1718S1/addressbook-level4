@@ -13,7 +13,7 @@ import java.util.List;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-public class LocateCommand extends Command{
+public class LocateCommand extends Command {
 
     public static final String COMMAND_WORD = "locate";
     public static final String COMMAND_ALIAS = "lct";
