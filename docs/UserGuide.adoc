@@ -81,7 +81,7 @@ Edits the remark of the person identified by the index number used in the last p
 Existing remark will be overwritten by the input. +
 Format: `remark INDEX r/REMARK`
 
-Examples: 
+Examples:
 
 === Viewing help : `help`
 
