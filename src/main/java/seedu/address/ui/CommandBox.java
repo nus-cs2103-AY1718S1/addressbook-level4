@@ -163,10 +163,16 @@ public class CommandBox extends UiPart<Region> {
      * to text field after some time.
      */
     private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        ObservableList<String> styleClass = commandTextField.getStyleClass();
+
         keyboardIcon.setImage(keyboardTyping);
-        pause.setOnFinished(event -> keyboardIcon.setImage(keyboardIdle));
+        pause.setOnFinished(event -> {
+            if (!styleClass.contains(ERROR_STYLE_CLASS)) {
+                keyboardIcon.setImage(keyboardIdle);
+            }
+        });
         pause.playFromStart();
+        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
