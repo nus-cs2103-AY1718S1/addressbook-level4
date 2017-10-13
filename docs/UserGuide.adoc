@@ -58,6 +58,7 @@ Format: `help`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Alias: `a`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -71,11 +72,13 @@ Examples:
 
 Shows a list of all persons in the address book. +
 Format: `list`
+Alias: `l`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -96,6 +99,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS...]`
+Alias: `f`
 
 ****
 * The search is case insensitive. e.g `n/hans` will match `Hans`
@@ -120,6 +124,7 @@ Returns any person who's address contains `Blk 100 Street` (case-insensitive). D
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
+Alias: `d`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -140,6 +145,7 @@ Deletes the 1st person in the results of the `find` command.
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
+Alias: `s`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -171,6 +177,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
+Alias: `u`
 
 [NOTE]
 ====
@@ -197,6 +204,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 Reverses the most recent `undo` command. +
 Format: `redo`
+Alias: `r`
 
 Examples:
 
