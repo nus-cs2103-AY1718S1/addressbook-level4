@@ -103,7 +103,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + PHONE_DESC_BOB + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
         // invalid postalcode followed by valid email
-        assertParseFailure(parser, "1" + INVALID_POSTALCODE_DESC + EMAIL_DESC_AMY, PostalCode.MESSAGE_POSTALCODE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_POSTALCODE_DESC + EMAIL_DESC_AMY,
+                PostalCode.MESSAGE_POSTALCODE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
