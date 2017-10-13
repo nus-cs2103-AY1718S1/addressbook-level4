@@ -177,6 +177,7 @@ public class CommandBox extends UiPart<Region> {
     private void initAutoComplete() {
         logic.updateAutoCompletePossibilities(commandTextField.getText());
         autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
+        isAutoCompletePossibilitiesUpToDate = true;
     }
 
     /**
