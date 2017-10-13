@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -25,6 +27,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
 
+    private CommandBox commandBoxForTesting;
     private CommandBoxHandle commandBoxHandle;
 
     @Before
@@ -33,6 +36,7 @@ public class CommandBoxTest extends GuiUnitTest {
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
+        commandBoxForTesting = commandBox;
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
@@ -44,13 +48,13 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_startingWithSuccessfulCommand() {
+    public void commandBoxStartingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
     }
 
     @Test
-    public void commandBox_startingWithFailedCommand() {
+    public void commandBoxStartingWithFailedCommand() {
         assertBehaviorForFailedCommand();
         assertBehaviorForSuccessfulCommand();
 
@@ -61,10 +65,8 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_handleKeyPress() {
+    public void commandBoxHandleKeyPress() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
-        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
-        guiRobot.push(KeyCode.ESCAPE);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
 
         guiRobot.push(KeyCode.A);
@@ -72,7 +74,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPressExit(){
+    public void handleKeyPressEscape() {
         //Command Box text field should contain nothing the first time
         guiRobot.push(KeyCode.ESCAPE);
         assertTrue("".equals(commandBoxHandle.getInput()));
@@ -90,7 +92,33 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithUp() {
+    public void handleKeyPressAlt() {
+        //Alt shifts the caret all the way left
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        //Setting up of sandbox environment for testing
+        guiRobot.write("Test");
+        assertTrue("Test".equals(mySandBox.getText()));
+
+        assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
+        //Caret shifted left -> Returns true
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+    }
+
+    @Test
+    public void testGetTextField() {
+        TextField myTextField = commandBoxForTesting.getCommandTextField();
+        guiRobot.write("Same TextField Test");
+        //Same text field -> Returns true
+        assertTrue(myTextField.getText().equals(commandBoxForTesting.getCommandTextField().getText()));
+        //Other values -> Returns false
+        assertNotNull(myTextField);
+        assertFalse(myTextField.equals(1));
+    }
+
+    @Test
+    public void handleKeyPressStartingWithUp() {
         // empty history
         assertInputHistory(KeyCode.UP, "");
         assertInputHistory(KeyCode.DOWN, "");
@@ -122,7 +150,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithDown() {
+    public void handleKeyPressStartingWithDown() {
         // empty history
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, "");
@@ -147,8 +175,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Runs a command that fails, then verifies that <br>
-     *      - the text remains <br>
-     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
+     * - the text remains <br>
+     * - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
     private void assertBehaviorForFailedCommand() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
@@ -158,8 +186,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Runs a command that succeeds, then verifies that <br>
-     *      - the text is cleared <br>
-     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     * - the text is cleared <br>
+     * - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
     private void assertBehaviorForSuccessfulCommand() {
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
