@@ -90,6 +90,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell {
@@ -129,6 +130,24 @@
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
+}
+
+.window_big_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 32px;
+    -fx-text-fill: #fffef7;
+}
+
+.window_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15px;
+    -fx-text-fill: #fffef7;
+}
+
+.window_small_text {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15px;
+    -fx-text-fill: gray;
 }
 
 .anchor-pane {

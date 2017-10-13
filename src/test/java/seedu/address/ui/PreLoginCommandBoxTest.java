@@ -23,27 +23,28 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 //@@author jelneo
 public class PreLoginCommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_IS_NOT_RECOGNIZED = ListCommand.COMMAND_WORD;
-    private static final String USERNAME = "loanShark97";
-    private static final String PASSWORD = "hitMeUp123";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
-    private Model model;
+    private ModelManager model;
+    private String adminUsername;
+    private String adminPassword;
 
     @Before
     public void setUp() {
         model = new ModelManager();
-        Logic logic = new LogicManager(model);
 
+        Logic logic = new LogicManager(model);
+        adminUsername = model.getUsernameFromUserPref();
+        adminPassword = model.getPasswordFromUserPref();
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
@@ -65,8 +66,9 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
         assertBehaviorForSuccessfulCommand(HelpCommand.COMMAND_WORD);
 
         // login command with successful login
-        commandBoxHandle.run(LoginCommand.COMMAND_WORD + " " + USERNAME + " " + PASSWORD);
-        assertBehaviorForSuccessfulCommand(LoginCommand.COMMAND_WORD + " " + USERNAME + " " + PASSWORD);
+        commandBoxHandle.run(LoginCommand.COMMAND_WORD + " " + adminUsername + " " + adminPassword);
+        assertBehaviorForSuccessfulCommand(LoginCommand.COMMAND_WORD + " "
+                + adminUsername + " " + adminPassword);
     }
 
     @Test

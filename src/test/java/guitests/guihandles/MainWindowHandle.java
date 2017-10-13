@@ -16,20 +16,22 @@ import seedu.address.model.ModelManager;
  */
 public class MainWindowHandle extends StageHandle {
 
-    private static final String ADMIN_USERNAME = "loanShark97";
-    private static final String ADMIN_PASSWORD = "hitMeUp123";
+    private final String adminUsername;
+    private final String adminPassword;
     private PersonListPanelHandle personListPanel;
     private ResultDisplayHandle resultDisplay;
     private CommandBoxHandle commandBox;
     private StatusBarFooterHandle statusBarFooter;
     private MainMenuHandle mainMenu;
-    private BrowserPanelHandle browserPanel;
+    private InfoPanelHandle infoPanel;
     private ModelManager modelManager;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
 
         modelManager = new ModelManager();
+        adminUsername = modelManager.getUsernameFromUserPref();
+        adminPassword = modelManager.getPasswordFromUserPref();
         try {
             simulateLogin();
             Platform.runLater(() -> {
@@ -37,7 +39,7 @@ public class MainWindowHandle extends StageHandle {
                 resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
                 commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
                 mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-                browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+                infoPanel = new InfoPanelHandle(getChildNode(InfoPanelHandle.INFO_PANEL_ID));
                 statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
             });
         } catch (IllegalValueException ive) {
@@ -52,8 +54,8 @@ public class MainWindowHandle extends StageHandle {
      * Logs into admin user account so that other GUI tests can test the main GUIs in the address book
      */
     public void simulateLogin() throws IllegalValueException, CommandException {
-        Username username = new Username(ADMIN_USERNAME);
-        Password password = new Password(ADMIN_PASSWORD);
+        Username username = new Username(adminUsername);
+        Password password = new Password(adminPassword);
         LoginCommand loginCommand = new LoginCommand(username, password);
         loginCommand.setData(modelManager, new CommandHistory(), new UndoRedoStack());
         loginCommand.execute();
@@ -80,7 +82,7 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return browserPanel;
+    public InfoPanelHandle getInfoPanel() {
+        return infoPanel;
     }
 }
