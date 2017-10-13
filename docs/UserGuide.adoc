@@ -249,6 +249,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
