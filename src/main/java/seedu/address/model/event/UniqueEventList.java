@@ -2,7 +2,6 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class UniqueEventList implements Iterable<Event> {
 
 
     private final ObservableList<Event> internalList = FXCollections.observableArrayList();
-    private final ObservableList<LocalDateTime> internalSortedList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
 
@@ -59,11 +57,8 @@ public class UniqueEventList implements Iterable<Event> {
      *
      */
     public void sortEvents() {
-        if (internalList.isEmpty()) {
-            throw new IllegalStateException("List is empty");
-        }
-        internalList.sort((e1, e2) -> (e1.getTime().toString().substring(0, 7)
-                .compareTo(e2.getTime().toString().substring(0, 7))));
+        internalList.sort((e1, e2) -> (e1.getTime().toString()
+                .compareTo(e2.getTime().toString())));
     }
 
     /**
