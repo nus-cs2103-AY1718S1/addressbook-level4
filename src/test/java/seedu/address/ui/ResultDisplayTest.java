@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.ResultDisplayHandle;
-import javafx.scene.input.KeyCode;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
