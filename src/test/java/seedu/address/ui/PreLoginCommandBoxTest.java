@@ -25,6 +25,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import sun.rmi.runtime.Log;
 
 //@@author jelneo
 public class PreLoginCommandBoxTest extends GuiUnitTest {
@@ -57,6 +58,25 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    @Test
+    public void commandBox_successfulBlankingOfPassword() {
+        commandBoxHandle.run(String.format(LoginCommand.COMMAND_WORD , " ", adminUsername, " ", adminPassword));
+        String blankedPassword = maskPassword(adminPassword);
+        assertEquals(String.format(LoginCommand.COMMAND_WORD , " ", adminUsername, " ", blankedPassword),
+                commandBoxHandle.getInput());
+    }
+
+    /**
+     * Helper method to masks password for testing
+     */
+    private String maskPassword(String passwordInput) {
+        String password = "";
+        for (int i = 0; i < passwordInput.length(); i++) {
+            password += CommandBox.BLACK_CIRCLE;
+        }
+        return password;
     }
 
     @Test
