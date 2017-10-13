@@ -89,12 +89,12 @@
 }
 
 .list-view {
+    -fx-background-color: #f7f7f7;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
 
 .list-cell {
-    -fx-background-color: #f7f7f7;
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
