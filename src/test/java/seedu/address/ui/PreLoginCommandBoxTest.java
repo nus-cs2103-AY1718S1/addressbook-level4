@@ -25,7 +25,6 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import sun.rmi.runtime.Log;
 
 //@@author jelneo
 public class PreLoginCommandBoxTest extends GuiUnitTest {
