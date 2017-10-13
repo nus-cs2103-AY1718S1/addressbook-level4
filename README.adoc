@@ -22,7 +22,8 @@ endif::[]
 ** Supports sorting of Persons.
 ** Able to find person based on additional details.
 ** Filter persons based on tags.
-** Additional options for delete and google maps on each person 
+** Additional options for delete and google maps on each person.
+** Auto generated persistent coloured tags.
 
 == Site Map
 
