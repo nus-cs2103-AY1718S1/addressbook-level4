@@ -104,13 +104,13 @@ public class InfoPanel extends UiPart<Region> {
     }
 
     /**
-     * Initializes and styles tags belonging to each person. Each unique tag has a unique color.
+     * Initializes and styles tags belonging to each person.
      * @param person
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-font-size:" + "24px");
+            tagLabel.setStyle("-fx-font-size:" + "15px");
             tags.getChildren().add(tagLabel);
         });
         logger.finest("All tags for " + person.getName().toString() + " initialized in info");
