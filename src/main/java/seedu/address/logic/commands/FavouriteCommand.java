@@ -5,7 +5,10 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.FavouriteStatus;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -21,10 +24,9 @@ public class FavouriteCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Favourited Person: %1$s";
-    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Unfavourited Person: %1$s";
-
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Remark command not implemented yet";
+    public static final String MESSAGE_FAVOURITED_PERSON = "Favourited Person: %1$s";
+    public static final String MESSAGE_UNFAVOURITED_PERSON = "Unfavourited Person: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index targetIndex;
 
@@ -35,25 +37,35 @@ public class FavouriteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
-        /*
+        
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToToggleFavourite = lastShownList.get(targetIndex.getZeroBased());
+        boolean newFavouriteStatus = !personToToggleFavourite.getStatus();
+        Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(), personToToggleFavourite.getPhone(), personToToggleFavourite.getEmail(),
+                personToToggleFavourite.getAddress(), new FavouriteStatus(newFavouriteStatus), personToToggleFavourite.getTags());
 
         try {
-            model.deletePerson(personToDelete);
+            model.updatePerson(personToToggleFavourite, favouriteToggledPerson);
+        } catch (DuplicatePersonException dpe) { 
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
-        */
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+        return new CommandResult(generateSuccessMessage(favouriteToggledPerson));
+    }
+
+    private String generateSuccessMessage(Person favouriteToggledPerson) {
+        if (favouriteToggledPerson.getStatus() == true) {
+            return String.format(MESSAGE_FAVOURITED_PERSON);
+        } else {
+            return String.format(MESSAGE_UNFAVOURITED_PERSON);
+        }
     }
 
     @Override
