@@ -35,7 +35,7 @@ image::tby1994.png[width="120", height="150" align="left"]
 {empty}[http://github.com/tby1994[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Integration Manager
-Responsibilities: Scheduling and Tracking + Logic 
+Responsibilities: Scheduling and Tracking + Logic
 
 '''
 
