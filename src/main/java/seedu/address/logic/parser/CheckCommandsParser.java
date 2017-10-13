@@ -39,7 +39,7 @@ public class CheckCommandsParser {
         final String[] subEditCommands = new String[] {"edit", "e", "change", "revise", "modify"};
         final String[] subExitCommands = new String[] {"exit", "quit"};
         final String[] subFindCommands = new String[] {"find", "f", "look", "search", "check"};
-        final String[] subHelpCommands = new String[] {"help"};
+        final String[] subHelpCommands = new String[] {"help", "info"};
         final String[] subHistoryCommands = new String[] {"history", "h", "past"};
         final String[] subListCommands = new String[] {"list", "l", "show", "display"};
         final String[] subRedoCommands = new String[] {"redo", "r"};
