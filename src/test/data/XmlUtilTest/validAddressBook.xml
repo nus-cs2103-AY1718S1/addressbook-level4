@@ -6,6 +6,7 @@
         <email isPrivate="false">hans@example.com</email>
         <schEmail isPrivate="false">hansmuster@u.nus.edu</schEmail>
         <address isPrivate="false">4th street</address>
+        <birthday isPrivate="false">12/11/1998</birthday>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -13,6 +14,7 @@
         <email isPrivate="false">ruth@example.com</email>
         <schEmail isPrivate="false">ruth@u.nus.edu</schEmail>
         <address isPrivate="false">81th street</address>
+        <birthday isPrivate="false">10/01/1998</birthday>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -20,6 +22,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <schEmail isPrivate="false">heinz@u.nus.edu</schEmail>
         <address isPrivate="false">wall street</address>
+        <birthday isPrivate="false">22/05/1988</birthday>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -27,6 +30,7 @@
         <email isPrivate="false">cornelia@example.com</email>
         <schEmail isPrivate="false">cornelia@u.ntu.edu</schEmail>
         <address isPrivate="false">10th street</address>
+        <birthday isPrivate="false">10/01/1998</birthday>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -34,6 +38,7 @@
         <email isPrivate="false">werner@example.com</email>
         <schEmail isPrivate="false">werner@u.ntu.edu</schEmail>
         <address isPrivate="false">michegan ave</address>
+        <birthday isPrivate="false">10/01/1998</birthday>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -41,6 +46,7 @@
         <email isPrivate="false">lydia@example.com</email>
         <schEmail isPrivate="false">lydia@u.nus.edu</schEmail>
         <address isPrivate="false">little tokyo</address>
+        <birthday isPrivate="false">12/11/1974</birthday>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -48,6 +54,7 @@
         <email isPrivate="false">anna@example.com</email>
         <schEmail isPrivate="false">annabest@u.nus.edu</schEmail>
         <address isPrivate="false">4th street</address>
+        <birthday isPrivate="false">05/06/2000</birthday>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -55,6 +62,7 @@
         <email isPrivate="false">stefan@example.com</email>
         <schEmail isPrivate="false">stefan@u.nus.edu</schEmail>
         <address isPrivate="false">little india</address>
+        <birthday isPrivate="false">10/01/1995</birthday>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -62,5 +70,6 @@
         <email isPrivate="false">hans@example.com</email>
         <schEmail isPrivate="false">martinnus@u.nus.edu</schEmail>
         <address isPrivate="false">chicago ave</address>
+        <birthday isPrivate="false">10/01/1978</birthday>
     </persons>
 </addressbook>

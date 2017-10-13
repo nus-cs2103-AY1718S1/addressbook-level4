@@ -49,6 +49,14 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts every person in the list alphabetically.
+     */
+    public void sort() {
+        internalList.sort((r1, r2) -> (
+                r1.getName().toString().compareTo(r2.getName().toString())));
+    }
+
+    /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
