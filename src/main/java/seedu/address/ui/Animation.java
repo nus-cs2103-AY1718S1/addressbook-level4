@@ -8,7 +8,6 @@ import javafx.util.Duration;
 public class Animation {
 
     public Animation() {
-   
     }
 
     public static void fadeIn(ObservableList<Node> tags) {
