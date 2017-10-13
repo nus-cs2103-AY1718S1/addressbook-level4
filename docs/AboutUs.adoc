@@ -21,7 +21,7 @@ Responsibilities: Model
 '''
 
 === Liu Hang
-image::liuhang0213.jp1g[width="150", align="left"]
+image::liuhang0213.jpg[width="150", align="left"]
 {empty}[http://github.com/liuhang0213[github]] [<<liuhang#, portfolio>>]
 
 Role: Developer +
