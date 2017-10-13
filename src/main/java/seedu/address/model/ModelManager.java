@@ -105,11 +105,11 @@ public class ModelManager extends ComponentManager implements Model {
             if (person.equals(addressBook.getPersonList().get(i))) {
                 
                 ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-                
                 Person newPerson = new Person(oldPerson);
                 newPerson.setTags(newTags);
                 
                 addressBook.updatePerson(oldPerson, newPerson);
+                indicateAddressBookChanged();
             }
         }
     }

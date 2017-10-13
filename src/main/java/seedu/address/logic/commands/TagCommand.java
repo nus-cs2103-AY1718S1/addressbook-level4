@@ -10,8 +10,6 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -50,12 +48,8 @@ public class TagCommand extends UndoableCommand {
             Set<Tag> oldTags = personToEdit.getTags();
             Set<Tag> allTags = getTagList(oldTags);
 
-            EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-            editPersonDescriptor.setTags(allTags);
-            Person editedPerson = EditCommand.createEditedPerson(personToEdit, editPersonDescriptor);
-
             try {
-                model.updatePerson(personToEdit, editedPerson);
+                model.updatePersonTags(personToEdit, allTags);
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (PersonNotFoundException pnfe) {
