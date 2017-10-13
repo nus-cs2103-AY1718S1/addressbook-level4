@@ -47,6 +47,8 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Favourite: ")
+                .append(getStatus())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
