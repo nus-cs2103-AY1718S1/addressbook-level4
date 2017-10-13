@@ -31,7 +31,7 @@ public class TagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1, 2, 3 "
             + PREFIX_TAG + "friend";
 
-    public static final String MESSAGE_TAG_PERSONS_SUCCESS = "Tag added: %1$s";
+    public static final String MESSAGE_TAG_PERSONS_SUCCESS = "New tag added.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index[] indices;
