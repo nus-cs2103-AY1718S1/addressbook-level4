@@ -298,8 +298,8 @@ Functions will be found from improved `delete` command
 
 === Display all tags from `new UI panel`
 
- All the tags in user myBook App will be displayed in a new UI panel +
- Functions wll be found from `new UI panel`
+All the tags in user myBook App will be displayed in a new UI panel +
+Functions wll be found from `new UI panel`
 
 == FAQ
 
