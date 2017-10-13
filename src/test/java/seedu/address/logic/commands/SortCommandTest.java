@@ -72,18 +72,22 @@ public class SortCommandTest {
         expectedList.add(validPerson2);
         expectedList.add(validPerson3);
 
+        //Test comparator - sort by name
         expectedList.sort((o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()));
         getSortCommandForPerson("n/", false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
+        //Test comparator - sort by phone
         expectedList.sort((o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(o2.getPhone().toString()));
         getSortCommandForPerson("p/", false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
+        //Test comparator - sort by email
         expectedList.sort((o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(o2.getEmail().toString()));
         getSortCommandForPerson("e/", false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
+        //Test comparator - sort by address
         expectedList.sort((o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(o2.getAddress().toString()));
         getSortCommandForPerson("a/", false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);

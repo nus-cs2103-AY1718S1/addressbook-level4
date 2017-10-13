@@ -38,7 +38,7 @@ public class SortCommand extends UndoableCommand {
             + PREFIX_PHONE_SORT + BY_DESCENDING;
 
     private final String sortType;
-    private final boolean isDescending;
+    private final Boolean isDescending;
 
     /**
      * @param sortType     specify which attribute to sort by
@@ -89,5 +89,13 @@ public class SortCommand extends UndoableCommand {
                     o2.getName().toString()
             );
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && sortType.equals(((SortCommand) other).sortType)
+                && isDescending.equals(((SortCommand) other).isDescending));
     }
 }
