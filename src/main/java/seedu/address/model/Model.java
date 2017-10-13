@@ -32,7 +32,8 @@ public interface Model {
     void changeTag(Tag oldTag, Tag newTag)throws PersonNotFoundException, DuplicatePersonException;
 
     /** Updates tags of a given person */
-    void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags) throws PersonNotFoundException, DuplicatePersonException;
+    void updatePersonTags(ReadOnlyPerson person, Set<Tag> newTags)
+            throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

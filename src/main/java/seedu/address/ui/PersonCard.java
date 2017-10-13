@@ -68,6 +68,10 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initializes the tags attached to each person and fades them in in the UI.
+     * @param person the person whose tags are being initialized.
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
