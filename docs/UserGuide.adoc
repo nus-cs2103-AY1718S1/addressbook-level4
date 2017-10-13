@@ -224,17 +224,36 @@ Selects the 1st person in the results of the `find` command.
 
 ==== To add a Facebook account:
 
-Adds a Facebook account
-Format: `addfacebook`
+Adds a Facebook account with the username provided to the person identified by the index
+Format: `addfacebook INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addfacebook 1 alexyeoh` +
+Adds a Facebook username 'alexyeoh' to the first person in the address book.
 
 ==== To add a Instagram account:
 
-Format: `addinstagram`
+Adds an Instagram account with the username provided to the person identified by the index
+Format: `addinstagram INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addinstagram 1 alexyeoh` +
+Adds an Instagram username 'alexyeoh' to the first person in the address book.
 
 ==== To add a Twitter account:
 
-Format: `addtwitter`
+Adds a Twitter account with the username provided to the person identified by the index
+Format: `addtwitter INDEX USERNAME`
 
+Examples:
+
+`list` +
+`addfacebook 1 alexyeoh` +
+Adds a Twitter username 'alexyeoh' to the first person in the address book.
 
 === Listing entered commands : `history`
 
