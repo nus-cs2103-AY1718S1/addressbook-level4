@@ -23,7 +23,7 @@ Responsibilities: Dev Ops + Integration
 
 === Soh Hong Hwee
 image::honghwee.jpg[width="150", align="left"]
-{empty}[https://github.com/aver0214[github]] 
+{empty}[https://github.com/aver0214[github]]
 
 Role: Team Lead +
 Responsibilities: Code quality + Assist Members
@@ -32,16 +32,16 @@ Responsibilities: Code quality + Assist Members
 
 === Wei Ren Kai
 image::renkai.jpg[width="150", align="left"]
-{empty}[https://github.com/renkai91[github]] 
+{empty}[https://github.com/renkai91[github]]
 
 Role: Developer +
 Responsibilities: Data + Testing
 
 '''
 
-=== Eh Bee Yee
+=== Beh Bee Yee
 image::meiyi.jpg[width="150", align="left"]
-{empty}[https://github.com/meiyi1234[github]] 
+{empty}[https://github.com/meiyi1234[github]]
 
 Role: Documentation +
 Responsibilities: Scheduling
