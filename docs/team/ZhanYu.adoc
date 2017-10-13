@@ -28,18 +28,40 @@ This enhancement allows them to find contacts by close name words or by tags pre
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
 //TODO: Add findClose section in Developer Guide (Implementation & Design Considerations See undoredo for example)
 
-#End of Extract#
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
 
 ---
 
-=== Enhancement Proposed: Sortable parameters in commands augmenting list view
+include::../UserGuide.adoc[leveloffset=2,tag=list]
+include::../UserGuide.adoc[leveloffset=2,tag=find]
 
-To allow users to operate on a sorted list for longer displayed lists by the `list` or `find` command.
+---
+
+==== Justification
+
+Users may sometimes have too many contacts in a listing.
+This enhancement allows them to find contacts quickly by sorting the displayed list of persons.
+Users can operate on a sorted list for longer displayed lists via `list` or `find` command.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=sorting]
+
+---
+
+=== Enhancement Proposed: Opening a new and separate Rolodex
+
+To allow users to operate on a different data set for different purposes.
 
 === Other contributions
 
