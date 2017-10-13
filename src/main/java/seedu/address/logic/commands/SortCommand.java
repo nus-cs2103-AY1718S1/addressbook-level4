@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.AddressBook;
-
 import static java.util.Objects.requireNonNull;
 
 /*
@@ -13,9 +11,6 @@ public class SortCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Address book has been sorted!";
-
-    public SortCommand() {}
-
 
     @Override
     public CommandResult executeUndoableCommand() {
