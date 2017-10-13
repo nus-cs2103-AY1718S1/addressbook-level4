@@ -276,3 +276,14 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Coming in v2.0
+
+. Fuzzy find using apache lucene. The user misspells the name, but the myth's book can
+   suggest similar words.
+
+. To-do list for our university going users to keep track their tasks.
+
+. Calendar command, that shows all events and appointments on a calendar.
+
+. Enable pictures for each contact so that users can remember the person faster.
