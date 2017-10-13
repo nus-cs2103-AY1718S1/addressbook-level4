@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T11-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T11-B3`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -729,12 +729,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |advanced user |enter command with shorter prefix|enhance my efficiency of using the app
+
+|`* * *` |clumsy user|prompt with warning/suggestion when enter invalid details during search|enter correct details after being reminded
+
+|`* * *` |user |add birthday to person and be reminded when date is near |know the birthday and prepare in advance
+
+|`* * *` |user |find a person by address, birthday, phone, tags |locate details of persons when name is forgetten
+
+|`* * *` |user |add a new person leaving out any details other than name |add a person that I am not familar with
+
+|`* * *` |user |edit details of a person |change person's details without removing and adding the person again
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
 
-{More to be added}
+|`* * *` |new user |see suggested commands as I type them |easily remember what to write without referring to the help sheet
+
+|`* * *` |user |edit information about a contact without retyping everything |save time and work
+
+|`* * *` |user |add or delete multiple users in one go |I can save time by not repeating commands
+
+|`* * *` |user |tag people using any tag |organize my contacts and add other pertinent information about them
+
+|`* * *` |user |use case-insensitive commands |type or retype commands in a specific case
+
+|`* * *` |user |add contacts while leaving one or more fields blank, except for the name |save contacts without having to know every detail
+
+|`* * *` |user |search my contacts by name, number, tag or address |find people more easily
+
+|`* * *` |user |conduct the search quickly and efficiently |save time
+
+|`* *` |advanced user |shorten commands |work efficiently
+
+|`* *` |user |send selected contacts to others |share them without others having to type it in
+
+|`* *` |user using a public computer |set a password to lock my stored data |be free of security related worries
+
+|`*` |user |see mutual contacts |find out who knows who
+
+|`* *` |user |merge multiple duplicate contacts simultaneously |save time and have a clean addressbook
+
+|`* *` |user |locate my contacts if their location services are enabled and they are nearby |meet up with more people
+
+|`* *` |user |link my addressbook contacts to their social media accounts |keep updated on their latest posts from a single platform
+
+|`* *` |user |have addressbook update my contacts automatically when they change them |have their latest information without updating it manually
+
+|`* *` |user |have photographs attached to my contacts |recognize them easily
+
+|`* *` |user |have common and emergency contacts preloaded in the addressbook |access them without adding them myself
+
+|`* *` |user |store multiple phone numbers or emails for the same contact |avoid making duplicate contacts with slightly different information
+
+|`*` |user |have nicknames associated with each contact while searching |recognize them better
+
+|`* *` |OTG user |access addressbook on multiple platforms and synchronize my data |have my contacts close at hand from anywhere
+
+|`* * *` |user |tag multiple people using the same tag |save time
+
+|`* *` |user |use tags to send mass emails or texts to people |save time sending them individually
+
+|`* * *` |user |see my most frequently contacted people at the top of the list |contact them quickly
+
+|`* *` |user |add tasks |manage my schedule
+
+|`* *` |user |edit tasks |keep up to date with changes
+
+|`* *` |user |delete tasks |remove entries I no longer need
+
+|`* *` |user |archive completed tasks |have a record of tasks I have finished
+
+|`* *` |unsure user |add tasks with or without deadlines |manage my schedule without knowing every detail
+
+|`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -767,7 +837,98 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1. User requests to find person
+2. User enters the category (i.e. name/address/tag/phone) and details to search for person
+3. AddressBook shows the list of persons with the details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The category entered is invalid.
++
+** 2a1. AddressBook shows an error message.
+** 2a2. AddressBook prompts user to type from a list of categories.
+** 2a3. User enters new category.
+** Steps 2a1 - 2a3 are repeated until valid category is entered.
+** User resumes from step 3.
++
+* 2b. The detail entered is invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
++
+* 2c. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Edit details of person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit details of a specific person in the list
+4. AddressBook prompts the category to edit
+5. User enters category and new details
+6. AddressBook changes the detail of the category of the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. The given category is invalid.
++
+[none]
+** 5a1. AddressBook shows an error message.
+** 5a2. AddressBook prompts for new entry.
+** 5a3. User enters new category and detail.
+** Repeat 5a1-5a3 until valid category is entered.
+** User resumes from step 6.
+
+[discrete]
+=== Use Case: Tag multiple people with the same tag
+
+1. User requests to list people.
+2. Addressbook lists all contacts.
+3. User requests to tag multiple with one tag using their index.
+4. Addressbook adds tags to all specified contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +936,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should respond to user commands within 2 seconds.
+.  Should return accurate search results for duplicate contacts by at least 70%.
+.  Should have a backup storage file to store data in case of data loss from main file.
+.  The project is expected to adhere to a schedule that delivers at least one feature every week.
 
 [appendix]
 == Glossary
@@ -798,16 +961,20 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+Addapt
 
-Author: ...
+Author: Not found.
 
 Pros:
 
-* ...
-* ...
+* Synchronizes contact information of everyone in the network.
+* Allows auto updating of contact information in real time.
+* Facilitates group communication.
+* Good for business environments.
+* Free.
 
 Cons:
 
-* ...
-* ...
+* Only available on iOS or Android.
+* Features can be used if people in your network also have the same application.
+* Has a steep learning curve.
