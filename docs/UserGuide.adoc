@@ -132,6 +132,23 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Locating a person : `locate`
+
+Locate the specified person's address from the address book on Google Map +
+Format: `Locate INDEX`
+
+****
+* Searches the address of the person at the specified `INDEX` on Google Map.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`locate 2` +
+Searches the 2nd person in the address book in Google Map.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
