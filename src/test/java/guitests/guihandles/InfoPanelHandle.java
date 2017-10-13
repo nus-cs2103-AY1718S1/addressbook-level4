@@ -21,25 +21,29 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String DEBT_FIELD_ID = "#debt";
+    private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
     private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
     private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
+    private static final String DATE_BORROW_FIELD_FIELD_ID = "#dateBorrowField";
 
-    private Label nameLabel;
-    private Label addressLabel;
-    private Label phoneLabel;
-    private Label emailLabel;
-    private Label postalCodeLabel;
-    private Label debtLabel;
-    private List<Label> tagLabels;
+    private final Label nameLabel;
+    private final Label addressLabel;
+    private final Label phoneLabel;
+    private final Label emailLabel;
+    private final Label postalCodeLabel;
+    private final Label debtLabel;
+    private final Label dateBorrowLabel;
+    private final List<Label> tagLabels;
     private final Text addressText;
     private final Text phoneText;
     private final Text emailText;
     private final Text postalCodeText;
     private final Text debtText;
+    private final Text dateBorrowText;
 
     private String lastRememberedName;
     private String lastRememberedAddress;
@@ -47,6 +51,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedEmail;
     private String lastRememberedPostalCode;
     private String lastRememberedDebt;
+    private String lastRememberedDateBorrow;
     private List<String> lastRememberedTags;
 
     public InfoPanelHandle(Node infoPanelNode) {
@@ -58,6 +63,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
+        this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -71,6 +77,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.emailText = getChildNode(EMAIL_FIELD_FIELD_ID);
         this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
+        this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
     }
 
     public String getName() {
@@ -91,6 +98,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     public String getDebt() {
         return debtLabel.getText();
+    }
+
+    public String getDateBorrow() {
+        return dateBorrowLabel.getText();
     }
 
     public String getPostalCode() {
@@ -117,6 +128,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return debtText.getText();
     }
 
+    public String getDateBorrowField () {
+        return dateBorrowText.getText();
+    }
+
     public List<String> getTags() {
         return tagLabels
                 .stream()
@@ -135,6 +150,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         lastRememberedPhone = getPhone();
         lastRememberedPostalCode = getPostalCode();
         lastRememberedTags = getTags();
+        lastRememberedDateBorrow = getDateBorrow();
     }
 
     /**
@@ -148,6 +164,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 || !getDebt().equals(lastRememberedDebt)
                 || !getEmail().equals(lastRememberedEmail)
                 || !getPostalCode().equals(lastRememberedPostalCode)
+                || !getDateBorrow().equals(lastRememberedDateBorrow)
                 || !getTags().equals(lastRememberedTags);
     }
 

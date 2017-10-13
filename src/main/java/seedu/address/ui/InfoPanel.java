@@ -19,7 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
 /**
- * The Info Panel of the App.
+ * The Info Panel of the App that displays full information of a {@code Person}.
  */
 public class InfoPanel extends UiPart<Region> {
 
@@ -29,6 +29,7 @@ public class InfoPanel extends UiPart<Region> {
     public static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
     public static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     public static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
+    public static final String MESSAGE_INFO_DATE_BORROW = "Date borrowed: ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -57,6 +58,10 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label debt;
     @FXML
+    private Text dateBorrowField;
+    @FXML
+    private Label dateBorrow;
+    @FXML
     public FlowPane tags;
 
     public InfoPanel() {
@@ -76,6 +81,7 @@ public class InfoPanel extends UiPart<Region> {
         emailField.setText(MESSAGE_INFO_EMAIL_FIELD);
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
+        dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW);
         bindListeners(person);
     }
 
@@ -90,6 +96,7 @@ public class InfoPanel extends UiPart<Region> {
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
+        dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
         //TODO: fix tag colours. person.tagProperty().addListener((observable, oldValue, newValue) -> {
         tags.getChildren().clear();
         initTags(person);

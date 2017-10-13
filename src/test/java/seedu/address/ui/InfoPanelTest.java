@@ -48,6 +48,8 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmailField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhone());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhoneField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrow());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrowField());
         assertEquals(new ArrayList<>(), infoPanelHandle.getTags());
 
         // associated info of a person

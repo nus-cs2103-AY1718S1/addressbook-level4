@@ -25,6 +25,12 @@
          </TextFlow>
          <TextFlow prefHeight="100.0" prefWidth="400.0">
             <children>
+               <Text fx:id="dateBorrowField" fill="gray" styleClass="window_small_label" text="Date borrowed: " />
+               <Label fx:id="dateBorrow" styleClass="window_small_label" text="\$dateBorrow" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="100.0" prefWidth="400.0">
+            <children>
                <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
                <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
             </children>
