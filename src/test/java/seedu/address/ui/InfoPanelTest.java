@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.ui.testutil.GuiTestAssert.assertInfoDisplaysPerson;
 
@@ -71,6 +72,27 @@ public class InfoPanelTest extends GuiUnitTest {
         postNow(selectionChangedEventStub);
         assertTrue(infoPanelHandle.isSelectedPersonChanged());
         assertInfoDisplay(infoPanel, BOB);
+    }
+
+    @Test
+    public void equals() {
+        infoPanel = new InfoPanel();
+
+        // test .equals() method for two same objects
+        assertTrue(infoPanel.equals(infoPanel));
+
+        // test .equals() method for an object of different type
+        assertFalse(infoPanel.equals(infoPanelHandle));
+
+        InfoPanel expectedInfoPanel = new InfoPanel();
+
+        assertTrue(infoPanel.equals(expectedInfoPanel));
+
+        infoPanel.loadPersonInfo(AMY);
+        assertFalse(infoPanel.equals(expectedInfoPanel));
+
+        expectedInfoPanel.loadPersonInfo(AMY);
+        assertTrue(infoPanel.equals(expectedInfoPanel));
     }
 
     /**

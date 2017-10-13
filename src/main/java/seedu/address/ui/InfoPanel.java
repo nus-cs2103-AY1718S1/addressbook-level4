@@ -158,8 +158,8 @@ public class InfoPanel extends UiPart<Region> {
                 && address.getText().equals(infoPanel.address.getText())
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
-                && email.getText().equals(infoPanel.email.getText())
-                && tags.equals(infoPanel.tags);
+                && email.getText().equals(infoPanel.email.getText());
+        //TODO: find a way to .equals the tags
     }
 
     @Subscribe
