@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final int CURRENT_THEME_INDEX = 1;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -203,12 +204,15 @@ public class MainWindow extends UiPart<Region> {
         themesWindow.show();
     }
 
+    /**
+     * Changes the theme based on the input theme
+     * @param theme
+     */
     public void handleChangeTheme(String theme) {
         if (getRoot().getStylesheets().size() > 1) {
-            getRoot().getStylesheets().remove(1);
+            getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
         }
         getRoot().getStylesheets().add("/view/" + theme);
-        System.out.println(getClass().getResource("/view/default.html").toString());
     }
 
     void show() {
