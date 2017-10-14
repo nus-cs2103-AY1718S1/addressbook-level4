@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bluebird - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -725,8 +725,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
-|`* * *` |frequent user |save contacts locally |don't have to load files each time I exit and re-open the application
-
 |`* * *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
 
 |`* * *` |heavy user |select a person by index |select the correct person by index if I have multiple person with same name
@@ -745,7 +743,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |experienced user |input commands using a shortened form |be more efficient when using the application
 
-|`* * *` |travelling user |load my contacts from file |use the app on all my devices
+|`* * *` |travelling user |save and load my contacts from file |use the app on all my devices
 
 |`* * *` |user |save the date of birth of my contacts |know when the birthdays of my contacts are
 
@@ -781,7 +779,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `BlueBird` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -789,9 +787,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  BlueBird shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  BlueBird deletes the person
 +
 Use case ends.
 
@@ -805,33 +803,33 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. BlueBird shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
 === Use case: Select person
 
-*Precondition: Person in question should be saved with 'add' in addressbook*
+*Precondition: Person in question should be saved with 'add' in BlueBird*
 
 *Guarantees: Person in question will be displayed with all fields visible*
 
 *MSS*
 
 1.  User requests to 'find' a specific person by name
-2.  AddressBook shows a list of persons with name entered
+2.  BlueBird shows a list of persons with name entered
 3.  User selects the index of specific person
-4.  AddressBook shows full contact details of person
+4.  BlueBird shows full contact details of person
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. The given index is invalid.
+* 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message
+** 3a1. BlueBird shows an error message
 +
 Use case resumes at step 2.
 
@@ -843,7 +841,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to see command history
-2.  AddressBook lists the commands entered in reverse order
+2.  BlueBird lists the commands entered in reverse order
 3.  User views previous commands
 +
 Use case ends.
@@ -851,7 +849,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The list is empty
 +
 Use case ends.
 
@@ -863,8 +861,7 @@ Use case ends.
 *MSS*
 
 1.  User enters 'help' command
-2.  AddressBook shows the instructions of the command entered
-3.  User views help window
+2.  BlueBird displays the User Guide on a new window
 +
 Use case ends.
 
@@ -887,15 +884,15 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to find one or more person(s) in AddressBook
-2.  AddressBook shows a list of persons with the name(s) specified by user
+1.  User requests to find one or more person(s) in BlueBird
+2.  BlueBird shows a list of persons with the name(s) specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. 0 person found
+* 2a. BlueBird found 0 person with the name
 +
 Use case ends.
 
@@ -905,25 +902,24 @@ Use case ends.
 *MSS*
 
 1.  User input command to add person
-2.  AddressBook adds the person
-3.  AddressBook displays message for successfully adding a person along with the person's details
+2.  BlueBird adds the person and displays message for successfully adding a person along with the person's details
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User input command wrongly.
+* 1a. User input command wrongly
 +
 [none]
-** 3a1. AddressBook shows an invalid format message and displays the right format to user.
+** 1a1. BlueBird shows an invalid format message and displays the right format to user
 +
 Use case resumes at step 1.
 
-* 1b. User added a person already present in AddressBook.
+* 1b. User tries to add a person already present in BlueBird
 +
 [none]
-** 3a1. AddressBook shows duplicate person error message.
+** 1b1. BlueBird shows duplicate person error message
 +
 Use case resumes at step 1.
 
@@ -933,14 +929,166 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests for a list of person(s) with a specified tag
-2.  AddressBook shows a list of person(s) with the tag specified by user
+2.  BlueBird shows a list of person(s) with the tag specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. 0 person with such tag
+* 2a. BlueBird found 0 person with specified tag
++
+Use case ends.
+
+[discrete]
+=== Use case: Hide Selected Contact(s)
+
+*MSS*
+
+1.  User requests to hide a contact with the command: hide
+2.  BlueBird displays message for successfully hiding contact(s) from view
+3.  User requests to display list of hidden contact(s) with command: hiddenList
+4.  BlueBird shows the list of hidden contact(s)
++
+Use Case ends.
+
+*Extensions*
+
+[none]
+* 1a. User can hide 1 contact with the command: hide name1
++
+Use case ends.
+
+[none]
+* 1b. User can hide multiple contacts with the command: hide >1
++
+[none]
+** 1b1. User can proceed to enter command: hide name1 name2
++
+Use case ends.
+
+[none]
+* 1c. User can hide contacts under a certain tag: hide exampleTagName
++
+Use case ends.
+
+[none]
+* 1d. User can undo hiding, similar to extension steps 1a, 1b, 1c, with command: unhide
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort Contacts by Tag
+
+*Precondition: Some contacts in user's BlueBird memory has to already have tags under their contact details.*
+
+*MSS*
+
+1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
+2.  BlueBird displays contacts that have the respective tag(s) under contact details as initially edited by user
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete Multiple Contacts at Once
+
+*MSS*
+
+1.  User requests to delete multiple contacts with command: delete >1
+2.  BlueBird prompts user to enter multiple names to delete: delete name1 name2 .. etc
+3.  User inputs command to delete multiple contacts
+4.  BlueBird displays message for successfully removing contact(s) from memory
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. If there is no such contact or if user inputs the spelling of the name incorrectly
++
+[none]
+** 2a1. BlueBird will check which name is non-existent (due to incorrect spelling or actually non-existent)
++
+[none]
+** 2a2. BlueBird will prompt user to check accuracy of that particular contact name and re-enter if necessary
++
+[none]
+** 2a3. If not, enter null
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo/Undo previous command
+
+*MSS*
+
+1. User starts BlueBird
+2. User request to deletes the wrong person from List
+3. BlueBird removes person
+4. User request to undo his action
+5. BlueBird reverses the delete command
+6. User decides to delete person again, redo action
+7. BlueBird reapplies delete command
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. User requests person that is not inside the BlueBird
++
+[none]
+** 2a1. BlueBird displays error message
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Editing a person's details
+
+*MSS*
+
+1. User requests to add a person into BlueBird
+2. BlueBird adds new person into List
+3. User requests to edit a person
+4. User provides index of person to be edited to BlueBird
+5. BlueBird returns person's details for user to edit
+6. BlueBird stores new details under person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input command wrongly
++
+[none]
+** 1a1. BlueBird shows an error message
++
+Use case resumes at step 1.
+* 1b. User added a person already present in BlueBird
++
+[none]
+** 1b1. BlueBird shows duplicate person error message
++
+Use case resumes at step 1.
+
+* 4a. User provided index that is larger than size of last updated list
++
+[none]
+** 4a1. BlueBird shows undoable command error message
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Load contacts from saved file.
+
+*MSS*
+
+1. User has a file of contacts from BlueBird
+2. User opens BlueBird on a different device
+3. User loads file of contacts onto new device
+4. BlueBird updates list
+5. User has a List of persons from previous BlueBird
 +
 Use case ends.
 
@@ -951,7 +1099,14 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse.
+.  System should be able to respond in 0.5s.
+.  The software should work without requiring an installer.
+.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
+   is not allowed.
+.  Should have a minimum of font size 12 in all window sizes for visibility.
+.  Project code should follow link:#oop[OOP].
 
 {More to be added}
 
@@ -976,33 +1131,39 @@ A contact detail that is not meant to be shared with others
 OOP
 
 ....
-Object-oriented programming (OOP) is a programming language model organized around
-objects rather than "actions" and data rather than logic.
+Object-oriented programming (OOP) is a programming language model organized around objects rather than "actions" and
+data rather than logic
 ....
 
 [[ide]]
 IDE
 
 ....
-An integrated development environment (IDE) is a software application that provides
-comprehensive facilities to computer programmers for software development
+An integrated development environment (IDE) is a software application that provides comprehensive facilities to computer
+programmers for software development
 ....
 
 [[api]]
 API
 
 ....
-An Application Programming Interface (API) specifies the interface through which
-other programs can interact with a software component. It is a contract between the
-component and its clients.
+An Application Programming Interface (API) specifies the interface through which other programs can interact with a
+software component
 ....
 
 [[ci]]
 CI
 
 ....
-Continuous Integration (CI) is an extreme application of build automation in
-which integration, building, and testing happens automatically after each code change
+Continuous Integration (CI) is an extreme application of build automation in which integration, building, and testing
+happens automatically after each code change
+....
+
+[[jdk]]
+JDK
+
+....
+The Java Development Kit (JDK) is a software development environment used for developing Java applications and applets
 ....
 
 [[index]]
@@ -1017,6 +1178,61 @@ Help window
 
 ....
 A web-based window displaying the user-guide within the application
+....
+
+[[pr]]
+PR
+
+....
+Pull Request(PR) is an online submission of committed changes on GitHub
+....
+
+[[xml]]
+XML
+
+....
+XML is a metalanguage which allows users to define their own customized markup languages,especially in order to display
+documents on the Internet
+....
+
+[[jar]]
+JAR
+
+....
+A JAR (Java ARchive) is a package file format typically used to aggregate many Java class files and associated metadata
+and resources (text, images, etc.) into one file for distribution
+....
+
+[[ui]]
+UI
+
+....
+User Interface(UI) is the window displayed to the user when interacting with the application
+....
+
+[[gui]]
+GUI
+
+....
+The graphical user interface (GUI) is a type of user interface that allows users to interact with electronic devices
+through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed
+command labels or text navigation
+....
+
+[[mss]]
+MSS
+
+....
+The Main Success Scenario (MSS) describes the most straightforward interaction for a given use case, which assumes that
+nothing goes wrong
+....
+
+[[asciidoc]]
+asciidoc
+
+....
+asciidoc is a markup language, which is a system for annotating a document in a way that is syntactically
+distinguishable from the text
 ....
 
 [appendix]
