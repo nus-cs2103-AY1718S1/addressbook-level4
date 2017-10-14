@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.module.ReadOnlyLesson;
 
 /**
- * Selects a lesson identified using it's last displayed index from the application.
+ * Selects a lesson identified using it's last displayed index from the address book.
  */
 public class SelectCommand extends Command {
 
