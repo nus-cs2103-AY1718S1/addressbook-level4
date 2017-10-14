@@ -86,7 +86,9 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return dateBorrowLabel.getText();
     }
 
-    public String getDateRepaid() { return dateRepaidLabel.getText(); }
+    public String getDateRepaid() {
+        return dateRepaidLabel.getText();
+    }
 
     public List<String> getTags() {
         return tagLabels

@@ -139,7 +139,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return dateBorrowText.getText();
     }
 
-    public String getDateRepaidField () { return dateRepaidText.getText(); }
+    public String getDateRepaidField () {
+        return dateRepaidText.getText();
+    }
 
     public List<String> getTags() {
         return tagLabels
