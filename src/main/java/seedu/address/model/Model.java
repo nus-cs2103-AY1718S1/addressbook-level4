@@ -50,6 +50,9 @@ public interface Model {
     /** Adds the given person into whitelist */
     void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    /** Sets the {@code debt} field to zero */
+    void resetPersonDebt(ReadOnlyPerson person) throws PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
