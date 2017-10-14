@@ -28,7 +28,7 @@ public class SortFindPanel extends UiPart<Region> {
     private final Logic logic;
 
     @FXML
-    private TextField searchField;
+    private TextField searchBox;
 
     @FXML
     private MenuButton sortMenu;
@@ -56,10 +56,10 @@ public class SortFindPanel extends UiPart<Region> {
     @FXML
     private void handleSearchFieldChanged() {
         try {
-            if (searchField.getText().trim().isEmpty()) {
+            if (searchBox.getText().trim().isEmpty()) {
                 logic.execute(LIST_COMMAND_WORD);
             } else {
-                logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
+                logic.execute(FIND_COMMAND_WORD + " " + searchBox.getText());
             }
         } catch (CommandException | ParseException e1) {
             logger.warning("Failed to find person in search box");
@@ -123,11 +123,14 @@ public class SortFindPanel extends UiPart<Region> {
     }
 
     public void highlightSearchField() {
-        searchField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+        searchBox.setStyle("-fx-border-color: green; -fx-border-width: 2");
     }
 
+    /**
+     * Unhighlights the sort menu and search box.
+     */
     public void unhighlightAll() {
         sortMenu.setStyle("-fx-border-color: null; -fx-border-width: 1");
-        searchField.setStyle("-fx-border-color: null; -fx-border-width: 1");
+        searchBox.setStyle("-fx-border-color: null; -fx-border-width: 1");
     }
 }

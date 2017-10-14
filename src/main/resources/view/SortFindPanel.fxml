@@ -16,7 +16,7 @@
             <MenuItem fx:id="addressItem" mnemonicParsing="false" onAction="#handleAddressItemPressed" text="Address" />
         </items>
       </MenuButton>
-      <TextField fx:id="searchField" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#handleSearchFieldChanged" prefHeight="32.0" prefWidth="149.0" promptText="Search Person..." />
+      <TextField fx:id="searchBox" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#handleSearchFieldChanged" prefHeight="32.0" prefWidth="149.0" promptText="Search Person..." />
    </children>
    <padding>
       <Insets left="10.0" top="3.0" />

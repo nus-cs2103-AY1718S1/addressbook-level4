@@ -19,7 +19,7 @@ public class TutorialMessages {
     public static final String INTRO_THREE = "This is the result display, where "
             + "I will display the outcome of your commands.";
     public static final String INTRO_FOUR = "This is the sort menu, where you can select how to sort the list.";
-    public static final String INTRO_FIVE = "This is the search bar, where "
+    public static final String INTRO_FIVE = "This is the search box, where "
             + "you are able to search for the person you want.";
     public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
     public static final String INTRO_END = "Functions of Bluebird:\n"
@@ -32,8 +32,8 @@ public class TutorialMessages {
             + "7. COMMAND\n";
 
     /* Command usage messages */
-    public static final String PROMPT_BEGIN = "Let's try out the different commands of Bluebird! Follow the format in the "
-            + "command box to learn how to use each commands. A parameter in [ ] means it is optional!";
+    public static final String PROMPT_BEGIN = "Let's try out the different commands of Bluebird! Follow the format in "
+            + "the command box to learn how to use each commands. A parameter in [ ] means it is optional!";
 
     public static final String PROMPT_TWO = "add: Adds a person to the address book. "
             + "Example: add "

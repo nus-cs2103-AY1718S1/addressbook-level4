@@ -15,7 +15,7 @@ import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import guitests.guihandles.SearchFieldHandle;
+import guitests.guihandles.SearchBoxHandle;
 import guitests.guihandles.SortMenuHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
@@ -93,7 +93,7 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getResultDisplay();
     }
 
-    protected SearchFieldHandle getSearchField() {
+    protected SearchBoxHandle getSearchField() {
         return mainWindowHandle.getSearchField();
     }
 
