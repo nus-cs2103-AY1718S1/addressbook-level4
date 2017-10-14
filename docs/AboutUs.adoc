@@ -22,7 +22,7 @@ Responsibilities: Storage Component
 
 === Boo Kai Hsien
 image::kaihsien.jpg[width="150", align="left"]
-{empty}[https://github.com/chrisboo[github]]
+{empty}[https://github.com/chrisboo[github]] [<<chrisboo#, portfolio>>]
 
 Role: Code quality, Deliverables and Deadlines +
 Responsibilities: Model Component, Logic Component
