@@ -1,18 +1,9 @@
-// NavigationMenu.adoc
-
-// Define macros for each HTML file referenced in the menu
-:Home: index.html[Home]
-:User Guide: UserGuide.html[User Guide]
-:Developer Guide: DeveloperGuide.html[Developer Guide]
-:About Us: AboutUs.html[About]
-:Contact Us: ContactUs.html[Contact]
-
 // Create the menu as an inline list, only if it's to be displayed in a browser
 ifndef::env-github[]
 [.nav-headbar#navbar]
-- link:{home}
-- link:{UserGuide}
-- link:{DeveloperGuide}
-- link:{AboutUs}
-- link:{ContactUs}
+- <<index#, Home>>
+- <<UserGuide#, User Guide>>
+- <<DeveloperGuide#, Developer Guide>>
+- <<AboutUs#, About>>
+- <<ContactUs#, Contact>>
 endif::[]
