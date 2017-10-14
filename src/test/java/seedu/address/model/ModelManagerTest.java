@@ -69,8 +69,8 @@ public class ModelManagerTest {
     @Test
     public void removeTagSuccess() {
         //set up the models
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).
-                withPerson(BENSON).withPerson(CARL).withPerson(DANIEL).build();
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE)
+                .withPerson(BENSON).withPerson(CARL).withPerson(DANIEL).build();
         UserPrefs userPrefs = new UserPrefs();
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ModelManager modelManagerCopy1 = new ModelManager(addressBook, userPrefs);
@@ -82,6 +82,6 @@ public class ModelManagerTest {
 
         //tag is not present in file, two models should be same, file should not be touched or altered
         modelManagerCopy2.deleteTag("alla");
-        assertEquals(modelManager,modelManagerCopy2);
+        assertEquals(modelManager, modelManagerCopy2);
     }
 }
