@@ -19,13 +19,10 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop personal organizer application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* This is a desktop personal organizer application. It is oriented for typist user (most operations should be done using keyboard rather than mouse).
 * It is a Java application intended for https://github.com/orgs/CS2103AUG2017-T09-B3/people[students] learning Software Engineering in https://nus-cs2103.github.io/website/[CS2103T] at http://www.nus.edu.sg/[NUS].
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (more than 6 KLoC) than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* The target user group is http://www.nus.edu.sg/[NUS] students. This application aims at making their university life more convenient.
+* Users can manage and store information about their contacts, upcoming events and todo list.
 
 == Site Map
 

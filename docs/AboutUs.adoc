@@ -35,7 +35,7 @@ Role: Developer
 '''
 
 === Loh Denna
-image::sample_teammate_photo.png[width="150", align="left"]
+image::dennaloh.jpg[width="150", align="left"]
 {empty}[https://github.com/dennaloh[github]]
 
 Role: Developer
