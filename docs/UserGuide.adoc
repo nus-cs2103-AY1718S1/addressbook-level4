@@ -188,6 +188,11 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Sorting entries in the addressbook : `sort`
+
+Sorts all the entries in addressbook in the alphabetical order of the names. +
+Format: `sort`
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
