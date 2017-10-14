@@ -26,7 +26,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
-    private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+    private ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -105,6 +105,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
+        mappedList = EasyBind.map(internalList, (person) -> person);
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
