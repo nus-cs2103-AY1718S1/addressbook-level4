@@ -80,7 +80,7 @@ Shorthand: `l`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...`+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
 Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...`
 
 ****
