@@ -126,6 +126,9 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+`Coming in v2.0` +
+The program will execute the search concurrently as the user is typing the name of the person.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -226,6 +229,45 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Add an image of a person : `image`
+
+`Coming in v2.0` +
+Adds and image for a person. The image has to be in the following directory: +
+src/main/resources/images/
+
+Format: `picture p/NAME i/IMAGE`
+
+Example:
+
+* `picture p/John Doe i/imageofjohn.jpg`
+
+=== Loading pre-existing address book : `load`
+
+`Coming in v2.0` +
+Loads pre-existing address book to current address book. The pre-existing +
+address book has to be in xml-format and it has to be in the data folder +
+with a different name than the current address book.
+
+Format: `load FILENAME`
+
+Example:
+
+* `load addressbook2.xml`
+
+=== Setting password for the address book: `password`
+
+`Coming in v2.0` +
+Sets password for the address book. After setting the password +
+you will be prompted the password when initializing the address book.
+
+Format : `password`
+
+Example :
+
+* `password` +
+`mypassword` (sets the password to mypassword) +
+`mypassword` (you are also asked to confirm the password)
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -265,3 +307,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *image* : `image p/NAME i/IMAGE`
+* *Load* : `load FILENAME`
+* *password* : `password`
+
