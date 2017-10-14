@@ -26,7 +26,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui(GROUP).png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -71,6 +71,11 @@ Examples:
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Listing all meetings : `listMeeting`
+
+Shows a list of all meetings in the address book. +
+Format: `listMeeting`
 
 === Editing a person : `edit`
 
@@ -244,6 +249,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *ListMeeting* : `listMeeting`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
