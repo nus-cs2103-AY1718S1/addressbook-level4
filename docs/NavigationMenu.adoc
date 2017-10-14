@@ -1,0 +1,19 @@
+// NavigationMenu.adoc
+
+// Define macros for each HTML file referenced in the menu
+:Home: index.html[Home]
+:User Guide: UserGuide.html[User Guide]
+:Developer Guide: DeveloperGuide.html[Developer Guide]
+:About Us: AboutUs.html[About]
+:Contact Us: ContactUs.html[Contact]
+:stylesDir: stylesheets
+
+// Create the menu as an inline list, only if it's not on github main area
+ifndef::env-github[]
+[.nav-sidebar#sidebar]
+- link:{home}
+- link:{UserGuide}
+- link:{DeveloperGuide}
+- link:{AboutUs}
+- link:{ContactUs}
+endif::[]
