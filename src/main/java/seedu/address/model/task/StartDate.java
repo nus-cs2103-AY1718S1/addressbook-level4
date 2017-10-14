@@ -9,21 +9,21 @@ import java.util.Date;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Respresents the deadline of a task in the application.
- * Guarantees: immutable, is valid as declared in {@link #FormatDate(String)}
+ * Represents the Starting Date of a given task in the application.
+ * Guarantees: immutable; is valid as declared in {@link #FormatDate(String)}
  */
-public class Deadline {
+public class StartDate {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Deadlines can only contain a String in the format dd/mm/yyyy";
+            "Dates can only contain a String in the format dd/mm/yyyy";
     public final Date date;
 
     /**
-     * Validates given deadline date.
+     * Validates given starting date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public Deadline(String date) throws IllegalValueException {
+    public StartDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
         this.date = FormatDate(trimmedDate);
