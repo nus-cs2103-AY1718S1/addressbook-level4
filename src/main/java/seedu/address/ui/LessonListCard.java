@@ -23,7 +23,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class LessonCard extends UiPart<Region> {
+public class LessonListCard extends UiPart<Region> {
 
     private static final String FXML = "LessonListCard.fxml";
 
@@ -48,13 +48,13 @@ public class LessonCard extends UiPart<Region> {
     @FXML
     private Label group;
     @FXML
-    private Label location;
+    private Label venue;
     @FXML
     private Label timeSlot;
     @FXML
     private FlowPane lecturers;
 
-    public LessonCard(ReadOnlyLesson lesson, int displayedIndex) {
+    public LessonListCard(ReadOnlyLesson lesson, int displayedIndex) {
         super(FXML);
         this.lesson = lesson;
         id.setText(displayedIndex + ". ");
@@ -66,10 +66,6 @@ public class LessonCard extends UiPart<Region> {
         setFontSizeUnit(currFontSize);
 
         switch (currentUnit) {
-        case MODULE:
-            switchToModuleCard();
-            break;
-
         case LOCATION:
             switchToLocationCard();
             break;
@@ -79,6 +75,7 @@ public class LessonCard extends UiPart<Region> {
             break;
 
         default:
+            switchToModuleCard();
         }
     }
 
@@ -91,7 +88,7 @@ public class LessonCard extends UiPart<Region> {
         classType.textProperty().bind(Bindings.convert(lesson.classTypeProperty()));
         group.textProperty().bind(Bindings.convert(lesson.groupProperty()));
         timeSlot.textProperty().bind(Bindings.convert(lesson.timeSlotProperty()));
-        location.textProperty().bind(Bindings.convert(lesson.locationProperty()));
+        venue.textProperty().bind(Bindings.convert(lesson.locationProperty()));
         lesson.lecturersProperty().addListener((observable, oldValue, newValue) -> {
             lecturers.getChildren().clear();
             lesson.getLecturers().forEach(lecturer -> lecturers.getChildren()
@@ -109,7 +106,7 @@ public class LessonCard extends UiPart<Region> {
      */
     private void switchToModuleCard() {
         code.setVisible(true);
-        location.setVisible(false);
+        venue.setVisible(false);
         group.setVisible(false);
         timeSlot.setVisible(false);
         classType.setVisible(false);
@@ -122,12 +119,12 @@ public class LessonCard extends UiPart<Region> {
      */
     private void switchToLocationCard() {
         code.setVisible(false);
-        location.setVisible(true);
+        venue.setVisible(true);
         group.setVisible(false);
         timeSlot.setVisible(false);
         classType.setVisible(false);
         lecturers.setVisible(false);
-        location.setStyle("-fx-font: 16 arial;");
+        venue.setStyle("-fx-font: 16 arial;");
 
     }
 
@@ -136,7 +133,7 @@ public class LessonCard extends UiPart<Region> {
      */
     private void switchToLessonCard() {
         code.setVisible(true);
-        location.setVisible(true);
+        venue.setVisible(true);
         group.setVisible(true);
         timeSlot.setVisible(true);
         classType.setVisible(true);
@@ -151,12 +148,12 @@ public class LessonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof LessonCard)) {
+        if (!(other instanceof LessonListCard)) {
             return false;
         }
 
         // state check
-        LessonCard card = (LessonCard) other;
+        LessonListCard card = (LessonListCard) other;
         return id.getText().equals(card.id.getText())
                 && lesson.equals(card.lesson);
     }
@@ -196,7 +193,7 @@ public class LessonCard extends UiPart<Region> {
     private void setFontSizeHelper(String fontSize) {
         code.setStyle("-fx-font-size: " + fontSize + ";");
         id.setStyle("-fx-font-size: " + fontSize + ";");
-        location.setStyle("-fx-font-size: " + fontSize + ";");
+        venue.setStyle("-fx-font-size: " + fontSize + ";");
         classType.setStyle("-fx-font-size: " + fontSize + ";");
         timeSlot.setStyle("-fx-font-size: " + fontSize + ";");
         group.setStyle("-fx-font-size: " + fontSize + ";");
