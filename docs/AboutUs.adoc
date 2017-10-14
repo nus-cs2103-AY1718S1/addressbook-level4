@@ -28,7 +28,7 @@ Responsibilities: Logic
 '''
 
 === Ng Aik Sheng
-image::yijinl.jpg[width="150", align="left"]
+image::nassy93.jpg[width="150", align="left"]
 {empty}[http://github.com/nassy93[github]] [<<nas#, portfolio>>]
 
 Role: Developer +
