@@ -109,6 +109,21 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Shift cursor left by words
+     */
+    private void shiftLeftByWord() {
+        if (commandTextField.getText().length() == 0) {
+            return;
+        }
+        int caretPositionToEvaluate = commandTextField.getCaretPosition() - 1;
+        while(commandTextField.getText().charAt(caretPositionToEvaluate-1) != ' '){
+            caretPositionToEvaluate -= 1;
+            if(caretPositionToEvaluate == 0){break;}
+        }
+        commandTextField.positionCaret(caretPositionToEvaluate);
+    }
+
+    /**
      * Polls the input statement to check if sentence starts with " add " or " a "
      * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
      * <p>
