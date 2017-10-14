@@ -86,7 +86,7 @@ public class DeleteCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        DeleteCommand deleteCommand = prepareCommand( personsToDelete1);
+        DeleteCommand deleteCommand = prepareCommand(personsToDelete1);
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -120,7 +120,7 @@ public class DeleteCommandTest {
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareCommand( ArrayList<Index> indexes) {
+    private DeleteCommand prepareCommand(ArrayList<Index> indexes) {
 
         DeleteCommand deleteCommand = new DeleteCommand(indexes);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());

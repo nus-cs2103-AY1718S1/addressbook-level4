@@ -7,16 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -34,16 +28,17 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
-        if (argMultimap.size() > 2) {
-            throw new ParseException(String.format(SortCommand.MESSAGE_MULTIPLE_ATTRIBUTE, SortCommand.MESSAGE_USAGE));
-        }
-
-        if (argMultimap.size() < 2) {
+        if (!args.matches("^|( [npea]/((asc)|(dsc)|))$")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        if ("".equals(args)) {
+            args = " n/asc";
+        }
+
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         assert argMultimap.size() == 2;
 
@@ -51,10 +46,6 @@ public class SortCommandParser implements Parser<SortCommand> {
         argMultimap.getValue(PREFIX_PHONE).ifPresent(setSortingOrder(PREFIX_PHONE));
         argMultimap.getValue(PREFIX_EMAIL).ifPresent(setSortingOrder(PREFIX_EMAIL));
         argMultimap.getValue(PREFIX_ADDRESS).ifPresent(setSortingOrder(PREFIX_ADDRESS));
-
-        if (isDescending == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
 
         return new SortCommand(sortType, isDescending);
     }
@@ -68,6 +59,13 @@ public class SortCommandParser implements Parser<SortCommand> {
                 isDescending = new Boolean(false);
                 return;
             }
+
+            //Defaults to ascending when order not specified
+            if ("".equals(s)) {
+                isDescending = new Boolean(false);
+                return;
+            }
+
             if (s.equals(SortCommand.BY_DESCENDING)) {
                 isDescending = new Boolean(true);
                 return;
@@ -76,20 +74,4 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         };
     }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
 }
