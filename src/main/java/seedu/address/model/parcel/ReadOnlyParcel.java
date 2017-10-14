@@ -45,7 +45,7 @@ public interface ReadOnlyParcel {
         final StringBuilder builder = new StringBuilder();
         builder.append("Article No.: ")
                 .append(getArticleNumber())
-                .append(" Receipent Name: ")
+                .append(" Recipient Name: ")
                 .append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
