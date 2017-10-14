@@ -12,37 +12,37 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Deric Khoo Jia Wei
-image::derickjw.jpg[width="150", align="left"]
+image::derickjw.png[width="150", align="left"]
 {empty}[https://github.com/derickjw[github]]
 
-Role: Team Lead + Scheduling and Tracking + Documentation +
+Role: Developer + Documentation (Main) +
 Responsibilities : UI + Use Cases + Product Survey
 
 '''
 
 === Chen Huijia
-image::lejolly.jpg[width="150", align="left"]
+image::hj2304.png[width="150", align="left"]
 {empty}[http://github.com/hj2304[github]]
 
-Role: +
+Role: Developer + Tester (Main) +
 Responsibilities: Model + Non-Functional Requirements
 
 '''
 
 === He Yuchen
-image::yuchenhe98.jpg[width="150", align="left"]
+image::yuchenhe98.png[width="150", align="left"]
 {empty}[http://github.com/yuchenhe98[github]]
 
-Role: Developer +
+Role: Developer + Schedule and Tracking +
 Responsibilities: Storage + User Stories
 
 '''
 
 === Khaw Yew Onn
-image::khawyewonn.jpg[width="150", align="left"]
+image::khawyewonn.png[width="150", align="left"]
 {empty}[http://github.com/khawyewonn[github]]
 
-Role: Developer +
+Role: Developer + Scheduling and Tracking (Main) +
 Responsibilities: Logic + Glossary
 
 '''
