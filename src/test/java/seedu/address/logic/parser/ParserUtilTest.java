@@ -19,18 +19,21 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.ArticleNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
+    private static final String INVALID_ARTICLE_NUMBER = "R1231230";
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
+    private static final String VALID_ARTICLE_NUMBER = "RR123456999SG";
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "505 Beach Road, Golden Mile Food Centre, #02-193/194, S199583";
@@ -61,6 +64,31 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PARCEL, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseArticleNumber_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseArticleNumber(null);
+    }
+
+    @Test
+    public void parseArticleNumber_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseArticleNumber(Optional.of(INVALID_ARTICLE_NUMBER));
+    }
+
+    @Test
+    public void parseArticleNumber_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseArticleNumber(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseArticleNumber_validValue_returnsArticleNumber() throws Exception {
+        ArticleNumber expectedArticleNumber = new ArticleNumber(VALID_ARTICLE_NUMBER);
+        Optional<ArticleNumber> actualArticleNumber = ParserUtil.parseArticleNumber(Optional.of(VALID_ARTICLE_NUMBER));
+
+        assertEquals(expectedArticleNumber, actualArticleNumber.get());
     }
 
     @Test
