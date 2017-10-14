@@ -1,8 +1,7 @@
 package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.Lecturer;
 
 import java.util.Set;
 
@@ -20,8 +19,8 @@ public interface ReadOnlyLesson {
     ClassType getClassType();
     ObjectProperty<Group> groupProperty();
     Group getGroup();
-    ObjectProperty<UniqueTagList> tagProperty();
-    Set<Tag> getTags();
+    ObjectProperty<Lecturer> lecturerProperty();
+    Lecturer getLecturer();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -48,8 +47,8 @@ public interface ReadOnlyLesson {
                 .append(getGroup())
                 .append(" Time Slot: ")
                 .append(getTimeSlot())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append(" Lecturer: ")
+                .append(getLecturer());
         return builder.toString();
     }
 

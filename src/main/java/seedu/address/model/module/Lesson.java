@@ -2,11 +2,9 @@ package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.Lecturer;
 
 import java.util.Objects;
-import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -21,19 +19,19 @@ public class Lesson implements ReadOnlyLesson{
     private ObjectProperty<Location> location;
     private ObjectProperty<TimeSlot> timeSlot;
 
-    private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Lecturer> lecturer;
 
     /**
      * Every field must be present and not null.
      */
-    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Set<Tag> tags) {
-        requireAllNonNull(classType, location, group, timeSlot, tags);
+    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Lecturer lecturer) {
+        requireAllNonNull(classType, location, group, timeSlot, lecturer);
         this.classType = new SimpleObjectProperty<>(classType);
         this.location = new SimpleObjectProperty<>(location);
         this.group = new SimpleObjectProperty<>(group);
         this.timeSlot = new SimpleObjectProperty<>(timeSlot);
         // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.lecturer = new SimpleObjectProperty<>(lecturer);
     }
 
     /**
@@ -41,7 +39,7 @@ public class Lesson implements ReadOnlyLesson{
      */
     public Lesson(ReadOnlyLesson source) {
         this(source.getClassType(), source.getLocation(), source.getGroup(),source.getTimeSlot(),
-                source.getTags());
+                source.getLecturer());
     }
 
     public void setLocation(Location location) {
@@ -100,28 +98,15 @@ public class Lesson implements ReadOnlyLesson{
         return group.get();
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-
-
-
-    public ObjectProperty<UniqueTagList> tagProperty() {
-        return tags;
+    @Override
+    public ObjectProperty<Lecturer> lecturerProperty() {
+        return lecturer;
     }
 
     @Override
-    public Set<Tag> getTags() {
-        return null;
-    }
+    public Lecturer getLecturer() { return lecturer.get(); }
 
-    /**
-     * Replaces this person's tags with the tags in the argument tag set.
-     */
-    public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
+    public void setLecturer(Lecturer lecturer) { this.lecturer.set(requireNonNull(lecturer)); }
 
     @Override
     public boolean equals(Object other) {
@@ -133,7 +118,7 @@ public class Lesson implements ReadOnlyLesson{
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(classType, location, group, timeSlot, tags);
+        return Objects.hash(classType, location, group, timeSlot, lecturer);
     }
 
     @Override
