@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.ArticleNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
@@ -17,7 +18,7 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class ParcelBuilder {
 
-    public static final String DEFAULT_ARTICLE_NUMBER = "RR999999999SG";
+    public static final String DEFAULT_ARTICLE_NUMBER = "RR999966699SG";
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
@@ -28,12 +29,14 @@ public class ParcelBuilder {
 
     public ParcelBuilder() {
         try {
+            ArticleNumber defaultArticleNumber=  new ArticleNumber(DEFAULT_ARTICLE_NUMBER);
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.parcel = new Parcel(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.parcel = new Parcel(defaultArticleNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default parcel's values are invalid.");
         }
@@ -46,6 +49,18 @@ public class ParcelBuilder {
         this.parcel = new Parcel(parcelToCopy);
     }
 
+    /**
+     * Sets the {@code ArticleNumber} of the {@code Parcel} that we are building.
+     */
+    public ParcelBuilder withArticleNumber(String articleNumber) {
+        try {
+            this.parcel.setArticleNumber(new ArticleNumber(articleNumber));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("article number is expected to be unique.");
+        }
+        return this;
+    }
+    
     /**
      * Sets the {@code Name} of the {@code Parcel} that we are building.
      */
