@@ -72,7 +72,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + BLOODTYPE_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withBloodType(VALID_BLOODTYPE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withBloodType(VALID_BLOODTYPE_BOB).withTags(VALID_TAG_HUSBAND).withAppointment(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: undo editing the last person in the list -> last person restored */

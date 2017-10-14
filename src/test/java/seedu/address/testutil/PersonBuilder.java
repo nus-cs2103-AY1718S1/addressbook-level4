@@ -29,7 +29,6 @@ public class PersonBuilder {
     public static final String DEFAULT_BLOODTYPE = "O";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
-    public static final String DEFAULT_APPOINTMENT = "2018/10/10 10:10";
     private Person person;
 
     public PersonBuilder() {
@@ -41,19 +40,9 @@ public class PersonBuilder {
             Bloodtype defaultBloodType = new Bloodtype(DEFAULT_BLOODTYPE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
-            Calendar calendar = Calendar.getInstance();
-            Appointment appointment;
-            try {
-                calendar.setTime(Appointment.DATE_FORMATTER.parse(DEFAULT_APPOINTMENT));
-                appointment = new Appointment(defaultName.toString());
-                this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                        defaultAddress, defaultBloodType, defaultTags, defaultRemark, appointment);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-
-
+            Appointment  appointment = new Appointment(defaultName.toString());
+            this.person = new Person(defaultName, defaultPhone, defaultEmail,
+                defaultAddress, defaultBloodType, defaultTags, defaultRemark, appointment);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
