@@ -116,6 +116,10 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    /**
+     * deletes tag if it is supposed to be deleted
+      * @param str
+     */
     public void deleteTag(String str) {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
