@@ -8,6 +8,7 @@
 
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="contactTab"
+            styleClass="cornerTab"
             xmlns="http://javafx.com/javafx/8">
     <TextArea fx:id="contacts" editable="false"/>
 </AnchorPane>

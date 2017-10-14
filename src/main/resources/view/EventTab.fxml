@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="eventTab"
+            styleClass="tab"
            xmlns="http://javafx.com/javafx/8">
     <TextArea fx:id="events" editable="false"/>
 </AnchorPane>
