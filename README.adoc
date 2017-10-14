@@ -10,16 +10,16 @@ image::docs/images/Ui.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+image::images/currentUi.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* The Myth's Book is a desktop address book application dedicated for university students to store useful information such
+ as the phone numbers and emails of the people around them. The Myth's Book is a `Command Line Input` based
+ software which helps caters to students who are efficient and comfortable in typing out command line inputs to
+ manipulate with information of their contacts in the address book.
+* It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 
 == Site Map
 
