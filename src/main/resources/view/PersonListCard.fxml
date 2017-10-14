@@ -25,8 +25,8 @@
                <children>
                   <HBox>
                      <children>
-                    <Label fx:id="id" minWidth="0.0" styleClass="cell_big_label" />
-                    <Label fx:id="name" minWidth="0.0" styleClass="cell_big_label" text="\$first" />
+                    <Label fx:id="id" minWidth="0.0" styleClass="cell_big_label" wrapText="true" />
+                    <Label fx:id="name" minWidth="0.0" styleClass="cell_big_label" text="\$first" wrapText="true" />
                      </children>
                   </HBox>
                <FlowPane fx:id="tags" />
@@ -36,12 +36,12 @@
                </padding>
             </VBox>
       </HBox>
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true">
             <padding>
                <Insets top="10.0" />
             </padding></Label>
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+      <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true" />
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true" />
     </VBox>
       <rowConstraints>
          <RowConstraints />
