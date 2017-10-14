@@ -1,12 +1,18 @@
 package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.tag.Lecturer;
+import seedu.address.model.tag.UniqueLecturerList;
+
+import java.util.Set;
 
 public interface ReadOnlyModule {
     ObjectProperty<Code> codeProperty();
     Code getCode();
     ObjectProperty<UniqueLessonList> uniqueLessonListProperty();
     UniqueLessonList getUniqueLessonList();
+    ObjectProperty<UniqueLecturerList> lecturerProperty();
+    Set<Lecturer> getLecturers();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
