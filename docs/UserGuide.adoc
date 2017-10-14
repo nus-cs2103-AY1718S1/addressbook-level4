@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: ` The Myth`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -71,15 +71,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL se/SCHOOL_EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/12/11/1972`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/03/2000 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com se/john@u.nus.edu a/John street, block 123, #01-01 b/12/11/1972`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com se/betsy@u.nus.edu a/Newgate Prison p/1234567 b/02/03/2000 t/criminal`
 
 === Listing all persons : `list`
 
@@ -94,7 +94,7 @@ Format: `sort`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [se/SCHOOL_EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -232,6 +232,28 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
+
+=== Listing all themes : `themeslist`
+
+Shows a list of all themes in the address book. +
+Format: `themeslist`
+
+=== Switching themes : `switch`
+
+Switches the current theme to the specified theme. +
+Format: `switch INDEX`
+
+****
+* Switches the current theme to the theme at the specified `INDEX`.
+* The index refers to the index number shown in the themes list window.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `themeslist` +
+`switch 2` +
+Switches to the 2nd theme in the themes list.
 
 === Clearing all entries : `clear`
 
