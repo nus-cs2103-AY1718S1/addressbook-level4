@@ -18,18 +18,18 @@ public class SortCommandTest {
     @Test
     public void execute() throws Exception {
         //setting up the model to for entries in reverse order
-        AddressBook abNIO = new AddressBook();
-        abNIO.addPerson(TypicalPersons.ELLE);
-        abNIO.addPerson(TypicalPersons.DANIEL);
-        abNIO.addPerson(TypicalPersons.CARL);
-        model = new ModelManager(abNIO, new UserPrefs());
+        AddressBook abNotInOrder = new AddressBook();
+        abNotInOrder.addPerson(TypicalPersons.ELLE);
+        abNotInOrder.addPerson(TypicalPersons.DANIEL);
+        abNotInOrder.addPerson(TypicalPersons.CARL);
+        model = new ModelManager(abNotInOrder, new UserPrefs());
 
         //create expectations
-        AddressBook abIO = new AddressBook();
-        abIO.addPerson(TypicalPersons.CARL);
-        abIO.addPerson(TypicalPersons.DANIEL);
-        abIO.addPerson(TypicalPersons.ELLE);
-        ModelManager expectedModel = new ModelManager(abIO, new UserPrefs());
+        AddressBook abInOrder = new AddressBook();
+        abInOrder.addPerson(TypicalPersons.CARL);
+        abInOrder.addPerson(TypicalPersons.DANIEL);
+        abInOrder.addPerson(TypicalPersons.ELLE);
+        ModelManager expectedModel = new ModelManager(abInOrder, new UserPrefs());
 
         //command and return result
         SortCommand sortCommand = prepareCommand();
