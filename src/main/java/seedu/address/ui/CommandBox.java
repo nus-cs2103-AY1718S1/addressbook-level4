@@ -156,11 +156,11 @@ public class CommandBox extends UiPart<Region> {
         this.commandTextField.setPromptText(toPrompt);
     }
 
-    public void tutorialHighlight() {
+    public void highlightCommandBox() {
         this.commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
     }
 
-    public void tutorialUnhighlight() {
+    public void unhighlightCommandBox() {
         this.commandTextField.setStyle("-fx-border-color: #383838 #383838 #ffffff #383838; -fx-border-width: 1");
     }
 }

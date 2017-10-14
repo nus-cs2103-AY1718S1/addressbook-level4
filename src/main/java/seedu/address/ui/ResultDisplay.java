@@ -38,11 +38,11 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
     }
 
-    public void tutorialHighlight() {
+    public void highlightResultDisplay() {
         this.resultDisplay.setStyle("-fx-border-color: green; -fx-border-width: 2");
     }
 
-    public void tutorialUnhighlight() {
+    public void unhighlightResultDisplay() {
         this.resultDisplay.setStyle("-fx-border-color: null; -fx-border-width: null");
     }
 }

@@ -2,12 +2,9 @@ package seedu.address.ui;
 
 import java.util.ArrayList;
 
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import seedu.address.commons.core.TutorialMessages;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -19,75 +16,72 @@ public class Tutorial {
     private CommandBox commandBox;
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
-    private MenuButton sortMenu;
-    private TextField searchField;
+    private SortFindPanel sortFindPanel;
     private TextArea tutorialText;
     private ArrayList<TutSteps> tutorialSteps = new ArrayList<>();
     private Logic logic;
 
     public Tutorial(CommandBox commandBox, PersonListPanel personListPanel, ResultDisplay resultDisplay,
-                    MenuButton sortMenu, TextField searchField, TextArea tutorialText, Logic logic) {
+                    SortFindPanel sortFindPanel, TextArea tutorialText, Logic logic) {
 
         this.commandBox = commandBox;
         this.personListPanel = personListPanel;
         this.tutorialText = tutorialText;
         this.logic = logic;
         this.resultDisplay = resultDisplay;
-        this.sortMenu = sortMenu;
-        this.searchField = searchField;
+        this.sortFindPanel = sortFindPanel;
 
         setUpTutorial();
     }
 
     private void setUpTutorial() {
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_ONE, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_TWO, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_THREE, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FOUR, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_FIVE, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_SIX, false));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_SEVEN, false, TutorialMessages.COMMAND_ADD_USAGE));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_EIGHT, false, "delete 6"));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_NINE, true, "delete 6"));
-        tutorialSteps.add(new TutSteps(TutorialMessages.STEP_CONCLUSION, false));
-        tutorialSteps.add(new TutSteps("Last step", false));
+        tutorialSteps.add(new TutSteps(TutorialMessages.INTRO_TWO));
+        tutorialSteps.add(new TutSteps(TutorialMessages.INTRO_THREE));
+        tutorialSteps.add(new TutSteps(TutorialMessages.INTRO_FOUR));
+        tutorialSteps.add(new TutSteps(TutorialMessages.INTRO_FIVE));
+        tutorialSteps.add(new TutSteps(TutorialMessages.INTRO_SIX));
+        tutorialSteps.add(new TutSteps(TutorialMessages.INTRO_END));
+        tutorialSteps.add(new TutSteps(TutorialMessages.PROMPT_BEGIN));
+        tutorialSteps.add(new TutSteps(TutorialMessages.PROMPT_TWO, TutorialMessages.COMMAND_ADD_USAGE));
+        tutorialSteps.add(new TutSteps(TutorialMessages.PROMPT_THREE, TutorialMessages.COMMAND_EDIT_USAGE));
+        tutorialSteps.add(new TutSteps(TutorialMessages.PROMPT_FOUR, TutorialMessages.COMMAND_DELETE_USAGE));
+        tutorialSteps.add(new TutSteps(TutorialMessages.CONCLUSION, TutorialMessages.DEFAULT_PROMPT));
+        tutorialSteps.add(new TutSteps("Last step"));
     }
 
     /**
      * Executes the current tutorial's step.
      */
     public void executeStep(TutSteps currentStep) throws CommandException, ParseException {
-        commandBox.setPromptText(currentStep.getCommandInput());
         switch (currentStep.getStepNumber()) {
         case 0:
-            commandBox.tutorialHighlight();
+            commandBox.highlightCommandBox();
             break;
         case 1:
             unhighlightAll();
-            resultDisplay.tutorialHighlight();
+            resultDisplay.highlightResultDisplay();
             break;
         case 2:
             unhighlightAll();
-            sortMenu.setStyle("-fx-border-color: green; -fx-border-width: 2");
+            sortFindPanel.highlightSortMenu();
             break;
         case 3:
             unhighlightAll();
-            searchField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+            sortFindPanel.highlightSearchField();
             break;
         case 4:
             unhighlightAll();
-            personListPanel.tutorialHighlight();
+            personListPanel.highlightPersonListPanel();
             break;
         default:
             unhighlightAll();
         }
         if (currentStep.isLastStep()) {
-            tutorialText.setVisible(false);
-        } else if (!currentStep.isToExecute()) {
+            endTutorial();
+        } else if (currentStep.isPrompt()) {
+            commandBox.setPromptText(currentStep.getCommandPrompt());
             tutorialText.setText(currentStep.getTextDisplay());
-        } else if (currentStep.isToExecute()) {
-            CommandResult result = logic.execute(currentStep.getCommandInput());
-            commandBox.setInputText("");
+        } else {
             tutorialText.setText(currentStep.getTextDisplay());
         }
     }
@@ -96,11 +90,10 @@ public class Tutorial {
      * Unhighlights all the UIs during tutorial.
      */
     private void unhighlightAll() {
-        personListPanel.tutorialUnhighlight();
-        commandBox.tutorialUnhighlight();
-        resultDisplay.tutorialUnhighlight();
-        sortMenu.setStyle("-fx-border-color: null; -fx-border-width: 1");
-        searchField.setStyle("-fx-border-color: null; -fx-border-width: 1");
+        personListPanel.unhighlightPersonListPanel();
+        commandBox.unhighlightCommandBox();
+        resultDisplay.unhighlightResultDisplay();
+        sortFindPanel.unhighlightAll();
     }
 
     public ArrayList<TutSteps> getTutorialSteps() {
@@ -111,8 +104,9 @@ public class Tutorial {
      * Ends the tutorial.
      */
     public void endTutorial() {
-        commandBox.setInputText("");
         unhighlightAll();
+        tutorialText.setVisible(false);
+        commandBox.setPromptText(TutorialMessages.DEFAULT_PROMPT);
     }
 }
 
@@ -123,28 +117,27 @@ class TutSteps {
 
     private static int totalNumSteps = 0;
     private String textDisplay;
-    private boolean toExecute = false;
     private boolean isLastStep = false;
     private int stepNumber;
-    private String commandInput = "";
+    private String commandPrompt = "";
+    private boolean hasPrompt = false;
 
-    public TutSteps(String textDisplay, boolean toExecute) {
+    public TutSteps(String textDisplay) {
         this.textDisplay = textDisplay;
-        this.toExecute = toExecute;
         stepNumber = totalNumSteps;
         if (totalNumSteps++ == TutorialMessages.NUM_STEPS) {
             this.isLastStep = true;
         }
     }
 
-    public TutSteps(String textDisplay, boolean toExecute, String commandInput) {
+    public TutSteps(String textDisplay, String commandPrompt) {
         this.textDisplay = textDisplay;
-        this.toExecute = toExecute;
-        this.commandInput = commandInput;
+        this.commandPrompt = commandPrompt;
         stepNumber = totalNumSteps;
         if (totalNumSteps++ == TutorialMessages.NUM_STEPS) {
             this.isLastStep = true;
         }
+        this.hasPrompt = true;
     }
 
     public String getTextDisplay() {
@@ -155,15 +148,15 @@ class TutSteps {
         return isLastStep;
     }
 
-    public String getCommandInput() {
-        return commandInput;
-    }
-
-    public boolean isToExecute() {
-        return toExecute;
+    public String getCommandPrompt() {
+        return commandPrompt;
     }
 
     public int getStepNumber() {
         return stepNumber;
+    }
+
+    public boolean isPrompt() {
+        return hasPrompt;
     }
 }
