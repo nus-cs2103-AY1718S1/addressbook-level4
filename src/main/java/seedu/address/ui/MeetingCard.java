@@ -17,7 +17,7 @@ import seedu.address.model.meeting.ReadOnlyMeeting;
 public class MeetingCard extends UiPart<Region> {
 
     private static final String FXML = "MeetingListCard.fxml";
-    private static String[] colors = { "red", "blue", "green", "grey" };
+    private static String[] colors = { "darkRed", "red", "orangeRed", "grey" };
 
     public final ReadOnlyMeeting meeting;
 
@@ -50,12 +50,12 @@ public class MeetingCard extends UiPart<Region> {
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime meetingDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
         LocalDateTime currDate = LocalDateTime.now();
-        long daysBet = ChronoUnit.DAYS.between(meetingDate, currDate);
-        if (daysBet == 1) {
+        long daysBet = ChronoUnit.DAYS.between(currDate, meetingDate);
+        if (daysBet == 0) {
             initMeeting(meeting, colors[0]);
-        } else if (daysBet == 2) {
+        } else if (daysBet == 1) {
             initMeeting(meeting, colors[1]);
-        } else if (daysBet == 3) {
+        } else if (daysBet == 2) {
             initMeeting(meeting, colors[2]);
         }
 
