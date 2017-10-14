@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import seedu.address.model.person.TagContainsKeywordsPredicate;
-import seedu.address.model.tag.Tag;
 
 /**
  * Finds and lists all persons in address book whose tag contains any of the argument keywords.

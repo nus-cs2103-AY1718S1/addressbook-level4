@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import java.util.List;
 import java.util.Set;
-import java.lang.reflect.Array;
 import java.util.StringJoiner;
 import java.util.function.Predicate;
 
@@ -24,12 +23,12 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         Set<Tag> set = person.getTags();
         Tag[] array = set.toArray(new Tag[0]);
         StringJoiner stringjoiner = new StringJoiner(" ");
-        for (int i = 0; i < array.length; i++ ) {
+        for (int i = 0; i < array.length; i++) {
             stringjoiner.add(array[i].toString());
         }
         String finalString = stringjoiner.toString();
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString,'[' + keyword + ']'));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString, '[' + keyword + ']'));
     }
 
     @Override
