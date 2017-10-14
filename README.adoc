@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+=  cherBook
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -7,7 +7,7 @@ https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appv
 https://coveralls.io/github/CS2103AUG2017-T16-B2/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T16-B2/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
-image::docs/images/mainUI.png[width="600"]
+image::docs/images/UI.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
@@ -15,12 +15,9 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* cherBook provides teachers an easy way to monitor students' academic development and provides an effortless mean of communication between teachers and parents.
+* It can store contact details of the parents of students, students' class, grades and education levels.
+* Unique features such as grade analytics are used to help teachers monitor the students' academic progress throughout the academic year.
 
 == Site Map
 
