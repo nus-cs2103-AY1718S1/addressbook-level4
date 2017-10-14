@@ -158,6 +158,10 @@ public class Person implements ReadOnlyPerson {
 
     //@@author
 
+    /**
+     * Sets date borrowed of a person the the given DateBorrow.
+     * @param dateRepaid must not be null.
+     */
     public void setDateRepaid(DateRepaid dateRepaid) {
         this.dateRepaid.set(requireNonNull(dateRepaid));
     }
