@@ -41,17 +41,36 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Components
 
-**BoNUS** mainly consists on three components: *contacts*, *events* and *calendar*. They work independently and each is considered as a kind of `data items`. They are described in details as follows:
+**BoNUS** mainly consists on three components: *contacts*, *events* and *calendar*. They work independently and each is
+considered as a kind of `data items`. They are described in details as follows:
 
 === Contacts
 
 You can store personal information of your contacts (friends, classmates, professors, etc.) in **BoNUS**.
 
-* By default, you can store and update their name, phone number, email address and mailing address. Refer to the `add` and `edit` command in the section below for more information.
-* You can store other information of your contacts by adding customize properties. Refer to the `config add-property` command in the section below for more information.
-* You can group your contacts by adding one or multiple tags to them. Contacts with the same tag will be classified under the same group.
+* By default, you can store and update their name, phone number, email address and mailing address. Refer to the `add`
+and `edit` command in the section below for more information.
+* You can store other information of your contacts by adding customize properties. Refer to the `config add-property`
+command in the section below for more information.
+* You can group your contacts by adding one or multiple tags to them. Contacts with the same tag will be classified
+under the same group.
+
+=== Events
+
+You can store your upcoming events (meeting with professor tomorrow, assignment deadline, lecture/tutorial time slot, etc.) in **BoNUS**.
+
+* By default, you can store and update their title, interval (starting time and end time), venue and description. Refer
+to the `add` and `edit` command in the section below for more information.
+* Similar to link:#contacts[contacts], you can add customize properties to events as well.
+* Similar to link:#contacts[contacts], you can add tags to events as well.
+* If you have set starting and/or end time for an event, it will be reflected accordingly on the link:#calendar[calendar] component.
+* You can set notification at specific time before an event starts (when you should arrive at the venue before a meeting begins) or at specific time
+before an event ends (when you need to finalize your assignment and submit it to your professor).
+* You can link one or more link:#contacts[contacts] to an event (if all of you are going to attend the same meeting).
 
 === Calendar
+
+Calender provides a more convenient interface for you to view your upcoming link:#events[events].
 
 == Commands
 
