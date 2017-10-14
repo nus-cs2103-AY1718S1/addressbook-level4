@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
-//import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -45,6 +47,26 @@ public class MeetingCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
         date.textProperty().bind(Bindings.convert(meeting.dateProperty()));
         place.textProperty().bind(Bindings.convert(meeting.placeProperty()));
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime meetingDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
+        LocalDateTime currDate = LocalDateTime.now();
+        long daysBet = ChronoUnit.DAYS.between(meetingDate, currDate);
+        if (daysBet == 1) {
+            initMeeting(meeting, colors[0]);
+        } else if (daysBet == 2) {
+            initMeeting(meeting, colors[1]);
+        } else if (daysBet == 3) {
+            initMeeting(meeting, colors[2]);
+        }
+
+    }
+
+    /**
+     * set colours to Meeting
+     * @param meeting
+     */
+    private void initMeeting(ReadOnlyMeeting meeting, String color) {
+        cardPane.setStyle("-fx-background-color: " + color);
     }
 
     @Override
