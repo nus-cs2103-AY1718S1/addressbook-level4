@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -10,11 +9,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 public class FavouriteCommand extends UndoableCommand {
@@ -22,15 +19,14 @@ public class FavouriteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "favourite";
     public static final String COMMAND_ALIAS = "fav";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a 'favourite' tag to the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to your favourite contacts "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added 'favourite' tag to Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added person to favourites: %1$s";
+    public static final String MESSAGE_ALREADY_FAVOURITE = "Already favourite";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String FAVOURITE_TAG = "favourite";
 
     private final Index index;
 
@@ -53,8 +49,11 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToFavourite = lastShownList.get(index.getZeroBased());
-        Person favouritedPerson = createFavouritedPerson(personToFavourite);
+        if (personToFavourite.getFavourite().checkFavourite()) {
 
+            return new CommandResult(String.format(MESSAGE_ALREADY_FAVOURITE));
+        }
+        Person favouritedPerson = createFavouritedPerson(personToFavourite);
         try {
             model.updatePerson(personToFavourite, favouritedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -63,12 +62,13 @@ public class FavouriteCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
         return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));
+
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Person} with the details of {@code personToFavourite}
      */
     private static Person createFavouritedPerson(ReadOnlyPerson personToFavourite) {
         assert personToFavourite != null;
@@ -77,9 +77,9 @@ public class FavouriteCommand extends UndoableCommand {
         Phone originalPhone = personToFavourite.getPhone();
         Email originalEmail = personToFavourite.getEmail();
         Address originalAddress = personToFavourite.getAddress();
-        Set<Tag> updatedTags = personToFavourite.getTags();
+        Set<Tag> originalTags = personToFavourite.getTags();
 
-        return new Person(originalName, originalPhone, originalEmail, originalAddress, updatedTags, true);
+        return new Person(originalName, originalPhone, originalEmail, originalAddress, originalTags, new Favourite(true));
     }
 
     @Override

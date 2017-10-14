@@ -6,16 +6,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Favourite {
 
-    public static boolean favourite;
-
+    public final boolean favourite;
 
     /**
      Constructs a Favourite object and instantiate it to either true or false false.
      */
     public Favourite(boolean toFavourite) {
-        if (toFavourite) {
-            this.favourite = true;
-        }
+
+            this.favourite = toFavourite;
     }
 
     public Favourite() {
@@ -23,5 +21,9 @@ public class Favourite {
     }
 
     public boolean checkFavourite() { return favourite; }
+
+    public String toString() {
+        return (true) ? "true" : "false";
+    }
 
 }

@@ -6,7 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
+
+import static java.awt.Color.green;
+import static java.awt.SystemColor.text;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -53,6 +57,10 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
+        if (person.getFavourite().checkFavourite()) {
+            name.setStyle("-fx-text-fill: red");
+        }
+
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
