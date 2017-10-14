@@ -29,6 +29,15 @@ Responsibilities:
 
 '''
 
+=== Pujitha Desiraju
+image::PujithaDesiraju.jpg[width="150", align="left"]
+{empty}[https://github.com/Pujitha97[github]] [<<pujithadesiraju#, portfolio>>]
+
+Role: Developer +
+Responsibilities:
+
+'''
+
 === Johnny Doe
 image::yijinl.jpg[width="150", align="left"]
 {empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
