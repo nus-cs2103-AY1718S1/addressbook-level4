@@ -1,5 +1,12 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -11,8 +18,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -55,9 +64,142 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case ESCAPE:
+            commandTextField.setText("");
+            break;
+        case ALT:
+            commandTextField.positionCaret(0);
+            break;
+        case CONTROL:
+            commandTextField.positionCaret(commandTextField.getText().length());
+            break;
+        case RIGHT:
+            //Check if user's Caret is at the end of the text input
+            boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
+            //If caret is not at the end of text, do nothing
+            if (isCaretWithin) {
+                break;
+            } else { //If caret is at the end, deploy hack that makes user life easy for add command
+                String finalText;
+                //If only add is present, concat prefix name string
+                //Checks if necessary prefixes are present
+                //Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
+                if (!containsName() && addPollSuccessful()) {
+                    finalText = concatPrefix(PREFIX_NAME);
+                } else if (!containsPhone() && addPollSuccessful()) {
+                    finalText = concatPrefix(PREFIX_PHONE);
+                } else if (!containsEmail() && addPollSuccessful()) {
+                    finalText = concatPrefix(PREFIX_EMAIL);
+                } else if (!containsAddress() && addPollSuccessful()) {
+                    finalText = concatPrefix(PREFIX_ADDRESS);
+                } else if (!containsBloodtype() && addPollSuccessful()) {
+                    finalText = concatPrefix(PREFIX_BLOODTYPE);
+                } else if (containsAllCompulsoryPrefix() && addPollSuccessful()) {
+                    finalText = concatPrefix(PREFIX_TAG);
+                } else {
+                    break;
+                }
+                commandTextField.setText(finalText);
+                commandTextField.positionCaret(finalText.length());
+                break;
+            }
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    /**
+     * Polls the input statement to check if sentence starts with " add " or " a "
+     * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
+     * <p>
+     * Additional Note: Polling method accounts for blank spaces in front
+     */
+    private boolean addPollSuccessful() {
+        String stringToEvaluate = commandTextField.getText().trim();
+        if (stringToEvaluate.length() == 0) {
+            return false;
+        } else if (stringToEvaluate.length() == 1) {
+            return stringToEvaluate.equalsIgnoreCase(AddCommand.COMMAND_ALIAS);
+        } else if (stringToEvaluate.length() == 2) {
+            return false;
+        } else if (stringToEvaluate.length() == 3) {
+            return containsAInFirstTwoChar(stringToEvaluate)
+                    || stringToEvaluate.equalsIgnoreCase(AddCommand.COMMAND_WORD);
+        } else {
+            return containsAInFirstTwoChar(stringToEvaluate)
+                    || containsAddInFirstFourChar(stringToEvaluate);
+        }
+    }
+
+    /**
+     * Checks if the first two elements of the string are "a "
+     */
+    private boolean containsAInFirstTwoChar(String stringToEvaluate) {
+        return (Character.toString(stringToEvaluate.charAt(0)).equalsIgnoreCase(AddCommand.COMMAND_ALIAS)
+                && Character.toString(stringToEvaluate.charAt(1)).equals(" "));
+    }
+
+    /**
+     * Checks if the first four elements of the string are "add "
+     */
+    private boolean containsAddInFirstFourChar(String stringToEvaluate) {
+        return (stringToEvaluate.substring(0, 3).equalsIgnoreCase(AddCommand.COMMAND_WORD)
+                && Character.toString(stringToEvaluate.charAt(3)).equals(" "));
+    }
+
+    /**
+     * Checks if the commandTextField all prefixes excluding tag
+     */
+    private boolean containsAllCompulsoryPrefix() {
+        return containsAddress() && containsEmail() && containsBloodtype()
+                && containsName() && containsPhone();
+    }
+
+    /**
+     * Adds prefix string to existing text input
+     */
+    private String concatPrefix(Prefix prefix) {
+        return commandTextField.getText().concat(" ").concat(prefix.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Bloodtype Prefix String
+     */
+    private boolean containsBloodtype() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_BLOODTYPE.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Address Prefix String
+     */
+    private boolean containsAddress() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_ADDRESS.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Email Prefix String
+     */
+    private boolean containsEmail() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_EMAIL.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Phone Prefix String
+     */
+    private boolean containsPhone() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_PHONE.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Name Prefix String
+     */
+    private boolean containsName() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_NAME.getPrefix());
     }
 
     /**
@@ -148,4 +290,10 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    /**
+     * Gets the text field for testing purposes
+     */
+    public TextField getCommandTextField() {
+        return commandTextField;
+    }
 }
