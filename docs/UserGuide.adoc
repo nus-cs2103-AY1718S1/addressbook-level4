@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
-By: `CS2103 T09-B3 Team`      Since: `Oct 2017`      Licence: `MIT`
+By: `CS2103 T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -75,6 +75,35 @@ based on their time interval. Events whose time intervals are not specified will
 
 * You can choose the style to display the upcoming events (weekly/monthly/yearly view).
 * You can add/update/delete events here, but the actual operation will be handled by the link:#events[events] component.
+
+== Features
+
+=== Convenient
+
+**BoNUS** can provide ultimate convenience and save much time in your daily life.
+
+* Import contacts from _iCloud_, _Google+_, _Facebook_, etc.
+* Import events from _Google_ _Calendar_, _Outlook_ _Calendar_, etc.
+* Sync between all your devices.
+* (**Exclusive**) automatically generate your school schedule by simply entering your timetable URL from _https://nusmods.com/[NUSMods]_.
+
+=== Fast
+
+As long as the number of records stored is less than 50,000 and the size of the storage file is smaller than 20MB, **BoNUS**
+is expected to
+
+* Start the application in 5 seconds.
+* Return the result of all link:#commands[commands] available with _human-invisible_ delay.
+* Update things displayed on the GUI (graphic user interface) smoothly.
+
+=== Secured
+
+The **BoNUS** developers understand our users will store personal data in the application. We value privacy and security
+a lot.
+
+* All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme.
+* Users will be prompted to enter their password whenever they open the application.
+* You can set up 2FA (two-factor authentication) if there is extra security requirement.
 
 == Commands
 
