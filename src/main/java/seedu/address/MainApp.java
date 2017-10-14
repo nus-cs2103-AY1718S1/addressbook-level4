@@ -214,6 +214,7 @@ public class MainApp extends Application {
         try {
             // change addressbook file path
             setAddressBookFilePath(event.getFilePath());
+            setAddressBookAppNamae(event.getFileName());
 
             init();
             start(this.primaryStage);
@@ -226,6 +227,20 @@ public class MainApp extends Application {
         try {
             userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
             userPrefs.setAddressBookFilePath(addressBookFilePath);
+            JsonUtil.saveJsonFile(userPrefs, "preferences.json");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setAddressBookAppNamae(String addressBookFileName) {
+        try {
+            config = JsonUtil.readJsonFile("config.json", Config.class).get();
+            config.setAppTitle(addressBookFileName);
+            JsonUtil.saveJsonFile(config, "config.json");
+
+            userPrefs = JsonUtil.readJsonFile("preferences.json", UserPrefs.class).get();
+            userPrefs.setAddressBookName(addressBookFileName);
             JsonUtil.saveJsonFile(userPrefs, "preferences.json");
         } catch (Exception e) {
             e.printStackTrace();
