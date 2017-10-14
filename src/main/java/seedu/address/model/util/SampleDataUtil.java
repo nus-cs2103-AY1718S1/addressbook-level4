@@ -1,6 +1,5 @@
 package seedu.address.model.util;
 
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -88,12 +87,4 @@ public class SampleDataUtil {
         return tags;
     }
 
-    /**
-     * Returns a calendar that is set to 2018/08/20 23:12
-     */
-    private static Calendar getCalendar() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2018, 8, 20, 23, 12);
-        return calendar;
-    }
 }
