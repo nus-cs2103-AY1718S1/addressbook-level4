@@ -139,15 +139,4 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-
-    /*
-    * removes all Tag of that str
-     */
-    public void removeTag(String str) {
-        Set<Tag> tagset = getTags();
-        for (Tag t : tagset) {
-            if (t.isSame(str))  tagset.remove(t);
-        }
-        setTags(tagset);
-    }
 }

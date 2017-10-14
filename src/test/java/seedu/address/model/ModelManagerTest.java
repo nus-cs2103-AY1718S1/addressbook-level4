@@ -1,10 +1,13 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
 
 import java.util.Arrays;
 
@@ -61,9 +64,23 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
 
-        //test for tags
-        modelManagerCopy.deleteTag("friends");
-        assertFalse(modelManager.equals(modelManagerCopy));
+    @Test
+    public void removeTagSuccess() {
+        //set up the models
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).withPerson(CARL).withPerson(DANIEL).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManagerCopy1 = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManagerCopy2 = new ModelManager(addressBook, userPrefs);
+
+        //tag is present in the file, two models should be different with deleted tag
+        modelManagerCopy1.deleteTag("friends");
+        assertFalse(modelManager.equals(modelManagerCopy1));
+
+        //tag is not present in file, two models should be same, file should not be touched or altered
+        modelManagerCopy2.deleteTag("alla");
+        assertEquals(modelManager,modelManagerCopy2);
     }
 }

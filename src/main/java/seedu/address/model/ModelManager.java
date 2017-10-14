@@ -117,7 +117,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public void deleteTag(String str) {
-        addressBook.removeTag(str);
+        if (addressBook.removeTag(str)) {
+            indicateAddressBookChanged();
+        }
     }
-
 }

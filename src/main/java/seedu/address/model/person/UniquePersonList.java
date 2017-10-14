@@ -2,8 +2,11 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -12,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -120,12 +124,32 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    /*
-    * find search through list of persons and tags, remove tag
+    /**
+     * Remove the tag in a personlist, returns true if there were tags removed
      */
-    public void removeTag(String str) {
-        for (Person p : internalList) {
-            p.removeTag(str);
+    public boolean removeTag(String str) {
+        boolean checker1 = false;
+        int checker2;
+        for (Person p: internalList) {
+            checker2 = 0;
+            List<Tag> taglist = new ArrayList<Tag>();
+            Set<Tag> tagset = p.getTags();
+            for (Tag tag : tagset) {
+                if (!tag.isSame(str)) {
+                    taglist.add(tag);
+                } else {
+                    checker1 = true;
+                    checker2++;
+                }
+            }
+            if (checker2 > 0) {
+                Set<Tag> replacement = new HashSet<Tag>(taglist);
+                p.setTags(replacement);
+            }
         }
+        if (checker1) {
+            setPersons(this);
+        }
+        return checker1;
     }
 }
