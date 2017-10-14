@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
+    private ObjectProperty<DateRepaid> dateRepaid;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -41,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
+        this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -52,6 +54,7 @@ public class Person implements ReadOnlyPerson {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
                 source.getDebt(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
+        this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
     }
 
     public void setName(Name name) {
@@ -154,6 +157,19 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author
+
+    public void setDateRepaid(DateRepaid dateRepaid) { this.dateRepaid.set(requireNonNull(dateRepaid)); }
+
+    @Override
+    public ObjectProperty<DateRepaid> dateRepaidProperty() {
+        return dateRepaid;
+    }
+
+    @Override
+    public DateRepaid getDateRepaid() {
+        return dateRepaid.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
