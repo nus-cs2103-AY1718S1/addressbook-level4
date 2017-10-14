@@ -76,6 +76,6 @@ public class XmlAdaptedParcel {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(parcelTags);
-        return new Parcel(name, phone, email, address, tags);
+        return new Parcel(articleNumber, name, phone, email, address, tags);
     }
 }
