@@ -47,7 +47,8 @@ public class TypicalPersons {
             .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withPostalCode("101010").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("9482224").withPostalCode("673673").withDebt("100000")
-            .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withEmail("werner@example.com").withAddress("michegan ave").build();
+            .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withEmail("werner@example.com")
+            .withAddress("michegan ave").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPostalCode("616111").withPhone("9482427").withDebt("12").withDeadLine(DeadLine.NO_DEAD_LINE_SET)
             .withEmail("lydia@example.com").withAddress("little tokyo").build();

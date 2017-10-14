@@ -223,7 +223,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseDeadLine_forEdit_null_throwsNullPointerException() throws Exception {
+    public void parseDeadLineForEdit_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseDeadLineForEdit(null);
     }
@@ -235,7 +235,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseDeadLine_forEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
+    public void parseDeadLineForEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseDeadLineForEdit(Optional.empty()).isPresent());
     }
 

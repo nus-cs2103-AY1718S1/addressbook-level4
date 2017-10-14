@@ -115,7 +115,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return  postalCodeLabel.getText();
     }
 
-    public String getDeadLine() { return deadLineLabel.getText(); }
+    public String getDeadLine() {
+        return deadLineLabel.getText();
+    }
 
     public String getAddressField() {
         return addressText.getText();
