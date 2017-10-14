@@ -19,6 +19,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String DEBT_FIELD_ID = "#debt";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
+    private static final String DATE_REPAID_FIELD_ID = "#dateRepaid";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -29,6 +30,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label postalCodeLabel;
     private final Label debtLabel;
     private final Label dateBorrowLabel;
+    private final Label dateRepaidLabel;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -42,6 +44,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
+        this.dateRepaidLabel = getChildNode(DATE_REPAID_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -81,6 +84,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     public String getDateBorrow() {
         return dateBorrowLabel.getText();
+    }
+
+    public String getDateRepaid() {
+        return dateRepaidLabel.getText();
     }
 
     public List<String> getTags() {
