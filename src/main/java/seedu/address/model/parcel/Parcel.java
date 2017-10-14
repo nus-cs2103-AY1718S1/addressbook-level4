@@ -29,8 +29,9 @@ public class Parcel implements ReadOnlyParcel {
     /**
      * Every field must be present and not null.
      */
-    public Parcel(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Parcel(ArticleNumber articleNumber, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(articleNumber, name, phone, email, address, tags);
+        this.articleNumber = new SimpleObjectProperty<>(articleNumber);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
