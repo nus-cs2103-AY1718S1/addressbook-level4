@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 /**
@@ -42,6 +43,10 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
+    }
+
+    @Subscribe
+    private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
 

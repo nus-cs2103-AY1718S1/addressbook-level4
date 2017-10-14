@@ -13,79 +13,79 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
 /**
- * A list of tags that enforces no nulls and uniqueness between its elements.
+ * A list of Lecturers that enforces no nulls and uniqueness between its elements.
  *
  * Supports minimal set of list operations for the app's features.
  *
- * @see Tag#equals(Object)
+ * @see Lecturer#equals(Object)
  */
-public class UniqueTagList implements Iterable<Tag> {
+public class UniqueLecturerList implements Iterable<Lecturer> {
 
-    private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Lecturer> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty TagList.
+     * Constructs empty LecturerList.
      */
-    public UniqueTagList() {}
+    public UniqueLecturerList() {}
 
     /**
-     * Creates a UniqueTagList using given tags.
+     * Creates a UniqueLecturerList using given lecturers.
      * Enforces no nulls.
      */
-    public UniqueTagList(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.addAll(tags);
+    public UniqueLecturerList(Set<Lecturer> lecturers) {
+        requireAllNonNull(lecturers);
+        internalList.addAll(lecturers);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Returns all tags in this list as a Set.
+     * Returns all lecturers in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
-    public Set<Tag> toSet() {
+    public Set<Lecturer> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return new HashSet<>(internalList);
     }
 
     /**
-     * Replaces the Tags in this list with those in the argument tag list.
+     * Replaces the lecturers in this list with those in the argument Lecturer list.
      */
-    public void setTags(Set<Tag> tags) {
-        requireAllNonNull(tags);
-        internalList.setAll(tags);
+    public void setLectuers(Set<Lecturer> lectuers) {
+        requireAllNonNull(lectuers);
+        internalList.setAll(lectuers);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Ensures every tag in the argument list exists in this object.
+     * Ensures every Lecturer in the argument list exists in this object.
      */
-    public void mergeFrom(UniqueTagList from) {
-        final Set<Tag> alreadyInside = this.toSet();
+    public void mergeFrom(UniqueLecturerList from) {
+        final Set<Lecturer> alreadyInside = this.toSet();
         from.internalList.stream()
-                .filter(tag -> !alreadyInside.contains(tag))
+                .filter(lecturer -> !alreadyInside.contains(lecturer))
                 .forEach(internalList::add);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Returns true if the list contains an equivalent Tag as the given argument.
+     * Returns true if the list contains an equivalent Lecturer as the given argument.
      */
-    public boolean contains(Tag toCheck) {
+    public boolean contains(Lecturer toCheck) {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
 
     /**
-     * Adds a Tag to the list.
+     * Adds a Lecturer to the list.
      *
-     * @throws DuplicateTagException if the Tag to add is a duplicate of an existing Tag in the list.
+     * @throws DuplicateLecturerException if the Lecturer to add is a duplicate of an existing Lecturer in the list.
      */
-    public void add(Tag toAdd) throws DuplicateTagException {
+    public void add(Lecturer toAdd) throws DuplicateLecturerException{
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateTagException();
+            throw new DuplicateLecturerException();
         }
         internalList.add(toAdd);
 
@@ -93,7 +93,7 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     @Override
-    public Iterator<Tag> iterator() {
+    public Iterator<Lecturer> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.iterator();
     }
@@ -101,7 +101,7 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Tag> asObservableList() {
+    public ObservableList<Lecturer> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
     }
@@ -110,15 +110,15 @@ public class UniqueTagList implements Iterable<Tag> {
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof UniqueTagList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueTagList) other).internalList));
+                || (other instanceof UniqueLecturerList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueLecturerList) other).internalList));
     }
 
     /**
      * Returns true if the element in this list is equal to the elements in {@code other}.
      * The elements do not have to be in the same order.
      */
-    public boolean equalsOrderInsensitive(UniqueTagList other) {
+    public boolean equalsOrderInsensitive(UniqueLecturerList other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         assert CollectionUtil.elementsAreUnique(other.internalList);
         return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
@@ -133,9 +133,9 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
-    public static class DuplicateTagException extends DuplicateDataException {
-        protected DuplicateTagException() {
-            super("Operation would result in duplicate tags");
+    public static class DuplicateLecturerException extends DuplicateDataException {
+        protected DuplicateLecturerException() {
+            super("Operation would result in duplicate lecturers");
         }
     }
 

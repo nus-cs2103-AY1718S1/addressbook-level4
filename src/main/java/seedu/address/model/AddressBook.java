@@ -10,13 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.module.Module;
+import seedu.address.model.module.ReadOnlyModule;
+import seedu.address.model.module.UniqueModuleList;
+import seedu.address.model.module.exceptions.DuplicateModuleException;
+import seedu.address.model.module.exceptions.ModuleNotFoundException;
+import seedu.address.model.tag.Lecturer;
+import seedu.address.model.tag.UniqueLecturerList;
 
 /**
  * Wraps all data at the address-book level
@@ -24,8 +24,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
-    private final UniqueTagList tags;
+    private final UniqueModuleList modules;
+    private final UniqueLecturerList lecturers;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -35,8 +35,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
-        tags = new UniqueTagList();
+        modules = new UniqueModuleList();
+        lecturers = new UniqueLecturerList();
     }
 
     public AddressBook() {}
@@ -51,12 +51,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
-        this.persons.setPersons(persons);
+    public void setModules(List<? extends ReadOnlyModule> modules) throws DuplicateModuleException {
+        this.modules.setModules(modules);
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags.setTags(tags);
+    public void setLecturers(Set<Lecturer> lecturers) {
+        this.lecturers.setLectuers(lecturers);
     }
 
     /**
@@ -65,132 +65,139 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         try {
-            setPersons(newData.getPersonList());
-        } catch (DuplicatePersonException e) {
-            assert false : "AddressBooks should not have duplicate persons";
+            setModules(newData.getModuleList());
+        } catch (DuplicateModuleException e) {
+            assert false : "AddressBooks should not have duplicate modules";
         }
 
-        setTags(new HashSet<>(newData.getTagList()));
-        syncMasterTagListWith(persons);
+        setLecturers(new HashSet<>(newData.getLecturerList()));
+        syncMasterLecturerListWith(modules);
     }
 
-    //// person-level operations
+    //// module-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a module to the address book.
+     * Also checks the new module's lecturers and updates {@link #lecturers} with any new lecturers found,
+     * and updates the Lecturer objects in the module to point to those in {@link #lecturers}.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicateModuleException if an equivalent module already exists.
      */
-    public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
-        Person newPerson = new Person(p);
-        syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(newPerson);
-    }
+    public void addModule(ReadOnlyModule m) throws DuplicateModuleException {
+        Module newModule = new Module(m);
+        try {
+            modules.add(newModule);
+        } catch (DuplicateModuleException e) {
+            throw e;
+        }
 
-    /**
-     * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
-     *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
-     * @see #syncMasterTagListWith(Person)
-     */
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedReadOnlyPerson);
-
-        Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, editedPerson);
+        syncMasterLecturerListWith(newModule);
     }
 
     /**
-     * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * Replaces the given module {@code target} in the list with {@code editedReadOnlyModule}.
+     * {@code AddressBook}'s lecturer list will be updated with the lecturers of {@code editedReadOnlyModule}.
+     *
+     * @throws DuplicateModuleException if updating the module's details causes the module to be equivalent to
+     *      another existing module in the list.
+     * @throws ModuleNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterLecturerListWith(Module)
      */
-    private void syncMasterTagListWith(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
+    public void updateModule(ReadOnlyModule target, ReadOnlyModule editedReadOnlyModule)
+            throws DuplicateModuleException, ModuleNotFoundException {
+        requireNonNull(editedReadOnlyModule);
+
+        Module editedModule = new Module(editedReadOnlyModule);
+
+        try {
+            modules.setModule(target, editedModule);
+        } catch (DuplicateModuleException e) {
+            throw e;
+        } catch (ModuleNotFoundException e) {
+            throw e;
+        }
+
+        syncMasterLecturerListWith(editedModule);
+    }
+
+    /**
+     * Ensures that every lecturer in this module:
+     *  - exists in the master list {@link #modules}
+     *  - points to a lecturer object in the master list
+     */
+    private void syncMasterLecturerListWith(Module module) {
+        final UniqueLecturerList moduleLecturers = new UniqueLecturerList(module.getLecturers());
+        lecturers.mergeFrom(moduleLecturers);
 
         // Create map with values = tag object references in the master list
-        // used for checking person tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+        // used for checking module lecturers references
+        final Map<Lecturer, Lecturer> masterTagObjects = new HashMap<>();
+        lecturers.forEach(lecturer -> masterTagObjects.put(lecturer, lecturer));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        person.setTags(correctTagReferences);
+        // Rebuild the list of module lecturers to point to the relevant lecturers in the master lecturer list.
+        final Set<Lecturer> correctTagReferences = new HashSet<>();
+        moduleLecturers.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        moduleLecturers.setLectuers(correctTagReferences);
     }
 
     /**
-     * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     * Ensures that every lecturer in these modules:
+     *  - exists in the master list {@link #modules}
+     *  - points to a Lecturer object in the master list
+     *  @see #syncMasterLecturerListWith(Module)
      */
-    private void syncMasterTagListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterTagListWith);
+    private void syncMasterLecturerListWith(UniqueModuleList modules) {
+        modules.forEach(this::syncMasterLecturerListWith);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws ModuleNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeModule(ReadOnlyModule key) throws ModuleNotFoundException {
+        if (modules.remove(key)) {
             return true;
         } else {
-            throw new PersonNotFoundException();
+            throw new ModuleNotFoundException();
         }
     }
 
-    //// tag-level operations
+    //// lecturer-level operations
 
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+    public void addLecturer(Lecturer t) throws UniqueLecturerList.DuplicateLecturerException {
+        lecturers.add(t);
     }
 
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return modules.asObservableList().size() + " modules, " + modules.asObservableList().size() +  " lecturers";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        return persons.asObservableList();
+    public ObservableList<ReadOnlyModule> getModuleList() {
+        return modules.asObservableList();
     }
 
     @Override
-    public ObservableList<Tag> getTagList() {
-        return tags.asObservableList();
+    public ObservableList<Lecturer> getLecturerList() {
+        return lecturers.asObservableList();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.modules.equals(((AddressBook) other).modules)
+                && this.lecturers.equalsOrderInsensitive(((AddressBook) other).lecturers));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(modules, lecturers);
     }
 }

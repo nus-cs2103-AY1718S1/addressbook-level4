@@ -12,11 +12,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Lesson in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Lesson implements ReadOnlyLesson{
-    private ObjectProperty<Code> code;
     private ObjectProperty<ClassType> classType;
     private ObjectProperty<Group> group;
     private ObjectProperty<Location> location;
@@ -27,9 +26,8 @@ public class Lesson implements ReadOnlyLesson{
     /**
      * Every field must be present and not null.
      */
-    public Lesson(Code code, ClassType classType, Location location, Group group, TimeSlot timeSlot, Set<Tag> tags) {
-        requireAllNonNull(code, classType, location, group, timeSlot, tags);
-        this.code = new SimpleObjectProperty<>(code);
+    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Set<Tag> tags) {
+        requireAllNonNull(classType, location, group, timeSlot, tags);
         this.classType = new SimpleObjectProperty<>(classType);
         this.location = new SimpleObjectProperty<>(location);
         this.group = new SimpleObjectProperty<>(group);
@@ -39,26 +37,11 @@ public class Lesson implements ReadOnlyLesson{
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Creates a copy of the given ReadOnlyLesson.
      */
     public Lesson(ReadOnlyLesson source) {
-        this(source.getCode(), source.getClassType(), source.getLocation(), source.getGroup(),source.getTimeSlot(),
+        this(source.getClassType(), source.getLocation(), source.getGroup(),source.getTimeSlot(),
                 source.getTags());
-    }
-
-
-    public void setCode(Code code) {
-        this.code.set(requireNonNull(code));
-    }
-
-    @Override
-    public ObjectProperty<Code> codeProperty() {
-        return code;
-    }
-
-    @Override
-    public Code getCode() {
-        return code.get();
     }
 
     public void setLocation(Location location) {
@@ -150,7 +133,7 @@ public class Lesson implements ReadOnlyLesson{
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(code, classType, location, group, timeSlot, tags);
+        return Objects.hash(classType, location, group, timeSlot, tags);
     }
 
     @Override
