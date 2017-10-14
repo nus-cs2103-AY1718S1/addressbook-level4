@@ -2,8 +2,8 @@ package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.tag.Lecturer;
-import seedu.address.model.tag.UniqueLecturerList;
+import seedu.address.model.Lecturer.Lecturer;
+import seedu.address.model.Lecturer.UniqueLecturerList;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -26,17 +26,19 @@ public class Module implements ReadOnlyModule {
     /**
      * Every field must be present and not null.
      */
-    public Module(Code code, UniqueLessonList lessonList) {
+    public Module(Code code, UniqueLessonList lessonList, Set<Lecturer> lecturers) {
         requireAllNonNull(code, lessonList);
         this.code = new SimpleObjectProperty<>(code);
         this.lessonList = new SimpleObjectProperty<>(lessonList);
+
+        this.lecturers = new SimpleObjectProperty<>(new UniqueLecturerList(lecturers));
     }
 
     /**
      * Creates a copy of the given ReadOnlyModule.
      */
     public Module(ReadOnlyModule source) {
-        this(source.getCode(), source.getUniqueLessonList());
+        this(source.getCode(), source.getUniqueLessonList(), source.getLecturers());
     }
 
     public void setCode(Code code) {

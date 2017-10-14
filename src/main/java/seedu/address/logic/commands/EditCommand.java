@@ -30,7 +30,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.predicates.UniqueAddressPredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.Lecturer.Tag;
 
 /**
  * Edits the details of an existing person in the address book.

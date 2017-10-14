@@ -1,9 +1,7 @@
 package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.tag.Lecturer;
-
-import java.util.Set;
+import seedu.address.model.Lecturer.Lecturer;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.

@@ -1,31 +1,28 @@
 package seedu.address.storage;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Lecturer.Lecturer;
+
 import javax.xml.bind.annotation.XmlValue;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.Lecturer.Tag;
-
-/**
- * JAXB-friendly adapted version of the Tag.
- */
-public class XmlAdaptedTag {
+public class XmlAdaptedLecturer {
 
     @XmlValue
-    private String tagName;
+    private String name;
 
     /**
      * Constructs an XmlAdaptedTag.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedTag() {}
+    public XmlAdaptedLecturer() {}
 
     /**
      * Converts a given Tag into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created
      */
-    public XmlAdaptedTag(Tag source) {
-        tagName = source.tagName;
+    public XmlAdaptedLecturer(Lecturer source) {
+        name = source.lecturerName;
     }
 
     /**
@@ -33,8 +30,8 @@ public class XmlAdaptedTag {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    public Tag toModelType() throws IllegalValueException {
-        return new Tag(tagName);
+    public Lecturer toModelType() throws IllegalValueException {
+        return new Lecturer(name);
     }
 
 }

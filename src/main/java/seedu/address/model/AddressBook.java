@@ -15,8 +15,8 @@ import seedu.address.model.module.ReadOnlyModule;
 import seedu.address.model.module.UniqueModuleList;
 import seedu.address.model.module.exceptions.DuplicateModuleException;
 import seedu.address.model.module.exceptions.ModuleNotFoundException;
-import seedu.address.model.tag.Lecturer;
-import seedu.address.model.tag.UniqueLecturerList;
+import seedu.address.model.Lecturer.Lecturer;
+import seedu.address.model.Lecturer.UniqueLecturerList;
 
 /**
  * Wraps all data at the address-book level

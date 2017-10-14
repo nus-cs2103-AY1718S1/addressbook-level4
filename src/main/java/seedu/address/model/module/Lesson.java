@@ -2,7 +2,7 @@ package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.tag.Lecturer;
+import seedu.address.model.Lecturer.Lecturer;
 
 import java.util.Objects;
 
