@@ -4,11 +4,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
 /**
- * A handle to the {@code SearchField} in the GUI.
+ * A handle to the {@code SearchBox} in the GUI.
  */
 public class SearchBoxHandle extends NodeHandle<TextField> {
 
-    public static final String SEARCH_FIELD_ID = "#searchField";
+    public static final String SEARCH_FIELD_ID = "#searchBox";
 
     public SearchBoxHandle(TextField searchFieldNode) {
         super(searchFieldNode);
