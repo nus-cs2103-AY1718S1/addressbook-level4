@@ -171,7 +171,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             addPerson(existingPerson);
         } catch (DuplicatePersonException e) {
-            assert false: "List should not have duplicate person";
+            assert false: "AddressBooks should not have duplicate person";
         }
     }
 
