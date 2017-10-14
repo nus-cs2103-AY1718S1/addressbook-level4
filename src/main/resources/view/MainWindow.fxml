@@ -21,7 +21,6 @@
   </MenuBar>
    <SplitPane dividerPositions="0.5" VBox.vgrow="NEVER">
       <items>
-      
         <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
           <padding>
             <Insets bottom="5" left="10" right="10" top="5" />
