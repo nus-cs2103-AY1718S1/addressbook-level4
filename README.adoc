@@ -15,7 +15,7 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* cherBook provides teachers an easy way to monitor students' academic development and provides an effortless mean of communication between teachers and parents.
+* cherBook provides teachers an easy way to monitor students' academic development and provides an effortless means of communication between teachers and parents.
 * It can store contact details of the parents of students, students' class, grades and education levels.
 * Unique features such as grade analytics are used to help teachers monitor the students' academic progress throughout the academic year.
 
