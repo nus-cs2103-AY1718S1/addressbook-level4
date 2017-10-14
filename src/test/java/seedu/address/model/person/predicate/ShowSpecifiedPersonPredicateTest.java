@@ -7,7 +7,7 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import org.junit.Test;
 
-import seedu.address.model.person.predicates.ShowSpecifiedPersonPredicate;
+import seedu.address.model.module.predicates.ShowSpecifiedPersonPredicate;
 
 public class ShowSpecifiedPersonPredicateTest {
 

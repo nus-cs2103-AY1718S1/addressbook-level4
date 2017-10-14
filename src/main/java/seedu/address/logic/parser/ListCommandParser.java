@@ -18,9 +18,6 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            return new ListCommand();
-        }
 
         if (isValidAttribute(trimmedArgs)) {
             return new ListCommand(trimmedArgs);
@@ -32,8 +29,7 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
     private boolean isValidAttribute(String args) {
-        return args.equals(ListCommand.ATTRIBUTE_ADDRESS) || args.equals(ListCommand.ATTRIBUTE_EMAIL)
-                || args.equals(ListCommand.ATTRIBUTE_PHONE);
+        return args.equals(ListCommand.LOCATION_KEYWORD) || args.equals(ListCommand.MODULE_KEYWORD);
     }
 
 }

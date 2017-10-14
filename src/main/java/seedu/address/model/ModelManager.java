@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +16,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -55,6 +60,20 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyLesson l : lessonLst) {
             if (!set.contains(l.getLocation())) {
                 set.add(l.getLocation());
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public HashSet<Code> getUniqueCodeSet() {
+        HashSet<Code> set = new HashSet<>();
+
+        ObservableList<ReadOnlyLesson> lessonLst = getFilteredLessonList();
+        updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        for (ReadOnlyLesson l : lessonLst) {
+            if (!set.contains(l.getCode())) {
+                set.add(l.getCode());
             }
         }
         return set;
@@ -144,19 +163,18 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void handleListingUnit() {
-        switch (ListingUnit.getCurrentListingUnit()) {
 
-        case LESSON:
-            // To be implemented
-            break;
+       if (ListingUnit.getCurrentListingUnit().equals(LOCATION)) {
+           Predicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+           updateFilteredLessonList(predicate);
+       } else if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
+           Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+           updateFilteredLessonList(predicate);
+       } else {
+           assert false : "We will only handle unit LOCATION and MODULE ";
+       }
 
-        case LOCATION:
-            // To be implemented
-            break;
 
-        default:
-            updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-        }
     }
 
 }

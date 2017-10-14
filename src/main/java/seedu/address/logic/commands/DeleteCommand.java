@@ -1,28 +1,21 @@
 package seedu.address.logic.commands;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.Model;
-import seedu.address.model.module.*;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.exceptions.ModuleNotFoundException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueEmailPredicate;
-import seedu.address.model.person.predicates.UniquePhonePredicate;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MODULES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -52,108 +45,69 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyModule> lastShownList = model.getFilteredModuleList();
+        List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         switch (ListingUnit.getCurrentListingUnit()) {
 
-        case LESSON:
-            // to be implement
+        case MODULE:
+            Code codeToDelete = lastShownList.get(targetIndex.getZeroBased()).getCode();
+            return deleteLessonWithModuleCode(codeToDelete);
 
         case LOCATION:
-            return deleteLessonWithSpecifiedLocation();
+            Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
+            return deleteLessonWithLocation(locationToDelete);
 
         default:
-            ReadOnlyModule moduleToDelete = lastShownList.get(targetIndex.getZeroBased());
+            ReadOnlyLesson lessonToDelete = lastShownList.get(targetIndex.getZeroBased());
             try {
-                model.deleteModule(moduleToDelete);
-            } catch (ModuleNotFoundException pnfe) {
+                model.deleteLesson(lessonToDelete);
+            } catch (LessonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             }
-            return new CommandResult(String.format(MESSAGE_DELETE_LESSON_SUCCESS, moduleToDelete));
+            return new CommandResult(String.format(MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete));
         }
     }
 
     /**
-     * Delete all modules with specified location
+     * Delete all lessons with specified location
      */
-    private CommandResult deleteLessonWithSpecifiedLocation(Location location) {
+    private CommandResult deleteLessonWithLocation(Location location) {
 
-        model.updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);
-        ObservableList<ReadOnlyModule> moduleList = model.getFilteredModuleList();
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
 
-        try {
-            UniqueLessonList lessonList;
-            for (ReadOnlyModule p : moduleList) {
-                lessonList = p.getUniqueLessonList();
-
-                for (ReadOnlyLesson l : lessonList) {
-                    if (l.getLocation().equals(location)) {
-                        lessonList.remove(l);
-                    }
-                }
+        for (ReadOnlyLesson l : lessonList) {
+            if (l.getLocation().equals(location)) {
+                lessonList.remove(l);
             }
-            model.updateFilteredModuleList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
-
-        } catch (LessonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
         }
+        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+
+
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, location));
     }
 
     /**
-     * Delete all persons with specified email.
+     * Delete all lessons with specified Module Code.
      */
-    private CommandResult deletePersonWithSpecifiedEmail(Email email) {
+    private CommandResult deleteLessonWithModuleCode(Code code) {
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        List<ReadOnlyPerson> personsToDelete = new ArrayList<ReadOnlyPerson>();
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
 
-        try {
-            for (ReadOnlyPerson p : personList) {
-                if (p.getEmail().equals(email)) {
-                    personsToDelete.add(p);
+            for (ReadOnlyLesson l : lessonList) {
+                if (l.getCode().equals(code)) {
+                    lessonList.remove(l);
                 }
             }
-            model.deletePersonSet(personsToDelete);
-            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
+            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
 
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_WITH_EMAIL_SUCCESS, email));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_WITH_MODULE_SUCCESS, code));
     }
-
-    /**
-     * Delete all persons with specified phone.
-     */
-    private CommandResult deletePersonWithSpecifiedPhone(Phone phone) {
-
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        List<ReadOnlyPerson> personsToDelete = new ArrayList<ReadOnlyPerson>();
-
-        try {
-            for (ReadOnlyPerson p : personList) {
-                if (p.getPhone().equals(phone)) {
-                    personsToDelete.add(p);
-                }
-            }
-            model.deletePersonSet(personsToDelete);
-            model.updateFilteredPersonList(new UniquePhonePredicate(model.getUniquePhonePersonSet()));
-
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_WITH_PHONE_SUCCESS, phone));
-    }
-
 
 
     @Override

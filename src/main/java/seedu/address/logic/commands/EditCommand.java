@@ -16,10 +16,18 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
+
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.*;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
 
 
 /**
@@ -87,7 +95,7 @@ public class EditCommand extends UndoableCommand {
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         switch (ListingUnit.getCurrentListingUnit()) {
@@ -170,7 +178,7 @@ public class EditCommand extends UndoableCommand {
                 }
             }
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
-            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedAddress));
+            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             throw new CommandException(ive.getMessage());
@@ -255,7 +263,7 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setCode(Code code) {
-            this. = code;
+            this.code = code;
         }
 
         public Optional<Code> getCode() {
