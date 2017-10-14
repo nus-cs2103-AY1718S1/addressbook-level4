@@ -13,10 +13,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-//import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
-//import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -86,6 +86,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException {
         addressBook.addMeeting(meeting);
         updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteMeeting(ReadOnlyMeeting target) throws MeetingNotFoundException {
+        addressBook.removeMeeting(target);
         indicateAddressBookChanged();
     }
 
