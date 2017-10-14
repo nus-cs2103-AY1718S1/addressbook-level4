@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -38,6 +39,13 @@ public class Parcel implements ReadOnlyParcel {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    /**
+     * constructor will be deprecated in the future
+     */
+    public Parcel(Name name, Phone phone, Email email, Address address, Set<Tag> tags) throws IllegalValueException {
+        this(new ArticleNumber("RR999999999SG"), name, phone, email, address, tags);
     }
 
     /**
