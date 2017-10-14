@@ -1,6 +1,7 @@
 package seedu.address.commons.events.ui;
 
 import java.io.File;
+
 import org.apache.commons.io.FilenameUtils;
 
 import seedu.address.commons.events.BaseEvent;
@@ -26,7 +27,9 @@ public class OpenAddressBookRequestEvent extends BaseEvent {
         return filePath;
     }
 
-    public String getFileName() { return fileName; }
+    public String getFileName() {
+        return fileName;
+    }
 
     @Override
     public String toString() {
