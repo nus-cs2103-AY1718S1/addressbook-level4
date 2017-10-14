@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -53,13 +54,15 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
+    public void test_getSortCommandResult_sortSuccessful() throws Exception {
         ModelStubAcceptingPersonForSort modelStub = new ModelStubAcceptingPersonForSort();
         populateModel(modelStub);
 
-        CommandResult commandResult = getSortCommandForPerson("n/", false, modelStub).execute();
+        String sortType = "/n";
+        Boolean isDescending = false;
+        CommandResult commandResult = getSortCommandForPerson(sortType, isDescending, modelStub).execute();
 
-        assertEquals(String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS), commandResult.feedbackToUser);
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, "name", "ascending"), commandResult.feedbackToUser);
     }
 
     @Test
@@ -74,22 +77,27 @@ public class SortCommandTest {
 
         //Test comparator - sort by name
         expectedList.sort((o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()));
-        getSortCommandForPerson("n/", false, modelStub).execute();
+        getSortCommandForPerson(CliSyntax.PREFIX_NAME.toString(), false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
         //Test comparator - sort by phone
         expectedList.sort((o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(o2.getPhone().toString()));
-        getSortCommandForPerson("p/", false, modelStub).execute();
+        getSortCommandForPerson(CliSyntax.PREFIX_PHONE.toString(), false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
         //Test comparator - sort by email
         expectedList.sort((o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(o2.getEmail().toString()));
-        getSortCommandForPerson("e/", false, modelStub).execute();
+        getSortCommandForPerson(CliSyntax.PREFIX_EMAIL.toString(), false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
         //Test comparator - sort by address
         expectedList.sort((o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(o2.getAddress().toString()));
-        getSortCommandForPerson("a/", false, modelStub).execute();
+        getSortCommandForPerson(CliSyntax.PREFIX_ADDRESS.toString(), false, modelStub).execute();
+        assertEquals(expectedList, modelStub.personsAdded);
+
+        //Test comparator - sort by address
+        expectedList.sort((o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()));
+        getSortCommandForPerson("z/", false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
     }

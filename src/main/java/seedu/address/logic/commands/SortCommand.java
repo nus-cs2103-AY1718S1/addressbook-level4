@@ -20,10 +20,12 @@ public class SortCommand extends UndoableCommand {
     public static final String BY_ASCENDING = "asc";
     public static final String BY_DESCENDING = "dsc";
 
-    public static final String MESSAGE_SORT_LIST_SUCCESS = "List has been sorted.";
+    public static final String MESSAGE_SORT_LIST_SUCCESS = "List has been sorted by %1$s in %2$s order.";
     public static final String MESSAGE_MULTIPLE_ATTRIBUTE = "Multiple attributes is not allowed.";
     public static final String MESSAGE_EMPTY_LIST = "The list is empty.";
 
+    private static String sortType_Readable = "name";
+    private static String sortOrder_Readable = "ascending";
 
     private static final String PREFIX_NAME_SORT = "n/";
     private static final String PREFIX_PHONE_SORT = "p/";
@@ -32,6 +34,7 @@ public class SortCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts list of all contacts "
             + "by their various attributes, including ascending and descending order.\n"
+            + "Defaults to sorting by name in ascending order.\n"
             + "Parameters: "
             + "[" + PREFIX_NAME_SORT + "(" + BY_ASCENDING + " OR " + BY_DESCENDING + ")] \n"
             + "Example: " + COMMAND_WORD + " "
@@ -39,6 +42,7 @@ public class SortCommand extends UndoableCommand {
 
     private final String sortType;
     private final Boolean isDescending;
+
 
     /**
      * @param sortType     specify which attribute to sort by
@@ -50,6 +54,8 @@ public class SortCommand extends UndoableCommand {
 
         this.sortType = sortType;
         this.isDescending = isDescending;
+
+        sortOrder_Readable = (isDescending) ? "descending" : "ascending";
     }
 
     @Override
@@ -63,33 +69,39 @@ public class SortCommand extends UndoableCommand {
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS));
+        return new CommandResult(String.format(MESSAGE_SORT_LIST_SUCCESS, sortType_Readable, sortOrder_Readable));
     }
 
     public Comparator<ReadOnlyPerson> getComparator(String sortType) {
         switch (sortType) {
         case PREFIX_NAME_SORT:
+            sortType_Readable = "name";
             return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
                     o2.getName().toString()
             );
         case PREFIX_PHONE_SORT:
+            sortType_Readable = "phone";
             return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(
                     o2.getPhone().toString()
             );
         case PREFIX_EMAIL_SORT:
+            sortType_Readable = "email";
             return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(
                     o2.getEmail().toString()
             );
         case PREFIX_ADDRESS_SORT:
+            sortType_Readable = "address";
             return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
                     o2.getAddress().toString()
             );
         default:
+            sortType_Readable = "name";
             return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
                     o2.getName().toString()
             );
         }
     }
+
 
     @Override
     public boolean equals(Object other) {

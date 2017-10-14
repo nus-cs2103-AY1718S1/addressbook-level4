@@ -19,36 +19,53 @@ public class SortCommandParserTest {
 
     private SortCommandParser parser = new SortCommandParser();
 
-    @Test
-    public void parse_sortOrderNotSpecified_failure() {
-        assertParseFailure(parser, SortCommand.COMMAND_WORD + WHITESPACE + CliSyntax.PREFIX_NAME,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-    }
 
     @Test
-    public void parse_notSingleAttribute_failure() {
-
-        //No argument inputted
-        assertParseFailure(parser, SortCommand.COMMAND_WORD,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-
-        //No recognised argument inputted
-        assertParseFailure(parser, SortCommand.COMMAND_WORD + "z/" + SortCommand.BY_ASCENDING,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-
+    public void parseFailure() {
         //More than 1 argument inputted
-        assertParseFailure(parser, SortCommand.COMMAND_WORD + WHITESPACE + CliSyntax.PREFIX_NAME
+        assertParseFailure(parser, WHITESPACE + CliSyntax.PREFIX_NAME
                         + SortCommand.BY_ASCENDING + WHITESPACE + CliSyntax.PREFIX_PHONE + SortCommand.BY_ASCENDING,
-                String.format(SortCommand.MESSAGE_MULTIPLE_ATTRIBUTE, SortCommand.MESSAGE_USAGE));
+        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        //Gibberish arguments inputted, with one valid argument
+        assertParseFailure(parser, WHITESPACE + "gibberish/g" + CliSyntax.PREFIX_PHONE + SortCommand.BY_ASCENDING,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+
+        //Sort order not recognised
+        assertParseFailure(parser, WHITESPACE + CliSyntax.PREFIX_PHONE + "gibberish",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 
 
     @Test
-    public void parse_allFieldsPresent_success() {
+    public void parseSuccess() {
 
-        assertParseSuccess(parser, SortCommand.COMMAND_WORD + WHITESPACE + CliSyntax.PREFIX_NAME
+        assertParseSuccess(parser, "", new SortCommand("n/", false));
+
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_NAME
                 + SortCommand.BY_ASCENDING, new SortCommand("n/", false));
 
-    }
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_PHONE
+                + SortCommand.BY_ASCENDING, new SortCommand("p/", false));
 
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_EMAIL
+                + SortCommand.BY_ASCENDING, new SortCommand("e/", false));
+
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_ADDRESS
+                + SortCommand.BY_ASCENDING, new SortCommand("a/", false));
+
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_NAME
+                + SortCommand.BY_DESCENDING, new SortCommand("n/", true));
+
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_PHONE
+                + SortCommand.BY_DESCENDING, new SortCommand("p/", true));
+
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_EMAIL
+                + SortCommand.BY_DESCENDING, new SortCommand("e/", true));
+
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_ADDRESS
+                + SortCommand.BY_DESCENDING, new SortCommand("a/", true));
+
+
+    }
 }

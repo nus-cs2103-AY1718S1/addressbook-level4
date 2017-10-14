@@ -28,16 +28,17 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
-        if (argMultimap.size() > 2) {
-            throw new ParseException(String.format(SortCommand.MESSAGE_MULTIPLE_ATTRIBUTE, SortCommand.MESSAGE_USAGE));
-        }
-
-        if (argMultimap.size() < 2) {
+        if (!args.matches("^|( [npea]/((asc)|(dsc)|))$")) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        if (args.equals("")) {
+            args = " n/asc";
+        }
+
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         assert argMultimap.size() == 2;
 
@@ -47,7 +48,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         argMultimap.getValue(PREFIX_ADDRESS).ifPresent(setSortingOrder(PREFIX_ADDRESS));
 
         if (isDescending == null) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+            isDescending = false;
         }
 
         return new SortCommand(sortType, isDescending);
@@ -62,6 +63,12 @@ public class SortCommandParser implements Parser<SortCommand> {
                 isDescending = new Boolean(false);
                 return;
             }
+
+            if (s.equals("")){
+                isDescending = new Boolean(false);
+                return;
+            }
+
             if (s.equals(SortCommand.BY_DESCENDING)) {
                 isDescending = new Boolean(true);
                 return;
