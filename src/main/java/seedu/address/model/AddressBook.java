@@ -228,7 +228,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from {@code whitelistedPersons} in {@code AddressBook}.
+     * Removes {@code key} from {@code whitelistedPersons} {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removeWhitelistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
