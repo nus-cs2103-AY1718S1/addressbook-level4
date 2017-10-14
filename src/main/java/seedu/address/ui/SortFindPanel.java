@@ -61,10 +61,8 @@ public class SortFindPanel extends UiPart<Region> {
             } else {
                 logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
             }
-        } catch (CommandException e1) {
-            e1.printStackTrace();
-        } catch (ParseException e1) {
-            e1.printStackTrace();
+        } catch (CommandException | ParseException e1) {
+            logger.warning("Failed to find person in search box");
         }
     }
 
@@ -77,12 +75,12 @@ public class SortFindPanel extends UiPart<Region> {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + nameItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
         } catch (CommandException | ParseException e1) {
-            logger.warning("Failed to sort name");
+            logger.warning("Failed to sort name using sort menu");
         }
     }
 
     /**
-     * Handles name item pressed event.
+     * Handles phone item pressed event.
      */
     @FXML
     private void handlePhoneItemPressed() {
@@ -90,12 +88,12 @@ public class SortFindPanel extends UiPart<Region> {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phoneItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
         } catch (CommandException | ParseException e1) {
-            logger.warning("Failed to sort name");
+            logger.warning("Failed to sort phone using sort menu");
         }
     }
 
     /**
-     * Handles name item pressed event.
+     * Handles email item pressed event.
      */
     @FXML
     private void handleEmailItemPressed() {
@@ -103,12 +101,12 @@ public class SortFindPanel extends UiPart<Region> {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + emailItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
         } catch (CommandException | ParseException e1) {
-            logger.warning("Failed to sort name");
+            logger.warning("Failed to sort email using sort menu");
         }
     }
 
     /**
-     * Handles name item pressed event.
+     * Handles address item pressed event.
      */
     @FXML
     private void handleAddressItemPressed() {
@@ -116,7 +114,7 @@ public class SortFindPanel extends UiPart<Region> {
             CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + addressItem.getText());
             raise(new NewResultAvailableEvent(result.feedbackToUser));
         } catch (CommandException | ParseException e1) {
-            logger.warning("Failed to sort name");
+            logger.warning("Failed to sort address using sort menu");
         }
     }
 }
