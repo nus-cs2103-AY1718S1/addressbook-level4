@@ -22,13 +22,13 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<SearchData> searchCount;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, SearchData searchCount) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -36,6 +36,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.searchCount = new SimpleObjectProperty<>(searchCount);
     }
 
     /**
@@ -43,7 +44,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getTags(), source.getSearchData());
     }
 
     public void setName(Name name) {
@@ -110,6 +111,12 @@ public class Person implements ReadOnlyPerson {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
+
+    @Override
+    public ObjectProperty<SearchData> searchDataProperty() {return searchCount;}
+
+    @Override
+    public SearchData getSearchData() { return searchCount.get();}
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
