@@ -33,21 +33,19 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/sharkie.png";
 
     private Logic logic;
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
-    private boolean logInStatus;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
-        this.logInStatus = false;
     }
 
     @Override
@@ -147,8 +145,6 @@ public class UiManager extends ComponentManager implements Ui {
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (logInStatus) {
-            mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
-        }
+        mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
     }
 }
