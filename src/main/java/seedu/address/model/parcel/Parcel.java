@@ -52,7 +52,7 @@ public class Parcel implements ReadOnlyParcel {
      * Creates a copy of the given ReadOnlyParcel.
      */
     public Parcel(ReadOnlyParcel source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getArticleNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getTags());
     }
 
