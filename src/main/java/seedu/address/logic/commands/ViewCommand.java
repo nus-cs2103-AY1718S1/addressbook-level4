@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
+import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.predicates.FixedAddressPredicate;
 import seedu.address.model.person.predicates.FixedEmailPredicate;
@@ -26,16 +27,12 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Views all persons with the selected listing attribute from the address book.\n"
-            + " It will simply listing the person of select index if the panel is currently listing all persons.\n"
+            + ": Views all lessons with the selected listing attribute from the address book.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_ADDRESS_SUCCESS = "person(s) founded with address %1$s";
-    public static final String MESSAGE_VIEW_EMAIL_SUCCESS = "person(s) founded with email %1$s";
-    public static final String MESSAGE_VIEW_PERSON_SUCCESS = "person founded with %1$s";
-    public static final String MESSAGE_VIEW_PHONE_SUCCESS = "person(s) founded phone number with %1$s";
-
+    public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
+    public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
     private final Index targetIndex;
 
     public ViewCommand(Index targetIndex) {
@@ -45,34 +42,28 @@ public class ViewCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
         ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX;
         }
 
-        ReadOnlyPerson toView = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyLesson toView = lastShownList.get(targetIndex.getZeroBased());
 
         Predicate predicate;
         String resultMessage;
 
-
         switch (currentUnit) {
 
-        case ADDRESS:
+        case LOCATION:
             predicate = new FixedAddressPredicate(toView.getAddress());
             resultMessage = String.format(MESSAGE_VIEW_ADDRESS_SUCCESS, toView.getAddress());
             break;
 
-        case EMAIL:
+        case MODULE:
             predicate = new FixedEmailPredicate(toView.getEmail());
             resultMessage = String.format(MESSAGE_VIEW_EMAIL_SUCCESS, toView.getEmail());
-            break;
-
-        case PHONE:
-            predicate = new FixedPhonePredicate(toView.getPhone());
-            resultMessage = String.format(MESSAGE_VIEW_PHONE_SUCCESS, toView.getPhone());
             break;
 
         default:

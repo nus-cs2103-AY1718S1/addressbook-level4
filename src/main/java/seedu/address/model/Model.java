@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
@@ -20,6 +21,9 @@ public interface Model {
 
     /** Get a hash set of all the distinct locations */
     HashSet<Location> getUniqueLocationSet();
+
+    /** Get a hash set of all the distinct module codes */
+    HashSet<Code> getUniqueCodeSet();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);

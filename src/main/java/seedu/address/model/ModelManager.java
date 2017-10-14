@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
@@ -55,6 +56,20 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyLesson l : lessonLst) {
             if (!set.contains(l.getLocation())) {
                 set.add(l.getLocation());
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public HashSet<Code> getUniqueCodeSet() {
+        HashSet<Code> set = new HashSet<>();
+
+        ObservableList<ReadOnlyLesson> lessonLst = getFilteredLessonList();
+        updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        for (ReadOnlyLesson l : lessonLst) {
+            if (!set.contains(l.getCode())) {
+                set.add(l.getCode());
             }
         }
         return set;
