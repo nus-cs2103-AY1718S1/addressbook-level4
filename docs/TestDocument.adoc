@@ -59,3 +59,5 @@ image::Architecture.png[title="Architecture diagram", width="400"]
 ____
 This is a quote block.
 ____
+
+include::NavigationMenu.adoc[]
