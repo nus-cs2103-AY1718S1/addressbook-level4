@@ -7,14 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 /**
  *  Appointment class to hold all the appointment information of an appointment
  *  */
 public class Appointment {
 
-    public static final String dateFormat = "yyyy/MM/dd HH:mm";
-    public static final DateFormat dateFormatter = new SimpleDateFormat(dateFormat);
+    public static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
+    public static final DateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT);
 
     private String personString;
     private Date date;
@@ -41,9 +40,9 @@ public class Appointment {
     @Override
     public String toString() {
         if (date != null) {
-            return this.personString + " at " + dateFormatter.format(date);
+            return "Appointment with " + this.personString + " on " + DATE_FORMATTER.format(date);
         } else {
-            return "No appointment set with" + personString;
+            return "No appointment set with " + personString;
         }
     }
 
@@ -52,6 +51,6 @@ public class Appointment {
         return other == this // short circuit if same object
                 || (other instanceof Bloodtype // instanceof handles nulls
                 && this.personString.equals(((Appointment) other).personString))
-                && this.date.equals(((Appointment) other).date); // state check
+                && this.date.toString().equals(((Appointment) other).date.toString()); // state check
     }
 }

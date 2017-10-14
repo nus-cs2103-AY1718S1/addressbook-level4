@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,7 +10,15 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Bloodtype;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,7 +38,7 @@ public class XmlAdaptedPerson {
     private String remark;
     @XmlElement(required = true)
     private String bloodType;
-    @XmlElement(required = true)
+    @XmlElement
     private String appointmentDate;
 
     @XmlElement
@@ -58,7 +68,11 @@ public class XmlAdaptedPerson {
             tagged.add(new XmlAdaptedTag(tag));
         }
         remark = source.getRemark().value;
-        appointmentDate = source.getAppointment().getDate().toString();
+        if (source.getAppointment().getDate() != null) {
+            appointmentDate = Appointment.DATE_FORMATTER.format(source.getAppointment().getDate());
+        } else {
+            appointmentDate = null;
+        }
     }
 
     /**
@@ -78,7 +92,19 @@ public class XmlAdaptedPerson {
         final Bloodtype bloodType = new Bloodtype(this.bloodType);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Remark remark = new Remark(this.remark);
-        final Appointment appointment = new Appointment(this.appointmentDate);
+        final Appointment appointment;
+        // if there is previously an appointment date, the constructor with appointment date is called
+        if (appointmentDate != null) {
+            Calendar calendar = Calendar.getInstance();
+            try {
+                calendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            appointment = new Appointment(name.toString(), calendar);
+        } else {
+            appointment = new Appointment(name.toString());
+        }
         return new Person(name, phone, email, address, bloodType, tags, remark, appointment);
 
     }

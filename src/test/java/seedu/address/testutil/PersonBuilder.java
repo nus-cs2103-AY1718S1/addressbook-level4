@@ -1,9 +1,12 @@
 package seedu.address.testutil;
 
+import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -26,7 +29,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BLOODTYPE = "O";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
-
+    public static final String DEFAULT_APPOINTMENT = "2018/10/10 10:10";
     private Person person;
 
     public PersonBuilder() {
@@ -38,9 +41,18 @@ public class PersonBuilder {
             Bloodtype defaultBloodType = new Bloodtype(DEFAULT_BLOODTYPE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Calendar calendar = Calendar.getInstance();
+            Appointment appointment;
+            try {
+                calendar.setTime(Appointment.DATE_FORMATTER.parse(DEFAULT_APPOINTMENT));
+                appointment = new Appointment(defaultName.toString());
+                this.person = new Person(defaultName, defaultPhone, defaultEmail,
+                        defaultAddress, defaultBloodType, defaultTags, defaultRemark, appointment);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultBloodType, defaultTags, defaultRemark);
+
 
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
@@ -131,6 +143,28 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("bloodType is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets appointment with Date of the person that we are building
+     */
+    public PersonBuilder withAppointment(String name, String date) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(Appointment.DATE_FORMATTER.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.person.setAppointment(new Appointment(person.getName().toString(), calendar));
+        return this;
+    }
+
+    /**
+     * Sets an empty appointment with the person that we are building
+     */
+    public PersonBuilder withAppointment(String name) {
+        this.person.setAppointment(new Appointment(person.getName().toString()));
         return this;
     }
 

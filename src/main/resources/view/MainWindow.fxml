@@ -31,14 +31,14 @@
     </StackPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" minWidth="500" prefWidth="500" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
         </VBox>
 
-        <StackPane fx:id="browserPlaceholder" prefWidth="340">
+        <StackPane fx:id="browserPlaceholder" prefWidth="200">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>

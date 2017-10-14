@@ -1,18 +1,19 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.stream.Stream;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Name;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.stream.Stream;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 /**
  * Parse input arguments and creates a new AddAppointmentCommand Object
@@ -31,16 +32,18 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
                 ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_DATE);
 
         if (!arePrefixesPresent(argumentMultimap, PREFIX_NAME, PREFIX_DATE)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAppointmentCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argumentMultimap.getValue(PREFIX_NAME)).get();
-            Date date = Appointment.dateFormatter.parse(argumentMultimap.getValue(PREFIX_DATE).get());
+            Date date = Appointment.DATE_FORMATTER.parse(argumentMultimap.getValue(PREFIX_DATE).get());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             Appointment appointment = new Appointment(name.toString(), calendar);
             return new AddAppointmentCommand(appointment);
+
         } catch (IllegalValueException e) {
             throw new ParseException(e.getMessage(), e);
         } catch (java.text.ParseException e) {

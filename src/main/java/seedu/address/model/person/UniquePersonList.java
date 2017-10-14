@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -134,6 +133,5 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
         throw new PersonNotFoundException();
-
     }
 }

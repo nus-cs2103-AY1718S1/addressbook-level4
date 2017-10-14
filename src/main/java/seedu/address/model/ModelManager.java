@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -120,6 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addAppointment(Appointment appointment) throws PersonNotFoundException {
         addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================

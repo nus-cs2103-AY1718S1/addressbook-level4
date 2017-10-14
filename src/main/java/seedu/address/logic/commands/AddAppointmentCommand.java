@@ -4,11 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.Calendar;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import java.util.Calendar;
 
 /**
  * Command to add appointment to a person in addressBook
@@ -21,7 +22,7 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + Appointment.dateFormat + "\n"
+            + PREFIX_DATE + Appointment.DATE_FORMAT + "\n"
             + "Example 1:" + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe"
             + PREFIX_DATE + "2017/01/01 17:20";
@@ -45,9 +46,9 @@ public class AddAppointmentCommand extends Command {
         try {
             model.addAppointment(appointment);
         } catch (PersonNotFoundException e) {
-           return new CommandResult(INVALID_PERSON);
+            return new CommandResult(INVALID_PERSON);
         }
-        return new CommandResult(MESSAGE_SUCCESS + "Meet "+ appointment.toString());
+        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.toString());
     }
 
     /**
