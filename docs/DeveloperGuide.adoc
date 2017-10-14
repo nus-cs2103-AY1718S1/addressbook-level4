@@ -98,7 +98,7 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Design
 
@@ -228,7 +228,7 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
-link:#addressbook-level-4---developer-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Implementation
 
@@ -381,7 +381,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Documentation
 
@@ -413,7 +413,7 @@ Here are the steps to convert the project documentation files to PDF format.
 image::chrome_save_as_pdf.png[width="300"]
 _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Testing
 
@@ -464,7 +464,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Dev Ops
 
@@ -491,7 +491,7 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Suggested Programming Tasks to Get Started
@@ -738,7 +738,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == User Stories
@@ -824,7 +824,7 @@ Social user - a user who likes to know more information about the people around 
 Task-oriented user - a user who prefers to have purposeful functions which would help facilitate easier access towards executing his work +
 {More to be added}
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Use Cases
@@ -964,7 +964,7 @@ Use case ends.
 
 {More to be added}
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Non Functional Requirements
@@ -982,7 +982,7 @@ link:#the-myths-book---user-guide[Back To Top]
 
 {More to be added}
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Glossary
@@ -1025,7 +1025,7 @@ Gradle
 Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven.
 ....
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Product Survey
@@ -1044,4 +1044,4 @@ Cons:
 * ...
 * ...
 
-link:#the-myths-book---user-guide[Back To Top]
+link:#the-myths-book---developer-guide[Back To Top]
