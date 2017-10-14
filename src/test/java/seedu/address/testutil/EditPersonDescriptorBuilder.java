@@ -92,7 +92,7 @@ public class EditPersonDescriptorBuilder {
         try {
             ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
+            throw new IllegalArgumentException("Birthday should be id dd/MM/yyyy format");
         }
         return this;
     }
@@ -104,7 +104,7 @@ public class EditPersonDescriptorBuilder {
         try {
             ParserUtil.parseWebsite(Optional.of(website)).ifPresent(descriptor::setWebsite);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
+            throw new IllegalArgumentException("Website is expected to be unique.");
         }
         return this;
     }
