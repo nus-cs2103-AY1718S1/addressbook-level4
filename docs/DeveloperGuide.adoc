@@ -1205,3 +1205,6 @@ Cons:
 
 * ...
 * ...
+
+[]
+include::NavigationMenu.adoc[]

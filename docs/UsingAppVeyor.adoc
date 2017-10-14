@@ -85,3 +85,6 @@ https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appv
 ----
 +
 Copy and paste the asciidoc code to your `README.adoc` file.
+
+[]
+include::NavigationMenu.adoc[]

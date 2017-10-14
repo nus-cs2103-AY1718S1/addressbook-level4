@@ -38,3 +38,5 @@ Responsibilities: Data
 
 '''
 
+[]
+include::NavigationMenu.adoc[]

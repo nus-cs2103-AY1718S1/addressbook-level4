@@ -38,3 +38,6 @@ image::checkstyle-idea-configuration.png[width="700"]
 
 * Reason: The plugin may not immediately run after setting it up.
 * Solution: Restart the IDE.
+
+[]
+include::NavigationMenu.adoc[]

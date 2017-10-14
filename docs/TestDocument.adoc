@@ -60,4 +60,5 @@ ____
 This is a quote block.
 ____
 
+[]
 include::NavigationMenu.adoc[]
