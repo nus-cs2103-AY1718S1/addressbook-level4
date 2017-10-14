@@ -3,7 +3,6 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -29,9 +28,6 @@ public class SortFindPanel extends UiPart<Region> {
 
     @FXML
     private TextField searchField;
-
-    @FXML
-    private MenuButton sortMenu;
 
     @FXML
     private MenuItem nameItem;
