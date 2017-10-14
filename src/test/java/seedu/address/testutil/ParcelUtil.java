@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ARTICLE_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -26,6 +27,7 @@ public class ParcelUtil {
      */
     public static String getParcelDetails(ReadOnlyParcel parcel) {
         StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_ARTICLE_NUMBER + parcel.getArticleNumber().value + " ");
         sb.append(PREFIX_NAME + parcel.getName().fullName + " ");
         sb.append(PREFIX_PHONE + parcel.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + parcel.getEmail().value + " ");
