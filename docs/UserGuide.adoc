@@ -45,6 +45,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Contacts
 
+You can store personal information of your contacts (friends, classmates, professors, etc.) in **BoNUS**.
+
+* By default, you can store and update their name, phone number, email address and mailing address. Refer to the `add` and `edit` command in the section below for more information.
+* You can store other information of your contacts by adding customize properties. Refer to the `config add-property` command in the section below for more information.
+* You can group your contacts by adding one or multiple tags to them. Contacts with the same tag will be classified under the same group.
+
+=== Calendar
+
 == Commands
 
 _Notice_: Commands in each component should be similar to each other.
