@@ -1099,8 +1099,8 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
-   able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed (80 words per minute) for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse to click and select the command they want.
 .  System should be able to respond in 0.5s.
 .  The software should work without requiring an installer.
 .  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
