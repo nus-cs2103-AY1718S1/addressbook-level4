@@ -14,6 +14,8 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
