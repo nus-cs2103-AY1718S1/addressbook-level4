@@ -1,15 +1,20 @@
 package seedu.address.logic.commands;
 
-import org.junit.Rule;
-import org.junit.Test;
-import seedu.address.commons.events.ui.ColorKeywordEvent;
-import seedu.address.ui.testutil.EventsCollectorRule;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.logic.commands.ColorKeywordCommand.DISABLE_COLOR;
 import static seedu.address.logic.commands.ColorKeywordCommand.ENABLE_COLOR;
 import static seedu.address.logic.commands.ColorKeywordCommand.MESSAGE_SUCCESS;
+
+import org.junit.Rule;
+import org.junit.Test;
+
+import seedu.address.commons.events.ui.ColorKeywordEvent;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
+
+
 
 public class ColorKeywordCommandTest {
 

@@ -53,8 +53,8 @@ public class FixedPhonePredicateTest {
     public void test_isThePhoneGiven_returnsTrue() {
 
         ReadOnlyPerson person = new PersonBuilder().build();
-        Phone Phone = person.getPhone();
-        FixedPhonePredicate predicate = new FixedPhonePredicate(Phone);
+        Phone phone = person.getPhone();
+        FixedPhonePredicate predicate = new FixedPhonePredicate(phone);
         assertTrue(predicate.test(person));
 
     }
