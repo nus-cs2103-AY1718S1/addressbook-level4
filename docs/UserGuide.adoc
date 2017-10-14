@@ -178,7 +178,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` \ `u`
+=== Undoing previous command : `undo` / `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
@@ -205,7 +205,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` \ `r`
+=== Redoing the previously undone command : `redo` / `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo` +
@@ -229,7 +229,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear` \ `c`
+=== Clearing all entries : `clear` / `c`
 
 Clears all entries from the address book. +
 Format: `clear` +
@@ -240,6 +240,16 @@ Shorthand: `c`
 Exits the program. +
 Format: `exit`
 
+=== Open different Address Book
+//tag::openbook[]
+Opens another address book from app.
+
+On GUI:
+
+. Go to the top menu and click File > Open.
+. Locate your desired Address Book on the pop-up window.
+. Select and press Open
+// end::openbook[]
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -268,3 +278,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Glossary
+
+* GUI: Graphical User Interface.
