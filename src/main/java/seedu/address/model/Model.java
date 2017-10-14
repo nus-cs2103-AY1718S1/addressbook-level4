@@ -20,7 +20,11 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_WHITELISTED_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -34,11 +38,17 @@ public interface Model {
     /** Deletes the given person. */
     void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Removes the given person from whitelist. */
+    void removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given person into blacklist */
     void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Adds the given person into whitelist */
+    void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -56,6 +66,9 @@ public interface Model {
     /** Returns an unmodifiable view of the blacklisted filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList();
 
+    /** Returns an unmodifiable view of the whitelisted filtered person list */
+    ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -67,6 +80,13 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates the filter of the filtered whitelisted person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
+
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 
