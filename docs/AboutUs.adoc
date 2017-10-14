@@ -4,13 +4,27 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team of students from the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
+=== Artur Szalata
+image::arturs.jpg[width="150", align="left"]
+{empty}[https://github.com/arturs68[github]]
+
+Roles: Team lead, testing +
+Responsibilities: Storage, Model
+
+'''
+
+=== Vu Duc Nam
+image::namvd2709.jpg[width="150", align="left"]
+{empty}[https://github.com/namvd2709[github]]
+
+Role: Project Manager +
+Responsibility: Logic
+
+'''
 
 === Adil Azmoon
 image::0E9023CF-666A-4E2F-9B6D-A3DC80C647E1.jpg[width="150", align="left"]
@@ -19,4 +33,5 @@ image::0E9023CF-666A-4E2F-9B6D-A3DC80C647E1.jpg[width="150", align="left"]
 Role: Developer +
 Responsibilities: UI
 
-'''
+Acknowledgement:
+AddressBook - Level 4, basis for Contact Pro, was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team.
