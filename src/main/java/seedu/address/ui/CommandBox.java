@@ -95,7 +95,7 @@ public class CommandBox extends UiPart<Region> {
     private Label keywordLabel;
 
     @FXML
-    private Label checkbox;
+    private Label checkBox;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -180,11 +180,11 @@ public class CommandBox extends UiPart<Region> {
         try {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
-            checkbox.setGraphic(tick);
+            checkBox.setGraphic(tick);
 
         } catch (ParseException e) {
             commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
-            checkbox.setGraphic(cross);
+            checkBox.setGraphic(cross);
         }
 
         for (int i = 0; i < inputArray.length; i++) {

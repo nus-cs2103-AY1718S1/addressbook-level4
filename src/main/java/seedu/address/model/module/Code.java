@@ -27,9 +27,9 @@ public class Code {
     public Code(String code) throws IllegalValueException {
         requireNonNull(code);
         String trimmedCode = code.trim();
-        if (!isValidCode(trimmedCode)) {
-            throw new IllegalValueException(MESSAGE_CODE_CONSTRAINTS);
-        }
+//        if (!isValidCode(trimmedCode)) {
+//            throw new IllegalValueException(MESSAGE_CODE_CONSTRAINTS);
+//        }
         this.fullCodeName = trimmedCode;
     }
 

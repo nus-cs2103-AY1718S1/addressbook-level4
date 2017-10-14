@@ -22,9 +22,9 @@ public class ClassType {
     public ClassType(String classType) throws IllegalValueException {
         requireNonNull(classType);
         String trimmedClassType = classType.trim();
-        if (!isValidClassType(trimmedClassType)) {
-            throw new IllegalValueException(MESSAGE_CLASSTYPE_CONSTRAINTS);
-        }
+//        if (!isValidClassType(trimmedClassType)) {
+//            throw new IllegalValueException(MESSAGE_CLASSTYPE_CONSTRAINTS);
+//        }
         this.value = trimmedClassType;
     }
 

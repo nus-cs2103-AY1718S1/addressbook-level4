@@ -23,9 +23,9 @@ public class Group {
     public Group(String group) throws IllegalValueException {
         requireNonNull(group);
         String trimmedGroup = group.trim();
-        if (!isValidGroup(trimmedGroup)) {
-            throw new IllegalValueException(MESSAGE_GROUP_CONSTRAINTS);
-        }
+//        if (!isValidGroup(trimmedGroup)) {
+//            throw new IllegalValueException(MESSAGE_GROUP_CONSTRAINTS);
+//        }
         this.value = trimmedGroup;
     }
 

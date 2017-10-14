@@ -41,6 +41,7 @@ public class SampleDataUtil {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Lesson sampleLesson : getSampleLessons()) {
+
                 sampleAb.addLesson(sampleLesson);
             }
             return sampleAb;

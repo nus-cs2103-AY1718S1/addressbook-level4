@@ -31,9 +31,9 @@ public class TimeSlot {
     public TimeSlot(String timeSlot) throws IllegalValueException {
         requireNonNull(timeSlot);
         String trimmedTimeSlot = timeSlot.trim();
-        if (!isValidTimeSLot(trimmedTimeSlot)) {
-            throw new IllegalValueException(MESSAGE_TIMESLOT_CONSTRAINTS);
-        }
+//        if (!isValidTimeSLot(trimmedTimeSlot)) {
+//            throw new IllegalValueException(MESSAGE_TIMESLOT_CONSTRAINTS);
+//        }
 
         this.value = trimmedTimeSlot;
     }
@@ -55,13 +55,13 @@ public class TimeSlot {
                 return true;
             }
         }
-
         return false;
     }
 
     private static boolean weekValid(String weekStr) {
         String[] namesOfDays = DateFormatSymbols.getInstance().getShortWeekdays();
         for (int i = 0; i < namesOfDays.length; i++) {
+            System.out.println(namesOfDays[i]);
             if (weekStr.equalsIgnoreCase(namesOfDays[i])) {
                 return true;
             }
