@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= AddressBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -92,8 +92,9 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons : `find`
 
+==== Default
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -112,9 +113,47 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+==== Option1
+
+Conducts fuzzy search for persons whose any detail contain the given keywords. +
+Format: `find -u KEYWORD`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* All details are searched, including name, phone, email, address, tag and so on
+****
+
+Examples:
+
+* `find -u jo` +
+Returns `john` and `John Doe`
+* `find -u 999` +
+Returns any person containing number `999`
+
+==== Option2
+
+Finds by the specific details. +
+Format: `find -d [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* At lease one argument must be given. e.g `find -d` will not work
+* Returns any person whose name contains the given name if name is specified, phone number contains +
+the given phone number if it is specified and so on to all details
+****
+
+Examples:
+
+* `find -d n/jo` +
+Returns `john` and `John Doe`
+* `find -d p/999 e/nus` +
+Returns any person whose phone number contains number `999` and email address contains `nus`
+
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+==== Option1
+
+Deletes the specified person from the address book using his/her corresponding index. +
 Format: `delete INDEX`
 
 ****
@@ -130,6 +169,25 @@ Examples:
 Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+==== Option2
+
+Deletes the specified person from the address book using his/her name. +
+Format: `del NAME`
+
+****
+* Deletes the person with the first occurrence of the specified `NAME`.
+* The name refers to the name shown in the contact list (case sensitive temporarily).
+* The name *must be a alphabets* john, Jane, Bob ...
+****
+
+Examples:
+
+* `del Alex` +
+Deletes the first person named Alex in the address book contact list.
+* `find Betsy` +
+`del Betsy` +
 Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
@@ -247,6 +305,34 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Coming in v2.0
+
+=== Sorting all contacts : `sort`
+
+Sorts all persons alphabetically. +
+Format: `sort`
+
+=== Right click menu
+
+A right click drop down list consisting some commonly used commands in UI. +
+There is no need to type in commands.
+
+=== Popup dialog window during editing
+
+A dialog window pops up during contact editing.
+
+=== To-do list: `sch`
+
+Attach a To-do list to a specified person to manage schedule with that person. +
+Format: `sch INDEX`
+
+Examples:
+
+* `sch 1 s/dinner at 7` +
+Adds schedule with the 1st person: `dinner at 7`.
+* `sch 2 s/` +
+Clears all existing schedules with the 2nd person.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -257,8 +343,8 @@ There is no need to save manually.
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
+* *Delete* : `delete INDEX` or `del NAME` +
+e.g. `delete 3`, `del john`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +

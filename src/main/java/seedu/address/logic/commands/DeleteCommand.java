@@ -7,6 +7,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+// import seedu.address.commons.events.logic.ContactDeletionEvent;
+// import seedu.address.commons.core.EventsCenter;
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -29,9 +31,10 @@ public class DeleteCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+
+        // EventsCenter.getInstance().post(new ContactDeletionEvent(targetIndex));
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
