@@ -24,11 +24,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_CLASS_TYPE, PREFIX_VENUE, PREFIX_GROUP, PREFIX_TIME_SLOT,
-                        PREFIX_MODULE_CODE, PREFIX_LECTURER);
+                ArgumentTokenizer.tokenize(args, PREFIX_MODULE_CODE, PREFIX_CLASS_TYPE, PREFIX_VENUE,
+                        PREFIX_GROUP, PREFIX_TIME_SLOT, PREFIX_LECTURER);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_CLASS_TYPE, PREFIX_VENUE, PREFIX_GROUP, PREFIX_TIME_SLOT,
-                PREFIX_MODULE_CODE, PREFIX_LECTURER)) {
+        if (!arePrefixesPresent(argMultimap,  PREFIX_MODULE_CODE, PREFIX_CLASS_TYPE, PREFIX_VENUE,
+                PREFIX_GROUP, PREFIX_TIME_SLOT, PREFIX_LECTURER)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
