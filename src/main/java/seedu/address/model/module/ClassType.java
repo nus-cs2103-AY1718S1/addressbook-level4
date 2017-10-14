@@ -5,19 +5,19 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Lesson's class type in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidClassType(String)}
  */
 public class ClassType {
     public static final String MESSAGE_CLASSTYPE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String CLASSTYPE_VALIDATION_REGEX = "\\d{3,}";
+            "Class type can only contain numbers, and should be at least 3 digits long";
+    public static final String CLASSTYPE_VALIDATION_REGEX = "[a-zA-Z]{3}";
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates given class type.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given class type string is invalid.
      */
     public ClassType(String classType) throws IllegalValueException {
         requireNonNull(classType);
@@ -29,10 +29,17 @@ public class ClassType {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid lesson class type.
      */
     public static boolean isValidClassType(String test) {
-        return test.matches(CLASSTYPE_VALIDATION_REGEX);
+        if (test.matches(CLASSTYPE_VALIDATION_REGEX) && containKeyword(test)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean containKeyword(String test) {
+        return test.equalsIgnoreCase("lec") || test.equalsIgnoreCase("tut");
     }
 
     @Override

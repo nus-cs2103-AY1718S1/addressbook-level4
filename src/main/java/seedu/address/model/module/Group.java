@@ -5,20 +5,20 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a Person's phone number in the address book.
+ * Represents a Lesson's group number in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidGroup(String)}
  */
 public class Group {
 
     public static final String MESSAGE_GROUP_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 1 digits long";
-    public static final String GROUP_VALIDATION_REGEX = "\\d";
+            "Group numbers can only contain numbers, and should be at least 1 digits long";
+    public static final String GROUP_VALIDATION_REGEX = "[\\d]*";
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates given group number.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given group string is invalid.
      */
     public Group(String group) throws IllegalValueException {
         requireNonNull(group);
@@ -30,7 +30,7 @@ public class Group {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid lesson group number.
      */
     public static boolean isValidGroup(String test) {
         return test.matches(GROUP_VALIDATION_REGEX);
