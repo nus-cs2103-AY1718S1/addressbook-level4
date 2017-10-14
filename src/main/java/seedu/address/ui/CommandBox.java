@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.controlsfx.control.textfield.TextFields;
 
 import com.google.common.eventbus.Subscribe;
@@ -35,6 +37,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -58,9 +61,15 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private final AddressBookParser tester;
+
     private HashMap<String, String> keywordColorMap;
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
+
+    private final ImageView tick = new ImageView("/images/tick.png");
+    private final ImageView cross = new ImageView("/images/cross.png");
+
 
     @FXML
     private TextField commandTextField;
@@ -86,6 +95,9 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private Label keywordLabel;
 
+    @FXML
+    private Label checkbox;
+
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -98,7 +110,12 @@ public class CommandBox extends UiPart<Region> {
         String[] commands = {"help", "add", "list", "edit", "find",
             "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
         TextFields.bindAutoCompletion(commandTextField, commands);
+        tick.setFitHeight(30);
+        tick.setFitWidth(30);
+        cross.setFitHeight(30);
+        cross.setFitWidth(30);
         historySnapshot = logic.getHistorySnapshot();
+        tester = new AddressBookParser();
         registerAsAnEventHandler(this);
     }
 
@@ -149,7 +166,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Handles the Enter button pressed event.
+     * Handles the Command input changed event.
      */
     private void listenCommandInputChanged() {
         String allTextInput = commandTextField.getText();
@@ -158,6 +175,16 @@ public class CommandBox extends UiPart<Region> {
 
         configInActiveTag();
         configInactiveKeyword();
+
+        try {
+            tester.parseCommand(allTextInput);
+            commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+            checkbox.setGraphic(tick);
+
+        } catch (ParseException e) {
+            commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
+            checkbox.setGraphic(cross);
+        }
 
         for (int i = 0; i < inputArray.length; i++) {
             String text = inputArray[i];
