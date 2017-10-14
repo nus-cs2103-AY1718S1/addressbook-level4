@@ -34,7 +34,6 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
-        ListingUnit.setCurrentListingUnit(MODULE);
         model.handleListingUnit();
     }
 

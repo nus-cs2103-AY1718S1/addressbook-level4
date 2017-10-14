@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LESSON;
 import static seedu.address.model.ListingUnit.LOCATION;
 import static seedu.address.model.ListingUnit.MODULE;
 
@@ -163,15 +164,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void handleListingUnit() {
-
-       if (ListingUnit.getCurrentListingUnit().equals(LOCATION)) {
+        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
+       if (currentUnit.equals(LOCATION) || currentUnit.equals(LESSON)) {
            Predicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
            updateFilteredLessonList(predicate);
        } else if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
            Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
            updateFilteredLessonList(predicate);
        } else {
-           assert false : "We will only handle unit LOCATION and MODULE ";
+           assert false : "We will only handle unit LOCATION MODULE and LESSON";
        }
 
 
