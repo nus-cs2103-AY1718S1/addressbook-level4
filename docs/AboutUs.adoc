@@ -32,6 +32,3 @@ image::0E9023CF-666A-4E2F-9B6D-A3DC80C647E1.jpg[width="150", align="left"]
 
 Role: Developer +
 Responsibilities: UI
-
-Acknowledgement:
-AddressBook - Level 4, basis for Contact Pro, was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team.
