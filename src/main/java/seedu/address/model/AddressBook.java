@@ -10,11 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.module.Module;
+import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.ReadOnlyModule;
+import seedu.address.model.module.UniqueLessonList;
 import seedu.address.model.module.UniqueModuleList;
-import seedu.address.model.module.exceptions.DuplicateModuleException;
-import seedu.address.model.module.exceptions.ModuleNotFoundException;
 import seedu.address.model.Lecturer.Lecturer;
 import seedu.address.model.Lecturer.UniqueLecturerList;
 
@@ -24,7 +23,7 @@ import seedu.address.model.Lecturer.UniqueLecturerList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueModuleList modules;
+    private final UniqueLessonList lessons;
     private final UniqueLecturerList lecturers;
 
     /*
@@ -35,7 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        modules = new UniqueModuleList();
+        lessons = new UniqueModuleList();
         lecturers = new UniqueLecturerList();
     }
 
@@ -178,7 +177,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyModule> getModuleList() {
+    public ObservableList<ReadOnlyLesson> getLessonList() {
         return modules.asObservableList();
     }
 

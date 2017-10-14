@@ -1,17 +1,9 @@
 package seedu.address.model.module;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.model.module.exceptions.DuplicateModuleException;
-import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.exceptions.ModuleNotFoundException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 import java.util.Iterator;
 import java.util.List;

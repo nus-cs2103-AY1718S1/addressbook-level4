@@ -18,17 +18,19 @@ public class Lesson implements ReadOnlyLesson{
     private ObjectProperty<Group> group;
     private ObjectProperty<Location> location;
     private ObjectProperty<TimeSlot> timeSlot;
+    private ObjectProperty<Code> code;
 
     private ObjectProperty<Lecturer> lecturer;
 
     /**
      * Every field must be present and not null.
      */
-    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Lecturer lecturer) {
+    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot,Code code, Lecturer lecturer) {
         requireAllNonNull(classType, location, group, timeSlot, lecturer);
         this.classType = new SimpleObjectProperty<>(classType);
         this.location = new SimpleObjectProperty<>(location);
         this.group = new SimpleObjectProperty<>(group);
+        this.code = new SimpleObjectProperty<>(code);
         this.timeSlot = new SimpleObjectProperty<>(timeSlot);
         // protect internal tags from changes in the arg list
         this.lecturer = new SimpleObjectProperty<>(lecturer);
@@ -39,7 +41,7 @@ public class Lesson implements ReadOnlyLesson{
      */
     public Lesson(ReadOnlyLesson source) {
         this(source.getClassType(), source.getLocation(), source.getGroup(),source.getTimeSlot(),
-                source.getLecturer());
+                source.getCode(), source.getLecturer());
     }
 
     public void setLocation(Location location) {
@@ -96,6 +98,20 @@ public class Lesson implements ReadOnlyLesson{
     @Override
     public Group getGroup() {
         return group.get();
+    }
+
+    public void setCodeType(Code code) {
+        this.code.set(requireNonNull(code));
+    }
+
+    @Override
+    public ObjectProperty<Code> codeProperty() {
+        return code;
+    }
+
+    @Override
+    public Code getCode() {
+        return code.get();
     }
 
     @Override

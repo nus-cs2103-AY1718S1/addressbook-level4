@@ -5,6 +5,10 @@ import seedu.address.model.module.*;
 import seedu.address.model.Lecturer.Lecturer;
 
 import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class XmlAdaptedLesson {
     @XmlElement(required = true)
@@ -14,9 +18,12 @@ public class XmlAdaptedLesson {
     @XmlElement(required = true)
     private String group;
     @XmlElement(required = true)
+    private String code;
+    @XmlElement(required = true)
     private String timeSlot;
+
     @XmlElement
-    private String lecturer;
+    private List<XmlAdaptedLecturer> lecturerList = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -34,8 +41,13 @@ public class XmlAdaptedLesson {
         classType = source.getClassType().value;
         location = source.getLocation().value;
         group = source.getGroup().value;
+        code = source.getCode().fullCodeName;
         timeSlot = source.getTimeSlot().value;
-        lecturer = source.getLecturer().lecturerName;
+
+        lecturerList = new ArrayList<>();
+        for (Lecturer lecturer : source.getLecturers()) {
+            lecturerList.add(new XmlAdaptedLecturer(lecturer));
+        }
     }
 
     /**
@@ -47,8 +59,14 @@ public class XmlAdaptedLesson {
         final ClassType classType = new ClassType(this.classType);
         final Location location = new Location(this.location);
         final Group group = new Group(this.group);
+        final Code code = new Code(this.code);
         final TimeSlot timeSLot = new TimeSlot(this.timeSlot);
-        final Lecturer lecturer = new Lecturer(this.lecturer);
-        return new Lesson(classType, location, group, timeSLot, lecturer);
+
+        final List<Lecturer> lecturers = new ArrayList<>();
+        for (XmlAdaptedLecturer lecturer : lecturerList) {
+            lecturers.add(lecturer.toModelType());
+        }
+        final Set<Lecturer> lecturerSet = new HashSet<>(lecturers);
+        return new Lesson(classType, location, group, timeSLot, code, lecturerSet);
     }
 }

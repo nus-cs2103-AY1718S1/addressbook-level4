@@ -9,8 +9,9 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.Lecturer.Tag;
-import seedu.address.model.Lecturer.UniqueTagList;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+
 
 /**
  * Represents a Person in the address book.

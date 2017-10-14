@@ -17,6 +17,8 @@ public interface ReadOnlyLesson {
     ClassType getClassType();
     ObjectProperty<Group> groupProperty();
     Group getGroup();
+    ObjectProperty<Code> codeProperty();
+    Code getCode();
     ObjectProperty<Lecturer> lecturerProperty();
     Lecturer getLecturer();
 
@@ -29,7 +31,9 @@ public interface ReadOnlyLesson {
                 && other.getLocation().equals(this.getLocation()) // state checks here onwards
                 && other.getTimeSlot().equals(this.getTimeSlot())
                 && other.getClassType().equals(this.getClassType())
-                && other.getGroup().equals(this.getGroup()));
+                && other.getGroup().equals(this.getGroup())
+                && other.getCode().equals(this.getCode())
+                && other.getLecturer().equals(this.getLecturer()));
     }
 
     /**
@@ -37,7 +41,9 @@ public interface ReadOnlyLesson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Class Type: ")
+        builder.append(" Module Code: ")
+                .append(getCode())
+                .append(" Class Type: ")
                 .append(getClassType())
                 .append(" Location: ")
                 .append(getLocation())
