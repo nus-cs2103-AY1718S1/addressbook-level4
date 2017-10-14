@@ -238,6 +238,23 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Shows a list of all themes in the address book. +
 Format: `themeslist`
 
+=== Switching themes : `switch`
+
+Switches the current theme to the specified theme. +
+Format: `switch INDEX`
+
+****
+* Switches the current theme to the theme at the specified `INDEX`.
+* The index refers to the index number shown in the themes list window.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `themeslist` +
+`switch 2` +
+Switches to the 2nd theme in the themes list.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
