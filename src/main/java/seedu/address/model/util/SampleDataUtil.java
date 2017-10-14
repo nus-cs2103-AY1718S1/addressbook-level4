@@ -1,7 +1,6 @@
 package seedu.address.model.util;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;

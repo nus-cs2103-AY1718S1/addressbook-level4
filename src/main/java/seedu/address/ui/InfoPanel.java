@@ -104,7 +104,7 @@ public class InfoPanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
-        deadLine.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
+        deadLine.textProperty().bind(Bindings.convert(person.deadLineProperty()));
         //TODO: fix tag colours. person.tagProperty().addListener((observable, oldValue, newValue) -> {
         tags.getChildren().clear();
         initTags(person);

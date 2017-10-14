@@ -185,10 +185,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author lawwman
-    public void setDeadLine(DeadLine deadLine) { this.deadLine.set(requireNonNull(deadLine)); }
+    public void setDeadLine(DeadLine deadLine) {
+        this.deadLine.set(requireNonNull(deadLine));
+    }
 
     @Override
-    public ObjectProperty<DeadLine> deadLineProperty() { return deadLine; }
+    public ObjectProperty<DeadLine> deadLineProperty() {
+        return deadLine;
+    }
 
     @Override
     public DeadLine getDeadLine() {

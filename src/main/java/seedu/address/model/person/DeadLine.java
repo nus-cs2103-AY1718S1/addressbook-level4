@@ -30,10 +30,9 @@ public class DeadLine {
      * @throws IllegalValueException if given phone string is invalid.
      */
     public DeadLine(String deadLine) throws IllegalValueException {
-        if(deadLine.equals(NO_DEAD_LINE_SET)) {
+        if (deadLine.equals(NO_DEAD_LINE_SET)) {
             this.value = deadLine;
-        }
-        else {
+        } else {
             requireNonNull(deadLine);
             String trimmedDeadLine = deadLine.trim();
             if (!isValidDeadLine(trimmedDeadLine)) {
@@ -67,11 +66,15 @@ public class DeadLine {
         return value.hashCode();
     }
 
+    /**
+     *
+     * @return formated date value
+     */
     private String formatDate() {
         SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
         int year = Integer.parseInt(value.substring(6, 10));
         int day = Integer.parseInt(value.substring(0, 2));
-        int month = Integer.parseInt(value.substring(3,5)) - 1;
+        int month = Integer.parseInt(value.substring(3, 5)) - 1;
         Date date = new GregorianCalendar(year, month, day).getTime();
         return ft.format(date);
     }
