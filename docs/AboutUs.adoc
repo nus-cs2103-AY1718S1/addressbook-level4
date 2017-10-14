@@ -1,5 +1,4 @@
 = About Us
-:relfileprefix: team/
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
@@ -13,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Ang Zhan Yu
 image::alexa.jpg[width="150", align="left"]
-{empty}https://ZY-Ang.github.io[homepage] https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
+{empty}https://ZY-Ang.github.io[homepage] https://github.com/ZY-Ang[github] <<team/ZhanYu#, portfolio>>
 
 Role: Developer +
 Responsibilities: Storage
@@ -22,7 +21,7 @@ Responsibilities: Storage
 
 === Jolyn Tan
 image::jolyn.jpg[width="150", align="left"]
-{empty}https://github.com/jo-lyn[github] <<Jolyn#, portfolio>>
+{empty}https://github.com/jo-lyn[github] <<team/Jolyn#, portfolio>>
 
 Role: Developer +
 Responsibilities: UI
@@ -31,7 +30,7 @@ Responsibilities: UI
 
 === Tan Mingrui
 image::mingrui.jpg[width="150", align="left"]
-{empty}http://github.com/mingruiii[github] <<Mingrui#, portfolio>>
+{empty}http://github.com/mingruiii[github] <<team/Mingrui#, portfolio>>
 
 Role: Developer +
 Responsibilities: Data
