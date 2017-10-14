@@ -34,7 +34,7 @@ public class LessonListPanel extends UiPart<Region> {
     private ObservableList<ReadOnlyLesson> lessonList;
 
     @FXML
-    private ListView<LessonCard> lessonListView;
+    private ListView<LessonListCard> lessonListView;
 
 
     public LessonListPanel(ObservableList<ReadOnlyLesson> infoList) {
@@ -46,8 +46,8 @@ public class LessonListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<ReadOnlyLesson> infoList) {
 
-        ObservableList<LessonCard> mappedList = EasyBind.map(
-                infoList, (person) -> new LessonCard(person, infoList.indexOf(person) + 1));
+        ObservableList<LessonListCard> mappedList = EasyBind.map(
+                infoList, (person) -> new LessonListCard(person, infoList.indexOf(person) + 1));
 
         lessonListView.setItems(mappedList);
         lessonListView.setCellFactory(listView -> new LessonListViewCell());
@@ -127,10 +127,10 @@ public class LessonListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
-    class LessonListViewCell extends ListCell<LessonCard> {
+    class LessonListViewCell extends ListCell<LessonListCard> {
 
         @Override
-        protected void updateItem(LessonCard lesson, boolean empty) {
+        protected void updateItem(LessonListCard lesson, boolean empty) {
             super.updateItem(lesson, empty);
 
             if (empty || lesson == null) {
