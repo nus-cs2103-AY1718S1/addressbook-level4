@@ -1166,7 +1166,8 @@ Use case resumes at step 2.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
-.  Should be usable by a novice who has never used a command prompt before
+.  Should be usable by a human who has never seen a command line interface before
+.  Should be usable by a human who has never used a command line interface before
 .  Data should be encrypted when application is not running
 .  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
 
