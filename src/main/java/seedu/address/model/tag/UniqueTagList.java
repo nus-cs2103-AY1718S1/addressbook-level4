@@ -138,5 +138,14 @@ public class UniqueTagList implements Iterable<Tag> {
             super("Operation would result in duplicate tags");
         }
     }
-
+    /**
+     * Remove the tag
+     */
+    public void removeTag(String str) {
+        for (Tag tag: internalList) {
+            if (tag.isSame(str)) {
+                internalList.remove(tag);
+            }
+        }
+    }
 }

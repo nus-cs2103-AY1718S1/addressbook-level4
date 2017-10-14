@@ -194,12 +194,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
-    /*
-    * sorts the list alphabetically
-    */
+    /**
+     * sorts list alphabetically
+     */
     public void sort() {
         persons.sort();
     }
 
-
+    public void removeTag(String str) {
+        persons.removeTag(str);
+    }
 }

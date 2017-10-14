@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -729,10 +729,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |search for the user based on certain keywords|find contacts easily
+
+|`* * *` |user |know how to use the commands  |to get familiar with the app
+
+|`* * *` |user with few contacts |sort my contacts by name |find my contacts easily by scrolling
+
+|`* * *` |user |save my contacts both online and offline |quit the project without fear of losing my contacts
+
+|`* * *` |user |exit the program |
+
+|`* * *` |user |list my contacts |see all my entries
+
+|`* * *` |user |edit my contacts |update any changes to my contacts
+
+|`* *` |user |double-confirm the delete command and clear command|avoid accidental commands
+
+|`* *` |user |view my command history |recall what changes I have made
+
+|`* *` |user |add a photo beside my contact |associate my contact using their photos
+
+|`* *` |user |export a contact |share the contact with someone
+
+|`* *` |user |find all contacts with a particular tag |locate all details of the group without having to go through the entire list
+
+|`* *` |experienced user |enter a command shortcut |save time
+
+|`* *` |user |open the program with a keyboard shortcut |save time
+
+|`* *` |new user |import my contacts from other existing contact lists |save time by not needing to manually add my contacts again
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |have a backup file and a backup command |store the data to avoid accidental data loss
+
+|`* *` |user |set up a login password |prevent someone else from looking at my contacts just by opening the application
+
+|`* *` |user |see a network of my contacts' addresses on Google Maps |see where all my contacts live on a map
+
+|`* *` |user |undo a command |remove any unwanted changes I might accidentally make
+
+|`* *` |user |redo an undone command |reapply the changes that I might accidentally undo
+
+|`* *` |user with many contacts |get the person who was searched by the user for the most times |get the info of frequent contacts easily
+
+|`*` |user |link my contacts to social media platforms |visit my friend's profile easily
+
+|`*` |user |customize the GUI |personalize its aesthetics to my liking
+
+|`*` |user with many contacts |sort persons by name |locate a person easily
 |=======================================================================
+
 
 {More to be added}
 
@@ -742,7 +789,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+== Use case: Delete person
 
 *MSS*
 
@@ -767,7 +814,55 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+== Use case: Sort person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to sort contacts by name
+4. AddressBook sorts contacts by name
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+== Use case: Help
+
+*MSS*
+
+1. User requests help
+2. AddressBook opens a new help window
++
+Use case ends.
+
+[discrete]
+== Use case: Edit person
+
+*MSS*
+
+1. User requests to edit person
+2. User types in new particulars
+3. AddressBook edits contact
++
+Use case ends.
+
+*Extensions*
+l
+[none]
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,11 +870,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The program should be able to start up within 5 seconds.
+.  The program should be able to respond to any queries within 1 second.
 
-{More to be added}
 
 [appendix]
 == Glossary
+
+Tag
+--> A short phrase to describe your contact
 
 [[mainstream-os]]
 Mainstream OS
@@ -798,16 +897,18 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+Handy Address Book
 
-Author: ...
+Author: Doctor Java
 
 Pros:
 
-* ...
-* ...
+* Functions Well
+* Custom Categories
+* Import/Export Contacts
+* Label Printing
+* Google Contacts Sync
 
 Cons:
 
-* ...
-* ...
+* Costly
