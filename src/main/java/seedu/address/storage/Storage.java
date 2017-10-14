@@ -24,10 +24,22 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     String getAddressBookFilePath();
 
     @Override
+    String getBackupAddressBookFilePath();
+
+    @Override
     Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
 
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+    @Override
+    Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException;
+
+    @Override
+    void backupAddressBook() throws IOException;
+
+    @Override
+    ReadOnlyAddressBook getBestAvailableAddressBook();
 
     /**
      * Saves the current version of the Address Book to the hard disk.
@@ -35,4 +47,6 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+
 }

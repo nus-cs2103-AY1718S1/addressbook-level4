@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/sharkie.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -40,13 +41,15 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private InfoPanel infoPanel;
+    private StartUpPanel startUpPanel;
     private PersonListPanel personListPanel;
+    private PersonListStartUpPanel personListStartUpPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -126,20 +129,57 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        infoPanel = new InfoPanel();
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
+    }
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+    //@@author jelneo
+    /**
+     * Fills up all the placeholders of window once the app starts up.
+     * Should only display welcome page without contacts.
+     */
+    void fillInnerPartsForStartUp() {
+        Platform.runLater(() -> {
+            startUpPanel = new StartUpPanel();
+            infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+            personListStartUpPanel = new PersonListStartUpPanel();
+            personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
+
+            ResultDisplay resultDisplay = new ResultDisplay();
+            resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+            CommandBox commandBox = new CommandBox(logic);
+            commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        });
+
+    }
+    //@@author
+
+    /**
+     * Fills up the placeholders of PersonListPanel with the given list name.
+     * Should only display welcome page without contacts.
+     */
+    void fillInnerPartsWithIndicatedList(String listName) {
+
+        switch(listName) {
+
+        case "blacklist":
+            personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
+            break;
+
+        default:
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        }
+
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     void hide() {
@@ -206,10 +246,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

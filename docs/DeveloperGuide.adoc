@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= Codii - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T17-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -721,7 +721,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to instructions when I forget my way around the App
 
 |`* * *` |user |add a new person |
 
@@ -729,12 +729,68 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |edit contacts |
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |add tags to my contacts |group them by other classifications as I prefer
+
+|`* * *` |user |filter my contacts by tags |easily see only contacts that are tagged with the tag of interest
+
+|`* * *` |user |save multiple phone numbers to one contact |have multiple ways of contacting a contact
+
+|`* * *` |debt collector |indicate and update amount owed by a debtor when the debtor borrows or returns money |see how much a debtor owes
+
+|`* * *` |debt collector |sort my contacts by the amount owed |
+
+|`* * *` |debt collector |have a list of people who have cleared their debts |refer to their recorded info when they require my services again
+
+|`* * *` |debt collector |have link:#critical[critical] lists |quickly view which debtors I have to chase for repayment soon
+
+|`* * *` |debt collector |have a link:#blacklist[blacklist] |know who not to lend money to
+
+|`* * *` |debt collector |have a list of debtors whose debts are overdue |
+
+|`* * *` |debt collector |have an automated interest calculator |have my debtors' debts updated automatically every month
+
+|`* * *` |debt collector |group my debtors by location |plan my visit schedules easily
+
+|`* *` |security-concerned debt collector |have password protection to my account |have some security over confidential information
+
+|`* *` |efficient debt collector |have an automated journey scheduler |maximise my efficiency
+
+|`* *` |security-concerned debt collector |receive an email notification when logging in from an unknown device |know when there are unintended logins to my account
+
+|`* *` |versatile user |have different appearance themes |have a more unique user experience that suits my preferences
+
+|`* *` |new user |have a guided installation/no installation |easily start using it
+
+|`* *` |clumsy user |have automatic backups |not worry about accidentally deleting things
+
+|`* *` |debt collector |have the ability to impose different periods of link:#ban[ban] on my blacklisted clients |have clients automatically transferred out of that list after their ban
+
+|`* *` |debt collector |have the ability to perform validity checks on clients' personal information (HP,Email address) |verify that their data is genuine
+
+|`* *` |meticulous debt collector |see my client's link:#progress-bar[progress-bar] which indicates their debt & the time remaining to pay it off |have a better visual representation of data
+
+|`* *` |new user |have a Help command that displays screenshots of positive examples |understand the commands more visually
+
+|`* *` |meticulous debt collector |have a feature that prevents duplicate contacts to be added |ensure that the system is not unnecessarily complex
+
+|`* *` |debt collector |have profile pictures for my clients |easily identify them in a glance
+
+|`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
+
+|`* *` |security-concerned debt collector |have link:#2FA[two-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+
+|`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
+
+|`*` |debt collector |create custom fields |store additional information for some contacts
+
+|`*` |debt collector |randomly generate a contact from the link:#cleared[cleared] list(clients who have paid their debts) |choose to chat up a random contact to talk them into getting a loan
+
+|`*` |debt collector |use a file upload feature |upload signed documents to a specific client record in the database
+
+|`*` |debt collector |have a 'add-log' button that generates specific date and time(at the instance of clicking the button) |fill up the call link:#log[log] sheet of a contact without manually typing the exact instance of time
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,7 +823,127 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add tag to person
+
+*MSS*
+
+1.  User requests to add a new tag to a person
+2.  AddressBook adds the tag to the person
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort by name
+
+*MSS*
+
+1. User requests to sort AddressBook by name of persons
+2. AddressBook shows a sorted list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add a person to favourite list
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to favourite specific person in the list
+4.  AddressBook adds the person in the favourite list
+5.  User requests to list favourite contacts
+6.  AddressBook shows a list of favourite contacts
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit a person
+2.  AddressBook displays the current information of the person
+3.  User edits the information in person
+4.  AddressBook updates the information in person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User keys in invalid information into fields.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person in the list
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The person already exists in the AddressBook.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. The user enters the wrong format into AddressBook.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Find person by name
+
+*MSS*
+
+1. User requests to find persons by name
+2. AddressBook shows a list of corresponding persons with matching case insensitive full words
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. No matches found.
++
+[none]
+** 1a1. AddressBook shows 0 persons found.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +951,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should not take more than two seconds to complete a command.
+.  The system should be maintainable with proper documentation.
+.  The system should be usable by a novice who has never used an address book application before.
+.  Should log user out after 20 minutes of inactivity to protect privacy.
 
 [appendix]
 == Glossary
@@ -795,19 +973,107 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[critical]]
+Critical
+
+....
+Requiring immediate attention of debt collectors
+....
+
+[[blacklist]]
+Blacklist
+
+....
+A list of people who are banned from borrowing
+....
+
+[[ban]]
+Ban
+
+....
+A period of prohibition in which the person is not allowed to loan money
+....
+
+[[progress-bar]]
+Progress Bar
+
+....
+A visual representation that shows a user how far along he/she is in a process
+....
+
+[[two-FA]]
+2FA
+
+....
+An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
+....
+
+[[log]]
+Log
+
+....
+An official record of events
+....
+
+[[cleared]]
+Cleared
+
+....
+Refers to clients that have paid off all their debts (in this context)
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+.*Address Book*, reviewed by Deleatha C Jones
+|===
+|Pros |Cons
 
-Author: ...
+|Easy to use
+|Can only enter one phone number
 
-Pros:
+|Has all contact information fields
+|
+|===
 
-* ...
-* ...
+.*Address book - Placebook*, reviewed by M Kenneally
+|===
+|Pros |Cons
 
-Cons:
+|Simple to use
+|Cannot import from Google contacts
 
-* ...
-* ...
+|Search address function is brilliant - fast and intuitive
+|
+
+|GPS location
+|
+
+|Nice clean interface
+|
+
+|No ads
+|
+|===
+
+.*Address Book and Contacts*, reviewed by Jessica Ryans & Leslie Murray
+|===
+|Pros |Cons
+
+|Simple to use
+|Can't edit groups once formed
+
+|It categorizes contacts into groups
+|Does not have enough fields
+|===
+
+.*Address Book*, reviewed by Becca Malard & Susan Starrett
+|===
+|Pros |Cons
+
+|Shows map of user location
+|Doesn't open all the time
+
+|Easy to use
+|Very slow
+|===

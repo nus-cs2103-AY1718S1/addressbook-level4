@@ -20,6 +20,12 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<PostalCode> postalCodeProperty();
+    PostalCode getPostalCode();
+    ObjectProperty<Debt> debtProperty();
+    Debt getDebt();
+    ObjectProperty<DateBorrow> dateBorrowProperty();
+    DateBorrow getDateBorrow();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -32,7 +38,10 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+                && other.getPostalCode().equals(this.getPostalCode())
+                && other.getDebt().equals(this.getDebt())
+                && other.getDateBorrow().equals(this.getDateBorrow());
     }
 
     /**
@@ -47,6 +56,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Postal Code: ")
+                .append(getPostalCode())
+                .append(getDebt())
+                .append(getDateBorrow())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

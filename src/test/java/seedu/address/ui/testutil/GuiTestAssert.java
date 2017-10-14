@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -23,6 +24,9 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getPostalCode(), actualCard.getPostalCode());
+        assertEquals(expectedCard.getDebt(), actualCard.getDebt());
+        assertEquals(expectedCard.getDateBorrow(), actualCard.getDateBorrow());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -34,8 +38,26 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
+        assertEquals(expectedPerson.getDebt().value, actualCard.getDebt());
+        assertEquals(expectedPerson.getDateBorrow().value, actualCard.getDateBorrow());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
+     */
+    public static void assertInfoDisplaysPerson(ReadOnlyPerson expectedPerson, InfoPanelHandle actualInfo) {
+        assertEquals(expectedPerson.getName().fullName, actualInfo.getName());
+        assertEquals(expectedPerson.getPhone().value, actualInfo.getPhone());
+        assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
+        assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
+        assertEquals(expectedPerson.getDebt().value, actualInfo.getDebt());
+        assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualInfo.getTags());
     }
 
     /**

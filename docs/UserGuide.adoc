@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Codii - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T17-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -26,6 +26,10 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+image::UiStartUp.png[width="790"]
++
+.  Log into the app using the format specified in the welcome screen.
++
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -33,7 +37,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -50,45 +54,63 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+
+=== Logging into the address book application : `login`
+
+Logs into the address book. +
+Format: `login USERNAME PASSWORD`
+
+Examples:
+
+* `login userAcc_123 pa$$_Word!@#&`
+* `login batMan_111 (Batcave.327+-)`
+
 === Viewing help : `help`
 
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to the address book. Date borrowed for person is automatically +
+noted down. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/Debt [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pc/000001 d/1234 t/criminal`
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Listing all blacklisted persons : `blacklist`
+
+Shows a list of all blacklisted persons in the address book. +
+Format: `blacklist`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* The date of debt borrowed cannot be edited.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567 pc/333111 e/johndoe@example.com` +
+Edits the phone number, postal code, and email address of the 1st person to be `91234567`, `333111`, and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -131,6 +153,46 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Banning a person : `ban`
+
+Adds the specified person from current records to blacklist. +
+Format: 'ban INDEX'
+
+****
+* Bans the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`ban 2` +
+Adds the 2nd person in the address book to blacklist.
+* `find Betsy` +
+`ban 1` +
+Adds the 1st person in the results of the `find` command to blacklist.
+
+=== Unbanning a person : `unban`
+
+Removes the specified person from blacklist. +
+Format: 'unban INDEX'
+
+****
+* Unbans the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `blacklist` +
+`unban 2` +
+Removes the 2nd person from blacklist.
+* `find Betsy` +
+`unban 1` +
+Removes the 1st person in the results of the `find` command from blacklist.
 
 === Selecting a person : `select`
 
@@ -225,7 +287,36 @@ Format: `exit`
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+There is no need to save manually. +
+If address book data can be loaded successfully, backup address book data is saved upon starting the program.
+
+=== Loading the data
+
+If the data file does not exist or cannot be read:
+[none]
+* Backup data file will be loaded, if available and readable.
++
+[none]
+* If backup data is unavailable:
++
+[none]
+** You will be given a sample address book.
++
+[none]
+* If backup data exists but cannot be read :
++
+[none]
+** You will be given an empty address book.
+
+[NOTE]
+====
+To quickly revert address book data to the state of last use:
+[none]
+* 1. Delete addressbook.xml.
++
+[none]
+* 2. Rename addressbook.xml-backup.xml to addressbook.xml.
+====
 
 == FAQ
 
@@ -234,12 +325,14 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Login* `login USERNAME PASSWORD` +
+e.g. `login userAcc_123 pa$$_Word!@#&`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

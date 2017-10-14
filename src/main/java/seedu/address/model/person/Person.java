@@ -22,18 +22,25 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Debt> debt;
+    private ObjectProperty<DateBorrow> dateBorrow;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
+                  Debt debt, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, postalCode, debt, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.debt = new SimpleObjectProperty<>(debt);
+        this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,10 +49,15 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
+                source.getDebt(), source.getTags());
+        this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
     }
 
+    /**
+     * Sets name of a person to the given Name.
+     * @param name must not be null.
+     */
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }
@@ -60,6 +72,10 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
+    /**
+     * Sets phone number of a person to the given Phone.
+     * @param phone must not be null.
+     */
     public void setPhone(Phone phone) {
         this.phone.set(requireNonNull(phone));
     }
@@ -74,6 +90,10 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    /**
+     * Sets email of a person to the given Email.
+     * @param email must not be null.
+     */
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
     }
@@ -88,6 +108,10 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
+    /**
+     * Sets address of a person to the given Address.
+     * @param address must not be null.
+     */
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
@@ -102,6 +126,63 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    /**
+     * Sets postal code of a person to the given PostalCode.
+     * @param postalCode must not be null.
+     */
+    public void setPostalCode(PostalCode postalCode) {
+        this.postalCode.set(requireNonNull(postalCode));
+    }
+
+    @Override
+    public ObjectProperty<PostalCode> postalCodeProperty() {
+        return postalCode;
+    }
+
+    @Override
+    public PostalCode getPostalCode() {
+        return postalCode.get();
+    }
+
+    /**
+     * Sets current debt of a person to the given Debt.
+     * @param debt must not be null.
+     */
+    public void setDebt(Debt debt) {
+        this.debt.set(requireNonNull(debt));
+    }
+
+    @Override
+    public ObjectProperty<Debt> debtProperty() {
+        return debt;
+    }
+
+    @Override
+    public Debt getDebt() {
+        return debt.get();
+    }
+
+    //@@author lawwman
+
+    /**
+     * Sets date borrowed of a person the the given DateBorrow.
+     * @param dateBorrow must not be null.
+     */
+    public void setDateBorrow(DateBorrow dateBorrow) {
+        this.dateBorrow.set(requireNonNull(dateBorrow));
+    }
+
+    @Override
+    public ObjectProperty<DateBorrow> dateBorrowProperty() {
+        return dateBorrow;
+    }
+
+    @Override
+    public DateBorrow getDateBorrow() {
+        return dateBorrow.get();
+    }
+
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -132,7 +213,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, postalCode, debt, tags);
     }
 
     @Override

@@ -15,7 +15,9 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.Username;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -24,6 +26,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -102,6 +105,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -118,6 +126,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -130,9 +143,36 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void changeListTo(String string) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void authenticateUser(Username username, Password password) {
+            fail("This method should not be called.");
+        }
+
     }
 
     /**
@@ -141,6 +181,11 @@ public class AddCommandTest {
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            throw new DuplicatePersonException();
+        }
+
+        @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
         }
 
@@ -158,6 +203,11 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            personsAdded.add(new Person(person));
+        }
+
+        @Override
+        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             personsAdded.add(new Person(person));
         }
 

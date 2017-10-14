@@ -14,8 +14,11 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.ChangeInternalListEvent;
+import seedu.address.commons.events.ui.LoginAppRequestEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -30,12 +33,13 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/sharkie.png";
 
     private Logic logic;
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
+
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -55,7 +59,7 @@ public class UiManager extends ComponentManager implements Ui {
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+            mainWindow.fillInnerPartsForStartUp();
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
@@ -67,7 +71,6 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -117,5 +120,31 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
                 event.exception);
+    }
+
+    //@@author jelneo
+    /**
+     * Handles login event.
+     * Displays contacts in address book if login is successful
+     */
+    @Subscribe
+    public void handleLoginAppRequestEvent(LoginAppRequestEvent event) {
+        // login is successful
+        if (event.getLoginStatus() == true) {
+            logger.info("Login successful");
+            LoginCommand.setLoginStatus(true);
+            //show address book
+            Platform.runLater(() -> mainWindow.fillInnerParts());
+        }
+    }
+
+    /**
+     * Handles change internal list event.
+     * Displays the list that user requested(e.g mainlist, blacklist etc)
+     */
+    @Subscribe
+    private void handleChangeInternalListEvent(ChangeInternalListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.fillInnerPartsWithIndicatedList(event.getListName());
     }
 }

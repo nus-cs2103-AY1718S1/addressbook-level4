@@ -15,7 +15,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.Password;
+import seedu.address.logic.Username;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BanCommand;
+import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -25,8 +29,10 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -46,6 +52,20 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_ban() throws Exception {
+        BanCommand command = (BanCommand) parser.parseCommand(
+                BanCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new BanCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_unban() throws Exception {
+        UnbanCommand command = (UnbanCommand) parser.parseCommand(
+                UnbanCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new UnbanCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
@@ -110,10 +130,23 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_blacklist() throws Exception {
+        assertTrue(parser.parseCommand(BlacklistCommand.COMMAND_WORD) instanceof BlacklistCommand);
+        assertTrue(parser.parseCommand(BlacklistCommand.COMMAND_WORD + " 3") instanceof BlacklistCommand);
+    }
+
+    @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_login() throws Exception {
+        LoginCommand command = (LoginCommand) parser.parseCommand(
+                LoginCommand.COMMAND_WORD + " " + "JohnDoe" + " " + "hiIAmJohnDoe123");
+        assertEquals(new LoginCommand(new Username("JohnDoe"), new Password("hiIAmJohnDoe123")), command);
     }
 
     @Test
@@ -140,5 +173,13 @@ public class AddressBookParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
+    }
+
+    //@@author jelneo
+    @Test
+    public void parseCommand_invalidLogin() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+        parser.parseCommand(LoginCommand.COMMAND_WORD);
     }
 }

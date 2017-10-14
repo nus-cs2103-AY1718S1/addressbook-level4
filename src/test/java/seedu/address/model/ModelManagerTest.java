@@ -12,7 +12,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -27,8 +31,29 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void equals() {
+    public void getFilteredBlacklistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredBlacklistedPersonList().remove(0);
+    }
+
+    // No existing command that calls deleteTag method. Testing will be done here for now.
+    @Test
+    public void deleteTag() throws PersonNotFoundException, IllegalValueException, TagNotFoundException {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.deleteTag(new Tag("friends"));
+
+        // friend tag should be deleted -> returns false
+        AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        assertFalse(addressBook.getPersonList().equals(oldAddressBook));
+    }
+
+    @Test
+    public void equals() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE)
+                .withPerson(BENSON).withBlacklistedPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 
