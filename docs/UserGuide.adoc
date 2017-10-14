@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= H.M.U v1.1 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103-F10-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-F10-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -50,9 +50,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+====
+*Command Bar*
+
+* User can select commands from the menu bar without using the Command Line for selected commands.
+* Supported commands : `help`, `clear`, `list`, `undo`, `redo`.
+====
+
 === Viewing help : `help`
 
-Format: `help`
+Option 1: Format: `help` +
+Option 2.1: Menu -> File -> Help +
+Option 2.2: Menu -> File -> `F1`
 
 === Adding a person: `add`
 
@@ -132,6 +141,23 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Locating a person : `locate`
+
+Locate the specified person's address from the address book on Google Map +
+Format: `Locate INDEX`
+
+****
+* Searches the address of the person at the specified `INDEX` on Google Map.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`locate 2` +
+Searches the 2nd person in the address book in Google Map.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -166,7 +192,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Option 1: Command Line -> Format: `undo` +
+Option 2: Menu -> Commands -> Undo
 
 [NOTE]
 ====
@@ -192,7 +219,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Option 1: Command Line -> Format: `redo` +
+Option 2: Menu -> Commands -> Undo
 
 Examples:
 
@@ -215,12 +243,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+Option 1: Command Line -> Format: `clear` +
+Option 2: Menu -> Commands -> Clear
 
 === Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Option 1: Command Line -> Format: `exit` +
+Option 2: Menu -> File -> Exit
 
 === Saving the data
 
@@ -250,3 +280,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Coming Soon in v2.0
+Customizable Toolbar +
+Password Support +
+Google Maps Support (Available in v1.1) +
+Contact's photo support

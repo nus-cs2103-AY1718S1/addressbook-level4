@@ -11,46 +11,38 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Deric Khoo Jia Wei
+image::derickjw.png[width="150", align="left"]
+{empty}[https://github.com/derickjw[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer + Documentation (Main) +
+Responsibilities : UI + Use Cases + Product Survey
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Chen Huijia
+image::hj2304.png[width="150", align="left"]
+{empty}[http://github.com/hj2304[github]]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Developer + Tester (Main) +
+Responsibilities: Model + Non-Functional Requirements
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== He Yuchen
+image::yuchenhe98.png[width="150", align="left"]
+{empty}[http://github.com/yuchenhe98[github]]
 
-Role: Developer +
-Responsibilities: UI
+Role: Developer + Schedule and Tracking +
+Responsibilities: Storage + User Stories
+
+'''
+
+=== Khaw Yew Onn
+image::khawyewonn.png[width="150", align="left"]
+{empty}[http://github.com/khawyewonn[github]]
+
+Role: Developer + Scheduling and Tracking (Main) +
+Responsibilities: Logic + Glossary
 
 '''
