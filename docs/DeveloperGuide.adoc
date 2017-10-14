@@ -427,8 +427,8 @@ The case for a list command:
 
 1. A user executes a `list` command with sort arguments.
 2. The application checks for invalid sort arguments.
-4. The application model creates a comparator using the sort arguments, in order.
-5. The application displays the results in the specified sort order.
+3. The application model creates a comparator using the sort arguments, in order.
+4. The application displays the results in the specified sort order.
 
 The case for a find command:
 
