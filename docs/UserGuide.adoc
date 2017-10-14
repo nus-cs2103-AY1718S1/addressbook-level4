@@ -15,7 +15,6 @@ endif::[]
 By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
----
 === Purpose
 *The user guide contains all essential information to make full use of the address book. This guide includes the description of the application's system function, abilities and step-by-step procedures to be able to use the address book effectively.*
 
@@ -23,7 +22,6 @@ By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 Death Note address book allows you to store the name, phone number, email, address, website and allows you to tag and remark the people in your address book.
 
 == Quick Start
----
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -48,7 +46,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
----
 ====
 *Command Format*
 
