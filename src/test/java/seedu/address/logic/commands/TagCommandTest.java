@@ -1,12 +1,15 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.HashSet;
@@ -113,6 +116,38 @@ public class TagCommandTest {
         TagCommand tagCommand = prepareCommand(indices, tags);
 
         assertCommandFailure(tagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        indices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        tags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        final TagCommand standardCommand = new TagCommand(indices, tags);
+
+        //same values -> returns true
+        Index[] copyIndices = new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON};
+        Set<Tag> copyTags = SampleDataUtil.getTagSet(VALID_TAG_FRIEND);
+        TagCommand commandWithSameValue = new TagCommand(copyIndices, copyTags);
+        assertTrue(standardCommand.equals(commandWithSameValue));
+
+        //same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        //null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        //differed types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        //different index -> returns false
+        Index[] differentIndex = new Index[]{INDEX_FIRST_PERSON, INDEX_THIRD_PERSON};
+        TagCommand commandWithDifferentIndex = new TagCommand(differentIndex, tags);
+        assertFalse(standardCommand.equals(commandWithDifferentIndex));
+
+        //different tag -> returns false
+        Set<Tag> differentTag = SampleDataUtil.getTagSet(VALID_TAG_HUSBAND);
+        TagCommand commandWithDifferentTag = new TagCommand(indices, differentTag);
+        assertFalse(standardCommand.equals(commandWithDifferentTag));
     }
 
     /**

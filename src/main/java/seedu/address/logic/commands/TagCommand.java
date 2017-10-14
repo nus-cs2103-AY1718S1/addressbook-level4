@@ -90,8 +90,22 @@ public class TagCommand extends UndoableCommand {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TagCommand // instanceof handles nulls
-                && newTags.equals(((TagCommand) other).newTags));
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TagCommand)) {
+            return false;
+        }
+
+        //state check
+        for (int i = 0; i < indices.length; i++) {
+            if (!indices[i].equals(((TagCommand) other).indices[i])) {
+                return false;
+            }
+        }
+        return newTags.toString().equals(((TagCommand) other).newTags.toString());
     }
 }
