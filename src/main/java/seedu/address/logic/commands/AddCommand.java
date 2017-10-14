@@ -27,8 +27,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_MODULE_CODE + "MA1101R "
             + PREFIX_CLASS_TYPE + "LEC "
             + PREFIX_VENUE + "LT27 "
-            + PREFIX_GROUP + "SL1 "
-            + PREFIX_TIME_SLOT + "FRI[1400-1600]"
+            + PREFIX_GROUP + "1 "
+            + PREFIX_TIME_SLOT + "FRI[1400-1600] "
             + PREFIX_LECTURER + "Ma Siu Lun";
 
     public static final String MESSAGE_SUCCESS = "New lesson added: %1$s";

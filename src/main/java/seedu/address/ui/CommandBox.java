@@ -187,6 +187,7 @@ public class CommandBox extends UiPart<Region> {
             checkBox.setGraphic(cross);
         }
 
+
         for (int i = 0; i < inputArray.length; i++) {
             String text = inputArray[i];
 

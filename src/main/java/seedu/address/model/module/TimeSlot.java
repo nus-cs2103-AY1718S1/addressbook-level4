@@ -4,10 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import java.text.DateFormatSymbols;
-
-
-
 /**
  * Represents a Lesson time slot in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidTimeSLot(String)}
@@ -19,7 +15,7 @@ public class TimeSlot {
                     + " [4 digits 24-hour clock format "
                     + " - "
                     + " 4 digits 24-hour clock format]";
-    public static final String TIMESLOT_VALIDATION_REGEX = "[a-zA-Z]{3}\\\\[[\\\\d]{4}-[\\\\d]{4}]";
+    public static final String TIMESLOT_VALIDATION_REGEX = "[a-zA-Z]{3}\\[[\\d]{4}-[\\d]{4}]";
 
     public final String value;
 
@@ -31,9 +27,9 @@ public class TimeSlot {
     public TimeSlot(String timeSlot) throws IllegalValueException {
         requireNonNull(timeSlot);
         String trimmedTimeSlot = timeSlot.trim();
-//        if (!isValidTimeSLot(trimmedTimeSlot)) {
-//            throw new IllegalValueException(MESSAGE_TIMESLOT_CONSTRAINTS);
-//        }
+        if (!isValidTimeSLot(trimmedTimeSlot)) {
+            throw new IllegalValueException(MESSAGE_TIMESLOT_CONSTRAINTS);
+        }
 
         this.value = trimmedTimeSlot;
     }
@@ -59,10 +55,10 @@ public class TimeSlot {
     }
 
     private static boolean weekValid(String weekStr) {
-        String[] namesOfDays = DateFormatSymbols.getInstance().getShortWeekdays();
-        for (int i = 0; i < namesOfDays.length; i++) {
-            System.out.println(namesOfDays[i]);
-            if (weekStr.equalsIgnoreCase(namesOfDays[i])) {
+        String[] capitalDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI",
+                "SAT" };
+        for (int i = 0; i < capitalDays.length; i++) {
+            if (weekStr.equalsIgnoreCase(capitalDays[i])) {
                 return true;
             }
         }

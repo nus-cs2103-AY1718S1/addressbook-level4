@@ -15,7 +15,7 @@ public class Code {
     /*
      * The valid code should be 2 letters, 4 digits and followed by 1 or 0 letter.
      */
-    public static final String CODE_VALIDATION_REGEX = "[a-zA-Z]{2}\\\\d{4}[a-zA-Z]?";
+    public static final String CODE_VALIDATION_REGEX = "[a-zA-Z]{2}\\d{4}[a-zA-Z]?";
 
     public final String fullCodeName;
 
@@ -27,9 +27,9 @@ public class Code {
     public Code(String code) throws IllegalValueException {
         requireNonNull(code);
         String trimmedCode = code.trim();
-//        if (!isValidCode(trimmedCode)) {
-//            throw new IllegalValueException(MESSAGE_CODE_CONSTRAINTS);
-//        }
+        if (!isValidCode(trimmedCode)) {
+            throw new IllegalValueException(MESSAGE_CODE_CONSTRAINTS);
+        }
         this.fullCodeName = trimmedCode;
     }
 

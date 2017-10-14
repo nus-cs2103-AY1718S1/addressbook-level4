@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Lecturer {
 
     public static final String MESSAGE_LECTURER_CONSTRAINTS = "Lecturer names should be alphabetic";
-    public static final String LECTURER_VALIDATION_REGEX = "[a-zA-X]*";
+    public static final String LECTURER_VALIDATION_REGEX = "[^\\s].*";
 
     public final String lecturerName;
 

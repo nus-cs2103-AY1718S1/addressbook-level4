@@ -29,9 +29,9 @@ public class Location {
      */
     public Location(String location) throws IllegalValueException {
         requireNonNull(location);
-//        if (!isValidLocation(location)) {
-//            throw new IllegalValueException(MESSAGE_LOCATION_CONSTRAINTS);
-//        }
+        if (!isValidLocation(location)) {
+            throw new IllegalValueException(MESSAGE_LOCATION_CONSTRAINTS);
+        }
         this.value = location;
     }
 

@@ -27,8 +27,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
 
-    public static final String MODULE_KEYWORD = "modules";
-    public static final String LOCATION_KEYWORD = "locations";
+    public static final String MODULE_KEYWORD = "module";
+    public static final String LOCATION_KEYWORD = "location";
 
     private final String parameter;
 
