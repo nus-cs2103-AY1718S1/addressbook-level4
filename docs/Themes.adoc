@@ -1,0 +1,31 @@
+= The Myth's Book - Themes List
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/se-edu/addressbook-level4
+
+By: `The Myth`      Since: `Oct 2017`      Licence: `MIT`
+
+== Themes
+
+=== Dark Theme : `switch`
+
+Format: `switch 1`
+
+image::DarkTheme.png[align="left"]
+
+=== Bright Theme : `switch`
+
+Format: `switch 2`
+
+image::BrightTheme.png[align="left"]
+
+

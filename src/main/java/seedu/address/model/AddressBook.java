@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final ArrayList<String> themes;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,9 +39,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        themes = new ArrayList<>();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        initialiseThemes();
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -157,8 +162,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Ensures that every person in the AddressBook
-     * is sorted in an alphabetical order.
+     * Initialises the Themes ArrayList
+     */
+
+    private void initialiseThemes() {
+        themes.add("DarkTheme.css");
+        themes.add("BrightTheme.css");
+    }
+
+    public ArrayList<String> getThemesList() {
+        return themes;
+    }
+
+    /** Ensures that every person in the AddressBook
+     *  is sorted in an alphabetical order.
      */
     public void sort() {
         persons.sort();

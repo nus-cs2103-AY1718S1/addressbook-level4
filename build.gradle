@@ -220,6 +220,7 @@ task deployOfflineDocs(type: Copy) {
         include 'stylesheets/*'
         include 'images/*'
         include 'UserGuide.html'
+        include 'Themes.html'
     }
 }
 
