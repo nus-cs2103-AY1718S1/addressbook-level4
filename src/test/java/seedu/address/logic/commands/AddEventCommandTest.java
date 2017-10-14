@@ -117,7 +117,6 @@ public class AddEventCommandTest {
         }
         @Override
         public void sortEventList()  {
-            fail("This method should not be called.");
         }
 
         @Override
