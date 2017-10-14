@@ -127,6 +127,31 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by tags: `findtags`
+
+Finds persons whose tags contain all of the given keywords. +
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friends` will not match `closefriends`
+* Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
+****
+
+Examples:
+
+* `findtags friends` +
+Returns any person having the tag `friends`
+* `findtags friends owesMoney` +
+Returns any person having both `friends` and `owesMoney` tags
+* `ft John` +
+Returns any person having the tag `friends`
+* `ft Betsy Tim John` +
+Returns any person having both `friends` and `owesMoney` tags
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -277,6 +302,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com c/120283`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Findtags* : `findtags KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtags computing NUS engineering`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
