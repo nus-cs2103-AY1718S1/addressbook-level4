@@ -18,20 +18,17 @@
     padding-top: 0;
 }
 
-#content #sidebar {
-    width: inherit;
+#content #navbar {
+    width: 100%;
     max-width: 60.8em;
     background-color: white;
     z-index:1;
     overflow:auto;
-}
-
-#content #sidebar {
     position:fixed !important;
     top: 0;
 }
 
-div.nav-sidebar ul {
+div.nav-headbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -40,15 +37,15 @@ div.nav-sidebar ul {
     border-bottom: solid #7a2518;
 }
 
-div.nav-sidebar li {
+div.nav-headbar li {
     float: left;
 }
 
-div.nav-sidebar li p {
+div.nav-headbar li p {
     margin: 0;
 }
 
-div.nav-sidebar li a {
+div.nav-headbar li a {
     -webkit-transition-duration: 0.5s; /* Safari */
     transition-duration: 0.5s;
     padding: 10px 10px;
@@ -60,7 +57,7 @@ div.nav-sidebar li a {
     font-style: normal;
 }
 
-div.nav-sidebar li a:hover {
+div.nav-headbar li a:hover {
     -webkit-transition-duration: 0.5s; /* Safari */
     transition-duration: 0.5s;
     color: white;
