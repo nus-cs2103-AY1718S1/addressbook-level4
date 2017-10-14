@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import seedu.address.commons.util.FxViewUtil;
  */
 public class HelpWindow extends UiPart<Region> {
 
-    public static final String USERGUIDE_FILE_PATH = "/docs/UserGuide.html";
+    public static final String USERGUIDE_FILE_PATH = "/docs/UserGuide.adoc";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String ICON = "/images/help_icon.png";
