@@ -6,11 +6,10 @@
 :Developer Guide: DeveloperGuide.html[Developer Guide]
 :About Us: AboutUs.html[About]
 :Contact Us: ContactUs.html[Contact]
-:stylesDir: stylesheets
 
-// Create the menu as an inline list, only if it's not on github main area
+// Create the menu as an inline list, only if it's to be displayed in a browser
 ifndef::env-github[]
-[.nav-sidebar#sidebar]
+[.nav-headbar#navbar]
 - link:{home}
 - link:{UserGuide}
 - link:{DeveloperGuide}
