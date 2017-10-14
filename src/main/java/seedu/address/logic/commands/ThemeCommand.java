@@ -32,4 +32,16 @@ public class ThemeCommand extends UndoableCommand {
         
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && theme.equals(((ThemeCommand) other).theme));
+    }
+
+    @Override
+    public String toString() {
+        return theme;
+    }
 }
