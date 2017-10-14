@@ -25,7 +25,9 @@ public class DeleteMeetingCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public DeleteMeetingCommand(Index targetIndex) { this.targetIndex = targetIndex; }
+    public DeleteMeetingCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
 
 
     @Override
