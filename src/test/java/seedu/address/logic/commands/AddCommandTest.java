@@ -20,9 +20,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-//import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -123,6 +123,11 @@ public class AddCommandTest {
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteMeeting(ReadOnlyMeeting target) throws MeetingNotFoundException {
             fail("This method should not be called.");
         }
 

@@ -5,12 +5,8 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-/**import seedu.address.model.person.exceptions.MeetingNotFoundException;
 
 /**
  * Deletes a meeting in the address book
@@ -29,7 +25,9 @@ public class DeleteMeetingCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public DeleteMeetingCommand(Index targetIndex) { this.targetIndex = targetIndex; }
+    public DeleteMeetingCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
 
 
     @Override

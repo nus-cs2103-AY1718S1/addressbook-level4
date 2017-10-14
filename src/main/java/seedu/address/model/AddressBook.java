@@ -204,6 +204,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     *
+     * Removes {@code key} from this {@code AddressBook}
+     * @throws MeetingNotFoundException if the  {@code key} is not this {@code AddressBook}.
+     */
     public boolean removeMeeting(ReadOnlyMeeting key) throws MeetingNotFoundException {
         if (meetings.remove(key)) {
             return true;
