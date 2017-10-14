@@ -86,15 +86,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
+    public void deleteTag(Tag tagToBeDeleted) throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(tagToBeDeleted);
+
         ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
         for (ReadOnlyPerson oldPerson : persons) {
             Person newPerson = new Person(oldPerson);
             Set<Tag> newPersonTags = new HashSet<>(newPerson.getTags());
-            boolean isPersonModified = newPersonTags.remove(tag);
+            boolean personIsModified = newPersonTags.remove(tagToBeDeleted);
 
-            if (isPersonModified) {
+            if (personIsModified) {
                 newPerson.setTags(newPersonTags);
                 addressBook.updatePerson(oldPerson, newPerson);
             }
