@@ -29,7 +29,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
         String finalString = stringjoiner.toString();
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString,'[' + keyword + ']'));
     }
 
     @Override
