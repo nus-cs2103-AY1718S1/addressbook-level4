@@ -65,6 +65,20 @@ public class ModelManagerTest {
         int newPersonListSize = modelManager.getAddressBook().getPersonList().size();
         assertEquals(1, newPersonListSize - originalPersonListSize);
     }
+    @Test
+    public void sortEventList_successfullySortEvent() throws Exception {
+        AddressBook addressBook = getTypicalAddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
+        modelManager.addEvent(TypicalEvents.EVENT2);
+        modelManager.addEvent(TypicalEvents.EVENT1);
+        modelManager1.addEvent(TypicalEvents.EVENT1);
+        modelManager1.addEvent(TypicalEvents.EVENT2);
+        modelManager.sortEventList();
+        System.out.println(modelManager);
+        assertEquals(modelManager, modelManager1);
+    }
 
     @Test
     public void addEvent_successfullyAddEvent() throws Exception {
