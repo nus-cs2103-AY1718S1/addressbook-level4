@@ -221,7 +221,7 @@ public class MainWindow extends UiPart<Region> {
         // Show open file dialog
         File file = fileChooser.showOpenDialog(new Stage());
 
-        raise(new OpenAddressBookRequestEvent(file.getPath()));
+        raise(new OpenAddressBookRequestEvent(file));
     }
 
     /**
