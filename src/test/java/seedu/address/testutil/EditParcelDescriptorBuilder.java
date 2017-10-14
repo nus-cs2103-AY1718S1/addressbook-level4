@@ -29,11 +29,24 @@ public class EditParcelDescriptorBuilder {
      */
     public EditParcelDescriptorBuilder(ReadOnlyParcel parcel) {
         descriptor = new EditParcelDescriptor();
+        descriptor.setArticleNumber(parcel.getArticleNumber());
         descriptor.setName(parcel.getName());
         descriptor.setPhone(parcel.getPhone());
         descriptor.setEmail(parcel.getEmail());
         descriptor.setAddress(parcel.getAddress());
         descriptor.setTags(parcel.getTags());
+    }
+
+    /**
+     * Sets the {@code ArticleNumber} of the {@code EditParcelDescriptor} that we are building.
+     */
+    public EditParcelDescriptorBuilder withArticleNumber(String articleNumber) {
+        try {
+            ParserUtil.parseArticleNumber(Optional.of(articleNumber)).ifPresent(descriptor::setArticleNumber);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("article number is expected to be unique.");
+        }
+        return this;
     }
 
     /**
