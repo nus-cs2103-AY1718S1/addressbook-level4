@@ -41,7 +41,7 @@ public class CommandTestUtil {
     public static final String VALID_DEBT_AMY = "100002";
     public static final String VALID_DEBT_BOB = "100001";
     public static final String VALID_DEAD_LINE_AMY = "11-11-2020";
-    public static final String VALID_DEAD_LINE_BOB = "11-12-2020";
+    public static final String VALID_DEAD_LINE_BOB = "11-12-2021";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 

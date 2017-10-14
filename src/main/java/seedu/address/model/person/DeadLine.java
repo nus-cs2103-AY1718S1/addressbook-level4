@@ -2,6 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author lawwman
@@ -13,9 +17,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class DeadLine {
 
     public static final String NO_DEAD_LINE_SET = "No deadline set.";
+    public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
     public static final String MESSAGE_DEAD_LINE_CONSTRAINTS =
             "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
-    public static final String DEADLINE_VALIDATION_REGEX = "(\\d[1-12])(\\-)(\\d[1-12])(\\-)(\\d{4})";
+    public static final String DEADLINE_VALIDATION_REGEX = "([0-1][0-9](-)){2}(\\d{4})";
     public final String value;
 
     /**
@@ -39,7 +44,7 @@ public class DeadLine {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person dead line.
      */
     public static boolean isValidDeadLine(String test) {
         return test.matches(DEADLINE_VALIDATION_REGEX);
@@ -60,5 +65,14 @@ public class DeadLine {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    private String formatDate() {
+        SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
+        int year = Integer.parseInt(value.substring(6, 10));
+        int day = Integer.parseInt(value.substring(0, 2));
+        int month = Integer.parseInt(value.substring(3,5)) - 1;
+        Date date = new GregorianCalendar(year, month, day).getTime();
+        return ft.format(date);
     }
 }

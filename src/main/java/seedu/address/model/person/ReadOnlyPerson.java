@@ -43,7 +43,8 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getDebt().equals(this.getDebt())
-                && other.getDateBorrow().equals(this.getDateBorrow());
+                && other.getDateBorrow().equals(this.getDateBorrow())
+                && other.getDeadLine().equals(this.getDeadLine());
     }
 
     /**

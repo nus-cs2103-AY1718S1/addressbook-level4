@@ -105,8 +105,8 @@ public class AddCommandParserTest {
 
         // multiple dead lines - last dead line accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + DEAD_LINE_DESC_BOB
-                + DEAD_LINE_DESC_AMY + TAG_DESC_FRIEND,
+                + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + DEAD_LINE_DESC_AMY
+                + DEAD_LINE_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
@@ -128,10 +128,13 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY
                 + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY, new AddCommand(expectedPerson));
+        Person expectedPerson2 = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
+                .withDebt(VALID_DEBT_AMY).withDeadLine(DeadLine.NO_DEAD_LINE_SET).withTags().build();
         // no dead line
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY
-                + DEBT_DESC_AMY, new AddCommand(expectedPerson));
+                + DEBT_DESC_AMY, new AddCommand(expectedPerson2));
     }
 
     @Test

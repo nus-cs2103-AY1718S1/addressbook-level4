@@ -107,7 +107,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
         // AddressBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY + PREFIX_TAG.getPrefix() + "friends";
+                + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
@@ -126,7 +126,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except email -> added */
+/* Case: add a person with all fields same as another person in the address book except email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY)
                 .withDeadLine(VALID_DEAD_LINE_AMY).withTags(VALID_TAG_FRIEND).build();
@@ -142,7 +142,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except postal code -> added */
+/* Case: add a person with all fields same as another person in the address book except postal code -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_BOB).withDebt(VALID_DEBT_AMY)
                 .withDeadLine(VALID_DEAD_LINE_AMY).withTags(VALID_TAG_FRIEND).build();
@@ -150,7 +150,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + POSTAL_CODE_DESC_BOB + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except debt -> added */
+/* Case: add a person with all fields same as another person in the address book except debt -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_BOB)
                 .withDeadLine(VALID_DEAD_LINE_AMY).withTags(VALID_TAG_FRIEND).build();
