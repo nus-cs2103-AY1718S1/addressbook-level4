@@ -28,7 +28,7 @@ public class AddMeetingCommand extends UndoableCommand {
             + PREFIX_LOCATION + "LOCATION "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_DATE + "31102017 21:30 "
+            + PREFIX_DATE + "31-10-2017 21:30 "
             + PREFIX_LOCATION + "School of Computing, NUS ";
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";

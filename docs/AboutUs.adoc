@@ -17,12 +17,19 @@ Role: Member +
 Responsibilities: LOGIC
 
 '''
-
 === Ng Kheng Yi
 image::khengyi.png[width="150", align="left"]
 {empty}[http://github.com/kyngyi[github]] [<<khengyi#, portfolio>>]
 
-Role: Member +
+Role: Developer +
 Responsibilities: Model
+=======
+=== Melvin Leo
+image::melvinleo.jpg[width="150", align="left"]
+{empty}[https://github.com/Melvin-leo[github]] [<<Melvin-leo#, portfolio>>]
+
+Role: Developer +
+Responsibilities: UI
 
 '''
+

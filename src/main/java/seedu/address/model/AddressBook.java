@@ -157,7 +157,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyMeeting);
 
         Meeting editedMeeting = new Meeting(editedReadOnlyMeeting);
-//        syncMasterTagListWith(editedMeeting);
+        // syncMasterTagListWith(editedMeeting);
         // TODO: the tags master list will be updated even though the below line fails.
         meetings.setMeeting(target, editedMeeting);
     }
@@ -201,6 +201,19 @@ public class AddressBook implements ReadOnlyAddressBook {
             return true;
         } else {
             throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     *
+     * Removes {@code key} from this {@code AddressBook}
+     * @throws MeetingNotFoundException if the  {@code key} is not this {@code AddressBook}.
+     */
+    public boolean removeMeeting(ReadOnlyMeeting key) throws MeetingNotFoundException {
+        if (meetings.remove(key)) {
+            return true;
+        } else {
+            throw new MeetingNotFoundException();
         }
     }
 

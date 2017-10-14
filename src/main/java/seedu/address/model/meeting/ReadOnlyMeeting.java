@@ -1,7 +1,5 @@
 package seedu.address.model.meeting;
 
-import java.util.Date;
-
 import javafx.beans.property.ObjectProperty;
 
 /**
