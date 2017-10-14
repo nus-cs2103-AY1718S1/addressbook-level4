@@ -38,6 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
+    private final FilteredList<ReadOnlyPerson> filteredWhitelistedPersons;
     private final UserPrefs userPrefs;
 
     /**
@@ -52,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
+        filteredWhitelistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getWhitelistedPersonList());
 
         this.userPrefs = userPrefs;
     }
@@ -89,6 +91,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removeWhitelistedPerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -99,6 +107,13 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addBlacklistedPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        addressBook.addWhitelistedPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -185,6 +200,15 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
+        return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);
+    }
+
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
@@ -195,6 +219,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredBlacklistedPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredWhitelistedPersons.setPredicate(predicate);
     }
 
     @Override
@@ -213,7 +243,8 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
-                && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons);
+                && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons)
+                && filteredWhitelistedPersons.equals(other.filteredWhitelistedPersons);
     }
 
 }
