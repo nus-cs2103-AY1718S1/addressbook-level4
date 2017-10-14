@@ -309,13 +309,14 @@
     -fx-padding: 8 1 8 1;
 }
 
-.cornerTab {
-    -fx-background-color: #00bfff;
+.contactsTab {
+    -fx-background-color: #6495ed;
     -fx-background-radius: 10 0 0 0;
 }
 
-.tab {
+.eventsTab {
     -fx-background-color: #6495ed;
+    -fx-background-radius: 0 10 0 0;
 }
 
 .commandBox {
