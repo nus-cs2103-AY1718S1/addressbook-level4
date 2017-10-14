@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.lecturer.UniqueTagList;
 
 public class UniqueTagListTest {
     @Rule

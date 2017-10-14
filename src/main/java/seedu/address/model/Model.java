@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
 
 
 /**
@@ -18,16 +16,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyLesson> PREDICATE_SHOW_ALL_LESSONS = unused -> true;
 
-    /** Get a hash set of all the distinct Addresses */
-    HashSet<Address> getUniqueAdPersonSet();
-
-    /** Get a hash set of all the distinct Emails */
-    HashSet<Email> getUniqueEmailPersonSet();
-
-    /** Get a hash set of all the distinct Phones */
-    HashSet<Phone> getUniquePhonePersonSet();
+    /** Get a hash set of all the distinct locations */
+    HashSet<Location> getUniqueLocationSet();
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -35,33 +27,33 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Deletes the given person. */
-    void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    /** Deletes the given lesson. */
+    void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException;
 
-    /** Deletes the given list of person. */
-    void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException;
+    /** Deletes the given list of lessons. */
+    void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException;
 
-    /** Adds the given person */
-    void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    /** Adds the given lesson */
+    void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given lesson {@code target} with {@code editedLesson}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to
+     *      another existing lesson in the list.
+     * @throws LessonNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+            throws DuplicateLessonException, LessonNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered lesson list */
+    ObservableList<ReadOnlyLesson> getFilteredLessonList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered lesson list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate);
 
     /**
      * handle different ListingUnit after redo and undo

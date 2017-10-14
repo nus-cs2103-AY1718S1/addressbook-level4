@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.lecturer;
 
 import static java.util.Objects.requireNonNull;
 

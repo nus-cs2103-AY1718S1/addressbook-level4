@@ -10,13 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.module.Module;
-import seedu.address.model.module.ReadOnlyModule;
-import seedu.address.model.module.UniqueModuleList;
-import seedu.address.model.module.exceptions.DuplicateModuleException;
-import seedu.address.model.module.exceptions.ModuleNotFoundException;
-import seedu.address.model.tag.Lecturer;
-import seedu.address.model.tag.UniqueLecturerList;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.UniqueLessonList;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
 
 /**
  * Wraps all data at the address-book level
@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueLecturerList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniqueModuleList modules;
+    private final UniqueLessonList lessons;
     private final UniqueLecturerList lecturers;
 
     /*
@@ -35,7 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        modules = new UniqueModuleList();
+        lessons = new UniqueLessonList();
         lecturers = new UniqueLecturerList();
     }
 
@@ -51,8 +51,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setModules(List<? extends ReadOnlyModule> modules) throws DuplicateModuleException {
-        this.modules.setModules(modules);
+    public void setLessons(List<? extends ReadOnlyLesson> lessons) throws DuplicateLessonException {
+        this.lessons.setLessons(lessons);
     }
 
     public void setLecturers(Set<Lecturer> lecturers) {
@@ -65,101 +65,101 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         try {
-            setModules(newData.getModuleList());
-        } catch (DuplicateModuleException e) {
-            assert false : "AddressBooks should not have duplicate modules";
+            setLessons(newData.getLessonList());
+        } catch (DuplicateLessonException e) {
+            assert false : "AddressBooks should not have duplicate lessons";
         }
 
         setLecturers(new HashSet<>(newData.getLecturerList()));
-        syncMasterLecturerListWith(modules);
+        syncMasterLecturerListWith(lessons);
     }
 
-    //// module-level operations
+    //// lesson-level operations
 
     /**
-     * Adds a module to the address book.
-     * Also checks the new module's lecturers and updates {@link #lecturers} with any new lecturers found,
-     * and updates the Lecturer objects in the module to point to those in {@link #lecturers}.
+     * Adds a lesson to the address book.
+     * Also checks the new lesson's lecturers and updates {@link #lecturers} with any new lecturers found,
+     * and updates the lecturer objects in the lesson to point to those in {@link #lecturers}.
      *
-     * @throws DuplicateModuleException if an equivalent module already exists.
+     * @throws DuplicateLessonException if an equivalent lesson already exists.
      */
-    public void addModule(ReadOnlyModule m) throws DuplicateModuleException {
-        Module newModule = new Module(m);
+    public void addLesson(ReadOnlyLesson m) throws DuplicateLessonException {
+        Lesson newLesson = new Lesson(m);
         try {
-            modules.add(newModule);
-        } catch (DuplicateModuleException e) {
+            lessons.add(newLesson);
+        } catch (DuplicateLessonException e) {
             throw e;
         }
 
-        syncMasterLecturerListWith(newModule);
+        syncMasterLecturerListWith(newLesson);
     }
 
     /**
-     * Replaces the given module {@code target} in the list with {@code editedReadOnlyModule}.
-     * {@code AddressBook}'s lecturer list will be updated with the lecturers of {@code editedReadOnlyModule}.
+     * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}.
+     * {@code AddressBook}'s lecturers list will be updated with the lecturers of {@code editedReadOnlyLesson}.
      *
-     * @throws DuplicateModuleException if updating the module's details causes the module to be equivalent to
-     *      another existing module in the list.
-     * @throws ModuleNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to
+     *      another existing lesson in the list.
+     * @throws LessonNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncMasterLecturerListWith(Module)
+     * @see #syncMasterLecturerListWith(Lesson)
      */
-    public void updateModule(ReadOnlyModule target, ReadOnlyModule editedReadOnlyModule)
-            throws DuplicateModuleException, ModuleNotFoundException {
-        requireNonNull(editedReadOnlyModule);
+    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedReadOnlyLesson)
+            throws DuplicateLessonException, LessonNotFoundException {
+        requireNonNull(editedReadOnlyLesson);
 
-        Module editedModule = new Module(editedReadOnlyModule);
+        Lesson editedLesson = new Lesson(editedReadOnlyLesson);
 
         try {
-            modules.setModule(target, editedModule);
-        } catch (DuplicateModuleException e) {
+            lessons.setLesson(target, editedLesson);
+        } catch (DuplicateLessonException e) {
             throw e;
-        } catch (ModuleNotFoundException e) {
+        } catch (LessonNotFoundException e) {
             throw e;
         }
 
-        syncMasterLecturerListWith(editedModule);
+        syncMasterLecturerListWith(editedLesson);
     }
 
     /**
-     * Ensures that every lecturer in this module:
-     *  - exists in the master list {@link #modules}
+     * Ensures that every lecturer in this lesson:
+     *  - exists in the master list {@link #lessons}
      *  - points to a lecturer object in the master list
      */
-    private void syncMasterLecturerListWith(Module module) {
-        final UniqueLecturerList moduleLecturers = new UniqueLecturerList(module.getLecturers());
-        lecturers.mergeFrom(moduleLecturers);
+    private void syncMasterLecturerListWith(Lesson lesson) {
+        final UniqueLecturerList lessonLecturers = new UniqueLecturerList(lesson.getLecturers());
+        lecturers.mergeFrom(lessonLecturers);
 
         // Create map with values = tag object references in the master list
-        // used for checking module lecturers references
+        // used for checking lesson lecturers references
         final Map<Lecturer, Lecturer> masterTagObjects = new HashMap<>();
         lecturers.forEach(lecturer -> masterTagObjects.put(lecturer, lecturer));
 
-        // Rebuild the list of module lecturers to point to the relevant lecturers in the master lecturer list.
+        // Rebuild the list of lesson lecturers to point to the relevant lecturers in the master lecturer list.
         final Set<Lecturer> correctTagReferences = new HashSet<>();
-        moduleLecturers.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        moduleLecturers.setLectuers(correctTagReferences);
+        lessonLecturers.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        lessonLecturers.setLectuers(correctTagReferences);
     }
 
     /**
-     * Ensures that every lecturer in these modules:
-     *  - exists in the master list {@link #modules}
+     * Ensures that every lecturer in these lessons:
+     *  - exists in the master list {@link #lessons}
      *  - points to a Lecturer object in the master list
-     *  @see #syncMasterLecturerListWith(Module)
+     *  @see #syncMasterLecturerListWith(Lesson)
      */
-    private void syncMasterLecturerListWith(UniqueModuleList modules) {
-        modules.forEach(this::syncMasterLecturerListWith);
+    private void syncMasterLecturerListWith(UniqueLessonList lessons) {
+        lessons.forEach(this::syncMasterLecturerListWith);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * @throws ModuleNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws LessonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removeModule(ReadOnlyModule key) throws ModuleNotFoundException {
-        if (modules.remove(key)) {
+    public boolean removeLesson(ReadOnlyLesson key) throws LessonNotFoundException {
+        if (lessons.remove(key)) {
             return true;
         } else {
-            throw new ModuleNotFoundException();
+            throw new LessonNotFoundException();
         }
     }
 
@@ -173,13 +173,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return modules.asObservableList().size() + " modules, " + modules.asObservableList().size() +  " lecturers";
+        return lessons.asObservableList().size() + " lessons, " + lecturers.asObservableList().size() +  " lecturers";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<ReadOnlyModule> getModuleList() {
-        return modules.asObservableList();
+    public ObservableList<ReadOnlyLesson> getLessonList() {
+        return lessons.asObservableList();
     }
 
     @Override
@@ -191,13 +191,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.modules.equals(((AddressBook) other).modules)
+                && this.lessons.equals(((AddressBook) other).lessons)
                 && this.lecturers.equalsOrderInsensitive(((AddressBook) other).lecturers));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(modules, lecturers);
+        return Objects.hash(lessons, lecturers);
     }
 }
