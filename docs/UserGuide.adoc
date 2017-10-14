@@ -192,8 +192,8 @@ Examples:
 `sort` +
 Sorts the list in alphabetical order.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`st` +
+Sorts the list in alphabetical order.
 
 === Listing entered commands : `history`
 
