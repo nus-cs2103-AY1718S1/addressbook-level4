@@ -39,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -65,6 +66,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void favoritePerson(ReadOnlyPerson target) throws
+            PersonNotFoundException {
+        addressBook.favoritePerson(target);
         indicateAddressBookChanged();
     }
 

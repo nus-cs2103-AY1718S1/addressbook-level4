@@ -34,17 +34,17 @@ public class ListAlphabetCommandTest {
         NameStartsWithAlphabetPredicate secondPredicate =
                 new NameStartsWithAlphabetPredicate("s");
 
-        ListAlphabetCommand ListFirstCommand = new ListAlphabetCommand(firstPredicate);
-        ListAlphabetCommand ListSecondCommand = new ListAlphabetCommand(secondPredicate);
+        ListAlphabetCommand listFirstCommand = new ListAlphabetCommand(firstPredicate);
+        ListAlphabetCommand listSecondCommand = new ListAlphabetCommand(secondPredicate);
 
-        assertTrue(ListFirstCommand.equals(ListFirstCommand));
+        assertTrue(listFirstCommand.equals(listFirstCommand));
 
-        ListAlphabetCommand ListFirstCommandCopy = new ListAlphabetCommand(firstPredicate);
-        assertTrue(ListFirstCommand.equals(ListFirstCommandCopy));
+        ListAlphabetCommand listFirstCommandCopy = new ListAlphabetCommand(firstPredicate);
+        assertTrue(listFirstCommand.equals(listFirstCommandCopy));
 
-        assertFalse(ListFirstCommand.equals(1));
-        assertFalse(ListFirstCommand.equals(null));
-        assertFalse(ListFirstCommand.equals(ListSecondCommand));
+        assertFalse(listFirstCommand.equals(1));
+        assertFalse(listFirstCommand.equals(null));
+        assertFalse(listFirstCommand.equals(listSecondCommand));
     }
 
     @Test

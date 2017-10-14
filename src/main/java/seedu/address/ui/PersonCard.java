@@ -5,6 +5,8 @@ import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -16,6 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String ICON = "/images/heart.png";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -42,6 +45,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label remark;
     @FXML
+    private Label favorite;
+    @FXML
     private FlowPane tags;
 
 
@@ -50,6 +55,7 @@ public class PersonCard extends UiPart<Region> {
         initLabelColor();
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initFavorite(person);
         initTags(person);
         bindListeners(person);
     }
@@ -64,6 +70,13 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        person.favoriteProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != oldValue) {
+                favorite.setVisible(!favorite.isVisible());
+            } else {
+                favorite.setVisible(false);
+            }
+        });
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -93,6 +106,17 @@ public class PersonCard extends UiPart<Region> {
             label.setStyle("-fx-background-color: " + color);
             tags.getChildren().add(label);
         });
+    }
+
+    /**
+     * Instantiate favorite label
+     */
+    private void initFavorite(ReadOnlyPerson person) {
+        ImageView image = new ImageView(new Image(getClass().getResourceAsStream(ICON)));
+        image.setFitHeight(25);
+        image.setFitWidth(25);
+        favorite.setGraphic(image);
+        favorite.setVisible(person.getFavorite().getFavorite());
     }
 
 

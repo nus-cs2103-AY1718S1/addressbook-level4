@@ -141,6 +141,27 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Favoriting a person : `favorite`
+
+Favorites the specified person from the address book so they will appear on top of the contact list. +
+Format: `favorite INDEX`
+
+****
+* Favorites the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`favorite 3` +
+Favorite the 3rd person in the address book.
+* `find Betsy` +
+`favorite 1` +
+Favorite the 1st person in the results of the `find` command.
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -270,5 +291,7 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Remark*: `remark INDEX [r/REMARK]`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Favorite*: `favorite INDEX`

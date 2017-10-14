@@ -156,6 +156,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Favorites {@code key} in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public void favoritePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        requireNonNull(key);
+        persons.favorite(key);
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

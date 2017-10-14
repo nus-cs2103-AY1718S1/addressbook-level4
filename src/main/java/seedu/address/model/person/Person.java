@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Favorite> favorite;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -37,8 +38,10 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.favorite = new SimpleObjectProperty<>(new Favorite());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+
     }
 
     /**
@@ -47,6 +50,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
                 source.getTags());
+        this.setFavorite(source.getFavorite());
     }
 
     public void setName(Name name) {
@@ -118,6 +122,21 @@ public class Person implements ReadOnlyPerson {
     public Remark getRemark() {
         return remark.get();
     }
+
+    public void setFavorite(Favorite favorite) {
+        this.favorite.set(requireNonNull(favorite));
+    }
+
+    @Override
+    public ObjectProperty<Favorite> favoriteProperty() {
+        return favorite;
+    }
+
+    @Override
+    public Favorite getFavorite() {
+        return favorite.get();
+    }
+
 
 
     /**

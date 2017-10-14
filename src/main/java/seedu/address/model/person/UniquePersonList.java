@@ -27,6 +27,7 @@ public class UniquePersonList implements Iterable<Person> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
+
     /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
@@ -46,6 +47,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+        sort();
     }
 
     /**
@@ -68,6 +70,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, new Person(editedPerson));
+        sort();
     }
 
     /**
@@ -81,11 +84,33 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
+        sort();
         return personFoundAndDeleted;
+    }
+
+    /**
+     * Favorites the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public void favorite(ReadOnlyPerson toFavorite) throws PersonNotFoundException {
+        requireNonNull(toFavorite);
+        int index = internalList.indexOf(toFavorite);
+
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        Person newPerson = new Person(toFavorite);
+        newPerson.getFavorite().toggleFavorite();
+
+        internalList.set(index, newPerson);
+        sort();
     }
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
+        sort();
     }
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
@@ -118,5 +143,19 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    //@@author: giang
+    /**
+     * sort the list in default sorting order: Favorite > non-Favorite; then alphabetical order
+     */
+    private void sort() {
+        internalList.sort((ReadOnlyPerson p1, ReadOnlyPerson p2) -> {
+            if (!p1.getFavorite().equals(p2.getFavorite())) {
+                return p2.getFavorite().getValue() - p1.getFavorite().getValue();
+            } else {
+                return p1.getName().fullName.compareTo(p2.getName().fullName);
+            }
+        });
     }
 }
