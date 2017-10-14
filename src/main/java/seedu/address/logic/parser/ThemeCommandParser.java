@@ -17,13 +17,15 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override
-    public ThemeCommand parse(String userInput) throws ParseException {
+    public ThemeCommand parse(String args) throws ParseException {
         try {
-            if (!userInput.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
-                    || userInput.equalsIgnoreCase(ThemeCommand.DARK_THEME)) {
+            String trimmedArgs = args.trim();
+            if (trimmedArgs.isEmpty()
+                    || (!trimmedArgs.equalsIgnoreCase(ThemeCommand.LIGHT_THEME)
+                    && !trimmedArgs.equalsIgnoreCase(ThemeCommand.DARK_THEME))) {
                 throw new IllegalValueException("");
             } else {
-                return new ThemeCommand(userInput);
+                return new ThemeCommand(trimmedArgs);
             }
 
         } catch (IllegalValueException ive) {
