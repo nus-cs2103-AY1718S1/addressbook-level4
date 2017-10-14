@@ -17,15 +17,15 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.module.ReadOnlyLesson;
 
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+public class LessonCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "LessonListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -35,45 +35,47 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final ReadOnlyPerson person;
+    public final ReadOnlyLesson lesson;
 
     @FXML
     private HBox cardPane;
     @FXML
-    private Label name;
+    private Label code;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label classType;
     @FXML
-    private Label address;
+    private Label group;
     @FXML
-    private Label email;
+    private Label location;
     @FXML
-    private FlowPane tags;
+    private Label timeSlot;
+    @FXML
+    private FlowPane lecturers;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public LessonCard(ReadOnlyLesson lesson, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.lesson = lesson;
         id.setText(displayedIndex + ". ");
-        initTags(person);
-        bindListeners(person);
+        initLecturers(lesson);
+        bindListeners(lesson);
         registerAsAnEventHandler(this);
         ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
         FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
         setFontSizeUnit(currFontSize);
 
         switch (currentUnit) {
-        case ADDRESS:
-            switchToAddressCard();
+        case MODULE:
+            switchToModuleCard();
             break;
 
-        case EMAIL:
-            switchToEmailCard();
+        case LOCATION:
+            switchToLocationCard();
             break;
 
-        case PHONE:
-            switchToPhoneCard();
+        case LESSON:
+            switchToLessonCard();
             break;
 
         default:
@@ -84,54 +86,61 @@ public class PersonCard extends UiPart<Region> {
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    private void bindListeners(ReadOnlyLesson lesson) {
+        code.textProperty().bind(Bindings.convert(lesson.codeProperty()));
+        classType.textProperty().bind(Bindings.convert(lesson.classTypeProperty()));
+        group.textProperty().bind(Bindings.convert(lesson.groupProperty()));
+        timeSlot.textProperty().bind(Bindings.convert(lesson.timeSlotProperty()));
+        location.textProperty().bind(Bindings.convert(lesson.locationProperty()));
+        lesson.lecturersProperty().addListener((observable, oldValue, newValue) -> {
+            lecturers.getChildren().clear();
+            lesson.getLecturers().forEach(lecturer -> lecturers.getChildren()
+                    .add(new Label(lecturer.lecturerName)));
         });
     }
 
 
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    private void initLecturers(ReadOnlyLesson lesson) {
+        lesson.getLecturers().forEach(lecturer -> lecturers.getChildren().add(new Label(lecturer.lecturerName)));
     }
 
     /**
      * change the card state to hide irrelevant information and only show address
      */
-    private void switchToAddressCard() {
-        name.setVisible(false);
-        phone.setVisible(false);
-        email.setVisible(false);
-        tags.setVisible(false);
-        address.setStyle("-fx-font: 16 arial;");
+    private void switchToModuleCard() {
+        code.setVisible(true);
+        location.setVisible(false);
+        group.setVisible(false);
+        timeSlot.setVisible(false);
+        classType.setVisible(false);
+        lecturers.setVisible(false);
+        code.setStyle("-fx-font: 16 arial;");
     }
 
     /**
      * change the card state to hide irrelevant information and only show phone
      */
-    private void switchToPhoneCard() {
-        name.setVisible(false);
-        address.setVisible(false);
-        email.setVisible(false);
-        tags.setVisible(false);
-        phone.setStyle("-fx-font: 16 arial;");
+    private void switchToLocationCard() {
+        code.setVisible(false);
+        location.setVisible(true);
+        group.setVisible(false);
+        timeSlot.setVisible(false);
+        classType.setVisible(false);
+        lecturers.setVisible(false);
+        location.setStyle("-fx-font: 16 arial;");
 
     }
 
     /**
-     * change the card state to hide irrelevant information and only show email
+     * change the card state to hide irrelevant information and only show lesson
      */
-    private void switchToEmailCard() {
-        name.setVisible(false);
-        phone.setVisible(false);
-        address.setVisible(false);
-        tags.setVisible(false);
-        email.setStyle("-fx-font: 16 arial;");
+    private void switchToLessonCard() {
+        code.setVisible(true);
+        location.setVisible(true);
+        group.setVisible(true);
+        timeSlot.setVisible(true);
+        classType.setVisible(true);
+        lecturers.setVisible(true);
     }
 
     @Override
@@ -142,14 +151,14 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof LessonCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        LessonCard card = (LessonCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+                && lesson.equals(card.lesson);
     }
 
     @Subscribe
@@ -185,12 +194,13 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private void setFontSizeHelper(String fontSize) {
-        name.setStyle("-fx-font-size: " + fontSize + ";");
+        code.setStyle("-fx-font-size: " + fontSize + ";");
         id.setStyle("-fx-font-size: " + fontSize + ";");
-        phone.setStyle("-fx-font-size: " + fontSize + ";");
-        address.setStyle("-fx-font-size: " + fontSize + ";");
-        email.setStyle("-fx-font-size: " + fontSize + ";");
-        tags.setStyle("-fx-font-size: " + fontSize + ";");
+        location.setStyle("-fx-font-size: " + fontSize + ";");
+        classType.setStyle("-fx-font-size: " + fontSize + ";");
+        timeSlot.setStyle("-fx-font-size: " + fontSize + ";");
+        group.setStyle("-fx-font-size: " + fontSize + ";");
+        lecturers.setStyle("-fx-font-size: " + fontSize + ";");
     }
 
     private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
