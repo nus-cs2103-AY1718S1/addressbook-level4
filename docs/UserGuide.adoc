@@ -129,23 +129,30 @@ Edits all the persons with the third address shown in the address list to be `Cl
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose names, address, email, phone number contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* All attributes names, address, email and phone number are searched.
+* Attributes name and address only full words will be matched e.g. `Han` will not match `Hans`
+* Attributes phone number and email given part of the full word will be matched e.g. `999` will match `91059999`
+* If list command with a specific attribute was called prior, only the word or sentences of that specific attribute will
+be consider for the find, or else it will take the words or sentences of all attributes for find,
+Please refer below for example.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `list` +
+`find 999` +
+Return any name or address that contain the full word `999` and return any phone number or email that contain `999` word
+in their email and phone number
+* `list email` +
+`find tianlan` +
+Returns any email contain `tianlan` word in the emails
 
 === Locating persons by name: `sort`
 
