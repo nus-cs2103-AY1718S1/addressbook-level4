@@ -156,26 +156,25 @@ Returns any email contain `tianlan` word in the emails
 
 === Locating persons by name: `sort`
 
- Sort the existing list. +
- Format: `sort KEYWORD`
+Sort the existing list. +
+Format: `sort KEYWORD`
 
- ****
- * The sort command will sort the list according to its current listed attribute
- * If the list was not listed in any attribute, it will be sorted by name of the person by default
- ****
+****
+* The sort command will sort the list according to its current listed attribute
+* If the list was not listed in any attribute, it will be sorted by name of the person by default
+****
 
- Examples:
+Examples:
 
- * `list address` +
- Returns a list of addresses +
- `sort` +
- Return a list of addresses sorted lexicographically
+* `list address` +
+Returns a list of addresses +
+`sort` +
+Return a list of addresses sorted lexicographically
 
- * `list` +
- Returns whole list +
- `sort` +
- Return a list sorted by name lexicographically
-
+* `list` +
+Returns whole list +
+`sort` +
+Return a list sorted by name lexicographically
 
 === Deleting a person : `delete`
 
