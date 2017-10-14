@@ -9,7 +9,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.module.ReadOnlyLesson;
 
 
-
 /**
  * API of the Logic component
  */
