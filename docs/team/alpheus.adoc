@@ -44,7 +44,7 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=test]
+include::../UserGuide.adoc[tag=find]
 
 #End of Extract#
 
@@ -52,8 +52,9 @@ include::../UserGuide.adoc[tag=test]
 
 ==== Justification
 
-Users will want to view the list of contacts sorted for them based on their name, phone, email or address.
-Some users find the contact they want by scrolling through the list as opposed to typing and this will aid them.
+Users may want to search for the contact not just by their names, but also by their phone number, email
+, address and also their tags as well. This enhancement gives users the choice to decide how they would want
+to search for the contact they want.
 
 ==== Implementation
 
