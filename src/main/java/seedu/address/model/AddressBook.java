@@ -194,9 +194,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
-    /**
-    * check if tag is removed and reset addressbook and returns true if it is
-     */
     public boolean removeTag(String str) {
         if (persons.removeTag(str)) {
             tags.removeTag(str);
@@ -205,5 +202,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             return false;
         }
+
+    public void sort() {
+        persons.sort();
+    }
+
+    public void removeTag(String str) {
+        persons.removeTag(str);
     }
 }
