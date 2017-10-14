@@ -1,0 +1,2 @@
+include::UserGuide.adoc[tag=beforeNavbar]
+include::UserGuide.adoc[tag=afterNavbar]
