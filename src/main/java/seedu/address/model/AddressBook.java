@@ -207,8 +207,4 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sort() {
         persons.sort();
     }
-
-    public void removeTag(String str) {
-        persons.removeTag(str);
-    }
 }
