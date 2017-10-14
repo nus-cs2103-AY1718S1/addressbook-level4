@@ -113,6 +113,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by the first few alphabets of the name: `pfind`
+
+Finds persons whose names begins with the given keywords. +
+Format: `pfind PARTIALNAME`
+
+****
+* The search is case sensitive.
+* Only the name is searched.
+* Both partial or full name will be matched. e.g. A or Alice will both return `Alice`
+****
+
+Examples:
+
+* `pfind Jo` +
+Returns any name starting with Jo, eg: `John`, `Joe` or `Joy`
+
+Alternatively, this command can perform by directly inputting `PARTIALNAME` into the search box right above the contact panel.
+
+image::searchbox.png[width="380"]
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -244,6 +264,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Partial Find* : `pfind PARTIALNAME` +
+e.g. `pfind Ja`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
