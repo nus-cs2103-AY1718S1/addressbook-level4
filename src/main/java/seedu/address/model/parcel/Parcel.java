@@ -18,6 +18,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Parcel implements ReadOnlyParcel {
 
+    private ObjectProperty<ArticleNumber> articleNumber;
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
@@ -44,6 +45,20 @@ public class Parcel implements ReadOnlyParcel {
     public Parcel(ReadOnlyParcel source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getTags());
+    }
+
+    public void setArticleNumber(ArticleNumber articleNumber) {
+        this.articleNumber.set(requireNonNull(articleNumber));
+    }
+
+    @Override
+    public ObjectProperty<ArticleNumber> articleNumberProperty() {
+        return articleNumber;
+    }
+
+    @Override
+    public ArticleNumber getArticleNumber() {
+        return articleNumber.get();
     }
 
     public void setName(Name name) {
