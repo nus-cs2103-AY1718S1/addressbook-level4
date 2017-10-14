@@ -204,7 +204,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public LessonListPanel getPersonListPanel() {
+    public LessonListPanel getLessonListPanel() {
         return this.lessonListPanel;
     }
 
