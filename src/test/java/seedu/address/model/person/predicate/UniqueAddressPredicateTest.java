@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
+import seedu.address.model.module.predicates.UniqueAddressPredicate;
 
 public class UniqueAddressPredicateTest {
 

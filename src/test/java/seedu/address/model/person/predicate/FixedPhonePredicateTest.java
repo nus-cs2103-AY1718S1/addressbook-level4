@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.predicates.FixedPhonePredicate;
+import seedu.address.model.module.predicates.FixedPhonePredicate;
 import seedu.address.testutil.PersonBuilder;
 
 public class FixedPhonePredicateTest {

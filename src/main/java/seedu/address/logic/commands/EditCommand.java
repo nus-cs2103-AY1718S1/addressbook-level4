@@ -27,9 +27,9 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueEmailPredicate;
-import seedu.address.model.person.predicates.UniquePhonePredicate;
+import seedu.address.model.module.predicates.UniqueAddressPredicate;
+import seedu.address.model.module.predicates.UniqueEmailPredicate;
+import seedu.address.model.module.predicates.UniquePhonePredicate;
 import seedu.address.model.lecturer.Tag;
 
 /**

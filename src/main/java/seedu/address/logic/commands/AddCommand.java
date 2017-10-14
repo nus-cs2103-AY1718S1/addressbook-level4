@@ -4,9 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.*;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.module.Module;
-import seedu.address.model.module.ReadOnlyModule;
-import seedu.address.model.module.exceptions.DuplicateModuleException;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
 
 /**
  * Adds a lesson to the address book.
@@ -21,33 +21,35 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_CLASS_TYPE + "CLASS_TYPE "
             + PREFIX_VENUE + "VENUE "
             + PREFIX_GROUP + "GROUP "
+            + PREFIX_TIME_SLOT + "TIME_SLOT "
             + PREFIX_LECTURER + "Lecturer\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MODULE_CODE + "MA1101R "
             + PREFIX_CLASS_TYPE + "LEC "
             + PREFIX_VENUE + "LT27 "
             + PREFIX_GROUP + "SL1 "
+            + PREFIX_TIME_SLOT + "FRI[1400-1600]"
             + PREFIX_LECTURER + "Ma Siu Lun";
 
     public static final String MESSAGE_SUCCESS = "New lesson added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This lesson already exists in the address book";
 
-    private final Module toAdd;
+    private final Lesson toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyModule}
      */
-    public AddCommand(ReadOnlyModule module) {
-        toAdd = new Module(module);
+    public AddCommand(ReadOnlyLesson lesson) {
+        toAdd = new Lesson(lesson);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addModule(toAdd);
+            model.addLesson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateModuleException e) {
+        } catch (DuplicateLessonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
