@@ -40,7 +40,7 @@ public class ThemesWindow extends UiPart<Region> {
     }
 
     /**
-     * Shows the help window.
+     * Shows the themes window.
      * @throws IllegalStateException
      * <ul>
      *     <li>
