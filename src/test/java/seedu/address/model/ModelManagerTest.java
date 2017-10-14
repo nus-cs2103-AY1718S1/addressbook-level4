@@ -69,7 +69,8 @@ public class ModelManagerTest {
     @Test
     public void removeTagSuccess() {
         //set up the models
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).withPerson(CARL).withPerson(DANIEL).build();
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).
+                withPerson(BENSON).withPerson(CARL).withPerson(DANIEL).build();
         UserPrefs userPrefs = new UserPrefs();
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ModelManager modelManagerCopy1 = new ModelManager(addressBook, userPrefs);
