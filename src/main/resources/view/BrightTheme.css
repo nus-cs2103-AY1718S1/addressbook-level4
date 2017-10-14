@@ -73,15 +73,22 @@
     -fx-background-color: -fx-focus-color;
 }
 
-.split-pane:horizontal .split-pane-divider {
+.split-pane:horizontal *.split-pane-divider {
     -fx-background-color: derive(white, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-padding: 0 1 0 1;
+    -fx-background-insets: 0;
+}
+.split-pane *.horizontal-grabber {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-shape: " ";
 }
 
 .split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
     -fx-background-color: derive(white, 100%);
+    -fx-divider-width: 0;
 }
 
 .list-view {
@@ -96,7 +103,7 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #AAAAAA;
+    -fx-background-color: #eeeeee;
 }
 
 .list-cell:filled:odd {
@@ -277,7 +284,7 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(white, 20%);
+    -fx-background-color: derive(#f2f3f4, 20%);
 }
 
 .scroll-bar .thumb {
@@ -300,6 +307,21 @@
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
     -fx-padding: 8 1 8 1;
+}
+
+.cornerTab {
+    -fx-background-color: #00bfff;
+    -fx-background-radius: 10 0 0 0;
+}
+
+.tab {
+    -fx-background-color: #6495ed;
+}
+
+.commandBox {
+    -fx-border-color: #1e90ff;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-color: white;
 }
 
 #cardPane {
