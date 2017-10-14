@@ -1,4 +1,4 @@
-// tag::beforeNavbar[]
+// tag::excludeNavbar[]
 = Rolodex - User Guide
 :toc:
 :toc-title:
@@ -13,10 +13,6 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W11-B2/main
 
-// end::beforeNavbar[]
-include::NavigationMenu.adoc[]
-
-// tag::afterNavbar[]
 By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
@@ -349,4 +345,7 @@ e.g.`select 2`
 === Additional Shortcuts
 
 * `esc` : Exit the application
-// end::afterNavbar[]
+// end::excludeNavbar[]
+
+[]
+include::NavigationMenu.adoc[]

@@ -1,2 +1,1 @@
-include::UserGuide.adoc[tag=beforeNavbar]
-include::UserGuide.adoc[tag=afterNavbar]
+include::UserGuide.adoc[tag=excludeNavbar]
