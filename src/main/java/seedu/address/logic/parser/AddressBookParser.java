@@ -22,6 +22,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -76,6 +77,10 @@ public class AddressBookParser {
         case BanCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new BanCommandParser().parse(arguments);
+
+        case RepaidCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new RepaidCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD_ALIAS:
         case EditCommand.COMMAND_WORD:
