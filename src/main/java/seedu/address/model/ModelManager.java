@@ -118,6 +118,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void resetPersonDebt(ReadOnlyPerson person) throws PersonNotFoundException {
+        addressBook.resetPersonDebt(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
