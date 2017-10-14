@@ -23,9 +23,6 @@ public class SortCommand extends UndoableCommand {
     public static final String MESSAGE_SORT_LIST_SUCCESS = "List has been sorted by %1$s in %2$s order.";
     public static final String MESSAGE_EMPTY_LIST = "The list is empty.";
 
-    private static String sortTypeReadable = "name";
-    private static String sortOrderReadable = "ascending";
-
     private static final String PREFIX_NAME_SORT = "n/";
     private static final String PREFIX_PHONE_SORT = "p/";
     private static final String PREFIX_EMAIL_SORT = "e/";
@@ -42,12 +39,14 @@ public class SortCommand extends UndoableCommand {
     private final String sortType;
     private final Boolean isDescending;
 
+    private String sortTypeReadable = "name";
+    private String sortOrderReadable = "ascending";
 
     /**
      * @param sortType     specify which attribute to sort by
      * @param isDescending specify if sorting is to be in descending order
      */
-    public SortCommand(String sortType, boolean isDescending) {
+    public SortCommand(String sortType, Boolean isDescending) {
         requireNonNull(sortType);
         requireNonNull(isDescending);
 

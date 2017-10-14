@@ -40,9 +40,15 @@ public class SortCommandTest {
             .withName("A").withPhone("987").withEmail("f@f").withAddress("b").build();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullSortType_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new SortCommand(null, new Boolean(null));
+        new SortCommand(null, true);
+    }
+
+    @Test
+    public void constructor_nullSortOrder_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new SortCommand(CliSyntax.PREFIX_NAME.toString(), null);
     }
 
     @Test
@@ -211,7 +217,7 @@ public class SortCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            return;
+
         }
 
         @Override

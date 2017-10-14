@@ -33,7 +33,7 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        if (args.equals("")) {
+        if ("".equals(args)) {
             args = " n/asc";
         }
 
@@ -61,7 +61,7 @@ public class SortCommandParser implements Parser<SortCommand> {
             }
 
             //Defaults to ascending when order not specified
-            if (s.equals("")) {
+            if ("".equals(s)) {
                 isDescending = new Boolean(false);
                 return;
             }
