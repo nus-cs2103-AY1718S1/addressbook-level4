@@ -1,0 +1,68 @@
+= Boo Kai Hsien - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: DeathNote
+DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B3/DeathNote/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-W10-B3/DeathNote/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Add aliases to commands
+
+==== External behavior
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+
+include::../UserGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows experienced user to use the AddressBook more efficiently. They can achieve the same task with less effort.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Open different Address Book on App
+
+==== External behavior
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+
+include::../UserGuide.adoc[tag=openbook]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows user to manage different version of address book. Suitable for use case when more than one user
+are using the app on the same device.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+#End of Extract#
+
+---
+
+
+=== Other contributions
+
+. Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+. Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
