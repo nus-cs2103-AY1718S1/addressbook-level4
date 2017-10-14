@@ -57,6 +57,10 @@ public class Person implements ReadOnlyPerson {
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
     }
 
+    /**
+     * Sets name of a person to the given Name.
+     * @param name must not be null.
+     */
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }
@@ -71,6 +75,10 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
+    /**
+     * Sets phone number of a person to the given Phone.
+     * @param phone must not be null.
+     */
     public void setPhone(Phone phone) {
         this.phone.set(requireNonNull(phone));
     }
@@ -85,6 +93,10 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    /**
+     * Sets email of a person to the given Email.
+     * @param email must not be null.
+     */
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
     }
@@ -99,6 +111,10 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
+    /**
+     * Sets address of a person to the given Address.
+     * @param address must not be null.
+     */
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
@@ -113,6 +129,10 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    /**
+     * Sets postal code of a person to the given PostalCode.
+     * @param postalCode must not be null.
+     */
     public void setPostalCode(PostalCode postalCode) {
         this.postalCode.set(requireNonNull(postalCode));
     }
@@ -127,6 +147,10 @@ public class Person implements ReadOnlyPerson {
         return postalCode.get();
     }
 
+    /**
+     * Sets current debt of a person to the given Debt.
+     * @param debt must not be null.
+     */
     public void setDebt(Debt debt) {
         this.debt.set(requireNonNull(debt));
     }
@@ -142,6 +166,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author lawwman
+
+    /**
+     * Sets date borrowed of a person the the given DateBorrow.
+     * @param dateBorrow must not be null.
+     */
     public void setDateBorrow(DateBorrow dateBorrow) {
         this.dateBorrow.set(requireNonNull(dateBorrow));
     }
