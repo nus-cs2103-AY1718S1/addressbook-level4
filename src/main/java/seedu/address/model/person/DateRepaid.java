@@ -1,27 +1,18 @@
 package seedu.address.model.person;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+/**
+ * Represents the date of when the Person was sent to the whitelist in the address book, i.e. the date
+ * the Person repays his debt completely.
+ * Guarantees: immutable;
+ */
 public class DateRepaid {
 
-    public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
-    public static final String SIMPLE_DATE_FORMAT = "MM/DD/YY";
+    public static final String STANDARDISED_PLACEHOLDER = "NOT REPAID";
 
-    public final String value;
+    public String value;
 
     public DateRepaid() {
-        DateFormat formatter = new SimpleDateFormat(SIMPLE_DATE_FORMAT);
-        Date date = null;
-        try {
-            date = formatter.parse("00/00/00");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
-        value = ft.format(date);
+        value = STANDARDISED_PLACEHOLDER;
     }
 
     /**
