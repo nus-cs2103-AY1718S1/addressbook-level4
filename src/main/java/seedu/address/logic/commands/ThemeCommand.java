@@ -29,7 +29,7 @@ public class ThemeCommand extends UndoableCommand {
         } else {
             UiStyle.getInstance().setToDarkTheme();
         }
-        
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
