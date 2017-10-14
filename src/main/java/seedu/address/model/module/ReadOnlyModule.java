@@ -15,7 +15,7 @@ public interface ReadOnlyModule {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getCode().equals(this.getCode()) // state checks here onwards
-                && other.getLocation().equals(this.getUniqueLessonList())
+                && other.getLocation().equals(this.getUniqueLessonList()));
     }
 
     /**
@@ -25,7 +25,7 @@ public interface ReadOnlyModule {
         final StringBuilder builder = new StringBuilder();
         builder.append(getCode())
                 .append(" Lesson List: ")
-                .append(getUniqueLessonList())
+                .append(getUniqueLessonList());
         return builder.toString();
     }
 }

@@ -1,21 +1,21 @@
 package seedu.address.model.module;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import static java.util.Objects.requireNonNull;
-
 /**
- * Represents a Person's address in the address book.
+ * Represents a Lesson's location in the application.
  * Guarantees: immutable; is valid as declared in {@link #isValidLocation(String)}
  */
 public class Location {
     public static final String MESSAGE_LOCATION_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+            "Lesson location can take any values, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the location must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String LOCATION_VALIDATION_REGEX = "[^\\s].*";
@@ -23,9 +23,9 @@ public class Location {
     public final String value;
 
     /**
-     * Validates given address.
+     * Validates given location.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given location string is invalid.
      */
     public Location(String location) throws IllegalValueException {
         requireNonNull(location);
@@ -36,14 +36,14 @@ public class Location {
     }
 
     /**
-     * Get a StringProperty of the address
+     * Get a StringProperty of the location
      */
     public StringProperty getAddressProperty() {
         return new SimpleStringProperty(value);
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid lesson location.
      */
     public static boolean isValidLocation(String test) {
         return test.matches(LOCATION_VALIDATION_REGEX);
