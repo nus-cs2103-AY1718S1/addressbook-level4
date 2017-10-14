@@ -1,5 +1,6 @@
 :stylesDir: stylesheets
 include::../README.adoc[]
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]

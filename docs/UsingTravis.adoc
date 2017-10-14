@@ -131,5 +131,6 @@ where `SEVERITY` is either `ERROR` or `WARN`, `FILENAME` is the path to the file
 
 Check scripts must exit with a non-zero exit code if any errors occur.
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]

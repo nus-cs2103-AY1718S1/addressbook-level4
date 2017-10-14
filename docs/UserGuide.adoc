@@ -347,5 +347,6 @@ e.g.`select 2`
 * `esc` : Exit the application
 // end::excludeNavbar[]
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]

@@ -39,5 +39,6 @@ image::checkstyle-idea-configuration.png[width="700"]
 * Reason: The plugin may not immediately run after setting it up.
 * Solution: Restart the IDE.
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]

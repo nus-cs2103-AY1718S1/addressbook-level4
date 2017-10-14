@@ -60,5 +60,6 @@ ____
 This is a quote block.
 ____
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]

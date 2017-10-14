@@ -265,5 +265,6 @@ Note how this project uses the http://checkstyle.sourceforge.net/[CheckStyle] st
 
 * Review PRs created by team members.
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]

@@ -1206,5 +1206,6 @@ Cons:
 * ...
 * ...
 
-[]
+ifndef::env-github[]
 include::NavigationMenu.adoc[]
+endif::[]
