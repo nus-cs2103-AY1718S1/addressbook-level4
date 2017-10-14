@@ -84,6 +84,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        UiStyle.getInstance().setScene(scene);
         primaryStage.setScene(scene);
 
         setAccelerators();
