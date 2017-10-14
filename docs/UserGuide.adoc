@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
-By: `CS2103 T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
+By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -76,7 +76,7 @@ based on their time interval. Events whose time intervals are not specified will
 * You can choose the style to display the upcoming events (weekly/monthly/yearly view).
 * You can add/update/delete events here, but the actual operation will be handled by the link:#events[events] component.
 
-== Features
+== Key features
 
 === Convenient
 
@@ -107,7 +107,7 @@ a lot.
 
 == Commands
 
-_Notice_: Commands in each component should be similar to each other.
+The listing below shows a summary of all commands currently available to users and how to use them.
 
 ====
 *Command Format*
@@ -118,39 +118,49 @@ _Notice_: Commands in each component should be similar to each other.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+====
+*Command in different components*
+
+* Most command can be applied to either a person or an event, whose result will depend on the context e.g. `add n/NAME`
+will add a person if the user is currently in the link:#contacts[contacts] component, add an event otherwise.
+* All commands entered in the link:#calendar[calendar] component will actually be handled by the link:#contacts[contacts]
+component.
+====
+
 === Viewing help : `help`
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person/event : `add`
 
-Adds a person to the address book +
+Adds a person/event to the application. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person/event can have any number of tags (including 0).
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons/events : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons/events in the application. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a person/event : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person/event in the application. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person/event at the specified `INDEX`. The index refers to the index number shown in the last listing.
+The index *must be a positive integer* like 1, 2, 3, ...
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* Existing values of the selected data item will be updated to the input values.
+* When editing tags, the existing tags of that data item will be removed i.e adding of tags is not cumulative.
+* You can remove all existing tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
@@ -160,17 +170,22 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons/events by any property : `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds events whose corresponding field(s) contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search can be based on one or multiple properties. The short name of the property `n/` can be omitted if the searching
+criteria is for the `name` property.
+* Apply `OR` search for keywords of the same property, i.e. persons/events matching at least one keyword will be returned.
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`. Thus, the order of the keywords for the same property does not matter.
+ e.g. `Hans Bo` will match `Bo Hans`.
+* Apply `AND` search for keywords of the different property, i.e. only persons/events matching all of the required properties
+will be returned. e.g. `Hans Bo p/84651943` will only return persons whose name contains either `Hans` or `Bo`, as well as,
+whose phone number is the same as `84651943`.
+* Only full word matching will be returned. e.g. `Han` will not match `Hans`
 ****
 
 Examples:
@@ -180,15 +195,15 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person/event : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person/event from the application. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person/event at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* like 1, 2, 3, ...
 ****
 
 Examples:
@@ -200,15 +215,15 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person/event: `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person/event identified by the index number used in the last listing. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person/event and loads the details of this data item.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* like `1, 2, 3, ...`
 ****
 
 Examples:
@@ -233,12 +248,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the application to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the application's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -282,8 +297,57 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the current component. +
 Format: `clear`
+
+[NOTE]
+====
+Use `clear --all` if you want to clear data in all components (all contacts and events).
+====
+
+=== Advance setting : `config`
+
+Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
+are doing before using any of the following commands. These commands are intended for advance users.
+
+==== Add new property : `config --add-property`
+
+Adds a new property field available to persons/events. +
+Format: `config --add-property s/b f/birthday [m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*]`
+
+****
+* This command does not add a new property to a specific person. Instead, it defines a property that will be available to
+all persons/events.
+* The short name `s/` and full name `f/` of the new property are compulsory, while the constraint message `m/` and regular
+expression for validation `r/` are optional. However, `m/` and `r/` must come together, i.e. a regular expression must be
+accompanied by a constraint message, which will be shown when the validation fails.
+* Short name is the identity (primary key) of all properties. Thus, the short name must be unique. The command will fail
+if there is an existing property with the same short name.
+* The given regular expression must use legal syntax. It will be checked by the
+https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
+****
+
+==== Set tag color : `config --set-tag-color`
+
+Sets the displayed color of a certain tag (for persons/events). +
+Format: `config --set-tag-color TAG_NAME COLOR`
+
+****
+* By default, the application will use a random color to display each tag. The same tags are displayed using the same
+color, different tags are _usually_ displayed using different colors.
+* The value of the parameter `COLOR` should be a valid RGB value. You can pick the RGB value of your favorite
+color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+****
+
+==== Import calendar : `config --import-calendar`
+
+Imports events from an online available calender. +
+Format: `config --import-calendar URL`
+
+[NOTE]
+====
+The supplied URL should be in either a valid ICS/iCal format or generated from your https://nusmods.com/[NUSMods].
+====
 
 === Exiting the program : `exit`
 
@@ -292,8 +356,9 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+* Address book data are saved in the hard disk automatically after any command that changes the data.
+* These commands are also called undoable commands.
+* There is no need to save manually.
 
 == FAQ
 
@@ -302,7 +367,7 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
@@ -318,3 +383,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Config* : `config --add-property` `config --set-tag-color` `config --import-calendar`
