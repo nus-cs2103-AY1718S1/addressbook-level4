@@ -10,13 +10,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.UniqueLessonList;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.lecturer.UniqueLecturerList;
 
 /**
  * Wraps all data at the address-book level

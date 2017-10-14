@@ -1,12 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -19,18 +16,19 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.module.predicates.UniqueAddressPredicate;
-import seedu.address.model.module.predicates.UniqueEmailPredicate;
-import seedu.address.model.module.predicates.UniquePhonePredicate;
-import seedu.address.model.lecturer.Tag;
+
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+
 
 /**
  * Edits the details of an existing person in the address book.
@@ -43,37 +41,39 @@ public class EditCommand extends UndoableCommand {
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_MODULE_CODE + "CODE] "
+            + "[" + PREFIX_CLASS_TYPE + "CLASS TYPE] "
+            + "[" + PREFIX_VENUE + "VENUE] "
+            + "[" + PREFIX_GROUP + "GROUP] "
+            + "[" + PREFIX_TIME_SLOT + "TIME SLOT] "
+            + "[" + PREFIX_LECTURER + "LECTURER]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_GROUP + "SL2 "
+            + PREFIX_VENUE + "LT25";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_EDIT_ADDRESS_SUCCESS = "Edited Address: %1$s";
-    public static final String MESSAGE_EDIT_EMAIL_SUCCESS = "Edited Email: %1$s";
-    public static final String MESSAGE_EDIT_PHONE_SUCCESS = "Edited Phone: %1$s";
+    public static final String MESSAGE_EDIT_LESSON_SUCCESS = "Edited Lesson: %1$s";
+    public static final String MESSAGE_EDIT_CLASS_TYPE_SUCCESS = "Edited Class Type: %1$s";
+    public static final String MESSAGE_EDIT_GROUP_SUCCESS = "Edited Group: %1$s";
+    public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
+    public static final String MESSAGE_EDIT_TIME_SLOT_SUCCESS = "Edited Time Slot: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditLessonDescriptor editLessonDescriptor;
     private final String attributeValue;
 
 
     /**
-     * @param index                of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index                of the lesson in the filtered lesson list to edit
+     * @param editLessonDescriptor details to edit the lesson with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditLessonDescriptor editLessonDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editLessonDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editLessonDescriptor = new EditLessonDescriptor(editLessonDescriptor);
         attributeValue = null;
     }
 
@@ -86,153 +86,125 @@ public class EditCommand extends UndoableCommand {
         requireNonNull(attributeValue);
 
         this.index = index;
-        this.editPersonDescriptor = null;
+        this.editLessonDescriptor = null;
         this.attributeValue = attributeValue;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         switch (ListingUnit.getCurrentListingUnit()) {
 
-        case ADDRESS:
-            return executeEditAddress(lastShownList.get(index.getZeroBased()).getAddress());
+        case LESSON:
+            return executeEditLesson(lastShownList.get(index.getZeroBased()));
 
-        case PHONE:
-            return executeEditPhone(lastShownList.get(index.getZeroBased()).getPhone());
-
-        case EMAIL:
-            return executeEditEmail(lastShownList.get(index.getZeroBased()).getEmail());
+        case LOCATION:
+            return executeEditLocation(lastShownList.get(index.getZeroBased()).getLocation());
 
         default:
-            return executeEditPerson(lastShownList.get(index.getZeroBased()));
+            return executeEditModule(lastShownList.get(index.getZeroBased()).getCode());
         }
     }
 
     /**
-     * Edit the person with updated information.
+     * Edit the lesson with updated information.
      */
-    private CommandResult executeEditPerson(ReadOnlyPerson personToEdit) throws CommandException {
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+    private CommandResult executeEditLesson(ReadOnlyLesson lessonToEdit) throws CommandException {
+        Lesson editedLesson = createEditedLesson(lessonToEdit, editLessonDescriptor);
         try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            model.updateLesson(lessonToEdit, editedLesson);
+        } catch (DuplicateLessonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_LESSON);
+        } catch (LessonNotFoundException pnfe) {
+            throw new AssertionError("The target lesson cannot be missing");
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_LESSON_SUCCESS, editedLesson));
     }
 
-    /**
-     * Edit the address, all persons with the edited address is updated with a new given address.
-     */
-    private CommandResult executeEditAddress(Address addressToEdit) throws CommandException {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        Address editedAddress = null;
-        try {
-            editedAddress = new Address(attributeValue);
-            for (ReadOnlyPerson p : personList) {
 
-                ReadOnlyPerson curEditedPerson;
-                if (p.getAddress().equals(addressToEdit)) {
-                    curEditedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
-                            editedAddress, p.getTags());
-                    model.updatePerson(p, curEditedPerson);
+    /**
+     * Edit the address, all lessons with the edited address is updated with a new given address.
+     */
+    private CommandResult executeEditLocation(Location addressToEdit) throws CommandException {
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+        Location editedAddress = null;
+        try {
+            editedAddress = new Location(attributeValue);
+            for (ReadOnlyLesson p : lessonList) {
+
+                ReadOnlyLesson curEditedLesson;
+                if (p.getLocation().equals(addressToEdit)) {
+                    curEditedLesson = new Lesson(p.getClassType(), editedAddress, p.getGroup(),
+                            p.getTimeSlot(), p.getCode(), p.getLecturers());
+                    model.updateLesson(p, curEditedLesson);
 
                 }
             }
-            model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
-            return new CommandResult(String.format(MESSAGE_EDIT_ADDRESS_SUCCESS, editedAddress));
+            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedAddress));
         } catch (IllegalValueException ive) {
-            model.updateFilteredPersonList(new UniqueAddressPredicate(model.getUniqueAdPersonSet()));
+            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             throw new CommandException(ive.getMessage());
-        } catch (PersonNotFoundException pnfe) {
+        } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
     }
 
+
     /**
-     * Edit the email, all persons with the edited email is updated with a new given email.
+     * Edit the Module Code, all lessons with the edited code is updated with a new given code.
      */
-    private CommandResult executeEditEmail(Email emailToEdit) throws CommandException {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        Email editedEmail = null;
+    private CommandResult executeEditModule(Code codeToEdit) throws CommandException {
+        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+        Code editedCode = null;
         try {
-            editedEmail = new Email(attributeValue);
-            for (ReadOnlyPerson p : personList) {
+            editedCode = new Code(attributeValue);
+            for (ReadOnlyLesson p : lessonList) {
 
-                ReadOnlyPerson curEditedPerson;
-                if (p.getEmail().equals(emailToEdit)) {
-                    curEditedPerson = new Person(p.getName(), p.getPhone(), editedEmail,
-                            p.getAddress(), p.getTags());
-                    model.updatePerson(p, curEditedPerson);
-
+                ReadOnlyLesson curEditedLesson;
+                if (p.getCode().equals(codeToEdit)) {
+                    curEditedLesson = new Lesson(p.getClassType(), p.getLocation(), p.getGroup(),
+                            p.getTimeSlot(), editedCode, p.getLecturers());
+                    model.updateLesson(p, curEditedLesson);
                 }
             }
-            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
-            return new CommandResult(String.format(MESSAGE_EDIT_EMAIL_SUCCESS, editedEmail));
+            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
-            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
+            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             throw new CommandException(ive.getMessage());
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-    }
-
-    /**
-     * Edit the phone, all persons with the edited phone is updated with a new given phone.
-     */
-    private CommandResult executeEditPhone(Phone phoneToEdit) throws CommandException {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        Phone editedPhone = null;
-        try {
-            editedPhone = new Phone(attributeValue);
-            for (ReadOnlyPerson p : personList) {
-
-                ReadOnlyPerson curEditedPerson;
-                if (p.getPhone().equals(phoneToEdit)) {
-                    curEditedPerson = new Person(p.getName(), editedPhone, p.getEmail(),
-                            p.getAddress(), p.getTags());
-                    model.updatePerson(p, curEditedPerson);
-                }
-            }
-            model.updateFilteredPersonList(new UniquePhonePredicate(model.getUniquePhonePersonSet()));
-            return new CommandResult(String.format(MESSAGE_EDIT_PHONE_SUCCESS, editedPhone));
-        } catch (IllegalValueException ive) {
-            model.updateFilteredPersonList(new UniqueEmailPredicate(model.getUniqueEmailPersonSet()));
-            throw new CommandException(ive.getMessage());
-        } catch (PersonNotFoundException pnfe) {
+        } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Lesson} with the details of {@code lessonToEdit}
+     * edited with {@code editLessonDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private Lesson createEditedLesson(ReadOnlyLesson lessonToEdit,
+                                             EditLessonDescriptor editLessonDescriptor) {
+        assert lessonToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Code updatedCode = editLessonDescriptor.getCode().orElse(lessonToEdit.getCode());
+        ClassType updatedClassType = editLessonDescriptor.getClassType().orElse(lessonToEdit.getClassType());
+        Group updatedGroup = editLessonDescriptor.getGroup().orElse(lessonToEdit.getGroup());
+        Location updatedLocation = editLessonDescriptor.getLocation().orElse(lessonToEdit.getLocation());
+        TimeSlot updatedTimeSlot = editLessonDescriptor.getTimeSlot().orElse(lessonToEdit.getTimeSlot());
+        Set<Lecturer> updatedLecturers = editLessonDescriptor.getLecturers().orElse(lessonToEdit.getLecturers());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Lesson(updatedClassType, updatedLocation, updatedGroup, updatedTimeSlot,
+                updatedCode, updatedLecturers);
     }
 
     @Override
@@ -249,9 +221,9 @@ public class EditCommand extends UndoableCommand {
 
         // state check
         EditCommand e = (EditCommand) other;
-        if (editPersonDescriptor != null && e.editPersonDescriptor != null) {
+        if (editLessonDescriptor != null && e.editLessonDescriptor != null) {
             return index.equals(e.index)
-                    && editPersonDescriptor.equals(e.editPersonDescriptor);
+                    && editLessonDescriptor.equals(e.editLessonDescriptor);
         } else {
             return index.equals(e.index)
                     && attributeValue.equals(e.attributeValue);
@@ -262,70 +234,82 @@ public class EditCommand extends UndoableCommand {
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
-    public static class EditPersonDescriptor {
-        private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
-        private Set<Tag> tags;
+    public static class EditLessonDescriptor {
+        private Code code;
+        private ClassType classType;
+        private Group group;
+        private Location location;
+        private TimeSlot timeSlot;
+        private Set<Lecturer> lecturers;
 
-        public EditPersonDescriptor() {
+        public EditLessonDescriptor() {
         }
 
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
-            this.name = toCopy.name;
-            this.phone = toCopy.phone;
-            this.email = toCopy.email;
-            this.address = toCopy.address;
-            this.tags = toCopy.tags;
+        public EditLessonDescriptor(EditLessonDescriptor toCopy) {
+            this.code = toCopy.code;
+            this.classType = toCopy.classType;
+            this.group = toCopy.group;
+            this.location = toCopy.location;
+            this.timeSlot = toCopy.timeSlot;
+            this.lecturers = toCopy.lecturers;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.code, this.classType, this.group, this.location,
+                    this.timeSlot, this.lecturers);
         }
 
-        public void setName(Name name) {
-            this.name = name;
+        public void setCode(Code code) {
+            this.code = code;
         }
 
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+        public Optional<Code> getCode() {
+            return Optional.ofNullable(code);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setClassType(ClassType classType) {
+            this.classType = classType;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<ClassType> getClassType() {
+            return Optional.ofNullable(classType);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setGroup(Group group) {
+            this.group = group;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Group> getGroup() {
+            return Optional.ofNullable(group);
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
+        public void setLocation(Location location) {
+            this.location = location;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<Location> getLocation() {
+            return Optional.ofNullable(location);
         }
 
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
+        public void setTimeSlot(TimeSlot timeSlot) {
+            this.timeSlot = timeSlot;
         }
 
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
+        public Optional<TimeSlot> getTimeSlot() {
+            return Optional.ofNullable(timeSlot);
         }
+
+        public void setLecturer(Set<Lecturer> lecturers) {
+            this.lecturers = lecturers;
+        }
+
+        public Optional<Set<Lecturer>> getLecturers() {
+            return Optional.ofNullable(lecturers);
+        }
+
 
         @Override
         public boolean equals(Object other) {
@@ -335,18 +319,19 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditLessonDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditLessonDescriptor e = (EditLessonDescriptor) other;
 
-            return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+            return getClassType().equals(e.getClassType())
+                    && getGroup().equals(e.getGroup())
+                    && getCode().equals(e.getCode())
+                    && getLocation().equals(e.getLocation())
+                    && getTimeSlot().equals(e.getTimeSlot())
+                    && getLecturers().equals(e.getLecturers());
         }
     }
 }

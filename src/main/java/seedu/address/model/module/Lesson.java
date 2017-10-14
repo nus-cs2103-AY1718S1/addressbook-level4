@@ -2,8 +2,10 @@ package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
+
 
 import java.util.Collections;
 import java.util.Objects;
@@ -28,6 +30,7 @@ public class Lesson implements ReadOnlyLesson{
     /**
      * Every field must be present and not null.
      */
+
     public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Code code,
                   Set<Lecturer> lecturers) { requireAllNonNull(classType, location, group, timeSlot, lecturers);
         this.classType = new SimpleObjectProperty<>(classType);
@@ -117,10 +120,6 @@ public class Lesson implements ReadOnlyLesson{
         return code.get();
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
     @Override
     public Set<Lecturer> getLecturers() {
         return Collections.unmodifiableSet(lecturers.get().toSet());

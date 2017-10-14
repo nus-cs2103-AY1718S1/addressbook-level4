@@ -2,11 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -18,10 +16,10 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.lecturer.Tag;
+import seedu.address.model.lecturer.Lecturer;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -38,20 +36,21 @@ public class EditCommandParser implements Parser<EditCommand> {
     @Override
     public EditCommand parse(String args) throws ParseException {
 
-        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.PERSON)) {
-            return parseEditPerson(args);
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE)) {
+            return parseEditModule(args);
         } else {
             return parseEditAttribute(args);
         }
     }
 
     /**
-     * Parse the input arguments given the current listing unit is person.
+     * Parse the input arguments given the current listing unit is MODULE.
      */
-    public EditCommand parseEditPerson(String args) throws ParseException {
+    public EditCommand parseEditModule(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_CLASS_TYPE, PREFIX_VENUE, PREFIX_GROUP, PREFIX_TIME_SLOT,
+                        PREFIX_MODULE_CODE, PREFIX_LECTURER);
 
         Index index;
 
@@ -61,22 +60,30 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditLessonDescriptor editLessonDescriptor = new EditLessonDescriptor();
         try {
-            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
-            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            ParserUtil.parseClassType(argMultimap.getValue(PREFIX_CLASS_TYPE))
+                    .ifPresent(editLessonDescriptor::setClassType);
+            ParserUtil.parseLocation(argMultimap.getValue(PREFIX_VENUE))
+                    .ifPresent(editLessonDescriptor::setLocation);
+            ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP))
+                    .ifPresent(editLessonDescriptor::setGroup);
+            ParserUtil.parseTimeSlot(argMultimap.getValue(PREFIX_TIME_SLOT))
+                    .ifPresent(editLessonDescriptor::setTimeSlot);
+            ParserUtil.parseCode(argMultimap.getValue(PREFIX_MODULE_CODE))
+                    .ifPresent(editLessonDescriptor::setCode);
+
+            parseLecturersForEdit(argMultimap.getAllValues(PREFIX_LECTURER)).ifPresent(editLessonDescriptor::setLecturer);
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        if (!editLessonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(index, editLessonDescriptor);
     }
 
     /**
@@ -108,18 +115,19 @@ public class EditCommandParser implements Parser<EditCommand> {
 
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
+     * Parses {@code Collection<String> tags} into a {@code Set<Lecturer>} if {@code lectureres} is non-empty.
+     * If {@code lecturer} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Lecturer>} containing zero tags.
      */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
+    private Optional<Set<Lecturer>> parseLecturersForEdit(Collection<String> lecturers) throws IllegalValueException {
+        assert lecturers != null;
 
-        if (tags.isEmpty()) {
+        if (lecturers.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
+        Collection<String> lecturersSet = lecturers.size() == 1 &&
+                lecturers.contains("") ? Collections.emptySet() : lecturers;
+        return Optional.of(ParserUtil.parseLecturer(lecturersSet));
     }
 
 }

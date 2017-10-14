@@ -41,7 +41,11 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+<<<<<<< HEAD
 import seedu.address.model.lecturer.Tag;
+=======
+import seedu.address.model.lecturer.Tag;
+>>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {

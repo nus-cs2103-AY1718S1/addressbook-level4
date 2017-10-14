@@ -4,7 +4,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+<<<<<<< HEAD
 import seedu.address.model.lecturer.Tag;
+=======
+import seedu.address.model.lecturer.Tag;
+>>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
 
 /**
  * A utility class to help with building Addressbook objects.
