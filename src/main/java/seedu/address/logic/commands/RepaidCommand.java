@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * 1. Adds a person identified using it's last displayed index into the whitelist.
@@ -41,7 +42,10 @@ public class RepaidCommand extends UndoableCommand {
         ReadOnlyPerson personToWhitelist = lastShownList.get(targetIndex.getZeroBased());
 
         try {
+            model.resetPersonDebt(personToWhitelist);
             model.addWhitelistedPerson(personToWhitelist);
+        } catch (PersonNotFoundException e) {
+            assert false : "The target person cannot be missing";
         } catch (DuplicatePersonException e) {
             assert false : "The target person is already in whitelist";
         }
