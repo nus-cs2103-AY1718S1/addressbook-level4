@@ -3,6 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -99,6 +102,22 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updatePerson(oldPerson, newPerson);
         }
         addressBook.removeTag(tag);
+    }
+
+    @Override
+    public boolean sortByPersonName(ArrayList<ReadOnlyPerson> contactList) throws NullPointerException {
+        if (filteredPersons.size() == 0) {
+            return false;
+        }
+        contactList.addAll(filteredPersons);
+        Collections.sort(contactList, Comparator.comparing(s -> s.toString().toLowerCase()));
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            assert false : "AddressBooks should not have duplicate persons";
+        }
+        return true;
     }
 
     //=========== Filtered Person List Accessors =============================================================
