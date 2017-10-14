@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalEvents.EVENT1;
 import static seedu.address.testutil.TypicalEvents.EVENT2;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -62,8 +63,18 @@ public class AddressBookTest {
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
+    @Test
+    public void resetData_withDuplicateEvents_throwsAssertionError() {
+        List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(BENSON));
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        newTags.addAll(BENSON.getTags());
+        // Repeat EVENT1 twice
+        List<Event> newEvents = Arrays.asList(new Event(EVENT1), new Event(EVENT1));
+        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags);
 
-
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
