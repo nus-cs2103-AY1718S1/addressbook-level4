@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-/*
+/**
 * sorts the addressbook
  */
 public class SortCommand extends UndoableCommand {
