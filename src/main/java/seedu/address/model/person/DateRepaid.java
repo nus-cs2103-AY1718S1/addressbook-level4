@@ -2,14 +2,14 @@ package seedu.address.model.person;
 
 /**
  * Represents the date of when the Person was sent to the whitelist in the address book, i.e. the date
- * the Person repays his debt completely.
+ * the Person repaid his debt completely.
  * Guarantees: immutable;
  */
 public class DateRepaid {
 
     public static final String STANDARDISED_PLACEHOLDER = "NOT REPAID";
 
-    public String value;
+    public final String value;
 
     public DateRepaid() {
         value = STANDARDISED_PLACEHOLDER;
@@ -22,7 +22,6 @@ public class DateRepaid {
     public DateRepaid(String date) {
         value = date;
     }
-
 
     @Override
     public String toString() {

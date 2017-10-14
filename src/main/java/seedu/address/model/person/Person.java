@@ -158,7 +158,9 @@ public class Person implements ReadOnlyPerson {
 
     //@@author
 
-    public void setDateRepaid(DateRepaid dateRepaid) { this.dateRepaid.set(requireNonNull(dateRepaid)); }
+    public void setDateRepaid(DateRepaid dateRepaid) {
+        this.dateRepaid.set(requireNonNull(dateRepaid));
+    }
 
     @Override
     public ObjectProperty<DateRepaid> dateRepaidProperty() {
