@@ -62,7 +62,8 @@ public class SortCommandTest {
         Boolean isDescending = false;
         CommandResult commandResult = getSortCommandForPerson(sortType, isDescending, modelStub).execute();
 
-        assertEquals(String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, "name", "ascending"), commandResult.feedbackToUser);
+        assertEquals(String.format(SortCommand.MESSAGE_SORT_LIST_SUCCESS, "name", "ascending"),
+                commandResult.feedbackToUser);
     }
 
     @Test

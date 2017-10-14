@@ -25,7 +25,7 @@ public class SortCommandParserTest {
         //More than 1 argument inputted
         assertParseFailure(parser, WHITESPACE + CliSyntax.PREFIX_NAME
                         + SortCommand.BY_ASCENDING + WHITESPACE + CliSyntax.PREFIX_PHONE + SortCommand.BY_ASCENDING,
-        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
 
         //Gibberish arguments inputted, with one valid argument
         assertParseFailure(parser, WHITESPACE + "gibberish/g" + CliSyntax.PREFIX_PHONE + SortCommand.BY_ASCENDING,

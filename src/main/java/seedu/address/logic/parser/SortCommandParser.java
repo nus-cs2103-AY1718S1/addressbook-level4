@@ -64,7 +64,7 @@ public class SortCommandParser implements Parser<SortCommand> {
                 return;
             }
 
-            if (s.equals("")){
+            if (s.equals("")) {
                 isDescending = new Boolean(false);
                 return;
             }
