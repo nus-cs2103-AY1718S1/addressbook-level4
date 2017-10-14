@@ -47,10 +47,6 @@ public class SortCommandParser implements Parser<SortCommand> {
         argMultimap.getValue(PREFIX_EMAIL).ifPresent(setSortingOrder(PREFIX_EMAIL));
         argMultimap.getValue(PREFIX_ADDRESS).ifPresent(setSortingOrder(PREFIX_ADDRESS));
 
-        if (isDescending == null) {
-            isDescending = false;
-        }
-
         return new SortCommand(sortType, isDescending);
     }
 
@@ -64,6 +60,7 @@ public class SortCommandParser implements Parser<SortCommand> {
                 return;
             }
 
+            //Defaults to ascending when order not specified
             if (s.equals("")) {
                 isDescending = new Boolean(false);
                 return;

@@ -31,13 +31,13 @@ public class SortCommand extends UndoableCommand {
     private static final String PREFIX_EMAIL_SORT = "e/";
     private static final String PREFIX_ADDRESS_SORT = "a/";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts list of all contacts "
-            + "by their various attributes, including ascending and descending order.\n"
-            + "Defaults to sorting by name in ascending order.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts list of all contacts by their attributes,"
+            + " defaults to name when no parameters found and ascending when order not specified.\n"
             + "Parameters: "
             + "[" + PREFIX_NAME_SORT + "(" + BY_ASCENDING + " OR " + BY_DESCENDING + ")] \n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_PHONE_SORT + BY_DESCENDING;
+            + "Example: " + COMMAND_WORD + " " + PREFIX_PHONE_SORT + BY_DESCENDING + " OR "
+            + COMMAND_WORD + " " + PREFIX_ADDRESS_SORT + " OR "
+            + COMMAND_WORD;
 
     private final String sortType;
     private final Boolean isDescending;
