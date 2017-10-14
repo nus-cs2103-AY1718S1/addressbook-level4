@@ -204,7 +204,11 @@ public class MainWindow extends UiPart<Region> {
     }
 
     public void handleChangeTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(1);
+        }
         getRoot().getStylesheets().add("/view/" + theme);
+        System.out.println(getClass().getResource("/view/default.html").toString());
     }
 
     void show() {
