@@ -42,13 +42,6 @@ public class Parcel implements ReadOnlyParcel {
     }
 
     /**
-     * constructor will be deprecated in the future
-     */
-    public Parcel(Name name, Phone phone, Email email, Address address, Set<Tag> tags) throws IllegalValueException {
-        this(new ArticleNumber("RR999999999SG"), name, phone, email, address, tags);
-    }
-
-    /**
      * Creates a copy of the given ReadOnlyParcel.
      */
     public Parcel(ReadOnlyParcel source) {
