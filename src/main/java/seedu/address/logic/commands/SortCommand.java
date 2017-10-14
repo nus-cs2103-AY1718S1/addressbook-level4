@@ -17,15 +17,13 @@ public class SortCommand extends Command {
             + "Parameters: ATTRIBUTE\n"
             + "Example: " + COMMAND_WORD + " name";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "List sorted successfully";
-
-    private static ListingUnit currentListingUnit = ListingUnit.getCurrentListingUnit();
+    public static final String MESSAGE_SORT_LESSON_SUCCESS = "List sorted successfully";
 
     @Override
     public CommandResult execute() throws CommandException {
 
         EventsCenter.getInstance().post(new SortListRequestEvent());
-        return new CommandResult(MESSAGE_SELECT_PERSON_SUCCESS);
+        return new CommandResult(MESSAGE_SORT_LESSON_SUCCESS);
 
     }
 
