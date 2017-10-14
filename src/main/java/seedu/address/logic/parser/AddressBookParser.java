@@ -98,7 +98,7 @@ public class AddressBookParser {
 
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
-            
+
         case LocateCommand.COMMAND_WORD:
         case LocateCommand.COMMAND_ALIAS:
             return new LocateCommandParser().parse(arguments);
@@ -107,5 +107,4 @@ public class AddressBookParser {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }
