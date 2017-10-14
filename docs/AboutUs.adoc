@@ -5,8 +5,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
@@ -19,7 +17,13 @@ Role: Member +
 Responsibilities: LOGIC
 
 '''
+=== Ng Kheng Yi
+image::khengyi.png[width="150", align="left"]
+{empty}[http://github.com/kyngyi[github]] [<<khengyi#, portfolio>>]
 
+Role: Developer +
+Responsibilities: Model
+=======
 === Melvin Leo
 image::melvinleo.jpg[width="150", align="left"]
 {empty}[https://github.com/Melvin-leo[github]] [<<Melvin-leo#, portfolio>>]
@@ -29,29 +33,3 @@ Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
