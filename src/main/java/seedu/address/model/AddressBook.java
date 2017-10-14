@@ -202,6 +202,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             return false;
         }
+    }
 
     public void sort() {
         persons.sort();
