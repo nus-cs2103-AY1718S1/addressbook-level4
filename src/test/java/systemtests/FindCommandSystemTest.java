@@ -19,7 +19,11 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.Lecturer.Tag;
+<<<<<<< HEAD
+import seedu.address.model.lecturer.Tag;
+=======
+import seedu.address.model.lecturer.Tag;
+>>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
 

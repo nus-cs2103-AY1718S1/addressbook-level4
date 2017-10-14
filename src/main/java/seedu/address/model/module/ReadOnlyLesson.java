@@ -1,7 +1,12 @@
 package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.Lecturer.Lecturer;
+
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
+
+import java.util.Set;
+
 
 /**
  * A read-only immutable interface for a Person in the addressbook.
@@ -19,8 +24,8 @@ public interface ReadOnlyLesson {
     Group getGroup();
     ObjectProperty<Code> codeProperty();
     Code getCode();
-    ObjectProperty<Lecturer> lecturerProperty();
-    Lecturer getLecturer();
+    ObjectProperty<UniqueLecturerList> lecturersProperty();
+    Set<Lecturer> getLecturers();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -33,7 +38,7 @@ public interface ReadOnlyLesson {
                 && other.getClassType().equals(this.getClassType())
                 && other.getGroup().equals(this.getGroup())
                 && other.getCode().equals(this.getCode())
-                && other.getLecturer().equals(this.getLecturer()));
+                && other.getLecturers().equals(this.getLecturers()));
     }
 
     /**
@@ -50,9 +55,8 @@ public interface ReadOnlyLesson {
                 .append(" Group: ")
                 .append(getGroup())
                 .append(" Time Slot: ")
-                .append(getTimeSlot())
-                .append(" Lecturer: ")
-                .append(getLecturer());
+                .append(getTimeSlot());
+        getLecturers().forEach(builder::append);
         return builder.toString();
     }
 

@@ -1,8 +1,8 @@
 package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.Lecturer.Lecturer;
-import seedu.address.model.Lecturer.UniqueLecturerList;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
 
 import java.util.Set;
 

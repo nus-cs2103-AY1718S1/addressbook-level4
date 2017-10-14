@@ -2,9 +2,14 @@ package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.Lecturer.Lecturer;
 
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
+
+
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -20,28 +25,29 @@ public class Lesson implements ReadOnlyLesson{
     private ObjectProperty<TimeSlot> timeSlot;
     private ObjectProperty<Code> code;
 
-    private ObjectProperty<Lecturer> lecturer;
+    private ObjectProperty<UniqueLecturerList> lecturers;
 
     /**
      * Every field must be present and not null.
      */
-    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot,Code code, Lecturer lecturer) {
-        requireAllNonNull(classType, location, group, timeSlot, lecturer);
+
+    public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Code code,
+                  Set<Lecturer> lecturers) { requireAllNonNull(classType, location, group, timeSlot, lecturers);
         this.classType = new SimpleObjectProperty<>(classType);
         this.location = new SimpleObjectProperty<>(location);
         this.group = new SimpleObjectProperty<>(group);
         this.code = new SimpleObjectProperty<>(code);
         this.timeSlot = new SimpleObjectProperty<>(timeSlot);
-        // protect internal tags from changes in the arg list
-        this.lecturer = new SimpleObjectProperty<>(lecturer);
+        // protect internal lecturers from changes in the arg list
+        this.lecturers = new SimpleObjectProperty<>(new UniqueLecturerList(lecturers));
     }
 
     /**
      * Creates a copy of the given ReadOnlyLesson.
      */
     public Lesson(ReadOnlyLesson source) {
-        this(source.getClassType(), source.getLocation(), source.getGroup(),source.getTimeSlot(),
-                source.getCode(), source.getLecturer());
+        this(source.getClassType(), source.getLocation(), source.getGroup(), source.getTimeSlot(),
+                source.getCode(), source.getLecturers());
     }
 
     public void setLocation(Location location) {
@@ -115,14 +121,21 @@ public class Lesson implements ReadOnlyLesson{
     }
 
     @Override
-    public ObjectProperty<Lecturer> lecturerProperty() {
-        return lecturer;
+    public Set<Lecturer> getLecturers() {
+        return Collections.unmodifiableSet(lecturers.get().toSet());
     }
 
     @Override
-    public Lecturer getLecturer() { return lecturer.get(); }
+    public ObjectProperty<UniqueLecturerList> lecturersProperty() {
+        return lecturers;
+    }
 
-    public void setLecturer(Lecturer lecturer) { this.lecturer.set(requireNonNull(lecturer)); }
+    /**
+     * Replaces this person's tags with the tags in the argument tag set.
+     */
+    public void setTags(Set<Lecturer> replacement) {
+        lecturers.set(new UniqueLecturerList(replacement));
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -134,7 +147,7 @@ public class Lesson implements ReadOnlyLesson{
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(classType, location, group, timeSlot, lecturer);
+        return Objects.hash(classType, location, group, timeSlot, lecturers);
     }
 
     @Override

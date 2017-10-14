@@ -11,11 +11,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.font.FontSize;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.Lecturer.Tag;
+import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Code;
+import seedu.address.model.lecturer.Lecturer;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -45,21 +46,21 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * Parses a {@code Optional<String> code} into an {@code Optional<Code>} if {@code code} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
-        requireNonNull(name);
-        return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+    public static Optional<Code> parseCode(Optional<String> code) throws IllegalValueException {
+        requireNonNull(code);
+        return code.isPresent() ? Optional.of(new Code(code.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> location} into an {@code Optional<Location>} if {@code location} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    public static Optional<Location> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(new Location(location.get())) : Optional.empty();
     }
 
     /**
@@ -72,32 +73,43 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+    public static Optional<Group> parseGroup(Optional<String> group) throws IllegalValueException {
+        requireNonNull(group);
+        return group.isPresent() ? Optional.of(new Group(group.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> timeSlot} into an {@code Optional<TimeSlot>} if {@code timeSlot} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    public static Optional<TimeSlot> parseTimeSlot(Optional<String> timeSlot) throws IllegalValueException {
+        requireNonNull(timeSlot);
+        return timeSlot.isPresent() ? Optional.of(new TimeSlot(timeSlot.get())) : Optional.empty();
     }
 
+
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses a {@code Optional<String> classType} into an {@code Optional<ClassType>} if {@code classType} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+    public static Optional<ClassType> parseClassType(Optional<String> classType) throws IllegalValueException {
+        requireNonNull(classType);
+        return classType.isPresent() ? Optional.of(new ClassType(classType.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses {@code Collection<String> lecturer} into a {@code Set<Lecturer>}.
+     */
+    public static Set<Lecturer> parseLecturer(Collection<String> lecturers) throws IllegalValueException {
+        requireNonNull(lecturers);
+        final Set<Lecturer> lecturerSet = new HashSet<>();
+        for (String lecturerName : lecturers) {
+            lecturerSet.add(new Lecturer(lecturerName));
         }
-        return tagSet;
+        return lecturerSet;
     }
 }

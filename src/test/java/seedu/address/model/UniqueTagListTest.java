@@ -4,7 +4,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.Lecturer.UniqueTagList;
+<<<<<<< HEAD
+import seedu.address.model.lecturer.UniqueTagList;
+=======
+import seedu.address.model.lecturer.UniqueTagList;
+>>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
 
 public class UniqueTagListTest {
     @Rule

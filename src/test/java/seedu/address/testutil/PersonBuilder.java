@@ -9,7 +9,11 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.Lecturer.Tag;
+<<<<<<< HEAD
+import seedu.address.model.lecturer.Tag;
+=======
+import seedu.address.model.lecturer.Tag;
+>>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
 import seedu.address.model.util.SampleDataUtil;
 
 /**

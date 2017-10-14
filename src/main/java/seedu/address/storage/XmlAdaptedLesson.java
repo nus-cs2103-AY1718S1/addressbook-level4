@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.module.*;
-import seedu.address.model.Lecturer.Lecturer;
+import seedu.address.model.lecturer.Lecturer;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
@@ -26,16 +26,16 @@ public class XmlAdaptedLesson {
     private List<XmlAdaptedLecturer> lecturerList = new ArrayList<>();
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedLesson.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedLesson() {}
 
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given Lesson into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedLesson
      */
     public XmlAdaptedLesson(ReadOnlyLesson source) {
         classType = source.getClassType().value;
@@ -51,9 +51,9 @@ public class XmlAdaptedLesson {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     * Converts this jaxb-friendly adapted lesson object into the model's Person object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted lesson
      */
     public Lesson toModelType() throws IllegalValueException {
         final ClassType classType = new ClassType(this.classType);

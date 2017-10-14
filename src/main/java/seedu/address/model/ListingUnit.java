@@ -6,9 +6,9 @@ package seedu.address.model;
  * Unit in the panel.
  */
 public enum ListingUnit {
-    PERSON, ADDRESS, EMAIL, PHONE;
+    MODULE, LOCATION, LESSON;
 
-    private static ListingUnit currentListingUnit = PERSON;
+    private static ListingUnit currentListingUnit = MODULE;
 
     /** Get current Listing unit */
     public static ListingUnit getCurrentListingUnit() {
