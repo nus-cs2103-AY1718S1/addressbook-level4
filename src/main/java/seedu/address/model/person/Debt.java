@@ -13,6 +13,7 @@ public class Debt {
 
     public static final String MESSAGE_DEBT_CONSTRAINTS =
             "Debt can only contain numbers, and should have 1 or more digits";
+    public static final String DEBT_ZERO_VALUE = "0";
     public static final String DEBT_VALIDATION_REGEX = "\\d+";
     public final String value;
 
