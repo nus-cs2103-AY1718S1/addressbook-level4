@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.ArticleNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
@@ -21,6 +22,8 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedParcel {
 
+    @XmlElement(required = true)
+    private String articleNumber;
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -46,6 +49,7 @@ public class XmlAdaptedParcel {
      * @param source future changes to this will not affect the created XmlAdaptedParcel
      */
     public XmlAdaptedParcel(ReadOnlyParcel source) {
+        articleNumber = source.getArticleNumber().value;
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -66,6 +70,7 @@ public class XmlAdaptedParcel {
         for (XmlAdaptedTag tag : tagged) {
             parcelTags.add(tag.toModelType());
         }
+        final ArticleNumber articleNumber = new ArticleNumber(this.articleNumber);
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
