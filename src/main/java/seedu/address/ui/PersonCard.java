@@ -15,6 +15,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -59,6 +60,8 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
         registerAsAnEventHandler(this);
         ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
+        FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
+        setFontSizeUnit(currFontSize);
 
         switch (currentUnit) {
         case ADDRESS:
@@ -188,6 +191,33 @@ public class PersonCard extends UiPart<Region> {
         address.setStyle("-fx-font-size: " + fontSize + ";");
         email.setStyle("-fx-font-size: " + fontSize + ";");
         tags.setStyle("-fx-font-size: " + fontSize + ";");
+    }
+
+    private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
+        switch (currFontSizeUnit) {
+        case FONT_SIZE_XSMALL_UNIT:
+            setFontSize(FONT_SIZE_XSMALL);
+            break;
+
+        case FONT_SIZE_SMALL_UNIT:
+            setFontSize(FONT_SIZE_SMALL);
+            break;
+
+        case FONT_SIZE_NORMAL_UNIT:
+            setFontSize(FONT_SIZE_NORMAL);
+            break;
+
+        case FONT_SIZE_LARGE_UNIT:
+            setFontSize(FONT_SIZE_LARGE);
+            break;
+
+        case FONT_SIZE_XLARGE_UNIT:
+            setFontSize(FONT_SIZE_XLARGE);
+            break;
+
+        default:
+            break;
+        }
     }
 
 }
