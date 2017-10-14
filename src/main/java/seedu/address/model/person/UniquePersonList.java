@@ -127,6 +127,9 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
+    /**
+     * Sort based on alphabetical order
+     */
     public void sort() {
         Collections.sort(internalList, new Comparator<Person>() {
             @Override
@@ -136,6 +139,9 @@ public class UniquePersonList implements Iterable<Person> {
         });
     }
 
+    /**
+     * Remove tag from contact
+     */
     public boolean removeTag(String str) {
         boolean checker1 = false;
         int checker2;
