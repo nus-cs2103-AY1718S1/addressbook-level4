@@ -174,7 +174,9 @@ public class MainWindow extends UiPart<Region> {
         case "blacklist":
             personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
             break;
-
+        case "whitelist":
+            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList());
+            break;
         default:
             personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         }
