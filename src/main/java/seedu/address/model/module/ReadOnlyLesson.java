@@ -12,8 +12,6 @@ import java.util.Set;
  */
 public interface ReadOnlyLesson {
 
-    ObjectProperty<Code> codeProperty();
-    Code getCode();
     ObjectProperty<Location> locationProperty();
     Location getLocation();
     ObjectProperty<TimeSlot> timeSlotProperty();
@@ -31,8 +29,7 @@ public interface ReadOnlyLesson {
     default boolean isSameStateAs(ReadOnlyLesson other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getCode().equals(this.getCode()) // state checks here onwards
-                && other.getLocation().equals(this.getLocation())
+                && other.getLocation().equals(this.getLocation()) // state checks here onwards
                 && other.getTimeSlot().equals(this.getTimeSlot())
                 && other.getClassType().equals(this.getClassType())
                 && other.getGroup().equals(this.getGroup()));
@@ -43,8 +40,7 @@ public interface ReadOnlyLesson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getCode())
-                .append(" Class Type: ")
+        builder.append(" Class Type: ")
                 .append(getClassType())
                 .append(" Location: ")
                 .append(getLocation())
