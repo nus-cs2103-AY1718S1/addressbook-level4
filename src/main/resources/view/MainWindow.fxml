@@ -4,10 +4,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -38,19 +37,7 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
-   <StackPane prefHeight="42.0" prefWidth="690.0" styleClass="pane-with-border">
-      <children>
-         <TextField fx:id="searchField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="188.0" promptText="Search person ..." style="-fx-background-color: dimgrey;" styleClass="pane-with-border" StackPane.alignment="CENTER_LEFT">
-            <StackPane.margin>
-               <Insets left="130.0" />
-            </StackPane.margin>
-         </TextField>
-         <MenuButton fx:id="sortMenu" mnemonicParsing="false" style="-fx-background-color: dimgrey;" text="Sort By:" textFill="WHITE" StackPane.alignment="CENTER_LEFT">
-            <StackPane.margin>
-               <Insets left="20.0" />
-            </StackPane.margin></MenuButton>
-      </children>
-   </StackPane>
+   <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">

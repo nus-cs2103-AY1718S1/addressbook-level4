@@ -8,12 +8,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -21,12 +20,10 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
@@ -37,9 +34,6 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String SORT_COMMAND_WORD = "sort";
-    private static final String FIND_COMMAND_WORD = "find";
-    private static final String LIST_COMMAND_WORD = "list";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
@@ -60,10 +54,7 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private TextField searchField;
-
-    @FXML
-    private MenuButton sortMenu;
+    private HBox sortFindPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -97,77 +88,9 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
-        initSortBox();
-        initSearchField();
 
         setAccelerators();
         registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Initializes the search field.
-     */
-    private void initSearchField() {
-        searchField.setOnKeyReleased(e -> {
-            try {
-                if (searchField.getText().trim().isEmpty()) {
-                    logic.execute(LIST_COMMAND_WORD);
-                } else {
-                    logic.execute(FIND_COMMAND_WORD + " " + searchField.getText());
-                }
-            } catch (CommandException e1) {
-                e1.printStackTrace();
-            } catch (ParseException e1) {
-                e1.printStackTrace();
-            }
-        });
-    }
-
-    /**
-     * Initializes the sort box.
-     */
-    private void initSortBox() throws CommandException, ParseException {
-        MenuItem name = new MenuItem("Name");
-        MenuItem phone = new MenuItem("Phone");
-        MenuItem email = new MenuItem("Email");
-        MenuItem address = new MenuItem("Address");
-        sortMenu.getItems().addAll(name, phone, email, address);
-
-        name.setOnAction(e -> {
-            try {
-                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + name.getText());
-                raise(new NewResultAvailableEvent(result.feedbackToUser));
-            } catch (CommandException | ParseException e1) {
-                logger.warning("Failed to sort name");
-            }
-        });
-
-        phone.setOnAction(e -> {
-            try {
-                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + phone.getText());
-                raise(new NewResultAvailableEvent(result.feedbackToUser));
-            } catch (CommandException | ParseException e1) {
-                logger.warning("Failed to sort phone");
-            }
-        });
-
-        email.setOnAction(e -> {
-            try {
-                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + email.getText());
-                raise(new NewResultAvailableEvent(result.feedbackToUser));
-            } catch (CommandException | ParseException e1) {
-                logger.warning("Failed to sort email");
-            }
-        });
-
-        address.setOnAction(e -> {
-            try {
-                CommandResult result = logic.execute(SORT_COMMAND_WORD + " " + address.getText());
-                raise(new NewResultAvailableEvent(result.feedbackToUser));
-            } catch (CommandException | ParseException e1) {
-                logger.warning("Failed to sort address");
-            }
-        });
     }
 
     public Stage getPrimaryStage() {
@@ -228,6 +151,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        SortFindPanel sortFindPanel = new SortFindPanel(logic);
+        sortFindPanelPlaceholder.getChildren().add(sortFindPanel.getRoot());
     }
 
     void hide() {
