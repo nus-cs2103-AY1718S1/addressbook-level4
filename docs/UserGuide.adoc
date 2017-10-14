@@ -332,11 +332,16 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/1234
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Ban* : `ban INDEX` +
+e.g. `ban 3`
+* *Unban* : `unban INDEX` +
+e.g. `unban 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Blacklist* : `blacklist`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`

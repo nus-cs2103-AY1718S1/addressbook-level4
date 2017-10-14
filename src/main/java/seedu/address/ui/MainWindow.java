@@ -22,7 +22,6 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.LoginCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -31,7 +30,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/sharkie.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -42,7 +41,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private InfoPanel infoPanel;
     private StartUpPanel startUpPanel;
     private PersonListPanel personListPanel;
     private PersonListStartUpPanel personListStartUpPanel;
@@ -50,7 +49,7 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane infoPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -136,8 +135,9 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        infoPanel = new InfoPanel();
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 
     //@@author jelneo
@@ -148,7 +148,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
             startUpPanel = new StartUpPanel();
-            browserPlaceholder.getChildren().add(startUpPanel.getRoot());
+            infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
             personListStartUpPanel = new PersonListStartUpPanel();
             personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
@@ -246,12 +246,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        if (LoginCommand.isLoggedIn()) {
-            browserPanel.freeResources();
-        }
     }
 
     @Subscribe

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -26,6 +27,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPostalCode(), actualCard.getPostalCode());
         assertEquals(expectedCard.getDebt(), actualCard.getDebt());
         assertEquals(expectedCard.getDeadLine(), actualCard.getDeadLine());
+        assertEquals(expectedCard.getDateBorrow(), actualCard.getDateBorrow());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -43,6 +45,21 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getDeadLine().value, actualCard.getDeadLine());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
+     */
+    public static void assertInfoDisplaysPerson(ReadOnlyPerson expectedPerson, InfoPanelHandle actualInfo) {
+        assertEquals(expectedPerson.getName().fullName, actualInfo.getName());
+        assertEquals(expectedPerson.getPhone().value, actualInfo.getPhone());
+        assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
+        assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
+        assertEquals(expectedPerson.getDebt().value, actualInfo.getDebt());
+        assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualInfo.getTags());
     }
 
     /**
