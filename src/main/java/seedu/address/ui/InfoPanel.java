@@ -105,7 +105,7 @@ public class InfoPanel extends UiPart<Region> {
 
     /**
      * Initializes and styles tags belonging to each person.
-     * @param person
+     * @param person must be a valid person.
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
