@@ -27,6 +27,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniquePersonList blacklistedPersons;
+    private final UniquePersonList whitelistedPersons;
     private final UniqueTagList tags;
 
     /*
@@ -39,6 +40,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         blacklistedPersons = new UniquePersonList();
+        whitelistedPersons = new UniquePersonList();
         tags = new UniqueTagList();
     }
 
@@ -62,6 +64,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.blacklistedPersons.setPersons(persons);
     }
 
+    public void setWhitelistedPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
+        this.whitelistedPersons.setPersons(persons);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -83,9 +89,16 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
+        try {
+            setWhitelistedPersons(newData.getWhitelistedPersonList());
+        } catch (DuplicatePersonException e) {
+            assert false : "AddressBooks should not have duplicate whitelisted persons";
+        }
+
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
         syncMasterTagListWith(blacklistedPersons);
+        syncMasterTagListWith(whitelistedPersons);
     }
 
     //// person-level operations
@@ -120,6 +133,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         blacklistedPersons.add(newPerson);
+    }
+
+    /**
+     * Adds a person to the whitelist in the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addWhitelistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+        Person newPerson = new Person(p);
+        syncMasterTagListWith(newPerson);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        whitelistedPersons.add(newPerson);
     }
 
     /**
@@ -198,6 +227,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code key} from {@code whitelistedPersons} in {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeWhitelistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        if (whitelistedPersons.remove(key)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -214,6 +255,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String toString() {
         return persons.asObservableList().size() + " persons, "
                 + blacklistedPersons.asObservableList().size() + " blacklisted persons, "
+                + whitelistedPersons.asObservableList().size() + " whitelisted persons, "
                 + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
@@ -229,6 +271,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+        return whitelistedPersons.asObservableList();
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
     }
@@ -239,12 +286,13 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.blacklistedPersons.equals(((AddressBook) other).blacklistedPersons)
+                && this.whitelistedPersons.equals(((AddressBook) other).whitelistedPersons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, blacklistedPersons, tags);
+        return Objects.hash(persons, blacklistedPersons, whitelistedPersons, tags);
     }
 }
