@@ -16,7 +16,7 @@ public class SortCommandTest {
     private Model model;
 
     @Test
-    public void execute_success() throws Exception {
+    public void execute() throws Exception {
         //setting up the model to for entries in reverse order
         AddressBook abNIO = new AddressBook();
         abNIO.addPerson(TypicalPersons.ELLE);
