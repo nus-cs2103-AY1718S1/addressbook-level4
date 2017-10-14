@@ -90,7 +90,6 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -116,6 +115,6 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleDataSavingExceptionEvent(DataSavingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait(FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE, FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE,
-                event.exception);
+            event.exception);
     }
 }

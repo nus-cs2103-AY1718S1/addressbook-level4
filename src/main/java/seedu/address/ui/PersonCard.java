@@ -46,6 +46,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label remark;
+    @FXML
+    private Label website;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -66,6 +68,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        website.textProperty().bind(Bindings.convert(person.websiteProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -98,7 +101,7 @@ public class PersonCard extends UiPart<Region> {
         // state check
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+            && person.equals(card.person);
     }
 
     private static String getColorForTag(String tagValue) {

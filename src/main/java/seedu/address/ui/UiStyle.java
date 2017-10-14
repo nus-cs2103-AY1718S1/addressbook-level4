@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.Random;
 
+import javafx.scene.Scene;
+
 /**
  * Contains the Styles / Colors that can be used in UI
  */
@@ -9,6 +11,11 @@ import java.util.Random;
 public class UiStyle {
 
     private static UiStyle instance = null;
+
+    private static final String LIGHT_THEME_STYLE = "view/LightTheme.css";
+    private static final String DARK_THEME_STYLE = "view/DarkTheme.css";
+
+    private static Scene scene = null;
 
     private static final String STYLE_BACKGROUND_COLOR = "-fx-background-color: ";
     private static final String HEX_COLOR = "#%1$s";
@@ -26,6 +33,11 @@ public class UiStyle {
         return instance;
     }
 
+    public static void setScene(Scene s) {
+        scene = s;
+        setToDarkTheme();
+    }
+
     public static String getRandomHexColor() {
         return String.format(HEX_COLOR, Integer.toHexString(random.nextInt(MAX_HEX_COLOR)));
     }
@@ -40,6 +52,17 @@ public class UiStyle {
      */
     public static String getBackgroundStyle(String color) {
         return UiStyle.STYLE_BACKGROUND_COLOR + color;
+    }
+
+    //---------------------------------------------------------
+    public static void setToLightTheme() {
+        scene.getStylesheets().remove(DARK_THEME_STYLE);
+        scene.getStylesheets().add(LIGHT_THEME_STYLE);
+    }
+
+    public static void setToDarkTheme() {
+        scene.getStylesheets().remove(LIGHT_THEME_STYLE);
+        scene.getStylesheets().add(DARK_THEME_STYLE);
     }
 
 }

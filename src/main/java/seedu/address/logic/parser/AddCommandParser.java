@@ -25,9 +25,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_BIRTHDAY, PREFIX_TAG);
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL , PREFIX_BIRTHDAY)) {
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_BIRTHDAY, PREFIX_WEBSITE, PREFIX_TAG);
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
@@ -38,9 +37,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Birthday birthday= ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             Remark remark = new Remark(""); // add command does not allow adding remarks straight away
+            Website website = ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, website, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

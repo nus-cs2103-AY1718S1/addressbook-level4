@@ -16,6 +16,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_WEBSITE = Website.WEBSITE_EXAMPLE;
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_BIRTHDAY="15/02/1992";
@@ -30,9 +31,10 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
-            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Website defaultWebsite = new Website(DEFAULT_WEBSITE);
+            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);          
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultBirthday, defaultRemark, defaultTags);
+                    defaultAddress, defaultBirthday, defaultRemark, defaultWebsite, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -122,6 +124,18 @@ public class PersonBuilder {
      */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Website} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withWebsite(String website) {
+        try {
+            this.person.setWebsite(new Website(website));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("website is expected to be unique.");
+        }
         return this;
     }
 

@@ -4,53 +4,36 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+DeathNote was developed by the https://github.com/CS2103AUG2017-W10-B3[CS2103AUG2017-W10-B3] team, modified
+from AddressBook - Level 4 by https://se-edu.github.io/docs/Team.html[se-edu] team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Adeeb Ashraf
 
-Role: Project Advisor
+{empty}[https://github.com/chilipadiboy[github]]
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Documentation, Testing, Integration +
+Responsibilities: Storage Component
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Boo Kai Hsien
+image::kaihsien.jpg[width="150", align="left"]
+{empty}[https://github.com/chrisboo[github]] [<<chrisboo#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Code quality, Deliverables and Deadlines +
+Responsibilities: Model Component, Logic Component
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Jeremy Chan
+image::jeremy.png[width="150", align="left"]
+{empty}[https://github.com/Jemereny[github]]
 
-Role: Developer +
-Responsibilities: UI
+Role: Team Lead, Scheduling and Tracking +
+Responsibilities: UI Component
 
 '''

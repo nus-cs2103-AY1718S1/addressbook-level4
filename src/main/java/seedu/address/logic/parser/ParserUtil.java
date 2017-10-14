@@ -10,8 +10,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
 import static java.util.Objects.requireNonNull;
+
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -30,6 +30,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -54,8 +55,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(new Phone(null));
     }
 
     /**
@@ -63,8 +63,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(new Address(null));
     }
 
     /**
@@ -72,8 +71,15 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(new Email(null));
+    }
+
+    /**
+     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Website> parseWebsite(Optional<String> website) throws IllegalValueException {
+        return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.of(new Website(null));
     }
 
     /**
