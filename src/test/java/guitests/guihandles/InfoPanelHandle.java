@@ -107,9 +107,13 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return debtLabel.getText();
     }
 
-    public String getDateBorrow() { return dateBorrowLabel.getText(); }
+    public String getDateBorrow() {
+        return dateBorrowLabel.getText();
+    }
 
-    public String getDateRepaid() { return dateRepaidLabel.getText(); }
+    public String getDateRepaid() {
+        return dateRepaidLabel.getText();
+    }
 
     public String getPostalCode() {
         return  postalCodeLabel.getText();
