@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.scene.image.ImageView;
 import org.controlsfx.control.textfield.TextFields;
 
 import com.google.common.eventbus.Subscribe;
@@ -35,6 +36,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -58,9 +60,15 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private final AddressBookParser tester;
+
     private HashMap<String, String> keywordColorMap;
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
+
+    private final ImageView tick = new ImageView("/images/tick.png");
+    private final ImageView cross = new ImageView("/images/cross.png");
+
 
     @FXML
     private TextField commandTextField;
@@ -86,6 +94,9 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private Label keywordLabel;
 
+    @FXML
+    private Label checkbox;
+
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -96,9 +107,14 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = logic.getCommandKeywordColorMap();
         String[] commands = {"help", "add", "list", "edit", "find",
-            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
+                "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
         TextFields.bindAutoCompletion(commandTextField, commands);
+        tick.setFitHeight(30);
+        tick.setFitWidth(30);
+        cross.setFitHeight(30);
+        cross.setFitWidth(30);
         historySnapshot = logic.getHistorySnapshot();
+        tester = new AddressBookParser();
         registerAsAnEventHandler(this);
     }
 
@@ -107,11 +123,13 @@ public class CommandBox extends UiPart<Region> {
      */
     private void configPrefixList() {
         prefixList = new ArrayList<>();
-        prefixList.add(CliSyntax.PREFIX_NAME.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_EMAIL.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_PHONE.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_ADDRESS.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_TAG.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_CLASS_TYPE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_MODULE_CODE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_GROUP.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_LECTURER.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_TIME_SLOT.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_VENUE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
     }
 
@@ -121,19 +139,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            default:
+                // let JavaFx handle the keypress
         }
     }
 
@@ -143,13 +161,13 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        default:
-            listenCommandInputChanged();
+            default:
+                listenCommandInputChanged();
         }
     }
 
     /**
-     * Handles the Enter button pressed event.
+     * Handles the Command input changed event.
      */
     private void listenCommandInputChanged() {
         String allTextInput = commandTextField.getText();
@@ -158,6 +176,16 @@ public class CommandBox extends UiPart<Region> {
 
         configInActiveTag();
         configInactiveKeyword();
+
+        try {
+            tester.parseCommand(allTextInput);
+            commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+            checkbox.setGraphic(tick);
+
+        } catch (ParseException e) {
+            commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
+            checkbox.setGraphic(cross);
+        }
 
         for (int i = 0; i < inputArray.length; i++) {
             String text = inputArray[i];
@@ -260,28 +288,28 @@ public class CommandBox extends UiPart<Region> {
         Insets leftInset = new Insets(0, 0, 0, 13);
 
         switch (fontIndex) {
-        case 1:
-            keywordLabel.getStyleClass().add("keyword-label-xsmall");
-            leftInset = new Insets(0, 0, 0, 9);
-            break;
-        case 2:
-            keywordLabel.getStyleClass().add("keyword-label-small");
-            leftInset = new Insets(0, 0, 0, 10);
-            break;
-        case 3:
-            keywordLabel.getStyleClass().add("keyword-label-default");
-            leftInset = new Insets(0, 0, 0, 14);
-            break;
-        case 4:
-            keywordLabel.getStyleClass().add("keyword-label-large");
-            leftInset = new Insets(0, 0, 0, 10);
-            break;
-        case 5:
-            keywordLabel.getStyleClass().add("keyword-label-xlarge");
-            leftInset = new Insets(0, 0, 0, 9);
-            break;
-        default:
-            keywordLabel.getStyleClass().add("keyword-label-default");
+            case 1:
+                keywordLabel.getStyleClass().add("keyword-label-xsmall");
+                leftInset = new Insets(0, 0, 0, 9);
+                break;
+            case 2:
+                keywordLabel.getStyleClass().add("keyword-label-small");
+                leftInset = new Insets(0, 0, 0, 10);
+                break;
+            case 3:
+                keywordLabel.getStyleClass().add("keyword-label-default");
+                leftInset = new Insets(0, 0, 0, 14);
+                break;
+            case 4:
+                keywordLabel.getStyleClass().add("keyword-label-large");
+                leftInset = new Insets(0, 0, 0, 10);
+                break;
+            case 5:
+                keywordLabel.getStyleClass().add("keyword-label-xlarge");
+                leftInset = new Insets(0, 0, 0, 9);
+                break;
+            default:
+                keywordLabel.getStyleClass().add("keyword-label-default");
         }
 
         stackPane.setAlignment(keywordLabel, Pos.CENTER_LEFT);
@@ -309,33 +337,33 @@ public class CommandBox extends UiPart<Region> {
         Insets leftInset = new Insets(0, 0, 0, margin + 13);
 
         switch (fontIndex) {
-        case 1:
-            tagLabel.getStyleClass().add("keyword-label-xsmall");
-            margin = computeMargin(1, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 9);
-            break;
-        case 2:
-            tagLabel.getStyleClass().add("keyword-label-small");
-            margin = computeMargin(2, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 10);
-            break;
-        case 3:
-            tagLabel.getStyleClass().add("keyword-label-default");
-            margin = computeMargin(3, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 14);
-            break;
-        case 4:
-            tagLabel.getStyleClass().add("keyword-label-large");
-            margin = computeMargin(4, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 10);
-            break;
-        case 5:
-            tagLabel.getStyleClass().add("keyword-label-xlarge");
-            margin = computeMargin(5, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 9);
-            break;
-        default:
-            tagLabel.getStyleClass().add("keyword-label-default");
+            case 1:
+                tagLabel.getStyleClass().add("keyword-label-xsmall");
+                margin = computeMargin(1, inputText);
+                leftInset = new Insets(0, 0, 0, margin + 9);
+                break;
+            case 2:
+                tagLabel.getStyleClass().add("keyword-label-small");
+                margin = computeMargin(2, inputText);
+                leftInset = new Insets(0, 0, 0, margin + 10);
+                break;
+            case 3:
+                tagLabel.getStyleClass().add("keyword-label-default");
+                margin = computeMargin(3, inputText);
+                leftInset = new Insets(0, 0, 0, margin + 14);
+                break;
+            case 4:
+                tagLabel.getStyleClass().add("keyword-label-large");
+                margin = computeMargin(4, inputText);
+                leftInset = new Insets(0, 0, 0, margin + 10);
+                break;
+            case 5:
+                tagLabel.getStyleClass().add("keyword-label-xlarge");
+                margin = computeMargin(5, inputText);
+                leftInset = new Insets(0, 0, 0, margin + 9);
+                break;
+            default:
+                tagLabel.getStyleClass().add("keyword-label-default");
         }
 
         stackPane.getChildren().add(tagLabel);
@@ -381,23 +409,23 @@ public class CommandBox extends UiPart<Region> {
         Text text = new Text(str);
         text.getStyleClass().clear();
         switch (index) {
-        case 1:
-            text.setFont(commandTextXsmall.getFont());
-            break;
-        case 2:
-            text.setFont(commandTextSmall.getFont());
-            break;
-        case 3:
-            text.setFont(commandTextDefault.getFont());
-            break;
-        case 4:
-            text.setFont(commandTextLarge.getFont());
-            break;
-        case 5:
-            text.setFont(commandTextXLarge.getFont());
-            break;
-        default:
-            text.setFont(commandTextDefault.getFont());
+            case 1:
+                text.setFont(commandTextXsmall.getFont());
+                break;
+            case 2:
+                text.setFont(commandTextSmall.getFont());
+                break;
+            case 3:
+                text.setFont(commandTextDefault.getFont());
+                break;
+            case 4:
+                text.setFont(commandTextLarge.getFont());
+                break;
+            case 5:
+                text.setFont(commandTextXLarge.getFont());
+                break;
+            default:
+                text.setFont(commandTextDefault.getFont());
 
         }
 
@@ -469,33 +497,33 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setFontSize(String userPref) {
         switch (userPref) {
-        case FONT_SIZE_XSMALL:
-            commandTextField.setStyle("-fx-font-size: x-small;");
-            fontIndex = 1;
-            break;
+            case FONT_SIZE_XSMALL:
+                commandTextField.setStyle("-fx-font-size: x-small;");
+                fontIndex = 1;
+                break;
 
-        case FONT_SIZE_SMALL:
-            commandTextField.setStyle("-fx-font-size: small;");
-            fontIndex = 2;
-            break;
+            case FONT_SIZE_SMALL:
+                commandTextField.setStyle("-fx-font-size: small;");
+                fontIndex = 2;
+                break;
 
-        case FONT_SIZE_NORMAL:
-            commandTextField.setStyle("-fx-font-size: normal;");
-            fontIndex = 3;
-            break;
+            case FONT_SIZE_NORMAL:
+                commandTextField.setStyle("-fx-font-size: normal;");
+                fontIndex = 3;
+                break;
 
-        case FONT_SIZE_LARGE:
-            commandTextField.setStyle("-fx-font-size: x-large;");
-            fontIndex = 4;
-            break;
+            case FONT_SIZE_LARGE:
+                commandTextField.setStyle("-fx-font-size: x-large;");
+                fontIndex = 4;
+                break;
 
-        case FONT_SIZE_XLARGE:
-            commandTextField.setStyle("-fx-font-size: xx-large;");
-            fontIndex = 5;
-            break;
+            case FONT_SIZE_XLARGE:
+                commandTextField.setStyle("-fx-font-size: xx-large;");
+                fontIndex = 5;
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
