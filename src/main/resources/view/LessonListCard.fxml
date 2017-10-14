@@ -31,7 +31,7 @@
       <FlowPane fx:id="lecturers" />
       <Label fx:id="classType" styleClass="cell_small_label" text="\$classType" />
          <Label fx:id="group" text="\$group" />
-      <Label fx:id="location" styleClass="cell_small_label" text="\$location" />
+      <Label fx:id="venue" styleClass="cell_small_label" text="\$venue" />
       <Label fx:id="timeSlot" styleClass="cell_small_label" text="\$timeSlot" />
     </VBox>
       <rowConstraints>
