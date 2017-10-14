@@ -79,17 +79,17 @@ public class ModelManagerTest {
         AddressBook emptyAddressBook = new AddressBookBuilder().build();
         ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
         AddressBook expectedAddressBook = new AddressBookBuilder().build();
-        emptyModelManager.deleteTag(tag);
+        emptyModelManager.deleteTagFromEveryone(tag);
         assertTrue(emptyAddressBook.equals(expectedAddressBook));
 
         //person not found, no such tag
         Tag noSuchTag = new Tag("nosuchtag", "");
-        modelManager.deleteTag(noSuchTag);
+        modelManager.deleteTagFromEveryone(noSuchTag);
         expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertTrue(addressBook.equals(expectedAddressBook));
 
         //deletes a tag
-        modelManager.deleteTag(tag);
+        modelManager.deleteTagFromEveryone(tag);
         AddressBook originalAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         for (ReadOnlyPerson person : originalAddressBook.getPersonList()) {
             for (ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
