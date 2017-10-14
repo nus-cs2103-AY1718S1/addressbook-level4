@@ -19,6 +19,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -162,11 +163,12 @@ public class ModelManager extends ComponentManager implements Model {
         switch (ListingUnit.getCurrentListingUnit()) {
 
         case LESSON:
-            // To be implemented
+            // to be implemented
             break;
 
         case LOCATION:
-            // To be implemented
+            Predicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+            updateFilteredLessonList(predicate);
             break;
 
         default:

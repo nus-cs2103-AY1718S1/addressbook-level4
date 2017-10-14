@@ -11,8 +11,8 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.person.predicates.UniqueLocationPredicate;
-import seedu.address.model.person.predicates.UniqueModuleCodePredicate;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 

@@ -1,12 +1,10 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.module.predicates;
 
 import java.util.HashSet;
 import java.util.function.Predicate;
 
 import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.ReadOnlyPerson;
 
 
 /**

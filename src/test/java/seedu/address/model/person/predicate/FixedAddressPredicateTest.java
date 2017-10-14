@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.predicates.FixedAddressPredicate;
+import seedu.address.model.module.predicates.FixedAddressPredicate;
 import seedu.address.testutil.PersonBuilder;
 
 public class FixedAddressPredicateTest {
