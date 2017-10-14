@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.Debt.DEBT_ZERO_VALUE;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -149,6 +152,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         whitelistedPersons.add(newPerson);
+    }
+
+    /**
+     * Resets person's debt field to zero, in the main list of the addressbook.
+     *
+     *  @throws PersonNotFoundException if person does not exist in list.
+     */
+    public void resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
+        removePerson(p);
+        Person existingPerson = new Person(p);
+        try {
+            existingPerson.setDebt(new Debt(DEBT_ZERO_VALUE));
+        } catch (IllegalValueException e) {
+            assert false: "The target value cannot be of illegal value";
+        }
+
+        try {
+            addPerson(existingPerson);
+        } catch (DuplicatePersonException e) {
+            assert false: "List should not have duplicate person";
+        }
     }
 
     /**
