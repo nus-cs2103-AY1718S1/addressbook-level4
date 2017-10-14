@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://github.com/CS2103AUG2017-T16-B2/main[T16-B2] team. +
+cherBook was developed by the AY17/18 https://github.com/CS2103AUG2017-T16-B2/main[T16-B2] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
