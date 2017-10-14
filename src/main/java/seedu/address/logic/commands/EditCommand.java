@@ -80,9 +80,9 @@ public class EditCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (editedPerson.equals(personToEdit)) {
+        /*if (editedPerson.equals(personToEdit)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
+        }*/
 
         try {
             model.updatePerson(personToEdit, editedPerson);
