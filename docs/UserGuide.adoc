@@ -64,13 +64,17 @@ to the `add` and `edit` command in the section below for more information.
 * Similar to link:#contacts[contacts], you can add customize properties to events as well.
 * Similar to link:#contacts[contacts], you can add tags to events as well.
 * If you have set starting and/or end time for an event, it will be reflected accordingly on the link:#calendar[calendar] component.
-* You can set notification at specific time before an event starts (when you should arrive at the venue before a meeting begins) or at specific time
-before an event ends (when you need to finalize your assignment and submit it to your professor).
+* You can set notification at specific time before an event starts (when you should arrive at the venue before a meeting
+begins) or at specific time before an event ends (when you need to finalize your assignment and submit it to your professor).
 * You can link one or more link:#contacts[contacts] to an event (if all of you are going to attend the same meeting).
 
 === Calendar
 
-Calender provides a more convenient interface for you to view your upcoming link:#events[events].
+Calender provides a more convenient interface for you to view your upcoming link:#events[events]. All events are displayed
+based on their time interval. Events whose time intervals are not specified will not be displayed here.
+
+* You can choose the style to display the upcoming events (weekly/monthly/yearly view).
+* You can add/update/delete events here, but the actual operation will be handled by the link:#events[events] component.
 
 == Commands
 
