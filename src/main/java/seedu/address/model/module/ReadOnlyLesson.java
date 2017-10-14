@@ -1,7 +1,8 @@
 package seedu.address.model.module;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.tag.Lecturer;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
 
 import java.util.Set;
 
@@ -19,8 +20,10 @@ public interface ReadOnlyLesson {
     ClassType getClassType();
     ObjectProperty<Group> groupProperty();
     Group getGroup();
-    ObjectProperty<Lecturer> lecturerProperty();
-    Lecturer getLecturer();
+    ObjectProperty<Code> codeProperty();
+    Code getCode();
+    ObjectProperty<UniqueLecturerList> lecturersProperty();
+    Set<Lecturer> getLecturers();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -31,7 +34,9 @@ public interface ReadOnlyLesson {
                 && other.getLocation().equals(this.getLocation()) // state checks here onwards
                 && other.getTimeSlot().equals(this.getTimeSlot())
                 && other.getClassType().equals(this.getClassType())
-                && other.getGroup().equals(this.getGroup()));
+                && other.getGroup().equals(this.getGroup())
+                && other.getCode().equals(this.getCode())
+                && other.getLecturers().equals(this.getLecturers()));
     }
 
     /**
@@ -39,16 +44,17 @@ public interface ReadOnlyLesson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(" Class Type: ")
+        builder.append(" Module Code: ")
+                .append(getCode())
+                .append(" Class Type: ")
                 .append(getClassType())
                 .append(" Location: ")
                 .append(getLocation())
                 .append(" Group: ")
                 .append(getGroup())
                 .append(" Time Slot: ")
-                .append(getTimeSlot())
-                .append(" Lecturer: ")
-                .append(getLecturer());
+                .append(getTimeSlot());
+        getLecturers().forEach(builder::append);
         return builder.toString();
     }
 
