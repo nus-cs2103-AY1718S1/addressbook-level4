@@ -10,9 +10,10 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F10-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT` +
+Updated by: `CS2103-F10-B1`
 
 == Quick Start
 
@@ -226,6 +227,29 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Features (Coming in v2.0)
+
+=== User login
+
+Enters a password to check if user is authorised to access information in Intelli. +
+Any data (i.e. the person list and the graph) will only be displayed after successful login. +
+Format: `login PASSWORD`
+
+=== Set a password
+
+Sets a password to protect Intelli from other users. +
+Format: `set PASSWORD`
+
+[NOTE]
+====
+To set a new password, a user must first be logged into Intelli with the previous password.
+====
+
+[NOTE]
+====
+The default password is `i<3Intelli`.
+====
 
 == FAQ
 
