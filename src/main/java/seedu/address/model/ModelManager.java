@@ -120,6 +120,9 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sort();
     }
 
+    /**
+     * Delete tag from contact
+     */
     public void deleteTag(String str) {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
