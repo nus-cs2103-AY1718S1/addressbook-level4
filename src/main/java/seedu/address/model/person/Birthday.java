@@ -6,8 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -24,7 +22,6 @@ public class Birthday {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        requireNonNull(birthday);
         if (!isValidBirthday(birthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
@@ -34,10 +31,10 @@ public class Birthday {
     /**
      * Returns true if a given string is a valid person email.
      */
-    private static boolean isValidBirthday(String birthday) {
+    static boolean isValidBirthday(String birthday) {
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
+        format.setLenient(false);
         try {
             Date strToDate=format.parse(birthday);      //tries to parse provided string in given format
         } catch (ParseException e) {

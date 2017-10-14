@@ -6,7 +6,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">15/02/1992</birthday>
-        <remark isPrivate="false"></remark>
+        <remark isPrivate="false">"Test"</remark>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -14,7 +14,7 @@
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <birthday isPrivate="false">15/02/1992</birthday>
-        <remark isPrivate="false"></remark>
+        <remark isPrivate="false">"This"</remark>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -22,7 +22,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <birthday isPrivate="false">15/02/1992</birthday>
-        <remark isPrivate="false"></remark>
+        <remark isPrivate="false">"Remark"</remark>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
