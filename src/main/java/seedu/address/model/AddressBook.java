@@ -2,14 +2,10 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -62,6 +58,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
+    }
+
+    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+        persons.addAppointment(appointment);
     }
 
     /**

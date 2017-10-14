@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -118,5 +119,21 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    /**
+     * Adds appointment to a person in the internal list.
+     * @param appointment
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+        for (Person person : internalList) {
+            if (person.getName().toString().equals(appointment.getPersonName())) {
+                person.setAppointment(appointment);
+                return;
+            }
+        }
+        throw new PersonNotFoundException();
+
     }
 }

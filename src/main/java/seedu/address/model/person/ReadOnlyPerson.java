@@ -26,7 +26,8 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
-
+    ObjectProperty<Appointment> appointmentProperty();
+    Appointment getAppointment();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -37,7 +38,9 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
-                && other.getBloodType().equals(this.getBloodType()));
+                && other.getBloodType().equals(this.getBloodType())
+                && other.getAddress().equals(this.getAppointment())
+                && other.getAppointment().equals(this.getAppointment()));
     }
 
     /**
@@ -56,9 +59,12 @@ public interface ReadOnlyPerson {
                 .append(getBloodType())
                 .append(" Tags: ")
                 .append(getRemark())
-                .append(" Remark: ");
+                .append(" Remark: ")
+                .append(" Appointment: ")
+                .append(getAppointment().toString());
         getTags().forEach(builder::append);
         return builder.toString();
     }
+
 
 }
