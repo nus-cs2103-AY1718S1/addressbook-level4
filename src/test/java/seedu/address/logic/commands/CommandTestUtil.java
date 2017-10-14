@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEAD_LINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -39,6 +40,8 @@ public class CommandTestUtil {
     public static final String VALID_POSTAL_CODE_BOB = "102123";
     public static final String VALID_DEBT_AMY = "100002";
     public static final String VALID_DEBT_BOB = "100001";
+    public static final String VALID_DEAD_LINE_AMY = "11-11-2020";
+    public static final String VALID_DEAD_LINE_BOB = "11-12-2020";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -54,6 +57,8 @@ public class CommandTestUtil {
     public static final String POSTAL_CODE_DESC_BOB = " " + PREFIX_POSTAL_CODE + VALID_POSTAL_CODE_BOB;
     public static final String DEBT_DESC_AMY = " " + PREFIX_DEBT + VALID_DEBT_AMY;
     public static final String DEBT_DESC_BOB = " " + PREFIX_DEBT + VALID_DEBT_BOB;
+    public static final String DEAD_LINE_DESC_AMY = " " + PREFIX_DEAD_LINE + VALID_DEAD_LINE_AMY;
+    public static final String DEAD_LINE_DESC_BOB = " " + PREFIX_DEAD_LINE + VALID_DEAD_LINE_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -63,6 +68,8 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_POSTAL_CODE_DESC = " " + PREFIX_POSTAL_CODE + "12345"; // not 6 digits
     public static final String INVALID_DEBT_DESC = " " + PREFIX_DEBT + "onehundred"; // String not allowed in debt
+    public static final String INVALID_DEAD_LINE_DESC = " " + PREFIX_DEAD_LINE + "0-0-2017"; //Only accepts range
+    // of [1-12]
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
@@ -71,11 +78,12 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY)
+                .withDeadLine(VALID_DEAD_LINE_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withPostalCode(VALID_POSTAL_CODE_BOB).withDebt(VALID_DEBT_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withDeadLine(VALID_DEAD_LINE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

@@ -25,6 +25,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getPostalCode(), actualCard.getPostalCode());
         assertEquals(expectedCard.getDebt(), actualCard.getDebt());
+        assertEquals(expectedCard.getDeadLine(), actualCard.getDeadLine());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -39,6 +40,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
         assertEquals(expectedPerson.getDebt().value, actualCard.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualCard.getDateBorrow());
+        assertEquals(expectedPerson.getDeadLine().value, actualCard.getDeadLine());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }

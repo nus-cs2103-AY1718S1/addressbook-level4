@@ -14,8 +14,8 @@ public class DeadLine {
 
     public static final String NO_DEAD_LINE_SET = "No deadline set.";
     public static final String MESSAGE_DEAD_LINE_CONSTRAINTS =
-            "Deadline can only contain ";
-    public static final String DEADLINE_VALIDATION_REGEX = "\\d{3,}";
+            "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
+    public static final String DEADLINE_VALIDATION_REGEX = "(\\d[1-12])(\\-)(\\d[1-12])(\\-)(\\d{4})";
     public final String value;
 
     /**
