@@ -32,8 +32,10 @@ public class ListCommand extends Command {
 
     public static final String DEFAULT_LISTING_ELEMENT = "Persons";
     public static final String ATTRIBUTE_ADDRESS = "address";
+    public static final String ATTRIBUTE_COLLECTION = "collection";
     public static final String ATTRIBUTE_EMAIL = "email";
     public static final String ATTRIBUTE_PHONE = "phone";
+
 
     private final String attName;
 
@@ -65,6 +67,11 @@ public class ListCommand extends Command {
             return executeListByAttribute(emailPredicate);
 
         case ATTRIBUTE_PHONE:
+            ListingUnit.setCurrentListingUnit(PHONE);
+            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
+            return executeListByAttribute(phonePredicate);
+
+        case ATTRIBUTE_COLLECTION:
             ListingUnit.setCurrentListingUnit(PHONE);
             UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
             return executeListByAttribute(phonePredicate);
