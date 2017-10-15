@@ -41,42 +41,43 @@ public class KeyListener {
     public void handleKeyPress() {
         mainWindow.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             commandBox.setStyleToDefault();
-            executeEvent(event);
+            executeKeyEvent(event);
         });
     }
 
     /**
-     * Executes the key event
+     * Executes the key event.
+     * Matches {@code keyEvent} with non-command events before handling keys mapped to command words.
      */
-    private void executeEvent(KeyEvent event) {
+    private void executeKeyEvent(KeyEvent keyEvent) {
 
         // Execute key events for non-command events
-        if (keys.get("FOCUS_PERSON_LIST").match(event)) {
+        if (keys.get("FOCUS_PERSON_LIST").match(keyEvent)) {
             personListPanel.setFocus();
 
-        } else if (keys.get("FOCUS_COMMAND_BOX").match(event)) {
+        } else if (keys.get("FOCUS_COMMAND_BOX").match(keyEvent)) {
             commandBox.setFocus();
 
-        } else if (keys.get("DELETE_SELECTION").match(event)) {
+        } else if (keys.get("DELETE_SELECTION").match(keyEvent)) {
             // TODO: add support for deletion at selected list
             // Dummy action
             personListPanel.setFocus();
 
         } else {
             // Execute key events for command words
-            executeCommandKeyEvents(event);
+            executeCommandKeyEvents(keyEvent);
         }
     }
 
     /**
-     * Execute key events for command words
+     * Executes {@code keyEvent} for command words by searching for mapped keys in HashMap {@code keys}
      */
-    private void executeCommandKeyEvents(KeyEvent event) {
+    private void executeCommandKeyEvents(KeyEvent keyEvent) {
         for (HashMap.Entry<String, KeyCombination> key: keys.entrySet()) {
             KeyCombination keyCombination = key.getValue();
             String command = key.getKey();
 
-            if (keyCombination.match(event)) {
+            if (keyCombination.match(keyEvent)) {
                 executeCommand(command);
             }
         }
