@@ -18,6 +18,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    private static final int AUTOCOMPLETE_CACHE_SIZE = 5;
+
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -25,13 +27,15 @@ public class LogicManager extends ComponentManager implements Logic {
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
     private final AutoCompletePossibilities autoCompletePossibilities;
+    private final AutoCompleteManager autoCompleteManager;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
-        this.autoCompletePossibilities = new AutoCompletePossibilities();
+        this.autoCompletePossibilities = new AutoCompletePossibilities("");
+        this.autoCompleteManager = new AutoCompleteManager(AUTOCOMPLETE_CACHE_SIZE);
     }
 
     @Override
@@ -63,8 +67,9 @@ public class LogicManager extends ComponentManager implements Logic {
         return new ListElementPointer(autoCompletePossibilities.getPossibilities());
     }
 
+    @Override
     public void updateAutoCompletePossibilities(String stub) {
-        autoCompletePossibilities.updatePossibilities(stub);
+        autoCompletePossibilities = autoCompleteManager.search(stub);
     }
 
 }
