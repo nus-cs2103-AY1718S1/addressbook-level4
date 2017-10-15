@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.ui.HelpWindow.USERGUIDE_FILE_PATH;
+import static seedu.address.ui.HelpWindow.HELP_FILE_PATH;
 
 import java.net.URL;
 
@@ -27,7 +27,7 @@ public class HelpWindowTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        URL expectedHelpPage = HelpWindow.class.getResource(USERGUIDE_FILE_PATH);
+        URL expectedHelpPage = HelpWindow.class.getResource(HELP_FILE_PATH);
         assertEquals(expectedHelpPage, helpWindowHandle.getLoadedUrl());
     }
 }

@@ -59,3 +59,7 @@ image::Architecture.png[title="Architecture diagram", width="400"]
 ____
 This is a quote block.
 ____
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

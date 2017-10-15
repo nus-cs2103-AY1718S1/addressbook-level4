@@ -104,3 +104,7 @@ See `build.gradle` ->
 * **`compileTestJava`** +
 Checks whether the project has the required dependencies to perform testing, and download any missing dependencies before compiling the test classes. +
 See `build.gradle` -> `allprojects` -> `dependencies` -> `testCompile` for the list of dependencies required.
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

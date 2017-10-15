@@ -10,7 +10,6 @@ Rolodex is an extension of AddressBook - Level 4, which is a desktop address boo
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-= {empty}
 === Enhancement Added: Keyboard Shortcuts
 
 ==== External behavior
@@ -39,7 +38,6 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 ---
 
-= {empty}
 === Enhancement Proposed: Add command `remark`
 
 {Explain similar to the Undo/Redo feature above.}

@@ -130,3 +130,7 @@ SEVERITY:FILENAME:LINE: MESSAGE
 where `SEVERITY` is either `ERROR` or `WARN`, `FILENAME` is the path to the file relative to the current directory, `LINE` is the line of the file where the error occurred and `MESSAGE` is the message explaining the error.
 
 Check scripts must exit with a non-zero exit code if any errors occur.
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

@@ -17,15 +17,19 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
+// tag::applicationDescription[]
 Rolodex is a desktop address book application for computing professionals who prefer working without a mouse to manage their contacts more efficiently.
-It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+The user interacts with it using a CLI (Command Line Interface), and it has a GUI created with JavaFX.
+It is written in Java, and has about 6 kLoC. +
+
+Rolodex is an extension of AddressBook - Level 4, which is a desktop address book application used for teaching Software Engineering principles.
+// end::applicationDescription[]
 
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 

@@ -427,8 +427,8 @@ The case for a list command:
 
 1. A user executes a `list` command with sort arguments.
 2. The application checks for invalid sort arguments.
-4. The application model creates a comparator using the sort arguments, in order.
-5. The application displays the results in the specified sort order.
+3. The application model creates a comparator using the sort arguments, in order.
+4. The application displays the results in the specified sort order.
 
 The case for a find command:
 
@@ -1166,7 +1166,8 @@ Use case resumes at step 2.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
-.  Should be usable by a novice who has never used a command prompt before
+.  Should be usable by a human who has never seen a command line interface before
+.  Should be usable by a human who has never used a command line interface before
 .  Data should be encrypted when application is not running
 .  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
 
@@ -1205,3 +1206,7 @@ Cons:
 
 * ...
 * ...
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]
