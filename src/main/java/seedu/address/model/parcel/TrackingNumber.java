@@ -5,14 +5,13 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents the article number of a parcel.
- * @link { https://en.wikipedia.org/wiki/Registered_mail}
+ * Represents the tracking number of a parcel.
  */
 public class TrackingNumber {
 
     public static final String MESSAGE_TRACKING_NUMBER_CONSTRAINTS =
-            "Parcel article number should start with 'RR', followed by 9 digits, and ends with 'SG'";
-    public static final String ARTICLE_NUMBER_VALIDATION_REGEX = "^[R]{2}[0-9]{9}[S][G]$";
+            "Parcel tracking number should start with 'RR', followed by 9 digits, and ends with 'SG'";
+    public static final String TRACKING_NUMBER_VALIDATION_REGEX = "^[R]{2}[0-9]{9}[S][G]$";
 
     public final String value;
 
@@ -23,18 +22,18 @@ public class TrackingNumber {
      */
     public TrackingNumber(String trackingNumber) throws IllegalValueException {
         requireNonNull(trackingNumber);
-        String trimmedArticleNumber = trackingNumber.trim();
-        if (!isValidArticleNumber(trimmedArticleNumber)) {
+        String trimmedTrackingNumber = trackingNumber.trim();
+        if (!isValidTrackingNumber(trimmedTrackingNumber)) {
             throw new IllegalValueException(MESSAGE_TRACKING_NUMBER_CONSTRAINTS);
         }
-        this.value = trimmedArticleNumber;
+        this.value = trimmedTrackingNumber;
     }
 
     /**
-     * Returns true if a given string is a valid parcel article number.
+     * Returns true if a given string is a valid parcel tracking number.
      */
-    public static boolean isValidArticleNumber(String test) {
-        return test.matches(ARTICLE_NUMBER_VALIDATION_REGEX);
+    public static boolean isValidTrackingNumber(String test) {
+        return test.matches(TRACKING_NUMBER_VALIDATION_REGEX);
     }
 
     @Override

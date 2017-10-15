@@ -154,7 +154,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a parcel, missing tags -> added */
         assertCommandSuccess(HOON);
 
-        /* Case: missing article number -> rejected */
+        /* Case: missing tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
@@ -181,7 +181,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = "adds " + ParcelUtil.getParcelDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: invalid article number -> rejected */
+        /* Case: invalid tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + INVALID_TRACKING_NUMBER_DESC + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         assertCommandFailure(command, TrackingNumber.MESSAGE_TRACKING_NUMBER_CONSTRAINTS);

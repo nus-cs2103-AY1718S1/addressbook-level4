@@ -25,14 +25,14 @@ import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
-    private static final String INVALID_ARTICLE_NUMBER = "R1231230";
+    private static final String INVALID_TRACKING_NUMBER = "R1231230";
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_ARTICLE_NUMBER = "RR123456999SG";
+    private static final String VALID_TRACKING_NUMBER = "RR123456999SG";
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "505 Beach Road, Golden Mile Food Centre, #02-193/194, S199583";
@@ -66,29 +66,29 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseArticleNumber_null_throwsNullPointerException() throws Exception {
+    public void parseTrackingNumber_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseTrackingNumber(null);
     }
 
     @Test
-    public void parseArticleNumber_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseTrackingNumber_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTrackingNumber(Optional.of(INVALID_ARTICLE_NUMBER));
+        ParserUtil.parseTrackingNumber(Optional.of(INVALID_TRACKING_NUMBER));
     }
 
     @Test
-    public void parseArticleNumber_optionalEmpty_returnsOptionalEmpty() throws Exception {
+    public void parseTrackingNumber_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseTrackingNumber(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseArticleNumber_validValue_returnsArticleNumber() throws Exception {
-        TrackingNumber expectedTrackingNumber = new TrackingNumber(VALID_ARTICLE_NUMBER);
-        Optional<TrackingNumber> actualArticleNumber = ParserUtil.parseTrackingNumber(
-                Optional.of(VALID_ARTICLE_NUMBER));
+    public void parseTrackingNumber_validValue_returnsTrackingNumber() throws Exception {
+        TrackingNumber expectedTrackingNumber = new TrackingNumber(VALID_TRACKING_NUMBER);
+        Optional<TrackingNumber> actualTrackingNumber = ParserUtil.parseTrackingNumber(
+                Optional.of(VALID_TRACKING_NUMBER));
 
-        assertEquals(expectedTrackingNumber, actualArticleNumber.get());
+        assertEquals(expectedTrackingNumber, actualTrackingNumber.get());
     }
 
     @Test

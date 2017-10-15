@@ -85,7 +85,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_TRACKING_NUMBER_DESC,
-                TrackingNumber.MESSAGE_TRACKING_NUMBER_CONSTRAINTS); // invalid article number
+                TrackingNumber.MESSAGE_TRACKING_NUMBER_CONSTRAINTS); // invalid tracking number
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
@@ -142,7 +142,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // article number
+        // tracking number
         Index targetIndex = INDEX_THIRD_PARCEL;
         String userInput = targetIndex.getOneBased() + TRACKING_NUMBER_DESC_AMY;
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder()

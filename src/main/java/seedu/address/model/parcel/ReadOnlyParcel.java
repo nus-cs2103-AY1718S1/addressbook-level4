@@ -43,7 +43,7 @@ public interface ReadOnlyParcel {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Article No.: ")
+        builder.append("Tracking No.: ")
                 .append(getTrackingNumber())
                 .append(" Recipient Name: ")
                 .append(getName())

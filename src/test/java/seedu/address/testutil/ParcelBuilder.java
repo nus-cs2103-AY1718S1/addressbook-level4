@@ -18,18 +18,18 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class ParcelBuilder {
 
-    public static final String DEFAULT_ARTICLE_NUMBER = "RR999966699SG";
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
 
     private Parcel parcel;
 
     public ParcelBuilder() {
         try {
-            TrackingNumber defaultTrackingNumber =  new TrackingNumber(DEFAULT_ARTICLE_NUMBER);
+            TrackingNumber defaultTrackingNumber =  new TrackingNumber(DEFAULT_TRACKING_NUMBER);
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
@@ -56,7 +56,7 @@ public class ParcelBuilder {
         try {
             this.parcel.setTrackingNumber(new TrackingNumber(trackingNumber));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("article number is expected to be unique.");
+            throw new IllegalArgumentException("tracking number is expected to be unique.");
         }
         return this;
     }

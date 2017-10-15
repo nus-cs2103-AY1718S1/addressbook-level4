@@ -17,30 +17,30 @@ public class TrackingNumberTest {
     public ExpectedException expected = ExpectedException.none();
 
     @Test
-    public void isValidArticleNumber() throws Exception {
-        assertFalse(TrackingNumber.isValidArticleNumber("")); // empty string
-        assertFalse(TrackingNumber.isValidArticleNumber(" ")); // spaces only
+    public void isValidTrackingNumber() throws Exception {
+        assertFalse(TrackingNumber.isValidTrackingNumber("")); // empty string
+        assertFalse(TrackingNumber.isValidTrackingNumber(" ")); // spaces only
 
         // missing parts
-        assertFalse(TrackingNumber.isValidArticleNumber("RR999999999")); // missing postfix 'SG'
-        assertFalse(TrackingNumber.isValidArticleNumber("999999999SG")); // missing prefix 'RR'
-        assertFalse(TrackingNumber.isValidArticleNumber("RRSG")); // missing digits
-        assertFalse(TrackingNumber.isValidArticleNumber("999999999")); // missing postfix and prefix
+        assertFalse(TrackingNumber.isValidTrackingNumber("RR999999999")); // missing postfix 'SG'
+        assertFalse(TrackingNumber.isValidTrackingNumber("999999999SG")); // missing prefix 'RR'
+        assertFalse(TrackingNumber.isValidTrackingNumber("RRSG")); // missing digits
+        assertFalse(TrackingNumber.isValidTrackingNumber("999999999")); // missing postfix and prefix
 
         // invalid parts
-        assertFalse(TrackingNumber.isValidArticleNumber("PE999999999SG")); // invalid prefix
-        assertFalse(TrackingNumber.isValidArticleNumber("RR999999999TW")); // invalid postfix
-        assertFalse(TrackingNumber.isValidArticleNumber("PE999999999TW")); // invalid prefix and postfix
-        assertFalse(TrackingNumber.isValidArticleNumber("PE9999999999SG")); // too long
-        assertFalse(TrackingNumber.isValidArticleNumber("RR99999999SG")); // too short
-        assertFalse(TrackingNumber.isValidArticleNumber("RR999!@#999SG")); // contain non-digit symbols
-        assertFalse(TrackingNumber.isValidArticleNumber("RR9999SG99999")); // wrong order
-        assertFalse(TrackingNumber.isValidArticleNumber("SG999999999RR")); // wrong order
+        assertFalse(TrackingNumber.isValidTrackingNumber("PE999999999SG")); // invalid prefix
+        assertFalse(TrackingNumber.isValidTrackingNumber("RR999999999TW")); // invalid postfix
+        assertFalse(TrackingNumber.isValidTrackingNumber("PE999999999TW")); // invalid prefix and postfix
+        assertFalse(TrackingNumber.isValidTrackingNumber("PE9999999999SG")); // too long
+        assertFalse(TrackingNumber.isValidTrackingNumber("RR99999999SG")); // too short
+        assertFalse(TrackingNumber.isValidTrackingNumber("RR999!@#999SG")); // contain non-digit symbols
+        assertFalse(TrackingNumber.isValidTrackingNumber("RR9999SG99999")); // wrong order
+        assertFalse(TrackingNumber.isValidTrackingNumber("SG999999999RR")); // wrong order
 
         // valid email
-        assertTrue(TrackingNumber.isValidArticleNumber("RR999999999SG"));
-        assertTrue(TrackingNumber.isValidArticleNumber("RR123456789SG"));
-        assertTrue(TrackingNumber.isValidArticleNumber("RR001231230SG"));
+        assertTrue(TrackingNumber.isValidTrackingNumber("RR999999999SG"));
+        assertTrue(TrackingNumber.isValidTrackingNumber("RR123456789SG"));
+        assertTrue(TrackingNumber.isValidTrackingNumber("RR001231230SG"));
     }
 
     @Test
@@ -65,10 +65,10 @@ public class TrackingNumberTest {
     }
 
     @Test
-    public void testInvalidArticleNumberInputThrowsExcpetion() throws IllegalValueException {
+    public void testInvalidTrackingNumberInputThrowsExcpetion() throws IllegalValueException {
         expected.expect(IllegalValueException.class);
         expected.expectMessage(MESSAGE_TRACKING_NUMBER_CONSTRAINTS);
-        new TrackingNumber(" "); // illegal article number
+        new TrackingNumber(" "); // illegal tracking number
     }
 
 }
