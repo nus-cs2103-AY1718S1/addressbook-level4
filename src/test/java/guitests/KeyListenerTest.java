@@ -9,33 +9,36 @@ import org.junit.Test;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 public class KeyListenerTest extends AddressBookGuiTest {
 
     @Test
-    public void executeKeyEventForNonCommandEvents() {
-        // Check that command box is accessible with assigned key presses
+    public void executeKeyEventForFocusOnCommandBox() {
         guiRobot.push(KeyCode.ENTER);
         assertTrue(getCommandBox().isFocused());
         guiRobot.push(KeyCode.A);
         assertTrue(getCommandBox().isFocused());
-        // Remove focus
+
         guiRobot.push(KeyCode.ESCAPE);
         assertFalse(getCommandBox().isFocused());
+    }
 
-        // Check that person list panel is accessible with assigned key presses
-        assertTrue(getPersonListPanel().isFocused());
+    @Test
+    public void executeKeyEventForFocusOnPersonListPanel() {
         guiRobot.push(KeyCode.ESCAPE);
         assertTrue(getPersonListPanel().isFocused());
+
         // Check scrolling
         guiRobot.push(KeyCode.UP);
         assertTrue(getPersonListPanel().isFocused());
         guiRobot.push(KeyCode.DOWN);
         assertTrue(getPersonListPanel().isFocused());
-        // Remove focus
+
         guiRobot.push(KeyCode.ENTER);
         assertFalse(getPersonListPanel().isFocused());
     }
@@ -44,6 +47,7 @@ public class KeyListenerTest extends AddressBookGuiTest {
     public void executeKeyEventForUndoCommand() {
         KeyCodeCombination undoKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Z");
 
+        // Empty undo stack
         guiRobot.push(undoKeyCode);
         assertEquals(UndoCommand.MESSAGE_FAILURE, getResultDisplay().getText());
 
@@ -53,13 +57,35 @@ public class KeyListenerTest extends AddressBookGuiTest {
     }
 
     @Test
+    public void executeKeyEventForRedoCommand() {
+        KeyCodeCombination redoKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Y");
+
+        // Empty redo stack
+        guiRobot.push(redoKeyCode);
+        assertEquals(RedoCommand.MESSAGE_FAILURE, getResultDisplay().getText());
+
+        getCommandBox().run("delete 1");
+        getCommandBox().run("undo");
+
+        guiRobot.push(redoKeyCode);
+        assertEquals(RedoCommand.MESSAGE_SUCCESS, getResultDisplay().getText());
+    }
+
+    @Test
+    public void executeKeyEventForClearCommand() {
+        KeyCodeCombination clearKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Shift+D");
+
+        guiRobot.push(clearKeyCode);
+        assertEquals(ClearCommand.MESSAGE_SUCCESS, getResultDisplay().getText());
+    }
+
+    @Test
     public void executeKeyEventForListCommand() {
         KeyCodeCombination listKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+L");
 
         guiRobot.push(listKeyCode);
         assertEquals(ListCommand.MESSAGE_SUCCESS, getResultDisplay().getText());
     }
-
 
     @Test
     public void executeKeyEventForHistoryCommand() {
