@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.LoginWindow">
    <children>
       <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="600.0" style="-fx-background-color: black; -fx-text-fill: white;" text="H.M.U v1.2 Login" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -15,12 +14,12 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="username" layoutX="14.0" layoutY="73.0" prefHeight="25.0" prefWidth="565.0" promptText="Username">
+      <TextField fx:id="usernamePrompt" layoutX="14.0" layoutY="73.0" prefHeight="25.0" prefWidth="565.0" promptText="Username">
          <font>
             <Font size="16.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="password" layoutX="14.0" layoutY="142.0" prefHeight="25.0" prefWidth="565.0" promptText="Password">
+      <PasswordField fx:id="passwordPrompt" layoutX="14.0" layoutY="142.0" prefHeight="25.0" prefWidth="565.0" promptText="Password">
          <font>
             <Font size="16.0" />
          </font>
