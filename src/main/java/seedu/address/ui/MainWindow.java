@@ -127,11 +127,12 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personDetailPanel = new PersonDetailPanel();
-        personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getLatestPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        personDetailPanel = new PersonDetailPanel(personListPanel);
+        personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
