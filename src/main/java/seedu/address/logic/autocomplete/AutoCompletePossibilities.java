@@ -1,6 +1,5 @@
 package seedu.address.logic.autocomplete;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import seedu.address.logic.parser.AutoCompleteCommandParser;
