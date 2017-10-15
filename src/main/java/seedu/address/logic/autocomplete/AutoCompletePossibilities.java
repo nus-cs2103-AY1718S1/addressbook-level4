@@ -35,7 +35,7 @@ public class AutoCompletePossibilities {
         if (o == null) {
             return false;
         }
-        if (!o instanceof AutoCompletePossibilities) {
+        if (!(o instanceof AutoCompletePossibilities)) {
             return false;
         }
 

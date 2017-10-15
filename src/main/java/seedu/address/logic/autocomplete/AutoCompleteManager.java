@@ -14,20 +14,21 @@ public class AutoCompleteManager {
         maxSize = size;
     }
 
-    private void insert(AutoCompletePossibilities entry) {
+    private AutoCompletePossibilities insert(AutoCompletePossibilities entry) {
         cache.addFirst(entry);
-        if (cache.size > maxSize) {
+        if (cache.size() > maxSize) {
             cache.removeLast();
         }
+        return entry;
     }
 
     public AutoCompletePossibilities search(String stub) {
-        for (AutoCompletePossibilties entryInCache : cache) {
+        for (AutoCompletePossibilities entryInCache : cache) {
             if (stub.equals(entryInCache.getStub())) {
                 return entryInCache;
             }
         }
-        insert(new AutoCompletePossibilties(stub));
+        return insert(new AutoCompletePossibilities(stub));
     }
 
 }

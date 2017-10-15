@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.autocomplete.AutoCompleteManager;
 import seedu.address.logic.autocomplete.AutoCompletePossibilities;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -26,7 +27,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
-    private final AutoCompletePossibilities autoCompletePossibilities;
+    private AutoCompletePossibilities autoCompletePossibilities;
     private final AutoCompleteManager autoCompleteManager;
 
     public LogicManager(Model model) {
