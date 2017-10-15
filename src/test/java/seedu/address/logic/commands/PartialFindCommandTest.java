@@ -55,7 +55,6 @@ public class PartialFindCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindCommand}.
      * Parses {@code userInput} into a {@code PartialFindCommand}.
      */
     private PartialFindCommand prepareCommand(String userInput) {
