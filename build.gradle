@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "rolodex.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -122,8 +122,8 @@ tasks.coveralls {
     onlyIf { System.env.'CI' }
 }
 
-class AddressBookTest extends Test {
-    public AddressBookTest() {
+class RolodexTest extends Test {
+    public RolodexTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -148,7 +148,7 @@ class AddressBookTest extends Test {
     }
 }
 
-task guiTests(type: AddressBookTest) {
+task guiTests(type: RolodexTest) {
     include 'guitests/**'
     include 'systemtests/**'
     include 'seedu/address/ui/**'
@@ -159,7 +159,7 @@ task guiTests(type: AddressBookTest) {
 }
 
 
-task nonGuiTests(type: AddressBookTest) {
+task nonGuiTests(type: RolodexTest) {
     include 'seedu/address/**'
     exclude 'seedu/address/ui/**'
 
@@ -169,7 +169,7 @@ task nonGuiTests(type: AddressBookTest) {
 }
 
 // Test mode depends on whether headless task has been run
-task allTests(type: AddressBookTest) {
+task allTests(type: RolodexTest) {
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
     }

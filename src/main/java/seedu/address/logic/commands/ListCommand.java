@@ -10,7 +10,7 @@ import java.util.List;
 import seedu.address.logic.parser.SortArgument;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all persons in the rolodex to the user.
  */
 public class ListCommand extends Command {
 
@@ -18,7 +18,7 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD_ABBREV = "l";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
-            + "Displays all persons in the address book, "
+            + "Displays all persons in the rolodex, "
             + "sorted by the specified sort order or the default sort order." + "\n"
             + "Parameters: " + MESSAGE_SORT_USAGE + "\n"
             + "Example: " + COMMAND_WORD + " "

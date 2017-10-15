@@ -10,8 +10,8 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/rolodex.xml";
-    private String addressBookName = "MyRolodex";
+    private String rolodexFilePath = "data/rolodex.xml";
+    private String rolodexName = "MyRolodex";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -29,20 +29,20 @@ public class UserPrefs {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
-    public String getAddressBookFilePath() {
-        return addressBookFilePath;
+    public String getRolodexFilePath() {
+        return rolodexFilePath;
     }
 
-    public void setAddressBookFilePath(String addressBookFilePath) {
-        this.addressBookFilePath = addressBookFilePath;
+    public void setRolodexFilePath(String rolodexFilePath) {
+        this.rolodexFilePath = rolodexFilePath;
     }
 
-    public String getAddressBookName() {
-        return addressBookName;
+    public String getRolodexName() {
+        return rolodexName;
     }
 
-    public void setAddressBookName(String addressBookName) {
-        this.addressBookName = addressBookName;
+    public void setRolodexName(String rolodexName) {
+        this.rolodexName = rolodexName;
     }
 
     @Override
@@ -57,21 +57,21 @@ public class UserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return Objects.equals(guiSettings, o.guiSettings)
-                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(rolodexFilePath, o.rolodexFilePath)
+                && Objects.equals(rolodexName, o.rolodexName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, rolodexFilePath, rolodexName);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nLocal data file location : " + rolodexFilePath);
+        sb.append("\nRolodex name : " + rolodexName);
         return sb.toString();
     }
 

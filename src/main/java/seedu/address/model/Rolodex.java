@@ -22,7 +22,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class Rolodex implements ReadOnlyRolodex {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
@@ -39,12 +39,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public Rolodex() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an Rolodex using the Persons and Tags in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public Rolodex(ReadOnlyRolodex toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -60,14 +60,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Rolodex} with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyRolodex newData) {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
         } catch (DuplicatePersonException e) {
-            assert false : "AddressBooks should not have duplicate persons";
+            assert false : "Rolodexes should not have duplicate persons";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -77,7 +77,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// person-level operations
 
     /**
-     * Adds a person to the address book.
+     * Adds a person to the rolodex.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
      *
@@ -94,7 +94,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * {@code Rolodex}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
@@ -145,8 +145,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * Removes {@code key} from this {@code Rolodex}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code Rolodex}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
@@ -183,9 +183,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                || (other instanceof Rolodex // instanceof handles nulls
+                && this.persons.equals(((Rolodex) other).persons)
+                && this.tags.equalsOrderInsensitive(((Rolodex) other).tags));
     }
 
     @Override
