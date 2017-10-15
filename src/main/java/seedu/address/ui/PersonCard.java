@@ -6,9 +6,11 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -20,6 +22,7 @@ public class PersonCard extends UiPart<Region> {
     private static String[] randomColors = { "navy", "teal", "violet", "green", "purple", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
+//    private Image favorited = new Image("@../../../../docs/images/fav_empty.png");
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -43,6 +46,8 @@ public class PersonCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    @FXML
+    private ImageView favorite;
     @FXML
     private FlowPane tags;
 
@@ -81,10 +86,20 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        initFav(person);
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
+    }
+
+    /**
+     * Changes the star metaphor image for each {@code Person} according to their favorite status
+     */
+    private void initFav(ReadOnlyPerson person) {
+        if (person.getFavorite().toString().equals(Favorite.FavoriteStatus.no.toString())) {
+            favorite.setImage(null);
+        }
     }
 
     /**

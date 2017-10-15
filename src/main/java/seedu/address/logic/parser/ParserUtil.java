@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -77,6 +78,20 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> favorite} into an {@code Optional<Favorite>} if {@code favorite} is present.
+     * Parses a {@code Optional<Favorite>} with a default value if {@code favorite} is not present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Favorite> parseFavorite(Optional<String> favorite) throws IllegalValueException {
+        requireNonNull(favorite);
+        return favorite.isPresent() ?
+                Optional.of(new Favorite(favorite.get())) :
+                // Set default favorite status to "no" when user does not specify
+                // This makes favorite-field optional
+                Optional.of(new Favorite("no"));
     }
 
     /**
