@@ -42,12 +42,12 @@ public class StatusBarFooterTest extends RolodexGuiTest {
     }
 
     @Test
-    public void syncStatus_initialValue() {
+    public void syncStatusInitialValue() {
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 
     @Test
-    public void syncStatus_mutatingCommandSucceeds_syncStatusUpdated() {
+    public void syncStatusMutatingCommandSucceedsSyncStatusUpdated() {
         String timestamp = new Date(injectedClock.millis()).toString();
         String expected = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertTrue(runCommand(PersonUtil.getAddCommand(HOON))); // mutating command succeeds
@@ -55,13 +55,13 @@ public class StatusBarFooterTest extends RolodexGuiTest {
     }
 
     @Test
-    public void syncStatus_nonMutatingCommandSucceeds_syncStatusRemainsUnchanged() {
+    public void syncStatusNonMutatingCommandSucceedsSyncStatusRemainsUnchanged() {
         assertTrue(runCommand(ListCommand.COMMAND_WORD)); // non-mutating command succeeds
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 
     @Test
-    public void syncStatus_commandFails_syncStatusRemainsUnchanged() {
+    public void syncStatusCommandFailsSyncStatusRemainsUnchanged() {
         assertFalse(runCommand("invalid command")); // invalid command fails
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }

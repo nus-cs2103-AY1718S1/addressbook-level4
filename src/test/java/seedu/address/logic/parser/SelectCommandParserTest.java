@@ -18,12 +18,12 @@ public class SelectCommandParserTest {
     private SelectCommandParser parser = new SelectCommandParser();
 
     @Test
-    public void parse_validArgs_returnsSelectCommand() {
+    public void parseValidArgsReturnsSelectCommand() {
         assertParseSuccess(parser, "1", new SelectCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
     }
 }

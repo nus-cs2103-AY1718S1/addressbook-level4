@@ -27,7 +27,7 @@ public class JsonUserPrefsStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readUserPrefs_nullFilePath_throwsNullPointerException() throws DataConversionException {
+    public void readUserPrefsNullFilePathThrowsNullPointerException() throws DataConversionException {
         thrown.expect(NullPointerException.class);
         readUserPrefs(null);
     }
@@ -38,12 +38,12 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
-    public void readUserPrefs_missingFile_emptyResult() throws DataConversionException {
+    public void readUserPrefsMissingFileEmptyResult() throws DataConversionException {
         assertFalse(readUserPrefs("NonExistentFile.json").isPresent());
     }
 
     @Test
-    public void readUserPrefs_notJsonFormat_exceptionThrown() throws DataConversionException {
+    public void readUserPrefsNotJsonFormatExceptionThrown() throws DataConversionException {
         thrown.expect(DataConversionException.class);
         readUserPrefs("NotJsonFormatUserPrefs.json");
 
@@ -59,14 +59,14 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
-    public void readUserPrefs_fileInOrder_successfullyRead() throws DataConversionException {
+    public void readUserPrefsFileInOrderSuccessfullyRead() throws DataConversionException {
         UserPrefs expected = getTypicalUserPrefs();
         UserPrefs actual = readUserPrefs("TypicalUserPref.json").get();
         assertEquals(expected, actual);
     }
 
     @Test
-    public void readUserPrefs_valuesMissingFromFile_defaultValuesUsed() throws DataConversionException {
+    public void readUserPrefsValuesMissingFromFileDefaultValuesUsed() throws DataConversionException {
         UserPrefs actual = readUserPrefs("EmptyUserPrefs.json").get();
         assertEquals(new UserPrefs(), actual);
     }
@@ -88,13 +88,13 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
-    public void savePrefs_nullPrefs_throwsNullPointerException() {
+    public void savePrefsNullPrefsThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveUserPrefs(null, "SomeFile.json");
     }
 
     @Test
-    public void saveUserPrefs_nullFilePath_throwsNullPointerException() {
+    public void saveUserPrefsNullFilePathThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveUserPrefs(new UserPrefs(), null);
     }
@@ -112,7 +112,7 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
-    public void saveUserPrefs_allInOrder_success() throws DataConversionException, IOException {
+    public void saveUserPrefsAllInOrderSuccess() throws DataConversionException, IOException {
 
         UserPrefs original = new UserPrefs();
         original.setGuiSettings(1200, 200, 0, 2);

@@ -42,13 +42,13 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_startingWithSuccessfulCommand() {
+    public void commandBoxStartingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
     }
 
     @Test
-    public void commandBox_startingWithFailedCommand() {
+    public void commandBoxStartingWithFailedCommand() {
         assertBehaviorForFailedCommand();
         assertBehaviorForSuccessfulCommand();
 
@@ -59,7 +59,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_handleKeyPress() {
+    public void commandBoxHandleKeyPress() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
         guiRobot.push(KeyCode.ESCAPE);
@@ -70,7 +70,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithUp() {
+    public void handleKeyPressStartingWithUp() {
         // empty history
         assertInputHistory(KeyCode.UP, "");
         assertInputHistory(KeyCode.DOWN, "");
@@ -102,7 +102,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPress_startingWithDown() {
+    public void handleKeyPressStartingWithDown() {
         // empty history
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, "");

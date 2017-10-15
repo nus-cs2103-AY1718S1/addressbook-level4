@@ -30,7 +30,7 @@ public class XmlRolodexStorageTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Test
-    public void readRolodex_nullFilePath_throwsNullPointerException() throws Exception {
+    public void readRolodexNullFilePathThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         readRolodex(null);
     }
@@ -46,12 +46,12 @@ public class XmlRolodexStorageTest {
     }
 
     @Test
-    public void read_missingFile_emptyResult() throws Exception {
+    public void read_missingFileEmptyResult() throws Exception {
         assertFalse(readRolodex("NonExistentFile.xml").isPresent());
     }
 
     @Test
-    public void read_notXmlFormat_exceptionThrown() throws Exception {
+    public void readNotXmlFormatExceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
         readRolodex("NotXmlFormatRolodex.xml");
@@ -62,7 +62,7 @@ public class XmlRolodexStorageTest {
     }
 
     @Test
-    public void readAndSaveRolodex_allInOrder_success() throws Exception {
+    public void readAndSaveRolodexAllInOrderSuccess() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempRolodex.xml";
         Rolodex original = getTypicalRolodex();
         XmlRolodexStorage xmlRolodexStorage = new XmlRolodexStorage(filePath);
@@ -88,20 +88,20 @@ public class XmlRolodexStorageTest {
     }
 
     @Test
-    public void saveRolodex_nullRolodex_throwsNullPointerException() {
+    public void saveRolodexNullRolodexThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveRolodex(null, "SomeFile.xml");
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getPersonListModifyListThrowsUnsupportedOperationException() {
         XmlSerializableRolodex rolodex = new XmlSerializableRolodex();
         thrown.expect(UnsupportedOperationException.class);
         rolodex.getPersonList().remove(0);
     }
 
     @Test
-    public void getTagList_modifyList_throwsUnsupportedOperationException() {
+    public void getTagListModifyListThrowsUnsupportedOperationException() {
         XmlSerializableRolodex rolodex = new XmlSerializableRolodex();
         thrown.expect(UnsupportedOperationException.class);
         rolodex.getTagList().remove(0);
@@ -119,7 +119,7 @@ public class XmlRolodexStorageTest {
     }
 
     @Test
-    public void saveRolodex_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveRolodexNullFilePathThrowsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
         saveRolodex(new Rolodex(), null);
     }

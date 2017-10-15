@@ -14,13 +14,13 @@ import seedu.address.model.UserPrefs;
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyRolodex_success() {
+    public void executeEmptyRolodexSuccess() {
         Model model = new ModelManager();
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
-    public void execute_nonEmptyRolodex_success() {
+    public void executeNonEmptyRolodexSuccess() {
         Model model = new ModelManager(getTypicalRolodex(), new UserPrefs());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }

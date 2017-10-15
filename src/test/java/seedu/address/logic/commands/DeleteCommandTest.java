@@ -28,7 +28,7 @@ public class DeleteCommandTest {
     private Model model = new ModelManager(getTypicalRolodex(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
+    public void executeValidIndexUnfilteredListSuccess() throws Exception {
         ReadOnlyPerson personToDelete = model.getLatestPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -41,7 +41,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+    public void executeInvalidIndexUnfilteredListThrowsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getLatestPersonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
@@ -49,7 +49,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
+    public void executeValidIndexFilteredListSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToDelete = model.getLatestPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -65,7 +65,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void executeInvalidIndexFilteredListThrowsCommandException() {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;

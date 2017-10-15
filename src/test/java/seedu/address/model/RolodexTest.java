@@ -34,20 +34,20 @@ public class RolodexTest {
     }
 
     @Test
-    public void resetData_null_throwsNullPointerException() {
+    public void resetDataNullThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
         rolodex.resetData(null);
     }
 
     @Test
-    public void resetData_withValidReadOnlyRolodex_replacesData() {
+    public void resetDataWithValidReadOnlyRolodexReplacesData() {
         Rolodex newData = getTypicalRolodex();
         rolodex.resetData(newData);
         assertEquals(newData, rolodex);
     }
 
     @Test
-    public void resetData_withDuplicatePersons_throwsAssertionError() {
+    public void resetDataWithDuplicatePersonsThrowsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
@@ -58,13 +58,13 @@ public class RolodexTest {
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getPersonListModifyListThrowsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         rolodex.getPersonList().remove(0);
     }
 
     @Test
-    public void getTagList_modifyList_throwsUnsupportedOperationException() {
+    public void getTagListModifyListThrowsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         rolodex.getTagList().remove(0);
     }

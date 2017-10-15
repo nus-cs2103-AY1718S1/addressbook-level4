@@ -15,7 +15,7 @@ public class ArgumentTokenizerTest {
     private final Prefix hatQ = new Prefix("^Q");
 
     @Test
-    public void tokenize_emptyArgsString_noValues() {
+    public void tokenizeEmptyArgsStringNoValues() {
         String argsString = "  ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
 
@@ -54,7 +54,7 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
-    public void tokenize_noPrefixes_allTakenAsPreamble() {
+    public void tokenizeNoPrefixesAllTakenAsPreamble() {
         String argsString = "  some random string /t tag with leading and trailing spaces ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString);
 
@@ -64,7 +64,7 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
-    public void tokenize_oneArgument() {
+    public void tokenizeOneArgument() {
         // Preamble present
         String argsString = "  Some preamble string p/ Argument value ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash);
@@ -80,7 +80,7 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
-    public void tokenize_multipleArguments() {
+    public void tokenizeMultipleArguments() {
         // Only two arguments are present
         String argsString = "SomePreambleString -t dashT-Value p/pSlash value";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
@@ -116,7 +116,7 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
-    public void tokenize_multipleArgumentsWithRepeats() {
+    public void tokenizeMultipleArgumentsWithRepeats() {
         // Two arguments repeated, some have empty values
         String argsString = "SomePreambleString -t dashT-Value ^Q ^Q -t another dashT value p/ pSlash value -t";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
@@ -127,7 +127,7 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
-    public void tokenize_multipleArgumentsJoined() {
+    public void tokenizeMultipleArgumentsJoined() {
         String argsString = "SomePreambleStringp/ pSlash joined-tjoined -t not joined^Qjoined";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
         assertPreamblePresent(argMultimap, "SomePreambleStringp/ pSlash joined-tjoined");

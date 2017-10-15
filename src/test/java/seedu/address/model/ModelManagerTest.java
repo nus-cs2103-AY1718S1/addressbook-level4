@@ -26,7 +26,7 @@ public class ModelManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredPersonListModifyListThrowsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getLatestPersonList().remove(0);

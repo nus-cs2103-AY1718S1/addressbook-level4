@@ -73,7 +73,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void handleRolodexChangedEvent_exceptionThrown_eventRaised() {
+    public void handleRolodexChangedEventExceptionThrownEventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlRolodexStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));

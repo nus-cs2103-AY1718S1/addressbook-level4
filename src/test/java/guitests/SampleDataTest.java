@@ -40,7 +40,7 @@ public class SampleDataTest extends RolodexGuiTest {
     }
 
     @Test
-    public void rolodex_dataFileDoesNotExist_loadSampleData() {
+    public void rolodexDataFileDoesNotExistLoadSampleData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }

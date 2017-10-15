@@ -29,56 +29,56 @@ public class XmlUtilTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void getDataFromFile_nullFile_throwsNullPointerException() throws Exception {
+    public void getDataFromFileNullFileThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         XmlUtil.getDataFromFile(null, Rolodex.class);
     }
 
     @Test
-    public void getDataFromFile_nullClass_throwsNullPointerException() throws Exception {
+    public void getDataFromFileNullClassThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         XmlUtil.getDataFromFile(VALID_FILE, null);
     }
 
     @Test
-    public void getDataFromFile_missingFile_fileNotFoundException() throws Exception {
+    public void getDataFromFileMissingFileFileNotFoundException() throws Exception {
         thrown.expect(FileNotFoundException.class);
         XmlUtil.getDataFromFile(MISSING_FILE, Rolodex.class);
     }
 
     @Test
-    public void getDataFromFile_emptyFile_dataFormatMismatchException() throws Exception {
+    public void getDataFromFileEmptyFileDataFormatMismatchException() throws Exception {
         thrown.expect(JAXBException.class);
         XmlUtil.getDataFromFile(EMPTY_FILE, Rolodex.class);
     }
 
     @Test
-    public void getDataFromFile_validFile_validResult() throws Exception {
+    public void getDataFromFileValidFileValidResult() throws Exception {
         XmlSerializableRolodex dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableRolodex.class);
         assertEquals(9, dataFromFile.getPersonList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
 
     @Test
-    public void saveDataToFile_nullFile_throwsNullPointerException() throws Exception {
+    public void saveDataToFileNullFileThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         XmlUtil.saveDataToFile(null, new Rolodex());
     }
 
     @Test
-    public void saveDataToFile_nullClass_throwsNullPointerException() throws Exception {
+    public void saveDataToFileNullClassThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         XmlUtil.saveDataToFile(VALID_FILE, null);
     }
 
     @Test
-    public void saveDataToFile_missingFile_fileNotFoundException() throws Exception {
+    public void saveDataToFileMissingFileFileNotFoundException() throws Exception {
         thrown.expect(FileNotFoundException.class);
         XmlUtil.saveDataToFile(MISSING_FILE, new Rolodex());
     }
 
     @Test
-    public void saveDataToFile_validFile_dataSaved() throws Exception {
+    public void saveDataToFileValidFileDataSaved() throws Exception {
         TEMP_FILE.createNewFile();
         XmlSerializableRolodex dataToWrite = new XmlSerializableRolodex(new Rolodex());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);

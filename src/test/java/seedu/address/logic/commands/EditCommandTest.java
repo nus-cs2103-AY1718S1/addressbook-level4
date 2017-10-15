@@ -38,7 +38,7 @@ public class EditCommandTest {
     private Model model = new ModelManager(getTypicalRolodex(), new UserPrefs());
 
     @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
+    public void executeAllFieldsSpecifiedUnfilteredListSuccess() throws Exception {
         Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
@@ -52,7 +52,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
+    public void executeSomeFieldsSpecifiedUnfilteredListSuccess() throws Exception {
         Index indexLastPerson = Index.fromOneBased(model.getLatestPersonList().size());
         ReadOnlyPerson lastPerson = model.getLatestPersonList().get(indexLastPerson.getZeroBased());
 
@@ -73,7 +73,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
+    public void executeNoFieldSpecifiedUnfilteredListSuccess() {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         ReadOnlyPerson editedPerson = model.getLatestPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
@@ -85,7 +85,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_filteredList_success() throws Exception {
+    public void executeFilteredListSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personInFilteredList = model.getLatestPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -102,7 +102,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonUnfilteredList_failure() {
+    public void executeDuplicatePersonUnfilteredListFailure() {
         Person firstPerson = new Person(model.getLatestPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
@@ -111,7 +111,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_duplicatePersonFilteredList_failure() {
+    public void executeDuplicatePersonFilteredListFailure() {
         showFirstPersonOnly(model);
 
         // edit person in filtered list into a duplicate in rolodex
@@ -123,7 +123,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
+    public void executeInvalidPersonIndexUnfilteredListFailure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getLatestPersonList().size() + 1);
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
@@ -136,7 +136,7 @@ public class EditCommandTest {
      * but smaller than size of rolodex
      */
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
+    public void executeInvalidPersonIndexFilteredListFailure() {
         showFirstPersonOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of rolodex list

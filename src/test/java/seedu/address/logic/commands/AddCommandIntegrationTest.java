@@ -28,7 +28,7 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newPerson_success() throws Exception {
+    public void executeNewPersonSuccess() throws Exception {
         Person validPerson = new PersonBuilder().build();
 
         Model expectedModel = new ModelManager(model.getRolodex(), new UserPrefs());
@@ -39,7 +39,7 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
+    public void executeDuplicatePersonThrowsCommandException() {
         Person personInList = new Person(model.getRolodex().getPersonList().get(0));
         assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
