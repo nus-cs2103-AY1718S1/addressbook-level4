@@ -23,13 +23,13 @@ import seedu.address.ui.util.KeyListenerUtil;
  * Listens to key events in the main window.
  */
 public class KeyListener {
+    private static HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Logic logic;
     private MainWindow mainWindow;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
-    private HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
 
     public KeyListener(Logic logic, MainWindow mainWindow, PersonListPanel personListPanel,
                        CommandBox commandBox) {
