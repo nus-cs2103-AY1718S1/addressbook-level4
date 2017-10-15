@@ -26,8 +26,8 @@ public interface ReadOnlyPerson {
     Debt getDebt();
     ObjectProperty<DateBorrow> dateBorrowProperty();
     DateBorrow getDateBorrow();
-    ObjectProperty<DeadLine> deadLineProperty();
-    DeadLine getDeadLine();
+    ObjectProperty<Deadline> deadLineProperty();
+    Deadline getDeadLine();
     ObjectProperty<DateRepaid> dateRepaidProperty();
     DateRepaid getDateRepaid();
     ObjectProperty<UniqueTagList> tagProperty();

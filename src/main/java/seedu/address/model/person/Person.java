@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
-    private ObjectProperty<DeadLine> deadLine;
+    private ObjectProperty<Deadline> deadLine;
     private ObjectProperty<DateRepaid> dateRepaid;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -34,8 +34,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
-                  Debt debt, DeadLine deadLine, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, debt, deadLine, tags);
+                  Debt debt, Deadline deadline, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, postalCode, debt, deadline, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -43,7 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
-        this.deadLine = new SimpleObjectProperty<>(deadLine);
+        this.deadLine = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -188,17 +188,17 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author lawwman
-    public void setDeadLine(DeadLine deadLine) {
-        this.deadLine.set(requireNonNull(deadLine));
+    public void setDeadLine(Deadline deadline) {
+        this.deadLine.set(requireNonNull(deadline));
     }
 
     @Override
-    public ObjectProperty<DeadLine> deadLineProperty() {
+    public ObjectProperty<Deadline> deadLineProperty() {
         return deadLine;
     }
 
     @Override
-    public DeadLine getDeadLine() {
+    public Deadline getDeadLine() {
         return deadLine.get();
     }
 

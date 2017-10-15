@@ -32,7 +32,7 @@
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
                <Text fx:id="deadLineField" fill="GREY" styleClass="window_small_label" text="Dead Line: " />
-               <Label fx:id="deadLine" styleClass="window_small_label" text="\$deadLine" />
+               <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" />
             </children>
           </TextFlow>
           <TextFlow prefHeight="50.0" prefWidth="400.0">

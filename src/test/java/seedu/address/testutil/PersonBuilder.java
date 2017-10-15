@@ -4,7 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -28,7 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_DEBT_CODE = "123456789";
     // To avoid the scenario where a test case instantiates a Person with DateBorrow that is later
     // than the Dead line.
-    public static final String DEFAULT_DEAD_LINE = DeadLine.NO_DEAD_LINE_SET;
+    public static final String DEFAULT_DEAD_LINE = Deadline.NO_DEAD_LINE_SET;
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -41,10 +41,10 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTAL_CODE);
             Debt defaultDebt = new Debt(DEFAULT_DEBT_CODE);
-            DeadLine defaultDeadLine = new DeadLine(DEFAULT_DEAD_LINE);
+            Deadline defaultDeadline = new Deadline(DEFAULT_DEAD_LINE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultPostalCode,
-                    defaultDebt, defaultDeadLine, defaultTags);
+                    defaultDebt, defaultDeadline, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -130,11 +130,11 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code DeadLine} of the {@code Person} that we are building.
+     * Sets the {@code Deadline} of the {@code Person} that we are building.
      */
     public PersonBuilder withDeadLine(String deadLine) {
         try {
-            this.person.setDeadLine(new DeadLine(deadLine));
+            this.person.setDeadLine(new Deadline(deadLine));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("dead line is expected to be unique.");
         }

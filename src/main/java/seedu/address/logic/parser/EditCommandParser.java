@@ -57,7 +57,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editPersonDescriptor::setPostalCode);
             ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).ifPresent(editPersonDescriptor::setDebt);
             ParserUtil.parseDeadLineForEdit(argMultimap.getValue(PREFIX_DEAD_LINE))
-                    .ifPresent(editPersonDescriptor::setDeadLine);
+                    .ifPresent(editPersonDescriptor::setDeadline);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

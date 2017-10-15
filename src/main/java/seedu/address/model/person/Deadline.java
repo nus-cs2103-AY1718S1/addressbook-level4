@@ -11,14 +11,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 //@@author lawwman
 /**
  * Represents the deadline of the debt of a person in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidDeadLine(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidDeadline(String)}
  */
 
-public class DeadLine {
+public class Deadline {
 
-    public static final String NO_DEAD_LINE_SET = "No deadline set.";
+    public static final String NO_DEADLINE_SET = "No deadline set.";
     public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
-    public static final String MESSAGE_DEAD_LINE_CONSTRAINTS =
+    public static final String MESSAGE_DEADLINE_CONSTRAINTS =
             "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
     public static final String DEADLINE_VALIDATION_REGEX = "([0-1][0-9](-)){2}(\\d{4})";
     public final String value;
@@ -29,23 +29,23 @@ public class DeadLine {
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public DeadLine(String deadLine) throws IllegalValueException {
-        if (deadLine.equals(NO_DEAD_LINE_SET)) {
-            this.value = deadLine;
+    public Deadline(String deadline) throws IllegalValueException {
+        if (deadline.equals(NO_DEADLINE_SET)) {
+            this.value = deadline;
         } else {
-            requireNonNull(deadLine);
-            String trimmedDeadLine = deadLine.trim();
-            if (!isValidDeadLine(trimmedDeadLine)) {
-                throw new IllegalValueException(MESSAGE_DEAD_LINE_CONSTRAINTS);
+            requireNonNull(deadline);
+            String trimmedDeadline = deadline.trim();
+            if (!isValidDeadline(trimmedDeadline)) {
+                throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
             }
-            this.value = trimmedDeadLine;
+            this.value = trimmedDeadline;
         }
     }
 
     /**
      * Returns true if a given string is a valid person dead line.
      */
-    public static boolean isValidDeadLine(String test) {
+    public static boolean isValidDeadline(String test) {
         return test.matches(DEADLINE_VALIDATION_REGEX);
     }
 
@@ -57,8 +57,8 @@ public class DeadLine {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeadLine // instanceof handles nulls
-                && this.value.equals(((DeadLine) other).value)); // state check
+                || (other instanceof Deadline // instanceof handles nulls
+                && this.value.equals(((Deadline) other).value)); // state check
     }
 
     @Override

@@ -20,7 +20,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -111,11 +111,11 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
-        DeadLine updatedDeadLine = editPersonDescriptor.getDeadLine().orElse(personToEdit.getDeadLine());
+        Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadLine());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
-                updatedDebt, updatedDeadLine, updatedTags);
+                updatedDebt, updatedDeadline, updatedTags);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private PostalCode postalCode;
         private Debt debt;
-        private DeadLine deadLine;
+        private Deadline deadline;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -159,7 +159,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
-            this.deadLine = toCopy.deadLine;
+            this.deadline = toCopy.deadline;
             this.tags = toCopy.tags;
         }
 
@@ -168,7 +168,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.postalCode,
-            this.debt, this.deadLine, this.tags);
+            this.debt, this.deadline, this.tags);
         }
 
         public void setName(Name name) {
@@ -219,12 +219,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(debt);
         }
 
-        public void setDeadLine(DeadLine deadLine) {
-            this.deadLine = deadLine;
+        public void setDeadline(Deadline deadline) {
+            this.deadline = deadline;
         }
 
-        public Optional<DeadLine> getDeadLine() {
-            return Optional.ofNullable(deadLine);
+        public Optional<Deadline> getDeadline() {
+            return Optional.ofNullable(deadline);
         }
 
         public void setTags(Set<Tag> tags) {
@@ -256,7 +256,7 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getPostalCode().equals(e.getPostalCode())
                     && getDebt().equals(e.getDebt())
-                    && getDeadLine().equals(e.getDeadLine())
+                    && getDeadline().equals(e.getDeadline())
                     && getTags().equals(e.getTags());
         }
     }

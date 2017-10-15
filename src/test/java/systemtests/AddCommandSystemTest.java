@@ -60,7 +60,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -258,7 +258,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid dead line -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INVALID_DEAD_LINE_DESC;
-        assertCommandFailure(command, DeadLine.MESSAGE_DEAD_LINE_CONSTRAINTS);
+        assertCommandFailure(command, Deadline.MESSAGE_DEAD_LINE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY

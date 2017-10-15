@@ -48,7 +48,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -130,7 +130,7 @@ public class AddCommandParserTest {
                 + DEBT_DESC_AMY + DEAD_LINE_DESC_AMY, new AddCommand(expectedPerson));
         Person expectedPerson2 = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
-                .withDebt(VALID_DEBT_AMY).withDeadLine(DeadLine.NO_DEAD_LINE_SET).withTags().build();
+                .withDebt(VALID_DEBT_AMY).withDeadLine(Deadline.NO_DEAD_LINE_SET).withTags().build();
         // no dead line
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY
@@ -217,7 +217,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INVALID_DEAD_LINE_DESC
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                DeadLine.MESSAGE_DEAD_LINE_CONSTRAINTS);
+                Deadline.MESSAGE_DEAD_LINE_CONSTRAINTS);
 
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

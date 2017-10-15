@@ -13,7 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -107,26 +107,26 @@ public class ParserUtil {
 
     //@@author lawwman
     /**
-     * Parses a {@code Optional<String> deadLine} into an {@code Optional<DeadLine>} if {@code DeadLine}
+     * Parses a {@code Optional<String> deadLine} into an {@code Optional<Deadline>} if {@code Deadline}
      * is present.
      * Meant for parsing for Add command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DeadLine> parseDeadLine(Optional<String> deadLine) throws IllegalValueException {
+    public static Optional<Deadline> parseDeadLine(Optional<String> deadLine) throws IllegalValueException {
         requireNonNull(deadLine);
-        return deadLine.isPresent() ? Optional.of(new DeadLine(deadLine.get()))
-                : Optional.of(new DeadLine(DeadLine.NO_DEAD_LINE_SET));
+        return deadLine.isPresent() ? Optional.of(new Deadline(deadLine.get()))
+                : Optional.of(new Deadline(Deadline.NO_DEAD_LINE_SET));
     }
     /**
-     * Parses a {@code Optional<String> deadLine} into an {@code Optional<DeadLine>} if {@code DeadLine}
+     * Parses a {@code Optional<String> deadLine} into an {@code Optional<Deadline>} if {@code Deadline}
      * is present.
      * Meant for parsing for Edit command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<DeadLine> parseDeadLineForEdit(Optional<String> deadLine)
+    public static Optional<Deadline> parseDeadLineForEdit(Optional<String> deadLine)
             throws IllegalValueException {
         requireNonNull(deadLine);
-        return deadLine.isPresent() ? Optional.of(new DeadLine(deadLine.get())) : Optional.empty();
+        return deadLine.isPresent() ? Optional.of(new Deadline(deadLine.get())) : Optional.empty();
     }
 
     /**

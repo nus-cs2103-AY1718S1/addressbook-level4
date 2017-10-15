@@ -17,7 +17,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -54,11 +54,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             PostalCode postalCode = ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTAL_CODE)).get();
             Debt debt = ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).get();
-            DeadLine deadLine = ParserUtil.parseDeadLine(argMultimap.getValue(PREFIX_DEAD_LINE)).get();
+            Deadline deadline = ParserUtil.parseDeadLine(argMultimap.getValue(PREFIX_DEAD_LINE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             //{@code DateBorrow} and {@code DateRepaid} fields are created within {@code Person} class
-            ReadOnlyPerson person = new Person(name, phone, email, address, postalCode, debt, deadLine, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, postalCode, debt, deadline, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

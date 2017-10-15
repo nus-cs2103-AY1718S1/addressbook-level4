@@ -19,7 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -241,10 +241,10 @@ public class ParserUtilTest {
 
     @Test
     public void parseDeadLine_validValue_returnsDeadLine() throws Exception {
-        DeadLine expectedDeadLine = new DeadLine(VALID_DEAD_LINE);
-        Optional<DeadLine> actualDeadLine = ParserUtil.parseDeadLine(Optional.of(VALID_DEAD_LINE));
+        Deadline expectedDeadline = new Deadline(VALID_DEAD_LINE);
+        Optional<Deadline> actualDeadLine = ParserUtil.parseDeadLine(Optional.of(VALID_DEAD_LINE));
 
-        assertEquals(expectedDeadLine, actualDeadLine.get());
+        assertEquals(expectedDeadline, actualDeadLine.get());
     }
 
     @Test

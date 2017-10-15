@@ -51,7 +51,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DeadLine;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -198,7 +198,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid dead line -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                + INVALID_DEAD_LINE_DESC, DeadLine.MESSAGE_DEAD_LINE_CONSTRAINTS);
+                + INVALID_DEAD_LINE_DESC, Deadline.MESSAGE_DEAD_LINE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
