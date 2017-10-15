@@ -733,11 +733,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* *` |NUS student |import schedule from NUSMods |automatically generate my school timetable
+
+|`* *` |frequent user |import contacts from iCloud, Google+, Facebook,etc. |sync all my contacts
+
+|`* *` |busy user |set notification before an event starts/ends |avoid missing important issues
+
+|`* *` |careful user |_soft delete_ my contacts/events |get them back manually if it is a mistake
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |`* *` |user |change the UI theme |customize my App
+
 |`*` |loyal user |send feedback to developers |help further improve this App
+
+|`*` |admin user |check the `audit_log` of the application |control how everyone in my organization uses the application
+
+|`*` |advance user |export all contacts/events to excel |view them on a device without this application
+
 |`*` |user |save my contacts on the cloud |sync between different devices
 |=======================================================================
 
