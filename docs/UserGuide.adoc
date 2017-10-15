@@ -112,36 +112,6 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by names or phone numbers or tags: `finds` (NEW)
-
-Finds persons who contain any of the given keywords. +
-Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
-
-****
-* The search for name is case insensitive. e.g `hans` will match `Hans`
-* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
-* The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
-* Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
-* Only full words will be matched e.g. `friend` will not match `friends`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `finds n/John` +
-Returns `john` and `John Doe`
-* `finds n/Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `finds p/91234567` +
-Returns any person having phone number `91234567` exactly
-* `finds p/91234567 12345678` +
-Returns any person having phone number `91234567` or `12345678` exactly
-* `finds t/[friends]` +
-Returns any person having tag `[friends]` exactly
-* `finds t/[friends] [colleagues]` +
-Returns any person having tags `[friends]` or `[colleagues]` exactly
-
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -258,23 +228,89 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== New Features
 
-=== Extra `options` menu
+=== Since v1.0
+
+==== Static `coloured` tags
+
+Tags generated will automatically be assigned a unique color.+
+Similar tags will also be assigned the same colour as long as tags have the same spelling.
+
+==== Display of `total person` 
+
+Total number of person in addressbook will now be displayed at the footer bar.
+
+=== Since v1.1
+
+==== Locating persons by names or phone numbers or tags: `finds` 
+
+Finds persons who contain any of the given keywords. +
+Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
+
+****
+* The search for name is case insensitive. e.g `hans` will match `Hans`
+* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
+* The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
+* Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `finds n/John` +
+Returns `john` and `John Doe`
+* `finds n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `finds p/91234567` +
+Returns any person having phone number `91234567` exactly
+* `finds p/91234567 12345678` +
+Returns any person having phone number `91234567` or `12345678` exactly
+* `finds t/[friends]` +
+Returns any person having tag `[friends]` exactly
+* `finds t/[friends] [colleagues]` +
+Returns any person having tags `[friends]` or `[colleagues]` exactly
+
+==== Extra `options` menu
 
 Each user will have an extra list of options to choose from beside their name. +
 Icon is similar to a down arrow.
 
-=== Delete function from `options`
+===== `Delete` option
 
-Deletes the specified person from the address book. +
-Function can be found from the new `options` feature.
+This feature can be found under the new `options` menu
+Deletes the user according to the selected option's parent person.
+
+=== Since v1.2
+
+==== Displaying google map : `gmap`
+
+Displays the google map of the person identified by the index number used in the last person listing. +
+Format: `gmap INDEX`
+
+****
+* Loads the peron's address into Google map page at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`gmap 2` +
+Display google map of the 2nd person in the address book.
+* `find Betsy` +
+`gmap 1` +
+Display google map the 1st person in the results of the `find` command.
+
+==== `Google map` option
+
+This feature can be found under the new `options` menu
+Display the google map data into browser panel based on person's address.
 
 === Coming soon in v2.0
-
-==== GoogleMap function from `options`
-
-Show google maps data based on person's address. +
-Function will be found from the new `options` feature.
 
 ==== Import export of addressbook from header menu bar
 
