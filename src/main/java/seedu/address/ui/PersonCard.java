@@ -52,6 +52,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label dateBorrow;
     @FXML
+    private Label deadline;
+    @FXML
     private Label dateRepaid;
     @FXML
     private Label email;
@@ -79,6 +81,7 @@ public class PersonCard extends UiPart<Region> {
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
+        deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
         dateRepaid.textProperty().bind(Bindings.convert(person.dateRepaidProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();

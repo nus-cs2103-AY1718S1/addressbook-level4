@@ -31,6 +31,12 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
+               <Text fx:id="deadlineField" fill="GREY" styleClass="window_small_label" text="Deadline: " />
+               <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" />
+            </children>
+          </TextFlow>
+          <TextFlow prefHeight="50.0" prefWidth="400.0">
+              <children>
                <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " />
                <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" />
             </children>

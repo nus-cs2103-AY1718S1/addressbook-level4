@@ -400,6 +400,9 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 There are three ways to run tests.
 
+Note that due to the nature of the Date Borrow field in Person Class, +
+it is advisable that developers do not test at midnight where the date might change.
+
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
