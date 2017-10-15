@@ -31,7 +31,7 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_BIRTHDAY_AMY="15/02/1992";
     public static final String VALID_BIRTHDAY_BOB="15/02/1993";
-    public static final String VALID_WEBSITE_AMY = "http://www.website.com/";
+    public static final String VALID_WEBSITE_AMY = "https://www.website.com/";
     public static final String VALID_WEBSITE_BOB = "http://www.yahoo.com/";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";

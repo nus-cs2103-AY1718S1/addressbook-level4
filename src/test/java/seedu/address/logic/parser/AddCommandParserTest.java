@@ -37,57 +37,57 @@ public class AddCommandParserTest {
 
         // multiple birthdays - last birthday accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+                + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + WEBSITE_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB).withWebsite(VALID_WEBSITE_BOB)
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + WEBSITE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + WEBSITE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, new AddCommand(expectedPersonMultipleTags));
 
         // multiple website - last website accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + WEBSITE_DESC_AMY
                 + WEBSITE_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
-                new AddCommand(expectedPersonMultipleTags));
     }
 
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY) .withWebsite(VALID_WEBSITE_AMY).withTags().build();
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
+                .withWebsite(VALID_WEBSITE_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPerson));
 
         // missing phone prefix
         Person expectedPersonWithoutPhone = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(EMPTY_PHONE)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
                 .withWebsite(VALID_WEBSITE_AMY).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPersonWithoutPhone));
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPersonWithoutPhone));
 
         // missing email prefix
         Person expectedPersonWithoutEmail = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(EMPTY_EMAIL).withAddress(VALID_ADDRESS_AMY)
+                .withEmail(EMPTY_EMAIL).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
                 .withWebsite(VALID_WEBSITE_AMY).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                + PHONE_DESC_AMY + ADDRESS_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPersonWithoutEmail));
+                + PHONE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPersonWithoutEmail));
 
         // missing address prefix
         Person expectedPersonWithoutAddress = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(EMPTY_ADDRESS)
+                .withEmail(VALID_EMAIL_AMY).withAddress(EMPTY_ADDRESS).withBirthday(VALID_BIRTHDAY_AMY)
                 .withWebsite(VALID_WEBSITE_AMY).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                + PHONE_DESC_AMY + EMAIL_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPersonWithoutAddress));
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY, new AddCommand(expectedPersonWithoutAddress));
 
         // missing website prefix
         Person expectedPersonWithoutWebsite = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
                 .withWebsite(EMPTY_WEBSITE).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
-                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPersonWithoutWebsite));
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY, new AddCommand(expectedPersonWithoutWebsite));
     }
 
     @Test
