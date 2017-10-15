@@ -55,7 +55,7 @@
        <padding>
            <Insets bottom="10" left="10" right="10" top="10" />
        </padding>
-    <StackPane fx:id="browserPlaceholder" minWidth="1000" prefWidth="1000" styleClass="individualBorderInSplitPane" SplitPane.resizableWithParent="false">
+    <StackPane fx:id="browserPlaceholder" minWidth="340" prefWidth="340" styleClass="individualBorderInSplitPane">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
