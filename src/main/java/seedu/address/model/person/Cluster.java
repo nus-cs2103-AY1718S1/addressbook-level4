@@ -5,11 +5,6 @@ import static seedu.address.model.person.PostalCode.MESSAGE_POSTAL_CODE_CONSTRAI
 import static seedu.address.model.person.PostalCode.isValidPostalCode;
 import static seedu.address.model.util.ClusterUtil.getCluster;
 
-import java.util.HashMap;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.util.ClusterUtil;
-
 //@@author khooroko
 /**
  * Represents a Person's cluster in the address book.
