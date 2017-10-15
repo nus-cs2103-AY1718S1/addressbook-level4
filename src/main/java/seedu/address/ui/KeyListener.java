@@ -41,39 +41,45 @@ public class KeyListener {
     }
 
     /**
-     * Handles the key press events
+     * Handles the key press events with event filter
      */
     public void handleKeyPress() {
         mainWindow.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             commandBox.setStyleToDefault();
-
-            if (keys.get("FOCUS_PERSON_LIST").match(event)) {
-                personListPanel.setFocus();
-            }
-            if (keys.get("FOCUS_COMMAND_BOX").match(event)) {
-                commandBox.setFocus();
-            }
-            if (keys.get("DELETE_SELECTION").match(event)) {
-                // TODO: add support for deletion at selected list
-                // Dummy action
-                personListPanel.setFocus();
-            }
-            if (keys.get("CLEAR_LIST").match(event)) {
-                executeCommand(ClearCommand.COMMAND_WORD);
-            }
-            if (keys.get("UNDO").match(event)) {
-                executeCommand(UndoCommand.COMMAND_WORD);
-            }
-            if (keys.get("REDO").match(event)) {
-                executeCommand(RedoCommand.COMMAND_WORD);
-            }
-            if (keys.get("VIEW_HISTORY").match(event)) {
-                executeCommand(HistoryCommand.COMMAND_WORD);
-            }
-            if (keys.get("LIST").match(event)) {
-                executeCommand(ListCommand.COMMAND_WORD);
-            }
+            executeEvent(event);
         });
+    }
+
+    /**
+     * Executes the key event
+     */
+    private void executeEvent(KeyEvent event) {
+        if (keys.get("FOCUS_PERSON_LIST").match(event)) {
+            personListPanel.setFocus();
+        }
+        if (keys.get("FOCUS_COMMAND_BOX").match(event)) {
+            commandBox.setFocus();
+        }
+        if (keys.get("DELETE_SELECTION").match(event)) {
+            // TODO: add support for deletion at selected list
+            // Dummy action
+            personListPanel.setFocus();
+        }
+        if (keys.get("CLEAR_LIST").match(event)) {
+            executeCommand(ClearCommand.COMMAND_WORD);
+        }
+        if (keys.get("UNDO").match(event)) {
+            executeCommand(UndoCommand.COMMAND_WORD);
+        }
+        if (keys.get("REDO").match(event)) {
+            executeCommand(RedoCommand.COMMAND_WORD);
+        }
+        if (keys.get("VIEW_HISTORY").match(event)) {
+            executeCommand(HistoryCommand.COMMAND_WORD);
+        }
+        if (keys.get("LIST").match(event)) {
+            executeCommand(ListCommand.COMMAND_WORD);
+        }
     }
 
     /**
