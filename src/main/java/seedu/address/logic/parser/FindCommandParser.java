@@ -67,8 +67,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         } else if (prefix.equals("t/")) {
             return new FindSpecificCommand(new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
         }
-
-        return null;
+        else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindSpecificCommand.MESSAGE_USAGE));
+        }
     }
 
 }
