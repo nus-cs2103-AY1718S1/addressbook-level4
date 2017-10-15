@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import javafx.scene.input.KeyCode;
 
-public class MainWindowTest extends AddressBookGuiTest {
+public class KeyListenerTest extends AddressBookGuiTest {
 
     @Test
     public void handleKeyListeners() {
@@ -17,19 +17,8 @@ public class MainWindowTest extends AddressBookGuiTest {
         guiRobot.push(KeyCode.A);
         assertTrue(mainWindowHandle.getCommandBox().isFocused());
         // Remove focus
-        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.ESCAPE);
         assertFalse(mainWindowHandle.getCommandBox().isFocused());
-
-        // Check that result display panel is accessible with assigned key presses
-        assertTrue(mainWindowHandle.getResultDisplay().isFocused());
-        // Check scrolling
-        guiRobot.push(KeyCode.UP);
-        assertTrue(mainWindowHandle.getResultDisplay().isFocused());
-        guiRobot.push(KeyCode.DOWN);
-        assertTrue(mainWindowHandle.getResultDisplay().isFocused());
-        // Remove focus
-        guiRobot.push(KeyCode.LEFT);
-        assertFalse(mainWindowHandle.getResultDisplay().isFocused());
 
         // Check that person list panel is accessible with assigned key presses
         assertTrue(mainWindowHandle.getPersonListPanel().isFocused());
