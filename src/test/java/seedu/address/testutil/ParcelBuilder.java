@@ -4,12 +4,12 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -60,7 +60,7 @@ public class ParcelBuilder {
         }
         return this;
     }
-    
+
     /**
      * Sets the {@code Name} of the {@code Parcel} that we are building.
      */

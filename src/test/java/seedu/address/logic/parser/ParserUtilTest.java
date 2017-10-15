@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 
@@ -19,10 +18,10 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -86,7 +85,8 @@ public class ParserUtilTest {
     @Test
     public void parseArticleNumber_validValue_returnsArticleNumber() throws Exception {
         TrackingNumber expectedTrackingNumber = new TrackingNumber(VALID_ARTICLE_NUMBER);
-        Optional<TrackingNumber> actualArticleNumber = ParserUtil.parseTrackingNumber(Optional.of(VALID_ARTICLE_NUMBER));
+        Optional<TrackingNumber> actualArticleNumber = ParserUtil.parseTrackingNumber(
+                Optional.of(VALID_ARTICLE_NUMBER));
 
         assertEquals(expectedTrackingNumber, actualArticleNumber.get());
     }

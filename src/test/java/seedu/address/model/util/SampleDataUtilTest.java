@@ -6,11 +6,11 @@ import static seedu.address.model.util.SampleDataUtil.getTagSet;
 import org.junit.Test;
 
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.TrackingNumber;
 
 public class SampleDataUtilTest {
 

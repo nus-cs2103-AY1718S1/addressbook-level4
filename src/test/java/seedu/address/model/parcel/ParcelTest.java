@@ -1,8 +1,7 @@
 package seedu.address.model.parcel;
 
-
-import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_ADDRESS;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_ARTICLE_NUMBER;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_EMAIL;
