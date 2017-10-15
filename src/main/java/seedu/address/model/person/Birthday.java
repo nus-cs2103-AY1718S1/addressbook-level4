@@ -13,9 +13,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
  */
 public class Birthday {
-    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person Birthday should be in the format of DD/MM/YYYY";
+    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Person Birthday should be in the format of DD/MM/YYYY";
 
+    public static final String BIRTHDAY_NULL = null; // no website
     public final String value;
 
     /**
@@ -24,6 +24,7 @@ public class Birthday {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
+        String trimmedbirthday = birthday == BIRTHDAY_NULL ? BIRTHDAY_NULL : birthday.trim();
         if (!isValidBirthday(birthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
@@ -35,6 +36,9 @@ public class Birthday {
      */
     static boolean isValidBirthday(String birthday) {
 
+        if (birthday == BIRTHDAY_NULL) {
+            return true;
+        }
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
         try {
