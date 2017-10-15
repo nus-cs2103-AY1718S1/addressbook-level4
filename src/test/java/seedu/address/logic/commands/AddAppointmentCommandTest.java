@@ -19,13 +19,6 @@ import seedu.address.testutil.TypicalPersons;
 
 public class AddAppointmentCommandTest {
 
-    private Model model;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    }
-
     @Test
     public void equals() throws ParseException {
         Calendar calendar = Calendar.getInstance();
