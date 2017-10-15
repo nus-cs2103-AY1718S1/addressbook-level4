@@ -9,24 +9,18 @@ import javafx.scene.input.KeyCombination;
  */
 public class KeyListenerUtil {
     public static HashMap<String, KeyCombination> getKeys() {
-        return new HashMap<String, KeyCombination>() {
-            {
-                put("FOCUS_PERSON_LIST", KeyCombination.valueOf("Esc"));
 
-                put("FOCUS_COMMAND_BOX", KeyCombination.valueOf("Enter"));
+        HashMap<String, KeyCombination> keys = new HashMap<>();
 
-                put("DELETE_SELECTION", KeyCombination.valueOf("Ctrl+D"));
+        keys.put("FOCUS_PERSON_LIST", KeyCombination.valueOf("Esc"));
+        keys.put("FOCUS_COMMAND_BOX", KeyCombination.valueOf("Enter"));
+        keys.put("DELETE_SELECTION", KeyCombination.valueOf("Ctrl+D"));
+        keys.put("CLEAR_LIST", KeyCombination.valueOf("Ctrl+Shift+D"));
+        keys.put("VIEW_HISTORY", KeyCombination.valueOf("Ctrl+H"));
+        keys.put("UNDO", KeyCombination.valueOf("Ctrl+Z"));
+        keys.put("REDO", KeyCombination.valueOf("Ctrl+Y"));
+        keys.put("LIST", KeyCombination.valueOf("Ctrl+l"));
 
-                put("CLEAR_LIST", KeyCombination.valueOf("Ctrl+Shift+D"));
-
-                put("VIEW_HISTORY", KeyCombination.valueOf("Ctrl+H"));
-
-                put("UNDO", KeyCombination.valueOf("Ctrl+Z"));
-
-                put("REDO", KeyCombination.valueOf("Ctrl+Y"));
-
-                put("LIST", KeyCombination.valueOf("Ctrl+l"));
-            }
-        };
+        return keys;
     }
 }
