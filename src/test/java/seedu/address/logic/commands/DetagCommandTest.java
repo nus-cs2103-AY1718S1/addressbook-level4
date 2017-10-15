@@ -33,7 +33,7 @@ public class DetagCommandTest {
     private final Index[] indices2 = {fromOneBased(2), fromOneBased(5)};
 
     @Test
-    public void execute_ValidIndex_success() throws Exception {
+    public void executeValidIndexSuccess() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();
@@ -50,7 +50,7 @@ public class DetagCommandTest {
     }
 
     @Test
-    public void execute_InvalidIndex_throwsCommandException() throws Exception {
+    public void executeInvalidIndexThrowsCommandException() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();
