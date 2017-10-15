@@ -20,6 +20,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.predicates.FavourListPredicate;
 import seedu.address.model.person.predicates.UniqueAddressPredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
@@ -94,6 +95,11 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
         return set;
+    }
+
+    @Override
+    public FavourListPredicate getFavourListPredicate() {
+        return new FavourListPredicate(favourList);
     }
 
     @Override

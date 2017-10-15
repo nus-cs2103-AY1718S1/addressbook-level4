@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.ListingUnit;
+import seedu.address.model.person.predicates.FavourListPredicate;
 import seedu.address.model.person.predicates.UniqueAddressPredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
@@ -25,7 +26,7 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all persons or all attributes(if specified) and "
             + "displays them as a list with index numbers.\n"
-            + "Parameters: address/email/phone\n"
+            + "Parameters: address/email/phone/collection\n"
             + "Example: " + COMMAND_WORD + " address";
 
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
@@ -72,9 +73,9 @@ public class ListCommand extends Command {
             return executeListByAttribute(phonePredicate);
 
         case ATTRIBUTE_COLLECTION:
-            ListingUnit.setCurrentListingUnit(PHONE);
-            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
-            return executeListByAttribute(phonePredicate);
+            ListingUnit.setCurrentListingUnit(PERSON);
+            FavourListPredicate favourListPredicate = model.getFavourListPredicate();
+            return executeListByAttribute(favourListPredicate);
 
         default:
             ListingUnit.setCurrentListingUnit(PERSON);

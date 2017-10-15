@@ -33,7 +33,7 @@ public class ListCommandParser implements Parser<ListCommand> {
 
     private boolean isValidAttribute(String args) {
         return args.equals(ListCommand.ATTRIBUTE_ADDRESS) || args.equals(ListCommand.ATTRIBUTE_EMAIL)
-                || args.equals(ListCommand.ATTRIBUTE_PHONE);
+                || args.equals(ListCommand.ATTRIBUTE_PHONE) || args.equals(ListCommand.ATTRIBUTE_COLLECTION);
     }
 
 }
