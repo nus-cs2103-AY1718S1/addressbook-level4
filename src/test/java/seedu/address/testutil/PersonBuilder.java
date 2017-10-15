@@ -93,8 +93,8 @@ public class PersonBuilder {
     public PersonBuilder withFormClass(String formClass) {
         try {
             this.person.setFormClass(new FormClass(formClass));
-        } catch (IllegalValueException ive) {//TODO: determine illegal arguments
-            throw new IllegalArgumentException("formClass are expected to be unique.");
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("formClass is expected to be unique.");
         }
         return this;
     }

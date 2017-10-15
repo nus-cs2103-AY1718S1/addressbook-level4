@@ -86,7 +86,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code FormClass} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withFormClass(String formClass) {
         try {
