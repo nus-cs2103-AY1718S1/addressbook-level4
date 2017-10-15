@@ -1,19 +1,21 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.fail;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import static org.junit.Assert.fail;
+
 
 public class AddAppointmentParserTest {
-
-    private AddAppointmentParser parser = new AddAppointmentParser();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private AddAppointmentParser parser = new AddAppointmentParser();
     @Test
     public void prefixesNotPresent() throws ParseException {
         thrown.expect(ParseException.class);

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -45,9 +44,9 @@ public class AddAppointmentCommandTest {
         //Invalid date (i.e date before current instance)
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2010/08/08 10:10"));
         Appointment appointment = new Appointment("asd", calendar);
-        Command command = new AddAppointmentCommand(appointment);
+        AddAppointmentCommand command = new AddAppointmentCommand(appointment);
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        ((AddAppointmentCommand) command).setData(model);
+        command.setData(model);
         CommandResult result = command.execute();
 
         //Invalid date message returned
@@ -58,7 +57,7 @@ public class AddAppointmentCommandTest {
         appointment = new Appointment("asd", calendar);
         command = new AddAppointmentCommand(appointment);
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        ((AddAppointmentCommand) command).setData(model);
+        command.setData(model);
         result = command.execute();
 
         //No such person
@@ -66,7 +65,7 @@ public class AddAppointmentCommandTest {
 
         appointment = new Appointment(TypicalPersons.ALICE.getName().toString(), calendar);
         command = new AddAppointmentCommand(appointment);
-        ((AddAppointmentCommand) command).setData(model);
+        command.setData(model);
         result = command.execute();
 
         //Command success
