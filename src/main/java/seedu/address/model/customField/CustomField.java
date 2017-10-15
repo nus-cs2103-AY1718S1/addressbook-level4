@@ -11,7 +11,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class CustomField {
 
     public static final String MESSAGE_CUSTOM_FIELD_CONSTRAINTS = "CustomFields names should be alphanumeric";
-    public static final String CUSTOM_FIELD_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String customFieldName;
     private String customFieldValue;
@@ -64,7 +63,7 @@ public class CustomField {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + customFieldName + ": " + customFieldValue + ']';
+        return " " + customFieldName + ": " + customFieldValue;
     }
 
 }
