@@ -7,7 +7,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.text.ParseException;
 import java.util.Calendar;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
