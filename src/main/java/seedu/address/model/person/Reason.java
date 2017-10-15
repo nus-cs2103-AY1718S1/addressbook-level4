@@ -5,13 +5,13 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * Represents a Person's reason for "why" in the address book.
  */
-public class Address {
+public class Reason {
 
+    public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Person addresses can take any values, and it should not be blank";
+            "Person reason can take any values, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -22,30 +22,22 @@ public class Address {
     public final String value;
 
     /**
-     * Initialise a Address object with value of empty String. This can ONLY be used in the default field of
-     * {@code AddPersonOptionalFieldDescriptor}
-     */
-    public Address() {
-        this.value = "";
-    }
-
-    /**
      * Validates given address.
      *
      * @throws IllegalValueException if given address string is invalid.
      */
-    public Address(String address) throws IllegalValueException {
-        requireNonNull(address);
-        if (!isValidAddress(address)) {
+    public Reason(String reason) throws IllegalValueException {
+        requireNonNull(reason);
+        if (!isValidReason(reason)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = address;
+        this.value = reason;
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) {
+    public static boolean isValidReason(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 

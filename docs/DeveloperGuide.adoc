@@ -1,4 +1,4 @@
-﻿= AddressBook Level 4 - Developer Guide
+﻿= LISA: Levels Integrated Secretarial Agent - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -723,15 +723,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person by providing only his/her name|
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |careless user| undo/redo previous command |
+|`* * *` |careless user| undo/redo previous command | to easily correct the mistake I made
 
-|`* * *` |user |add/delete tags without overriting/rewriting the entire tag list |
+|`* * *` |user | add/delete tags without overwriting/rewriting the entire tag list |
 
 |`* *` |user | search with partial keyword | find details I'm not sure of
 
@@ -756,10 +756,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user | check last modified date for a contact| identify possible outdated contacts
-
-|`*` |efficiency user| load multiple addressbooks | have different book for different purpose
-
-|`*` |experienced user| write multiple command in a single line| shorten typing time
 
 |`*` |lazy user| create an email by clicking on email address on person card| send email on the fly
 
