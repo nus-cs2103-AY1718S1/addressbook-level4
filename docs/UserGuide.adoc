@@ -75,14 +75,6 @@ Attaches `Likes to swim` as remark to first person on the list.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Editing a person's remark: `remark`
-
-Edits the remark of the person identified by the index number used in the last person listing. +
-Existing remark will be overwritten by the input. +
-Format: `remark INDEX r/REMARK`
-
-Examples:
-
 === Viewing help : `help`
 
 Format: `help`
@@ -127,6 +119,16 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Editing a person's remark: `remark`
+
+Edits the remark of the person identified by the index number used in the last person listing. +
+Format: `remark INDEX r/REMARK`
+
+Examples:
+* `list` +
+`remark 1 r/Snores loudly` +
+Attaches `Snores loudly` as remark to first person on the list.
 
 === Locating persons by name: `find`
 
