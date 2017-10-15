@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ import org.junit.rules.ExpectedException;
 // import com.sun.org.apache.regexp.internal.RE;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -35,8 +37,10 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ToggleTagColorCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -55,6 +59,21 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_toggleColor() throws ParseException {
+        ToggleTagColorCommand command = (ToggleTagColorCommand) parser.parseCommand("tagcolor off");
+        assertEquals(new ToggleTagColorCommand(false, "", ""), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointment() throws Exception {
+        AddAppointmentCommand command = (AddAppointmentCommand) parser
+                .parseCommand("appointment n/asd d/2018/08/08 20:10");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/08/08 20:10"));
+        assertTrue(command.equals(new AddAppointmentCommand(new Appointment("asd", calendar))));
     }
 
     @Test

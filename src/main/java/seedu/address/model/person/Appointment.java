@@ -50,7 +50,6 @@ public class Appointment {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Bloodtype // instanceof handles nulls
-                && this.personString.equals(((Appointment) other).personString))
-                && this.date.toString().equals(((Appointment) other).date.toString()); // state check
+                && this.personString.equals(((Appointment) other).personString));
     }
 }

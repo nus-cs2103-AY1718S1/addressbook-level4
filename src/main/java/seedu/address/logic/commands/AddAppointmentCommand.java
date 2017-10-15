@@ -58,4 +58,16 @@ public class AddAppointmentCommand extends Command {
         Calendar calendar = Calendar.getInstance();
         return !appointment.getDate().before(calendar.getTime());
     }
+
+    public Appointment getAppointment() {
+        return this.appointment;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddAppointmentCommand // instanceof handles nulls
+                && this.appointment.getPersonName()
+                .equals((((AddAppointmentCommand) other).getAppointment().getPersonName())));
+    }
 }
