@@ -22,14 +22,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<Boolean> favourite;
+    private ObjectProperty<Favourite> favourite;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Boolean favourite, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Favourite favourite, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -104,17 +104,17 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setFavourite(Boolean favourite) {
+    public void setFavourite(Favourite favourite) {
         this.favourite.set(requireNonNull(favourite));
     }
 
     @Override
-    public ObjectProperty<Boolean> favouriteProperty() {
+    public ObjectProperty<Favourite> favouriteProperty() {
         return favourite;
     }
 
     @Override
-    public Boolean getFavourite() {
+    public Favourite getFavourite() {
         return favourite.get();
     }
 

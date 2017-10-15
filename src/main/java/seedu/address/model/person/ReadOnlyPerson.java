@@ -20,8 +20,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    ObjectProperty<Boolean> favouriteProperty();
-    Boolean getFavourite();
+    ObjectProperty<Favourite> favouriteProperty();
+    Favourite getFavourite();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -51,7 +51,7 @@ public interface ReadOnlyPerson {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Favourite")
-                .append(getFavourite().toString())
+                .append(getFavourite())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

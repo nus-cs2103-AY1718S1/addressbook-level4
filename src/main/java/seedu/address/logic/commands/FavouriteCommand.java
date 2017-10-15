@@ -8,11 +8,11 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.Favourite;
 
 /**
  * Mark a person in the contact as favourite
@@ -53,7 +53,7 @@ public class FavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), true, personToEdit.getTags());
+                personToEdit.getAddress(), favourite, personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);

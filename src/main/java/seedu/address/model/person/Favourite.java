@@ -5,14 +5,22 @@ package seedu.address.model.person;
  */
 public class Favourite {
 
-    public String status;
+    private String status;
 
     public Favourite() {
         this.status = "False"; // default state
     }
 
+    public Favourite(String status) {
+        this.status = status;
+    }
+
     public void setFavourite() {
         this.status = "True";
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     @Override

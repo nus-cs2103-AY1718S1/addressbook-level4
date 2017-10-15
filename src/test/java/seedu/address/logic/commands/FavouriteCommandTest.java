@@ -31,7 +31,7 @@ public class FavouriteCommandTest {
     @Test
     public void execute_markFavourite_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withFavourite(true).build();
+                .withFavourite("True").build();
         FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
         String expectedMessage = String.format(FavouriteCommand.MESSAGE_FAVOURITE_SUCCESS, editedPerson);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
