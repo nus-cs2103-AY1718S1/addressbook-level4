@@ -29,6 +29,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.predicates.FavourListPredicate;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -125,6 +126,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public FavourListPredicate getFavourListPredicate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -138,6 +145,11 @@ public class AddCommandTest {
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException {
+
         }
 
         @Override
