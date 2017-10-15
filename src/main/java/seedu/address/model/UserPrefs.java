@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
@@ -12,6 +14,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String password = null;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -75,4 +78,25 @@ public class UserPrefs {
         return sb.toString();
     }
 
+    /**
+     *
+     * @param input (Password typed in command line)
+     * @return true if password is valid
+     * @retrun false if password is invalid
+     */
+    public boolean checkPassword(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(input.getBytes());
+
+            byte[] mdBytes = md.digest();
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < mdBytes.length; i++) {
+                hexString.append(Integer.toString((mdBytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            return password.equals(hexString.toString());
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
+    }
 }
