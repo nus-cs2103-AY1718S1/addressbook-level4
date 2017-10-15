@@ -1,0 +1,37 @@
+= Adeeb Ashraf - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: DeathNote
+DeathNote is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B3/DeathNote/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-W10-B3/DeathNote/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Added Birthday and Remarks Parameters
+
+==== External behavior
+
+---
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+
+include::../UserGuide.adoc[tag=bday] +
+
+inclyde::../UserGuide.adoc[tag=remark] +
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows users to further personalize each contact with more parameters +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+#End of Extract#
+
+---
