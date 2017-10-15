@@ -35,7 +35,12 @@
       <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode" />
       <Label fx:id="debt" styleClass="cell_small_label" text="\$debt" />
       <Label fx:id="dateBorrow" styleClass="cell_small_label" text="\$dateBorrow" />
+<<<<<<< HEAD
          <Label fx:id="deadLine" text="\$deadLine" />
+=======
+      <Label fx:id="dateRepaid" styleClass="cell_small_label" text="\$dateRepaid" />
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+>>>>>>> f72064d6c5ff3c947d59857fd55e1c3c1e472537
     </VBox>
       <rowConstraints>
          <RowConstraints />

@@ -39,6 +39,7 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setDebt(ALICE.getDebt());
             personWithTags.setDateBorrow(ALICE.getDateBorrow());
             personWithTags.setDeadLine(ALICE.getDeadLine());
+            personWithTags.setDateRepaid(ALICE.getDateRepaid());
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);

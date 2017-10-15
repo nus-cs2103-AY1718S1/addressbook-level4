@@ -57,7 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             DeadLine deadLine = ParserUtil.parseDeadLine(argMultimap.getValue(PREFIX_DEAD_LINE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            //DateBorrow field is created within Person class
+            //{@code DateBorrow} and {@code DateRepaid} fields are created within {@code Person} class
             ReadOnlyPerson person = new Person(name, phone, email, address, postalCode, debt, deadLine, tagList);
 
             return new AddCommand(person);
