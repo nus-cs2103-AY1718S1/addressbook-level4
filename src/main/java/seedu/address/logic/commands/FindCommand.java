@@ -18,8 +18,8 @@ public class FindCommand extends Command {
             + "and displays them as a list with index numbers.\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Options: \n"
-            + "\tdefault - Find contacts whose names contain any of the specified keywords (case-sensitive) \n"
-            + "\t" + PREFIX_TAG + " - Find contacts whose tags contain any of the specified keywords (case-sensitive) \n"
+            + "\tdefault - Find contacts whose names contain any of the specified keywords (case-sensitive)\n"
+            + "\t" + PREFIX_TAG + " - Find contacts whose tags contain any of the specified keywords (case-sensitive)\n"
             + "Parameters: [OPTION] KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " t/ friends colleagues";
 
