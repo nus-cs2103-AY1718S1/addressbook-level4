@@ -325,26 +325,21 @@ e.g.`select 2`
 
 === Command Shortcuts
 
-* `ctrl` + `a` : Add command
-* `ctrl` + `c` : Clear command
-* `ctrl` + `f` : Find command
 * `ctrl` + `l` : List command
 * `ctrl` + `h` : History command
 * `ctrl` + `z` : Undo command
 * `ctrl` + `y` : Redo command
-* `ctrl` + `\#` : Select contact at number `#`
-* `ctrl` + `d` + `\#`: Delete contact at number `#`
-* `ctrl` + `e` + `\#` : Edit contact at number `#`
+* `ctrl` + `shift` + `d` : Clear command
 
 === Navigation/Selection Shortcuts
 
-* `↑` or `↓` : Scroll the contact list
-* `shift` + `↑` or `shift` + `↓` : Select multiple contacts
-** `ctrl` + `d` : Delete selected contacts
+* `enter` : Selects the command box
+* `esc` : Deselects the command box +
++
+When the command box is not in selection: +
 
-=== Additional Shortcuts
-
-* `esc` : Exit the application
+* `↑` or `↓` : Scrolls the contact list +
+* `ctrl` + `d` : Deletes selected contact (not implemented yet)
 // end::excludeNavbar[]
 
 ifndef::env-github[]
