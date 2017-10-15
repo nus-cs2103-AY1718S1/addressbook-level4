@@ -17,14 +17,10 @@ import seedu.address.model.util.ClusterUtil;
  */
 public class Cluster {
 
-    public static final String CLUSTER_VALIDATION_REGEX = "[A-Za-z,.'\\\"\\\\s]";
-
     public final String value;
 
     /**
      * Validates given cluster. Can only be called with a validated postal code.
-     *
-     * @throws IllegalValueException if given cluster string is invalid.
      */
     public Cluster(PostalCode postalCode) {
         requireNonNull(postalCode);
