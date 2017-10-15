@@ -38,6 +38,9 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Collects the given person. */
+    void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException;
+
     /** Deletes the given list of person. */
     void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException;
 

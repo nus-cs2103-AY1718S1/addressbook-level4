@@ -34,6 +34,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    private final HashSet<ReadOnlyPerson> favourList;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -45,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        favourList = new HashSet<ReadOnlyPerson>();
     }
 
     public ModelManager() {
@@ -113,6 +116,15 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException {
+        if (!favourList.contains(target)) {
+            favourList.add(target);
+        } else {
+            throw new DuplicatePersonException();
+        }
     }
 
     @Override
