@@ -10,9 +10,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class FormClass {
 
-    public static final String MESSAGE_FORMCLASS_CONSTRAINTS = "FormClass names should be alphanumeric";
+    public static final String MESSAGE_FORMCLASS_CONSTRAINTS =
+            "FormClass names should be alphanumeric and can contain '.' and '-' ";
 
-    public static final String FORMCLASS_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String FORMCLASS_VALIDATION_REGEX = "^[a-zA-Z0-9\\.\\-\\/]+$";
 
     public final String value;
 
