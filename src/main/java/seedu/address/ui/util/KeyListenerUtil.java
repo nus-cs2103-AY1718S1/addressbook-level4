@@ -24,7 +24,7 @@ public class KeyListenerUtil {
         keys.put(HistoryCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+H"));
         keys.put(UndoCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+Z"));
         keys.put(RedoCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+Y"));
-        keys.put(ListCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+l"));
+        keys.put(ListCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+L"));
 
         return keys;
     }
