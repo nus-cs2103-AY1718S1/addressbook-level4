@@ -23,9 +23,9 @@ public interface ReadOnlyPerson {
     ObjectProperty<Email> emailProperty();
 
     Email getEmail();
-  
+
     ObjectProperty<Birthday> birthdayProperty();
-  
+
     Birthday getBirthday();
 
     ObjectProperty<Address> addressProperty();

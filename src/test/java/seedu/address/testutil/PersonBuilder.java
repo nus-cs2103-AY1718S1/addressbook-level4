@@ -32,7 +32,7 @@ public class PersonBuilder {
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Website defaultWebsite = new Website(DEFAULT_WEBSITE);
-            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);          
+            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
                     defaultAddress, defaultBirthday, defaultRemark, defaultWebsite, defaultTags);
         } catch (IllegalValueException ive) {

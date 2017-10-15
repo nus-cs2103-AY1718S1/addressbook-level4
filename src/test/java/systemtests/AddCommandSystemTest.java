@@ -126,7 +126,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing address -> added */
         toAdd = new PersonBuilder().withName("Adeeb").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
             .withAddress(EMPTY_ADDRESS).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + " n/Adeeb" + PHONE_DESC_AMY + EMAIL_DESC_AMY + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY 
+        command = AddCommand.COMMAND_WORD + " n/Adeeb" + PHONE_DESC_AMY + EMAIL_DESC_AMY + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
