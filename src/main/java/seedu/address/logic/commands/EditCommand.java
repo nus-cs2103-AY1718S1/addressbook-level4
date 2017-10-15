@@ -32,7 +32,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 
-
 /**
  * Edits the details of an existing person in the address book.
  */
@@ -226,7 +225,9 @@ public class EditCommand extends UndoableCommand {
             }
         }
 
-        public Optional<Birthday> getBirthday() { return Optional.ofNullable(birthday); }
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
 
         public void setWebsite(Website website) {
             if (website.value != null) {
@@ -262,12 +263,12 @@ public class EditCommand extends UndoableCommand {
             EditPersonDescriptor e = (EditPersonDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getBirthday().equals(e.getBirthday())
-                    && getWebsite().equals(e.getWebsite())
-                    && getTags().equals(e.getTags());
+                && getPhone().equals(e.getPhone())
+                && getEmail().equals(e.getEmail())
+                && getAddress().equals(e.getAddress())
+                && getBirthday().equals(e.getBirthday())
+                && getWebsite().equals(e.getWebsite())
+                && getTags().equals(e.getTags());
         }
     }
 }
