@@ -3,9 +3,10 @@ package seedu.address.logic.commands;
 import java.util.ArrayList;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import seedu.address.model.person.ReadOnlyPerson;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
   * Sort names of contacts by alphabetical order
