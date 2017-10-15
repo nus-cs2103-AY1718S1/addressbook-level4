@@ -33,7 +33,9 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG);
 
         String trimmedArgsName;
+        String trimmedArgsTag;
         String[] keywordNameList;
+        String[] keywordTagList;
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
         
         try {
@@ -44,6 +46,15 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
                 keywordNameList = trimmedArgsName.split("\\s+");
                 mapKeywords.put(PREFIX_NAME.toString(), Arrays.asList(keywordNameList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_TAG).isPresent()) {
+                trimmedArgsTag = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_TAG)).get().trim();
+                if (trimmedArgsTag.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordTagList = trimmedArgsTag.split("\\s+");
+                mapKeywords.put(PREFIX_TAG.toString(), Arrays.asList(keywordTagList));
             }
             
         } catch (IllegalValueException ive) {

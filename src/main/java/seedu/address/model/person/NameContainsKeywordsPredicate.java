@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 import java.util.HashMap;
@@ -20,8 +21,18 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.get(PREFIX_NAME.toString()).stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        boolean result = false;
+        if (keywords.containsKey(PREFIX_NAME.toString()) && !keywords.get(PREFIX_NAME.toString()).isEmpty()) {
+            result = keywords.get(PREFIX_NAME.toString()).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+            
+        }
+
+        if (keywords.containsKey(PREFIX_TAG.toString()) && !keywords.get(PREFIX_TAG.toString()).isEmpty()) {
+            result = result || person.containTags(keywords.get(PREFIX_TAG.toString()));
+        }
+        
+        return result;
     }
 
     @Override
