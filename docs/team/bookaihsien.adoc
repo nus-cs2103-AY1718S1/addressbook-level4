@@ -64,5 +64,5 @@ are using the app on the same device.
 
 === Other contributions
 
-. Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-. Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+. Add Appveyor, Coveralls and Codeacy to the project for efficient integrations.
+. Add AddressBook file name as window title (pr https://github.com/CS2103AUG2017-W10-B3/DeathNote/pull/27[#27]).
