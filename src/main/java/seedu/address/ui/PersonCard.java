@@ -9,7 +9,9 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.logic.Logic;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisplayGmapEvent;
+import seedu.address.commons.events.ui.PersonPanelOptionsDelete;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -33,7 +35,6 @@ public class PersonCard extends UiPart<Region> {
 
     public final ReadOnlyPerson person;
     private final int displayedIndex;
-    private final Logic logic;
 
     @FXML
     private HBox cardPane;
@@ -52,11 +53,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private MenuButton optionsButton;
 
-    public PersonCard(ReadOnlyPerson person, Logic logic, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         this.displayedIndex = displayedIndex;
-        this.logic = logic;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -91,22 +91,22 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * Menu list option: Delete
+     * Raises PersonPanelOptionsDelete, handled by UIManager
      * Handle Delete user
      */
     @FXML
     public void handleDelete() throws CommandException, ParseException {
-        String commandString = "delete " + this.displayedIndex;
-        this.logic.execute(commandString);
-
+        raise(new PersonPanelOptionsDelete(Index.fromOneBased(this.displayedIndex)));
     }
 
     /**
      * Menu list option: GoogleMap
+     * Raises DisplayGmapEvent, handled by BrowserPanel
      * Display google map on main viewport
      */
     @FXML
     public void handleGoogleMap() {
-        ReadOnlyPerson testing = this.person;
+        raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
     }
 
 
