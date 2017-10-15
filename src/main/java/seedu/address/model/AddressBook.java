@@ -195,13 +195,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * sorts list alphabetically
+     * Remove tag from persson
+     * Returns true if tag is successfully removed
      */
-    public void sort() {
-        persons.sort();
+    public boolean removeTag(String str) {
+        if (persons.removeTag(str)) {
+            tags.removeTag(str);
+            resetData(this);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void removeTag(String str) {
-        persons.removeTag(str);
+    public void sort() {
+        persons.sort();
     }
 }
