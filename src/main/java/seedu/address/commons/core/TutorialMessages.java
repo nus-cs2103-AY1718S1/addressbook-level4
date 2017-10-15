@@ -34,10 +34,10 @@ public class TutorialMessages {
             + "7. COMMAND\n";
 
     /* Command usage messages */
-    public static final String PROMPT_BEGIN = "Let's try out the different commands of Bluebird! Follow the format in "
+    public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Follow the format in "
             + "the command box to learn how to use each commands. A parameter in [ ] means it is optional!";
 
-    public static final String PROMPT_TWO = "add: Adds a person to the address book. "
+    public static final String USAGE_TWO = "add: Adds a person to the address book. "
             + "Example: add "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
@@ -46,30 +46,31 @@ public class TutorialMessages {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String PROMPT_THREE = "edit: Edits the details of the person identified "
+    public static final String USAGE_THREE = "edit: Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Example: edit 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String PROMPT_FOUR = "delete: Deletes the person identified "
+    public static final String USAGE_FOUR = "delete: Deletes the person identified "
             + "by the index number used in the last person listing.\n"
             + "Example: delete 1";
 
     /* Command prompt messages */
-    public static final String COMMAND_ADD_USAGE = "add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]";
-    public static final String COMMAND_EDIT_USAGE = "edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]";
-    public static final String COMMAND_DELETE_USAGE = "delete INDEX";
+    public static final String PROMPT_TWO = "add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]";
+    public static final String PROMPT_THREE = "edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]";
+    public static final String PROMPT_FOUR = "delete INDEX";
 
     /* Concluding message */
     public static final String CONCLUSION = "That's it for the tutorial! If you still need help, you can "
             + "type \"help\" on the command box or press F1 for the user guide.";
 
     /* Default prompt message */
-    public static final String DEFAULT_PROMPT = "Enter command here....";
+    public static final String PROMPT_DEFAULT = "Enter command here....";
 
-    private static final ArrayList<String> introList = new ArrayList<String>() {
+    /* List of all introductory messages */
+    public static final ArrayList<String> INTRO_LIST = new ArrayList<String>() {
         {
             add(INTRO_TWO);
             add(INTRO_THREE);
@@ -77,36 +78,25 @@ public class TutorialMessages {
             add(INTRO_FIVE);
             add(INTRO_SIX);
             add(INTRO_END);
-            add(PROMPT_BEGIN);
+            add(USAGE_BEGIN);
         }
     };
 
-    private static final ArrayList<String> promptList = new ArrayList<String>() {
+    /* List of all command prompt */
+    public static final ArrayList<String> COMMAND_USAGE_LIST = new ArrayList<String>() {
+        {
+            add(USAGE_TWO);
+            add(USAGE_THREE);
+            add(USAGE_FOUR);
+        }
+    };
+
+    /* List of all command prompt messages */
+    public static final ArrayList<String> COMMAND_PROMPT_LIST = new ArrayList<String>() {
         {
             add(PROMPT_TWO);
             add(PROMPT_THREE);
             add(PROMPT_FOUR);
         }
     };
-
-    private static final ArrayList<String> commandUsageList = new ArrayList<String>() {
-        {
-            add(COMMAND_ADD_USAGE);
-            add(COMMAND_EDIT_USAGE);
-            add(COMMAND_DELETE_USAGE);
-        }
-    };
-
-    public static ArrayList<String> getIntroList() {
-        return introList;
-    }
-
-
-    public static ArrayList<String> getPromptList() {
-        return promptList;
-    }
-
-    public static ArrayList<String> getCommandUsageList() {
-        return commandUsageList;
-    }
 }

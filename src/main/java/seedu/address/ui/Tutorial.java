@@ -29,23 +29,23 @@ public class Tutorial {
     private void setUpTutorial() {
 
         /* Steps for introduction to Bluebird */
-        for (String introMessages : TutorialMessages.getIntroList()) {
+        for (String introMessages : TutorialMessages.INTRO_LIST) {
             tutorialSteps.add(new TutSteps(introMessages));
         }
 
         /* Steps for commands usage */
         for (int i = 0; i < TutorialMessages.PROMPT_NUM_STEPS; i++) {
-            tutorialSteps.add(new TutSteps(TutorialMessages.getPromptList().get(i),
-                    TutorialMessages.getCommandUsageList().get(i)));
+            tutorialSteps.add(new TutSteps(TutorialMessages.COMMAND_USAGE_LIST.get(i),
+                    TutorialMessages.COMMAND_PROMPT_LIST.get(i)));
         }
 
         /* Steps for conclusion */
-        tutorialSteps.add(new TutSteps(TutorialMessages.CONCLUSION, TutorialMessages.DEFAULT_PROMPT));
+        tutorialSteps.add(new TutSteps(TutorialMessages.CONCLUSION, TutorialMessages.PROMPT_DEFAULT));
         tutorialSteps.add(new TutSteps("Last step"));
     }
 
     /**
-     * Executes the current tutorial's step.
+     * Executes the tutorial step.
      */
     public void executeStep(TutSteps currentStep) throws CommandException, ParseException {
         switch (currentStep.getStepNumber()) {
@@ -91,7 +91,7 @@ public class Tutorial {
     public void endTutorial() {
         mainWindow.unhighlightAll();
         tutorialText.setVisible(false);
-        mainWindow.setCommandPrompt(TutorialMessages.DEFAULT_PROMPT);
+        mainWindow.setCommandPrompt(TutorialMessages.PROMPT_DEFAULT);
     }
 }
 
