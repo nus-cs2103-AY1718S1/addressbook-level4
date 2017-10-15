@@ -104,7 +104,8 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
             return new RedoCommand();
 
-        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD)) {
+        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
+                || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
             return new FavouriteCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)

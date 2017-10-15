@@ -19,12 +19,15 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class FavouriteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "favourite";
+    public static final String COMMAND_WORD_1 = "favourite";
+    public static final String COMMAND_WORD_2 = "fav";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Mark the person as favourite "
+    public static final String MESSAGE_USAGE = COMMAND_WORD_1 + ": Mark the person as favourite "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 ";
+            + "Example: " + COMMAND_WORD_1
+            + "OR "
+            + COMMAND_WORD_2 + " 1 ";
 
     public static final String MESSAGE_ARGUMENTS = "INDEX: %1$d";
     public static final String MESSAGE_FAVOURITE_SUCCESS = "Favourite Person: %1$s";
