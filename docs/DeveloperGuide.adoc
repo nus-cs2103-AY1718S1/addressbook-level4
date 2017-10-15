@@ -1162,7 +1162,7 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Every command should respond within two seconds.
-.  Features of the product should be added incrementally.
+.  Navigation through the application without a mouse should be easy.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
@@ -1170,7 +1170,7 @@ Use case resumes at step 2.
 .  Should be usable by a human who has never used a command line interface before
 .  Data should be encrypted when application is not running
 .  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
-
+.  Commands should be intuitive and easy to learn.
 
 
 [appendix]
