@@ -29,8 +29,6 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
-    @XmlElement(required = true)
-    private boolean isPrivate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -56,7 +54,6 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
-        isPrivate = source.isPrivate();
     }
 
     /**
@@ -74,7 +71,6 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final boolean isPrivate = this.isPrivate;
-        return new Person(name, phone, email, address, tags, isPrivate);
+        return new Person(name, phone, email, address, tags);
     }
 }

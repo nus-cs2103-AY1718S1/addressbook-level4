@@ -82,7 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 

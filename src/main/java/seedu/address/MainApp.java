@@ -1,7 +1,5 @@
 package seedu.address;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_NOT_HIDDEN;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -69,7 +67,6 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
-        model.updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
 
         logic = new LogicManager(model);
 

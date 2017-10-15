@@ -45,8 +45,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            boolean isPrivate = false;
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList, isPrivate);
+
+            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
