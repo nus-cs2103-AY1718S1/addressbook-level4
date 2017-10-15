@@ -27,8 +27,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -119,9 +119,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+        LocateCommand command = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

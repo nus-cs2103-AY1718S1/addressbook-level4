@@ -10,9 +10,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Selects a person identified using it's last displayed index from the address book.
+ * Locates a person's address by showing its location on Google Maps.
  */
-public class SelectCommand extends Command {
+public class LocateCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
 
@@ -27,7 +27,7 @@ public class SelectCommand extends Command {
 
     private final Index targetIndex;
 
-    public SelectCommand(Index targetIndex) {
+    public LocateCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -48,7 +48,7 @@ public class SelectCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SelectCommand // instanceof handles nulls
-                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+                || (other instanceof LocateCommand // instanceof handles nulls
+                && this.targetIndex.equals(((LocateCommand) other).targetIndex)); // state check
     }
 }
