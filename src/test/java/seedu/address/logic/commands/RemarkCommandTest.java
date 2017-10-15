@@ -72,7 +72,7 @@ public class RemarkCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel); 
+        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
