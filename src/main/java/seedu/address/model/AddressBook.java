@@ -10,10 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -26,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueEventList events;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +43,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new UniqueEventList();
     }
 
     public AddressBook() {
@@ -63,6 +70,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces all events in this list with those in the argument event list.
+     */
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
+
+    /**
      * Replaces all tags in this list with those in the argument tag list.
      */
     public void setTags(Set<Tag> tags) {
@@ -79,6 +93,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
+        try {
+            setEvents(newData.getEventList());
+        } catch (DuplicateEventException de) {
+            assert false : "AddressBooks should not have duplicate events";
+        }
+
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -168,6 +188,36 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        if (events.remove(key)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+
+    /**
+     * Adds an event to the address book.
+     *
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
+        Event newEvent = new Event(e);
+        events.add(newEvent);
+    }
+
+    /**
+     * Sorts the events according to time
+     */
+    public void sortEventList() {
+        events.sortEvents();
+    }
+
+
     /*****************************************************
      * Tag-level operations
      *****************************************************/
@@ -189,6 +239,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
     }
 
     @Override

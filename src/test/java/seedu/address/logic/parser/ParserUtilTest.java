@@ -17,6 +17,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
+import seedu.address.model.event.EventVenue;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
@@ -27,11 +30,13 @@ import seedu.address.model.tag.Tag;
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_TIME = "251019 9:30pm";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
+    private static final String VALID_TIME = "25062006 09:39pm";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
@@ -74,14 +79,28 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseEventName_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseEventName(null);
+    }
+    @Test
     public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseName(Optional.of(INVALID_NAME));
+    }
+    @Test
+    public void parseEventName_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseEventName(Optional.of(INVALID_NAME));
     }
 
     @Test
     public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
+    }
+    @Test
+    public void parseEventName_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseEventName(Optional.empty()).isPresent());
     }
 
     @Test
@@ -91,11 +110,23 @@ public class ParserUtilTest {
 
         assertEquals(expectedName, actualName.get());
     }
+    @Test
+    public void parseEventName_validValue_returnsName() throws Exception {
+        EventName expectedEventName = new EventName(VALID_NAME);
+        Optional<EventName> actualEventName = ParserUtil.parseEventName(Optional.of(VALID_NAME));
+
+        assertEquals(expectedEventName, actualEventName.get());
+    }
 
     @Test
     public void parsePhone_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parsePhone(null);
+    }
+    @Test
+    public void parseTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTime(null);
     }
 
     @Test
@@ -103,10 +134,19 @@ public class ParserUtilTest {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
     }
+    @Test
+    public void parseTime_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTime(Optional.of(INVALID_TIME));
+    }
 
     @Test
     public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    }
+    @Test
+    public void parseTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTime(Optional.empty()).isPresent());
     }
 
     @Test
@@ -116,11 +156,23 @@ public class ParserUtilTest {
 
         assertEquals(expectedPhone, actualPhone.get());
     }
+    @Test
+    public void parseTime_validValue_returnsPhone() throws Exception {
+        EventTime expectedTime = new EventTime(VALID_TIME);
+        Optional<EventTime> actualTime = ParserUtil.parseTime(Optional.of(VALID_TIME));
+
+        assertEquals(expectedTime, actualTime.get());
+    }
 
     @Test
     public void parseAddress_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseAddress(null);
+    }
+    @Test
+    public void parseVenue_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseVenue(null);
     }
 
     @Test
@@ -128,11 +180,21 @@ public class ParserUtilTest {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS));
     }
+    @Test
+    public void parseVenue_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseVenue(Optional.of(INVALID_ADDRESS));
+    }
 
     @Test
     public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
     }
+    @Test
+    public void parseVenue_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseVenue(Optional.empty()).isPresent());
+    }
+
 
     @Test
     public void parseAddress_validValue_returnsAddress() throws Exception {
@@ -140,6 +202,13 @@ public class ParserUtilTest {
         Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS));
 
         assertEquals(expectedAddress, actualAddress.get());
+    }
+    @Test
+    public void parseVenue_validValue_returnsVenue() throws Exception {
+        EventVenue expectedVenue = new EventVenue(VALID_ADDRESS);
+        Optional<EventVenue> actualVenue = ParserUtil.parseVenue(Optional.of(VALID_ADDRESS));
+
+        assertEquals(expectedVenue, actualVenue.get());
     }
 
     @Test
