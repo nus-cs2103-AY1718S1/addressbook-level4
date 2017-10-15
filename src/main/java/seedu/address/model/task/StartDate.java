@@ -12,10 +12,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents the Starting Date of a given task in the application.
  * Guarantees: immutable; is valid as declared in {@link #FormatDate(String)}
  */
-public class StartDate {
-
-    public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates can only contain a String in the format dd/mm/yyyy";
+public class StartDate extends TaskDates {
+    
     public final Date date;
 
     /**
@@ -28,18 +26,9 @@ public class StartDate {
         String trimmedDate = date.trim();
         this.date = FormatDate(trimmedDate);
     }
-
-    /**
-     * Formats the date of a given string. If the input date format is invalid, an exception is thrown.
-     */
-    public static Date FormatDate(String date) throws IllegalValueException {
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            formatter.setLenient(false);
-            return formatter.parse(date);
-        } catch (ParseException pe) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
+    
+    public StartDate(Date date) {
+        this.date = date;
     }
 
     @Override

@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Description {
 
     public static final String MESSAGE_DESCRIPTION_CONSTRAINTS =
-            "Task descriptions should not consist of only non-alphanumeric characters and should not be blank";
+            "Task descriptions should not be blank";
 
     /*
      * The first character of the description must not be a whitespace,
@@ -39,7 +39,6 @@ public class Description {
      * Returns true if a given string is a valid task description.
      */
     public static boolean isValidDescription(String test) {
-        
         return test.matches(DESCRIPTION_VALIDATION_REGEX);
     }
 
