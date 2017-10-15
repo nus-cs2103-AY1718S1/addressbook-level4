@@ -112,12 +112,43 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by names or phone numbers or tags: `finds`
+
+Finds persons who contain any of the given keywords. +
+Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
+
+****
+* The search for name is case insensitive. e.g `hans` will match `Hans`
+* The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
+* The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
+* Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `finds n/John` +
+Returns `john` and `John Doe`
+* `finds n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+* `finds p/91234567` +
+Returns any person having phone number `91234567` exactly
+* `finds p/91234567 12345678` +
+Returns any person having phone number `91234567` or `12345678` exactly
+* `finds t/[friends]` +
+Returns any person having tag `[friends]` exactly
+* `finds t/[friends] [colleagues]` +
+Returns any person having tags `[friends]` or `[colleagues]` exactly
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
 ****
+
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -227,6 +258,49 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+
+=== Extra `options` menu (NEW)
+
+Each user will have an extra list of options to choose from beside their name. +
+Icon is similar to a down arrow.
+
+=== Delete function from `options`(NEW)
+
+Deletes the specified person from the address book. +
+Function can be found from the new `options` feature.
+
+=== Coming soon in v2.0
+
+==== GoogleMap function from `options`
+
+Show google maps data based on person's address. +
+Function will be found from the new `options` feature.
+
+==== Themes selection for myBook interface from `options`
+
+Allows user to select from a range of user interface themes +
+Function will be found from the new `options` feature.
+
+==== Close panels in UI from `Button`
+
+Allows user to open or close panels in UI when not needed +
+Functions will be found from the new `Button` feature
+
+=== Set important contacts from `important command`
+
+Allows user to set important contacts to always appear at the top of the list +
+Function will be found from the new `important` command feature
+
+=== Deleting a group of persons from improved `delete command`
+
+Allows user to delete a group of people through name  or tags +
+Functions will be found from improved `delete` command
+
+=== Display all tags from `new UI panel`
+
+All the tags in user myBook App will be displayed in a new UI panel +
+Functions wll be found from `new UI panel`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -243,6 +317,10 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by names or phone numbers or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
+e.g. `finds n/James Jake`
+e.g  `finds p/98765432`
+e.g. `finds t/[Friends] [colleagues]`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
