@@ -89,14 +89,6 @@ public class MainWindow extends UiPart<Region> {
         return primaryStage;
     }
 
-    /**
-     * Set key listeners for handling keyboard shortcuts.
-     */
-    protected void setKeyListeners() {
-        KeyListener keyListener = new KeyListener(logic, this, personListPanel, commandBox);
-        keyListener.handleKeyPress();
-    }
-
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }
@@ -129,6 +121,14 @@ public class MainWindow extends UiPart<Region> {
                 event.consume();
             }
         });
+    }
+
+    /**
+     * Set key listeners for handling keyboard shortcuts.
+     */
+    void setKeyListeners() {
+        KeyListener keyListener = new KeyListener(logic, this, personListPanel, commandBox);
+        keyListener.handleKeyPress();
     }
 
     /**
