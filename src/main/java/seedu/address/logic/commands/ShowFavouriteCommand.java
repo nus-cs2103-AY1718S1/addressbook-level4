@@ -14,8 +14,6 @@ public class ShowFavouriteCommand extends Command{
             + " OR "
             + COMMAND_WORD_2;
 
-    //public ShowFavouriteCommand() { }
-
     @Override
     public CommandResult execute() {
         final IsFavouritePredicate predicate = new IsFavouritePredicate();
