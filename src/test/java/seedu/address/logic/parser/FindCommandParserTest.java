@@ -9,8 +9,10 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindByNameCommand;
+import seedu.address.logic.commands.FindByTagsCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.TagsContainKeywordsPredicate;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -22,6 +24,22 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class FindCommandParserTest {
 
     private FindCommandParser parser = new FindCommandParser();
+
+    @Test
+    public void parse_emptyTagArgs_throwsParseException() {
+        assertParseFailure(parser, "t/     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validTagArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        FindCommand expectedFindCommand =
+                new FindByTagsCommand(new TagsContainKeywordsPredicate(Arrays.asList("colleagues", "friends")));
+        assertParseSuccess(parser, "t/ colleagues friends", expectedFindCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, "t/   \n colleagues \t friends \n", expectedFindCommand);
+    }
 
     @Test
     public void parse_emptyArg_throwsParseException() {
