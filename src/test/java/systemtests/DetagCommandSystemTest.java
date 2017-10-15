@@ -54,8 +54,8 @@ public class DetagCommandSystemTest extends AddressBookSystemTest {
         Model modelBeforeDeletingLast = getModel();
         Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
         assertTrue(expectedModel.equals(modelBeforeDeletingLast));
-        assertTrue(lastPersonIndex.getZeroBased()==6);
-        assertFalse(modelBeforeDeletingLast.getFilteredPersonList().size()==lastPersonIndex.getZeroBased());
+        assertTrue(lastPersonIndex.getZeroBased() == 6);
+        assertFalse(modelBeforeDeletingLast.getFilteredPersonList().size() == lastPersonIndex.getZeroBased());
         assertCommandSuccess(lastPersonIndex);
 
         /* Case: undo detagging the last person in the list -> last person's tag restored */
@@ -67,8 +67,8 @@ public class DetagCommandSystemTest extends AddressBookSystemTest {
         Model modelAfterDeletingLast = getModel();
         Tag removedPersonTag = removeTag(modelAfterDeletingLast, lastPersonIndex);
         expectedResultMessage = String.format(MESSAGE_DETAG_PERSONS_SUCCESS, removedPersonTag);
-        assertCommandSuccess("DeTaG "+ modelAfterDeletingLast.getFilteredPersonList().size() +
-                        " t/" + removedPersonTag.tagName, modelAfterDeletingLast,
+        assertCommandSuccess("DeTaG " + modelAfterDeletingLast.getFilteredPersonList().size()
+                        + " t/" + removedPersonTag.tagName, modelAfterDeletingLast,
                 expectedResultMessage);
 
         /* Case: undo detagging the last person in the list -> last person's tag restored */
@@ -115,17 +115,17 @@ public class DetagCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getPersonList().size() + 1);
-        command = DetagCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased() + " " + PREFIX_TAG +
-                deletedPersonTag.tagName;
+        command = DetagCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased() + " " + PREFIX_TAG
+                + deletedPersonTag.tagName;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DetagCommand.COMMAND_WORD + " abc" + PREFIX_TAG +
-                        deletedPersonTag, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DetagCommand.COMMAND_WORD + " abc" + PREFIX_TAG
+                + deletedPersonTag, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DetagCommand.COMMAND_WORD + " 1 abc" + PREFIX_TAG +
-                        deletedPersonTag, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DetagCommand.COMMAND_WORD + " 1 abc" + PREFIX_TAG
+                + deletedPersonTag, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
     }
 
@@ -156,13 +156,13 @@ public class DetagCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) throws CommandException {
         Model expectedModel = getModel();
-        assertTrue(expectedModel.getAddressBook().getPersonList().size()==7);
+        assertTrue(expectedModel.getAddressBook().getPersonList().size() == 7);
         Tag deletedPersonTag = removeTag(expectedModel, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DETAG_PERSONS_SUCCESS, deletedPersonTag);
 
         assertCommandSuccess(
-                DetagCommand.COMMAND_WORD + " " + toDelete.getOneBased() + " " + PREFIX_TAG +
-                        deletedPersonTag.tagName, expectedModel, expectedResultMessage);
+                DetagCommand.COMMAND_WORD + " " + toDelete.getOneBased() + " " + PREFIX_TAG
+                        + deletedPersonTag.tagName, expectedModel, expectedResultMessage);
     }
 
     /**
