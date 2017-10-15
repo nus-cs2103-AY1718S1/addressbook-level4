@@ -1147,6 +1147,13 @@ Sequence diagram
 A sequence diagram is an interaction diagram that shows how objects operate with one another and in what order.
 ....
 
+[[event-bus]]
+Event Bus
+
+....
+EventBus allows publish-subscribe-style communication between components without requiring the components to explicitly register with one another (and thus be aware of each other). It is designed exclusively to replace traditional Java in-process event distribution using explicit registration. It is not a general-purpose publish-subscribe system, nor is it intended for interprocess communication.
+....
+
 [appendix]
 == Product Survey
 
