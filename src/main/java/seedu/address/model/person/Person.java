@@ -159,7 +159,9 @@ public class Person implements ReadOnlyPerson {
      * @return customFields.get()
      */
     @Override
-    public UniqueCustomFieldList getCustomFieldList() { return customFields.get(); }
+    public UniqueCustomFieldList getCustomFieldList() {
+        return customFields.get();
+    }
 
     public ObjectProperty<UniqueCustomFieldList> customFieldProperty() {
         return customFields;

@@ -93,7 +93,9 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
             }
         }
 
-        if (toAdd.getCustomFieldValue().equals("")) { return; }
+        if (toAdd.getCustomFieldValue().equals("")) {
+            return;
+        }
 
         internalList.add(toAdd);
 
