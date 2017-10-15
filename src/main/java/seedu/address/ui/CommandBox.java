@@ -162,7 +162,7 @@ public class CommandBox extends UiPart<Region> {
      * {@code keyboardTyping} icon changes to {@code keyboardIdle} when there is no change
      * to text field after some time.
      */
-    private void setStyleToDefault() {
+    protected void setStyleToDefault() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         keyboardIcon.setImage(keyboardTyping);
@@ -178,7 +178,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Sets the command box style to indicate a failed command.
      */
-    private void setStyleToIndicateCommandFailure() {
+    protected void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
