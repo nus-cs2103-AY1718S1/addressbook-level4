@@ -87,11 +87,11 @@ public class ParserUtil {
      */
     public static Optional<Favorite> parseFavorite(Optional<String> favorite) throws IllegalValueException {
         requireNonNull(favorite);
-        return favorite.isPresent() ?
-                Optional.of(new Favorite(favorite.get())) :
+        return favorite.isPresent()
+                ? Optional.of(new Favorite(favorite.get()))
                 // Set default favorite status to "no" when user does not specify
                 // This makes favorite-field optional
-                Optional.of(new Favorite("no"));
+                : Optional.of(new Favorite("no"));
     }
 
     /**
