@@ -27,7 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_POSTAL_CODE = "600123";
     public static final String DEFAULT_DEBT_CODE = "123456789";
     // To avoid the scenario where a test case instantiates a Person with DateBorrow that is later
-    // than the Dead line.
+    // than the Deadline.
     public static final String DEFAULT_DEADLINE = Deadline.NO_DEADLINE_SET;
     public static final String DEFAULT_TAGS = "friends";
 
