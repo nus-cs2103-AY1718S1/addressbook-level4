@@ -27,19 +27,4 @@ public class AutoCompletePossibilities {
         return stub;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (o == null) {
-            return false;
-        }
-        if (!(o instanceof AutoCompletePossibilities)) {
-            return false;
-        }
-
-        AutoCompletePossibilities otherObject = (AutoCompletePossibilities)o;
-        return stub.equals(otherObject.getStub());
-    }
 }

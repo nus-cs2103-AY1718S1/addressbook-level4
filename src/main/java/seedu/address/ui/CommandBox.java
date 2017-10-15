@@ -112,6 +112,7 @@ public class CommandBox extends UiPart<Region> {
             if (commandTextField.getText().split(" ").length == 1) {
                 initAutoComplete();
             }
+            // Remember old caret position, so that selected text include all autocompleted text
             oldCaretPosition = commandTextField.getCaretPosition();
         }
         // loop back to the start (original user input) if all autocomplete options are exhausted
