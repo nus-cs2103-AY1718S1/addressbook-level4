@@ -29,6 +29,7 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
+    private static final String MESSAGE_INFO_CLUSTER_FIELD = "General location: ";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
     private static final String MESSAGE_INFO_DATE_BORROW = "Date borrowed: ";
     private static final String MESSAGE_INFO_DATE_REPAID = "Date repaid: ";
@@ -51,6 +52,10 @@ public class InfoPanel extends UiPart<Region> {
     private Text postalCodeField;
     @FXML
     private Label postalCode;
+    @FXML
+    private Text clusterField;
+    @FXML
+    private Label cluster;
     @FXML
     private Text emailField;
     @FXML
@@ -86,6 +91,7 @@ public class InfoPanel extends UiPart<Region> {
         addressField.setText(MESSAGE_INFO_ADDRESS_FIELD);
         emailField.setText(MESSAGE_INFO_EMAIL_FIELD);
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
+        clusterField.setText(MESSAGE_INFO_CLUSTER_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID);
@@ -101,6 +107,7 @@ public class InfoPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
+        cluster.textProperty().bind(Bindings.convert(person.clusterProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
@@ -165,6 +172,7 @@ public class InfoPanel extends UiPart<Region> {
                 && phone.getText().equals(infoPanel.phone.getText())
                 && address.getText().equals(infoPanel.address.getText())
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
+                && cluster.getText().equals(infoPanel.cluster.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
                 && email.getText().equals(infoPanel.email.getText())
                 && dateBorrow.getText().equals(infoPanel.dateBorrow.getText())

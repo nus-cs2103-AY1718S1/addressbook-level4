@@ -49,6 +49,12 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
+               <Text fx:id="clusterField" fill="gray" styleClass="window_small_label" text="General Location: " />
+               <Label fx:id="cluster" styleClass="window_small_label" text="\$cluster" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
                <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
                <Label fx:id="email" styleClass="window_small_label" text="\$email" />
             </children>
