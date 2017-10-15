@@ -17,6 +17,14 @@ public class Phone {
     public final String value;
 
     /**
+     * Initialise a Phone object with value of empty String. This can ONLY be used in the default field of
+     * {@code AddPersonOptionalFieldDescriptor}
+     */
+    public Phone() {
+        this.value = "";
+    }
+
+    /**
      * Validates given phone number.
      *
      * @throws IllegalValueException if given phone string is invalid.
