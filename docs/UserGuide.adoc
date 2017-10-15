@@ -92,6 +92,26 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Filtering persons by tags: `filter`
+
+Filters persons whose tags contain any of the given keywords. +
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case sensitive. e.g `professor` will match `professor`
+* The order of the keywords does not matter. e.g. `professor tutor` keywords will match `[tutor]` and '[professor]' tags
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Tags matching at least one keyword will be returned (i.e. `OR` search). e.g. `tutor` will return persons with both `[tutor]` and '[professor]' tags
+****
+
+Examples:
+
+* `filter professor` +
+Returns any person having at least a `[professor]` tag
+* `filter professor tutor` +
+Returns any person having at least a `[professor]` or `[tutor]` tags, or both
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -141,6 +161,26 @@ Format: `select INDEX`
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+=== Sorting a person : `sort`
+
+Sort the list of contacts in addressbook by name. +
+Format: `sort`
+
+****
+* Sort the list of contacts according to alphabetical order.
+* The names sorted will be case-insensitive.
+* If there is no contacts in the list, nothing will be sorted.
 ****
 
 Examples:
@@ -212,6 +252,27 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Remove a tag from select persons : `removetag`
+
+Removes the given tag from identified person by the list of index numbers used in the last person . +
+Format: `removetag [INDEX] [MORE_INDEXES] [t/TAG]...`
+
+****
+* Removes the tag from every person specified by the `INDEXES`.
+* The tag is case-sensitive.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`removetag 1 2 3 t/friends` +
+Removes the tag "friends" from 1st, 2nd and 3rd person in the address book.
+* `find Betsy` +
+`removetag 2 5 t/classmate` +
+Removes the tag "classmate" from the 2nd and 5th person in the results of the `find` command.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -227,11 +288,35 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Coming in v2.0
+
+=== Log in window for a user
+
+=== UniCity as an online application
+
+=== Database to check for UniCity users
+
+=== Facebook command to search for contacts on Facebook
+
+=== Automatic pop-up help window for new users
+
+=== Event reminders for a person
+
+=== Changing wallpaper of the background of UniCity
+
+=== Auto-completion through command history
+
+=== Suggestions when typing a name in find command
+
+=== Group contacts by their courses of study
+
+=== Memories
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
+Alternatively, you may log in as a user into the online version of UniCity and it will fetch your contacts from your addressbook.
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
@@ -241,12 +326,17 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Filter* : `filter KEYWORD [MORE_KEYWORDS]` +
+e.g. `filter friend hallmate`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : 'sort'
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *RemoveTag* : `removetag` +
+e.g. `removetag 3 7 t/lecturer`

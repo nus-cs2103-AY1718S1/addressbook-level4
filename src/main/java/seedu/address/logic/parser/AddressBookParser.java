@@ -13,12 +13,15 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavouriteCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -52,6 +55,10 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_2)) {
             return new AddCommandParser().parse(arguments);
 
+        } else if (commandWord.equalsIgnoreCase(RemoveTagCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(RemoveTagCommand.COMMAND_WORDVAR_2)) {
+            return new RemoveTagCommandParser().parse(arguments);
+
         } else if (commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_2)) {
             return new EditCommandParser().parse(arguments);
@@ -67,6 +74,10 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_2)) {
             return new ClearCommand();
+
+        } else if (commandWord.equalsIgnoreCase(FilterCommand.COMMAND_WORDVAR)) {
+            return new FilterCommandParser().parse(arguments);
+
         } else if (commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_2)) {
             return new FindCommandParser().parse(arguments);
@@ -95,6 +106,10 @@ public class AddressBookParser {
 
         } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD)) {
             return new FavouriteCommandParser().parse(arguments);
+
+        } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {
+            return new SortCommand();
 
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

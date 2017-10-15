@@ -132,13 +132,6 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Deletes the specified tag from this person's tags.
-     */
-    public void removeTag(Tag toRemove) {
-        tags.get().remove(toRemove);
-    }
-
-    /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
