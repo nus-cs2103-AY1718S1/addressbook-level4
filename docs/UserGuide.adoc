@@ -92,6 +92,24 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Editing a person : `favourite`
+
+Change the `favourite` status of an existing person in the address book. +
+Format: `favourite INDEX`
+
+****
+* Modify the `favourite` field of the person with the input index.
+* If the person is a favourite person, change the `favourite` status "False".
+* If the person is not a favourite person, mark it as favourite.
+* The index number refers to the order in the latest list.
+* The index number must be a positive integer and cannot exceed the length of the latest list.
+****
+
+Examples:
+
+* `favourite 1` +
+Changes the `favourite` status of the 1st person in the latest list.
+
 === Filtering persons by tags: `filter`
 
 Filters persons whose tags contain any of the given keywords. +
