@@ -30,7 +30,6 @@ Rolodex is an extension of AddressBook - Level 4, which is a desktop address boo
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
