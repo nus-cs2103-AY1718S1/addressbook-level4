@@ -59,8 +59,8 @@ Format: `help`
 
 === Adding a person: `add` / `a`
 
-Adds a person to the address book. +
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Adds a person to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/Birthday(DD/MM/YYYY) [t/TAG]...`
 Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 [TIP]
@@ -68,7 +68,8 @@ A person can have any number of tags.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` b/Birthday(DD/MM/YYYY)
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` b/15/02/1992
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https:www.website.com/`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Rick`
@@ -82,7 +83,7 @@ Shorthand: `l`
 === Editing a person : `edit` / `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/Birthday(DD/MM/YYYY)] [t/TAG]...`
 Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...`
 
 ****
@@ -166,7 +167,21 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Adding Remarks : `remark`
+
+Adds remarks to the person identified by the INDEX
+Format: remark INDEX r/[REMARK]
+
+Examples:
+
+* remark 1 r/Likes to drink coffee.
+Edits the remark for the first person to Likes to drink coffee.
+
+* remark 1 r/
+Removes the remark for the first person.
+
 === Listing entered commands : `history` / `h`
+
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
