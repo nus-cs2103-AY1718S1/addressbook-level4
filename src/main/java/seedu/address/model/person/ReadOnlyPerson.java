@@ -26,6 +26,7 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<UniqueCustomFieldList> customFieldProperty();
     Set<CustomField> getCustomFields();
+    UniqueCustomFieldList getCustomFieldList();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

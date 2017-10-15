@@ -50,7 +50,7 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
     /**
      * Replaces the CustomFields in this list with those in the argument customField list.
      */
-    public void setTags(Set<CustomField> customFields) {
+    public void setCustomFields(Set<CustomField> customFields) {
         requireAllNonNull(customFields);
         internalList.setAll(customFields);
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -82,19 +82,20 @@ public class UniqueCustomFieldList implements Iterable<CustomField> {
     public void add(CustomField toAdd) {
         requireNonNull(toAdd);
 
-        boolean customFieldNameExists = false;
-
         for (CustomField cf : internalList) {
             if (cf.customFieldName.equals(toAdd.customFieldName)) {
+                if (toAdd.getCustomFieldValue().equals("")) {
+                    remove(toAdd.customFieldName);
+                    return;
+                }
                 cf.setCustomFieldValue(toAdd.getCustomFieldValue());
-                customFieldNameExists = true;
-                break;
+                return;
             }
         }
 
-        if (!customFieldNameExists) {
-            internalList.add(toAdd);
-        }
+        if (toAdd.getCustomFieldValue().equals("")) { return; }
+
+        internalList.add(toAdd);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }

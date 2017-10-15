@@ -29,6 +29,20 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueCustomFieldList> customFields;
 
     /**
+     * Every field must be present and not null except Custom Field.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
+    }
+
+    /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<CustomField> customFields) {
@@ -135,6 +149,14 @@ public class Person implements ReadOnlyPerson {
     public Set<CustomField> getCustomFields() {
         return Collections.unmodifiableSet(customFields.get().toSet());
     }
+
+    /**
+     * Returns the list of custom fields of the person
+     *
+     * @return customFields.get()
+     */
+    @Override
+    public UniqueCustomFieldList getCustomFieldList() { return customFields.get(); }
 
     public ObjectProperty<UniqueCustomFieldList> customFieldProperty() {
         return customFields;
