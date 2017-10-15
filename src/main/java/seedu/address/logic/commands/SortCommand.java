@@ -1,9 +1,11 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.ArrayList;
-import seedu.address.logic.commands.exceptions.CommandException;
+
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.model.person.ReadOnlyPerson;
+
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
   * Sort names of contacts by alphabetical order
@@ -16,7 +18,7 @@ public class SortCommand extends Command {
 
     private ArrayList<ReadOnlyPerson> contactList;
 
-    public SortCommand(){
+    public SortCommand() {
         contactList = new ArrayList<>();
     }
 
