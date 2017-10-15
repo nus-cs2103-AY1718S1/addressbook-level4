@@ -57,33 +57,39 @@ public class KeyListener {
                 // Dummy action
                 personListPanel.setFocus();
             }
-            try {
-                if (keys.get("CLEAR_LIST").match(event)) {
-                    CommandResult commandResult = logic.execute(ClearCommand.COMMAND_WORD);
-                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-                }
-                if (keys.get("UNDO").match(event)) {
-                    CommandResult commandResult = logic.execute(UndoCommand.COMMAND_WORD);
-                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-                }
-                if (keys.get("REDO").match(event)) {
-                    CommandResult commandResult = logic.execute(RedoCommand.COMMAND_WORD);
-                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-                }
-                if (keys.get("VIEW_HISTORY").match(event)) {
-                    CommandResult commandResult = logic.execute(HistoryCommand.COMMAND_WORD);
-                    displayResult(commandResult.feedbackToUser);
-                }
-            } catch (CommandException | ParseException e) {
-                commandBox.setStyleToIndicateCommandFailure();
-                logger.info("uhoh");
-                raise(new NewResultAvailableEvent(e.getMessage()));
+            if (keys.get("CLEAR_LIST").match(event)) {
+                executeCommand(ClearCommand.COMMAND_WORD);
+            }
+            if (keys.get("UNDO").match(event)) {
+                executeCommand(UndoCommand.COMMAND_WORD);
+            }
+            if (keys.get("REDO").match(event)) {
+                executeCommand(RedoCommand.COMMAND_WORD);
+            }
+            if (keys.get("VIEW_HISTORY").match(event)) {
+                executeCommand(HistoryCommand.COMMAND_WORD);
             }
         });
     }
 
     /**
-     * Displays the result to user
+     * Handles execution of command
+     * @param command to be executed
+     */
+    private void executeCommand(String command) {
+        try {
+            CommandResult commandResult = logic.execute(command);
+            displayResult(commandResult.feedbackToUser);
+
+        } catch (CommandException | ParseException e) {
+            commandBox.setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + e.getMessage());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
+     * Displays the command result to user
      */
     private void displayResult(String commandResult) {
         logger.info("Result: " + commandResult);
