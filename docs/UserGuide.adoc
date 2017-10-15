@@ -58,10 +58,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Format: `help`
 
 === Adding a person: `add` / `a`
-
+//tag::bday[]
 Adds a person to the address book +
 Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY](DD/MM/YYYY)] [w/WEBSITE] [t/TAG]...`
 Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/Birthday] [w/WEBSITE] [t/TAG]...`
+//end::bday[]
 
 [TIPS]
 A person can have any number of TAGS.
@@ -169,10 +170,10 @@ Selects the 2nd person in the address book.
 Selects the 1st person in the results of the `find` command.
 
 === Adding Remarks : `remark`
-
+//tag::remark[]
 Adds remarks to the person identified by the INDEX
 Format: remark INDEX r/[REMARK]
-
+//end::remark[]
 Examples:
 
 * remark 1 r/Likes to drink coffee.
