@@ -18,6 +18,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -50,7 +51,8 @@ public class AutoCompleteCommandParserTest {
         assertEquals(parser.parseForCommands("p"), Arrays.asList(new String[] {"p"}));
         assertEquals(parser.parseForCommands("q"), Arrays.asList(new String[] {"q"}));
         assertEquals(parser.parseForCommands("r"),
-                Arrays.asList(new String[] {RedoCommand.COMMAND_USAGE, RemoveTagCommand.COMMAND_USAGE, "r"}));
+                Arrays.asList(new String[] {RedoCommand.COMMAND_USAGE, RemarkCommand.COMMAND_USAGE,
+                        RemoveTagCommand.COMMAND_USAGE, "r"}));
         assertEquals(parser.parseForCommands("s"), Arrays.asList(new String[] {SelectCommand.COMMAND_USAGE, "s"}));
         assertEquals(parser.parseForCommands("t"), Arrays.asList(new String[] {"t"}));
         assertEquals(parser.parseForCommands("u"), Arrays.asList(new String[] {UndoCommand.COMMAND_USAGE, "u"}));
