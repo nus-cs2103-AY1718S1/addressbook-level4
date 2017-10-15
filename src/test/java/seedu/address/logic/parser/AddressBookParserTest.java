@@ -31,6 +31,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -84,7 +85,7 @@ public class AddressBookParserTest {
         final String groupName = "Some group name";
         GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
                         + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + groupName);
-        assertEquals(new GroupCommand(INDEX_FIRST_PERSON, groupName), command);
+        assertEquals(new GroupCommand(INDEX_FIRST_PERSON, new Group(groupName)), command);
     }
 
     @Test

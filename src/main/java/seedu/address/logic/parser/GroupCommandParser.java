@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
 
 /**
  * Parses input arguments and creates a new GroupCommand object
@@ -26,13 +27,10 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
-            // TBI  Group group = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP_NAME)).get();
+            Group group = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP_NAME)).get();
+            return new GroupCommand(index, group);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
         }
-
-        String groupName = argMultimap.getValue(PREFIX_GROUP_NAME).orElse("");
-
-        return new GroupCommand(index, groupName);
     }
 }

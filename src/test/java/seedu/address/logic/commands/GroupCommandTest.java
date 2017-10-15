@@ -18,6 +18,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.group.Group;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for GroupCommand.
@@ -30,16 +31,16 @@ public class GroupCommandTest {
     public void execute() throws Exception {
         final String groupName = "Some group name";
 
-        assertCommandFailure(prepareCommand(INDEX_FIRST_PERSON, groupName), model,
+        assertCommandFailure(prepareCommand(INDEX_FIRST_PERSON, new Group(groupName)), model,
                 String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), groupName));
     }
 
     @Test
-    public void equals() {
-        final GroupCommand standardCommand = new GroupCommand(INDEX_FIRST_PERSON, VALID_GROUP_NAME_FAMILY);
+    public void equals() throws Exception {
+        final GroupCommand standardCommand = new GroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_FAMILY));
 
         // same values -> returns true
-        GroupCommand commandWithSameValues = new GroupCommand(INDEX_FIRST_PERSON, VALID_GROUP_NAME_FAMILY);
+        GroupCommand commandWithSameValues = new GroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_FAMILY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -52,17 +53,17 @@ public class GroupCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new GroupCommand(INDEX_SECOND_PERSON, VALID_GROUP_NAME_FAMILY)));
+        assertFalse(standardCommand.equals(new GroupCommand(INDEX_SECOND_PERSON, new Group(VALID_GROUP_NAME_FAMILY))));
 
         // different remarks -> returns false
-        assertFalse(standardCommand.equals(new GroupCommand(INDEX_FIRST_PERSON, VALID_GROUP_NAME_CS2103)));
+        assertFalse(standardCommand.equals(new GroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_CS2103))));
     }
 
     /**
-     * Returns an {@code GroupCommand} with parameters {@code index} and {@code groupName}
+     * Returns an {@code GroupCommand} with parameters {@code index} and {@code group}
      */
-    private GroupCommand prepareCommand(Index index, String groupName) {
-        GroupCommand groupCommand = new GroupCommand(index, groupName);
+    private GroupCommand prepareCommand(Index index, Group group) {
+        GroupCommand groupCommand = new GroupCommand(index, group);
         groupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return groupCommand;
     }

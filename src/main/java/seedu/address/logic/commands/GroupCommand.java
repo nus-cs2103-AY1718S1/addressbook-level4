@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.Group;
 
 /**
  * Adds person with given index to a group. If such a group does not exist, creates it and then adds the person.
@@ -21,16 +22,16 @@ public class GroupCommand extends UndoableCommand {
             + PREFIX_GROUP_NAME + "GROUP_NAME.\n"
             + "Example: " + COMMAND_WORD + " 3 " + PREFIX_GROUP_NAME + "Family";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Group name: %2$s";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Group: %2$s";
 
     private final Index index;
-    private final String groupName;
+    private final Group groupName;
 
     /**
      * @param index of the person in the filtered person list to add to the group
      * @param groupName of the group
      */
-    public GroupCommand(Index index, String groupName) {
+    public GroupCommand(Index index, Group groupName) {
         requireNonNull(index);
         requireNonNull(groupName);
 
