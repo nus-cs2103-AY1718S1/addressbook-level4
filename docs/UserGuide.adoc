@@ -259,12 +259,12 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 
-=== Extra `options` menu (NEW)
+=== Extra `options` menu
 
 Each user will have an extra list of options to choose from beside their name. +
 Icon is similar to a down arrow.
 
-=== Delete function from `options`(NEW)
+=== Delete function from `options`
 
 Deletes the specified person from the address book. +
 Function can be found from the new `options` feature.
@@ -276,7 +276,12 @@ Function can be found from the new `options` feature.
 Show google maps data based on person's address. +
 Function will be found from the new `options` feature.
 
-==== Themes selection for myBook interface from `options`
+==== Import export of addressbook from header menu bar
+
+An option to import external addressbook data in xml format. +
+An option to export local addressbook data in xml format.
+
+==== Themes selection for myBook interface from header menu bar
 
 Allows user to select from a range of user interface themes +
 Function will be found from the new `options` feature.
