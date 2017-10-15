@@ -19,7 +19,7 @@ Responsibilities:
 
 === Jaryl Tan
 image::jaryltan.jpg[width="150", align="left"]
-{empty}image::githubicon.png[Github Icon, 300, 300, link=https://github.com/Juxarius] [<<jaryltan#, portfolio>>]
+image::githubicon.png[Github Icon, 300, 300, link=https://github.com/Juxarius] [<<jaryltan#, portfolio>>]
 
 Role: Developer +
 Responsibilities:
