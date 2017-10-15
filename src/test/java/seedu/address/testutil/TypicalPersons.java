@@ -36,18 +36,16 @@ public class TypicalPersons {
             .withPhone("85355255").withPostalCode("600123").withDebt("123456789")
             .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com")
-            .withPhone("98765432").withPostalCode("123311").withDebt("12345")
-            .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withTags("owesMoney", "friends").build();
+            .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withPhone("98765432")
+            .withPostalCode("123311").withDebt("12345").withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withPostalCode("111111").withDebt("123456")
-            .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withAddress("wall street").build();
+            .withAddress("wall street").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withDebt("1234567")
             .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withPostalCode("101010").build();
-    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
-            .withPhone("9482224").withPostalCode("673673").withDebt("100000")
-            .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withEmail("werner@example.com")
+    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+            .withPostalCode("673673").withDebt("100000").withEmail("werner@example.com")
             .withAddress("michegan ave").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPostalCode("616111").withPhone("9482427").withDebt("12").withDeadLine(DeadLine.NO_DEAD_LINE_SET)
@@ -60,8 +58,7 @@ public class TypicalPersons {
             .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withPhone("85355255").withTags("friends").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
-            .withEmail("johnd@example.com").withPhone("98765432").withDeadLine(DeadLine.NO_DEAD_LINE_SET)
-            .withTags("owesMoney", "friends").build();
+            .withEmail("johnd@example.com").withPhone("98765432").withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal")
             .withDeadLine(DeadLine.NO_DEAD_LINE_SET).withPhone("95352563").withEmail("heinz@example.com")
             .withAddress("wall street").withPostalCode("111111").withDebt("1234567").build();
