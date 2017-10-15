@@ -104,7 +104,7 @@ public class LocateCommandTest {
 
         try {
             CommandResult commandResult = locateCommand.execute();
-            assertEquals(String.format(LocateCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(LocateCommand.MESSAGE_LOCATE_PERSON_SUCCESS, index.getOneBased()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
