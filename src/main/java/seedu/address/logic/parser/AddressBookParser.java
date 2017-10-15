@@ -71,8 +71,8 @@ public class AddressBookParser {
         case FindSpecificCommand.COMMAND_WORD:
             return new FindCommandParser().parseSpecific(arguments);
 
-            case GmapCommand.COMMAND_WORD:
-                return new GmapCommandParser().parse(arguments);
+        case GmapCommand.COMMAND_WORD:
+            return new GmapCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
