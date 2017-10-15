@@ -83,7 +83,6 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setScene(scene);
 
         setAccelerators();
-        setKeyListeners();
         registerAsAnEventHandler(this);
     }
 
@@ -128,22 +127,9 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Set key listeners for handling keyboard shortcuts.
      */
-    private void setKeyListeners() {
-        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            switch (event.getCode()) {
-            case ESCAPE:
-            case LEFT:
-                personListPanel.setFocus();
-                break;
-            case ENTER:
-                commandBox.setFocus();
-                break;
-            case RIGHT:
-                resultDisplay.setFocus();
-                break;
-            default:
-            }
-        });
+    void setKeyListeners() {
+        KeyListener keyListener = new KeyListener(logic, this, personListPanel, commandBox);
+        keyListener.handleKeyPress();
     }
 
     /**
@@ -226,10 +212,6 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
     }
 
     void releaseResources() {
