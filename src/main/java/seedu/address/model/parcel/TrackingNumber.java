@@ -8,24 +8,24 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents the article number of a parcel.
  * @link { https://en.wikipedia.org/wiki/Registered_mail}
  */
-public class ArticleNumber {
+public class TrackingNumber {
 
-    public static final String MESSAGE_ARTICLE_NUMBER_CONSTRAINTS =
+    public static final String MESSAGE_TRACKING_NUMBER_CONSTRAINTS =
             "Parcel article number should start with 'RR', followed by 9 digits, and ends with 'SG'";
     public static final String ARTICLE_NUMBER_VALIDATION_REGEX = "^[R]{2}[0-9]{9}[S][G]$";
 
     public final String value;
 
     /**
-     * Validates given articleNumber.
+     * Validates given trackingNumber.
      *
-     * @throws IllegalValueException if given articleNumber string is invalid.
+     * @throws IllegalValueException if given trackingNumber string is invalid.
      */
-    public ArticleNumber(String articleNumber) throws IllegalValueException {
-        requireNonNull(articleNumber);
-        String trimmedArticleNumber = articleNumber.trim();
+    public TrackingNumber(String trackingNumber) throws IllegalValueException {
+        requireNonNull(trackingNumber);
+        String trimmedArticleNumber = trackingNumber.trim();
         if (!isValidArticleNumber(trimmedArticleNumber)) {
-            throw new IllegalValueException(MESSAGE_ARTICLE_NUMBER_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_TRACKING_NUMBER_CONSTRAINTS);
         }
         this.value = trimmedArticleNumber;
     }
@@ -45,8 +45,8 @@ public class ArticleNumber {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ArticleNumber // instanceof handles nulls
-                && this.value.equals(((ArticleNumber) other).value)); // state check
+                || (other instanceof TrackingNumber // instanceof handles nulls
+                && this.value.equals(((TrackingNumber) other).value)); // state check
     }
 
     @Override

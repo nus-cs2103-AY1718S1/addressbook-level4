@@ -19,7 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.ArticleNumber;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
@@ -69,26 +69,26 @@ public class ParserUtilTest {
     @Test
     public void parseArticleNumber_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseArticleNumber(null);
+        ParserUtil.parseTrackingNumber(null);
     }
 
     @Test
     public void parseArticleNumber_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseArticleNumber(Optional.of(INVALID_ARTICLE_NUMBER));
+        ParserUtil.parseTrackingNumber(Optional.of(INVALID_ARTICLE_NUMBER));
     }
 
     @Test
     public void parseArticleNumber_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseArticleNumber(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parseTrackingNumber(Optional.empty()).isPresent());
     }
 
     @Test
     public void parseArticleNumber_validValue_returnsArticleNumber() throws Exception {
-        ArticleNumber expectedArticleNumber = new ArticleNumber(VALID_ARTICLE_NUMBER);
-        Optional<ArticleNumber> actualArticleNumber = ParserUtil.parseArticleNumber(Optional.of(VALID_ARTICLE_NUMBER));
+        TrackingNumber expectedTrackingNumber = new TrackingNumber(VALID_ARTICLE_NUMBER);
+        Optional<TrackingNumber> actualArticleNumber = ParserUtil.parseTrackingNumber(Optional.of(VALID_ARTICLE_NUMBER));
 
-        assertEquals(expectedArticleNumber, actualArticleNumber.get());
+        assertEquals(expectedTrackingNumber, actualArticleNumber.get());
     }
 
     @Test

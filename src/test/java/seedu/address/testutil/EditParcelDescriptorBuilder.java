@@ -29,7 +29,7 @@ public class EditParcelDescriptorBuilder {
      */
     public EditParcelDescriptorBuilder(ReadOnlyParcel parcel) {
         descriptor = new EditParcelDescriptor();
-        descriptor.setArticleNumber(parcel.getArticleNumber());
+        descriptor.setTrackingNumber(parcel.getTrackingNumber());
         descriptor.setName(parcel.getName());
         descriptor.setPhone(parcel.getPhone());
         descriptor.setEmail(parcel.getEmail());
@@ -38,13 +38,13 @@ public class EditParcelDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code ArticleNumber} of the {@code EditParcelDescriptor} that we are building.
+     * Sets the {@code TrackingNumber} of the {@code EditParcelDescriptor} that we are building.
      */
-    public EditParcelDescriptorBuilder withArticleNumber(String articleNumber) {
+    public EditParcelDescriptorBuilder withTrackingNumber(String trackingNumber) {
         try {
-            ParserUtil.parseArticleNumber(Optional.of(articleNumber)).ifPresent(descriptor::setArticleNumber);
+            ParserUtil.parseTrackingNumber(Optional.of(trackingNumber)).ifPresent(descriptor::setTrackingNumber);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("article number is expected to be unique.");
+            throw new IllegalArgumentException("tracking number is expected to be unique.");
         }
         return this;
     }

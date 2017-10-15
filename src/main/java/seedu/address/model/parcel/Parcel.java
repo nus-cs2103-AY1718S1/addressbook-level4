@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -19,7 +18,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Parcel implements ReadOnlyParcel {
 
-    private ObjectProperty<ArticleNumber> articleNumber;
+    private ObjectProperty<TrackingNumber> trackingNumber;
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
@@ -30,9 +29,9 @@ public class Parcel implements ReadOnlyParcel {
     /**
      * Every field must be present and not null.
      */
-    public Parcel(ArticleNumber articleNumber, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(articleNumber, name, phone, email, address, tags);
-        this.articleNumber = new SimpleObjectProperty<>(articleNumber);
+    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(trackingNumber, name, phone, email, address, tags);
+        this.trackingNumber = new SimpleObjectProperty<>(trackingNumber);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -45,22 +44,22 @@ public class Parcel implements ReadOnlyParcel {
      * Creates a copy of the given ReadOnlyParcel.
      */
     public Parcel(ReadOnlyParcel source) {
-        this(source.getArticleNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getTrackingNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getTags());
     }
 
-    public void setArticleNumber(ArticleNumber articleNumber) {
-        this.articleNumber.set(requireNonNull(articleNumber));
+    public void setTrackingNumber(TrackingNumber trackingNumber) {
+        this.trackingNumber.set(requireNonNull(trackingNumber));
     }
 
     @Override
-    public ObjectProperty<ArticleNumber> articleNumberProperty() {
-        return articleNumber;
+    public ObjectProperty<TrackingNumber> trackingNumberProperty() {
+        return trackingNumber;
     }
 
     @Override
-    public ArticleNumber getArticleNumber() {
-        return articleNumber.get();
+    public TrackingNumber getTrackingNumber() {
+        return trackingNumber.get();
     }
 
     public void setName(Name name) {
@@ -149,7 +148,7 @@ public class Parcel implements ReadOnlyParcel {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(articleNumber, name, phone, email, address, tags);
+        return Objects.hash(trackingNumber, name, phone, email, address, tags);
     }
 
     @Override

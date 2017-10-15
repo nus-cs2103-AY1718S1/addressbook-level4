@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ARTICLE_NUMBER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -18,7 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.ArticleNumber;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
@@ -39,7 +39,7 @@ public class EditCommand extends UndoableCommand {
             + "by the index number used in the last parcel listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_ARTICLE_NUMBER + "ARTICLE_NUMBER]"
+            + "[" + PREFIX_TRACKING_NUMBER + "TRACKING_NUMBER]"
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -98,15 +98,15 @@ public class EditCommand extends UndoableCommand {
                                              EditParcelDescriptor editParcelDescriptor) {
         assert parcelToEdit != null;
 
-        ArticleNumber updatedArticleNumber = editParcelDescriptor.getArticleNumber()
-                .orElse(parcelToEdit.getArticleNumber());
+        TrackingNumber updatedTrackingNumber = editParcelDescriptor.getTrackingNumber()
+                .orElse(parcelToEdit.getTrackingNumber());
         Name updatedName = editParcelDescriptor.getName().orElse(parcelToEdit.getName());
         Phone updatedPhone = editParcelDescriptor.getPhone().orElse(parcelToEdit.getPhone());
         Email updatedEmail = editParcelDescriptor.getEmail().orElse(parcelToEdit.getEmail());
         Address updatedAddress = editParcelDescriptor.getAddress().orElse(parcelToEdit.getAddress());
         Set<Tag> updatedTags = editParcelDescriptor.getTags().orElse(parcelToEdit.getTags());
 
-        return new Parcel(updatedArticleNumber, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class EditCommand extends UndoableCommand {
      * corresponding field value of the parcel.
      */
     public static class EditParcelDescriptor {
-        private ArticleNumber articleNumber;
+        private TrackingNumber trackingNumber;
         private Name name;
         private Phone phone;
         private Email email;
@@ -142,7 +142,7 @@ public class EditCommand extends UndoableCommand {
         public EditParcelDescriptor() {}
 
         public EditParcelDescriptor(EditParcelDescriptor toCopy) {
-            this.articleNumber = toCopy.articleNumber;
+            this.trackingNumber = toCopy.trackingNumber;
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
@@ -154,16 +154,16 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.articleNumber, this.name, this.phone, this.email, this.address,
+            return CollectionUtil.isAnyNonNull(this.trackingNumber, this.name, this.phone, this.email, this.address,
                     this.tags);
         }
 
-        public void setArticleNumber(ArticleNumber articleNumber) {
-            this.articleNumber = articleNumber;
+        public void setTrackingNumber(TrackingNumber trackingNumber) {
+            this.trackingNumber = trackingNumber;
         }
 
-        public Optional<ArticleNumber> getArticleNumber() {
-            return Optional.ofNullable(articleNumber);
+        public Optional<TrackingNumber> getTrackingNumber() {
+            return Optional.ofNullable(trackingNumber);
         }
 
         public void setName(Name name) {
@@ -221,7 +221,7 @@ public class EditCommand extends UndoableCommand {
             // state check
             EditParcelDescriptor e = (EditParcelDescriptor) other;
 
-            return getArticleNumber().equals(e.getArticleNumber())
+            return getTrackingNumber().equals(e.getTrackingNumber())
                     && getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())

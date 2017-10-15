@@ -4,7 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.ArticleNumber;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
@@ -29,13 +29,13 @@ public class ParcelBuilder {
 
     public ParcelBuilder() {
         try {
-            ArticleNumber defaultArticleNumber=  new ArticleNumber(DEFAULT_ARTICLE_NUMBER);
+            TrackingNumber defaultTrackingNumber =  new TrackingNumber(DEFAULT_ARTICLE_NUMBER);
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.parcel = new Parcel(defaultArticleNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
+            this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
                     defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default parcel's values are invalid.");
@@ -50,11 +50,11 @@ public class ParcelBuilder {
     }
 
     /**
-     * Sets the {@code ArticleNumber} of the {@code Parcel} that we are building.
+     * Sets the {@code TrackingNumber} of the {@code Parcel} that we are building.
      */
-    public ParcelBuilder withArticleNumber(String articleNumber) {
+    public ParcelBuilder withTrackingNumber(String trackingNumber) {
         try {
-            this.parcel.setArticleNumber(new ArticleNumber(articleNumber));
+            this.parcel.setTrackingNumber(new TrackingNumber(trackingNumber));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("article number is expected to be unique.");
         }

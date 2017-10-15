@@ -12,8 +12,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyParcel {
 
-    ObjectProperty<ArticleNumber> articleNumberProperty();
-    ArticleNumber getArticleNumber();
+    ObjectProperty<TrackingNumber> trackingNumberProperty();
+    TrackingNumber getTrackingNumber();
     ObjectProperty<Name> nameProperty();
     Name getName();
     ObjectProperty<Phone> phoneProperty();
@@ -31,7 +31,7 @@ public interface ReadOnlyParcel {
     default boolean isSameStateAs(ReadOnlyParcel other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getArticleNumber().equals(this.getArticleNumber())
+                && other.getTrackingNumber().equals(this.getTrackingNumber())
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
@@ -44,7 +44,7 @@ public interface ReadOnlyParcel {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Article No.: ")
-                .append(getArticleNumber())
+                .append(getTrackingNumber())
                 .append(" Recipient Name: ")
                 .append(getName())
                 .append(" Phone: ")

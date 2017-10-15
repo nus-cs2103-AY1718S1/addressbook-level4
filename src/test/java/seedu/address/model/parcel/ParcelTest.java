@@ -23,7 +23,7 @@ public class ParcelTest {
     @Test
     public void equals() throws IllegalValueException {
         Parcel parcel = new Parcel(new ParcelBuilder().build());
-        Parcel sameParcel = new Parcel(new ArticleNumber(DEFAULT_ARTICLE_NUMBER),
+        Parcel sameParcel = new Parcel(new TrackingNumber(DEFAULT_ARTICLE_NUMBER),
                 new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
                 new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
                 SampleDataUtil.getTagSet(DEFAULT_TAGS));
@@ -33,10 +33,10 @@ public class ParcelTest {
         assertEquals(parcel, sameParcel);
 
         // parcel inequality
-        differentParcel.setArticleNumber(new ArticleNumber("RR123661123SG"));
-        assertEquals(differentParcel.getArticleNumber(), new ArticleNumber("RR123661123SG"));
-        assertEquals(differentParcel.articleNumberProperty().get(),
-                new SimpleObjectProperty<>(new ArticleNumber("RR123661123SG")).get());
+        differentParcel.setTrackingNumber(new TrackingNumber("RR123661123SG"));
+        assertEquals(differentParcel.getTrackingNumber(), new TrackingNumber("RR123661123SG"));
+        assertEquals(differentParcel.trackingNumberProperty().get(),
+                new SimpleObjectProperty<>(new TrackingNumber("RR123661123SG")).get());
         assertFalse(parcel.equals(differentParcel));
 
         differentParcel.setName(new Name("John"));
@@ -63,7 +63,7 @@ public class ParcelTest {
                 new UniqueTagList(SampleDataUtil.getTagSet("test"))).get());
 
         // check state equality
-        assertEquals(parcel.getArticleNumber(), new ArticleNumber(DEFAULT_ARTICLE_NUMBER));
+        assertEquals(parcel.getTrackingNumber(), new TrackingNumber(DEFAULT_ARTICLE_NUMBER));
         assertEquals(parcel.getName(), new Name(DEFAULT_NAME));
         assertEquals(parcel.getPhone(), new Phone(DEFAULT_PHONE));
         assertEquals(parcel.getEmail(), new Email(DEFAULT_EMAIL));

@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.ArticleNumber;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
@@ -45,14 +45,14 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> articleNumber} into an {@code Optional<ArticleNumber>} if {@code articleNumber}
+     * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if {@code trackingNumber}
      * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<ArticleNumber> parseArticleNumber(Optional<String> articleNumber)
+    public static Optional<TrackingNumber> parseTrackingNumber(Optional<String> trackingNumber)
             throws IllegalValueException {
-        requireNonNull(articleNumber);
-        return articleNumber.isPresent() ? Optional.of(new ArticleNumber(articleNumber.get())) : Optional.empty();
+        requireNonNull(trackingNumber);
+        return trackingNumber.isPresent() ? Optional.of(new TrackingNumber(trackingNumber.get())) : Optional.empty();
     }
 
     /**
