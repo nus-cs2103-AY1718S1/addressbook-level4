@@ -731,7 +731,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |use shorter aliases for commands|enter commands quickly and not have to type in the full command
 
-|`* * *` |user |find people by their tags|view people under certain tags
+|`* * *` |user |find people by their tags|locate a specific group of persons
 
 |`* * *` |user |have a responsive inbuilt browser with similar response times to external browsers|use the inbuilt browser smoothly
 
@@ -759,9 +759,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |find a subset of contacts using specified parameters|filter through my contacts
 
-|`* *` |user |click on the address to be shown its Google Maps result|easily navigate to my contact's location
+|`* *` |user |locate a person's address on Google Maps|easily navigate to my contact's location
 
-|`* *` |user |resize the dimensions of the command and output bar|customise the application to my desired layout
+|`* *` |user |resize the dimensions of the command and output bar|customise the application to the desired layout
 
 |`* *` |user |upload pictures of my contacts|identify my contacts with similar names
 
@@ -783,7 +783,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |send an email via the inbuilt browser by clicking on a contact's email|easily and quickly send an email to an existing contact
 
-|`* *` |user |have a Notes section to add notes that can be tagged and shared with people|jot down certain events and details
+|`* *` |user |have a Notes section to add notes that attaches to a person|jot down certain events and details
 
 |`* *` |user who is privacy focused |encrypt my contacts|hide and secure my contacts from others
 
@@ -1042,12 +1042,13 @@ Use case resumes at step 2.
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be able to respond to a command within 500ms.
-.  Should adhere to the Java coding standard.
 .  Data should only be accessible to the user himself.
+.  Should be compatible with earlier versions.
 .  Should be able to handle all possible exceptions.
+.  Should adhere to the Java coding standard.
 
 {More to be added}
 
