@@ -11,10 +11,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -45,8 +45,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if {@code trackingNumber}
-     * is present.
+     * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if
+     * {@code trackingNumber} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<TrackingNumber> parseTrackingNumber(Optional<String> trackingNumber)

@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 
 /**

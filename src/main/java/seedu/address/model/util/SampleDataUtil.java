@@ -7,11 +7,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.tag.Tag;
 
