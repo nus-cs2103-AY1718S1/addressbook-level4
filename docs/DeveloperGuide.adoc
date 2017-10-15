@@ -871,6 +871,7 @@ Use case resumes at step 2.
 .  Test coverage should reach 85% at any time.
 .  Should always favour security over efficiency in development.
 .  Any user who understands English should be able to use the application with the help of the <<UserGuide#, User Guide>>.
+.  Internet connection is required if users want to sync their contacts/events in all devices and store in the cloud.
 
 [appendix]
 == Glossary
