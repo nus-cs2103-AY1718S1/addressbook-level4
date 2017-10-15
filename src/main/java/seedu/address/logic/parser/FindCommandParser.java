@@ -38,6 +38,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+        String symbolAtStart = trimmedArgs.substring(0, 2);
+        if ((!symbolAtStart.equals(PREFIX_NAME.getPrefix())) && (!symbolAtStart.equals(PREFIX_PHONE.getPrefix()))
+                && (!symbolAtStart.equals(PREFIX_EMAIL.getPrefix()))
+                && (!symbolAtStart.equals(PREFIX_ADDRESS.getPrefix()))) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
         int[] attributeIndexArray = {indexOfName, indexOfPhone, indexOfEmail, indexOfAddress, trimmedArgs.length()};
         Arrays.sort(attributeIndexArray);
 
