@@ -112,7 +112,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by names or phone numbers or tags: `finds`
+=== Locating persons by names or phone numbers or tags: `finds` (NEW)
 
 Finds persons who contain any of the given keywords. +
 Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
@@ -286,17 +286,16 @@ Function will be found from the new `options` feature.
 Allows user to open or close panels in UI when not needed +
 Functions will be found from the new `Button` feature
 
-=== Set important contacts from `important command`
+==== List important contacts from `[important] tag`
 
-Allows user to set important contacts to always appear at the top of the list +
-Function will be found from the new `important` command feature
+Person with [important] tag will always appear at the top of the list
 
-=== Deleting a group of persons from improved `delete command`
+==== Deleting a group of persons from improved `delete command`
 
 Allows user to delete a group of people through name  or tags +
 Functions will be found from improved `delete` command
 
-=== Display all tags from `new UI panel`
+==== Display all tags from `new UI panel`
 
 All the tags in user myBook App will be displayed in a new UI panel +
 Functions wll be found from `new UI panel`
