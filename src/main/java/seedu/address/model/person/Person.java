@@ -1,16 +1,17 @@
 package seedu.address.model.person;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
+
 
 /**
  * Represents a Person in the address book.
@@ -30,11 +31,12 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and name must not be null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,  Website website, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Birthday birthday, Remark remark,  Website website, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.birthday=new SimpleObjectProperty<>(birthday);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
@@ -65,7 +67,8 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) { this.phone.set(requireNonNull(phone)); }
+    public void setPhone(Phone phone) {
+        this.phone.set(requireNonNull(phone)); }
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {
@@ -91,13 +94,16 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
-    public void setBirthday(Birthday birthday){ this.birthday.setValue(requireNonNull(birthday));}
+    public void setBirthday(Birthday birthday) {
+        this.birthday.setValue(requireNonNull(birthday)); }
 
     @Override
-    public ObjectProperty<Birthday> birthdayProperty() { return birthday; }
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday; }
 
     @Override
-    public Birthday getBirthday(){ return birthday.get(); }
+    public Birthday getBirthday() {
+        return birthday.get(); }
 
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));

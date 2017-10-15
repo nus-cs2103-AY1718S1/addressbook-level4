@@ -1,10 +1,12 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+
 
 /**
  * Represents a Person's address in the address book.
@@ -36,7 +38,7 @@ public class Birthday {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
         try {
-            Date strToDate=format.parse(birthday);      //tries to parse provided string in given format
+            Date strToDate = format.parse(birthday);      //tries to parse provided string in given format
         } catch (ParseException e) {
             return false;
         }
