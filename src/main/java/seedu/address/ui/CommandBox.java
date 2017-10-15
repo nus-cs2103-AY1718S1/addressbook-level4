@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.controlsfx.control.textfield.TextFields;
 
 import com.google.common.eventbus.Subscribe;
@@ -25,6 +23,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;

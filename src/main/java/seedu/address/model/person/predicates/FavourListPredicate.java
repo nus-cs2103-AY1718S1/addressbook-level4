@@ -18,7 +18,7 @@ public class FavourListPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-       return collectionSet.contains(person);
+        return collectionSet.contains(person);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.PERSON;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -9,7 +11,6 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
-import static seedu.address.model.ListingUnit.PERSON;
 
 /**
  * Collects a person identified using it's last displayed index from the address book into the favor list.
@@ -45,14 +46,14 @@ public class CollectCommand extends UndoableCommand {
         ReadOnlyPerson personToCollect = lastShownList.get(targetIndex.getZeroBased());
 
         if (ListingUnit.getCurrentListingUnit().equals(PERSON)) {
-                try {
-                    model.collectPerson(personToCollect);
-                } catch (DuplicatePersonException pnfe) {
-                   throw new CommandException(pnfe.getMessage());
-                }
+            try {
+                model.collectPerson(personToCollect);
+            } catch (DuplicatePersonException pnfe) {
+                throw new CommandException(pnfe.getMessage());
+            }
             return new CommandResult(String.format(MESSAGE_COLLECT_PERSON_SUCCESS, personToCollect));
         } else {
-            throw  new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+            throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }
     }
 
