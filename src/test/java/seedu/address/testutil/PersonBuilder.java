@@ -132,11 +132,11 @@ public class PersonBuilder {
     /**
      * Sets the {@code Deadline} of the {@code Person} that we are building.
      */
-    public PersonBuilder withDeadLine(String deadLine) {
+    public PersonBuilder withDeadline(String deadline) {
         try {
-            this.person.setDeadline(new Deadline(deadLine));
+            this.person.setDeadline(new Deadline(deadline));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("dead line is expected to be unique.");
+            throw new IllegalArgumentException("deadline is expected to be unique.");
         }
         return this;
     }
