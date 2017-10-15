@@ -38,7 +38,8 @@ public class PersonBuilder {
             FormClass defaultFormClass = new FormClass(DEFAULT_FORMCLASS);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTALCODE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultFormClass, defaultPostalCode,
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultFormClass,
+                    defaultPostalCode,
                     defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
