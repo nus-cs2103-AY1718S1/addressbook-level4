@@ -237,13 +237,13 @@ There is no need to save manually.
 Tags generated will automatically be assigned a unique color.+
 Similar tags will also be assigned the same colour as long as tags have the same spelling.
 
-==== Display of `total person` 
+==== Display of `total person`
 
 Total number of person in addressbook will now be displayed at the footer bar.
 
 === Since v1.1
 
-==== Locating persons by names or phone numbers or tags: `finds` 
+==== Locating persons by names or phone numbers or tags: `finds`
 
 Finds persons who contain any of the given keywords. +
 Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or t/[MORE_KEYWORDS]`
