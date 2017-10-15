@@ -23,6 +23,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private boolean isLoggedIn = false;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -33,15 +34,42 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
-        logger.info("----------------[USER COMMAND][" + commandText + "]");
-        try {
-            Command command = addressBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
-            CommandResult result = command.execute();
-            undoRedoStack.push(command);
-            return result;
-        } finally {
-            history.add(commandText);
+        CommandResult result;
+        if (!isLoggedIn) {
+            if (isCorrectPassword(commandText)) {
+                result = new CommandResult("Login successful! Welcome to H.M.U v1.2");
+            } else {
+                result = new CommandResult("Invalid Credentials! Please try again.");
+            }
+        } else {
+
+            logger.info("----------------[USER COMMAND][" + commandText + "]");
+            try {
+                Command command = addressBookParser.parseCommand(commandText);
+                command.setData(model, history, undoRedoStack);
+                result = command.execute();
+                undoRedoStack.push(command);
+                return result;
+            } finally {
+                history.add(commandText);
+            }
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @param commandText
+     * isLoggedIn = true if password is valid
+     * isLoggedIn = false if password is invalid
+     */
+    private boolean isCorrectPassword(String commandText) {
+        if (model.getUserPrefs().checkPassword(commandText)) {
+            isLoggedIn = true;
+            return true;
+        } else {
+            isLoggedIn = false;
+            return false;
         }
     }
 
