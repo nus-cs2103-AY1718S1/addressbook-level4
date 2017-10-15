@@ -14,8 +14,14 @@ endif::[]
 
 By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+=== Purpose
+*The user guide contains all essential information to make full use of the address book. This guide includes the description of the application's system function, abilities and step-by-step procedures to be able to use the address book effectively.*
 
+=== Overview
+Death Note address book allows you to store the name, phone number, email, address, website and allows you to tag and remark the people in your address book.
+
+== Quick Start
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
@@ -40,7 +46,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
-
 ====
 *Command Format*
 
@@ -60,19 +65,23 @@ Format: `help`
 === Adding a person: `add` / `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/Birthday(DD/MM/YYYY) [t/TAG]...`
-Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/Birthday(DD/MM/YYYY) [w/WEBSITE] [t/TAG]...` +
+Shorthand: `a n/NAME [p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY(DD/MM/YYYY)]  [w/WEBSITE] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags.
 
+* Name field *MUST* be included.
+* Other fields are optional.
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` b/Birthday(DD/MM/YYYY)
+* `add n/Abel`
+* `add n/Dickson p/97741234 e/dickson@example.com`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` b/15/02/1992
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https:www.website.com/`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Rick`
+* `add n/Zulu t/friend e/zulu@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list` / `l`
 
@@ -83,8 +92,8 @@ Shorthand: `l`
 === Editing a person : `edit` / `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/Birthday(DD/MM/YYYY)] [t/TAG]...`
-Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/Birthday(DD/MM/YYYY)] [w/WEBSITE] [t/TAG]...` +
+Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/Birthday(DD/MM/YYYY)] [w/WEBSITE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -100,8 +109,8 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `edit 2 w/https://www.yahoo.com/` +
-Edits the website of the 2nd person to be https://www.yahoo.com/.
+* `edit 2 w/https://www.yahoo.com/ p/97883421` +
+Edits the website of the 2nd person to be https://www.yahoo.com/ and change the contact number to 97883421.
 
 === Locating persons by name: `find` / `f`
 
@@ -250,10 +259,19 @@ Clears all entries from the address book. +
 Format: `clear` +
 Shorthand: `c`
 
+=== Change theme of the application : `theme`
+Changes the theme of the address book. +
+Format: `theme`
+
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
+
+Examples:
+
+* `theme` light
+* `theme` dark
 
 === Open different Address Book
 //tag::openbook[]
@@ -265,6 +283,7 @@ On GUI:
 . Locate your desired Address Book on the pop-up window.
 . Select and press Open
 // end::openbook[]
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -277,12 +296,12 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY(DD/MM/YYYY)] [w/WEBSITE] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 w/https://www.yahoo.com/ t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY(DD/MM/YYYY)] [w/WEBSITE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
