@@ -278,7 +278,7 @@ Returns any person having tags `[friends]` or `[colleagues]` exactly
 Each user will have an extra list of options to choose from beside their name. +
 Icon is similar to a down arrow.
 
-===== `Delete` option
+==== `Delete` option
 
 This feature can be found under the new `options` menu
 Deletes the user according to the selected option's parent person.
