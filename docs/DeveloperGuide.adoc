@@ -303,6 +303,24 @@ The following link:#activity-diagram[activity diagram] summarize what happens in
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+// tag::undoredo[]
+=== Sort mechanism
+
+The sort mechanism is facilitated by `EventBus`. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
+
+[NOTE]
+If the previous attribute type of `list` command is address, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
+
+The following link:#sequence-diagram[sequence diagram] shows how the sort operation works:
+
+image::SortCommandSeqDiagram.png[width="900"]
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute sort command.
+
+image::SortCommandActivityDiagram.png[width="900"]
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -1128,7 +1146,6 @@ Sequence diagram
 ....
 A sequence diagram is an interaction diagram that shows how objects operate with one another and in what order.
 ....
-
 
 [appendix]
 == Product Survey
