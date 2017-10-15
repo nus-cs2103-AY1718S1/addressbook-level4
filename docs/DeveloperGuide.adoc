@@ -306,7 +306,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::undoredo[]
 === Sort mechanism
 
-The sort mechanism is facilitated by `EventBus`. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
+The sort mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
 
 [NOTE]
 If the previous attribute type of `list` command is address, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
