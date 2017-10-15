@@ -303,24 +303,6 @@ The following link:#activity-diagram[activity diagram] summarize what happens in
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
-// tag::undoredo[]
-=== Sort mechanism
-
-The sort mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
-
-[NOTE]
-If the previous attribute type of `list` command is address, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
-
-The following link:#sequence-diagram[sequence diagram] shows how the sort operation works:
-
-image::SortCommandSeqDiagram.png[width="900"]
-
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
-
-The following link:#activity-diagram[activity diagram] summarize what happens when an user execute sort command.
-
-image::SortCommandActivityDiagram.png[width="900"]
-
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -362,6 +344,44 @@ image::SortCommandActivityDiagram.png[width="900"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::undoredo[]
+=== Sort mechanism
+
+The sort mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
+
+[NOTE]
+If the previous attribute type of `list` command is address, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
+
+The following link:#sequence-diagram[sequence diagram] shows how the sort operation works:
+
+image::SortCommandSeqDiagram.png[width="900"]
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute sort command.
+
+image::SortCommandActivityDiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** Sort list by calling event to sort the current Observable<ReadOnlyPerson> person list on `PersonListPanel`. +
+**Pros:** The actual `internalList` wont be altered and wont affect other commands' execution. +
+**Cons:** Could be counter intuitive for new developer who is looking at the code for the first time as normally developers would relate such execution in the `Model` component of this product. +
+**Alternative 2:** Sort the actual `internalList` in `UniquePersonList` +
+**Pros:** Easier for new developer to understand the operation of SortCommand execution as it is more intuitive. +
+**Cons:** Alter the `internalList` which might affect operation of other Commands.
+
+---
+
+**Aspect:** How sort executes +
+**Alternative 1 (current choice):** Sort exiting list base on the attribute type of previous `List` command called. +
+**Pros:** Make more sense as if address attribute was provided as parameter for previous `List` command, the existing list before sort been execute will only shown a list addresses. +
+**Cons:** Need to find out with attribute type was given as parameter for previous `List` command and sort accordingly which amount to more work. +
+**Alternative 2:** Despite the previous `List` attribute type and return a list with all the details from all attributes and sorted by name. +
+**Pros:** Less work. +
+**Cons:** `Sort` command will not go hand in hand with `List` command.
 
 === Logging
 
