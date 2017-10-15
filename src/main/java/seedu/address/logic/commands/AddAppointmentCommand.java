@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.Calendar;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -70,4 +71,13 @@ public class AddAppointmentCommand extends Command {
                 && this.appointment.getPersonName()
                 .equals((((AddAppointmentCommand) other).getAppointment().getPersonName())));
     }
+
+    /**
+     * For testing purposes
+     *
+     */
+    public void setData(Model model) {
+        this.model = model;
+    }
+
 }

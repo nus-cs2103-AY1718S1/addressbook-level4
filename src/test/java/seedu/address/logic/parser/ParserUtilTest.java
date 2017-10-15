@@ -33,7 +33,6 @@ public class ParserUtilTest {
     private static final String INVALID_BLOODTYPE = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
-    private static final String INVALID_DATE = "10/1023/23 223:22";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -43,7 +42,6 @@ public class ParserUtilTest {
     private static final String VALID_REMARK = "neighbour";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-    private static final String VALID_DATE = "2018/10/10 10:10";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();

@@ -30,21 +30,21 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void setPerson_throwsNoPersonFoundException() throws PersonNotFoundException, DuplicatePersonException {
+    public void setPersonThrowsNoPersonFoundException() throws PersonNotFoundException, DuplicatePersonException {
         UniquePersonList uniquePersonList = new UniquePersonList();
         thrown.expect(PersonNotFoundException.class);
         uniquePersonList.setPerson(TypicalPersons.ALICE, TypicalPersons.ALICE);
     }
 
     @Test
-    public void removePerson_throwsNoPersonFoundException() throws PersonNotFoundException, DuplicatePersonException {
+    public void removePersonThrowsNoPersonFoundException() throws PersonNotFoundException, DuplicatePersonException {
         UniquePersonList uniquePersonList = new UniquePersonList();
         thrown.expect(PersonNotFoundException.class);
         uniquePersonList.remove(TypicalPersons.ALICE);
     }
 
     @Test
-    public void addAppointment_returnsCorrectPerson() throws DuplicatePersonException, PersonNotFoundException {
+    public void addAppointmentReturnsCorrectPerson() throws DuplicatePersonException, PersonNotFoundException {
 
         Calendar calendar = Calendar.getInstance();
         try {
@@ -69,7 +69,7 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void addAppointment_throwsNoPersonFoundException() throws PersonNotFoundException {
+    public void addAppointmentThrowsNoPersonFoundException() throws PersonNotFoundException {
         UniquePersonList uniquePersonList = new UniquePersonList();
         thrown.expect(PersonNotFoundException.class);
         uniquePersonList.addAppointment(new Appointment(TypicalPersons.ALICE.getName().toString()));

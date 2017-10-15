@@ -62,13 +62,13 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_toggleColor() throws ParseException {
+    public void parseCommandToggleColor() throws ParseException {
         ToggleTagColorCommand command = (ToggleTagColorCommand) parser.parseCommand("tagcolor off");
         assertEquals(new ToggleTagColorCommand(false, "", ""), command);
     }
 
     @Test
-    public void parseCommand_addAppointment() throws Exception {
+    public void parseCommandAddAppointment() throws Exception {
         AddAppointmentCommand command = (AddAppointmentCommand) parser
                 .parseCommand("appointment n/asd d/2018/08/08 20:10");
         Calendar calendar = Calendar.getInstance();
