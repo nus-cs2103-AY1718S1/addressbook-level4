@@ -66,8 +66,8 @@ public class Person implements ReadOnlyPerson {
         this.phone.set(requireNonNull(phone));
     }
 
-    public boolean setPrivate() {
-        this.isPrivate = true;
+    public boolean setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
         return true;
     }
 

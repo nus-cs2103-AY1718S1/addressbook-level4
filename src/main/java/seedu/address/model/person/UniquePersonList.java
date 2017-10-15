@@ -114,7 +114,7 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean hide(ReadOnlyPerson toHide) throws PersonNotFoundException {
         requireNonNull(toHide);
         final int indexToHide = internalList.indexOf(toHide);
-        final boolean personFoundAndHidden = internalList.get(indexToHide).setPrivate();
+        final boolean personFoundAndHidden = internalList.get(indexToHide).setPrivate(true);
         if (!personFoundAndHidden) {
             throw new PersonNotFoundException();
         }
