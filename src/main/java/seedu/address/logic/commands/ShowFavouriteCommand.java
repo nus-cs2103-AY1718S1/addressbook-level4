@@ -5,7 +5,7 @@ import seedu.address.model.person.IsFavouritePredicate;
 /**
  * List all favourite persons
  */
-public class ShowFavouriteCommand extends Command{
+public class ShowFavouriteCommand extends Command {
 
     public static final String COMMAND_WORD_1 = "showFavourite";
     public static final String COMMAND_WORD_2 = "sf";
