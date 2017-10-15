@@ -288,7 +288,7 @@ Functions will be found from the new `Button` feature
 
 ==== List important contacts from `[important] tag`
 
-Person with [important] tag will always appear at the top of the list 
+Person with [important] tag will always appear at the top of the list
 
 ==== Deleting a group of persons from improved `delete command`
 
