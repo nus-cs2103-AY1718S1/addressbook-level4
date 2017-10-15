@@ -1,8 +1,9 @@
 ﻿Some code adapted from http://code.makery.ch/library/javafx-8-tutorial/ by Marco Jakob
 
-Copyright by Susumu Yoshida - http://www.mcdodesign.com/
-- address_book_32.png
-- AddressApp.ico
+Some code adapted from http://rosettacode.org/wiki/Levenshtein_distance#Java licensed under GNU 1.2 
+
+Copyright by SE-Edu - https://se-edu.github.io/
+- rolodex_icon_32.png
 
 Copyright by Jan Jan Kovařík - http://glyphicons.com/
 - calendar.png
