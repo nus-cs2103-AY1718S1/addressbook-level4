@@ -16,7 +16,7 @@ public class NameStartsWithKeywordsPredicate implements Predicate<ReadOnlyPerson
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> person.getName().fullName.startsWith(keyword));
+                .anyMatch(keyword -> person.getName().fullName.toLowerCase().startsWith(keyword.toLowerCase()));
     }
 
     @Override

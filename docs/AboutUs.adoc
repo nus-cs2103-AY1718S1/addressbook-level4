@@ -17,4 +17,11 @@ image::oscarwang.jpg[width="150", align="left"]
 Role: Developer +
 Responsibilities:
 
+=== RATTANIN SIRIPORNPITAK
+image::rsjunior37.jpg[width="150", align="left"]
+{empty}[https://github.com/RSJunior37[Github]] [<<rsjunior#, Portfolio>>]
+
+Role: Developer +
+Responsibilities:
+
 '''
