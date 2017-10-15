@@ -148,7 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
         return false;
     }
 
-    public void sortListByName(ArrayList<ReadOnlyPerson> contactList) throws CommandException{
+    public void sortListByName(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
         contactList.addAll(filteredPersons);
         Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
 
