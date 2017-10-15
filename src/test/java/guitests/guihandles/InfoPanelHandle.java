@@ -23,6 +23,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String CLUSTER_FIELD_ID = "#cluster";
     private static final String DEBT_FIELD_ID = "#debt";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
+    private static final String DEADLINE_FIELD_ID = "#deadline";
     private static final String DATE_REPAID_FIELD_ID = "#dateRepaid";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
@@ -32,6 +33,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String CLUSTER_FIELD_FIELD_ID = "#clusterField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
     private static final String DATE_BORROW_FIELD_FIELD_ID = "#dateBorrowField";
+    private static final String DEADLINE_FIELD_FIELD_ID = "#deadlineField";
     private static final String DATE_REPAID_FIELD_FIELD_ID = "#dateRepaidField";
 
     private final Label nameLabel;
@@ -42,6 +44,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private final Label clusterLabel;
     private final Label debtLabel;
     private final Label dateBorrowLabel;
+    private final Label deadlineLabel;
     private final Label dateRepaidLabel;
     private final List<Label> tagLabels;
     private final Text addressText;
@@ -51,6 +54,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private final Text clusterText;
     private final Text debtText;
     private final Text dateBorrowText;
+    private final Text deadlineText;
     private final Text dateRepaidText;
 
     private String lastRememberedName;
@@ -61,6 +65,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedCluster;
     private String lastRememberedDebt;
     private String lastRememberedDateBorrow;
+    private String lastRememberedDeadline;
     private String lastRememberedDateRepaid;
     private List<String> lastRememberedTags;
 
@@ -75,6 +80,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.clusterLabel = getChildNode(CLUSTER_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
+        this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
         this.dateRepaidLabel = getChildNode(DATE_REPAID_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -91,6 +97,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.clusterText = getChildNode(CLUSTER_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
         this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
+        this.deadlineText = getChildNode(DEADLINE_FIELD_FIELD_ID);
         this.dateRepaidText = getChildNode(DATE_REPAID_FIELD_FIELD_ID);
     }
 
@@ -130,6 +137,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return clusterLabel.getText();
     }
 
+    public String getDeadline() {
+        return deadlineLabel.getText();
+    }
+
     public String getAddressField() {
         return addressText.getText();
     }
@@ -158,6 +169,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return dateBorrowText.getText();
     }
 
+    public String getDeadlineField() {
+        return deadlineText.getText();
+    }
+
     public String getDateRepaidField () {
         return dateRepaidText.getText();
     }
@@ -182,6 +197,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         lastRememberedCluster = getCluster();
         lastRememberedTags = getTags();
         lastRememberedDateBorrow = getDateBorrow();
+        lastRememberedDeadline = getDeadline();
         lastRememberedDateRepaid = getDateRepaid();
     }
 
@@ -198,6 +214,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 || !getPostalCode().equals(lastRememberedPostalCode)
                 || !getCluster().equals(lastRememberedCluster)
                 || !getDateBorrow().equals(lastRememberedDateBorrow)
+                || !getDeadline().equals(lastRememberedDeadline)
                 || !getDateRepaid().equals(lastRememberedDateRepaid)
                 || !getTags().equals(lastRememberedTags);
     }

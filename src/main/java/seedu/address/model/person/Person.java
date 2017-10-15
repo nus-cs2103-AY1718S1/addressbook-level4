@@ -26,6 +26,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Cluster> cluster;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
+    private ObjectProperty<Deadline> deadline;
     private ObjectProperty<DateRepaid> dateRepaid;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -34,8 +35,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
-                  Debt debt, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, debt, tags);
+                  Debt debt, Deadline deadline, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, postalCode, debt, deadline, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -44,6 +45,7 @@ public class Person implements ReadOnlyPerson {
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
+        this.deadline = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -54,7 +56,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getDebt(), source.getTags());
+                source.getDebt(), source.getDeadline(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
@@ -202,6 +204,21 @@ public class Person implements ReadOnlyPerson {
         return dateBorrow.get();
     }
 
+    //@@author lawwman
+    public void setDeadline(Deadline deadline) {
+        this.deadline.set(requireNonNull(deadline));
+    }
+
+    @Override
+    public ObjectProperty<Deadline> deadlineProperty() {
+        return deadline;
+    }
+
+    @Override
+    public Deadline getDeadline() {
+        return deadline.get();
+    }
+
     //@@author
     /**
      * Sets date borrowed of a person the the given DateBorrow.
@@ -251,7 +268,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, debt, tags);
+        return Objects.hash(name, phone, email, address, postalCode, debt, deadline, tags);
     }
 
     @Override

@@ -31,7 +31,8 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General location: ";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
-    private static final String MESSAGE_INFO_DATE_BORROW = "Date borrowed: ";
+    private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date borrowed: ";
+    private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID = "Date repaid: ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -69,6 +70,10 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label dateBorrow;
     @FXML
+    private Text deadlineField;
+    @FXML
+    private Label deadline;
+    @FXML
     private Text dateRepaidField;
     @FXML
     private Label dateRepaid;
@@ -93,7 +98,8 @@ public class InfoPanel extends UiPart<Region> {
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         clusterField.setText(MESSAGE_INFO_CLUSTER_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
-        dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW);
+        dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
+        deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID);
         bindListeners(person);
     }
@@ -111,6 +117,7 @@ public class InfoPanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
+        deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
         dateRepaid.textProperty().bind(Bindings.convert(person.dateRepaidProperty()));
         //TODO: fix tag colours. person.tagProperty().addListener((observable, oldValue, newValue) -> {
         tags.getChildren().clear();
@@ -175,6 +182,7 @@ public class InfoPanel extends UiPart<Region> {
                 && cluster.getText().equals(infoPanel.cluster.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
                 && email.getText().equals(infoPanel.email.getText())
+                && deadline.getText().equals(infoPanel.deadline.getText())
                 && dateBorrow.getText().equals(infoPanel.dateBorrow.getText())
                 && dateRepaid.getText().equals(infoPanel.dateRepaid.getText())
                 && tags.getChildrenUnmodifiable()
