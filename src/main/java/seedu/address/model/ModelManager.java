@@ -3,8 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,11 +13,12 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -86,37 +85,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTag(Index[] indices, Tag oldTag) throws PersonNotFoundException,
-            DuplicatePersonException {
-
-        for (int i = 0; i < indices.length; i++) {
-            Index index = indices[i];
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(index.getOneBased());
-
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-            newTags.remove(oldTag);
-            newPerson.setTags(newTags);
-
-            addressBook.updatePerson(oldPerson, newPerson);
-        }
+    public synchronized void deleteTag(ReadOnlyPerson person, Tag oldTag) throws PersonNotFoundException,
+            DuplicatePersonException, TagNotFoundException {
+        addressBook.deleteTag(person, oldTag);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addTag(Index[] indices, Tag newTag) throws PersonNotFoundException,
-            DuplicatePersonException {
-        for (int i = 0; i < indices.length; i++) {
-            Index index = indices[i];
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(index.getOneBased());
-
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-            newTags.add(newTag);
-            newPerson.setTags(newTags);
-
-            addressBook.updatePerson(oldPerson, newPerson);
-        }
+    public synchronized void attachTag(ReadOnlyPerson person, Tag newTag) throws PersonNotFoundException,
+            DuplicatePersonException, UniqueTagList.DuplicateTagException {
+        addressBook.attachTag(person, newTag);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 

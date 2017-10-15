@@ -17,6 +17,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -28,25 +29,28 @@ import seedu.address.model.tag.Tag;
  */
 public class DetagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final Index[] indices1 = {fromOneBased(1), fromOneBased(2), fromOneBased(3)};
-    private final Index[] indices2 = {fromOneBased(4), fromOneBased(5)};
+    private final Index[] indices1 = {fromOneBased(1), fromOneBased(2)};
+    private final Index[] indices2 = {fromOneBased(2), fromOneBased(5)};
 
     @Test
-    public void executeValidIndexSuccess() throws Exception {
+    public void execute_ValidIndex_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();
 
         DetagCommand detagCommand = prepareCommand(indices1, tag);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTag(indices1, tag);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        for (Index index: indices1) {
+            ReadOnlyPerson person = model.getFilteredPersonList().get(index.getZeroBased());
+            expectedModel.deleteTag(person, tag);
+        }
         assertCommandSuccess(detagCommand, model, String.format(MESSAGE_DETAG_PERSONS_SUCCESS, tag),
                 expectedModel);
     }
 
     @Test
-    public void executeInvalidIndexThrowsCommandException() throws Exception {
+    public void execute_InvalidIndex_throwsCommandException() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Set<Tag> tagList = personToDelete.getTags();
         Tag tag = tagList.iterator().next();

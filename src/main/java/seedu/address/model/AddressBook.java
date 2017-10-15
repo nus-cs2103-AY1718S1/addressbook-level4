@@ -15,6 +15,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -160,6 +161,49 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    public void removeTag(Tag t) throws TagNotFoundException {
+        tags.remove(t);
+    }
+
+    /**
+     * Remove {@code oldTag} from list of person stated by {@code indices} from
+     * {@code AddressBook}
+     * @param oldPerson
+     * @param oldTag
+     * @throws DuplicatePersonException
+     * @throws PersonNotFoundException
+     * @throws TagNotFoundException
+     */
+    public void deleteTag(ReadOnlyPerson oldPerson, Tag oldTag)
+            throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
+        Person newPerson = new Person(oldPerson);
+        Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+        if (!newTags.remove(oldTag)) {
+            throw new TagNotFoundException();
+        }
+        newPerson.setTags(newTags);
+
+        updatePerson(oldPerson, newPerson);
+    }
+
+    /**
+     * Attach {@code newTag} to list of person stated by {@code indices}
+     * from the {@code AddressBook}
+     * @param oldPerson
+     * @param newTag
+     * @throws DuplicatePersonException
+     * @throws PersonNotFoundException
+     */
+    public void attachTag(ReadOnlyPerson oldPerson, Tag newTag)
+            throws DuplicatePersonException, PersonNotFoundException, UniqueTagList.DuplicateTagException {
+        Person newPerson = new Person(oldPerson);
+        Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+        newTags.add(newTag);
+        newPerson.setTags(newTags);
+
+        updatePerson(oldPerson, newPerson);
     }
 
     //// util methods

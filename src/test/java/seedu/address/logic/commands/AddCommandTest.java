@@ -126,13 +126,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Index[] indices, Tag oldTag)
+        public void deleteTag(ReadOnlyPerson person, Tag oldTag)
             throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void addTag(Index[] indices, Tag newTag)
+        public void attachTag(ReadOnlyPerson person, Tag tag)
                 throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
