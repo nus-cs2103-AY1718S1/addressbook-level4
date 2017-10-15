@@ -154,29 +154,4 @@ public class FindCommandParser implements Parser<FindCommand> {
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList(parameters));
         return new FindCommand(predicate);
     }
-    /**
-     * Get a list of names who has the certain attributes provided by user.
-     * @param prefix the attribute to search from the storage
-     * @param keywords the information to search for based on the prefix given
-     * @return a list of names contain at least one keyword
-     */
-    private ArrayList<String> getNamesToSearch(Prefix prefix, String[] keywords) {
-        ArrayList<String> nameList = new ArrayList<>();
-
-        if (prefix.getPrefix().equals(PREFIX_PHONE.getPrefix())) {
-
-        } else if (prefix.getPrefix().equals(PREFIX_EMAIL.getPrefix())) {
-
-        }
-        if (nameList.size() == 0) {
-            return null;
-        } else {
-            return nameList;
-        }
-    }
-
-    private ArrayList<String> getNamesToSearch(String trimmedAddress) {
-        return null;
-    }
-
 }
