@@ -67,6 +67,20 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a meeting: `addmeeting`
+Upcoming in V2.0: addmeeting by index of person in Contacts
+
+Adds a meeting to the address book +
+Format: `addmeeting n/NAME d/DATE_TIME l/LOCATION`
+
+[Note]
+Input format for Date and Time is "DD-MM-YYYY HH:MM"
+
+Examples:
+
+* `addmeeting n/John Doe d/31-10-2017 21:00 l/School of Computing, NUS`
+* `addmeeting n/Betsy Crowe d/27-12-2017 08:30 l/iCube Auditorium, NUS`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
@@ -241,6 +255,8 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Addmeeting* `addmeeting n/NAME d/DATE_TIME l/LOCATION` +
+e.g. `addmeeting n/Mary Jane d/22-11-2017 l/Vivo City`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
