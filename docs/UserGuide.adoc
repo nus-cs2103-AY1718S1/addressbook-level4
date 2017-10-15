@@ -60,11 +60,12 @@ Format: `help`
 === Adding a person: `add` / `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/Birthday(DD/MM/YYYY) [t/TAG]...`
-Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/Birthday(DD/MM/YYYY) w/WEBSITE [t/TAG]...`
+Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/Birthday] [w/WEBSITE] [t/TAG]...`
 
-[TIP]
-A person can have any number of tags.
+[TIPS]
+A person can have any number of TAGS.
+Only NAME is compulsory
 
 Examples:
 
@@ -83,7 +84,7 @@ Shorthand: `l`
 === Editing a person : `edit` / `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/Birthday(DD/MM/YYYY)] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/Birthday(DD/MM/YYYY)] w/WEBSITE [t/TAG]...`
 Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...`
 
 ****
@@ -277,12 +278,12 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Add* `Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/Birthday(DD/MM/YYYY) w/WEBSITE [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -293,6 +294,19 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Parameters
+*Name*: n/ +
+*Phone Number*: p/ +
+*Email*: e/ +
+*Address*:  a/ +
+*Birthday*: b/ +
+*Remark*^1^: r/ +
+*Website*: w/ +
+*Tags*^2^: t/ +
+
+^1^Only available during editting +
+^2^Can have multiple tags
 
 == Glossary
 

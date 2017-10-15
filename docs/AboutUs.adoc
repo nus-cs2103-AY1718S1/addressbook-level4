@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Adeeb Ashraf
 
-{empty}[https://github.com/chilipadiboy[github]]
+image::Adeebpic.jpg[https://github.com/chilipadiboy[github]]
 
 Role: Documentation, Testing, Integration +
 Responsibilities: Storage Component
