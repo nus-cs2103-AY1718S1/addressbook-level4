@@ -12,6 +12,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.Favourite;
 
 /**
  * Mark a person in the contact as favourite
@@ -30,6 +31,7 @@ public class FavouriteCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
+    private Favourite favourite = new Favourite();
 
     /**
      * @param index of the person in the filtered person list to mark as favourite
@@ -38,6 +40,7 @@ public class FavouriteCommand extends UndoableCommand {
         requireNonNull(index);
 
         this.index = index;
+        this.favourite.setFavourite();
     }
 
     @Override
