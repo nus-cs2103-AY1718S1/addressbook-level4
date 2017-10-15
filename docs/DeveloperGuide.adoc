@@ -807,6 +807,94 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person
+2.  AddressBook shows an example of add person message
+3.  User follows the format and provide all the required fields
+4.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User uses the wrong format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User didn't fill in all the required fields
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find a person
+2.  AddressBook shows an example of find person message
+3.  User follows the format and provide the name of the person
+4.  AddressBook finds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User uses the wrong format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. Name given by the user is not in the AddressBook
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Change language
+
+*MSS*
+
+1.  User requests to change language
+2.  AddressBook shows a list of language supported
+3.  User requests to change to a specific language in the list
+4.  AddressBook changes to the chosen language
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Language chosen is not in the list
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+
+
+
+
+
+
 {More to be added}
 
 [appendix]
@@ -815,6 +903,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to test with a test case more than 1000 persons and more than 1000 commands.
+.  Should be able to use easily by new users by reading the User Guide.
+.  The data shown on the GUI should have a default font size greater than 12 so that it is visible enough.
+.  The efficiency to perform most of the commands, e.g. AddCommand, DeleteCommand and FindCommand should be at least O(n) time.
+.  The application should be put under maintenance every month.
+.  The default background colour of the GUI should not be too garish or too shiny.However, the users can change the background.
+.  Should not be easily hacked, e.g. data corruption, data access by other.
+.  Should be able to change the font type and size easily.
+.  Changes of the address book should be saved in a log file.
 
 {More to be added}
 
