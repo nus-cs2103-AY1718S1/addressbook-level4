@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -85,7 +85,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    /*
+    /**
      * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withBirthday(String birthday) {
@@ -97,9 +97,9 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-     /*
-      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
-      */
+    /**
+     * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
+     */
     public EditPersonDescriptorBuilder withWebsite(String website) {
         try {
             ParserUtil.parseWebsite(Optional.of(website)).ifPresent(descriptor::setWebsite);

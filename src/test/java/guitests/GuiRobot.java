@@ -1,5 +1,7 @@
 package guitests;
 
+import static java.lang.Thread.sleep;
+
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
@@ -7,6 +9,8 @@ import org.testfx.api.FxRobot;
 
 import guitests.guihandles.exceptions.StageNotFoundException;
 import javafx.stage.Stage;
+
+
 
 /**
  * Robot used to simulate user actions on the GUI.

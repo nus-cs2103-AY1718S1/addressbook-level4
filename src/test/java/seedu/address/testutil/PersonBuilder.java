@@ -1,11 +1,19 @@
 package seedu.address.testutil;
 
+import java.util.Set;
+
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
-
-import java.util.Set;
 
 /**
  * A utility class to help with building Person objects.
@@ -19,7 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_WEBSITE = Website.WEBSITE_EXAMPLE;
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
-    public static final String DEFAULT_BIRTHDAY="15/02/1992";
+    public static final String DEFAULT_BIRTHDAY = "15/02/1992";
 
     private Person person;
 
