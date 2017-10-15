@@ -29,17 +29,17 @@ public class ShowFavouriteCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showFavourite() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         ShowFavouriteCommand command = prepareCommand();
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA));
     }
 
     @Test
     public void execute_listIsFiltered_showFavourite() {
         showFirstPersonOnly(model);
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         ShowFavouriteCommand command = prepareCommand();
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, FIONA));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA));
     }
 
     private ShowFavouriteCommand prepareCommand() {
