@@ -24,4 +24,11 @@ image:githubicon.png[Github Icon, 40, 40, link="https://github.com/Juxarius"] im
 Role: Developer +
 Responsibilities:
 
+=== RATTANIN SIRIPORNPITAK
+image::rsjunior37.jpg[width="150", align="left"]
+{empty}[https://github.com/RSJunior37[Github]] [<<rsjunior#, Portfolio>>]
+
+Role: Developer +
+Responsibilities:
+
 '''

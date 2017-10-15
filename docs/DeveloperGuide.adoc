@@ -795,6 +795,35 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Filter contact with search box
+
+*MSS*
+
+1. User types the desired contact partially into the search box
+2. AddressBooks shows specific contacts that matched the partial search
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input too few partial keywords
++
+[none]
+** 1a1. AddressBook shows filtered list with too many contacts
+** 1a2. User extends the keyword to narrow down the search further
++
+Use case resumes at step 2.
++
+[none]
+* 1b. No match for given keywords
++
+[none]
+** 1b1. AddressBook shows empty contact panel
++
+Use case ends.
+
+
 {More to be added}
 
 [appendix]
