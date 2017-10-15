@@ -27,7 +27,7 @@ public class FavouriteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_ARGUMENTS = "INDEX: %1$d";
-    public static final String MESSAGE_FAVOURITE_SUCCESS = "Added remark to Person: %1$s";
+    public static final String MESSAGE_FAVOURITE_SUCCESS = "Favourite Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
