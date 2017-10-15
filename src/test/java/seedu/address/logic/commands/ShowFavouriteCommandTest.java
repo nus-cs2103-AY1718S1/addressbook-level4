@@ -28,14 +28,14 @@ public class ShowFavouriteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_ListIsNotFiltered_ShowFavourite() {
+    public void execute_listIsNotFiltered_showFavourite() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         ShowFavouriteCommand command = prepareCommand();
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, FIONA));
     }
 
     @Test
-    public void execute_ListIsFiltered_ShowFavourite() {
+    public void execute_listIsFiltered_showFavourite() {
         showFirstPersonOnly(model);
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         ShowFavouriteCommand command = prepareCommand();
