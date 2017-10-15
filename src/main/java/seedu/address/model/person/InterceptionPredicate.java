@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.function.Predicate;
 
 /**
@@ -10,6 +12,7 @@ public class InterceptionPredicate implements Predicate<ReadOnlyPerson> {
     private final Predicate<? super ReadOnlyPerson> predicate2;
 
     public InterceptionPredicate(Predicate<? super ReadOnlyPerson> predicate1, Predicate<ReadOnlyPerson> predicate2) {
+        requireAllNonNull(predicate1, predicate2);
         this.predicate1 = predicate1;
         this.predicate2 = predicate2;
     }
