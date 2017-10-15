@@ -10,12 +10,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.ui.util.KeyListenerUtil;
@@ -41,7 +36,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles the key press events with event filter
+     * Handles key press events
      */
     public void handleKeyPress() {
         mainWindow.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -54,37 +49,41 @@ public class KeyListener {
      * Executes the key event
      */
     private void executeEvent(KeyEvent event) {
+
+        // Execute key events for non-command events
         if (keys.get("FOCUS_PERSON_LIST").match(event)) {
             personListPanel.setFocus();
-        }
-        if (keys.get("FOCUS_COMMAND_BOX").match(event)) {
+
+        } else if (keys.get("FOCUS_COMMAND_BOX").match(event)) {
             commandBox.setFocus();
-        }
-        if (keys.get("DELETE_SELECTION").match(event)) {
+
+        } else if (keys.get("DELETE_SELECTION").match(event)) {
             // TODO: add support for deletion at selected list
             // Dummy action
             personListPanel.setFocus();
+
+        } else {
+            // Execute key events for command words
+            executeCommandKeyEvents(event);
         }
-        if (keys.get("CLEAR_LIST").match(event)) {
-            executeCommand(ClearCommand.COMMAND_WORD);
-        }
-        if (keys.get("UNDO").match(event)) {
-            executeCommand(UndoCommand.COMMAND_WORD);
-        }
-        if (keys.get("REDO").match(event)) {
-            executeCommand(RedoCommand.COMMAND_WORD);
-        }
-        if (keys.get("VIEW_HISTORY").match(event)) {
-            executeCommand(HistoryCommand.COMMAND_WORD);
-        }
-        if (keys.get("LIST").match(event)) {
-            executeCommand(ListCommand.COMMAND_WORD);
+    }
+
+    /**
+     * Execute key events for command words
+     */
+    private void executeCommandKeyEvents(KeyEvent event) {
+        for (HashMap.Entry<String, KeyCombination> key: keys.entrySet()) {
+            KeyCombination keyCombination = key.getValue();
+            String command = key.getKey();
+
+            if (keyCombination.match(event)) {
+                executeCommand(command);
+            }
         }
     }
 
     /**
      * Handles execution of command
-     * @param command to be executed
      */
     private void executeCommand(String command) {
         try {
