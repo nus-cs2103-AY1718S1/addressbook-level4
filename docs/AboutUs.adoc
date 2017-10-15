@@ -6,13 +6,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 Project LISA was developed by the https://github.com/CS2103AUG2017-T13-B1[CS2103AUG2017-T13-B1] team. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a 5-man team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== WANG CHIH-HAO
+=== WANG CHIH-HAO aka Oscar
 image::oscarwang.jpg[width="150", align="left"]
-{empty}[https://github.com/OscarWang114[github]] [<<oscarwang#, portfolio>>]
+image:githubicon.png[Github Icon, 40, 40, link="https://github.com/OscarWang114"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/oscarwang.adoc"]
+
+Role: Developer +
+Responsibilities:
+
+=== Jaryl Tan aka Juxarius
+image::jaryltan.jpg[width="150", align="left"]
+image:githubicon.png[Github Icon, 40, 40, link="https://github.com/Juxarius"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/jaryltan.adoc"]
 
 Role: Developer +
 Responsibilities:
