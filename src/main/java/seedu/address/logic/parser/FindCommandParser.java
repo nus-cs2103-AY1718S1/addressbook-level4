@@ -34,6 +34,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         int indexOfPhone = trimmedArgs.indexOf(PREFIX_PHONE.getPrefix());
         int indexOfEmail = trimmedArgs.indexOf(PREFIX_EMAIL.getPrefix());
         int indexOfAddress = trimmedArgs.indexOf(PREFIX_ADDRESS.getPrefix());
+        if (indexOfName == -1 && indexOfPhone == -1 && indexOfEmail == -1 && indexOfAddress == -1) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
         int[] attributeIndexArray = {indexOfName, indexOfPhone, indexOfEmail, indexOfAddress, trimmedArgs.length()};
         Arrays.sort(attributeIndexArray);
 
@@ -48,6 +52,10 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
             trimmedNames = trimmedArgs.substring(indexOfName + 2, attributeIndexArray[index + 1]).trim();
         }
+        if (trimmedNames.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
 
         String trimmedPhones = null;
         if (indexOfPhone != -1) {
@@ -59,6 +67,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
             }
             trimmedPhones = trimmedArgs.substring(indexOfPhone + 2, attributeIndexArray[index + 1]).trim();
+        }
+        if (trimmedPhones.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         String trimmedEmails = null;
@@ -72,6 +84,10 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
             trimmedEmails = trimmedArgs.substring(indexOfEmail + 2, attributeIndexArray[index + 1]).trim();
         }
+        if (trimmedEmails.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
 
         String trimmedAddress = null;
         if (indexOfAddress != -1) {
@@ -83,6 +99,10 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
             }
             trimmedAddress = trimmedArgs.substring(indexOfAddress + 2, attributeIndexArray[index + 1]).trim();
+        }
+        if (trimmedAddress.equals("")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         List<String> namesToSearch = new ArrayList<>();
