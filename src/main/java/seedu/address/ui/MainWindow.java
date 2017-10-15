@@ -45,6 +45,9 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private ResultDisplay resultDisplay;
+    private CommandBox commandBox;
+    private SortFindPanel sortFindPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -136,23 +139,22 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        SortFindPanel sortFindPanel = new SortFindPanel(logic);
+        sortFindPanel = new SortFindPanel(logic);
         sortFindPanelPlaceholder.getChildren().add(sortFindPanel.getRoot());
 
         browserPanel = new BrowserPanel();
         if (MainApp.isFirstTimeOpen()) {
-            TutorialPanel tutorialPanel = new TutorialPanel(commandBox, personListPanel,
-                    resultDisplay, sortFindPanel, logic, browserPanel, browserPlaceholder);
+            TutorialPanel tutorialPanel = new TutorialPanel(this, logic, browserPanel, browserPlaceholder);
             browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
         } else {
             browserPlaceholder.getChildren().add(browserPanel.getRoot());
@@ -234,5 +236,39 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    /**
+     * Unhighlights all the UIs during tutorial.
+     */
+    public void unhighlightAll() {
+        personListPanel.unhighlight();
+        commandBox.unhighlight();
+        resultDisplay.unhighlight();
+        sortFindPanel.unhighlight();
+    }
+
+    public void highlightCommandBox() {
+        commandBox.highlight();
+    }
+
+    public void highlightResultDisplay() {
+        resultDisplay.highlight();
+    }
+
+    public void highlightSortMenu() {
+        sortFindPanel.highlightSortMenu();
+    }
+
+    public void highlightSearchBox() {
+        sortFindPanel.highlightSearchBox();
+    }
+
+    public void highlightPersonListPanel() {
+        personListPanel.highlight();
+    }
+
+    public void setCommandPrompt(String toPrompt) {
+        commandBox.setPromptText(toPrompt);
     }
 }

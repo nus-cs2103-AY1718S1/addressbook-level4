@@ -27,10 +27,7 @@ public class TutorialPanel extends UiPart<Region> {
     private ArrayList<TutSteps> tutStepsList = new ArrayList<>();
     private Tutorial newTutorial;
     private Logic logic;
-    private CommandBox commandBox;
-    private ResultDisplay resultDisplay;
-    private SortFindPanel sortFindPanel;
-    private PersonListPanel personListPanel;
+    private MainWindow mainWindow;
     private BrowserPanel browserPanel;
     private StackPane browserPlaceHolder;
 
@@ -46,14 +43,10 @@ public class TutorialPanel extends UiPart<Region> {
     @FXML
     private TextArea tutorialText;
 
-    public TutorialPanel(CommandBox commandBox, PersonListPanel personListPanel,
-                         ResultDisplay resultDisplay, SortFindPanel sortFindPanel, Logic logic,
+    public TutorialPanel(MainWindow mainWindow, Logic logic,
                          BrowserPanel browserPanel, StackPane browserPlaceHolder) {
         super(FXML);
-        this.commandBox = commandBox;
-        this.personListPanel = personListPanel;
-        this.resultDisplay = resultDisplay;
-        this.sortFindPanel = sortFindPanel;
+        this.mainWindow = mainWindow;
         this.logic = logic;
         this.browserPanel = browserPanel;
         this.browserPlaceHolder = browserPlaceHolder;
@@ -62,8 +55,7 @@ public class TutorialPanel extends UiPart<Region> {
     }
 
     private void initTutorial() {
-        newTutorial = new Tutorial(commandBox, personListPanel, resultDisplay,
-                sortFindPanel, tutorialText, logic);
+        newTutorial = new Tutorial(mainWindow, tutorialText, logic);
         tutStepsList = newTutorial.getTutorialSteps();
     }
 

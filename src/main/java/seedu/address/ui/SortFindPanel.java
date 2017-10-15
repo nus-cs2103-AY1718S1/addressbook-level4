@@ -122,14 +122,14 @@ public class SortFindPanel extends UiPart<Region> {
         sortMenu.setStyle("-fx-border-color: green; -fx-border-width: 2");
     }
 
-    public void highlightSearchField() {
+    public void highlightSearchBox() {
         searchBox.setStyle("-fx-border-color: green; -fx-border-width: 2");
     }
 
     /**
      * Unhighlights the sort menu and search box.
      */
-    public void unhighlightAll() {
+    public void unhighlight() {
         sortMenu.setStyle("-fx-border-color: null; -fx-border-width: 1");
         searchBox.setStyle("-fx-border-color: null; -fx-border-width: 1");
     }

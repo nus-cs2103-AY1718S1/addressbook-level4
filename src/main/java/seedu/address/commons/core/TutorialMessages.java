@@ -6,13 +6,15 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
+
 /**
  * Container for tutorial messages.
  */
 public class TutorialMessages {
 
-    public static final int NUM_STEPS = 11;
-
+    public static final int TOTAL_NUM_STEPS = 11;
+    public static final int PROMPT_NUM_STEPS = 3;
     /* Introductory Messages */
     public static final String INTRO_BEGIN = "Welcome to Bluebird! Would you like to go through the tutorial?";
     public static final String INTRO_TWO = "This is the command box, where you will enter your commands.";
@@ -66,4 +68,45 @@ public class TutorialMessages {
 
     /* Default prompt message */
     public static final String DEFAULT_PROMPT = "Enter command here....";
+
+    private static final ArrayList<String> introList = new ArrayList<String>() {
+        {
+            add(INTRO_TWO);
+            add(INTRO_THREE);
+            add(INTRO_FOUR);
+            add(INTRO_FIVE);
+            add(INTRO_SIX);
+            add(INTRO_END);
+            add(PROMPT_BEGIN);
+        }
+    };
+
+    private static final ArrayList<String> promptList = new ArrayList<String>() {
+        {
+            add(PROMPT_TWO);
+            add(PROMPT_THREE);
+            add(PROMPT_FOUR);
+        }
+    };
+
+    private static final ArrayList<String> commandUsageList = new ArrayList<String>() {
+        {
+            add(COMMAND_ADD_USAGE);
+            add(COMMAND_EDIT_USAGE);
+            add(COMMAND_DELETE_USAGE);
+        }
+    };
+
+    public static ArrayList<String> getIntroList() {
+        return introList;
+    }
+
+
+    public static ArrayList<String> getPromptList() {
+        return promptList;
+    }
+
+    public static ArrayList<String> getCommandUsageList() {
+        return commandUsageList;
+    }
 }
