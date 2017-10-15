@@ -31,13 +31,14 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-<<<<<<< HEAD
                <Text fx:id="deadLineField" fill="GREY" styleClass="window_small_label" text="Dead Line: " />
                <Label fx:id="deadLine" styleClass="window_small_label" text="\$deadLine" />
-=======
+            </children>
+          </TextFlow>
+          <TextFlow prefHeight="50.0" prefWidth="400.0">
+              <children>
                <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " />
                <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" />
->>>>>>> f72064d6c5ff3c947d59857fd55e1c3c1e472537
             </children>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
