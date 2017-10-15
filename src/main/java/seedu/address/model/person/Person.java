@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Cluster> cluster;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
 
@@ -39,6 +40,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         // protect internal tags from changes in the arg list
@@ -126,6 +128,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author khooroko
     /**
      * Sets postal code of a person to the given PostalCode.
      * @param postalCode must not be null.
@@ -144,6 +147,12 @@ public class Person implements ReadOnlyPerson {
         return postalCode.get();
     }
 
+    @Override
+    public ObjectProperty<Cluster> clusterProperty() {
+        return cluster;
+    }
+
+    //@@author lawwman
     /**
      * Sets current debt of a person to the given Debt.
      * @param debt must not be null.
@@ -161,8 +170,6 @@ public class Person implements ReadOnlyPerson {
     public Debt getDebt() {
         return debt.get();
     }
-
-    //@@author lawwman
 
     /**
      * Sets date borrowed of a person the the given DateBorrow.
