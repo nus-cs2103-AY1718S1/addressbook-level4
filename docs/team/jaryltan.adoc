@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Tags are an important feature for an addressbook because of how it gives the user the freedom to connect attributes to certain contacts. Overwriting previously saved tags mean a lot of work and unintented mistake as the main use case of an edit function for tags is to add on rather than to replace.
 
 ==== Implementation
 
