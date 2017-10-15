@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Group in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidGroupName(String)}
+ * Guarantees: immutable; groupName is valid as declared in {@link #isValidGroupName(String)}
  */
 public class Group {
 
@@ -18,48 +18,46 @@ public class Group {
     */
     public static final String GROUP_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    private String name;
+    public final String groupName;
 
     /**
-     * Validates given group name.
+     * Validates given group groupName.
      *
-     * @throws IllegalValueException if the given group name string is invalid.
+     * @throws IllegalValueException if the given group groupName string is invalid.
      */
-    public Group(String name) throws IllegalValueException {
-        requireNonNull(name);
-        String trimmedName = name.trim();
+    public Group(String groupName) throws IllegalValueException {
+        requireNonNull(groupName);
+        String trimmedName = groupName.trim();
         if (!isValidGroupName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_GROUP_CONSTRAINTS);
         }
-        this.name = trimmedName;
+        this.groupName = trimmedName;
     }
 
     /**
-     * Returns true if a given string is a valid group name.
+     * Returns true if a given string is a valid group groupName.
      */
     public static boolean isValidGroupName(String test) {
         return test.matches(GROUP_VALIDATION_REGEX);
     }
 
-    public void setName(String name) { requireNonNull(name); this.name = name; }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Group // instanceof handles nulls
-                && this.name.equals(((Group) other).name)); // state check
+                && this.groupName.equals(((Group) other).groupName)); // state check
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return groupName.hashCode();
     }
 
     /**
      * Format state as text for viewing.
      */
     public String toString() {
-        return name;
+        return groupName;
     }
 
 }
