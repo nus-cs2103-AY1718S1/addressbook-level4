@@ -1,0 +1,43 @@
+= Jaryl Tan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== LISA: Levels Integrated Secretarial Agent
+LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/pull/47/commits[Functional code]] [https://github.com/CS2103AUG2017-T13-B1/main/pull/47/commits/baf693dc2457e0dca1ca7812d9c47cdfea402e6b[Test code]]
+
+=== Enhancement Added: Improved Tag management, allowing Tags to be added on and deleted without being overwritten
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+
+=== Other contributions
+
