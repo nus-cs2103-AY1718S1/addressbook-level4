@@ -3,10 +3,10 @@ package seedu.address.model.tag;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.google.common.base.Joiner;
+
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import com.google.common.base.Joiner;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
