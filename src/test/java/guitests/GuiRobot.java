@@ -1,7 +1,5 @@
 package guitests;
 
-import static java.lang.Thread.sleep;
-
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
