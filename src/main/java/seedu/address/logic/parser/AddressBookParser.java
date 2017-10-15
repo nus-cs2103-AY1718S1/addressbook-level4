@@ -52,43 +52,27 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD_2:
+        case AddCommand.COMMAND_WORD_3:
             return new AddCommandParser().parse(arguments);
-
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
 
-        case AddCommand.COMMAND_WORD_2:
-            return new AddCommandParser().parse(arguments);
-
-        case AddCommand.COMMAND_WORD_3:
-            return new AddCommandParser().parse(arguments);
-
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD_2:
+        case EditCommand.COMMAND_WORD_3:
             return new EditCommandParser().parse(arguments);
-
 
         case TagAddCommand.COMMAND_WORD:
             return new TagAddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD_2:
-            return new EditCommandParser().parse(arguments);
-
-        case EditCommand.COMMAND_WORD_3:
-            return new EditCommandParser().parse(arguments);
-
         case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
-
         case SelectCommand.COMMAND_WORD_2:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD_2:
-            return new DeleteCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD_3:
             return new DeleteCommandParser().parse(arguments);
 
@@ -96,26 +80,16 @@ public class AddressBookParser {
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
-
         case FindCommand.COMMAND_WORD_2:
-            return new FindCommandParser().parse(arguments);
-
         case FindCommand.COMMAND_WORD_3:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
-
         case ListCommand.COMMAND_WORD_2:
-            return new ListCommand();
-
         case ListCommand.COMMAND_WORD_3:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
-            return new HistoryCommand();
-
         case HistoryCommand.COMMAND_WORD_2:
             return new HistoryCommand();
 
@@ -123,11 +97,7 @@ public class AddressBookParser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
         case HelpCommand.COMMAND_WORD_2:
-            return new HelpCommand();
-
         case HelpCommand.COMMAND_WORD_3:
             return new HelpCommand();
 
