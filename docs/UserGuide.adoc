@@ -330,15 +330,3 @@ e.g.`select 2`
 e.g. `remark 4 r/Sneezes a lot`
 * *RemoveTag* : `removetag TAGNAME` +
 e.g `removetag friends`
-
-== Command Shortcut Summary
-* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-* *Clear* : `c`
-* *Delete* : `d INDEX`
-* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-* *Find* : `f KEYWORD [MORE_KEYWORDS]`
-* *List* : `l`
-* *Select* : `s INDEX`
-* *History* : `h`
-* *Undo* : `u`
-* *Redo* : `r`
