@@ -39,28 +39,136 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         String[] parameters = (String[]) predicate.getKeywords().toArray();
-
-        List<String> matchedNames = new ArrayList<>();
-        ArrayList<String> nameList = new ArrayList<>();
-
-        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
-            String[] str = model.getAddressBook().getPersonList().get(i).getName().toString().toLowerCase().split(" ");
-            for (int j = 0; j < str.length; j++) {
-                nameList.add(str[j]);
+        ArrayList<String> nameKeywords = new ArrayList<>();
+        ArrayList<String> phoneKeywords = new ArrayList<>();
+        ArrayList<String> emailKeywords = new ArrayList<>();
+        ArrayList<String> addressKeywords = new ArrayList<>();
+        ArrayList<String> currentKeywords = nameKeywords;
+        for (int i = 0; i < parameters.length; i++) {
+            if (parameters[i].equals(PREFIX_NAME.getPrefix())) {
+                currentKeywords = nameKeywords;
+            } else if (parameters[i].equals(PREFIX_PHONE.getPrefix())) {
+                currentKeywords = phoneKeywords;
+            } else if (parameters[i].equals(PREFIX_EMAIL.getPrefix())) {
+                currentKeywords = emailKeywords;
+            } else if (parameters[i].equals(PREFIX_ADDRESS.getPrefix())) {
+                currentKeywords = addressKeywords;
+            } else {
+                currentKeywords.add(parameters[i]);
+            }
+        }
+        List<String> namesToSearch = new ArrayList<>();
+        if (nameKeywords.size() != 0) {
+            ArrayList<String> namesMatched = getNamesFromNameKeywords(nameKeywords);
+            if (namesMatched != null) {
+                namesToSearch.addAll(namesMatched);
+            }
+        }
+        if (phoneKeywords.size() != 0) {
+            ArrayList<String> namesMatched = getNamesFromPhoneKeywords(phoneKeywords);
+            if (namesMatched != null) {
+                namesToSearch.addAll(namesMatched);
+            }
+        }
+        if (emailKeywords.size() != 0) {
+            ArrayList<String> namesMatched = getNamesFromEmailKeywords(emailKeywords);
+            if (namesMatched != null) {
+                namesToSearch.addAll(namesMatched);
+            }
+        }
+        if (addressKeywords.size() != 0) {
+            ArrayList<String> namesMatched = getNamesFromAddressKeywords(addressKeywords);
+            if (namesMatched != null) {
+                namesToSearch.addAll(namesMatched);
             }
         }
 
-        for (int i = 0; i < parameters.length; i++) {
+        NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
+        model.updateFilteredPersonList(updatedPredicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    private ArrayList<String> getNamesFromAddressKeywords(ArrayList<String> addressKeywords) {
+        ArrayList<String> matchedNames = new ArrayList<>();
+        ArrayList<String> addressList = new ArrayList<>();
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            addressList.add(model.getAddressBook().getPersonList().get(i).getAddress().toString().toLowerCase());
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < addressKeywords.size(); i++) {
+            stringBuffer.append(addressKeywords.get(i) + " ");
+        }
+        String addressValue = stringBuffer.toString().toLowerCase().trim();
+        for (int i = 0; i < addressList.size(); i++) {
+            if (addressList.get(i).contains(addressValue)) {
+                matchedNames.add(model.getAddressBook().getPersonList().get(i).getName().toString());
+            }
+        }
+        if (matchedNames.size() == 0) {
+            return null;
+        } else {
+            return matchedNames;
+        }
+    }
+
+    private ArrayList<String> getNamesFromEmailKeywords(ArrayList<String> emailKeywords) {
+        ArrayList<String> matchedNames = new ArrayList<>();
+        ArrayList<String> emailList = new ArrayList<>();
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            emailList.add(model.getAddressBook().getPersonList().get(i).getEmail().toString());
+        }
+        for (int i = 0; i < emailKeywords.size(); i++) {
+            for (int j = 0; j < emailList.size(); j++) {
+                if (emailList.get(j).contains(emailKeywords.get(i))) {
+                    matchedNames.add(model.getAddressBook().getPersonList().get(j).getName().toString());
+                }
+            }
+        }
+        if (matchedNames.size() == 0) {
+            return null;
+        } else {
+            return matchedNames;
+        }
+    }
+
+    private ArrayList<String> getNamesFromPhoneKeywords(ArrayList<String> phoneKeywords) {
+        ArrayList<String> matchedNames = new ArrayList<>();
+        ArrayList<String> phoneList = new ArrayList<>();
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            phoneList.add(model.getAddressBook().getPersonList().get(i).getPhone().toString());
+        }
+        for (int i = 0; i < phoneKeywords.size(); i++) {
+            for (int j = 0; j < phoneList.size(); j++) {
+                if (phoneList.get(j).contains(phoneKeywords.get(i))) {
+                    matchedNames.add(model.getAddressBook().getPersonList().get(j).getName().toString());
+                }
+            }
+        }
+        if (matchedNames.size() == 0) {
+            return null;
+        } else {
+            return matchedNames;
+        }
+    }
+
+    private ArrayList<String> getNamesFromNameKeywords(ArrayList<String> nameKeywords) {
+        ArrayList<String> matchedNames = new ArrayList<>();
+        ArrayList<String> nameList = new ArrayList<>();
+        for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+            nameList.add(model.getAddressBook().getPersonList().get(i).getName().toString().toLowerCase());
+        }
+        for (int i = 0; i < nameKeywords.size(); i++) {
             for (int j = 0; j < nameList.size(); j++) {
-                if (nameList.get(j).contains(parameters[i].toLowerCase())) {
+                if (nameList.get(j).contains(nameKeywords.get(i).toLowerCase())) {
                     matchedNames.add(nameList.get(j));
                 }
             }
         }
-
-        NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(matchedNames);
-        model.updateFilteredPersonList(updatedPredicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        if (matchedNames.size() == 0) {
+            return null;
+        } else {
+            return matchedNames;
+        }
     }
 
     @Override
