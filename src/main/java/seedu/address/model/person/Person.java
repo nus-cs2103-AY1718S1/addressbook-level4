@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.customField.CustomField;
+import seedu.address.model.customField.UniqueCustomFieldList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,18 +26,21 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueCustomFieldList> customFields;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<CustomField> customFields) {
+        requireAllNonNull(name, phone, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal custom fields from changes in the arg list
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList(customFields));
     }
 
     /**
@@ -43,7 +48,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getTags(), source.getCustomFields());
     }
 
     public void setName(Name name) {
@@ -120,6 +125,26 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    /**
+     * Returns an immutable custom field set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<CustomField> getCustomFields() {
+        return Collections.unmodifiableSet(customFields.get().toSet());
+    }
+
+    public ObjectProperty<UniqueCustomFieldList> customFieldProperty() {
+        return customFields;
+    }
+
+    /**
+     * Replaces this person's custom fields with the custom fields in the argument custom fields set.
+     */
+    public void setCustomFields(Set<CustomField> replacement) {
+        customFields.set(new UniqueCustomFieldList(replacement));
     }
 
     @Override

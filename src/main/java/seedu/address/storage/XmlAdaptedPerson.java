@@ -29,6 +29,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String birthday;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
