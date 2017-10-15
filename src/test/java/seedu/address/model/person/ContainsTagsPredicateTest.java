@@ -39,7 +39,7 @@ public class ContainsTagsPredicateTest {
     }
 
     @Test
-    public void test_ContainsTags_returnsTrue() {
+    public void test_containsTags_returnsTrue() {
         // One keyword
         ContainsTagsPredicate predicate = new ContainsTagsPredicate(Collections.singletonList("family"));
         assertTrue(predicate.test(new PersonBuilder().withTags("family").build()));
@@ -54,7 +54,7 @@ public class ContainsTagsPredicateTest {
     }
 
     @Test
-    public void test_DoesNotContainTags_returnsFalse() {
+    public void test_doesNotContainTags_returnsFalse() {
         // Zero keywords
         ContainsTagsPredicate predicate = new ContainsTagsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withTags("friends").build()));
