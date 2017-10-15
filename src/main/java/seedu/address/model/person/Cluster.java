@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.PostalCode.MESSAGE_POSTAL_CODE_CONSTRAINTS;
+import static seedu.address.model.person.PostalCode.isValidPostalCode;
 import static seedu.address.model.util.ClusterUtil.getCluster;
 
 import java.util.HashMap;
@@ -11,36 +13,26 @@ import seedu.address.model.util.ClusterUtil;
 //@@author khooroko
 /**
  * Represents a Person's cluster in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidCluster(String)}
+ * Guarantees: immutable; can only be declared with a valid {@code PostalCode}
  */
 public class Cluster {
-
-    public static final String MESSAGE_CLUSTER_CONSTRAINTS =
-            "Cluster should contain only alphabets, commas, and whitespaces with first 2 numbers registered";
 
     public static final String CLUSTER_VALIDATION_REGEX = "[A-Za-z,.'\\\"\\\\s]";
 
     public final String value;
 
     /**
-     * Validates given cluster.
+     * Validates given cluster. Can only be called with a validated postal code.
      *
      * @throws IllegalValueException if given cluster string is invalid.
      */
-    public Cluster(PostalCode postalCode) throws IllegalValueException {
+    public Cluster(PostalCode postalCode) {
         requireNonNull(postalCode);
-        String cluster = getCluster(postalCode.toString().substring(0, 2));
-        if (cluster == null) {
-            throw new IllegalValueException(MESSAGE_CLUSTER_CONSTRAINTS);
+        if (!isValidPostalCode(postalCode.toString())) {
+            throw new AssertionError(MESSAGE_POSTAL_CODE_CONSTRAINTS);
         }
+        String cluster = getCluster(postalCode.toString());
         this.value = cluster;
-    }
-
-    /**
-     * Returns true if a given string is a valid person cluster.
-     */
-    public static boolean isValidCluster(String test) {
-        return test.matches(CLUSTER_VALIDATION_REGEX);
     }
 
     @Override

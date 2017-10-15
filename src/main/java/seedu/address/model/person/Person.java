@@ -57,6 +57,7 @@ public class Person implements ReadOnlyPerson {
                 source.getDebt(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
+        this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
     }
 
     /**
@@ -150,9 +151,18 @@ public class Person implements ReadOnlyPerson {
         return postalCode.get();
     }
 
+    public void setCluster(Cluster cluster) {
+        this.cluster.set(requireNonNull(cluster));
+    }
+
     @Override
     public ObjectProperty<Cluster> clusterProperty() {
         return cluster;
+    }
+
+    @Override
+    public Cluster getCluster() {
+        return cluster.get();
     }
 
     //@@author lawwman
@@ -193,7 +203,6 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author
-
     /**
      * Sets date borrowed of a person the the given DateBorrow.
      * @param dateRepaid must not be null.
