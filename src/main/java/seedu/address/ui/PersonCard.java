@@ -22,7 +22,6 @@ public class PersonCard extends UiPart<Region> {
     private static String[] randomColors = { "navy", "teal", "violet", "green", "purple", "black" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
-//    private Image favorited = new Image("@../../../../docs/images/fav_empty.png");
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
