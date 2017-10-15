@@ -38,25 +38,30 @@ public class TimeSlot {
      * Returns if a given string is a valid lesson time slot.
      */
     public static boolean isValidTimeSLot(String test) {
-        if(test.matches(TIMESLOT_VALIDATION_REGEX)){
+        if (test.matches(TIMESLOT_VALIDATION_REGEX)) {
             String weekDay = test.substring(0, 3);
             String startHour = test.substring(4, 6);
             String startMin = test.substring(6, 8);
             String endHour = test.substring(9, 11);
             String endMin = test.substring(11, 13);
             boolean isWeekValid = weekValid(weekDay);
-            boolean isTimeValid = timeValid(startHour,startMin,endHour,endMin);
+            boolean isTimeValid = timeValid(startHour, startMin, endHour, endMin);
 
-            if(isWeekValid && isTimeValid) {
+            if (isWeekValid && isTimeValid) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Determine if the given week text is valid
+     * @param weekStr
+     * @return true if the text is valid
+     */
     private static boolean weekValid(String weekStr) {
         String[] capitalDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI",
-                "SAT" };
+            "SAT" };
         for (int i = 0; i < capitalDays.length; i++) {
             if (weekStr.equalsIgnoreCase(capitalDays[i])) {
                 return true;

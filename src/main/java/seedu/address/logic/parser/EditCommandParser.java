@@ -2,9 +2,12 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -73,7 +76,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseCode(argMultimap.getValue(PREFIX_MODULE_CODE))
                     .ifPresent(editLessonDescriptor::setCode);
 
-            parseLecturersForEdit(argMultimap.getAllValues(PREFIX_LECTURER)).ifPresent(editLessonDescriptor::setLecturer);
+            parseLecturersForEdit(argMultimap.getAllValues(PREFIX_LECTURER))
+                    .ifPresent(editLessonDescriptor::setLecturer);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -125,8 +129,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (lecturers.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> lecturersSet = lecturers.size() == 1 &&
-                lecturers.contains("") ? Collections.emptySet() : lecturers;
+        Collection<String> lecturersSet = lecturers.size() == 1
+                && lecturers.contains("") ? Collections.emptySet() : lecturers;
         return Optional.of(ParserUtil.parseLecturer(lecturersSet));
     }
 

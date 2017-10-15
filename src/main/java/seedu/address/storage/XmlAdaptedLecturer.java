@@ -1,10 +1,13 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlValue;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
 
-import javax.xml.bind.annotation.XmlValue;
-
+/**
+ * Stores lecturer data in an XML file
+ */
 public class XmlAdaptedLecturer {
 
     @XmlValue

@@ -44,7 +44,9 @@ public class Lecturer {
     }
 
     @Override
-    public int hashCode() { return lecturerName.hashCode(); }
+    public int hashCode() {
+        return lecturerName.hashCode();
+    }
 
     /**
      * Format state as text for viewing.

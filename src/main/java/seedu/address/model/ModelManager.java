@@ -165,17 +165,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void handleListingUnit() {
         ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
-       if (currentUnit.equals(LOCATION) || currentUnit.equals(LESSON)) {
-           Predicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
-           updateFilteredLessonList(predicate);
-       } else if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
-           Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
-           updateFilteredLessonList(predicate);
-       } else {
+        if (currentUnit.equals(LOCATION) || currentUnit.equals(LESSON)) {
+            Predicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+            updateFilteredLessonList(predicate);
+        } else if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
+            Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+            updateFilteredLessonList(predicate);
+        } else {
            assert false : "We will only handle unit LOCATION MODULE and LESSON";
-       }
-
-
+        }
     }
 
 }

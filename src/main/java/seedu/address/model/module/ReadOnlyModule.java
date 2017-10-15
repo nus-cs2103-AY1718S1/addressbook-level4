@@ -1,11 +1,15 @@
 package seedu.address.model.module;
 
+import java.util.Set;
+
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 
-import java.util.Set;
-
+/**
+ * A read-only immutable interface for a Module in the application.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
 public interface ReadOnlyModule {
     ObjectProperty<Code> codeProperty();
     Code getCode();

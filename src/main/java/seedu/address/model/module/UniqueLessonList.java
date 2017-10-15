@@ -5,9 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.Iterator;
 import java.util.List;
 
+import org.fxmisc.easybind.EasyBind;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
@@ -20,7 +21,7 @@ import seedu.address.model.module.exceptions.LessonNotFoundException;
  * @see Lesson #equals(Object)
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
-public class UniqueLessonList implements Iterable<Lesson>{
+public class UniqueLessonList implements Iterable<Lesson> {
 
     private final ObservableList<Lesson> internalList = FXCollections.observableArrayList();
     // used by asObservableList()

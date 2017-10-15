@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -14,7 +16,7 @@ import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+
 
 
 /**
@@ -98,13 +100,12 @@ public class DeleteCommand extends UndoableCommand {
 
         model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
         ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-
-            for (ReadOnlyLesson l : lessonList) {
-                if (l.getCode().equals(code)) {
-                    lessonList.remove(l);
-                }
+        for (ReadOnlyLesson l : lessonList) {
+            if (l.getCode().equals(code)) {
+                lessonList.remove(l);
             }
-            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        }
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_WITH_MODULE_SUCCESS, code));
     }
