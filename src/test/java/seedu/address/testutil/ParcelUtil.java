@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.parcel.ReadOnlyParcel;
@@ -26,6 +27,7 @@ public class ParcelUtil {
      */
     public static String getParcelDetails(ReadOnlyParcel parcel) {
         StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_TRACKING_NUMBER + parcel.getTrackingNumber().value + " ");
         sb.append(PREFIX_NAME + parcel.getName().fullName + " ");
         sb.append(PREFIX_PHONE + parcel.getPhone().value + " ");
         sb.append(PREFIX_EMAIL + parcel.getEmail().value + " ");

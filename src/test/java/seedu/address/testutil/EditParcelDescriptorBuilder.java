@@ -29,11 +29,24 @@ public class EditParcelDescriptorBuilder {
      */
     public EditParcelDescriptorBuilder(ReadOnlyParcel parcel) {
         descriptor = new EditParcelDescriptor();
+        descriptor.setTrackingNumber(parcel.getTrackingNumber());
         descriptor.setName(parcel.getName());
         descriptor.setPhone(parcel.getPhone());
         descriptor.setEmail(parcel.getEmail());
         descriptor.setAddress(parcel.getAddress());
         descriptor.setTags(parcel.getTags());
+    }
+
+    /**
+     * Sets the {@code TrackingNumber} of the {@code EditParcelDescriptor} that we are building.
+     */
+    public EditParcelDescriptorBuilder withTrackingNumber(String trackingNumber) {
+        try {
+            ParserUtil.parseTrackingNumber(Optional.of(trackingNumber)).ifPresent(descriptor::setTrackingNumber);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tracking number is expected to be unique.");
+        }
+        return this;
     }
 
     /**

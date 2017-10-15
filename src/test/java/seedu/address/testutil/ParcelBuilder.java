@@ -9,6 +9,7 @@ import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,17 +23,20 @@ public class ParcelBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
 
     private Parcel parcel;
 
     public ParcelBuilder() {
         try {
+            TrackingNumber defaultTrackingNumber =  new TrackingNumber(DEFAULT_TRACKING_NUMBER);
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.parcel = new Parcel(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default parcel's values are invalid.");
         }
@@ -43,6 +47,18 @@ public class ParcelBuilder {
      */
     public ParcelBuilder(ReadOnlyParcel parcelToCopy) {
         this.parcel = new Parcel(parcelToCopy);
+    }
+
+    /**
+     * Sets the {@code TrackingNumber} of the {@code Parcel} that we are building.
+     */
+    public ParcelBuilder withTrackingNumber(String trackingNumber) {
+        try {
+            this.parcel.setTrackingNumber(new TrackingNumber(trackingNumber));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tracking number is expected to be unique.");
+        }
+        return this;
     }
 
     /**

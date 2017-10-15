@@ -14,6 +14,7 @@ import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,6 +22,8 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedParcel {
 
+    @XmlElement(required = true)
+    private String trackingNumber;
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -46,6 +49,7 @@ public class XmlAdaptedParcel {
      * @param source future changes to this will not affect the created XmlAdaptedParcel
      */
     public XmlAdaptedParcel(ReadOnlyParcel source) {
+        trackingNumber = source.getTrackingNumber().value;
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -66,11 +70,12 @@ public class XmlAdaptedParcel {
         for (XmlAdaptedTag tag : tagged) {
             parcelTags.add(tag.toModelType());
         }
+        final TrackingNumber trackingNumber = new TrackingNumber(this.trackingNumber);
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(parcelTags);
-        return new Parcel(name, phone, email, address, tags);
+        return new Parcel(trackingNumber, name, phone, email, address, tags);
     }
 }

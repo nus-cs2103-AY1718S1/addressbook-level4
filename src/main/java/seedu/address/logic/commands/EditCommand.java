@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -37,6 +39,7 @@ public class EditCommand extends UndoableCommand {
             + "by the index number used in the last parcel listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_TRACKING_NUMBER + "TRACKING_NUMBER]"
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -95,13 +98,15 @@ public class EditCommand extends UndoableCommand {
                                              EditParcelDescriptor editParcelDescriptor) {
         assert parcelToEdit != null;
 
+        TrackingNumber updatedTrackingNumber = editParcelDescriptor.getTrackingNumber()
+                .orElse(parcelToEdit.getTrackingNumber());
         Name updatedName = editParcelDescriptor.getName().orElse(parcelToEdit.getName());
         Phone updatedPhone = editParcelDescriptor.getPhone().orElse(parcelToEdit.getPhone());
         Email updatedEmail = editParcelDescriptor.getEmail().orElse(parcelToEdit.getEmail());
         Address updatedAddress = editParcelDescriptor.getAddress().orElse(parcelToEdit.getAddress());
         Set<Tag> updatedTags = editParcelDescriptor.getTags().orElse(parcelToEdit.getTags());
 
-        return new Parcel(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
 
     @Override
@@ -127,6 +132,7 @@ public class EditCommand extends UndoableCommand {
      * corresponding field value of the parcel.
      */
     public static class EditParcelDescriptor {
+        private TrackingNumber trackingNumber;
         private Name name;
         private Phone phone;
         private Email email;
@@ -136,6 +142,7 @@ public class EditCommand extends UndoableCommand {
         public EditParcelDescriptor() {}
 
         public EditParcelDescriptor(EditParcelDescriptor toCopy) {
+            this.trackingNumber = toCopy.trackingNumber;
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
@@ -147,7 +154,16 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.trackingNumber, this.name, this.phone, this.email, this.address,
+                    this.tags);
+        }
+
+        public void setTrackingNumber(TrackingNumber trackingNumber) {
+            this.trackingNumber = trackingNumber;
+        }
+
+        public Optional<TrackingNumber> getTrackingNumber() {
+            return Optional.ofNullable(trackingNumber);
         }
 
         public void setName(Name name) {
@@ -205,7 +221,8 @@ public class EditCommand extends UndoableCommand {
             // state check
             EditParcelDescriptor e = (EditParcelDescriptor) other;
 
-            return getName().equals(e.getName())
+            return getTrackingNumber().equals(e.getTrackingNumber())
+                    && getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
