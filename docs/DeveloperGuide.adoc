@@ -14,6 +14,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+=== Overview
+This developer guide provides general information about how is this application managed explaining both architectural and coding styles.
+
 == Setting up
 
 === Prerequisites
@@ -30,10 +35,16 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
++
 
+. *SceneBuilder (OPTIONAL)*  Visual tool
++
+[NOTE]
+Currently using Scenebuilder for Java 8. SceneBuilder 8.4.0.
 
-=== Setting up the project in your computer
+=== Setting up the project
 
+==== Setting up the project into your computer
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -45,6 +56,14 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
+
+==== Setting up SceneBuilder
+
+This application uses an external library called "controlsfx-8.40.11"
+
+. Open Scenebuilder (You do not need to load any projects)
+. Open `JAR/FXML Manager`
+. Import controlsfx-8.40.11.jar (By default it will be in _C:\Users\USERPROFILE\.gradle\caches\modules-2\files-2.1\org.controlsfx\controlsfx\8.40.11\61694ec2668cc69116e970c7513aa3501179bc00_)
 
 === Verifying the setup
 
