@@ -166,6 +166,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid birthday -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + INVALID_BIRTHDAY_DESC + WEBSITE_DESC_AMY
                 + INVALID_TAG_DESC;
+        assertCommandFailure(command, Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
     }
 
     /**
