@@ -142,7 +142,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // name
+        // article number
         Index targetIndex = INDEX_THIRD_PARCEL;
         String userInput = targetIndex.getOneBased() + ARTICLE_NUMBER_DESC_AMY;
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder()
