@@ -103,7 +103,7 @@ public class AddCommandParserTest {
                 + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
-        // multiple dead lines - last dead line accepted
+        // multiple deadlines - last deadline accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + DEADLINE_DESC_AMY
                 + DEADLINE_DESC_BOB + TAG_DESC_FRIEND,
@@ -131,7 +131,7 @@ public class AddCommandParserTest {
         Person expectedPerson2 = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
                 .withDebt(VALID_DEBT_AMY).withDeadline(Deadline.NO_DEADLINE_SET).withTags().build();
-        // no dead line
+        // no deadline
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY
                 + DEBT_DESC_AMY, new AddCommand(expectedPerson2));
@@ -213,7 +213,7 @@ public class AddCommandParserTest {
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Debt.MESSAGE_DEBT_CONSTRAINTS);
 
-        // invalid dead line
+        // invalid deadline
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INVALID_DEADLINE_DESC
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,

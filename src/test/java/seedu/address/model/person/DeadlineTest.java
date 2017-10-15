@@ -9,7 +9,7 @@ public class DeadlineTest {
 
     @Test
     public void isValidDeadLine() {
-        // invalid dead lines
+        // invalid deadlines
         assertFalse(Deadline.isValidDeadline("")); // empty string
         assertFalse(Deadline.isValidDeadline(" ")); // spaces only
         assertFalse(Deadline.isValidDeadline("91")); // just 2 digits
@@ -17,7 +17,7 @@ public class DeadlineTest {
         assertFalse(Deadline.isValidDeadline("91-20-30")); // incorrect format
         assertFalse(Deadline.isValidDeadline("21-21-2017")); // impossible date
 
-        // valid dead lines
+        // valid deadlines
         assertTrue(Deadline.isValidDeadline("11-11-2019")); // correct format
     }
 }

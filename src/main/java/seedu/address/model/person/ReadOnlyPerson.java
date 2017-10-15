@@ -66,7 +66,7 @@ public interface ReadOnlyPerson {
                 .append(getPostalCode())
                 .append(getDebt())
                 .append(getDateBorrow())
-                .append(" Dead Line: ")
+                .append(" Deadline: ")
                 .append(getDeadline())
                 .append(getDateRepaid())
                 .append(" Tags: ");

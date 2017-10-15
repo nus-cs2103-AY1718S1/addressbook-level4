@@ -255,7 +255,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + POSTAL_CODE_DESC_AMY + INVALID_DEBT_DESC;
         assertCommandFailure(command, Debt.MESSAGE_DEBT_CONSTRAINTS);
 
-        /* Case: invalid dead line -> rejected */
+        /* Case: invalid deadline -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INVALID_DEADLINE_DESC;
         assertCommandFailure(command, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);

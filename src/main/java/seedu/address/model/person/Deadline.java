@@ -43,7 +43,7 @@ public class Deadline {
     }
 
     /**
-     * Returns true if a given string is a valid person dead line.
+     * Returns true if a given string is a valid person deadline.
      */
     public static boolean isValidDeadline(String test) {
         return test.matches(DEADLINE_VALIDATION_REGEX);

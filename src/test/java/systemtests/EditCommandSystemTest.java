@@ -196,7 +196,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_DEBT_DESC, Debt.MESSAGE_DEBT_CONSTRAINTS);
 
-        /* Case: invalid dead line -> rejected */
+        /* Case: invalid deadline -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                 + INVALID_DEADLINE_DESC, Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
 

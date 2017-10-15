@@ -113,11 +113,11 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Deadline} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withDeadline(String deadLine) {
+    public EditPersonDescriptorBuilder withDeadline(String deadline) {
         try {
-            ParserUtil.parseDeadline(Optional.of(deadLine)).ifPresent(descriptor::setDeadline);
+            ParserUtil.parseDeadline(Optional.of(deadline)).ifPresent(descriptor::setDeadline);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("dead line is expected to be unique.");
+            throw new IllegalArgumentException("deadline is expected to be unique.");
         }
         return this;
     }
