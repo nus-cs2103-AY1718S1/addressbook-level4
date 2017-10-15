@@ -28,6 +28,7 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
     private ListElementPointer autoCompleteSnapshot;
     private boolean isAutoCompletePossibilitiesUpToDate = false;
+    private int oldCaretPosition = 0;
 
     @FXML
     private TextField commandTextField;
@@ -111,6 +112,7 @@ public class CommandBox extends UiPart<Region> {
             if (commandTextField.getText().split(" ").length == 1) {
                 initAutoComplete();
             }
+            oldCaretPosition = commandTextField.getCaretPosition();
         }
         // loop back to the start (original user input) if all autocomplete options are exhausted
         if (!autoCompleteSnapshot.hasPrevious()) {
@@ -136,7 +138,6 @@ public class CommandBox extends UiPart<Region> {
      * and positions the caret to the end of the {@code text}.
      */
     private void replaceTextAndSelectAllForward(String text) {
-        int oldCaretPosition = commandTextField.getCaretPosition();
         commandTextField.setText(text);
         commandTextField.selectRange(oldCaretPosition, commandTextField.getText().length());
     }
