@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
 //import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 //import seedu.address.model.person.exceptions.DuplicatePersonException;
 //haven implement yet
@@ -33,6 +34,7 @@ public class AddMeetingCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
+    public static final String MESSAGE_OVERDUE_MEETING = "Meeting's date and time is before log in date and time";
 
     private final Meeting toAdd;
 
@@ -51,6 +53,8 @@ public class AddMeetingCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateMeetingException e) {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+        } catch (MeetingBeforeCurrDateException mde) {
+            throw new CommandException(MESSAGE_OVERDUE_MEETING);
         }
     }
 

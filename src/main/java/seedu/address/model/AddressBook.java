@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +17,7 @@ import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 //import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -50,7 +53,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Meetings and Tags in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -116,9 +119,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateMeetingException if an equivalent meeting of the same date and time already exists.
      */
-    public void addMeeting(ReadOnlyMeeting m) throws DuplicateMeetingException {
+    public void addMeeting(ReadOnlyMeeting m) throws DuplicateMeetingException, MeetingBeforeCurrDateException {
         Meeting newMeeting = new Meeting(m);
-        meetings.add(newMeeting);
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(newMeeting.getDate().toString(), formatter);
+        if (meetDate.isAfter((currDate))) {
+            meetings.add(newMeeting);
+        } else {
+            throw new MeetingBeforeCurrDateException();
+        }
     }
 
     /**

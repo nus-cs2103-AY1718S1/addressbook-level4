@@ -2,6 +2,8 @@ package seedu.address.model.meeting;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -93,7 +95,12 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
         for (final ReadOnlyMeeting meeting : meetings) {
-            replacement.add(new Meeting(meeting));
+            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime currDate = LocalDateTime.now();
+            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
+            if (meetDate.isAfter((currDate))) {
+                replacement.add(new Meeting(meeting));
+            }
         }
         setMeetings(replacement);
     }

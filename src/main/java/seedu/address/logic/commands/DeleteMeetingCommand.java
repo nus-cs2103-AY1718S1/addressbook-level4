@@ -43,7 +43,7 @@ public class DeleteMeetingCommand extends UndoableCommand {
 
         try {
             model.deleteMeeting(meetingToDelete);
-        } catch (MeetingNotFoundException pnfe) {
+        } catch (MeetingNotFoundException mnfe) {
             assert false : "The target meeting cannot be missing";
         }
 
