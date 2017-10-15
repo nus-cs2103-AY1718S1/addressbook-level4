@@ -112,10 +112,10 @@ public class ParserUtil {
      * Meant for parsing for Add command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Deadline> parseDeadLine(Optional<String> deadLine) throws IllegalValueException {
-        requireNonNull(deadLine);
-        return deadLine.isPresent() ? Optional.of(new Deadline(deadLine.get()))
-                : Optional.of(new Deadline(Deadline.NO_DEAD_LINE_SET));
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get()))
+                : Optional.of(new Deadline(Deadline.NO_DEADLINE_SET));
     }
     /**
      * Parses a {@code Optional<String> deadLine} into an {@code Optional<Deadline>} if {@code Deadline}
@@ -123,10 +123,10 @@ public class ParserUtil {
      * Meant for parsing for Edit command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Deadline> parseDeadLineForEdit(Optional<String> deadLine)
+    public static Optional<Deadline> parseDeadlineForEdit(Optional<String> deadline)
             throws IllegalValueException {
-        requireNonNull(deadLine);
-        return deadLine.isPresent() ? Optional.of(new Deadline(deadLine.get())) : Optional.empty();
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get())) : Optional.empty();
     }
 
     /**

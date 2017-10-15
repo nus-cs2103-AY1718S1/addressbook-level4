@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
-    private ObjectProperty<Deadline> deadLine;
+    private ObjectProperty<Deadline> deadline;
     private ObjectProperty<DateRepaid> dateRepaid;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -43,7 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
-        this.deadLine = new SimpleObjectProperty<>(deadline);
+        this.deadline = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -54,7 +54,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getDebt(), source.getDeadLine(), source.getTags());
+                source.getDebt(), source.getDeadline(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
     }
@@ -188,18 +188,18 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author lawwman
-    public void setDeadLine(Deadline deadline) {
-        this.deadLine.set(requireNonNull(deadline));
+    public void setDeadline(Deadline deadline) {
+        this.deadline.set(requireNonNull(deadline));
     }
 
     @Override
-    public ObjectProperty<Deadline> deadLineProperty() {
-        return deadLine;
+    public ObjectProperty<Deadline> deadlineProperty() {
+        return deadline;
     }
 
     @Override
-    public Deadline getDeadLine() {
-        return deadLine.get();
+    public Deadline getDeadline() {
+        return deadline.get();
     }
 
     //@@author
@@ -252,7 +252,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, debt, deadLine, tags);
+        return Objects.hash(name, phone, email, address, postalCode, debt, deadline, tags);
     }
 
     @Override

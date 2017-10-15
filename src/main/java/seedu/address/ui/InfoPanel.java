@@ -31,7 +31,7 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date borrowed: ";
-    private static final String MESSAGE_INFO_DEAD_LINE_FIELD = "Dead Line: ";
+    private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID = "Date repaid: ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -65,9 +65,9 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label dateBorrow;
     @FXML
-    private Text deadLineField;
+    private Text deadlineField;
     @FXML
-    private Label deadLine;
+    private Label deadline;
     @FXML
     private Text dateRepaidField;
     @FXML
@@ -93,8 +93,7 @@ public class InfoPanel extends UiPart<Region> {
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
-        deadLineField.setText(MESSAGE_INFO_DEAD_LINE_FIELD);
-        dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
+        deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID);
         bindListeners(person);
     }
@@ -111,7 +110,7 @@ public class InfoPanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
-        deadLine.textProperty().bind(Bindings.convert(person.deadLineProperty()));
+        deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
         dateRepaid.textProperty().bind(Bindings.convert(person.dateRepaidProperty()));
         //TODO: fix tag colours. person.tagProperty().addListener((observable, oldValue, newValue) -> {
         tags.getChildren().clear();
@@ -175,7 +174,7 @@ public class InfoPanel extends UiPart<Region> {
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
                 && email.getText().equals(infoPanel.email.getText())
-                && deadLine.getText().equals(infoPanel.deadLine.getText())
+                && deadline.getText().equals(infoPanel.deadline.getText())
                 && dateBorrow.getText().equals(infoPanel.dateBorrow.getText())
                 && dateRepaid.getText().equals(infoPanel.dateRepaid.getText())
                 && tags.getChildrenUnmodifiable()

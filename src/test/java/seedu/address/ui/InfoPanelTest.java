@@ -53,8 +53,8 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhoneField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrow());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrowField());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadLine());
-        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadLineField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadline());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadlineField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateRepaid());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateRepaidField());
         assertEquals(new ArrayList<>(), infoPanelHandle.getTags());

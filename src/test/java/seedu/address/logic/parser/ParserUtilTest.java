@@ -34,7 +34,7 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_POSTAL_CODE = "00111";
     private static final String INVALID_DEBT = "1234a";
-    private static final String INVALID_DEAD_LINE = "0-0-2017";
+    private static final String INVALID_DEADLINE = "0-0-2017";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
@@ -43,7 +43,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_POSTAL_CODE = "321123";
     private static final String VALID_DEBT = "1234";
-    private static final String VALID_DEAD_LINE = "11-11-2020";
+    private static final String VALID_DEADLINE = "11-11-2020";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -223,28 +223,28 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseDeadLineForEdit_null_throwsNullPointerException() throws Exception {
+    public void parseDeadlineForEdit_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseDeadLineForEdit(null);
+        ParserUtil.parseDeadlineForEdit(null);
     }
 
     @Test
-    public void parseDeadLine_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseDeadline_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseDeadLine(Optional.of(INVALID_DEAD_LINE));
+        ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE));
     }
 
     @Test
-    public void parseDeadLineForEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseDeadLineForEdit(Optional.empty()).isPresent());
+    public void parseDeadlineForEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDeadlineForEdit(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseDeadLine_validValue_returnsDeadLine() throws Exception {
-        Deadline expectedDeadline = new Deadline(VALID_DEAD_LINE);
-        Optional<Deadline> actualDeadLine = ParserUtil.parseDeadLine(Optional.of(VALID_DEAD_LINE));
+    public void parseDeadline_validValue_returnsDeadLine() throws Exception {
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        Optional<Deadline> actualDeadline = ParserUtil.parseDeadline(Optional.of(VALID_DEADLINE));
 
-        assertEquals(expectedDeadline, actualDeadLine.get());
+        assertEquals(expectedDeadline, actualDeadline.get());
     }
 
     @Test

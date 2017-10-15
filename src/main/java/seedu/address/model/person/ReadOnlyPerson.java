@@ -26,8 +26,8 @@ public interface ReadOnlyPerson {
     Debt getDebt();
     ObjectProperty<DateBorrow> dateBorrowProperty();
     DateBorrow getDateBorrow();
-    ObjectProperty<Deadline> deadLineProperty();
-    Deadline getDeadLine();
+    ObjectProperty<Deadline> deadlineProperty();
+    Deadline getDeadline();
     ObjectProperty<DateRepaid> dateRepaidProperty();
     DateRepaid getDateRepaid();
     ObjectProperty<UniqueTagList> tagProperty();
@@ -46,7 +46,7 @@ public interface ReadOnlyPerson {
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getDebt().equals(this.getDebt())
                 && other.getDateBorrow().equals(this.getDateBorrow())
-                && other.getDeadLine().equals(this.getDeadLine())
+                && other.getDeadline().equals(this.getDeadline())
                 && other.getDateRepaid().equals(this.getDateRepaid());
     }
 
@@ -67,7 +67,7 @@ public interface ReadOnlyPerson {
                 .append(getDebt())
                 .append(getDateBorrow())
                 .append(" Dead Line: ")
-                .append(getDeadLine())
+                .append(getDeadline())
                 .append(getDateRepaid())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

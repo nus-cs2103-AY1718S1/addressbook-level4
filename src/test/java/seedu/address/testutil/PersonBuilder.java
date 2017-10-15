@@ -28,7 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_DEBT_CODE = "123456789";
     // To avoid the scenario where a test case instantiates a Person with DateBorrow that is later
     // than the Dead line.
-    public static final String DEFAULT_DEAD_LINE = Deadline.NO_DEAD_LINE_SET;
+    public static final String DEFAULT_DEADLINE = Deadline.NO_DEADLINE_SET;
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -41,7 +41,7 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTAL_CODE);
             Debt defaultDebt = new Debt(DEFAULT_DEBT_CODE);
-            Deadline defaultDeadline = new Deadline(DEFAULT_DEAD_LINE);
+            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultPostalCode,
                     defaultDebt, defaultDeadline, defaultTags);
@@ -134,7 +134,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withDeadLine(String deadLine) {
         try {
-            this.person.setDeadLine(new Deadline(deadLine));
+            this.person.setDeadline(new Deadline(deadLine));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("dead line is expected to be unique.");
         }
