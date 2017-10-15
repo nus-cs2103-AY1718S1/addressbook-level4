@@ -24,6 +24,8 @@ public class KeyListenerUtil {
                 put("UNDO", KeyCombination.valueOf("Ctrl+Z"));
 
                 put("REDO", KeyCombination.valueOf("Ctrl+Y"));
+
+                put("LIST", KeyCombination.valueOf("Ctrl+l"));
             }
         };
     }

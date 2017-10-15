@@ -13,6 +13,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -68,6 +69,9 @@ public class KeyListener {
             }
             if (keys.get("VIEW_HISTORY").match(event)) {
                 executeCommand(HistoryCommand.COMMAND_WORD);
+            }
+            if (keys.get("LIST").match(event)) {
+                executeCommand(ListCommand.COMMAND_WORD);
             }
         });
     }
