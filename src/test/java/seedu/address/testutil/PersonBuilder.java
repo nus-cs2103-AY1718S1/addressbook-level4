@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -26,6 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_WEBSITE = Website.WEBSITE_EXAMPLE;
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_BIRTHDAY = "15/02/1992";
 
     private Person person;
 
@@ -36,10 +38,11 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Website defaultWebsite = new Website(DEFAULT_WEBSITE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultRemark, defaultWebsite, defaultTags);
+                    defaultAddress, defaultBirthday, defaultRemark, defaultWebsite, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -108,6 +111,18 @@ public class PersonBuilder {
             this.person.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Birthday should be in dd/MM/yyyy format");
         }
         return this;
     }

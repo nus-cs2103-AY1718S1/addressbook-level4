@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
 
 /**
  * Represents a Person in the address book.
@@ -21,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Website> website;
     private ObjectProperty<UniqueTagList> tags;
@@ -28,10 +31,12 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and name must not be null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Website website, Set<Tag> tags) {
-        requireNonNull(name);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Birthday birthday, Remark remark,  Website website, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
@@ -44,8 +49,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(),
-            source.getAddress(), source.getRemark(), source.getWebsite(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getBirthday(), source.getRemark(), source.getWebsite(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -63,8 +68,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
-    }
+        this.phone.set(requireNonNull(phone)); }
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {
@@ -89,6 +93,17 @@ public class Person implements ReadOnlyPerson {
     public Email getEmail() {
         return email.get();
     }
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.setValue(requireNonNull(birthday)); }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday; }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get(); }
 
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));

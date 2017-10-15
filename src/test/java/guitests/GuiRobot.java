@@ -8,6 +8,8 @@ import org.testfx.api.FxRobot;
 import guitests.guihandles.exceptions.StageNotFoundException;
 import javafx.stage.Stage;
 
+
+
 /**
  * Robot used to simulate user actions on the GUI.
  * Extends {@link FxRobot} by adding some customized functionality and workarounds.
