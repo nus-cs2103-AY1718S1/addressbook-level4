@@ -14,22 +14,12 @@ public class ShowFavouriteCommand extends Command{
             + " OR "
             + COMMAND_WORD_2;
 
-    private final IsFavouritePredicate predicate;
-
-    public ShowFavouriteCommand(IsFavouritePredicate predicate) {
-        this.predicate = predicate;
-    }
+    //public ShowFavouriteCommand() { }
 
     @Override
     public CommandResult execute() {
+        final IsFavouritePredicate predicate = new IsFavouritePredicate();
         model.updateFilteredPersonList(predicate);
         return new CommandResult((getMessageForPersonListShownSummary(model.getFilteredPersonList().size())));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ShowFavouriteCommand // instanceof handles nulls
-                && this.predicate.equals(((ShowFavouriteCommand) other).predicate)); // state check
     }
 }
