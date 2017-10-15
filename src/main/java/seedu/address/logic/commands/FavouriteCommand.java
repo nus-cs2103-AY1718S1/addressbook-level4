@@ -19,19 +19,23 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class FavouriteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "favourite";
+    public static final String COMMAND_WORD_1 = "favourite";
+    public static final String COMMAND_WORD_2 = "fav";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Mark the person as favourite "
+    public static final String MESSAGE_USAGE = COMMAND_WORD_1 + ": Mark the person as favourite "
             + "by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 ";
+            + "Example: " + COMMAND_WORD_1
+            + "OR "
+            + COMMAND_WORD_2 + " 1 ";
 
     public static final String MESSAGE_ARGUMENTS = "INDEX: %1$d";
     public static final String MESSAGE_FAVOURITE_SUCCESS = "Favourite Person: %1$s";
+    public static final String MESSAGE_DEFAVOURITE_SUCCESS = "Remove Person from Favourites: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private Favourite favourite = new Favourite();
+    private boolean changedToFav;
 
     /**
      * @param index of the person in the filtered person list to mark as favourite
@@ -40,7 +44,6 @@ public class FavouriteCommand extends UndoableCommand {
         requireNonNull(index);
 
         this.index = index;
-        this.favourite.setFavourite();
     }
 
     @Override
@@ -52,6 +55,13 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Favourite favourite = personToEdit.getFavourite();
+        favourite.setFavourite();
+        if (favourite.getStatus().equals("True")) {
+            changedToFav = true;
+        } else {
+            changedToFav = false;
+        }
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), favourite, personToEdit.getTags());
 
@@ -64,11 +74,19 @@ public class FavouriteCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
+        if (changedToFav) {
+            return new CommandResult(generateFavouriteSuccessMessage(editedPerson));
+        } else {
+            return new CommandResult(generateDeFavouriteSuccessMessage(editedPerson));
+        }
     }
 
-    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+    private String generateFavouriteSuccessMessage(ReadOnlyPerson personToEdit) {
         return String.format(MESSAGE_FAVOURITE_SUCCESS, personToEdit);
+    }
+
+    private String generateDeFavouriteSuccessMessage(ReadOnlyPerson personToEdit) {
+        return String.format(MESSAGE_DEFAVOURITE_SUCCESS, personToEdit);
     }
 
     @Override

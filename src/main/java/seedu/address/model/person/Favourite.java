@@ -16,7 +16,11 @@ public class Favourite {
     }
 
     public void setFavourite() {
-        this.status = "True";
+        if (this.status.equals("False")) {
+            this.status = "True";
+        } else {
+            this.status = "False";
+        }
     }
 
     public String getStatus() {
