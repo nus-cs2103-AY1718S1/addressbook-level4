@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/main/tree/master
 
 By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
 
@@ -787,9 +787,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  BlueBird shows a list of persons
+2.  Bluebird shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  BlueBird deletes the person
+4.  Bluebird deletes the person
 +
 Use case ends.
 
@@ -803,23 +803,23 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. BlueBird shows an error message.
+** 3a1. Bluebird shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
 === Use case: Select person
 
-*Precondition: Person in question should be saved with 'add' in BlueBird*
+*Precondition: Person in question should be saved with 'add' in Bluebird*
 
 *Guarantees: Person in question will be displayed with all fields visible*
 
 *MSS*
 
 1.  User requests to 'find' a specific person by name
-2.  BlueBird shows a list of persons with name entered
+2.  Bluebird shows a list of persons with name entered
 3.  User selects the index of specific person
-4.  BlueBird shows full contact details of person
+4.  Bluebird shows full contact details of person
 +
 Use case ends.
 
@@ -829,7 +829,7 @@ Use case ends.
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. BlueBird shows an error message
+** 3a1. Bluebird shows an error message
 +
 Use case resumes at step 2.
 
@@ -841,7 +841,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to see command history
-2.  BlueBird lists the commands entered in reverse order
+2.  Bluebird lists the commands entered in reverse order
 3.  User views previous commands
 +
 Use case ends.
@@ -861,7 +861,7 @@ Use case ends.
 *MSS*
 
 1.  User enters 'help' command
-2.  BlueBird displays the User Guide on a new window
+2.  Bluebird displays the User Guide on a new window
 +
 Use case ends.
 
@@ -884,15 +884,15 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to find one or more person(s) in BlueBird
-2.  BlueBird shows a list of persons with the name(s) specified by user
+1.  User requests to find one or more person(s) in Bluebird
+2.  Bluebird shows a list of persons with the name(s) specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. BlueBird found 0 person with the name
+* 2a. Bluebird found 0 person with the name
 +
 Use case ends.
 
@@ -902,7 +902,7 @@ Use case ends.
 *MSS*
 
 1.  User input command to add person
-2.  BlueBird adds the person and displays message for successfully adding a person along with the person's details
+2.  Bluebird adds the person and displays message for successfully adding a person along with the person's details
 +
 Use case ends.
 
@@ -912,14 +912,14 @@ Use case ends.
 * 1a. User input command wrongly
 +
 [none]
-** 1a1. BlueBird shows an invalid format message and displays the right format to user
+** 1a1. Bluebird shows an invalid format message and displays the right format to user
 +
 Use case resumes at step 1.
 
-* 1b. User tries to add a person already present in BlueBird
+* 1b. User tries to add a person already present in Bluebird
 +
 [none]
-** 1b1. BlueBird shows duplicate person error message
+** 1b1. Bluebird shows duplicate person error message
 +
 Use case resumes at step 1.
 
@@ -929,14 +929,14 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests for a list of person(s) with a specified tag
-2.  BlueBird shows a list of person(s) with the tag specified by user
+2.  Bluebird shows a list of person(s) with the tag specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. BlueBird found 0 person with specified tag
+* 2a. Bluebird found 0 person with specified tag
 +
 Use case ends.
 
@@ -946,9 +946,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to hide a contact with the command: hide
-2.  BlueBird displays message for successfully hiding contact(s) from view
+2.  Bluebird displays message for successfully hiding contact(s) from view
 3.  User requests to display list of hidden contact(s) with command: hiddenList
-4.  BlueBird shows the list of hidden contact(s)
+4.  Bluebird shows the list of hidden contact(s)
 +
 Use Case ends.
 
@@ -980,12 +980,12 @@ Use case ends.
 [discrete]
 === Use case: Sort Contacts by Tag
 
-*Precondition: Some contacts in user's BlueBird memory has to already have tags under their contact details.*
+*Precondition: Some contacts in user's Bluebird memory has to already have tags under their contact details.*
 
 *MSS*
 
 1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
-2.  BlueBird displays contacts that have the respective tag(s) under contact details as initially edited by user
+2.  Bluebird displays contacts that have the respective tag(s) under contact details as initially edited by user
 +
 Use case ends.
 
@@ -995,9 +995,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to delete multiple contacts with command: delete >1
-2.  BlueBird prompts user to enter multiple names to delete: delete name1 name2 .. etc
+2.  Bluebird prompts user to enter multiple names to delete: delete name1 name2 .. etc
 3.  User inputs command to delete multiple contacts
-4.  BlueBird displays message for successfully removing contact(s) from memory
+4.  Bluebird displays message for successfully removing contact(s) from memory
 +
 Use case ends.
 
@@ -1007,10 +1007,10 @@ Use case ends.
 * 2a. If there is no such contact or if user inputs the spelling of the name incorrectly
 +
 [none]
-** 2a1. BlueBird will check which name is non-existent (due to incorrect spelling or actually non-existent)
+** 2a1. Bluebird will check which name is non-existent (due to incorrect spelling or actually non-existent)
 +
 [none]
-** 2a2. BlueBird will prompt user to check accuracy of that particular contact name and re-enter if necessary
+** 2a2. Bluebird will prompt user to check accuracy of that particular contact name and re-enter if necessary
 +
 [none]
 ** 2a3. If not, enter null
@@ -1022,23 +1022,23 @@ Use case ends.
 
 *MSS*
 
-1. User starts BlueBird
+1. User starts Bluebird
 2. User request to deletes the wrong person from List
-3. BlueBird removes person
+3. Bluebird removes person
 4. User request to undo his action
-5. BlueBird reverses the delete command
+5. Bluebird reverses the delete command
 6. User decides to delete person again, redo action
-7. BlueBird reapplies delete command
+7. Bluebird reapplies delete command
 +
 Use case ends
 
 *Extensions*
 
 [none]
-* 2a. User requests person that is not inside the BlueBird
+* 2a. User requests person that is not inside the Bluebird
 +
 [none]
-** 2a1. BlueBird displays error message
+** 2a1. Bluebird displays error message
 +
 Use case resumes at step 1.
 
@@ -1047,12 +1047,12 @@ Use case resumes at step 1.
 
 *MSS*
 
-1. User requests to add a person into BlueBird
-2. BlueBird adds new person into List
+1. User requests to add a person into Bluebird
+2. Bluebird adds new person into List
 3. User requests to edit a person
-4. User provides index of person to be edited to BlueBird
-5. BlueBird returns person's details for user to edit
-6. BlueBird stores new details under person
+4. User provides index of person to be edited to Bluebird
+5. Bluebird returns person's details for user to edit
+6. Bluebird stores new details under person
 +
 Use case ends.
 
@@ -1062,20 +1062,20 @@ Use case ends.
 * 1a. User input command wrongly
 +
 [none]
-** 1a1. BlueBird shows an error message
+** 1a1. Bluebird shows an error message
 +
 Use case resumes at step 1.
-* 1b. User added a person already present in BlueBird
+* 1b. User added a person already present in Bluebird
 +
 [none]
-** 1b1. BlueBird shows duplicate person error message
+** 1b1. Bluebird shows duplicate person error message
 +
 Use case resumes at step 1.
 
 * 4a. User provided index that is larger than size of last updated list
 +
 [none]
-** 4a1. BlueBird shows undoable command error message
+** 4a1. Bluebird shows undoable command error message
 +
 Use case resumes at step 4.
 
@@ -1084,11 +1084,11 @@ Use case resumes at step 4.
 
 *MSS*
 
-1. User has a file of contacts from BlueBird
-2. User opens BlueBird on a different device
+1. User has a file of contacts from Bluebird
+2. User opens Bluebird on a different device
 3. User loads file of contacts onto new device
-4. BlueBird updates list
-5. User has a List of persons from previous BlueBird
+4. Bluebird updates list
+5. User has a List of persons from previous Bluebird
 +
 Use case ends.
 
