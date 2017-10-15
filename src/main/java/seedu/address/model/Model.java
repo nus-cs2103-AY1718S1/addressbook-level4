@@ -1,8 +1,12 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -47,5 +51,17 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Checks if list is empty
+     * Returns true if is empty
+     */
+    Boolean checkIfListEmpty(ArrayList<ReadOnlyPerson> contactList);
+
+    /**
+     * Sort contact list in alphabetical order
+     * @throws NullPointerException if {@code contactList} is null.
+     */
+    void sortListByName(ArrayList<ReadOnlyPerson> contactList)  throws CommandException;
 
 }
