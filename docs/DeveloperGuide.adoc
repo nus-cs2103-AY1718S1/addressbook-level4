@@ -346,6 +346,109 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::favourite[]
+=== Favourite a contact
+To favourite a contact is achieved by `FavouriteCommand`, which is a subclass of `UndoableCommand`. It basically changes the value of the `Favourite` field of a `Person`.
+
+In this sense, `Favourite` class need to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is "False".
+
+To make the default status of a `Favourite` field "False", the default constructor of `Favourite` is implemented in this way:
+[source,java]
+----
+public class Favourite {
+
+    private String status;
+
+    public Favourite() {
+        this.status = "False";
+    }
+----
+
+In addition, the utility class `PersonBuilder` sets the default value of `Favourite` to each newly created object in this way:
+[source,java]
+----
+public class PersonBuilder {
+    // ... other default values ...
+    public static final Favourite DEFAULT_FAVOURITE = new Favourite();
+
+    private Person person;
+
+    public PersonBuilder() {
+           try {
+               // ... set other fields to their default states ...
+               Favourite defaultFavourite = DEFAULT_FAVOURITE;
+
+               this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                       defaultFavourite, defaultTags);
+           } catch (IllegalValueException ive) {
+               // ... catch statement ...
+           }
+       }
+}
+----
+
+After the default status is set, `FavouriteCommand` changes it either from "True" to "False" or "False" to "True". `FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`. Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
+[source,java]
+----
+public class FavouriteCommandParser implements Parser<FavouriteCommand> {
+    public FavouriteCommand parse(String args) throws ParseException {
+        try {
+            // ... parse index and pass it to `FavouriteCommand`...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+To update the `Favourite` field of a `Person`, the other information of the specific `Person` is copied into a newly created `Person` instance. The new `Favourite` value will be set to be opposite of the original one. This is implemented in the following way:
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+    // ... variables, constructor and other overrided methods ...
+
+    @Override
+        protected CommandResult executeUndoableCommand() throws CommandException {
+            // ... fetch personToEdit ...
+
+            Favourite favourite = personToEdit.getFavourite();
+            favourite.setFavourite();
+            if (favourite.getStatus().equals("True")) {
+                changedToFav = true;
+            } else {
+                changedToFav = false;
+            }
+            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), favourite, personToEdit.getTags());
+
+            // ... try replace personToEdit with editedPerson ...
+        }
+}
+----
+
+It is important to display `Favourite` in the user interface. Thus a few changes on UI is needed. `PersonCard` class and `PersonCardHandle` class are modified to include `Favourite` label in the UI. `PersonListCard.fxml` is also modified to reserve space for the `Favourite` label.
+
+==== Design Considerations
+
+**Aspect:** Store `Favourite` values +
+**Alternative 1 (current choice):** Add a new `Favourite` class +
+**Pros:** Follows how `Address`, `EMAIL` and all other personal information are stored. It also follows the open-close principle and exercises cohesion, where all matters related to `Favourite` field is dealt in its own class. +
+**Cons:** Need to change a lot of code because adding a new class will affect UI, Logic, Model and Storage. +
+**Alternative 2:** Keep it as a `Boolean` value +
+**Pros:** Does not need to create another class. Easier to implement. +
+**Cons:** Potentially catastrophic because some Boolean methods need to be overwritten. It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes.
+
+---
+
+**Aspect:** Change the `Favourite` value of the selected `Person` +
+**Alternative 1 (current choice):** Copy values from other fields to a newly created `Person` instance. Then add an opposite value of the old `Favourite` to the instance. +
+**Pros:** Easy to understand for new Computer Science student undergraduates. Also by using `ReadOnlyPerson` for the person being selected, we can ensure its original value will be intact. This is crucial if updating person failed in the later stage. +
+**Cons:** Additional space consumed to store a new `Person` instance. +
+**Alternative 2:** Edit `Favourite` field on the spot +
+**Pros:** No additional new instance needs to be instantiated. Even easier to understand. +
+**Cons:** Modifying original values directly can be potentially dangerous. The safer alternative is to create a duplicate, and perform operations on it. +
+// end::favourite[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
