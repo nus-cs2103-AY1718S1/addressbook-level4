@@ -80,7 +80,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> website} into an {@code Optional<Website>} if {@code website} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Website> parseWebsite(Optional<String> website) throws IllegalValueException {
@@ -92,8 +92,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.of(new Birthday(null));
     }
 
     /**

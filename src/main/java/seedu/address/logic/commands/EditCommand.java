@@ -221,13 +221,15 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setBirthday(Birthday birthday) {
-            this.birthday = birthday; }
+            if (birthday.value != null) {
+                this.birthday = birthday;
+            }
+        }
 
-        public Optional<Birthday> getBirthday() {
-            return Optional.ofNullable(birthday); }
+        public Optional<Birthday> getBirthday() { return Optional.ofNullable(birthday); }
 
         public void setWebsite(Website website) {
-            if (website.hasWebsite()) {
+            if (website.value != null) {
                 this.website = website;
             }
         }

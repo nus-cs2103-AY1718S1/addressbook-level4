@@ -24,21 +24,25 @@ public class Birthday {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        if (!isValidBirthday(birthday)) {
+        String trimmedBirthday = birthday == null ? null : birthday.trim();
+        if (!isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
-        this.value = birthday;
+        this.value = trimmedBirthday;
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid date.
      */
-    static boolean isValidBirthday(String birthday) {
+    static boolean isValidBirthday(String test) {
+        if (test == null) {
+            return true;
+        }
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
         try {
-            Date strToDate = format.parse(birthday);      //tries to parse provided string in given format
+            Date strToDate = format.parse(test);      //tries to parse provided string in given format
         } catch (ParseException e) {
             return false;
         }
@@ -53,8 +57,8 @@ public class Birthday {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Birthday // instanceof handles nulls
-                && this.value.equals(((Birthday) other).value)); // state check
+            || (other instanceof Birthday // instanceof handles nulls
+            && (this.value == ((Birthday) other).value || this.value.equals(((Birthday) other).value))); // state check
     }
 
     @Override

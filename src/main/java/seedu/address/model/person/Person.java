@@ -33,7 +33,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(Name name, Phone phone, Email email, Address address,
                   Birthday birthday, Remark remark,  Website website, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireNonNull(name);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.birthday = new SimpleObjectProperty<>(birthday);
@@ -67,8 +67,7 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone)); }
+    public void setPhone(Phone phone) { this.phone.set(requireNonNull(phone)); }
 
     @Override
     public ObjectProperty<Phone> phoneProperty() {
@@ -90,20 +89,15 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Email getEmail() {
-        return email.get();
-    }
+    public Email getEmail() { return email.get(); }
 
-    public void setBirthday(Birthday birthday) {
-        this.birthday.setValue(requireNonNull(birthday)); }
+    public void setBirthday(Birthday birthday) { this.birthday.set(requireNonNull(birthday)); }
 
     @Override
-    public ObjectProperty<Birthday> birthdayProperty() {
-        return birthday; }
+    public ObjectProperty<Birthday> birthdayProperty() { return birthday; }
 
     @Override
-    public Birthday getBirthday() {
-        return birthday.get(); }
+    public Birthday getBirthday() { return birthday.get(); }
 
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
