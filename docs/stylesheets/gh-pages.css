@@ -41,6 +41,14 @@ div.nav-headbar li {
     float: left;
 }
 
+div.nav-headbar li:last-child {
+    float: right;
+}
+
+div.nav-headbar li:last-child a {
+    padding-right: 20px;
+}
+
 div.nav-headbar li p {
     margin: 0;
 }

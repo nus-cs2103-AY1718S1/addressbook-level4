@@ -6,4 +6,5 @@ ifndef::env-github[]
 - <<DeveloperGuide#, Developer Guide>>
 - <<AboutUs#, About>>
 - <<ContactUs#, Contact>>
+- https://github.com/CS2103AUG2017-W11-B2/main[Github]
 endif::[]
