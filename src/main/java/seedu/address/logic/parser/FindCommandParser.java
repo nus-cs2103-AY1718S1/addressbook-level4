@@ -112,43 +112,43 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
         }
 
-        List<String> namesToSearch = new ArrayList<>();
+        List<String> keyWordsToSearch = new ArrayList<>();
 
         if (trimmedNames != null) {
             String[] nameKeywords = trimmedNames.split(" ");
-            namesToSearch.add(PREFIX_NAME.getPrefix());
+            keyWordsToSearch.add(PREFIX_NAME.getPrefix());
             for (int i = 0; i < nameKeywords.length; i++) {
-                namesToSearch.add(nameKeywords[i]);
+                keyWordsToSearch.add(nameKeywords[i]);
             }
         }
 
         if (trimmedPhones != null) {
             String[] phoneKeywords = trimmedPhones.split(" ");
-            namesToSearch.add(PREFIX_PHONE.getPrefix());
+            keyWordsToSearch.add(PREFIX_PHONE.getPrefix());
             for (int i = 0; i < phoneKeywords.length; i++) {
-                namesToSearch.add(phoneKeywords[i]);
+                keyWordsToSearch.add(phoneKeywords[i]);
             }
         }
 
         if (trimmedEmails != null) {
             String[] emailKeywords = trimmedEmails.split(" ");
-            namesToSearch.add(PREFIX_EMAIL.getPrefix());
+            keyWordsToSearch.add(PREFIX_EMAIL.getPrefix());
             for (int i = 0; i < emailKeywords.length; i++) {
-                namesToSearch.add(emailKeywords[i]);
+                keyWordsToSearch.add(emailKeywords[i]);
             }
         }
 
         if (trimmedAddress != null) {
             String[] addressKeywords = trimmedAddress.split(" ");
-            namesToSearch.add(PREFIX_ADDRESS.getPrefix());
+            keyWordsToSearch.add(PREFIX_ADDRESS.getPrefix());
             for (int i = 0; i < addressKeywords.length; i++) {
-                namesToSearch.add(addressKeywords[i]);
+                keyWordsToSearch.add(addressKeywords[i]);
             }
         }
 
-        String[] parameters = new String[namesToSearch.size()];
+        String[] parameters = new String[keyWordsToSearch.size()];
         for (int i = 0; i < parameters.length; i++) {
-            parameters[i] = namesToSearch.get(i);
+            parameters[i] = keyWordsToSearch.get(i);
         }
 
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList(parameters));
