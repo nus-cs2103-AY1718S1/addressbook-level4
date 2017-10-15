@@ -49,6 +49,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
+        this.totalPersons.setText(totalPersons + " person(s) total");
     }
 
     /**
