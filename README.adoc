@@ -1,11 +1,11 @@
-= Address Book (Level 4)
+= DeathNote
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 https://travis-ci.org/CS2103AUG2017-W10-B3/DeathNote[image:https://travis-ci.org/CS2103AUG2017-W10-B3/DeathNote.svg?branch=master[Build Status]]
 https://ci.appveyor.com/project/chrisboo/deathnote/build/1.0.1[image:https://ci.appveyor.com/api/projects/status/mg2oh1l3aw3j318v?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+https://coveralls.io/github/CS2103AUG2017-W10-B3/DeathNote?branch=master[image:https://s3.amazonaws.com/assets.coveralls.io/badges/coveralls_89.svg[Coverage Status]]
+https://www.codacy.com/app/chrisboo/DeathNote?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-W10-B3/DeathNote&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/a8d551036b1c4f2f84a16291a9fe1df0[Codacy Badge]]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
