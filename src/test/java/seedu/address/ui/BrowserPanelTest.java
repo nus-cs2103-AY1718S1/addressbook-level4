@@ -2,8 +2,10 @@ package seedu.address.ui;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
@@ -15,15 +17,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.MainApp;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.Logic;
-import seedu.address.logic.LogicManager;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
+import seedu.address.model.person.ReadOnlyPerson;
 
 public class BrowserPanelTest extends GuiUnitTest {
+    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
+            FXCollections.observableList(getTypicalPersons());
+
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private DisplayGmapEvent gmapEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
@@ -31,12 +38,10 @@ public class BrowserPanelTest extends GuiUnitTest {
     @Before
     public void setUp() {
 
-        Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        gmapEventStub = new DisplayGmapEvent(Index.fromOneBased(1));
 
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, logic, 0));
-
-        guiRobot.interact(() -> browserPanel = new BrowserPanel());
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(TYPICAL_PERSONS));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
@@ -55,5 +60,12 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated google map page of a person
+        postNow(gmapEventStub);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertTrue(browserPanelHandle.getLoadedUrl().toString(), browserPanelHandle.getLoadedUrl()
+                .toString().contains("https://www.google.com/maps/search/"));
     }
 }
