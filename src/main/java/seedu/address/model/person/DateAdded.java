@@ -20,8 +20,8 @@ public class DateAdded {
             "DateAdded is in DD-MM-YYYY format, and it should not be blank";
     public static final String MESSAGE_DATE_PARSE_ERROR =
             "Error parsing from xml to Date object.";
-    public static final String dateFormat = "dd/MM/yyyy hh:mm:ss";
-    private static final SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+    public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm:ss";
+    private static final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
 
     public final Date dateAdded;
 
