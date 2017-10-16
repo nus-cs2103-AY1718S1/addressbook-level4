@@ -45,6 +45,8 @@ public class AutocompleteManager {
         }
         if (matches.size() == 1) {
             return matches.get(0);
-        } else return matcher;
+        } else {
+            return matcher;
+        }
     }
 }

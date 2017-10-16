@@ -27,5 +27,4 @@ public interface Logic {
 
     /** Returns the autocomplete manager */
     AutocompleteManager getAutocompleteManager();
-     
 }
