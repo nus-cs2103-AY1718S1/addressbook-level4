@@ -5,6 +5,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Helper functions for handling strings.
@@ -119,17 +122,11 @@ public class StringUtil {
         checkArgument(!preppedAddress.isEmpty(), "Address parameter cannot be empty");
         checkArgument(preppedAddress.split("\\s+").length == 1, "Address parameter should be a single word");
 
-        String[] addressInPreppedSentence = addressSentence.split("\\s+");
 
+        List<String> tempAddress = Arrays.asList(addressSentence.split("\\s+"));
+        return tempAddress.stream().anyMatch(preppedAddress::equalsIgnoreCase);
+    }
 
-////        for (String addressInSentence : addressInPreppedSentence) {
-////            if (addressInSentence.equalsIgnoreCase(preppedAddress)) {
-////                return true;
-////
-////            }
-//        }
-//        return false;
-//    }
     /**
      * Returns a detailed message of the t, including the stack trace.
      */
