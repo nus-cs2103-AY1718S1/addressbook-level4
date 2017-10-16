@@ -1,3 +1,4 @@
+
 = AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
@@ -255,7 +256,23 @@ https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolo
 and input the color name in english or in hexadecimal form
 ====
 
+=== Set appointment: `appointment`
 
+Set appointment to a specific contact +
+Format: `appointment n/NAME d/YYYY/MM/DD HH:MM` +
+Shorthand format: `apt n/NAME d/YYYY/MM/DD HH:MM`
+
+Sort list by appointment dates. +
+Format: `appointment` +
+Shorthand format: `appointment`
+
+[NOTE]
+====
+You can only set dates that are after current time. (i.e. you can set a time to yesterday)
+
+Take note the name is case-sensitive.
+
+====
 
 === Adding/Removing Remarks to a person : `remark`
 

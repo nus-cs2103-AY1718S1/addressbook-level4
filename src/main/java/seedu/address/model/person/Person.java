@@ -25,14 +25,16 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Bloodtype> bloodType;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Appointment> appointment;
 
     /**
      * Every field must be present and not null.
      */
 
     public Person(Name name, Phone phone, Email email, Address address,
-                  Bloodtype bloodType, Set<Tag> tags, Remark remark) {
-        requireAllNonNull(name, phone, email, address, bloodType, tags, remark);
+                  Bloodtype bloodType, Set<Tag> tags, Remark remark, Appointment appointment) {
+
+        requireAllNonNull(name, phone, email, address, bloodType, tags, remark, appointment);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -42,6 +44,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.remark = new SimpleObjectProperty<>(remark);
+        this.appointment = new SimpleObjectProperty<>(appointment);
     }
 
     /**
@@ -49,8 +52,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBloodType(), source.getTags(), source.getRemark());
-
+                source.getBloodType(), source.getTags(), source.getRemark(), source.getAppointment());
     }
 
     public void setName(Name name) {
@@ -158,6 +160,20 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public ObjectProperty<Appointment> appointmentProperty() {
+        return appointment;
+    }
+
+    @Override
+    public Appointment getAppointment() {
+        return appointment.get();
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment.set(appointment);
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
@@ -174,5 +190,4 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-
 }

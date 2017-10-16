@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -104,10 +105,34 @@ public class ModelManager extends ComponentManager implements Model {
      * On/Off tag colors for AddressBook
      * Updates UI by refreshing personListPanel
      */
+    @Override
     public synchronized void setTagColor(boolean isOn, String tagString, String color) {
         Set<Tag> tag = new HashSet<>(addressBook.getTagList());
         addressBook.setTags(tag, isOn, tagString, color);
         indicateAddressBookChanged();
+    }
+
+    /**
+     * Adds appointment for a contact in address book
+     *
+     */
+    @Override
+    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+        addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull appointment date,
+     * in chronological order
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listAppointment() {
+
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
+
+
+        return FXCollections.unmodifiableObservableList(list);
     }
 
     //=========== Filtered Person List Accessors =============================================================

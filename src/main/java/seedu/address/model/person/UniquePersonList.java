@@ -103,6 +103,30 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+
+    /**
+     * @return the backing list that is sorted by appointment dates
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
+
+        internalList.sort((o1, o2) -> {
+            if (o1.getAppointment().getDate() != null && o2.getAppointment().getDate() != null
+                    && o2.getAppointment().getDate().before(o1.getAppointment().getDate())) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     *
+     * @return the list as an unmodifiable list and sorted by appointment
+     */
+
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();
@@ -118,5 +142,20 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    /**
+     * Adds appointment to a person in the internal list.
+     * @param appointment
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+        for (Person person : internalList) {
+            if (person.getName().toString().equals(appointment.getPersonName())) {
+                person.setAppointment(appointment);
+                return;
+            }
+        }
+        throw new PersonNotFoundException();
     }
 }
