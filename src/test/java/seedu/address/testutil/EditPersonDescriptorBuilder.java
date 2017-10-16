@@ -32,6 +32,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setDateOfBirth(person.getDateOfBirth());
         descriptor.setTags(person.getTags());
     }
 
@@ -79,6 +80,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Date of Birth} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDateOfBirth(String dob) {
+        try {
+            ParserUtil.parseDateOfBirth(Optional.of(dob)).ifPresent(descriptor::setDateOfBirth);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Date of birth is expected to be unique.");
         }
         return this;
     }
