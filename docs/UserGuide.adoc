@@ -280,10 +280,21 @@ Adds a remark 'Loves coffee' to the 1st person in the list.
 * `remark 1 r/` +
 Clears the existing remark for the 1st person in the list.
 
-=== Customizing Tag Colors : [In Progress]
+=== KeyBoard Hacks [Since v1.2]
+
+When typing in the command bar, various key bindings consists of different functions.
+
 ****
-* Allows the user to customize a tag's color
+* Escape: Clears entire command box text field
+* Alt: Shifts text cursor all the way to the left
+* Control: Shifts text cursor all the way to the right
+* Right: Activate Add Command hack if conditions are right +
+Condition 1: Add Command hack will trigger only if the caret is at the end of the line +
+Condition 2: "Add" or "A" must be the first word & character respectively at the start of the line
 ****
+
+
+
 
 === Deleting all persons with a particular tag : [In Progress]
 ****
@@ -369,6 +380,7 @@ There is no need to save manually.
 
 == Command Summary
 
+=== MedNus Features
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
 * *Add Shorthand Form* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
@@ -402,3 +414,10 @@ e.g.`s 2`
 * *Redo* : `redo`
 * *Redo Shorthand Form* : `r`
 * *Adding/Deleting a Remark* : `remark`
+
+=== Keyboard Hacks
+* *Escape* : Clears entire command box text field
+* *Alt* : Shifts text cursor all the way to the left
+* *Control* : Shifts text cursor all the way to the right
+* *Right* : Add Command Hack will trigger if the caret is at the end of the line +
+or "Add" or "A" is present at the start of the line.

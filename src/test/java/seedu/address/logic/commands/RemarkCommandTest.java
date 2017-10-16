@@ -76,6 +76,7 @@ public class RemarkCommandTest {
         String expectedMessage = String.format(RemarkCommand.MESSAGE_REMARK_PERSON_SUCCESS, personToRemark);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
@@ -93,6 +94,7 @@ public class RemarkCommandTest {
         String expectedMessage = String.format(RemarkCommand.MESSAGE_REMOVE_REMARK_SUCCESS, personToRemark);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        showFirstPersonOnly(expectedModel);
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), personToRemark);
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
