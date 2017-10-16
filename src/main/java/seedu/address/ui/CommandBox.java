@@ -80,35 +80,35 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleStandardPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
-                keyEvent.consume();
-                navigateToPreviousInput();
+        case UP:
+            keyEvent.consume();
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        case ESCAPE:
+            keyEvent.consume();
+            commandTextField.setText("");
+            break;
+        case ALT:
+            keyEvent.consume();
+            shiftCaretLeftByWord();
+            break;
+        case CONTROL:
+            keyEvent.consume();
+            shiftCaretRightByWord();
+            break;
+        case RIGHT:
+            boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
+            if (isCaretWithin) {
                 break;
-            case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
+            } else {
+                addsNextPrefix();
                 break;
-            case ESCAPE:
-                keyEvent.consume();
-                commandTextField.setText("");
-                break;
-            case ALT:
-                keyEvent.consume();
-                shiftCaretLeftByWord();
-                break;
-            case CONTROL:
-                keyEvent.consume();
-                shiftCaretRightByWord();
-                break;
-            case RIGHT:
-                boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
-                if (isCaretWithin) {
-                    break;
-                } else {
-                    addsNextPrefix();
-                    break;
-                }
-            default:
+            }
+        default:
         }
     }
 
@@ -117,15 +117,15 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleShiftPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case ALT:
-                keyEvent.consume();
-                commandTextField.positionCaret(0);
-                break;
-            case CONTROL:
-                keyEvent.consume();
-                commandTextField.positionCaret(commandTextField.getText().length());
-                break;
-            default:
+        case ALT:
+            keyEvent.consume();
+            commandTextField.positionCaret(0);
+            break;
+        case CONTROL:
+            keyEvent.consume();
+            commandTextField.positionCaret(commandTextField.getText().length());
+            break;
+        default:
         }
     }
 
@@ -328,18 +328,18 @@ public class CommandBox extends UiPart<Region> {
      */
     private boolean containsPrefix(String element) {
         switch (element) {
-            case "name":
-                return (!containsName() && addPollSuccessful());
-            case "phone":
-                return (!containsPhone() && addPollSuccessful());
-            case "email":
-                return (!containsEmail() && addPollSuccessful());
-            case "address":
-                return (!containsAddress() && addPollSuccessful());
-            case "bloodtype":
-                return (!containsBloodtype() && addPollSuccessful());
-            default:
-                return (containsAllCompulsoryPrefix() && addPollSuccessful());
+        case "name":
+            return (!containsName() && addPollSuccessful());
+        case "phone":
+            return (!containsPhone() && addPollSuccessful());
+        case "email":
+            return (!containsEmail() && addPollSuccessful());
+        case "address":
+            return (!containsAddress() && addPollSuccessful());
+        case "bloodtype":
+            return (!containsBloodtype() && addPollSuccessful());
+        default:
+            return (containsAllCompulsoryPrefix() && addPollSuccessful());
 
         }
     }
