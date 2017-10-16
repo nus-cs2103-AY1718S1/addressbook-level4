@@ -6,18 +6,20 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 
 public class AddEventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addE";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a event to the event list. "
             + "Parameters: "
-            + PREFIX_EVENT_NAME + "Name "
-            + PREFIX_EVENT_DESCRIPTION + "Description "
-            + PREFIX_EVENT_TIME + "Time \n"
+            + PREFIX_EVENT_NAME + "NAME "
+            + PREFIX_EVENT_DESCRIPTION + "DESCRIPTION "
+            + PREFIX_EVENT_TIME + "TIME \n"
             + "Example: "
             + PREFIX_EVENT_NAME + "Project Meeting "
             + PREFIX_EVENT_DESCRIPTION + "Discuss how to conduct software demo "
@@ -38,18 +40,37 @@ public class AddEventCommand extends UndoableCommand {
         try {
             model.addEvent(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
+        } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
     }
 
     @Override
-    protected void undo() {
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddEventCommand // instanceof handles nulls
+                && toAdd.equals(((AddEventCommand) other).toAdd));
+    }
 
+    @Override
+    protected void undo() {
+        requireNonNull(model);
+        try {
+            model.deleteEvent(toAdd);
+        } catch (EventNotFoundException enfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
     }
 
     @Override
     protected void redo() {
-
+        requireNonNull(model);
+        try {
+            model.addEvent(toAdd);
+        } catch (DuplicateEventException dee) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        }
     }
 }
