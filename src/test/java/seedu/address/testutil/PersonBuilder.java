@@ -1,116 +1,122 @@
 package seedu.address.testutil;
 
-import java.util.Set;
-
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-<<<<<<< HEAD
-import seedu.address.model.lecturer.Tag;
-=======
-import seedu.address.model.lecturer.Tag;
->>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.*;
 import seedu.address.model.util.SampleDataUtil;
+
+import java.util.Set;
 
 /**
  * A utility class to help with building Person objects.
  */
-public class PersonBuilder {
+public class PersonBuilder { //TODO: change the name to LessonBuilder
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_CODE = "CS2103T";
+    public static final String DEFAULT_CLASS_TYPE = "LEC";
+    public static final String DEFAULT_LOCATION = "LT27";
+    public static final String DEFAULT_GROUP = "1";
+    public static final String DEFAULT_TIME_SLOT = "FRI[1400-1600]";
+    public static final String DEFAULT_LECTURER = "Prof Wang Jun Ming";
 
-    private Person person;
+    private Lesson lesson;
 
     public PersonBuilder() {
         try {
-            Name defaultName = new Name(DEFAULT_NAME);
-            Phone defaultPhone = new Phone(DEFAULT_PHONE);
-            Email defaultEmail = new Email(DEFAULT_EMAIL);
-            Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            Code defaultCode = new Code(DEFAULT_CODE);
+            ClassType defaultClassType = new ClassType(DEFAULT_CLASS_TYPE);
+            Location defaultLocation = new Location(DEFAULT_LOCATION);
+            TimeSlot defaultTimeSlot = new TimeSlot(DEFAULT_TIME_SLOT);
+            Set<Lecturer> defaultLecturer = SampleDataUtil.getLecturerSet(DEFAULT_LECTURER);
+            Group defaultGroup = new Group(DEFAULT_GROUP);
+            this.lesson = new Lesson(defaultClassType, defaultLocation, defaultGroup, defaultTimeSlot, defaultCode,
+                    defaultLecturer);
         } catch (IllegalValueException ive) {
-            throw new AssertionError("Default person's values are invalid.");
+            throw new AssertionError("Default lesson's details are invalid.");
         }
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     * Initializes the LessonBuilder with the data of {@code readOnlyLesson}.
      */
-    public PersonBuilder(ReadOnlyPerson personToCopy) {
-        this.person = new Person(personToCopy);
+    public PersonBuilder(ReadOnlyLesson readOnlyLesson) {
+        this.lesson = new Lesson(readOnlyLesson);
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Code} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withName(String name) {
+    public PersonBuilder withCode(String code) {
         try {
-            this.person.setName(new Name(name));
+            this.lesson.setCodeType(new Code(code));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("name is expected to be unique.");
+            throw new IllegalArgumentException("code is expected to be unique.");
         }
         return this;
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Parses the {@code lecturers} into a {@code Set<Lecturers>} and set it to the {@code Lesson} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PersonBuilder withLecturers(String... lecturers) {
         try {
-            this.person.setTags(SampleDataUtil.getTagSet(tags));
+            this.lesson.setTags(SampleDataUtil.getLecturerSet(lecturers));//TODO: need to change the setTag method name to setLecturer in Lesson class
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
+            throw new IllegalArgumentException("lecturers' names are expected to be unique.");
         }
         return this;
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Sets the {@code TimeSlot} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
+    public PersonBuilder withTimeSlot(String timeSlot) {
         try {
-            this.person.setAddress(new Address(address));
+            this.lesson.setTimeSlot(new TimeSlot(timeSlot));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
+            throw new IllegalArgumentException("time slot is expected to be unique.");
         }
         return this;
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Location} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withPhone(String phone) {
+    public PersonBuilder withLocation(String location) {
         try {
-            this.person.setPhone(new Phone(phone));
+            this.lesson.setLocation(new Location(location));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("location is expected to be unique.");
         }
         return this;
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Sets the {@code Group} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
+    public PersonBuilder withGroup(String group) {
         try {
-            this.person.setEmail(new Email(email));
+            this.lesson.setGroupType(new Group(group));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
+            throw new IllegalArgumentException("group is expected to be unique.");
         }
         return this;
     }
 
-    public Person build() {
-        return this.person;
+    /**
+     * Sets the {@code ClassType} of the {@code Lesson} that we are building.
+     */
+    public PersonBuilder withClassType(String classType) {
+        try {
+            this.lesson.setClassType(new ClassType(classType));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("class type is expected to be unique.");
+        }
+        return this;
+    }
+
+    public Lesson build() {
+        return this.lesson;
     }
 
 }
