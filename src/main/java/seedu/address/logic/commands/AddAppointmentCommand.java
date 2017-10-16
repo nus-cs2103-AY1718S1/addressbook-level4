@@ -48,7 +48,7 @@ public class AddAppointmentCommand extends Command {
 
         if(appointment == null) {
             model.listAppointment();
-            return new CommandResult("");
+            return new CommandResult("Rearranged contacts to show upcoming appointments.");
         }
         requireNonNull(appointment);
         if (!isDateValid()) {
