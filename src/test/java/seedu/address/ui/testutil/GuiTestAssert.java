@@ -41,7 +41,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
-        assertEquals(expectedPerson.getDebt().value, actualCard.getDebt());
+        assertEquals(expectedPerson.getDebt().toString(), actualCard.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualCard.getDateBorrow());
         assertEquals(expectedPerson.getDeadline().value, actualCard.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualCard.getDateRepaid());
@@ -59,7 +59,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
         assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
         assertEquals(expectedPerson.getCluster().value, actualInfo.getCluster());
-        assertEquals(expectedPerson.getDebt().value, actualInfo.getDebt());
+        assertEquals(expectedPerson.getDebt().toString(), actualInfo.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
         assertEquals(expectedPerson.getDeadline().value, actualInfo.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualInfo.getDateRepaid());
