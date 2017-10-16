@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents the Starting Date of a given task in the application.
- * Guarantees: immutable; is valid as declared in {@link #FormatDate(String)}
+ * Guarantees: immutable; is valid as declared in {@link #formatDate(String)}
  */
 public class StartDate extends TaskDates {
 
@@ -22,7 +22,7 @@ public class StartDate extends TaskDates {
     public StartDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        this.date = FormatDate(trimmedDate);
+        this.date = formatDate(trimmedDate);
     }
 
     public StartDate(Date date) {

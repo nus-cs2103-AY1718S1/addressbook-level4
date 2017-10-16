@@ -19,7 +19,7 @@ public class TaskDates {
     /**
      * Formats the date of a given string. If the input date format is invalid, an exception is thrown.
      */
-    public static Date FormatDate(String date) throws IllegalValueException {
+    public static Date formatDate(String date) throws IllegalValueException {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             formatter.setLenient(false);
