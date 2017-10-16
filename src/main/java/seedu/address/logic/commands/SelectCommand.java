@@ -16,10 +16,12 @@ public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String COMMAND_ALIAS = "s";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Selects the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
 
