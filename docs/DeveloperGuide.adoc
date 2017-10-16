@@ -362,6 +362,7 @@ public class Favourite {
     public Favourite() {
         this.status = "False";
     }
+}
 ----
 
 In addition, the utility class `PersonBuilder` sets the default value of `Favourite` to each newly created object in this way:
@@ -406,6 +407,7 @@ To update the `Favourite` field of a `Person`, the other information of the spec
 ----
 public class FavouriteCommand extends UndoableCommand {
     // ... variables, constructor and other overrided methods ...
+    Boolean changedToFav;
 
     @Override
         protected CommandResult executeUndoableCommand() throws CommandException {
