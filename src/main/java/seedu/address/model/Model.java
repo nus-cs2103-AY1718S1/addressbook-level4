@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -43,6 +44,8 @@ public interface Model {
     /** Removes a tag from every person in the list.*/
     void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    /** Removes a tag from the specified Index on the list.*/
+    void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

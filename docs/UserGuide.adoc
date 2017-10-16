@@ -158,6 +158,12 @@ Examples:
 `removetag friends` +
 Deletes the tag `friends` from everyone in the address book.
 
+=== Sorting the list: `sort`
+
+****
+Coming soon in v2.0
+****
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +

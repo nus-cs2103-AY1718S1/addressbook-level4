@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -28,6 +29,12 @@ public class RemoveTagCommandParserTest {
         RemoveTagCommand expectedCommand = new RemoveTagCommand (new Tag("friends"));
         assertTrue(parser.parse("friends") instanceof RemoveTagCommand);
         assertParseSuccess(parser, "friends", expectedCommand);
+
+        // no leading and trailing whitespaces but with Index.
+        RemoveTagCommand expectedCommand2 = new RemoveTagCommand (Index.fromZeroBased(0), new Tag(
+                "enemy"));
+        assertTrue(parser.parse("1 enemy") instanceof RemoveTagCommand);
+        assertParseSuccess(parser, " 1 enemy", expectedCommand2);
     }
 
 }

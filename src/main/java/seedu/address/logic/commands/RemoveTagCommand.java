@@ -2,7 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import java.util.Optional;
+
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -24,20 +26,32 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_NOT_DELETED = "Tag not deleted";
 
     private final Tag toRemove;
+    private final Optional<Index> index;
 
     /**
      * Creates an RemoveTagCommand to remove the specified {@code Tag}
      */
     public RemoveTagCommand (Tag tag) {
         this.toRemove = tag;
+        this.index = Optional.ofNullable(null);
+    }
+
+    public RemoveTagCommand (Index index, Tag tag) {
+        this.toRemove = tag;
+        this.index = Optional.of(index);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.removeTag(toRemove);
-            return new CommandResult(String.format(MESSAGE_SUCCESS));
+            if (index == null) {
+                model.removeTag(toRemove);
+                return new CommandResult(String.format(MESSAGE_SUCCESS));
+            } else {
+                model.removeTag(index.get(), toRemove);
+                return new CommandResult(String.format(MESSAGE_SUCCESS));
+            }
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException e) {
@@ -49,7 +63,8 @@ public class RemoveTagCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof RemoveTagCommand // instanceof handles nulls
-                && this.toRemove.equals(((RemoveTagCommand) other).toRemove)); // state check
+                && this.toRemove.equals(((RemoveTagCommand) other).toRemove)
+                && this.index.equals(((RemoveTagCommand) other).index)); // state check
     }
 
 }
