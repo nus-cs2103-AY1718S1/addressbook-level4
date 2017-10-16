@@ -743,8 +743,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |have aesthetically pleasing UI |
-
 |`* *` |user |find a person by phone number |help recognize a person without knowledge of name
 
 |`* *` |teacher |list individual fields e.g. phone number |mass message students
@@ -887,6 +885,7 @@ Use case resumes at step 2.
 .  Should not be easily hacked, e.g. data corruption, data access by other.
 .  Should be able to change the font type and size easily.
 .  Changes of the address book should be saved in a log file.
+.  UI should be aesthetically pleasing
 
 [appendix]
 == Glossary
