@@ -110,7 +110,6 @@ public class EditCommand extends UndoableCommand {
         FavouriteStatus updatedFavouriteStatus =
                 personToEdit.getFavouriteStatus(); // edit command does not allow editing favourite status
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(currentTags);
-        
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                     updatedRemark, updatedFavouriteStatus, updatedTags);
     }
