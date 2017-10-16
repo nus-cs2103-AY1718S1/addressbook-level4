@@ -79,3 +79,7 @@ https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 
 {Optionally (not graded), you may include other projects in your portfolio.}
 endif::[]
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]
