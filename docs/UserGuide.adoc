@@ -258,12 +258,12 @@ and input the color name in english or in hexadecimal form
 
 === Set appointment: `appointment`
 
-Set appointment to a specific contact
-Format: `appointment n/NAME d/YYYY/MM/DD HH:MM`
+Set appointment to a specific contact +
+Format: `appointment n/NAME d/YYYY/MM/DD HH:MM` +
 Shorthand format: `apt n/NAME d/YYYY/MM/DD HH:MM`
 
-Sort list by appointment dates.
-Format: `appointment`
+Sort list by appointment dates. +
+Format: `appointment` +
 Shorthand format: `appointment`
 
 [NOTE]
