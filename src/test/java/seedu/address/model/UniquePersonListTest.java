@@ -1,5 +1,11 @@
 package seedu.address.model;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+
 import java.util.Iterator;
 
 import org.junit.Rule;
@@ -7,13 +13,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-import seedu.address.testutil.TypicalPersons;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.ELLE;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -48,29 +47,40 @@ public class UniquePersonListTest {
 
     //==== helper methods ======
 
+    /**
+     * @param e
+     * @return boolean of value true if the list is not sorted, false otherwise.
+     */
     private boolean isSorted(UniquePersonList e) {
         Iterator<Person> iterator = e.iterator();
         while (iterator.hasNext()) {
             Person person1 = iterator.next();
             Person person2 = iterator.hasNext() ? iterator.next() : null;
             if (person2 != null) {
-                if (person1.getName().toString().toLowerCase().compareTo(person2.getName().toString().toLowerCase()) < 0) {
+                if (person1.getName().toString().toLowerCase().compareTo(person2.getName().toString().toLowerCase())
+                        < 0) {
                     return false;
-                };
+                }
             }
         }
         return true;
 
     }
+
+    /**
+     * @param e
+     * @return boolean of value true if the list is sorted, false otherwise.
+     */
     private boolean isSorted(ObservableList<ReadOnlyPerson> e) {
         Iterator<ReadOnlyPerson> iterator = e.iterator();
         while (iterator.hasNext()) {
             ReadOnlyPerson person1 = iterator.next();
             ReadOnlyPerson person2 = iterator.hasNext() ? iterator.next() : null;
             if (person2 != null) {
-                if (person1.getName().toString().toLowerCase().compareTo(person2.getName().toString().toLowerCase()) > 0) {
+                if (person1.getName().toString().toLowerCase().compareTo(person2.getName().toString().toLowerCase())
+                        > 0) {
                     return false;
-                };
+                }
             }
         }
         return true;
