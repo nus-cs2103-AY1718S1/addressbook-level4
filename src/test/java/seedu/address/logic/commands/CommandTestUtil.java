@@ -75,6 +75,8 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    private static final String SPLIT_BY_WHITESPACE = "\\s+";
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -129,7 +131,7 @@ public class CommandTestUtil {
      */
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        final String[] splitName = person.getName().fullName.split(SPLIT_BY_WHITESPACE);
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
@@ -140,7 +142,7 @@ public class CommandTestUtil {
      */
     public static void showFirstBlacklistedPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getBlacklistedPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        final String[] splitName = person.getName().fullName.split(SPLIT_BY_WHITESPACE);
         model.updateFilteredBlacklistedPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredBlacklistedPersonList().size() == 1;
