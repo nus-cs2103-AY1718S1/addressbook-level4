@@ -40,7 +40,6 @@ public class BrowserPanel extends UiPart<Region> {
         this.personList = personList;
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
-
         loadDefaultPage(theme);
         registerAsAnEventHandler(this);
     }
@@ -63,9 +62,6 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     public void loadDefaultPage(String theme) {
-        if (theme.contains("/view/")) {
-            theme = theme.replace("/view/", "");
-        }
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm() + "?theme=" + theme);
     }
