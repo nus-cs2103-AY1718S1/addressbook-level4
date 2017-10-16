@@ -116,10 +116,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Polls the input statement to check if sentence starts with " add " or " a "
-     * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
-     * <p>
-     * Additional Note: Polling method accounts for blank spaces in front
+     * Fundamental Check: Checks if add poll KeyWord is in the input text
+     * Additional Checks: Checks if prefix is in the input text
      */
     private boolean containsPrefix(String element) {
         switch (element) {
