@@ -13,6 +13,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindNumberCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -49,47 +50,50 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
+            case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+                return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
+            case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
+                return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+            case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
+                return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
+            case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
+                return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+            case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
+                return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
+            case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
+                return new FindCommandParser().parse(arguments);
 
-        case FindTagCommand.COMMAND_WORD: case FindTagCommand.COMMAND_ALIAS:
-            return new FindTagCommandParser().parse(arguments);
+            case FindTagCommand.COMMAND_WORD: case FindTagCommand.COMMAND_ALIAS:
+                return new FindTagCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
+            case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+                return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
-            return new HistoryCommand();
+            case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+                return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
-            return new ExitCommand();
+            case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
+                return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
+            case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+                return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
+                return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+            case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
+                return new RedoCommand();
 
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            case FindNumberCommand.COMMAND_WORD: case FindNumberCommand.COMMAND_ALIAS:
+                return new FindNumberCommandParser().parse(arguments);
+
+            default:
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 
