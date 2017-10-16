@@ -1,25 +1,29 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
+
+import java.util.List;
+import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.*;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventDescription;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
+/**
+ * Edits the details of an existing event in the address book.
+ */
 public class EditEventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editE";
@@ -117,7 +121,8 @@ public class EditEventCommand extends UndoableCommand {
         assert eventToEdit != null;
 
         EventName updatedName = editEventDescriptor.getEventName().orElse(eventToEdit.getEventName());
-        EventDescription updatedDescription = editEventDescriptor.getEventDescription().orElse(eventToEdit.getDescription());
+        EventDescription updatedDescription = editEventDescriptor.getEventDescription().orElse(
+                eventToEdit.getDescription());
         EventTime updatedTime = editEventDescriptor.getEventTime().orElse(eventToEdit.getTime());
 
         return new Event(updatedName, updatedDescription, updatedTime);
@@ -131,7 +136,6 @@ public class EditEventCommand extends UndoableCommand {
         private EventName name;
         private EventDescription description;
         private EventTime time;
-        
 
         public EditEventDescriptor() {}
 

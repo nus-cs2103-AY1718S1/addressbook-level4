@@ -1,16 +1,20 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
+
+/**
+ * Adds an event to the address book.
+ */
 public class AddEventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addE";
@@ -20,7 +24,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_EVENT_NAME + "NAME "
             + PREFIX_EVENT_DESCRIPTION + "DESCRIPTION "
             + PREFIX_EVENT_TIME + "TIME \n"
-            + "Example: "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_NAME + "Project Meeting "
             + PREFIX_EVENT_DESCRIPTION + "Discuss how to conduct software demo "
             + PREFIX_EVENT_TIME + "30/10/2017 ";

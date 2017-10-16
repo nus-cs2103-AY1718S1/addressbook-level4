@@ -97,10 +97,10 @@ public class ParserUtil {
      * if {@code eventDescription} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<EventDescription> parseEventDescription(Optional<String> EventDescription)
+    public static Optional<EventDescription> parseEventDescription(Optional<String> eventDescription)
             throws IllegalValueException {
-        requireNonNull(EventDescription);
-        return EventDescription.isPresent() ? Optional.of(new EventDescription(EventDescription.get()))
+        requireNonNull(eventDescription);
+        return eventDescription.isPresent() ? Optional.of(new EventDescription(eventDescription.get()))
                 : Optional.empty();
     }
 
@@ -109,19 +109,19 @@ public class ParserUtil {
      * if {@code eventName} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<EventName> parseEventName(Optional<String> EventName)
+    public static Optional<EventName> parseEventName(Optional<String> eventName)
             throws IllegalValueException {
-        requireNonNull(EventName);
-        return EventName.isPresent() ? Optional.of(new EventName(EventName.get())) : Optional.empty();
+        requireNonNull(eventName);
+        return eventName.isPresent() ? Optional.of(new EventName(eventName.get())) : Optional.empty();
     }
 
     /**
      * Parses a {@code Optional<String> EventTime} into an {@code Optional<EventTime>} if {@code eventTime} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<EventTime> parseEventTime(Optional<String> EventTime) throws IllegalValueException {
-        requireNonNull(EventTime);
-        return EventTime.isPresent() ? Optional.of(new EventTime(EventTime.get())) : Optional.empty();
+    public static Optional<EventTime> parseEventTime(Optional<String> eventTime) throws IllegalValueException {
+        requireNonNull(eventTime);
+        return eventTime.isPresent() ? Optional.of(new EventTime(eventTime.get())) : Optional.empty();
     }
 
     /**
