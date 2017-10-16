@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class RemarkCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredListToShowAll();
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
