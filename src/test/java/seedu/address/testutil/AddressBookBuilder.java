@@ -2,14 +2,18 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+<<<<<<< HEAD
+import seedu.address.model.lecturer.Tag;
+=======
+import seedu.address.model.lecturer.Tag;
+>>>>>>> a7bbacace6bcc3a50c6b9b1dab99446eae012891
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("MA1101R", "CS2100").withTag("Prof CaoLiang").build();}
+ *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -24,25 +28,25 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Lesson} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withLesson(ReadOnlyLesson lesson) {
+    public AddressBookBuilder withPerson(ReadOnlyPerson person) {
         try {
-            addressBook.addLesson(lesson);
-        } catch (DuplicateLessonException dpe) {
-            throw new IllegalArgumentException("lesson is expected to be unique.");
+            addressBook.addPerson(person);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
         }
         return this;
     }
 
     /**
-     * Parses {@code lecturer} into a {@code Lecturer} and adds it to the {@code AddressBook} that we are building.
+     * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withLecturer(String lecturer) {
+    public AddressBookBuilder withTag(String tagName) {
         try {
-            addressBook.addLecturer(new Lecturer(lecturer));
+            addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("lecturer is expected to be valid.");
+            throw new IllegalArgumentException("tagName is expected to be valid.");
         }
         return this;
     }
