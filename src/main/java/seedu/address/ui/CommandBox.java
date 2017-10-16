@@ -67,6 +67,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
+    private String userPrefFontSize;
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -175,16 +176,8 @@ public class CommandBox extends UiPart<Region> {
 
             configInActiveTag();
             configInactiveKeyword();
+            configBorderColor(allTextInput);
 
-            try {
-                tester.parseCommand(allTextInput);
-                commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
-                checkbox.setGraphic(tick);
-
-            } catch (ParseException e) {
-                commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
-                checkbox.setGraphic(cross);
-            }
 
             for (int i = 0; i < inputArray.length; i++) {
                 String text = inputArray[i];
@@ -235,6 +228,18 @@ public class CommandBox extends UiPart<Region> {
             }
         }
 
+    }
+
+    private void configBorderColor(String allTextInput) {
+        try {
+            tester.parseCommand(allTextInput);
+            commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
+            checkbox.setGraphic(tick);
+
+        } catch (ParseException e) {
+            commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
+            checkbox.setGraphic(cross);
+        }
     }
 
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
@@ -506,26 +511,31 @@ public class CommandBox extends UiPart<Region> {
         switch (userPref) {
         case FONT_SIZE_XSMALL:
             commandTextField.setStyle("-fx-font-size: x-small;");
+            userPrefFontSize = "-fx-font-size: x-small;";
             fontIndex = 1;
             break;
 
         case FONT_SIZE_SMALL:
             commandTextField.setStyle("-fx-font-size: small;");
+            userPrefFontSize = "-fx-font-size: small;";
             fontIndex = 2;
             break;
 
         case FONT_SIZE_NORMAL:
             commandTextField.setStyle("-fx-font-size: normal;");
+            userPrefFontSize = "-fx-font-size: normal;";
             fontIndex = 3;
             break;
 
         case FONT_SIZE_LARGE:
             commandTextField.setStyle("-fx-font-size: x-large;");
+            userPrefFontSize = "-fx-font-size: x-large;";
             fontIndex = 4;
             break;
 
         case FONT_SIZE_XLARGE:
             commandTextField.setStyle("-fx-font-size: xx-large;");
+            userPrefFontSize = "-fx-font-size: xx-large;";
             fontIndex = 5;
             break;
 
