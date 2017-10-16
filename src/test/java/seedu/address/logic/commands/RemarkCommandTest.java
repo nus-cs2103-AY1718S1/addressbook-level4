@@ -34,7 +34,7 @@ public class RemarkCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void executeAddRemarkSuccess() throws Exception {
+    public void execute_addRemark_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withRemark("Some remark").build();
 
@@ -49,7 +49,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void executeDeleteRemarkSuccess() throws Exception {
+    public void execute_deleteRemark_success() throws Exception {
         Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         editedPerson.setRemark(new Remark(""));
 
@@ -64,7 +64,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void executeFilteredListSuccess() throws Exception {
+    public void execute_filteredList_success() throws Exception {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -81,7 +81,7 @@ public class RemarkCommandTest {
     }
 
     @Test
-    public void executeInvalidPersonIndexUnfilteredListFailure() throws Exception {
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, VALID_REMARK_BOB);
 
@@ -93,7 +93,7 @@ public class RemarkCommandTest {
      * but smaller than size of address book
      */
     @Test
-    public void executeInvalidPersonIndexFilteredListFailure() throws Exception {
+    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
         showFirstPersonOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
@@ -116,7 +116,7 @@ public class RemarkCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
 
         // null -> returns false
-        assertFalse(standardCommand == (null));
+        assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));

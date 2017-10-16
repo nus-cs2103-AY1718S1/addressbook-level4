@@ -22,7 +22,7 @@ public class RemarkTest {
         assertFalse(remark.equals(1));
 
         // null -> returns false
-        assertFalse(remark == (null));
+        assertFalse(remark.equals(null));
 
         // different person -> returns false
         Remark differentRemark = new Remark("Bye");
