@@ -2,14 +2,12 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Respresents the deadline of a task in the application.
+ * Represents the deadline of a task in the application.
  * Guarantees: immutable, is valid as declared in {@link #FormatDate(String)}
  */
 public class Deadline extends TaskDates {

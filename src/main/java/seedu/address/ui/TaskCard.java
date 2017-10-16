@@ -4,9 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import seedu.address.model.task.ReadOnlyTask;
 import javafx.scene.layout.Region;
+import seedu.address.model.task.ReadOnlyTask;
 
+/**
+ * An UI component that displays information of a {@code Task}.
+ */
 public class TaskCard extends UiPart<Region> {
 
     private static final String FXML = "TaskListCard.fxml";

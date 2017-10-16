@@ -8,6 +8,10 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+/**
+ * Represents a Task in the application.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class Task implements ReadOnlyTask {
 
     private ObjectProperty<Description> description;

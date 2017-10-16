@@ -6,10 +6,15 @@ import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a date for a task which can be formatted.
+ */
 public class TaskDates {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
             "Dates can only contain a String in the format dd/mm/yyyy";
+    
+    public TaskDates() {}
 
     /**
      * Formats the date of a given string. If the input date format is invalid, an exception is thrown.

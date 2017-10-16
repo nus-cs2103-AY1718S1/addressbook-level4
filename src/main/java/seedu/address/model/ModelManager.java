@@ -145,7 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-//=========== Filtered Task List Accessors =============================================================
+    //=========== Filtered Task List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyTask} backed by the internal list of
@@ -180,5 +180,4 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredTasks.equals(other.filteredTasks);
     }
-
 }
