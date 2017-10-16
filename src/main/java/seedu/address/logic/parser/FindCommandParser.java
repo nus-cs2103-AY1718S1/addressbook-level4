@@ -44,7 +44,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 
 
-        String keywords =args.trim().substring(args.indexOf('/'));
+
+        String[] keywords =args.trim().substring(args.indexOf('/')).split("\\s+");
             if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
 
                 predicate = new NameContainsKeywordsPredicate(Arrays.asList(keywords));
