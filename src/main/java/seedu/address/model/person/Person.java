@@ -153,6 +153,10 @@ public class Person implements ReadOnlyPerson {
         return postalCode.get();
     }
 
+    /**
+     * Sets cluster of a person to the given Cluster.
+     * @param cluster must not be null.
+     */
     public void setCluster(Cluster cluster) {
         this.cluster.set(requireNonNull(cluster));
     }
@@ -205,6 +209,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author lawwman
+
+    /**
+     * Sets associated deadline of a person to the given Deadline.
+     * @param deadline must not be null.
+     */
     public void setDeadline(Deadline deadline) {
         this.deadline.set(requireNonNull(deadline));
     }

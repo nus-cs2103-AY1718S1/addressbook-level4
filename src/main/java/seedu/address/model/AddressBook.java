@@ -179,11 +179,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
-        } else {
-            throw new PersonNotFoundException();
-        }
+        return persons.remove(key);
     }
 
     /**
@@ -191,18 +187,25 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (blacklistedPersons.remove(key)) {
-            return true;
-        }
-        throw new PersonNotFoundException();
+        return blacklistedPersons.remove(key);
     }
 
     //// tag-level operations
 
+    /**
+     * Adds a {@code Tag} to the tag list.
+     * @param t the tag to be added.
+     * @throws UniqueTagList.DuplicateTagException if the tag already exists.
+     */
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
+    /**
+     * Removes a {@code Tag} from the tag list.
+     * @param t the tag to be removed.
+     * @throws TagNotFoundException if the tag does not exist.
+     */
     public void removeTag(Tag t) throws TagNotFoundException {
         tags.remove(t);
     }

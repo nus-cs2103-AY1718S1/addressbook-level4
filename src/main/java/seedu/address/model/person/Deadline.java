@@ -67,8 +67,7 @@ public class Deadline {
     }
 
     /**
-     *
-     * @return formated date value
+     * @return formatted date value
      */
     private String formatDate() {
         SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
