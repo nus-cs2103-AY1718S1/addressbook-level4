@@ -19,43 +19,81 @@ public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        if (descriptor.getName().isPresent()
-                && !person.getName().fullName.toLowerCase().contains(
-                descriptor.getName().get().toLowerCase())) {
+        if (isNameNotMatchedIfPresent(person)) {
             return false;
         }
-        if (descriptor.getPhone().isPresent()
-                && !person.getPhone().value.toLowerCase().contains(
-                descriptor.getPhone().get().toLowerCase())) {
+        if (isPhoneNotMatchedIfPresent(person)) {
             return false;
         }
-        if (descriptor.getEmail().isPresent()
-                && !person.getEmail().value.toLowerCase().contains(
-                descriptor.getEmail().get().toLowerCase())) {
+        if (isEmailNotMatchedIfPresent(person)) {
             return false;
         }
-        if (descriptor.getAddress().isPresent()
-                && !person.getAddress().value.toLowerCase().contains(
-                descriptor.getAddress().get().toLowerCase())) {
+        if (isAddressNotMatchedIfPresent(person)) {
             return false;
         }
-        if (descriptor.getTags().isPresent()) {
+        if (isTagNotMatchedIfPresent(person)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return true if name in {@code descriptor} present but not match name of {@code person}
+     */
+    private boolean isNameNotMatchedIfPresent(ReadOnlyPerson person) {
+        String personName = person.getName().fullName.toLowerCase();
+        return descriptor.getName().isPresent()
+                && !personName.contains(descriptor.getName().get().toLowerCase());
+    }
+
+    /**
+     * @return true if phone in {@code descriptor} present but not match phone of {@code person}
+     */
+    private boolean isPhoneNotMatchedIfPresent(ReadOnlyPerson person) {
+        String personPhone = person.getPhone().value;
+        return descriptor.getPhone().isPresent()
+                && !personPhone.contains(descriptor.getPhone().get());
+    }
+
+    /**
+     * @return true if email in {@code descriptor} present but not match email of {@code person}
+     */
+    private boolean isEmailNotMatchedIfPresent(ReadOnlyPerson person) {
+        String personEmail = person.getEmail().value.toLowerCase();
+        return descriptor.getEmail().isPresent()
+                && !personEmail.contains(descriptor.getEmail().get().toLowerCase());
+    }
+
+    /**
+     * @return true if address in {@code descriptor} present but not match address of {@code person}
+     */
+    private boolean isAddressNotMatchedIfPresent(ReadOnlyPerson person) {
+        String personAddress = person.getAddress().value.toLowerCase();
+        return descriptor.getAddress().isPresent()
+                && !personAddress.contains(descriptor.getAddress().get().toLowerCase());
+    }
+
+    /**
+     * @return true if tag in {@code descriptor} present but not match tag of {@code person}
+     */
+    private boolean isTagNotMatchedIfPresent(ReadOnlyPerson person) {
+        if(descriptor.getTags().isPresent()) {
             Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
             Iterator<Tag> personIterator = person.getTags().iterator();
             while (descriptorIterator.hasNext()) {
                 boolean isContainIgnoreCase = false;
+                String tagInDescriptor = descriptorIterator.next().tagName.toLowerCase();
                 while (personIterator.hasNext()) {
-                    if (personIterator.next().tagName.toLowerCase().contains(
-                            descriptorIterator.next().tagName.toLowerCase())) {
+                    if (personIterator.next().tagName.toLowerCase().contains(tagInDescriptor)) {
                         isContainIgnoreCase = true;
                     }
                 }
                 if (!isContainIgnoreCase) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     @Override
