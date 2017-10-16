@@ -753,8 +753,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |list contacts according to custom groups |easily reach a certain group of contacts
 
-|`*` |user |add/delete/find information in (O logN) time |fast information retrieval
-
 |`*` |user |add picture as a field |see my contacts' faces
 
 |`*` |user |share my addressbook with others |others can have my list of contacts
@@ -886,6 +884,7 @@ Use case resumes at step 2.
 .  Should be able to change the font type and size easily.
 .  Changes of the address book should be saved in a log file.
 .  UI should be aesthetically pleasing
+.  add, delete, edit and find operation should take no longer than O(log n)
 
 [appendix]
 == Glossary
