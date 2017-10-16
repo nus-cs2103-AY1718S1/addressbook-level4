@@ -57,9 +57,8 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format without phone labelling: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-Format with phone labelling: `add n/NAME p/H: (Home number) HP: (HandPhone number) O: (Office number) e/EMAIL a/ADDRESS [t/TAG]...` +
-Shorthand: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
+Shorthand: `a n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0) +
