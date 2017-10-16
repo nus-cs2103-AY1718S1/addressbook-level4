@@ -129,6 +129,20 @@ public class RemoveTagCommandTest {
         assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_NO_SUCH_TAG);
     }
 
+    /**
+     * Tests failure of an unfiltered persons list with valid input indexes but a tag that exists outside of the
+     * target indexes
+     */
+    @Test
+    public void execute_validTagNotInUnFilteredList_failure() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        Tag toRemove = new Tag("owesMoney");
+        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+
+        assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_NO_SUCH_TAG);
+    }
+
     @Test
     public void equals() throws Exception {
         ArrayList<Index> indexes1 = new ArrayList<Index>();

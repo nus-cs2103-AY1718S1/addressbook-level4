@@ -24,7 +24,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "
-            + "rt"
+            + COMMAND_WORDVAR_2
             + ": Removes the given tag from identified person by the list of index numbers used in the last person "
             + "listing."
             + " Command is case-sensitive. \n"
@@ -56,7 +56,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     /**
      * First checks if all target indexes are not out of bounds and then checks if the tag exists among
-     * the given target indexes of person and then removes tag from each target person
+     * the given target indexes of person and then removes tag from each target person that has the given tag.
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -70,7 +70,9 @@ public class RemoveTagCommand extends UndoableCommand {
             }
         }
 
-        for (ReadOnlyPerson readOnlyPerson : lastShownList) {
+        for (int i = 0; i < targetIndexes.size(); i++) {
+            int targetIndex = targetIndexes.get(i).getZeroBased();
+            ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
             if (readOnlyPerson.getTags().contains(toRemove)) {
                 noPersonContainsTagToRemove = false;
             }
