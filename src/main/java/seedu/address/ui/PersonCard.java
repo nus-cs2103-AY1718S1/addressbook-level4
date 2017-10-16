@@ -2,10 +2,15 @@ package seedu.address.ui;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -38,13 +43,18 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private FlowPane groups;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
+       // groups.setStyle("-fx-background-color: mediumblue");
+        groups.setHgap(5);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initGroups(person);
         bindListeners(person);
     }
 
@@ -61,10 +71,19 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
+        person.groupProperty().addListener((observable, oldValue, newValue) -> {
+            groups.getChildren().clear();
+            person.getGroups().forEach(group -> groups.getChildren().add((new Label(group.groupName))));
+        });
+        groups.getChildren().forEach(label -> label.setStyle("-fx-background-color: mediumblue;-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
     }
 
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    private void initGroups(ReadOnlyPerson person) {
+        person.getGroups().forEach(group -> groups.getChildren().add(new Label(group.groupName)));
     }
 
     @Override

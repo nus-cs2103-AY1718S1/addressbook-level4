@@ -51,7 +51,7 @@ public class UniqueGroupList implements Iterable<Group> {
     /**
      * Replaces the Groups in this list with those in the argument group list.
      */
-    public void setTags(Set<Group> groups) {
+    public void setGroups(Set<Group> groups) {
         requireAllNonNull(groups);
         internalList.setAll(groups);
         assert CollectionUtil.elementsAreUnique(internalList);

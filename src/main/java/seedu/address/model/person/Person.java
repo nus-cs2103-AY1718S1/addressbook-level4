@@ -127,9 +127,18 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Replaces this person's groups with the tags in the argument tag set.
+     * Replaces this person's groups with the groups in the argument group set.
      */
     public void setGroups(Set<Group> replacement) { groups.set(new UniqueGroupList(replacement)); }
+
+    /**
+     * Adds a group to this person's groups.
+     */
+    public void addGroup(Group newGroup) {
+        Set<Group> replacement = groups.get().toSet();
+        replacement.add(newGroup);
+        setGroups(replacement);
+    }
 
     /**
      * Returns an immutable group set, which throws {@code UnsupportedOperationException}

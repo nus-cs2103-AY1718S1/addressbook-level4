@@ -9,6 +9,9 @@
         <postalCode></postalCode>
         <city></city>
     </persons>
+    <groups>
+        <name>Family</name>
+    </groups>
     <tags>
         <name>Friends</name>
     </tags>

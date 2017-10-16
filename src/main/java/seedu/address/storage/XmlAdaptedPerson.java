@@ -53,12 +53,13 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        grouped = new ArrayList<>();
+        for (Group group : source.getGroups()) {
+            grouped.add(new XmlAdaptedGroup(group));
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
-        }
-        for (Group group : source.getGroups()) {
-            grouped.add(new XmlAdaptedGroup(group));
         }
     }
 
@@ -68,13 +69,13 @@ public class XmlAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
         final List<Group> personGroups = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
+        final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedGroup group : grouped) {
             personGroups.add(group.toModelType());
+        }
+        for (XmlAdaptedTag tag : tagged) {
+            personTags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
