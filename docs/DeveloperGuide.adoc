@@ -939,7 +939,7 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be initialised and ready for user input within 1 second
-.  Should require at most 1MB of memory
+.  Should require at most 100MB of memory in RAM
 .  Should still allow for addressbook viewing even without an internet connection
 
 [appendix]

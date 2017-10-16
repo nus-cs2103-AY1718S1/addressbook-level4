@@ -245,6 +245,15 @@ Changes the remark of an existing person in the address book. +
 Format: `remark INDEX r/[Remark]` +
 Alias: `re`
 
+****
+* Selects the person and changes the remark of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The contents of the remark can be empty.
+****
+
+Examples:
+
 * `list` +
 `remark 1 r/Loves beer` +
 Changes the remark of the 1st person in the address book to "Loves beer".
@@ -262,13 +271,6 @@ Alias: `st`
 View a list of persons with birthdays in the current month +
 Format: `birthday` +
 Alias: `bd`
-
-****
-* Changes the remark of the person identified by the index number used in the last
-person listing.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-* The contents of the remark can be empty.
 
 === Increase/decrease font size : `size`
 
