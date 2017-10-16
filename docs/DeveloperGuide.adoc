@@ -390,6 +390,7 @@ For example, `Hansen Johannah` can be found by typing `Han Johan` in the search 
 but `Hansen Jonannah` cannot be found because the prefix `Johan` is not in any part of the full name.
 
 ==== Sequence diagram
+image::SearchbarSequenceDiagram.png[width="800"]
 
 ==== Design considerations
 
