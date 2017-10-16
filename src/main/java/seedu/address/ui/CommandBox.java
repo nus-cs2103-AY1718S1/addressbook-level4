@@ -109,7 +109,7 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = logic.getCommandKeywordColorMap();
         String[] commands = {"help", "add", "list", "edit", "find",
-                "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
+            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
         TextFields.bindAutoCompletion(commandTextField, commands);
         tick.setFitHeight(30);
         tick.setFitWidth(30);
@@ -139,18 +139,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
-                // As up and down buttons will alter the position of the caret,
-                // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
 
-                navigateToPreviousInput();
-                break;
-            case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
-                break;
-            default:
+        case UP:
+            // As up and down buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
+
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        default:
                 // let JavaFx handle the keypress
         }
     }
@@ -160,10 +161,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-            default:
-                listenCommandInputChanged();
-        }
+        listenCommandInputChanged();
     }
 
     /**

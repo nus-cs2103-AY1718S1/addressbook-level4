@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 /**
  * Collects a person identified using it's last displayed index from the address book into the favor list.
  */
-public class CollectCommand extends Command{
+public class CollectCommand extends Command {
 
     public static final String COMMAND_WORD = "collect";
 
