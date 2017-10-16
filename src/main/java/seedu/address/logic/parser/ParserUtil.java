@@ -67,7 +67,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Debt>} if {@code debt} is present.
+     * Parses a {@code Optional<String> debt} into an {@code Optional<Debt>} if {@code debt} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Debt> parseDebt(Optional<String> debt) throws IllegalValueException {
@@ -107,7 +107,7 @@ public class ParserUtil {
 
     //@@author lawwman
     /**
-     * Parses a {@code Optional<String> deadLine} into an {@code Optional<Deadline>} if {@code Deadline}
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code Deadline}
      * is present.
      * Meant for parsing for Add command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -117,8 +117,9 @@ public class ParserUtil {
         return deadline.isPresent() ? Optional.of(new Deadline(deadline.get()))
                 : Optional.of(new Deadline(Deadline.NO_DEADLINE_SET));
     }
+
     /**
-     * Parses a {@code Optional<String> deadLine} into an {@code Optional<Deadline>} if {@code Deadline}
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code Deadline}
      * is present.
      * Meant for parsing for Edit command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -129,6 +130,7 @@ public class ParserUtil {
         return deadline.isPresent() ? Optional.of(new Deadline(deadline.get())) : Optional.empty();
     }
 
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

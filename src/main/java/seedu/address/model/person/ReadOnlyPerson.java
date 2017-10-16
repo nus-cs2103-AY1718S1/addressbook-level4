@@ -71,10 +71,11 @@ public interface ReadOnlyPerson {
                 .append(getCluster())
                 .append(" Debt: ")
                 .append(getDebt())
-                .append("Date borrowed: ")
+                .append(" Date borrowed: ")
                 .append(getDateBorrow())
                 .append(" Deadline: ")
                 .append(getDeadline())
+                .append(" Date Repaid: ")
                 .append(getDateRepaid())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
