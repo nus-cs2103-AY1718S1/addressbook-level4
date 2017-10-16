@@ -39,6 +39,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         String[] parameters = (String[]) predicate.getKeywords().toArray();
+        //Create list to store the keywords of different keywords
         ArrayList<String> nameKeywords = new ArrayList<>();
         ArrayList<String> phoneKeywords = new ArrayList<>();
         ArrayList<String> emailKeywords = new ArrayList<>();
@@ -57,6 +58,7 @@ public class FindCommand extends Command {
                 currentKeywords.add(parameters[i]);
             }
         }
+        //Go through each keywords list and get the names to search in the storage
         List<String> namesToSearch = new ArrayList<>();
         if (nameKeywords.size() != 0) {
             ArrayList<String> namesMatched = getNamesFromNameKeywords(nameKeywords);
@@ -88,6 +90,11 @@ public class FindCommand extends Command {
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
+    /**
+     * Get a list of names whose contact details contain all the address keywords provided by user.
+     * @param addressKeywords a list of address keywords to search for
+     * @return a list of names found by searching the corresponding address keywords
+     */
     private ArrayList<String> getNamesFromAddressKeywords(ArrayList<String> addressKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
         ArrayList<String> addressList = new ArrayList<>();
@@ -111,6 +118,11 @@ public class FindCommand extends Command {
         }
     }
 
+    /**
+     * Get a list of names whose contact details contain at least one of the email keywords provided by user.
+     * @param emailKeywords a list of email keywords to search for
+     * @return a list of names found by searching the corresponding email keywords
+     */
     private ArrayList<String> getNamesFromEmailKeywords(ArrayList<String> emailKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
         ArrayList<String> emailList = new ArrayList<>();
@@ -131,6 +143,11 @@ public class FindCommand extends Command {
         }
     }
 
+    /**
+     * Get a list of names whose contact details contain at least one of the phone keywords provided by user.
+     * @param phoneKeywords a list of phone keywords to search for
+     * @return a list of names found by searching the corresponding phone keywords
+     */
     private ArrayList<String> getNamesFromPhoneKeywords(ArrayList<String> phoneKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
         ArrayList<String> phoneList = new ArrayList<>();
@@ -151,6 +168,11 @@ public class FindCommand extends Command {
         }
     }
 
+    /**
+     * Get a list of names whose contact details contain at least one of the name keywords provided by user.
+     * @param nameKeywords a list of name keywords to search for
+     * @return a list of names found by searching the corresponding name keywords
+     */
     private ArrayList<String> getNamesFromNameKeywords(ArrayList<String> nameKeywords) {
         ArrayList<String> matchedNames = new ArrayList<>();
         ArrayList<String> nameList = new ArrayList<>();
