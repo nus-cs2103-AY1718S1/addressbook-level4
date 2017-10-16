@@ -877,21 +877,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
-|`* * *` |advanced user |perform actions with hotkeys |increase productivity
+|`* * *` |efficient user |perform actions with hotkeys |increase productivity
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |private user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |delete a specific tag |remove tags that I no longer need
+|`* *` |organized user |delete a specific tag |remove tags that I no longer need
 
-|`* *`|user |store notes about a contact|remember things pertaining to the contact
+|`* *`|forgetful user |store notes about a contact|remember things pertaining to the contact
 
-|`* *` |user |use abbreviation when typing commands |type commands faster
+|`* *` |lazy user |use abbreviation when typing commands |type commands faster
 
-|`* *` |user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
+|`* *` |careless user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |user with many persons in the address book |delete a person using their name |remove a contact without having to find their index
+|`*` |lazy user |delete a person using their name |remove a contact without having to find their index
 
 |`*` |advanced user |amend the storage file manually |import and export data easily
 
