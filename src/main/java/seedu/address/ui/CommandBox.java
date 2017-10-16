@@ -31,6 +31,7 @@ import javafx.scene.text.Text;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.commons.events.ui.ColorKeywordEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -65,6 +66,7 @@ public class CommandBox extends UiPart<Region> {
     private HashMap<String, String> keywordColorMap;
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
+    private boolean enableHighlight = false;
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -107,7 +109,7 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.getStyleClass().add("keyword-label-default");
         keywordColorMap = logic.getCommandKeywordColorMap();
         String[] commands = {"help", "add", "list", "edit", "find",
-            "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
+                "delete", "select", "history", "undo", "redo", "clear", "exit", "customise", "view"};
         TextFields.bindAutoCompletion(commandTextField, commands);
         tick.setFitHeight(30);
         tick.setFitWidth(30);
@@ -137,19 +139,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            default:
+                // let JavaFx handle the keypress
         }
     }
 
@@ -159,8 +161,8 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        default:
-            listenCommandInputChanged();
+            default:
+                listenCommandInputChanged();
         }
     }
 
@@ -168,70 +170,73 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Command input changed event.
      */
     private void listenCommandInputChanged() {
-        String allTextInput = commandTextField.getText();
-        String[] inputArray = allTextInput.split(" ");
-        int index = 0;
+        if (enableHighlight) {
+            String allTextInput = commandTextField.getText();
+            String[] inputArray = allTextInput.split(" ");
+            int index = 0;
 
-        configInActiveTag();
-        configInactiveKeyword();
+            configInActiveTag();
+            configInactiveKeyword();
 
-        try {
-            tester.parseCommand(allTextInput);
-            commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
-            checkbox.setGraphic(tick);
+            try {
+                tester.parseCommand(allTextInput);
+                commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+                checkbox.setGraphic(tick);
 
-        } catch (ParseException e) {
-            commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
-            checkbox.setGraphic(cross);
-        }
-
-        for (int i = 0; i < inputArray.length; i++) {
-            String text = inputArray[i];
-
-            //Command Keyword
-            if (i == 0 && validCommandKeyword(text)) {
-                configActiveKeyword(text);
+            } catch (ParseException e) {
+                commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
+                checkbox.setGraphic(cross);
             }
 
-            //Name
-            if (text.contains(prefixList.get(NAME))) {
-                index = allTextInput.indexOf(prefixList.get(NAME));
-                configActiveTag(index, prefixList.get(NAME));
-            }
+            for (int i = 0; i < inputArray.length; i++) {
+                String text = inputArray[i];
 
-            //Email
-            if (text.contains(prefixList.get(EMAIL))) {
-                index = allTextInput.indexOf(prefixList.get(EMAIL));
-                configActiveTag(index, prefixList.get(EMAIL));
-            }
+                //Command Keyword
+                if (i == 0 && validCommandKeyword(text)) {
+                    configActiveKeyword(text);
+                }
 
-            //Phone
-            if (text.contains(prefixList.get(PHONE))) {
-                index = allTextInput.indexOf(prefixList.get(PHONE));
-                configActiveTag(index, prefixList.get(PHONE));
-            }
+                //Name
+                if (text.contains(prefixList.get(NAME))) {
+                    index = allTextInput.indexOf(prefixList.get(NAME));
+                    configActiveTag(index, prefixList.get(NAME));
+                }
 
-            //Address
-            if (text.contains(prefixList.get(ADDRESS))) {
-                index = allTextInput.indexOf(prefixList.get(ADDRESS));
-                configActiveTag(index, prefixList.get(ADDRESS));
-            }
+                //Email
+                if (text.contains(prefixList.get(EMAIL))) {
+                    index = allTextInput.indexOf(prefixList.get(EMAIL));
+                    configActiveTag(index, prefixList.get(EMAIL));
+                }
 
-            //Tag
-            if (text.contains(prefixList.get(TAG))) {
-                ArrayList<Integer> tagList = getTagIndexList(allTextInput);
-                for (int j = 0; j < tagList.size(); j++) {
-                    index = tagList.get(j);
-                    configActiveTag(index, index + prefixList.get(TAG));
+                //Phone
+                if (text.contains(prefixList.get(PHONE))) {
+                    index = allTextInput.indexOf(prefixList.get(PHONE));
+                    configActiveTag(index, prefixList.get(PHONE));
+                }
+
+                //Address
+                if (text.contains(prefixList.get(ADDRESS))) {
+                    index = allTextInput.indexOf(prefixList.get(ADDRESS));
+                    configActiveTag(index, prefixList.get(ADDRESS));
+                }
+
+                //Tag
+                if (text.contains(prefixList.get(TAG))) {
+                    ArrayList<Integer> tagList = getTagIndexList(allTextInput);
+                    for (int j = 0; j < tagList.size(); j++) {
+                        index = tagList.get(j);
+                        configActiveTag(index, index + prefixList.get(TAG));
+                    }
+                }
+
+                //font size
+                if (text.contains(prefixList.get(FONT_SIZE))) {
+                    index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
+                    configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
-
-            //font size
-            if (text.contains(prefixList.get(FONT_SIZE))) {
-                index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
-                configActiveTag(index, prefixList.get(FONT_SIZE));
-            }
         }
+
     }
 
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
@@ -377,6 +382,12 @@ public class CommandBox extends UiPart<Region> {
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
+    }
+
+
+    @Subscribe
+    private void handleColorKeywordEvent(ColorKeywordEvent event) {
+        setEnableHighlight(event.isEnabled);
     }
 
     /**
@@ -554,5 +565,10 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
+    /**
+     * Sets the command box to enable highlighting of command keywords
+     */
+    public void setEnableHighlight(boolean enableHighlight) {
+        this.enableHighlight = enableHighlight;
+    }
 }
