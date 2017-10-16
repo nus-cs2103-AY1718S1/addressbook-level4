@@ -230,18 +230,6 @@ public class CommandBox extends UiPart<Region> {
 
     }
 
-    private void configBorderColor(String allTextInput) {
-        try {
-            tester.parseCommand(allTextInput);
-            commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
-            checkbox.setGraphic(tick);
-
-        } catch (ParseException e) {
-            commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
-            checkbox.setGraphic(cross);
-        }
-    }
-
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
@@ -277,6 +265,21 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.setVisible(false);
         keywordLabel.toBack();
         commandTextField.toFront();
+    }
+
+    /**
+     * Configure border colour to indicate validity of user input.
+     */
+    private void configBorderColor(String allTextInput) {
+        try {
+            tester.parseCommand(allTextInput);
+            commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
+            checkbox.setGraphic(tick);
+
+        } catch (ParseException e) {
+            commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
+            checkbox.setGraphic(cross);
+        }
     }
 
 
