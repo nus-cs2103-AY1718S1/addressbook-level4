@@ -4,7 +4,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 import static java.util.Objects.requireNonNull;
 
-public class EDesc {
+public class EventDescription {
 
 
     public static final String MESSAGE_EVENT_DESCRIPTION_CONSTRAINTS =
@@ -23,7 +23,7 @@ public class EDesc {
      *
      * @throws IllegalValueException if given name string is invalid.
      */
-    public EDesc(String desc) throws IllegalValueException {
+    public EventDescription(String desc) throws IllegalValueException {
         requireNonNull(desc);
         String trimmedName = desc.trim();
         if (!isValidName(trimmedName)) {
@@ -48,8 +48,8 @@ public class EDesc {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof EDesc // instanceof handles nulls
-                && this.EventDesc.equals(((EDesc) other).EventDesc)); // state check
+                || (other instanceof EventDescription // instanceof handles nulls
+                && this.EventDesc.equals(((EventDescription) other).EventDesc)); // state check
     }
 
     @Override

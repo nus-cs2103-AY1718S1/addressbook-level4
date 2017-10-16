@@ -4,7 +4,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 import static java.util.Objects.requireNonNull;
 
-public class ETime {
+public class EventTime {
 
 
     public static final String MESSAGE_EVENT_TIME_CONSTRAINTS =
@@ -24,7 +24,7 @@ public class ETime {
      *
      * @throws IllegalValueException if given name string is invalid.
      */
-    public ETime(String desc) throws IllegalValueException {
+    public EventTime(String desc) throws IllegalValueException {
         requireNonNull(desc);
         String trimmedName = desc.trim();
         if (!isValidName(trimmedName)) {
@@ -49,8 +49,8 @@ public class ETime {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ETime // instanceof handles nulls
-                && this.EventTime.equals(((ETime) other).EventTime)); // state check
+                || (other instanceof seedu.address.model.event.EventTime // instanceof handles nulls
+                && this.EventTime.equals(((seedu.address.model.event.EventTime) other).EventTime)); // state check
     }
 
     @Override

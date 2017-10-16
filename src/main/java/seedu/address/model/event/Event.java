@@ -13,15 +13,15 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 
 public class Event implements ReadOnlyEvent{
-    ObjectProperty<EName> name;
-    ObjectProperty<EDesc> desc;
-    ObjectProperty<ETime> time;
+    ObjectProperty<EventName> name;
+    ObjectProperty<EventDescription> desc;
+    ObjectProperty<EventTime> time;
     ObjectProperty<ParticipantList> participants;
 
     /**
      * Event name and time must be present and not null.
      */
-    public Event (EName name, EDesc desc, ETime time, Set<Person> participants){
+    public Event (EventName name, EventDescription desc, EventTime time, Set<Person> participants){
         requireAllNonNull(name, time);
         this.name=new SimpleObjectProperty<>(name);
         this.desc=new SimpleObjectProperty<>(desc);
@@ -33,31 +33,31 @@ public class Event implements ReadOnlyEvent{
         this(source.getEName(), source.getDesc(), source.getETime(), source.getParticipants());
     }
 
-    public void setEName(EName name){
+    public void setEName(EventName name){
         this.name.set(requireNonNull(name));
     }
 
     @Override
-    public ObjectProperty<EName> EnameProperty() { return name; }
+    public ObjectProperty<EventName> EnameProperty() { return name; }
 
     @Override
-    public EName getEName() { return name.get(); }
+    public EventName getEName() { return name.get(); }
 
-    public void setEDesc(EDesc desc) { this.desc.set(desc); }
-
-    @Override
-    public ObjectProperty<EDesc> descProperty() { return desc; }
+    public void setEDesc(EventDescription desc) { this.desc.set(desc); }
 
     @Override
-    public EDesc getDesc() {return desc.get(); }
-
-    public void setETime(ETime time) { this.time.set(requireNonNull(time)); }
+    public ObjectProperty<EventDescription> descProperty() { return desc; }
 
     @Override
-    public ObjectProperty<ETime> timeProperty() { return time; }
+    public EventDescription getDesc() {return desc.get(); }
+
+    public void setETime(EventTime time) { this.time.set(requireNonNull(time)); }
 
     @Override
-    public ETime getETime() {return time.get(); }
+    public ObjectProperty<EventTime> timeProperty() { return time; }
+
+    @Override
+    public EventTime getETime() {return time.get(); }
 
     @Override
     public ObjectProperty<ParticipantList> participantProperty() {

@@ -6,12 +6,12 @@ import seedu.address.model.person.Person;
 import java.util.Set;
 
 public interface ReadOnlyEvent {
-    ObjectProperty<EName> EnameProperty();
-    EName getEName();
-    ObjectProperty<EDesc> descProperty();
-    EDesc getDesc();
-    ObjectProperty<ETime> timeProperty();
-    ETime getETime();
+    ObjectProperty<EventName> EnameProperty();
+    EventName getEName();
+    ObjectProperty<EventDescription> descProperty();
+    EventDescription getDesc();
+    ObjectProperty<EventTime> timeProperty();
+    EventTime getETime();
     ObjectProperty<ParticipantList> participantProperty();
     Set<Person> getParticipants();
 
