@@ -760,6 +760,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |search with ambiguous criteria |allow for more margin of error with searches
 
 |`*` |user |display frequency of contact information retrieval |know which contacts I visit more frequently
+
+|`*` |user |change language of the app |users who only understands Mandarin can also use the app
 |=======================================================================
 
 
