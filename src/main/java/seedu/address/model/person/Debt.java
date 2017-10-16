@@ -48,16 +48,16 @@ public class Debt {
     /**
      * Adds the indicated amount to debt
      */
-    public void addToDebt(String amount) {
-        Double newValue = toNumber(value) + toNumber(amount);
+    public void addToDebt(Debt amount) {
+        Double newValue = toNumber(value) + toNumber(amount.value);
         value = Double.toString(newValue);
     }
 
     /**
      * Deducts an indicated amount from debt
      */
-    public void deductFromDebt(String amount) {
-        Double newValue = toNumber(value) + toNumber(amount);
+    public void deductFromDebt(Debt amount) {
+        Double newValue = toNumber(value) + toNumber(amount.value);
         value = Double.toString(newValue);
     }
 
