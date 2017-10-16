@@ -16,7 +16,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class BanCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "ban";
-    public static final String COMMAND_WORD_ALIAS = "ban";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Ban a person identified by the index number used in the last person listing.\n"

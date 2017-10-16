@@ -62,6 +62,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(persons);
     }
 
+    /**
+     * Returns a list of blacklisted people
+     */
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         final ObservableList<ReadOnlyPerson> blacklistedPersons = this.blacklistedPersons.stream().map(p -> {
