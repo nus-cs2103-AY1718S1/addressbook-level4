@@ -5,35 +5,27 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+Building on AddressBook - Level 4, Intelli is developed by the CS2103-F10-B1 team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Joanne Ong Cui Fang
+image::joanneong.jpg[width="150", align="left"]
+{empty}[https://github.com/joanneong[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Documentation, UI
+
+'''
+
+=== Tan Yikai
+image::TanYikai.jpg[width="150", align="left"]
+{empty}[http://github.com/TanYikai[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Deliverables and deadlines, Scheduling and tracking, Logic
 
 '''
 
@@ -46,11 +38,11 @@ Responsibilities: Storage, Code Quality
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Wen Xin
+image::wenmogu.jpg[width="150", align="left"]
+{empty}[http://github.com/wenmogu[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Testing, Integration, Model
 
 '''
