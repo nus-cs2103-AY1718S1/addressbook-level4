@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Cluster;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
@@ -82,11 +83,12 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code PostalCode} of the {@code Person} that we are building.
+     * Sets the {@code PostalCode} and {@code Cluster} of the {@code Person} that we are building.
      */
-    public  PersonBuilder withPostalCode(String postalCode) {
+    public PersonBuilder withPostalCode(String postalCode) {
         try {
             this.person.setPostalCode(new PostalCode(postalCode));
+            this.person.setCluster(new Cluster(this.person.getPostalCode()));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("postal code is expected to be unique.");
         }

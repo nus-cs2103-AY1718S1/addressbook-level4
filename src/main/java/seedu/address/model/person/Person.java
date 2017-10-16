@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Cluster> cluster;
     private ObjectProperty<Debt> debt;
     private ObjectProperty<DateBorrow> dateBorrow;
     private ObjectProperty<Deadline> deadline;
@@ -41,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         this.deadline = new SimpleObjectProperty<>(deadline);
@@ -57,6 +59,7 @@ public class Person implements ReadOnlyPerson {
                 source.getDebt(), source.getDeadline(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
+        this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
     }
 
     /**
@@ -131,6 +134,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author khooroko
     /**
      * Sets postal code of a person to the given PostalCode.
      * @param postalCode must not be null.
@@ -149,6 +153,21 @@ public class Person implements ReadOnlyPerson {
         return postalCode.get();
     }
 
+    public void setCluster(Cluster cluster) {
+        this.cluster.set(requireNonNull(cluster));
+    }
+
+    @Override
+    public ObjectProperty<Cluster> clusterProperty() {
+        return cluster;
+    }
+
+    @Override
+    public Cluster getCluster() {
+        return cluster.get();
+    }
+
+    //@@author lawwman
     /**
      * Sets current debt of a person to the given Debt.
      * @param debt must not be null.
@@ -166,8 +185,6 @@ public class Person implements ReadOnlyPerson {
     public Debt getDebt() {
         return debt.get();
     }
-
-    //@@author lawwman
 
     /**
      * Sets date borrowed of a person the the given DateBorrow.
@@ -203,7 +220,6 @@ public class Person implements ReadOnlyPerson {
     }
 
     //@@author
-
     /**
      * Sets date borrowed of a person the the given DateBorrow.
      * @param dateRepaid must not be null.

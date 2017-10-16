@@ -58,6 +58,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
         assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
+        assertEquals(expectedPerson.getCluster().value, actualInfo.getCluster());
         assertEquals(expectedPerson.getDebt().value, actualInfo.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
         assertEquals(expectedPerson.getDeadline().value, actualInfo.getDeadline());
