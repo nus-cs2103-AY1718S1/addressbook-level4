@@ -185,7 +185,7 @@ public class AddressBookParserTest {
                 + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName);
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
-    
+
     @Test
     public void parseCommand_showFavourite() throws Exception {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
