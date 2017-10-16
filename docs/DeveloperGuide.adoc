@@ -16,7 +16,7 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Rolodex is a desktop rolodex application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+Rolodex is a desktop contact management application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
 
 This guide will walk you through the design, implementation and development environment of Rolodex. This is the go-to page for all your information needs in understanding our application.
 
