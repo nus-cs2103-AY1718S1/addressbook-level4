@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= iConnect - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W09-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -745,11 +745,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |change the color theme/background image of the product |have a nice visual experience
 
-|`* * *` |user |have a separate prompt for add users |choose to not remember the full command
+|`* * *` |user |have a separate prompt for add users |choose not to remember the full command
 
 |`* * *` |user |have a separate prompt for edit users |choose not to remember the full command
 
-|`* * *` |organise user |have different classification for tag to multiple contacts |have a finer classification by event
+|`* * *` |organised user |have different classification for tag to multiple contacts |have a finer classification by event
 
 |`* * *` |user |sort contacts by chronological order (most recently added) |keep track of my records
 
@@ -757,7 +757,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |type in intuitive commands(add, insert, put) |choose not to remember specific commands
 
-|`* * *` |user |delete multiple user by index |perform batch deletion
+|`* * *` |user |delete multiple users by index |perform batch deletion
 
 |`* * *` |user |delete users by name |choose not to search for the contact’s index before deletion
 
@@ -787,7 +787,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |careless user |specify number of times to undo/redo with in input parameter |save time
 
-|`* *` |user |get a list of contact that I removed (like a Recycle bin) |recover the accidentally deleted ones
+|`* *` |user |get a list of contacts that I removed (like a Recycle bin) |recover the accidentally deleted ones
 
 |`* *` |user |remove a contact permanently from the deleted contact list (like empty Recycle bin) |keep the contact list clean
 
@@ -908,29 +908,49 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Find contact by name/keyword
+=== Use case: Find contact by keywords
 
 *MSS*
 
-1.  User input command to find contacts: find [NAME/KEYWORD]
-2.  Address book shows a list of contacts with given name
+1.  User input command to find contacts: find [n/NAMES] [p/PHONES] [e/EMAILS] [a/ADDRESS]
+2.  Address book shows a list of contacts with at least one of the keywords provided
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. No name matches but keyword matches exist
+* 2a. No arguments are provided after the command word
 +
 [none]
-** 2a1. Address book notify users and display contacts with given keyword instead
+** 2a1. Address book shows user an incorrect input format message
 +
 Use case ends.
 
-* 2b. No name matches and keyword matches exist
+* 2b. No keywords are provided after a prefix
 +
 [none]
-** 2b1. Address book shows person not found message
+** 2b1. Address book shows user an incorrect input format message
++
+Use case ends.
+
+* 2c. Dummy values are provided before the first prefix
++
+[none]
+** 2c1. Address book shows user an incorrect input format message
++
+Use case ends.
+
+* 2d. User enters multiple same prefixes
++
+[none]
+** 2d1. Address book only shows contacts provided by keywords after the first prefix and ignores the rest
++
+Use case ends.
+
+* 2e. No contacts found by the given keywords
+[none]
+** 2e1. Address book shows an empty list message
 +
 Use case ends.
 
