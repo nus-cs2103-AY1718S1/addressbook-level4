@@ -42,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private CommandBox commandBox;
     private Config config;
     private UserPrefs prefs;
 
@@ -86,6 +87,14 @@ public class MainWindow extends UiPart<Region> {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    /**
+     * Set key listeners for handling keyboard shortcuts.
+     */
+    protected void setKeyListeners() {
+        KeyListener keyListener = new KeyListener(logic, this, personListPanel, commandBox);
+        keyListener.handleKeyPress();
     }
 
     private void setAccelerators() {
@@ -138,7 +147,7 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getRolodexFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -202,10 +211,6 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
     }
 
     void releaseResources() {

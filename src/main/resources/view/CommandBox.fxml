@@ -10,7 +10,7 @@
     <StackPane.margin>
       <Insets left="10.0" />
     </StackPane.margin></TextField>
-  <ImageView id="keyboardImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+  <ImageView id="keyboardImage" fx:id="keyboardIcon" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
     <StackPane.margin>
       <Insets left="10.0" right="20.0" />
     </StackPane.margin></ImageView>
