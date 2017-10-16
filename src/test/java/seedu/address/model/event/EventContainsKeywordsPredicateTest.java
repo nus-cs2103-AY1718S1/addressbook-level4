@@ -74,7 +74,7 @@ public class EventContainsKeywordsPredicateTest {
 
         // Keywords match date, time and venue, but does not match name
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
-        assertFalse(predicate.test(new EventBuilder().withEventName("Alice").withDateTime("12022016 08:30pm")
+        assertFalse(predicate.test(new EventBuilder().withEventName("Alice").withDateTime("12022016 08:30")
                 .withVenue("Main Street").build()));
     }
 }

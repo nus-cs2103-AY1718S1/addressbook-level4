@@ -17,7 +17,7 @@ public class EventTimeTest {
         assertFalse(EventTime.isValidTime("peter*")); // contains non-alphanumeric characters
 
         // valid name
-        assertTrue(EventTime.isValidTime("25122004 12:30pm")); // time with pm
-        assertTrue(EventTime.isValidTime("21032017 08:30am")); // time with am
+        assertTrue(EventTime.isValidTime("25122004 12:30"));
+        assertTrue(EventTime.isValidTime("21032017 08:30"));
     }
 }
