@@ -59,25 +59,11 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
         registerAsAnEventHandler(this);
-        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
+        ListingUnit currentListingUnit = ListingUnit.getCurrentListingUnit();
         FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
         setFontSizeUnit(currFontSize);
+        setListingUnit(currentListingUnit);
 
-        switch (currentUnit) {
-        case ADDRESS:
-            switchToAddressCard();
-            break;
-
-        case EMAIL:
-            switchToEmailCard();
-            break;
-
-        case PHONE:
-            switchToPhoneCard();
-            break;
-
-        default:
-        }
     }
 
     /**
@@ -217,6 +203,24 @@ public class PersonCard extends UiPart<Region> {
 
         default:
             break;
+        }
+    }
+
+    private void setListingUnit(ListingUnit currentUnit) {
+        switch (currentUnit) {
+        case ADDRESS:
+            switchToAddressCard();
+            break;
+
+        case EMAIL:
+            switchToEmailCard();
+            break;
+
+        case PHONE:
+            switchToPhoneCard();
+            break;
+
+        default:
         }
     }
 
