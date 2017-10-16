@@ -110,7 +110,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPressAlt() {
+    public void handleKeyPressShiftAlt() {
         //Shift-Alt shifts the caret all the way left
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -127,7 +127,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPressControl() {
+    public void handleKeyPressShiftControl() {
         //Shift-Alt shifts the caret all the way right
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
