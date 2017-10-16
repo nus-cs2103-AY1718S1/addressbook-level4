@@ -20,6 +20,8 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
+    public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -75,7 +77,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
+        String[] keywords = ALICE.getName().fullName.split(ONE_OR_MORE_SPACES_REGEX);
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 

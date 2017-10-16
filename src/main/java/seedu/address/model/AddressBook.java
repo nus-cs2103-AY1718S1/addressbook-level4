@@ -193,9 +193,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (blacklistedPersons.remove(key)) {
             return true;
-        } else {
-            throw new PersonNotFoundException();
         }
+        throw new PersonNotFoundException();
     }
 
     //// tag-level operations

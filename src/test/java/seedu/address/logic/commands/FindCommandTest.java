@@ -28,6 +28,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
+    public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -76,7 +78,7 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split(ONE_OR_MORE_SPACES_REGEX))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
