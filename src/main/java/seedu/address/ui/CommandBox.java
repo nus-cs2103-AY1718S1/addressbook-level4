@@ -18,6 +18,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import org.controlsfx.control.textfield.TextFields;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -43,6 +44,9 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private ImageView keyboardIcon;
 
+    private String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
+    "list", "redo", "select", "undo"};
+
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -50,6 +54,7 @@ public class CommandBox extends UiPart<Region> {
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        TextFields.bindAutoCompletion(commandTextField, commandList);
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
     }
