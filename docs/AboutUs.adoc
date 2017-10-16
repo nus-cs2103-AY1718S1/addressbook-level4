@@ -46,9 +46,9 @@ Responsibilities: Storage
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Javyn Thun
+image::javyn.jpg[width="150", align="left"]
+{empty}[http://github.com/JavynThun[github]] [<<javynthun#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI
