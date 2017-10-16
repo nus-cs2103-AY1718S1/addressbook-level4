@@ -1,21 +1,27 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Stream;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventDescription;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
 
 public class AddEventCommandParser implements Parser<AddEventCommand>{
 
-    @Override
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddEventCommand
+     * and returns an AddEventCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public AddEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_EVENT_DESCRIPTION,
@@ -25,7 +31,20 @@ public class AddEventCommandParser implements Parser<AddEventCommand>{
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddEventCommand.MESSAGE_USAGE));
         }
-        return null;
+
+        try {
+            EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME)).get();
+            EventDescription description = ParserUtil.parseEventDescription(
+                    argMultimap.getValue(PREFIX_EVENT_DESCRIPTION)).get();
+            EventTime time = ParserUtil.parseEventTime(argMultimap.getValue(PREFIX_EVENT_TIME)).get();
+
+            Event event = new Event(name, description, time);
+
+            return new AddEventCommand(event);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
     }
 
     /**
