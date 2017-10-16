@@ -19,7 +19,7 @@ public class Debt {
     /**
      * Validates given debt.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given debt string is invalid.
      */
     public Debt(String debt) throws IllegalValueException {
         requireNonNull(debt);
@@ -31,7 +31,7 @@ public class Debt {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person debt.
      */
     public static boolean isValidDebt(String test) {
         return test.matches(DEBT_VALIDATION_REGEX);

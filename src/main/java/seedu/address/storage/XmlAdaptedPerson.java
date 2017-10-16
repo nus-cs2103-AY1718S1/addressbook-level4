@@ -14,6 +14,7 @@ import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -38,6 +39,8 @@ public class XmlAdaptedPerson {
     private String postalCode;
     @XmlElement (required = true)
     private String debt;
+    @XmlElement (required = true)
+    private String interest;
     @XmlElement (required = true)
     private String dateBorrow;
     @XmlElement (required = true)
@@ -67,6 +70,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         postalCode = source.getPostalCode().value;
         debt = source.getDebt().value;
+        interest = source.getInterest().value;
         dateBorrow = source.getDateBorrow().value;
         deadline = source.getDeadline().value;
         dateRepaid = source.getDateRepaid().value;
@@ -92,11 +96,12 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final PostalCode postalCode = new PostalCode(this.postalCode);
         final Debt debt = new Debt(this.debt);
+        final Interest interest = new Interest(this.interest);
         final DateBorrow dateBorrow = new DateBorrow(this.dateBorrow);
         final Deadline deadline = new Deadline(this.deadline);
         final DateRepaid dateRepaid = new DateRepaid(this.dateRepaid);
         final Set<Tag> tags = new HashSet<>(personTags);
-        Person adaptedPerson = new Person(name, phone, email, address, postalCode, debt, deadline, tags);
+        Person adaptedPerson = new Person(name, phone, email, address, postalCode, debt, interest, deadline, tags);
         adaptedPerson.setDateBorrow(dateBorrow);
         adaptedPerson.setDateRepaid(dateRepaid);
         return adaptedPerson;
