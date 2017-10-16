@@ -46,7 +46,7 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToToggleFavourite = lastShownList.get(targetIndex.getZeroBased());
-        boolean newFavouriteStatus = !personToToggleFavourite.getStatus();
+        boolean newFavouriteStatus = !personToToggleFavourite.getFavouriteStatus().getStatus();
         Person favouriteToggledPerson = new Person(personToToggleFavourite.getName(),
                 personToToggleFavourite.getPhone(), personToToggleFavourite.getEmail(),
                 personToToggleFavourite.getAddress(), personToToggleFavourite.getRemark(),
@@ -68,7 +68,7 @@ public class FavouriteCommand extends UndoableCommand {
      * @return String that shows whether person was favourited or unfavourited
      */
     private String generateSuccessMessage(ReadOnlyPerson favouriteToggledPerson) {
-        if (favouriteToggledPerson.getStatus() == true) {
+        if (favouriteToggledPerson.getFavouriteStatus().getStatus()) {
             return String.format(MESSAGE_FAVOURITED_PERSON, favouriteToggledPerson);
         } else {
             return String.format(MESSAGE_UNFAVOURITED_PERSON, favouriteToggledPerson);
