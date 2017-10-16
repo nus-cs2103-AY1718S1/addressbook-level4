@@ -756,6 +756,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |group my debtors by location |plan my visit schedules easily
 
+|`* * *` |debt collector |have a debt field |store the amount of debt each Person has
+
+|`* * *` |debt collector |have a deadline field |keep track of the deadline of the Person's debt
+
+|`* * *` |debt collector |have a date borrowed field |
+
 |`* *` |security-concerned debt collector |have password protection to my account |have some security over confidential information
 
 |`* *` |efficient debt collector |have an automated journey scheduler |maximise my efficiency
