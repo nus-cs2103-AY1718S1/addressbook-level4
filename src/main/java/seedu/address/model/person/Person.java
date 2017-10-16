@@ -168,11 +168,18 @@ public class Person implements ReadOnlyPerson {
     
     @Override
     public boolean containTags(List<String> tagsList) {
+        int matchTagsCount = 0;
+        int numberOfKeywords = tagsList.size();
         for (Tag t : this.tags.get().toSet()) {
             boolean exist = tagsList.stream().anyMatch(tag -> t.tagName.equals(tag));
-            if (exist) { return true; }
+            if (exist) { matchTagsCount++; }
         }
-        return false;
+        
+        if (matchTagsCount == numberOfKeywords) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     @Override
