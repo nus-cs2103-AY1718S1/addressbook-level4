@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAPS_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAPS_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -186,7 +187,8 @@ public abstract class AddressBookSystemTest {
         String selectedCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_MAPS_URL_PREFIX + URLEncoder.encode(selectedCardAddress, "UTF-8"));
+            String encodedUrlAddress = URLEncoder.encode(selectedCardAddress, "UTF-8").replaceAll("%2C", ",");
+            expectedUrl = new URL(GOOGLE_MAPS_URL_PREFIX + encodedUrlAddress + GOOGLE_MAPS_URL_SUFFIX);
         } catch (MalformedURLException | UnsupportedEncodingException e) {
             throw new AssertionError("URL expected to be valid.");
         }
