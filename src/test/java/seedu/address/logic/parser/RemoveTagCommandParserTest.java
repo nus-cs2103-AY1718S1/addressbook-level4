@@ -10,7 +10,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveTagCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 public class RemoveTagCommandParserTest {
