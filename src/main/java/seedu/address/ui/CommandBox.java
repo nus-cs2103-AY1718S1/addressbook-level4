@@ -86,6 +86,10 @@ public class CommandBox extends UiPart<Region> {
         case CONTROL:
             commandTextField.positionCaret(commandTextField.getText().length());
             break;
+        case MINUS:
+            shiftCaretLeftByWord();
+        case EQUALS:
+            shiftCaretRightByWord();
         case RIGHT:
             boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
             if (isCaretWithin) {
@@ -113,6 +117,20 @@ public class CommandBox extends UiPart<Region> {
             }
         default:
         }
+    }
+
+    /**
+     * Shifts the caret left to the left of the first character of the next word
+     */
+    public void shiftCaretLeftByWord(){
+        
+    }
+
+    /**
+     * Shifts the caret right to the right of the last character of the next word
+     */
+    public void shiftCaretRightByWord(){
+
     }
 
     /**
