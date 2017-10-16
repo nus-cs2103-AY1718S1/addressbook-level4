@@ -47,8 +47,8 @@ public class RemoveTagCommandTest {
     /**
      * Generates a new {@code RemoveTagCommand} which upon execution, removes tag in {@code model}.
      */
-    private RemoveTagCommand prepareCommand(String tag) {
-        RemoveTagCommand command = new RemoveTagCommand(tag);
+    private RemoveTagCommand prepareCommand(String tag) throws IllegalValueException {
+        RemoveTagCommand command = new RemoveTagCommand(new Tag(tag));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

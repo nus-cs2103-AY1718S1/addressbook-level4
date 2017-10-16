@@ -3,11 +3,14 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
 
 public class RemoveTagCommandParserTest {
 
@@ -20,9 +23,11 @@ public class RemoveTagCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsRemoveTagCommand() throws ParseException {
+    public void parse_validArgs_returnsRemoveTagCommand() throws IllegalValueException {
         // no leading and trailing whitespaces
+        RemoveTagCommand expectedCommand = new RemoveTagCommand (new Tag("friends"));
         assertTrue(parser.parse("friends") instanceof RemoveTagCommand);
+        assertParseSuccess(parser, "friends", expectedCommand);
     }
 
 }

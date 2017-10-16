@@ -23,12 +23,12 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_NOT_DELETED = "Tag not deleted";
 
-    private final String toRemove;
+    private final Tag toRemove;
 
     /**
      * Creates an RemoveTagCommand to remove the specified {@code Tag}
      */
-    public RemoveTagCommand (String tag) {
+    public RemoveTagCommand (Tag tag) {
         this.toRemove = tag;
     }
 
@@ -36,15 +36,20 @@ public class RemoveTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.removeTag(new Tag(toRemove));
+            model.removeTag(toRemove);
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException e) {
             throw new CommandException(MESSAGE_NOT_DELETED);
-        } catch (IllegalValueException e) {
-            throw new CommandException(MESSAGE_NOT_DELETED);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RemoveTagCommand // instanceof handles nulls
+                && this.toRemove.equals(((RemoveTagCommand) other).toRemove)); // state check
     }
 
 }
