@@ -14,6 +14,7 @@ public class RedoCommand extends Command {
 
     public static final String COMMAND_ALIAS = "r";
     public static final String COMMAND_WORD = "redo";
+    public static final String COMMAND_USAGE = COMMAND_WORD;
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
