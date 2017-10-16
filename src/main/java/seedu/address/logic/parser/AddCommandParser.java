@@ -41,6 +41,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         try {
+            // TODO: Implement and use generic ParserUtil::parseProperty method here.
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();

@@ -22,6 +22,10 @@ public class ConfigCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Configuration changed: %1$s";
 
+    public ConfigCommand(String configType, String configValue) {
+
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
         return null;
