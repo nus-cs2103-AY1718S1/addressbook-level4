@@ -68,6 +68,8 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //=========== Model support for contact component =============================================================
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -87,12 +89,6 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void sortEventList() {
-        addressBook.sortEventList();
         indicateAddressBookChanged();
     }
 
@@ -117,6 +113,14 @@ public class ModelManager extends ComponentManager implements Model {
         Set<Tag> newTags = new HashSet<>(addressBook.getTagList());
         newTags.remove(tag);
         addressBook.setTags(newTags);
+    }
+
+    //=========== Model support for activity component =============================================================
+
+    @Override
+    public void sortEventList() {
+        addressBook.sortEventList();
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -147,6 +151,8 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //=========== Filtered Activity List Accessors =============================================================
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
