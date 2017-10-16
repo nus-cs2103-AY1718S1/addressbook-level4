@@ -20,6 +20,10 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<FormClass> formClassProperty();
+    FormClass getFormClass();
+    ObjectProperty<PostalCode> postalCodeProperty();
+    PostalCode getPostalCode();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -32,7 +36,9 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getFormClass().equals(this.getFormClass())
+                && other.getPostalCode().equals(this.getPostalCode()));
     }
 
     /**
@@ -41,15 +47,25 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
-                .append(" Tags: ");
+               .append(" Phone: ")
+               .append(getPhone())
+               .append(" Email: ")
+               .append(getEmail())
+               .append(" Address: ")
+               .append(getAddress())
+               .append(" FormClass: ")
+               .append(getFormClass())
+               .append(" PostalCode: ")
+               .append(getPostalCode())
+               .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    default String getTagsAsString() {
+        StringBuilder sb = new StringBuilder();
+        getTags().forEach(tag -> sb.append(tag.tagName + " "));
+        return sb.toString();
     }
 
 }
