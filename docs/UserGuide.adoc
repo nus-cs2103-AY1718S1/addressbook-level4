@@ -55,7 +55,21 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Alias: `h`
 
-Format: `help`
+Shows the usage of the specific command identified. If no command is specified, opens help window. +
+Format: `help [COMMAND_IDENTIFIER]`
+
+[TIP]
+A command identifier includes all existing commands and their aliases.
+
+[NOTE]
+You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`.
+
+Examples:
+
+* `help` (without command identifier)
+* `help add` (using command word)
+* `help a` (using alias)
+
 
 === Adding a person: `add`
 
@@ -65,7 +79,7 @@ Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 
 Examples:
 
