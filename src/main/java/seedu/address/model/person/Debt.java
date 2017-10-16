@@ -15,7 +15,7 @@ public class Debt {
             + "a positive integer or a positive number with two decimal places";
     // validation regex validates empty string. Check for presence of at least 1 digit is needed.
     public static final String DEBT_VALIDATION_REGEX = "^(?=.*\\d)\\d*(?:\\.\\d\\d)?$";
-    public final String value;
+    public String value;
 
     /**
      * Validates given debt.
@@ -41,8 +41,24 @@ public class Debt {
     /**
      * Returns the double value represented by the string {@code value}
      */
-    public double toNumber() {
+    public double toNumber(String value) {
         return Double.valueOf(value);
+    }
+
+    /**
+     * Adds the indicated amount to debt
+     */
+    public void addToDebt(String amount) {
+        Double newValue = toNumber(value) + toNumber(amount);
+        value = Double.toString(newValue);
+    }
+
+    /**
+     * Deducts an indicated amount from debt
+     */
+    public void deductFromDebt(String amount) {
+        Double newValue = toNumber(value) + toNumber(amount);
+        value = Double.toString(newValue);
     }
 
     @Override
