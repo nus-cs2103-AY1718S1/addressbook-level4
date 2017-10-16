@@ -18,6 +18,9 @@ public class FavouriteStatus {
     public boolean getStatus() {
         return isFavourite;
     }
+    
+    @Override
+    public String toString() { return (isFavourite ? "Favourite" : ""); }
 
     @Override
     public boolean equals(Object other) {
