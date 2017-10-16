@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConTag - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -181,6 +181,26 @@ Locates the 2nd person's address in the address book.
 * `find Betsy` +
 `select 1` +
 Locates the 1st person's address in the results of the `find` command.
+
+=== Scheduling an activity: `schedule` [Coming in v2.0]
+
+Alias: `sc`
+
+Schedules an activity with a person in the contact list. +
+Format: `schedule INDEX d/DATE act/ACTIVITY
+
+****
+* DATE must follow DD-MM-YYYY or DD-MM format
+****
+
+Examples:
+
+* `list` +
+`schedule 3 d/15-01-2018 act/Play basketball` +
+Associates the specified schedule with the 3rd person in the address book.
+* `find Betsy` +
+`schedule 1 d/07-12-2019` +
+Associates the specified schedule with the 1st person in the results of the `find` command.
 
 === Getting email addresses : `copy` [Coming in v2.0]
 
