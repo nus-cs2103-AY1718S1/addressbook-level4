@@ -12,11 +12,10 @@ public class Phone {
 
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Users are to label their numbers with HP: (HandPhone number) H: (Home number) or O: (Office number)\n "
-                    + "For example, HP: 91234567 H: 97287288 O: 34987987.\n "
-                    + "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "(?=(?:.*\\d){3})"
-            + "(student/)[0-9]+( parent/)[0-9]+";
+            "Users are to enter their numbers in this format, p/ student/(student number) parent/(parent number)\n"
+                    + "For example, p/ student/97271111 parent/97979797\n"
+                    + "Phone numbers can only contain numbers, and should be exactly 8 digits";
+    public static final String PHONE_VALIDATION_REGEX = "(student/)(\\d\\d\\d\\d\\d\\d\\d\\d)( parent/)(\\d\\d\\d\\d\\d\\d\\d\\d)";
     public final String value;
 
     /**

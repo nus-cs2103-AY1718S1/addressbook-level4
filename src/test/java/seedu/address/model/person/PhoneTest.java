@@ -12,25 +12,18 @@ public class PhoneTest {
         // invalid phone numbers
         assertFalse(Phone.isValidPhone("")); // empty string
         assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("91")); // less than 3 numbers
-        assertFalse(Phone.isValidPhone("phone")); // non-numeric
-        assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
-        assertFalse(Phone.isValidPhone("HIP: 9011041")); // Incorrect phone type
-        assertFalse(Phone.isValidPhone("HOP: 9011041 Oll: 9893898 Hm: 971897")); // multiple incorrect phone type
-        assertFalse(Phone.isValidPhone("H: 911        ")); // consecutive whitespaces
-        assertFalse(Phone.isValidPhone("!@@#$#@$#@{}")); // random symbols
-
+        assertFalse(Phone.isValidPhone("student/97272031 parent/9797979")); // parent do not have exactly 8 digit
+        assertFalse(Phone.isValidPhone("student/9727 parent/979")); // both do not have exactly 8 digit
+        assertFalse(Phone.isValidPhone("student/9727 parent/97979797")); // student do not have exactly 8 digit
+        assertFalse(Phone.isValidPhone("student:97272031 parent:97979797")); // use : instead of /
+        assertFalse(Phone.isValidPhone("studen/97272031 paret/97979797")); // wrong labelling
+        assertFalse(Phone.isValidPhone("student/97272031   parent/97979797")); // consecutive whitespaces
+        assertFalse(Phone.isValidPhone("!@@#$#@$#@{}")); // random symbol
+        assertFalse(Phone.isValidPhone("student/972jb72031 parent/97jhb979797")); // alphanumeric numbers
+        assertFalse(Phone.isValidPhone("student/gfxgfx parent/gfxgfxgfx")); // purely alphabets
 
         // valid phone numbers
-        assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
-        assertTrue(Phone.isValidPhone("93121534"));
-        assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
-        assertTrue(Phone.isValidPhone("9312 981234 981534 17234")); // multiple numbers without labels
-        assertTrue(Phone.isValidPhone("HP: 928782711")); // hand phone number
-        assertTrue(Phone.isValidPhone("O: 9134343431")); // office number
-        assertTrue(Phone.isValidPhone("H: 911")); // house number
-        assertTrue(Phone.isValidPhone("O: 911 H: 972727 HP: 9234817")); // multiple numbers with different labels
-        assertTrue(Phone.isValidPhone("H: 916541 H: 916541 H: 965411 H: 965411")); // multiple numbers with same labels
-        assertTrue(Phone.isValidPhone("916541 H: 916541 HP: 965411")); // mixture of numbers with and without labels
+        assertTrue(Phone.isValidPhone("student/97272031 parent/97979797")); // exactly 8 numbers
+        assertTrue(Phone.isValidPhone("student/87272111 parent/87767988")); // another set of exact 8 digit numbers
     }
 }
