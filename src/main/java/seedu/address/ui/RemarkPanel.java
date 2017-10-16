@@ -32,7 +32,7 @@ public class RemarkPanel extends UiPart<Region> {
         remarkPanel.textProperty().bind(displayed);
 
         registerAsAnEventHandler(this);
-        remarkPanel.setStyle("-fx-text-fill:" + "black");
+        remarkPanel.setStyle("-fx-text-fill:" + "white");
     }
 
     @Subscribe
