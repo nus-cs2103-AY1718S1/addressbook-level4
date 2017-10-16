@@ -26,19 +26,23 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+        //Throw an error if there is no argument followed by the command word
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+        //Get the index range of different keywords (distinguished by attributes) from trimmedArgs
         int indexOfName = trimmedArgs.indexOf(PREFIX_NAME.getPrefix());
         int indexOfPhone = trimmedArgs.indexOf(PREFIX_PHONE.getPrefix());
         int indexOfEmail = trimmedArgs.indexOf(PREFIX_EMAIL.getPrefix());
         int indexOfAddress = trimmedArgs.indexOf(PREFIX_ADDRESS.getPrefix());
+        //Throw an error if there is no prefixes to specify the type of the keywords
         if ((indexOfName == -1) && (indexOfPhone == -1) && (indexOfEmail == -1) && (indexOfAddress == -1)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
         String symbolAtStart = trimmedArgs.substring(0, 2);
+        //Throw an error if there is some dummy values before the first prefix after the command word
         if ((!symbolAtStart.equals(PREFIX_NAME.getPrefix())) && (!symbolAtStart.equals(PREFIX_PHONE.getPrefix()))
                 && (!symbolAtStart.equals(PREFIX_EMAIL.getPrefix()))
                 && (!symbolAtStart.equals(PREFIX_ADDRESS.getPrefix()))) {
@@ -47,7 +51,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
         int[] attributeIndexArray = {indexOfName, indexOfPhone, indexOfEmail, indexOfAddress, trimmedArgs.length()};
         Arrays.sort(attributeIndexArray);
-
+        //Put different types of keywords into separate strings
         String trimmedNames = null;
         if (indexOfName != -1) {
             int index = 0;
@@ -58,6 +62,8 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
             }
             trimmedNames = trimmedArgs.substring(indexOfName + 2, attributeIndexArray[index + 1]).trim();
+            //Throw an error if there is no keyword provided for the specified type of attribute.
+            //Same below.
             if (trimmedNames.equals("")) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -111,7 +117,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
             }
         }
-
+        //Add all the keywords to a list distinguished by prefixes in order to parse them to FindCommand class
         List<String> keyWordsToSearch = new ArrayList<>();
 
         if (trimmedNames != null) {
@@ -150,7 +156,6 @@ public class FindCommandParser implements Parser<FindCommand> {
         for (int i = 0; i < parameters.length; i++) {
             parameters[i] = keyWordsToSearch.get(i);
         }
-
         NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList(parameters));
         return new FindCommand(predicate);
     }
