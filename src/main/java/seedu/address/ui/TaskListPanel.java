@@ -1,4 +1,4 @@
-import java.util.logging.Logger;
+/*import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -17,7 +17,7 @@ import seedu.address.ui.UiPart;
 /**
  * Panel containing the list of tasks.
  */
-public class TaskListPanel extends UiPart<Region> {
+/*public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(seedu.address.ui.TaskListPanel.class);
 
@@ -37,4 +37,5 @@ public class TaskListPanel extends UiPart<Region> {
         personListView.setCellFactory(listView -> new PersonListPanel.PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
+}*/
 
