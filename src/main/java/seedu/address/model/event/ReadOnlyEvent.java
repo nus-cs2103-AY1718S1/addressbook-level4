@@ -22,9 +22,7 @@ public interface ReadOnlyEvent {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getEName().equals(this.getEName()) // state checks here onwards
-                && other.getDesc().equals(this.getDesc())
                 && other.getETime().equals(this.getETime())
-                && other.getParticipants().equals(this.getParticipants()));
     }
 
     /**
