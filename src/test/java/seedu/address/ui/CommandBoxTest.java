@@ -127,6 +127,90 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void handleKeyPressAlt() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 1. No input retains Caret position
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 2. Empty spaces only input shifts Caret all the way left
+        guiRobot.write("         ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 3. Caret at end of word - Shifts to left side of word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 4, Caret between a word - Gets shifted to the left of current word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("101010101010");
+        mySandBox.positionCaret(mySandBox.getText().length()/2);
+        assertFalse(mySandBox.getCaretPosition() ==0);
+        assertFalse(mySandBox.getCaretPosition()==mySandBox.getText().length());
+        guiRobot.push(KeyCode.ALT);
+        assertFalse(mySandBox.getCaretPosition()==mySandBox.getText().length());
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 5, Word followed by space - Shifts caret immediately to beginning of word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("101010");
+        guiRobot.write("     ");
+        assertFalse(mySandBox.getCaretPosition() ==0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 6, Spaces followed by words - Shifts caret to beginning of word but after spaces
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("     ");
+        guiRobot.write("101010");
+        assertFalse(mySandBox.getCaretPosition() ==0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 5);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 7, Shortcut works for other non-alphabet strings
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("  (*&^%$ 9876543 <>?:{}|  ");
+        assertTrue(mySandBox.getCaretPosition() == 26);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 17);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 9);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 2);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+    }
+
+    @Test
     public void handleKeyPressShiftControl() {
         //Shift-Alt shifts the caret all the way right
         //Extracts the textfield. Needed to use the caret related methods
