@@ -1,6 +1,6 @@
-package seedu.address.logic.commands.configCommands;
+package seedu.address.logic.commands.configs;
 
-import static seedu.address.logic.commands.configCommands.ConfigCommand.ConfigType.TAG_COLOR;
+import static seedu.address.logic.commands.configs.ConfigCommand.ConfigType.TAG_COLOR;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;

@@ -1,12 +1,10 @@
-package seedu.address.logic.commands.configCommands;
+package seedu.address.logic.commands.configs;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIG_TYPE;
 
 import java.util.HashMap;
 
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Customizes the configuration of the application.
@@ -25,16 +23,19 @@ public abstract class ConfigCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Configuration changed: %1$s";
 
+    /**
+     * Different types of sub-commands within {@link ConfigCommand}.
+     */
     public enum ConfigType {
         ADD_PROPERTY, IMPORT_CALENDAR, TAG_COLOR,
     }
 
-    public static final HashMap<String, ConfigType> toEnumConfigType = new HashMap<>();
+    public static final HashMap<String, ConfigType> TO_ENUM_CONFIG_TYPE = new HashMap<>();
 
     static {
-        toEnumConfigType.put("add-property", ConfigType.ADD_PROPERTY);
-        toEnumConfigType.put("set-tag-color", ConfigType.TAG_COLOR);
-        toEnumConfigType.put("import-calendar", ConfigType.IMPORT_CALENDAR);
+        TO_ENUM_CONFIG_TYPE.put("add-property", ConfigType.ADD_PROPERTY);
+        TO_ENUM_CONFIG_TYPE.put("set-tag-color", ConfigType.TAG_COLOR);
+        TO_ENUM_CONFIG_TYPE.put("import-calendar", ConfigType.IMPORT_CALENDAR);
     }
 
     private ConfigType configType;

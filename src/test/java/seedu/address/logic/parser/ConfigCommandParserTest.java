@@ -9,8 +9,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.configCommands.AddPropertyCommand;
-import seedu.address.logic.commands.configCommands.ChangeTagColorCommand;
+import seedu.address.logic.commands.configs.AddPropertyCommand;
+import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 
 public class ConfigCommandParserTest {
     private ConfigCommandParser parser = new ConfigCommandParser();
@@ -21,6 +21,7 @@ public class ConfigCommandParserTest {
                 new ChangeTagColorCommand("husband #7db9a1", "husband", "#7db9a1"));
 
         assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_CONFIG_NEW_PROPERTY,
-                new AddPropertyCommand("1"));
+                new AddPropertyCommand(VALID_CONFIG_NEW_PROPERTY, "b", "birthday",
+                        "something", "[^\\s].*"));
     }
 }

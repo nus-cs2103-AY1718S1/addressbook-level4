@@ -9,8 +9,8 @@ import java.util.Optional;
 /**
  * Stores mapping of prefixes to their respective arguments. Each key may be associated with multiple argument values.
  * Values for a given key are stored in a list, and the insertion ordering is maintained. Keys are unique, but the list
- * of argument values allows it to contain duplicate argument values, i.e. the same argument value can be inserted multiple
- * times for the same prefix.
+ * of argument values allows it to contain duplicate argument values, i.e. the same argument value can be inserted
+ * multiple times for the same prefix.
  */
 public class ArgumentMultimap {
 

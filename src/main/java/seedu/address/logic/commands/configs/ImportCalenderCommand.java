@@ -1,12 +1,12 @@
-package seedu.address.logic.commands.configCommands;
+package seedu.address.logic.commands.configs;
 
-import static seedu.address.logic.commands.configCommands.ConfigCommand.ConfigType.IMPORT_CALENDAR;
+import static seedu.address.logic.commands.configs.ConfigCommand.ConfigType.IMPORT_CALENDAR;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Imports an external calendar from a URL of iCal format.
+ * Imports an external calendar from a URL of ICS/iCal format.
  */
 public class ImportCalenderCommand extends ConfigCommand {
     public ImportCalenderCommand(String configValue) {
