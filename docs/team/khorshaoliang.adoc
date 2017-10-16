@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/KhorSL/main[Functional code]] [https://github.com/KhorSL/main[Test code]]
 
 === Enhancement Added: Add multiple persons from `.txt` file
 
@@ -20,6 +20,12 @@ include::../UserGuide.adoc[tag=multiple]
 #End of Extract#
 
 ---
+
+==== Justification
+
+Adding multiple persons will aid users (e.g. tutors) who need to add multiple persons,
+and it would be too tedious to add them one by one.
+With the new feature implemented it would improve such users convenience in using the software.
 
 === Enhancement Added: Find persons by name, tags and email
 
@@ -36,7 +42,7 @@ include::../UserGuide.adoc[tag=find]
 
 ==== Justification
 
-Adding multiple persons will aid users (e.g. tutors) who need to add multiple persons, and it would be too tedious to add them one by one. With the new feature implemented it would improve such users convenience in using the software.
+Allowing users to find persons based on tags will allow users to know the relationship with their contact.
 
 == Project: GoPost!
 
