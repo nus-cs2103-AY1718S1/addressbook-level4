@@ -76,11 +76,13 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(outputCorrectTypeOfSuccessMessage(editedPerson));
     }
 
+    /**
+     * Checks if
+     * (a) Object is the same object
+     * (b) Object is an instance of the object and that personIndex and remarkString are the same
+     */
     @Override
     public boolean equals(Object other) {
-        // Check if
-        // (a) Object is the same object
-        // (b) Object is an instance of the object and that personIndex and remarkString are the same
         return other == this // short circuit if same object
                 || (other instanceof RemarkCommand // instanceof handles nulls
                 && this.personIndex.equals(((RemarkCommand) other).personIndex))

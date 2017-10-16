@@ -26,23 +26,18 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
-        //Have to initialize this here else you can't pass as argument in return line
         Index indexInput;
 
-        //If prefix is not present, throw exception and correct user
-        // by showing invalid command format and correct message usage
         if (!isPrefixPresent(argMultimap, PREFIX_REMARK)) {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
         }
         try {
-            //Tries to obtain int input and outputs ive if input is not a number
             indexInput = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        //Get value of input remark if any. If no input remarks, remarks saved as empty string ""
         String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
 
         return new RemarkCommand(indexInput, new Remark(remark));
