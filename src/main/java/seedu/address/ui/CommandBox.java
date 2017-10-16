@@ -67,6 +67,17 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
+        if (keyEvent.isShiftDown()) {
+            handleShiftPress(keyEvent);
+        } else {
+            handleStandardPress(keyEvent);
+        }
+    }
+
+    /**
+     * Handles KeyPress Commands that are not keyed with Shift button held down
+     */
+    private void handleStandardPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
         case UP:
             keyEvent.consume();
@@ -80,15 +91,11 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setText("");
             break;
         case ALT:
-            commandTextField.positionCaret(0);
+            shiftCaretLeftByWord();
             break;
         case CONTROL:
-            commandTextField.positionCaret(commandTextField.getText().length());
-            break;
-        case MINUS:
-            shiftCaretLeftByWord();
-        case EQUALS:
             shiftCaretRightByWord();
+            break;
         case RIGHT:
             boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
             if (isCaretWithin) {
@@ -102,23 +109,38 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Handles KeyPress Commands that are keyed with Shift button held down
+     */
+    private void handleShiftPress(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+            case ALT:
+                commandTextField.positionCaret(0);
+                break;
+            case CONTROL:
+                commandTextField.positionCaret(commandTextField.getText().length());
+                break;
+            default:
+        }
+    }
+
+    /**
      * Shifts the caret left to the left of the first character of the next word
      */
-    public void shiftCaretLeftByWord(){
-        
+    private void shiftCaretLeftByWord() {
+
     }
 
     /**
      * Shifts the caret right to the right of the last character of the next word
      */
-    public void shiftCaretRightByWord(){
+    private void shiftCaretRightByWord() {
 
     }
 
     /**
      * Adds the next prefix required for the input
      */
-    public void addsNextPrefix(){
+    private void addsNextPrefix() {
         String finalText;
         if (containsPrefix("name")) {
             finalText = concatPrefix(PREFIX_NAME);
@@ -145,18 +167,18 @@ public class CommandBox extends UiPart<Region> {
      */
     private boolean containsPrefix(String element) {
         switch (element) {
-        case "name":
-            return (!containsName() && addPollSuccessful());
-        case "phone":
-            return (!containsPhone() && addPollSuccessful());
-        case "email":
-            return (!containsEmail() && addPollSuccessful());
-        case "address":
-            return (!containsAddress() && addPollSuccessful());
-        case "bloodtype":
-            return (!containsBloodtype() && addPollSuccessful());
-        default:
-            return (containsAllCompulsoryPrefix() && addPollSuccessful());
+            case "name":
+                return (!containsName() && addPollSuccessful());
+            case "phone":
+                return (!containsPhone() && addPollSuccessful());
+            case "email":
+                return (!containsEmail() && addPollSuccessful());
+            case "address":
+                return (!containsAddress() && addPollSuccessful());
+            case "bloodtype":
+                return (!containsBloodtype() && addPollSuccessful());
+            default:
+                return (containsAllCompulsoryPrefix() && addPollSuccessful());
 
         }
     }
