@@ -18,4 +18,5 @@
    <Text fx:id="commandTextLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
    <Text fx:id="commandTextXLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
   <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." StackPane.alignment="CENTER_LEFT" />
+   <Label fx:id="checkbox" text="Label" StackPane.alignment="CENTER_RIGHT" />
 </StackPane>

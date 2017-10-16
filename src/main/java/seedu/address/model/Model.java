@@ -11,6 +11,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.predicates.FavourListPredicate;
 
 
 /**
@@ -29,6 +30,9 @@ public interface Model {
     /** Get a hash set of all the distinct Phones */
     HashSet<Phone> getUniquePhonePersonSet();
 
+    /** Get a predicate for filtering favourList */
+    FavourListPredicate getFavourListPredicate();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -37,6 +41,9 @@ public interface Model {
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Collects the given person. */
+    void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException;
 
     /** Deletes the given list of person. */
     void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException;

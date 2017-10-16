@@ -20,6 +20,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.predicates.FavourListPredicate;
 import seedu.address.model.person.predicates.UniqueAddressPredicate;
 import seedu.address.model.person.predicates.UniqueEmailPredicate;
 import seedu.address.model.person.predicates.UniquePhonePredicate;
@@ -34,6 +35,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    private final HashSet<ReadOnlyPerson> favourList;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -45,6 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        favourList = new HashSet<ReadOnlyPerson>();
     }
 
     public ModelManager() {
@@ -94,6 +98,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public FavourListPredicate getFavourListPredicate() {
+        return new FavourListPredicate(favourList);
+    }
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
@@ -113,6 +122,15 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException {
+        if (!favourList.contains(target)) {
+            favourList.add(target);
+        } else {
+            throw new DuplicatePersonException();
+        }
     }
 
     @Override
