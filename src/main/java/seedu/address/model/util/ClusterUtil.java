@@ -26,7 +26,7 @@ public class ClusterUtil {
     public static final String CLUSTER_POSTAL_DISTRICT_16 = "Bedok, Upper East Coast, Eastwood, Kew Drive";
     public static final String CLUSTER_POSTAL_DISTRICT_17 = "Loyang, Changi";
     public static final String CLUSTER_POSTAL_DISTRICT_18 = "Tampines, Pasir Ris";
-    public static final String CLUSTER_POSTAL_DISTRICT_19 = "Serangoon Garden, Hougang, Ponggol";
+    public static final String CLUSTER_POSTAL_DISTRICT_19 = "Serangoon Garden, Hougang, Punggol";
     public static final String CLUSTER_POSTAL_DISTRICT_20 = "Bishan, Ang Mo Kio";
     public static final String CLUSTER_POSTAL_DISTRICT_21 = "Upper Bukit Timah, Clementi Park, Ulu Pandan";
     public static final String CLUSTER_POSTAL_DISTRICT_22 = "Jurong";
