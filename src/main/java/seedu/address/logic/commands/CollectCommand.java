@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 /**
  * Collects a person identified using it's last displayed index from the address book into the favor list.
  */
-public class CollectCommand extends UndoableCommand {
+public class CollectCommand extends Command{
 
     public static final String COMMAND_WORD = "collect";
 
@@ -35,7 +35,7 @@ public class CollectCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
