@@ -150,6 +150,13 @@ public class Person implements ReadOnlyPerson {
         this.setAddress(replacement.getAddress());
         this.setRemark(replacement.getRemark());
         this.setTags(replacement.getTags());
+
+     /**
+      * Remove a tag from the person's tag list.
+      */
+    public boolean removeTag(Tag tagGettingRemoved) {
+        UniqueTagList tagsList = tags.get();
+        return tagsList.removeTag(tagGettingRemoved);
     }
 
     @Override

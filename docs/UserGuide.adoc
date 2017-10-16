@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F10-B1/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -216,6 +216,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Clearing command history : `clearhistory`
+
+Clears the command history. +
+Format: `clearhistory`
+
+[WARNING]
+====
+After the command history is cleared, you will not be able to undo any previous commands.
+====
 
 === Exiting the program : `exit`
 
