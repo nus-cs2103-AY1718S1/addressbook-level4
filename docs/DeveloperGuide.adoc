@@ -747,6 +747,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |rename any field |update my relationship with contact
 
+|`* *` |user |check the usage of commands easily |it will save time and energy on my end
+
 |`* *` |user |view the location of an address on google maps |make plans to travel there
 
 |`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
