@@ -74,6 +74,9 @@ public class RemarkCommand extends UndoableCommand {
 
     /**
      * Generate a new person with all attributes from the readonly person, but add or change remark
+     * @param person Readonly person to be remarked/editted
+     * @param remark new Remark object to be insert
+     * @return a new Readonly person with the remark object
      */
     private Person addOrChangeRemark(ReadOnlyPerson person, Remark remark) {
         Name updatedName = person.getName();

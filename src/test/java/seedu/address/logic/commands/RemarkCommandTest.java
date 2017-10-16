@@ -1,4 +1,4 @@
-//@@author
+//@@author giang
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertTrue;

@@ -19,14 +19,13 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     public UndoCommand parse(String args) throws ParseException {
         if (args.isEmpty()) {
             return new UndoCommand();
+        } else if (args.equals(" all")) {
+            return new UndoCommand(Integer.MAX_VALUE);
         } else {
             try {
                 int steps = ParserUtil.parseInt(args);
                 return new UndoCommand(steps);
             } catch (IllegalValueException ive) {
-                if (args.equals(" all")) {
-                    return new UndoCommand(Integer.MAX_VALUE);
-                }
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
             }
