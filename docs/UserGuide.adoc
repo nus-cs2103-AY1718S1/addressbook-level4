@@ -140,10 +140,11 @@ Deletes the 1st person in the results of the `find` command.
 === Deleting a tag : `removetag`
 
 Removes a tag from every person in the list in the address book. +
-Format: `removetag TAGNAME`
+Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
 
 ****
-Option to remove a tag for selected people coming soon in V2.0
+removetag command available since v1.1 +
+Option to remove a tag for selected people since V1.2
 
 ****
 
@@ -157,6 +158,11 @@ Examples:
 * `list` +
 `removetag friends` +
 Deletes the tag `friends` from everyone in the address book.
+
+* `list` +
+`find John` +
+`removetag 1 enemy` +
+Deletes tag `enemy` from the first person in the list shown in the address book.
 
 === Sorting the list: `sort`
 
@@ -276,8 +282,9 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *RemoveTag* : `removetag TAGNAME` +
-e.g `removetag friends`
+* *RemoveTag* : `removetag TAGNAME` or `removetag INDEX TAGNAME` +
+e.g `removetag friends` +
+e.g `removetag 3 enemy`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
