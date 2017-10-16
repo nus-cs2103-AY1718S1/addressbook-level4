@@ -130,9 +130,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean sortByPersonName(ArrayList<ReadOnlyPerson> contactList) throws NullPointerException {
+        public ObservableList<ReadOnlyPerson> sortByPersonName() throws NullPointerException {
             fail("This method should not be called.");
-            return false;
+            return getFilteredPersonList();
         }
 
         @Override
