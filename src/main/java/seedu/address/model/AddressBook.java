@@ -163,9 +163,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    public void removeTag(Tag t) throws TagNotFoundException {
+    /*public void removeTag(Tag t) throws TagNotFoundException {
         tags.remove(t);
-    }
+    }*/
 
     /**
      * Remove {@code oldTag} from list of person stated by {@code indices} from
