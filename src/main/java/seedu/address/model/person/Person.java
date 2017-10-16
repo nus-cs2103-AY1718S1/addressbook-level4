@@ -119,7 +119,6 @@ public class Person implements ReadOnlyPerson {
     public DateOfBirth getDateOfBirth() {
         return dob.get();
     }
-  
     public String getReason() {
         Address a = this.getAddress();
         Name n = this.getName();
