@@ -13,7 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #FormatDate(String)}
  */
 public class StartDate extends TaskDates {
-    
+
     public final Date date;
 
     /**
@@ -26,7 +26,7 @@ public class StartDate extends TaskDates {
         String trimmedDate = date.trim();
         this.date = FormatDate(trimmedDate);
     }
-    
+
     public StartDate(Date date) {
         this.date = date;
     }

@@ -60,7 +60,7 @@ public class Task implements ReadOnlyTask {
     }
 
     public void setDeadline(Deadline deadline) {
-        
+
         this.deadline.set(requireNonNull(deadline));
     }
 

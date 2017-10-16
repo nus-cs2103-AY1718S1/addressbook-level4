@@ -86,7 +86,7 @@ public class UniqueTaskList implements Iterable<Task> {
     }
 
     public void setTasks(UniqueTaskList replacement) {
-        
+
         this.internalList.setAll(replacement.internalList);
     }
 
@@ -107,7 +107,7 @@ public class UniqueTaskList implements Iterable<Task> {
 
     @Override
     public Iterator<Task> iterator() {
-        
+
         return internalList.iterator();
     }
 
@@ -120,7 +120,7 @@ public class UniqueTaskList implements Iterable<Task> {
 
     @Override
     public int hashCode() {
-        
+
         return internalList.hashCode();
     }
 

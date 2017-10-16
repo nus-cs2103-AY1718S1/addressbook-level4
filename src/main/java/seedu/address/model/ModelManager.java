@@ -180,4 +180,5 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredTasks.equals(other.filteredTasks);
     }
+
 }

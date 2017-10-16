@@ -10,9 +10,9 @@ import javafx.scene.layout.Region;
 public class TaskCard extends UiPart<Region> {
 
     private static final String FXML = "TaskListCard.fxml";
-    
+
     public final ReadOnlyTask task;
-    
+
     @FXML
     private ListView taskPane;
 
@@ -34,7 +34,7 @@ public class TaskCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         bindListeners(task);
     }
-    
+
     /**
      * Binds the individual UI elements to observe their respective {@code Task} properties
      * so that they will be notified of any changes.

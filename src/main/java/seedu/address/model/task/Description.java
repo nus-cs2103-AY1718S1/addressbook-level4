@@ -18,7 +18,7 @@ public class Description {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String DESCRIPTION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-    
+
     public final String taskDescription;
 
     /**

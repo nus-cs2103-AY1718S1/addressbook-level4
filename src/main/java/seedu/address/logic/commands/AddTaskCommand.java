@@ -19,17 +19,17 @@ public class AddTaskCommand extends UndoableCommand {
             + "DESCRIPTION "
             + PREFIX_START_DATE + "START DATE(dd-MM-yy) "
             + PREFIX_DEADLINE + "DEADLINE DATE(dd-MM-yy) ";
-    
+
     public static final String MESSAGE_SUCCESS = "Task has been added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book";
-    
+
     private final Task toAdd;
 
     /**
      * Creates an AddTaskCommand to add the specified {@code ReadOnlyTask}
      */
     public AddTaskCommand(ReadOnlyTask task) {
-        
+   
         toAdd = new Task(task);
     }
 

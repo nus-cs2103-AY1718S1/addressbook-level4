@@ -65,7 +65,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
-    
+
     public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
         this.tasks.setTasks(tasks);
     }
@@ -175,12 +175,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
-    
+
     ////task-level operations
 
     /**
      * Adds a task to the address book.
-     * 
+     *
      * @throws DuplicateTaskException if an equivalent task already exists.
      */
     public void addTask(ReadOnlyTask t) throws DuplicateTaskException {
@@ -225,7 +225,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new TaskNotFoundException();
         }
     }
-    
+
     //// util methods
 
     @Override
