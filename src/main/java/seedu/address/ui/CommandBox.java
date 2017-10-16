@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -79,32 +80,32 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleStandardPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            keyEvent.consume();
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        case ESCAPE:
-            commandTextField.setText("");
-            break;
-        case ALT:
-            shiftCaretLeftByWord();
-            break;
-        case CONTROL:
-            shiftCaretRightByWord();
-            break;
-        case RIGHT:
-            boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
-            if (isCaretWithin) {
+            case UP:
+                keyEvent.consume();
+                navigateToPreviousInput();
                 break;
-            } else {
-                addsNextPrefix();
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
                 break;
-            }
-        default:
+            case ESCAPE:
+                commandTextField.setText("");
+                break;
+            case ALT:
+                shiftCaretLeftByWord();
+                break;
+            case CONTROL:
+                shiftCaretRightByWord();
+                break;
+            case RIGHT:
+                boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
+                if (isCaretWithin) {
+                    break;
+                } else {
+                    addsNextPrefix();
+                    break;
+                }
+            default:
         }
     }
 
@@ -125,9 +126,27 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Shifts the caret left to the left of the first character of the next word
+     * <p>
+     * 1. If Caret is at far left, break
+     * <p>
+     * 2. If Char is present on left of Caret, shift left until
+     * a) Caret is at far left or
+     * b) "_" is found
+     * <p>
+     * 3. If "_" is present on left of Caret, shift left until 2 Condition holds
+     * Run Step 2
      */
     private void shiftCaretLeftByWord() {
-
+        int newCaretPosition = commandTextField.getCaretPosition();
+        if (newCaretPosition == 0) {
+            return;
+        } else if (isEmptyBefore(newCaretPosition)) {
+            newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
+            newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
+        } else {
+            newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
+        }
+        commandTextField.positionCaret(newCaretPosition);
     }
 
     /**
@@ -136,6 +155,51 @@ public class CommandBox extends UiPart<Region> {
     private void shiftCaretRightByWord() {
 
     }
+
+    /**
+     * Shifts the caret left, ignoring all empty spaces
+     * <p>
+     * Pre-Condition 1: Current caret position must have an empty space string on the left.
+     * It must never be called if there is a possibility of the string before
+     * it being not an empty space
+     * <p>
+     * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
+     * of it being 0
+     */
+    private int shiftLeftIgnoringSpaces(int newCaretPosition) {
+        int caretHolder = newCaretPosition;
+        for (int i = caretHolder; i > 0; i--) {
+            if (!isEmptyBefore(caretHolder)) {
+                break;
+            }
+            caretHolder -= 1;
+        }
+        return caretHolder;
+    }
+
+    /**
+     * Shifts the caret left, ignoring all char
+     */
+    private int shiftLeftIgnoringWords(int newCaretPosition) {
+        int caretHolder = newCaretPosition;
+        for (int i = caretHolder; i > 0; i--) {
+            if (isEmptyBefore(caretHolder)) {
+                break;
+            }
+            caretHolder -= 1;
+        }
+        return caretHolder;
+    }
+
+    /**
+     * Returns true if string element before currentCaretPosition index is empty
+     */
+    private boolean isEmptyBefore(int currentCaretPosition) {
+        Character charBefore = commandTextField.getText().charAt(currentCaretPosition - 1);
+        String convertToString = Character.toString(charBefore);
+        return (" ".equals(convertToString));
+    }
+
 
     /**
      * Adds the next prefix required for the input
