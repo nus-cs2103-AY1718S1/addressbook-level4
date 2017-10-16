@@ -13,6 +13,7 @@ import org.junit.Test;
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.AddCommand;
@@ -110,7 +111,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void handleKeyPressAlt() {
-        //Alt shifts the caret all the way left
+        //Shift-Alt shifts the caret all the way left
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
         //Setting up of sandbox environment for testing
@@ -119,7 +120,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
         assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
         //Caret shifted left -> Returns true
-        guiRobot.push(KeyCode.ALT);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ALT);
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 4);
         assertTrue(mySandBox.getCaretPosition() == 0);
@@ -127,7 +128,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void handleKeyPressControl() {
-        //Alt shifts the caret all the way right
+        //Shift-Alt shifts the caret all the way right
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
         //Setting up of sandbox environment for testing
@@ -136,13 +137,13 @@ public class CommandBoxTest extends GuiUnitTest {
 
         assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
         //Caret shifted left -> Returns true
-        guiRobot.push(KeyCode.ALT);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ALT);
         //Ensure caret is at the left
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 4);
         assertTrue(mySandBox.getCaretPosition() == 0);
         //Push caret to right
-        guiRobot.push(KeyCode.CONTROL);
+        guiRobot.press(KeyCode.SHIFT, KeyCode.CONTROL);
         //Ensure caret is at the right
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
@@ -152,8 +153,8 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void handleValidRightKeyPressLenMaxThree() {
         //This test focuses on ensuring that the key press works only for the add command
-        //and hack triggers only when "a" or "add" is detected at the front of the statement.
-        //Cases like "adda" "addy" "am" or "aa" will not trigger add command hack
+        //and shortcut triggers only when "a" or "add" is detected at the front of the statement.
+        //Cases like "adda" "addy" "am" or "aa" will not trigger add command shortcut
 
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -317,7 +318,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void handleInvalidRightKeyPress() {
-        //Test to ensure add command hack does not trigger as long as
+        //Test to ensure add command shortcut does not trigger as long as
         //caret is within the text
 
         //Extracts the textfield. Needed to use the caret related methods
@@ -326,10 +327,10 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue("Add".equals(mySandBox.getText()));
 
         //Caret shifted left -> Returns true
-        guiRobot.push(KeyCode.ALT);
+        guiRobot.press(KeyCode.SHIFT, KeyCode.ALT);
         //Ensure caret is at the left
         assertTrue(mySandBox.getCaretPosition() == 0);
-        //Try to trigger add hack - Nothing happens, Caret + 1
+        //Try to trigger add shortcut - Nothing happens, Caret + 1
         guiRobot.push(KeyCode.RIGHT);
         assertTrue("Add".equals(mySandBox.getText()));
         assertTrue(mySandBox.getCaretPosition() == 1);
@@ -340,7 +341,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue("Add".equals(mySandBox.getText()));
         assertTrue(mySandBox.getCaretPosition() == 3);
 
-        //Trigger add hack - n/ is concatenated
+        //Trigger add shortcut - n/ is concatenated
         guiRobot.push(KeyCode.RIGHT);
         assertTrue("Add n/".equals(mySandBox.getText()));
 
@@ -350,7 +351,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void handleValidRightKeyPressPrefixInOrder() {
         //Add Command allows users to enter the prefix in any order
-        //The Add Command hack accounts for missing prefix or jump in prefix but for this test
+        //The Add Command shortcut accounts for missing prefix or jump in prefix but for this test
         //it will focus on testing under the assumption that the prefix in the right order: n p e a b t
 
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -369,13 +370,13 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
-        //Ensure that hack does not run if caret is not at end of line
+        //Ensure that shortcut does not run if caret is not at end of line
         int currentCaretPosition = mySandBox.getCaretPosition();
         mySandBox.positionCaret(currentCaretPosition - 1);
         guiRobot.push(KeyCode.RIGHT);
         assertTrue(testString.equals(mySandBox.getText()));
         //Return caret back to original position
-        guiRobot.push(KeyCode.CONTROL);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.CONTROL);
         //Simulate User Input
         guiRobot.write("98765432");
         testString += "98765432";
@@ -408,7 +409,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void handleValidRightKeyPressPrefixRandom() {
-        //The Add Command hack accounts for missing prefix or jump in prefix.
+        //The Add Command shortcut accounts for missing prefix or jump in prefix.
         //This functionality will be tested in this test
 
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -427,7 +428,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testString += " " + STRING_EMAIL + "jeremylsw@u.nus.edu";
         assertTrue((testString).equals(mySandBox.getText()));
 
-        //Add command hack will detect missing p/ and concatenate it
+        //Add command shortcut will detect missing p/ and concatenate it
         guiRobot.push(KeyCode.RIGHT);
         testString += " " + STRING_PHONE;
         assertTrue((testString).equals(mySandBox.getText()));
