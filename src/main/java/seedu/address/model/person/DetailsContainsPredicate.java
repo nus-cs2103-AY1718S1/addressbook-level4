@@ -19,22 +19,11 @@ public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        if (isNameNotMatchedIfPresent(person)) {
-            return false;
-        }
-        if (isPhoneNotMatchedIfPresent(person)) {
-            return false;
-        }
-        if (isEmailNotMatchedIfPresent(person)) {
-            return false;
-        }
-        if (isAddressNotMatchedIfPresent(person)) {
-            return false;
-        }
-        if (isTagNotMatchedIfPresent(person)) {
-            return false;
-        }
-        return true;
+        return !isNameNotMatchedIfPresent(person)
+                && !isPhoneNotMatchedIfPresent(person)
+                && !isEmailNotMatchedIfPresent(person)
+                && !isAddressNotMatchedIfPresent(person)
+                && !isTagNotMatchedIfPresent(person);
     }
 
     /**
