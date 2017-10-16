@@ -68,7 +68,19 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /** Attempts to auto-complete */
-    private void attemptAutocomplete() {}
+    private void attemptAutocomplete() {
+        String matcher = commandTextField.getText();
+        String command = autocompleteManager.attemptAutocomplete(matcher);
+        if (matcher.equals(command)) {
+            setStyleToIndicateCommandFailure();
+            logger.info("Autocomplete failed with input: " + matcher);
+        } else {
+            commandTextField.setText(command);
+            commandTextField.end();
+            commandTextField.insertText(commandTextField.getCaretPosition(), " ");
+            logger.info(String.format("Autocomplete successfully autocomplete input %s into %s", matcher, command));
+        }
+    }
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},

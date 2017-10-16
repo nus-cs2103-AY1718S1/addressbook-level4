@@ -1,5 +1,8 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
+
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -28,7 +31,20 @@ public class AutocompleteManager {
 
     public AutocompleteManager() {}
 
+    /**
+     * attempt to autocomplete input into one of the commands
+     * @param matcher field input
+     * @return String representation of command, or the matcher if not exactly one command is returned.
+     */
     public String attemptAutocomplete(String matcher) {
-        return matcher;
+        ArrayList<String> matches = new ArrayList<>();
+        for (String command: commands) {
+            if (StringUtil.containsWordsStartWithString(command, matcher)) {
+                matches.add(command);
+            }
+        }
+        if (matches.size() == 1) {
+            return matches.get(0);
+        } else return matcher;
     }
 }
