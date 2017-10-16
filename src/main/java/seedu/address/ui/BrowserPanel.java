@@ -35,13 +35,13 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel(ObservableList<ReadOnlyPerson> personList) {
+    public BrowserPanel(ObservableList<ReadOnlyPerson> personList, String theme) {
         super(FXML);
         this.personList = personList;
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        loadDefaultPage();
+        loadDefaultPage(theme);
         registerAsAnEventHandler(this);
     }
 
@@ -62,9 +62,12 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads a default HTML file with a background that matches the general theme.
      */
-    private void loadDefaultPage() {
+    public void loadDefaultPage(String theme) {
+        if (theme.contains("/view/")) {
+            theme = theme.replace("/view/", "");
+        }
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        loadPage(defaultPage.toExternalForm() + "?theme=" + theme);
     }
 
     /**
@@ -84,6 +87,5 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelGmapEvent(DisplayGmapEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadMapPage(personList.get(event.targetIndex));
-
     }
 }
