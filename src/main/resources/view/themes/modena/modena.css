@@ -93,8 +93,8 @@ is being used to size a border should also be in pixels.
      * -fx-base directly, the sections in this file will typically use -fx-color.
      */
     -fx-base: #ececec;
-	
-	background-color: d3d3d3; 
+
+	background-color: d3d3d3;
 
     /* A very light grey used for the background of windows.  See also
      * -fx-text-background-color, which should be used as the -fx-text-fill
@@ -3435,11 +3435,11 @@ is being used to size a border should also be in pixels.
  ******************************************************************************/
 
 .list-cell:filled:even {
-    -fx-background-color: #f1f1f1;
+    -fx-background-color: #bbffff;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #f6ffff;
+    -fx-background-color: #e2ffff;
 }
 
 .list-cell:filled:selected {

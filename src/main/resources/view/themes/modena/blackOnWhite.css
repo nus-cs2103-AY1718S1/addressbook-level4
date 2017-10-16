@@ -30,7 +30,7 @@
  ******************************************************************************/
 
 .root {
-	background-color: white; 
+	background-color: white;
     -fx-base: white;
     -fx-background: -fx-base;
     -fx-control-inner-background: -fx-base;

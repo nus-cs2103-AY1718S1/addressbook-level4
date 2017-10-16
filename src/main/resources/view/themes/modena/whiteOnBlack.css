@@ -31,7 +31,7 @@
 
 .root {
     -fx-base: black;
-	background-color: black; 
+	background-color: black;
     -fx-background: -fx-base;
     -fx-control-inner-background: -fx-base;
     -fx-control-inner-background-alt: -fx-base;

@@ -1,7 +1,7 @@
 .root {
 	-fx-body-color : #F5F5F5;
 	-fx-outer-border : #cecece;
-	background-color: #e0e0e0; 
+	background-color: #e0e0e0;
 }
 .button:focused, .toggle-button:focused,
 .split-menu-button:focused, .menu-button:focused,
@@ -928,4 +928,26 @@ VBox > .split-menu-button.last > .arrow-button {
 }
 .slider:vertical .track {
 	-fx-pref-width: 5;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Custom Styling                                                              *
+ *                                                                             *
+ ******************************************************************************/
+
+.list-cell:filled:even {
+    -fx-background-color: #f6ffff;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #ffffff;
+}
+
+.list-view .list-cell:empty {
+    -fx-background: #ffffff;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #bbffff;
 }
