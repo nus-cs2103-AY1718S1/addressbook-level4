@@ -50,17 +50,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` `h` `man`
+=== Viewing help : `help` `h`
 
 Format: `help`
  (or) `h`
- (or) `man`
 
 === Adding a person: `add` `create` `put`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-(or) `creat n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+(or) `create n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 (or) `put n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -195,7 +194,7 @@ Examples:
 `t-add friends 2 3` +
 Adds the tag friends to the 2nd and 3rd person in the address book.
 
-=== Removing a tag to a person(s) : `t-remove`
+=== Removing a tag to a person(s) : `t-remove` _[Coming in v2.0]_
 
 Removes a tag from specified person(s) from the address book. +
 Format: `t-remove [TAG] INDEX`
