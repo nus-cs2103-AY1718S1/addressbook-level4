@@ -147,10 +147,9 @@ public class CommandBox extends UiPart<Region> {
             return;
         } else if (isEmptyBefore(newCaretPosition)) {
             newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
-            newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
         } else {
-            newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
         }
+        newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
         commandTextField.positionCaret(newCaretPosition);
     }
 
@@ -173,10 +172,9 @@ public class CommandBox extends UiPart<Region> {
             return;
         } else if (isEmptyAfter(newCaretPosition)) {
             newCaretPosition = shiftRightIgnoringSpaces(newCaretPosition, maxAchievablePosition);
-            newCaretPosition = shiftRightIgnoringWords(newCaretPosition, maxAchievablePosition);
         } else {
-            newCaretPosition = shiftRightIgnoringWords(newCaretPosition, maxAchievablePosition);
         }
+        newCaretPosition = shiftRightIgnoringWords(newCaretPosition, maxAchievablePosition);
         commandTextField.positionCaret(newCaretPosition);
     }
 
