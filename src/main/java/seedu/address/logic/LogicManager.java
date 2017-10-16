@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -20,9 +21,9 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -83,6 +84,7 @@ public class LogicManager extends ComponentManager implements Logic {
         keywordColorMap.put(HelpCommand.COMMAND_WORD, "#0099CC");
         keywordColorMap.put(ListCommand.COMMAND_WORD, "#CCFF66");
         keywordColorMap.put(SelectCommand.COMMAND_WORD, "#99CCFF");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "#4AFF33");
         keywordColorMap.put(ClearCommand.COMMAND_WORD, "#999999");
         keywordColorMap.put(UndoCommand.COMMAND_WORD, "#669999");
         keywordColorMap.put(RedoCommand.COMMAND_WORD, "#ABCDEF");
