@@ -737,6 +737,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list persons according to a specified tag |to list them as a group easily
 
+|`* * *` |user |delete a group of people with names or similar tag |save time from deleting one by one
+
+|`* *` |user |add birthday date to contact |save more details of a person
+
 |`* *` |user |hide details of a person |just see the name of the person
 
 |`* *` |user |sort contacts in UI by drag and drop |arrange them in the order of my preference
