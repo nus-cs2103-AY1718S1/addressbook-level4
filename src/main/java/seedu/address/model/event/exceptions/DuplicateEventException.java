@@ -1,4 +1,10 @@
 package seedu.address.model.event.exceptions;
 
-public class DuplicateEventException {
+import seedu.address.commons.exceptions.DuplicateDataException;
+
+public class DuplicateEventException extends DuplicateDataException {
+    public DuplicateEventException() {
+        super("Operation would result in duplicate events");
+    }
+
 }
