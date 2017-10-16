@@ -13,7 +13,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.parser.RemoveTagParser;
+import seedu.address.logic.parser.RemoveTagCommandParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -29,7 +29,7 @@ public class RemoveTagCommandTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        RemoveTagParser parser = new RemoveTagParser();
+        RemoveTagCommandParser parser = new RemoveTagCommandParser();
         assertParseFailure(parser, "     ", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
     }

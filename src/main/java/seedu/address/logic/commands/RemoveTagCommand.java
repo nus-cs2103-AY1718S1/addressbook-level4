@@ -46,4 +46,5 @@ public class RemoveTagCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_NOT_DELETED);
         }
     }
+
 }

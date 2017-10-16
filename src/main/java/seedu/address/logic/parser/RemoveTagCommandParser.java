@@ -8,7 +8,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
  */
-public class RemoveTagParser implements Parser<RemoveTagCommand> {
+public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand

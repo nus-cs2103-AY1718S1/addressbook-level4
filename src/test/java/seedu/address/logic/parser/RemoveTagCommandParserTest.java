@@ -9,9 +9,9 @@ import org.junit.Test;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class RemoveTagParserTest {
+public class RemoveTagCommandParserTest {
 
-    private RemoveTagParser parser = new RemoveTagParser();
+    private RemoveTagCommandParser parser = new RemoveTagCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
