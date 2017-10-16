@@ -16,6 +16,7 @@ public class Tutorial {
     private MainWindow mainWindow;
     private TextArea tutorialText;
     private ArrayList<TutSteps> tutorialSteps = new ArrayList<>();
+    private int currentStepNum = 0;
     private Logic logic;
 
     public Tutorial(MainWindow mainWindow, TextArea tutorialText, Logic logic) {
@@ -30,7 +31,7 @@ public class Tutorial {
 
         /* Steps for introduction to Bluebird */
         for (String introMessages : TutorialMessages.INTRO_LIST) {
-            tutorialSteps.add(new TutSteps(introMessages));
+            tutorialSteps.add(new TutSteps(introMessages, TutorialMessages.PROMPT_DEFAULT));
         }
 
         /* Steps for commands usage */
@@ -45,11 +46,13 @@ public class Tutorial {
     }
 
     /**
-     * Executes the tutorial step.
+     * Executes the next tutorial step.
      */
-    public void executeStep(TutSteps currentStep) throws CommandException, ParseException {
-        switch (currentStep.getStepNumber()) {
+    public void executeNextStep() throws CommandException, ParseException {
+        TutSteps stepToExecute = tutorialSteps.get(currentStepNum);
+        switch (currentStepNum++) {
         case 0:
+            mainWindow.unhighlightAll();
             mainWindow.highlightCommandBox();
             break;
         case 1:
@@ -71,18 +74,28 @@ public class Tutorial {
         default:
             mainWindow.unhighlightAll();
         }
-        if (currentStep.isLastStep()) {
+        if (stepToExecute.isLastStep()) {
             endTutorial();
-        } else if (currentStep.isPrompt()) {
-            mainWindow.setCommandPrompt(currentStep.getCommandPrompt());
-            tutorialText.setText(currentStep.getTextDisplay());
+        } else if (stepToExecute.isPrompt()) {
+            mainWindow.setCommandPrompt(stepToExecute.getCommandPrompt());
+            tutorialText.setText(stepToExecute.getTextDisplay());
         } else {
-            tutorialText.setText(currentStep.getTextDisplay());
+            tutorialText.setText(stepToExecute.getTextDisplay());
         }
     }
 
-    public ArrayList<TutSteps> getTutorialSteps() {
-        return tutorialSteps;
+    /**
+     * Executes the previous tutorial step.
+     */
+    public void executePreviousStep() throws CommandException, ParseException {
+        if (currentStepNum - 2 >= 0) {
+            currentStepNum -= 2;
+            executeNextStep();
+        }
+    }
+
+    public boolean isLastStep() {
+        return currentStepNum == TutorialMessages.TOTAL_NUM_STEPS + 1;
     }
 
     /**

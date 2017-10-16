@@ -30,6 +30,7 @@ public class TutorialPanel extends UiPart<Region> {
     private MainWindow mainWindow;
     private BrowserPanel browserPanel;
     private StackPane browserPlaceHolder;
+    private boolean isSkip = true;
 
     @FXML
     private Button rightButton;
@@ -56,7 +57,6 @@ public class TutorialPanel extends UiPart<Region> {
 
     private void initTutorial() {
         newTutorial = new Tutorial(mainWindow, tutorialText, logic);
-        tutStepsList = newTutorial.getTutorialSteps();
     }
 
     /**
@@ -64,16 +64,17 @@ public class TutorialPanel extends UiPart<Region> {
      */
     @FXML
     private void handleLeftButtonPressed() {
+        isSkip = false;
+        leftButton.setText("Next");
+        rightButton.setText("Back");
         try {
-            newTutorial.executeStep(tutStepsList.get(0));
+            newTutorial.executeNextStep();
         } catch (CommandException e1) {
             logger.warning("Can't execute command in tutorial.");
         } catch (ParseException e1) {
             logger.warning("Wrong command input in tutorial.");
         }
-        leftButton.setText("Next");
-        tutStepsList.remove(0);
-        if (tutStepsList.size() == 0) {
+        if (newTutorial.isLastStep()) {
             setTutorialVisible(false);
             browserPlaceHolder.getChildren().add(browserPanel.getRoot());
         }
@@ -83,10 +84,14 @@ public class TutorialPanel extends UiPart<Region> {
      * Handles the right button pressed event.
      */
     @FXML
-    private void handleRightButtonPressed() {
-        newTutorial.endTutorial();
-        setTutorialVisible(false);
-        browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+    private void handleRightButtonPressed() throws CommandException, ParseException {
+        if (isSkip) {
+            newTutorial.endTutorial();
+            setTutorialVisible(false);
+            browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+        } else {
+            newTutorial.executePreviousStep();
+        }
     }
 
     private void setTutorialVisible(boolean isVisible) {
