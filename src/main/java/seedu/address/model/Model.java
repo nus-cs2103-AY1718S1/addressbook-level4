@@ -33,6 +33,10 @@ public interface Model {
     void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException;
 
+    /** Adds given tag to every person */
+    void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
+            DuplicatePersonException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

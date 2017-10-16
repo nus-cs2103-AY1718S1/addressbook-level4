@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -95,7 +96,6 @@ public class AddressBookParserTest {
                 (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_2 + " "
                 + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
-        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), abbreviatedCommand);
     }
 
     @Test
@@ -170,6 +170,20 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " "
                 + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName);
         assertEquals(new RemoveTagCommand(indexes, toRemove), command);
+    }
+
+    @Test
+    public void parseCommand_addTag() throws Exception {
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        final String tagName = "friends";
+        Tag toAdd = new Tag(tagName);
+        AddTagCommand command = (AddTagCommand) parser.parseCommand(AddTagCommand.COMMAND_WORDVAR_1
+                + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName);
+        assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
     @Test

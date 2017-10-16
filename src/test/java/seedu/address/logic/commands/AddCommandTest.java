@@ -109,6 +109,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addTag(ArrayList<Index> targetIndexes, Tag toAdd)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
