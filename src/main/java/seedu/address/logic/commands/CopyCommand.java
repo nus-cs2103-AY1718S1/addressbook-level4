@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,12 +48,12 @@ public class CopyCommand extends Command {
         }
 
         // outputList without square brackets
-        String MESSAGE_OUTPUT = outputList.toString().substring(1, outputList.toString().length() - 1);
+        String messageOutput = outputList.toString().substring(1, outputList.toString().length() - 1);
         // outputList use semi-colon separator
-        MESSAGE_OUTPUT = MESSAGE_OUTPUT.replace(",", ";");
+        messageOutput = messageOutput.replace(",", ";");
 
-        return new CommandResult(MESSAGE_OUTPUT);
-}
+        return new CommandResult(messageOutput);
+    }
 
     @Override
     public boolean equals(Object other) {
