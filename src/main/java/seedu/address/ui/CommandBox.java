@@ -49,13 +49,27 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Handles the key press event, {@code keyEvent}.
+     *
+     * UP:
+     * As up and down buttons will alter the position of the caret,
+     * consuming it causes the caret's position to remain unchanged
+     *
+     * RIGHT:
+     * 1. Check if user's Caret is at the end of the text input.
+     *    If caret is not at the end of text, do nothing
+     *    If caret is at the end, deploy shortcut that makes user life easy for add command
+     * 2. If only add is present, concat prefix name string
+     *    Checks if necessary prefixes are present
+     *    Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
+     *
+     * DEFAULT:
+     * Lets JavaFx handle the Key Press
+     *
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
         case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
 
             navigateToPreviousInput();
@@ -74,27 +88,22 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.positionCaret(commandTextField.getText().length());
             break;
         case RIGHT:
-            //Check if user's Caret is at the end of the text input
             boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
-            //If caret is not at the end of text, do nothing
             if (isCaretWithin) {
                 break;
-            } else { //If caret is at the end, deploy hack that makes user life easy for add command
+            } else {
                 String finalText;
-                //If only add is present, concat prefix name string
-                //Checks if necessary prefixes are present
-                //Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
-                if (!containsName() && addPollSuccessful()) {
+                if (containsPrefix("name")) {
                     finalText = concatPrefix(PREFIX_NAME);
-                } else if (!containsPhone() && addPollSuccessful()) {
+                } else if (containsPrefix("phone")) {
                     finalText = concatPrefix(PREFIX_PHONE);
-                } else if (!containsEmail() && addPollSuccessful()) {
+                } else if (containsPrefix("email")) {
                     finalText = concatPrefix(PREFIX_EMAIL);
-                } else if (!containsAddress() && addPollSuccessful()) {
+                } else if (containsPrefix("address")) {
                     finalText = concatPrefix(PREFIX_ADDRESS);
-                } else if (!containsBloodtype() && addPollSuccessful()) {
+                } else if (containsPrefix("bloodtype")) {
                     finalText = concatPrefix(PREFIX_BLOODTYPE);
-                } else if (containsAllCompulsoryPrefix() && addPollSuccessful()) {
+                } else if (containsPrefix("all")) {
                     finalText = concatPrefix(PREFIX_TAG);
                 } else {
                     break;
@@ -104,23 +113,31 @@ public class CommandBox extends UiPart<Region> {
                 break;
             }
         default:
-            // let JavaFx handle the keypress
         }
     }
 
     /**
-     * Shift cursor left by words
+     * Polls the input statement to check if sentence starts with " add " or " a "
+     * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
+     * <p>
+     * Additional Note: Polling method accounts for blank spaces in front
      */
-    private void shiftLeftByWord() {
-        if (commandTextField.getText().length() == 0) {
-            return;
+    private boolean containsPrefix(String element){
+        switch(element){
+            case "name":
+                return (!containsName() && addPollSuccessful());
+            case "phone":
+                return (!containsPhone() && addPollSuccessful());
+            case "email":
+                return (!containsEmail() && addPollSuccessful());
+            case "address":
+                return (!containsAddress() && addPollSuccessful());
+            case "bloodtype":
+                return (!containsBloodtype() && addPollSuccessful());
+            default:
+                return (containsAllCompulsoryPrefix() && addPollSuccessful());
+
         }
-        int caretPositionToEvaluate = commandTextField.getCaretPosition() - 1;
-        while(commandTextField.getText().charAt(caretPositionToEvaluate-1) != ' '){
-            caretPositionToEvaluate -= 1;
-            if(caretPositionToEvaluate == 0){break;}
-        }
-        commandTextField.positionCaret(caretPositionToEvaluate);
     }
 
     /**
