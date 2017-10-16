@@ -13,8 +13,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class SwitchThemeCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "switchtheme";
-    public static final String COMMAND_ALIAS = "st";
+    public static final String COMMAND_WORD = "switch";
+    public static final String COMMAND_ALIAS = "sw";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Switches the current theme to the theme identified by the index number in the themes list.\n"
