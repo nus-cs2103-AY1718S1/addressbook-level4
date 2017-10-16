@@ -1,11 +1,14 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -26,6 +29,10 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    /** Deletes given tag from every person */
+    void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
+            DuplicatePersonException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -44,5 +51,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Sort the given list according to alphabetical order
+     * @throws NullPointerException if {@code contactList} is null.
+     */
+    Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList);
 
 }

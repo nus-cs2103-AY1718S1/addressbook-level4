@@ -1,4 +1,5 @@
 = AddressBook Level 4 - Developer Guide
+= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -729,9 +730,39 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |edit my friends' contact on Addressbook |
+
+|`* * *` |user |exit Addressbook |continue using other functions in my operating system
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |access my contacts' social media account through address book |
+
+|`* *` |user |remove a tag from my friends' contact information |
+
+|`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
+
+|`* *` |curious user |search my contacts' information online with google |
+
+|`* *` |careless user |undo my previous commands |retrieve important information that I have accidentally deleted earlier on
+
+|`* *` |indecisive user |redo my undone commands |recover the original state of my address book
+
+|`* *` |careful user |look through my past commands |trace back my actions
+
+|`* *` |bored user |select a person with a certain index number |contact a random person in my contacts I tried
+
+|`* *` |lazy user |select a contact from my address book to call |I do not need to use other phone functions to call
+
+|`*` |user with many tags in the address book |sort my contact list according to their tags |locate a person easily
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |forgetful user |include a photo next to my contacts' name |recognize my contacts' better if I forget their names
+
+|`*` |fancy user |set a background wallpaper to my address book | personalise and beautify my address book
+
+|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify my Addressbook
 |=======================================================================
 
 {More to be added}
@@ -739,17 +770,38 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `UniCity` and the *Actor* is the `user`, unless specified otherwise)
+
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add a person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add a person with the phone number and email address.
+2. UniCity processes the information and adds the person to the list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given information is in an invalid format.
++
+[none]
+** 2a1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete a person
+
+*MSS*
+
+1.  User requests to list persons.
+2.  UniCity shows a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  UniCity deletes the person.
 +
 Use case ends.
 
@@ -763,18 +815,242 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. UniCity shows an error message.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit a person
+
+*MSS*
+
+1. User requests to edit a person.
+2. UniCity locates that specific person.
+3. User provides new information of that person.
+4. UniCity updates the person with the information provided.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The person given is not in the list.
++
+[none]
+** 3a1. UniCity shows an error message.
++
+Use case ends.
+
+
+[none]
+* 3a. The given information is in an invalid format.
++
+[none]
+** 3a1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Find a person
+
+*MSS*
+
+1. User requests to find a person.
+2. UniCity processes the information and lists every person with the name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given name does not match anyone in the list.
++
+[none]
+** 2a1. UniCity prompts a message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Select a person
+
+*MSS*
+
+1. User requests to select a person with a certain index number.
+2. UniCity selects the person with that index number in the current list order.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The index is smaller than 1.
++
+[none]
+** 2a1. UniCity displays an error message and prompts a sample input format.
++
+Use case ends.
+
+[none]
+* 2a. The index is out of bound.
++
+[none]
+** 2a1. UniCity displays an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1. User requests to view all persons in the list.
+2. UniCity displays a list of every person stored.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays an empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo an action
+
+*MSS*
+
+1. User requests to undo an action.
+2. UniCity reverses the changes the last command causes and displays a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The last command is not undoable.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[none]
+* 2a. No command was executed before.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo an action
+
+*MSS*
+
+1. User requests to redo the previously undone action.
+2. UniCity re-execute the last command before the undo command and displays a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No action was undone.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[discrete]
+=== Use case: View previous commands
+
+*MSS*
+
+1. User requests to view previous commands entered.
+2. UniCity returns a list of commands entered from the most recent to the earliest.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command was given.
++
+[none]
+** 2a1. UniCity displays a message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear UniCity
+
+*MSS*
+
+1. User requests to clear the UniCity.
+2. UniCity asks the user to confirm clearing the entire address book.
+3. User confirms to proceed.
+4. UniCity deletes everything that has been stored.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User decides not to proceed to clear UniCity.
++
+[none]
+** 3a1. UniCity displays clearing aborted.
++
+Use case ends.
+
+[discrete]
+=== Use case: Get help
+
+*MSS*
+
+1. User requests to get help with using UniCity.
+2. UniCity opens the user guide.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit the application
+
+*MSS*
+
+1. User requests to exit UniCity.
+2. UniCity asks the user to confirm.
+3. User confirms to exit the application.
+4. UniCity shuts down.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User decides not to proceed to exit UniCity.
++
+[none]
+** 3a1. UniCity displays exit aborted.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+.  able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should start up within 5 seconds of running the app.
+.  Every command should be documented.
+.  User interface should intuitive for a novice user.
+.  System should not crash when an error has been encountered. Error handling must be dealt with gracefully.
 
 {More to be added}
 
@@ -793,6 +1069,84 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[API]]
+Application Programming Interface
+
+....
+A specific method prescribed by a computer operating system or by an application program by which a programmer writing
+an application program can make requests of the operating system or another application.
+....
+
+[[bug]]
+Bug
+
+....
+A coding error in a computer program.
+....
+
+[[help-system]]
+Help System
+
+....
+A documentation component of a software program that explains the features of the program and helps the user understand
+its capabilities.
+....
+
+[[information-architecture]]
+Information Architecture
+
+....
+The set of ideas about how all information in a given context should be treated philosophically and, in a general way,
+how it should be organized; this is expressed in an information architecture document.
+....
+
+[[IDE]]
+Integrated Development Environment
+
+....
+A programming environment that has been packaged as an application program, typically consisting of a code editor, a
+compiler, a debugger, and a GUI builder.
+....
+
+[[KISS Principle]]
+Keep It Simple, Stupid
+
+....
+The principle that people want products that are easy to learn and use, and that companies realize time and cost benefits
+ by producing such products.
+....
+
+[[OOP]]
+Object-Oriented Programming
+
+....
+A programming model organized around objects rather than actions and data rather than logic, based on the idea that what
+ we really care about are the objects we want to manipulate, rather than the logic required to manipulate them.
+....
+
+[[SDK]]
+Software Development Kit
+
+....
+A set of programs used by a computer programmer to write application programs.
+....
+
+[[user-acceptance-testing]]
+User Acceptance Testing
+
+....
+A phase of software development in which the software is tested in the "real world" by the intended audience.
+....
+
+[[user-interface]]
+User Interface
+
+....
+Everything designed into an information device with which a human being may interact -- including display screen,
+keyboard, mouse, light pen, the appearance of a desktop, illuminated characters, help messages, and how an application
+program or a Web site invites interaction and responds to it.
 ....
 
 [appendix]

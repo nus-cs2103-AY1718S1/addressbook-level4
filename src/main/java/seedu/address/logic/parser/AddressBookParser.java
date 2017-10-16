@@ -12,12 +12,16 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FavouriteCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -33,6 +37,7 @@ public class AddressBookParser {
 
     /**
      * Parses user input into command for execution.
+     * Logic editted: User can type abbreviated and case-insensitive commands. Comment to check travis test.
      *
      * @param userInput full user input string
      * @return the command based on the user input
@@ -46,45 +51,68 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
-
-        case AddCommand.COMMAND_WORD:
+        if (commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(AddCommand.COMMAND_WORDVAR_2)) {
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(RemoveTagCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(RemoveTagCommand.COMMAND_WORDVAR_2)) {
+            return new RemoveTagCommandParser().parse(arguments);
+
+        } else if (commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_2)) {
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_2)) {
             return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(ClearCommand.COMMAND_WORDVAR_2)) {
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(FilterCommand.COMMAND_WORDVAR)) {
+            return new FilterCommandParser().parse(arguments);
+
+        } else if (commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(FindCommand.COMMAND_WORDVAR_2)) {
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(ListCommand.COMMAND_WORDVAR_2)) {
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(HistoryCommand.COMMAND_WORDVAR_2)) {
             return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(ExitCommand.COMMAND_WORD)) {
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(HelpCommand.COMMAND_WORD)) {
             return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_2)) {
             return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD:
+        } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
             return new RedoCommand();
 
-        default:
+        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
+                || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
+            return new FavouriteCommandParser().parse(arguments);
+
+        } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {
+            return new SortCommand();
+
+        } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
