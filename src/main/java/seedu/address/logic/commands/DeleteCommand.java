@@ -19,10 +19,10 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_ALIAS = "d";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Deletes the people identified by the index numbers used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) [OTHER INDICES]\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer) [OTHER_INDICES]...\n"
+            + MESSAGE_GET_MORE_HELP;
 
     //public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted all person(s)!";
