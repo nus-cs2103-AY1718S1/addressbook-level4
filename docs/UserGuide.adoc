@@ -75,6 +75,7 @@ Default avatar folder: `./images/avatars` +
 Format: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/john_doe.png`
 // end::addwithavatar[]
 
+// tag::multiple[]
 === Adding multiple persons: `multiple`
 
 Adds multiple persons to the address book with inputs from a `.txt` file stored in the default data folder +
@@ -98,6 +99,8 @@ n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 +
 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal +
 n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 t/pretty
 ****
+// end::multiple[]
+
 === Export: `export`
 Exports the all contacts to a `.txt` file in a specified location. +
 Format: `export [FILETYPE] [PATH]` +
@@ -131,25 +134,40 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+// tag::find[]
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose contain any of the given keywords. +
+Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...`
 
 ****
+* The search is a `OR` search. 
+e.g. finding `n/alex r/friends` will display all persons that name contain `alex` along with all persons that have `friends` tag
+* The `OR` rule applies to all other individual attribute.
+(i.e. persons matching at least one keyword will be returned.)
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* When finding name, only full words will be matched e.g. `Han` will not match `Hans`
+* When finding email, any part of the email will be matched e.g. `mail` will match `@gmail.com` and `@hotmail.com`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find r/friends` +
+Returns any person with `friends` tag +
+* `find e/@gmail.com` +
+Returns any person whose email contain `@gmail.com`
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/Betsy Tim John r/friends` +
+Returns any person having names `Betsy`, `Tim`, or `John` or any person with `friends` tag
+* `find n/Betsy Tim John r/friends e/@gmail.com` +
+Returns any person having names `Betsy`, `Tim`, or `John`, any person with `friends` tag
+and any person whose email contain `@gmail.com`
+// end::find[]
 
 === Deleting a person : `delete`
 
