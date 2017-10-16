@@ -144,7 +144,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        public void sort(String sortType) {//this method is intentionally left empty
+        public void sort(String sortType) throws DuplicatePersonException {//this method is intentionally left empty
         }
     }
 
