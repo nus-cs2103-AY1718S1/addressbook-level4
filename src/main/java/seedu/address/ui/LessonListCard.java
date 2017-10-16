@@ -70,12 +70,13 @@ public class LessonListCard extends UiPart<Region> {
             switchToLocationCard();
             break;
 
-        case LESSON:
-            switchToLessonCard();
+        case MODULE:
+            switchToModuleCard();
             break;
 
         default:
-            switchToModuleCard();
+            switchToLessonCard();
+
         }
     }
 

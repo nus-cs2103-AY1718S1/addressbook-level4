@@ -1,22 +1,29 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ListingUnit;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.ListingUnit;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.ClassType;
 import seedu.address.model.module.Code;

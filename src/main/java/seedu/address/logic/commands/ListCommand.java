@@ -1,16 +1,18 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
+
 
 
 /**
@@ -27,8 +29,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
 
-    public static final String MODULE_KEYWORD = "modules";
-    public static final String LOCATION_KEYWORD = "locations";
+    public static final String MODULE_KEYWORD = "module";
+    public static final String LOCATION_KEYWORD = "location";
 
     private final String parameter;
 

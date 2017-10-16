@@ -82,7 +82,7 @@ public class UniqueLecturerList implements Iterable<Lecturer> {
      *
      * @throws DuplicateLecturerException if the Lecturer to add is a duplicate of an existing Lecturer in the list.
      */
-    public void add(Lecturer toAdd) throws DuplicateLecturerException{
+    public void add(Lecturer toAdd) throws DuplicateLecturerException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateLecturerException();

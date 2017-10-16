@@ -1,8 +1,8 @@
 package seedu.address.model.module;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Lesson's class type in the application.
@@ -22,9 +22,9 @@ public class ClassType {
     public ClassType(String classType) throws IllegalValueException {
         requireNonNull(classType);
         String trimmedClassType = classType.trim();
-//        if (!isValidClassType(trimmedClassType)) {
-//            throw new IllegalValueException(MESSAGE_CLASSTYPE_CONSTRAINTS);
-//        }
+        if (!isValidClassType(trimmedClassType)) {
+            throw new IllegalValueException(MESSAGE_CLASSTYPE_CONSTRAINTS);
+        }
         this.value = trimmedClassType;
     }
 

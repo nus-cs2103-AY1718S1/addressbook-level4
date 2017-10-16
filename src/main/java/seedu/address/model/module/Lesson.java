@@ -1,24 +1,23 @@
 package seedu.address.model.module;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 
-
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 /**
  * Represents a Lesson in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Lesson implements ReadOnlyLesson{
+public class Lesson implements ReadOnlyLesson {
     private ObjectProperty<ClassType> classType;
     private ObjectProperty<Group> group;
     private ObjectProperty<Location> location;
@@ -32,7 +31,8 @@ public class Lesson implements ReadOnlyLesson{
      */
 
     public Lesson(ClassType classType, Location location, Group group, TimeSlot timeSlot, Code code,
-                  Set<Lecturer> lecturers) { requireAllNonNull(classType, location, group, timeSlot, lecturers);
+                  Set<Lecturer> lecturers) {
+        requireAllNonNull(classType, location, group, timeSlot, lecturers);
         this.classType = new SimpleObjectProperty<>(classType);
         this.location = new SimpleObjectProperty<>(location);
         this.group = new SimpleObjectProperty<>(group);
