@@ -310,17 +310,19 @@ Display google map the 1st person in the results of the `find` command.
 This feature can be found under the new `options` menu
 Display the google map data into browser panel based on person's address.
 
+==== Themes selection from `File` toolbar
+
+Allows user to select from a range of user interface themes +
+Function will be found from under the `File` section of menu toolbar.+
+Selected themes will be saved into user preference file upon exit of program.+
+Reinitializing of myBook will display the previous choice of theme.
+
 === Coming soon in v2.0
 
 ==== Import export of addressbook from header menu bar
 
 An option to import external addressbook data in xml format. +
 An option to export local addressbook data in xml format.
-
-==== Themes selection for myBook interface from header menu bar
-
-Allows user to select from a range of user interface themes +
-Function will be found from the new `options` feature.
 
 ==== Close panels in UI from `Button`
 
@@ -355,6 +357,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Google Map* : `gmap INDEX` +
+e.g. `gmap 1`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Find by names or phone numbers or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
