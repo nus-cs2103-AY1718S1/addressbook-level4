@@ -44,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private EventListPanel eventListPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -56,6 +57,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -128,6 +132,9 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -207,6 +214,10 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
+    }
+
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
     }
 
     void releaseResources() {
