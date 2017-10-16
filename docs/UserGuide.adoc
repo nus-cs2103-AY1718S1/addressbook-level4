@@ -135,7 +135,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 // tag::find[]
-=== Locating persons by name: `find`
+=== Locating persons by keywords: `find`
 
 Finds persons whose contain any of the given keywords. +
 Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...`
@@ -143,9 +143,11 @@ Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETER
 ****
 * The search is a `OR` search. 
 e.g. finding `n/alex r/friends` will display all persons that name contain `alex` along with all persons that have `friends` tag
-* The `OR` rule applies to all other individual attribute.
-(i.e. persons matching at least one keyword will be returned.)
+* The `OR` rule applies to all other individual attribute except `tags`.
+(i.e. persons matching at least one keyword will be returned except for `tags` field.)
 e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The `AND` rule for searching applies to `tags` field
+e.g. `r/friends family` will return persons with tags that match both `friends` and `family`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * When finding name, only full words will be matched e.g. `Han` will not match `Hans`
@@ -156,8 +158,8 @@ Examples:
 
 * `find n/John` +
 Returns `john` and `John Doe`
-* `find r/friends` +
-Returns any person with `friends` tag +
+* `find r/friends family` +
+Returns any person with `friends` tag and `family` tag +
 * `find e/@gmail.com` +
 Returns any person whose email contain `@gmail.com`
 * `find n/Betsy Tim John` +
