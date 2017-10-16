@@ -143,7 +143,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertFalse(mySandBox.getCaretPosition() == 4);
         assertTrue(mySandBox.getCaretPosition() == 0);
         //Push caret to right
-        guiRobot.press(KeyCode.SHIFT, KeyCode.CONTROL);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.CONTROL);
         //Ensure caret is at the right
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
@@ -327,7 +327,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue("Add".equals(mySandBox.getText()));
 
         //Caret shifted left -> Returns true
-        guiRobot.press(KeyCode.SHIFT, KeyCode.ALT);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ALT);
         //Ensure caret is at the left
         assertTrue(mySandBox.getCaretPosition() == 0);
         //Try to trigger add shortcut - Nothing happens, Caret + 1
