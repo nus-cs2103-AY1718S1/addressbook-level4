@@ -89,15 +89,19 @@ public class CommandBox extends UiPart<Region> {
                 navigateToNextInput();
                 break;
             case ESCAPE:
+                keyEvent.consume();
                 commandTextField.setText("");
                 break;
             case ALT:
+                keyEvent.consume();
                 shiftCaretLeftByWord();
                 break;
             case CONTROL:
+                keyEvent.consume();
                 shiftCaretRightByWord();
                 break;
             case RIGHT:
+                keyEvent.consume();
                 boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
                 if (isCaretWithin) {
                     break;
@@ -115,9 +119,11 @@ public class CommandBox extends UiPart<Region> {
     private void handleShiftPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case ALT:
+                keyEvent.consume();
                 commandTextField.positionCaret(0);
                 break;
             case CONTROL:
+                keyEvent.consume();
                 commandTextField.positionCaret(commandTextField.getText().length());
                 break;
             default:
