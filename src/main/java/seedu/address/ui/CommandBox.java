@@ -49,22 +49,21 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Handles the key press event, {@code keyEvent}.
-     *
+     * <p>
      * UP:
      * As up and down buttons will alter the position of the caret,
      * consuming it causes the caret's position to remain unchanged
-     *
+     * <p>
      * RIGHT:
      * 1. Check if user's Caret is at the end of the text input.
-     *    If caret is not at the end of text, do nothing
-     *    If caret is at the end, deploy shortcut that makes user life easy for add command
+     * If caret is not at the end of text, do nothing
+     * If caret is at the end, deploy shortcut that makes user life easy for add command
      * 2. If only add is present, concat prefix name string
-     *    Checks if necessary prefixes are present
-     *    Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
-     *
+     * Checks if necessary prefixes are present
+     * Checks based on priority : n/ p/ e/ a/ b/ t/ prefixes
+     * <p>
      * DEFAULT:
      * Lets JavaFx handle the Key Press
-     *
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
@@ -122,20 +121,20 @@ public class CommandBox extends UiPart<Region> {
      * <p>
      * Additional Note: Polling method accounts for blank spaces in front
      */
-    private boolean containsPrefix(String element){
-        switch(element){
-            case "name":
-                return (!containsName() && addPollSuccessful());
-            case "phone":
-                return (!containsPhone() && addPollSuccessful());
-            case "email":
-                return (!containsEmail() && addPollSuccessful());
-            case "address":
-                return (!containsAddress() && addPollSuccessful());
-            case "bloodtype":
-                return (!containsBloodtype() && addPollSuccessful());
-            default:
-                return (containsAllCompulsoryPrefix() && addPollSuccessful());
+    private boolean containsPrefix(String element) {
+        switch (element) {
+        case "name":
+            return (!containsName() && addPollSuccessful());
+        case "phone":
+            return (!containsPhone() && addPollSuccessful());
+        case "email":
+            return (!containsEmail() && addPollSuccessful());
+        case "address":
+            return (!containsAddress() && addPollSuccessful());
+        case "bloodtype":
+            return (!containsBloodtype() && addPollSuccessful());
+        default:
+            return (containsAllCompulsoryPrefix() && addPollSuccessful());
 
         }
     }
