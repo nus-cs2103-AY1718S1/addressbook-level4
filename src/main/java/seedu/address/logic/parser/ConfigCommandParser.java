@@ -17,14 +17,14 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     /**
      * Used for initial separation of configuration change type and new configuration value.
      */
-    private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("(--?<configType>\\S+)(?<configValue>.+)");
+    private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
 
     @Override
     public ConfigCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        // No need to use trim() here because it has been done in AddressBook Parser.
-        final Matcher matcher = CONFIG_COMMAND_FORMAT.matcher(args);
+        // Defensive programming here to use trim again.
+        final Matcher matcher = CONFIG_COMMAND_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }

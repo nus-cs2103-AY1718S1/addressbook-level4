@@ -22,12 +22,24 @@ public class ConfigCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Configuration changed: %1$s";
 
-    public ConfigCommand(String configType, String configValue) {
+    private String configType;
+    private String configValue;
 
+    public ConfigCommand(String configType, String configValue) {
+        this.configType = configType;
+        this.configValue = configValue;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ConfigCommand // instanceof handles nulls
+                && configType.equals(((ConfigCommand) other).configType)
+                && configValue.equals(((ConfigCommand) other).configValue));
     }
 }
