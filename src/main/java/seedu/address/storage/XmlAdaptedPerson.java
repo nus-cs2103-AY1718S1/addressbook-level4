@@ -14,6 +14,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +33,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedGroup> groupXml = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -54,6 +57,11 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+
+        groupXml = new ArrayList<>();
+        for (Group group: source.getGroups()) {
+            groupXml.add(new XmlAdaptedGroup(group));
+        }
     }
 
     /**
@@ -66,11 +74,18 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+
+        final List<Group> personGroups = new ArrayList<>();
+        for (XmlAdaptedGroup group: groupXml) {
+            personGroups.add(group.toModelType());
+        }
+
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<Group> groups = new HashSet<>();
+        return new Person(name, phone, email, address, tags, groups);
     }
 }
