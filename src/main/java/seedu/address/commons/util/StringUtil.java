@@ -68,12 +68,11 @@ public class StringUtil {
 
 
     /**
-     * Returns true if the {@code emailsentence} contains the {@code email}.
+     * Returns true if the {@code phoneSentence} contains the {@code email}.
      *   Ignores case, but a full word match is required.
      *   <br>examples:<pre>
-     *       containsEmailgnoreCase("abc@example.com", "e/example") == true
-     *       containsEmailgnoreCase(("abc@example.com", "example") == false
-     *       containsEmailgnoreCase(("abc@example.com", "e/EXAMPLE") == true//Case insensitive
+     *       ontainsPhoneIgnoreCase("abc@example.com", "e/example") == true
+     *       ontainsPhoneIgnoreCase(("abc@example.com", "example") == false
      *       </pre>
      * @param phoneSentence cannot be null
      * @param word cannot be null, cannot be empty, must be a email domain with .com
