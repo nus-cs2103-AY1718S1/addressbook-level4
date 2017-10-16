@@ -16,10 +16,10 @@ import seedu.address.logic.commands.GroupCommand;
 import seedu.address.model.group.Group;
 
 public class GroupCommandParserTest {
-    private GroupCommandParser parser = new GroupCommandParser();
-
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
+
+    private GroupCommandParser parser = new GroupCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
