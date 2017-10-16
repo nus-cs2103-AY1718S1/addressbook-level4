@@ -18,7 +18,6 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String PIN_ICON = "/images/pinned_icon.png";
-    private static final String UNPIN_ICON = "/images/unpinned_icon.png";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -94,7 +93,6 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private Image setPinIcon(ReadOnlyPerson person) {
-        Image notPinned = new Image(UNPIN_ICON);
         Image pinned = new Image(PIN_ICON);
         if (person.isPinned()) {
             return pinned;
