@@ -9,6 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.NameMeeting;
+import seedu.address.model.meeting.PersonToMeet;
+import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
@@ -23,6 +25,10 @@ public class XmlAdaptedMeeting {
     private String place;
     @XmlElement(required = true)
     private String date;
+    @XmlElement(required = true)
+    private String personToMeet;
+    @XmlElement(required = true)
+    private String phoneNum;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -42,7 +48,9 @@ public class XmlAdaptedMeeting {
     public XmlAdaptedMeeting(ReadOnlyMeeting source) {
         name = source.getName().fullName;
         place = source.getPlace().value;
-        date = source.getDate().toString(); //.value
+        date = source.getDate().toString();
+        personToMeet = source.getPersonName().toString();
+        phoneNum = source.getPersonPhone().toString();
     }
 
 
@@ -56,8 +64,10 @@ public class XmlAdaptedMeeting {
         final NameMeeting name = new NameMeeting(this.name);
         final DateTime dateTime = new DateTime(this.date);
         final Place place = new Place(this.place);
+        final PersonToMeet personToMeet = new PersonToMeet(this.personToMeet);
+        final PhoneNum phoneNum = new PhoneNum(this.phoneNum);
 
-        return new Meeting(name, dateTime, place);
+        return new Meeting(name, dateTime, place, personToMeet, phoneNum);
     }
 
 }

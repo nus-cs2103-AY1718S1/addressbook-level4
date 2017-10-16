@@ -5,16 +5,22 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.List;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddMeetingCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.NameMeeting;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.Model;
+import seedu.address.model.person.ReadOnlyPerson;
 
 
 /**
@@ -30,6 +36,14 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION);
 
+        Index index;
+
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
+        }
+
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
         }
@@ -39,9 +53,7 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
             DateTime date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Place place = ParserUtil.parsePlace(argMultimap.getValue(PREFIX_LOCATION)).get();
 
-            ReadOnlyMeeting meeting = new Meeting(name, date, place);
-
-            return new AddMeetingCommand(meeting);
+            return new AddMeetingCommand(name, date, place, index);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
