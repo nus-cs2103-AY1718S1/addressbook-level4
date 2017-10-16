@@ -218,6 +218,15 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::add
+=== Making Name as the only compulsory field in Add Command
+
+The `add` command follows the format below:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+
+This means when adding a new person in LISA, the user only needs to provide a compulsory NAME field. Everything else is optional.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
