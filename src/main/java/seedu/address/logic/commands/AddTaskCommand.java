@@ -29,7 +29,7 @@ public class AddTaskCommand extends UndoableCommand {
      * Creates an AddTaskCommand to add the specified {@code ReadOnlyTask}
      */
     public AddTaskCommand(ReadOnlyTask task) {
-   
+
         toAdd = new Task(task);
     }
 
