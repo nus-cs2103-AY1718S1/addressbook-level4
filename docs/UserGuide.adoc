@@ -296,6 +296,38 @@ Examples:
 * `import /Users/seedu/Documents/exportData.xml` +
 imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+=== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+=== Synchronizing with the cloud [Coming in v2.0]:
+
+==== Configuring your cloud account: `sync`
+
+Configures the addressbook to synchronize with the cloud using the given user credentials. +
+Format: `sync u/USERNAME p/PASSWORD`
+
+==== Synchronizing
+Address book data is automatically synchronized with cloud when an internet connection is available. +
+There is no need to synchronize manually.
+
+==== Removing your cloud account: `unsync`
+
+Stops synchronizing of contact information with any previously configured cloud accounts. +
+Format: `unsync`
+
 == Facebook Integration [Coming in v2.0]:
 
 === Connecting to Facebook: `connectfacebook`
@@ -334,38 +366,6 @@ Examples:
 
 * `addfacebookcontact Barack Obama` +
 adds Facebook User named 'Barack Obama' to AddressBook
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-=== Synchronizing with the cloud [Coming in v2.0]:
-
-==== Configuring your cloud account: `sync`
-
-Configures the addressbook to synchronize with the cloud using the given user credentials. +
-Format: `sync u/USERNAME p/PASSWORD`
-
-==== Synchronizing
-Address book data is automatically synchronized with cloud when an internet connection is available. +
-There is no need to synchronize manually.
-
-==== Removing your cloud account: `unsync`
-
-Stops synchronizing of contact information with any previously configured cloud accounts. +
-Format: `unsync`
 
 == FAQ
 
