@@ -250,7 +250,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE) + "?theme="
-                    + GuiSettings.DEFAULT_THEME, getBrowserPanel().getLoadedUrl());
+                    + GuiSettings.DEFAULT_THEME, getBrowserPanel().getLoadedUrl().toExternalForm());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

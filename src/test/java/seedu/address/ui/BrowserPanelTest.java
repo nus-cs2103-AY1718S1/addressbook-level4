@@ -53,7 +53,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertEquals(expectedDefaultPageUrl + "?theme=" + GuiSettings.DEFAULT_THEME,
-                browserPanelHandle.getLoadedUrl());
+                browserPanelHandle.getLoadedUrl().toExternalForm());
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
