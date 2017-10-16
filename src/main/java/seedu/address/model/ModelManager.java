@@ -4,18 +4,20 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -94,11 +96,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
-            List<ReadOnlyPerson> newList = new ArrayList<>();
             Person addPin = addPinTag(person);
             updatePerson(person, addPin);
-            combineList(newList);
-            indicateAddressBookChanged();
+            sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
         }
@@ -107,20 +107,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
         try {
-            List<ReadOnlyPerson> newList = new ArrayList<>();
             Person removePin = removePinTag(person);
             updatePerson(person, removePin);
-            combineList(newList);
-            indicateAddressBookChanged();
+            sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
         }
-    }
-
-    private void combineList(List<ReadOnlyPerson> newList) throws DuplicatePersonException {
-        newList.addAll(getFilteredPersonList().filtered(Model.PREDICATE_SHOW_PINNED_PERSONS).sorted());
-        newList.addAll(getFilteredPersonList().filtered(Model.PREDICATE_SHOW_UNPINNED_PERSONS).sorted());
-        addressBook.setPersons(newList);
     }
 
     /**
@@ -190,8 +182,41 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sort(String sortType) {
-        addressBook.sort(sortType);
+    public void sort(String sortType) throws DuplicatePersonException {
+        switch (sortType) {
+        case SortCommand.ARGUMENT_NAME:
+            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
+            break;
+
+        case SortCommand.ARGUMENT_PHONE:
+            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_PHONE));
+            break;
+
+        case SortCommand.ARGUMENT_EMAIL:
+            addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_EMAIL));
+            break;
+
+        default:
+            break;
+
+        }
         indicateAddressBookChanged();
     }
+
+    /**
+     * Sort the addressbook by the comparator given
+     * @return ArrayList<ReadOnlyPerson> sorted list</ReadOnlyPerson>
+     */
+    private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
+        ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        SortedList<ReadOnlyPerson> sortedList =
+                getFilteredPersonList().filtered(PREDICATE_SHOW_PINNED_PERSONS).sorted(comparator);
+        newList.addAll(sortedList);
+        sortedList = getFilteredPersonList().filtered(PREDICATE_SHOW_UNPINNED_PERSONS).sorted(comparator);
+        newList.addAll(sortedList);
+
+        return newList;
+    }
+
 }
