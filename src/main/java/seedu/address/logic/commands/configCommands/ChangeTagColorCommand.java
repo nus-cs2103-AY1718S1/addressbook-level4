@@ -4,13 +4,18 @@ import static seedu.address.logic.commands.configCommands.ConfigCommand.ConfigTy
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Changes the color of an existing tag.
  */
 public class ChangeTagColorCommand extends ConfigCommand {
-    public ChangeTagColorCommand(String configValue) {
+    private Tag tag;
+    private String newColor;
+
+    public ChangeTagColorCommand(String configValue, String tagName, String tagColor) {
         super(TAG_COLOR, configValue);
+        this.newColor = tagColor;
     }
 
     @Override

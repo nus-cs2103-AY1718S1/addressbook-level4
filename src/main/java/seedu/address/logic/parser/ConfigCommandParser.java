@@ -18,10 +18,11 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new ConfigCommand object
  */
 public class ConfigCommandParser implements Parser<ConfigCommand> {
-    /**
-     * Used for initial separation of configuration change type and new configuration value.
-     */
+
+    /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
+    private static final Pattern TAG_COLOR_FORMAT =
+            Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
 
     @Override
     public ConfigCommand parse(String args) throws ParseException {
@@ -69,11 +70,25 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         }
     }
 
-    private ChangeTagColorCommand checkTagColor(String value) {
-        return new ChangeTagColorCommand(value);
+    /**
+     * Creates an {@link ChangeTagColorCommand}.
+     */
+    private ChangeTagColorCommand checkTagColor(String value) throws ParseException {
+        final Matcher matcher = TAG_COLOR_FORMAT.matcher(value.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String tagName = matcher.group("tagName").trim();
+        final String tagColor = matcher.group("tagNewColor").trim();
+
+        return new ChangeTagColorCommand(value, tagName, tagColor);
     }
 
-    private AddPropertyCommand checkAddProperty(String value) {
+    /**
+     * Creates an {@link AddPropertyCommand}.
+     */
+    private AddPropertyCommand checkAddProperty(String value) throws ParseException {
         return new AddPropertyCommand(value);
     }
 
