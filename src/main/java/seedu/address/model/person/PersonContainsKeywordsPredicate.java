@@ -4,8 +4,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
@@ -13,10 +13,10 @@ import seedu.address.commons.util.StringUtil;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} or {@code Tag} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final HashMap<String, List<String>> keywords;
 
-    public NameContainsKeywordsPredicate(HashMap<String, List<String>> keywords) {
+    public PersonContainsKeywordsPredicate(HashMap<String, List<String>> keywords) {
         this.keywords = keywords;
     }
 
@@ -44,8 +44,8 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof PersonContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }
