@@ -23,6 +23,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FAVORITE_NO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FAVORITE_YES;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -74,14 +75,14 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_BOB + " "
                 + EMAIL_DESC_BOB + "  "
                 + ADDRESS_DESC_BOB + " "
-                + FAVORITE_DESC_NO + " "
+                + FAVORITE_DESC_YES + " "
                 + TAG_DESC_HUSBAND + " ";
         Person editedPerson = new PersonBuilder()
                 .withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB)
-                .withFavorite(VALID_FAVORITE_NO)
+                .withFavorite(VALID_FAVORITE_YES)
                 .withTags(VALID_TAG_HUSBAND)
                 .build();
         assertCommandSuccess(command, index, editedPerson);
@@ -105,7 +106,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB
-                + FAVORITE_DESC_NO
+                + FAVORITE_DESC_YES
                 + TAG_DESC_FRIEND
                 + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);

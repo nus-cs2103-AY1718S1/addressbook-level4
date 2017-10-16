@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_NO;
 import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_YES;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
@@ -73,7 +74,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   "
                 + ADDRESS_DESC_AMY + "   "
-                + FAVORITE_DESC_YES + "   "
+                + FAVORITE_DESC_NO + "   "
                 + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
@@ -94,7 +95,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + FAVORITE_DESC_YES
+                + FAVORITE_DESC_NO
                 + TAG_DESC_FRIEND;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
@@ -107,7 +108,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + FAVORITE_DESC_YES
+                + FAVORITE_DESC_NO
                 + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 

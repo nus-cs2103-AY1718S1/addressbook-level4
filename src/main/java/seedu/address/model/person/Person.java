@@ -30,7 +30,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(Name name, Phone phone, Email email, Address address,
                   Favorite favorite, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, favorite, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -148,7 +148,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, favorite, tags);
     }
 
     @Override
