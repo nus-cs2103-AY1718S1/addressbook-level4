@@ -46,7 +46,7 @@ public class RemoveTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            if (index == null) {
+            if (index.orElse(null) == null) {
                 model.removeTag(toRemove);
                 return new CommandResult(String.format(MESSAGE_SUCCESS));
             } else {
