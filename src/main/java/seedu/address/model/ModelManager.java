@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.regex.PatternSyntaxException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,8 @@ import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -66,6 +69,21 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    //=========== Model support for property component =============================================================
+
+    /**
+     * Adds a new customize property to {@code PropertyManager}.
+     *
+     * @throws DuplicatePropertyException if there already exists a property with the same {@code shortName}.
+     * @throws PatternSyntaxException if the given regular expression contains invalid syntax.
+     */
+    @Override
+    public void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException {
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
+        indicateAddressBookChanged();
     }
 
     //=========== Model support for contact component =============================================================
@@ -180,7 +198,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredEvents.setPredicate(predicate);
     }
 
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -199,5 +216,4 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredEvents.equals(other.filteredEvents);
     }
-
 }

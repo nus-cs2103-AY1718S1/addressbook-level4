@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.function.Predicate;
+import java.util.regex.PatternSyntaxException;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -9,6 +10,7 @@ import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,6 +26,12 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    //=========== Model support for property component =============================================================
+
+    /** Adds a new customize property */
+    void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException;
 
     //=========== Model support for contact component =============================================================
 
