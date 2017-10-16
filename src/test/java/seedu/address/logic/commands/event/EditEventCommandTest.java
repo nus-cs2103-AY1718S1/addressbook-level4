@@ -4,7 +4,6 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_SOCCER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_IMPORTANT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMING_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -54,11 +53,10 @@ public class EditEventCommandTest {
         ReadOnlyEvent lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
 
         EventBuilder eventInList = new EventBuilder(lastEvent);
-        Event editedEvent = eventInList.withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM)
-                .withTags(VALID_TAG_IMPORTANT).build();
+        Event editedEvent = eventInList.withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM).build();
 
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
-                .withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM).withTags(VALID_TAG_IMPORTANT).build();
+                .withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM).build();
         EditEventCommand editCommand = prepareCommand(indexLastEvent, descriptor);
 
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);

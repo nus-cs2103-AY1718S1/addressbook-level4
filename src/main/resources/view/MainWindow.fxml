@@ -2,13 +2,12 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
@@ -33,13 +32,25 @@
     </StackPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" minWidth="340" prefWidth="500" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-            <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <TabPane fx:id="tabPane" prefHeight="1000" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
+                     tabMaxWidth="200.0" tabMinWidth="140.0" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab fx:id="tabContacts" text="Contacts">
+                        <content>
+                            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                        </content>
+                    </Tab>
+                    <Tab fx:id="tabEvents" closable="false" text="Events">
+                        <content>
+                            <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
         </VBox>
 
         <StackPane fx:id="browserPlaceholder" prefWidth="340">

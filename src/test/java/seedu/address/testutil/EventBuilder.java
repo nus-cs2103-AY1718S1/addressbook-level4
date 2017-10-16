@@ -1,15 +1,11 @@
 package seedu.address.testutil;
 
-import java.util.Set;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Event objects.
@@ -28,8 +24,7 @@ public class EventBuilder {
             Title defaultTitle = new Title(DEFAULT_TITLE);
             Timing defaultTiming = new Timing(DEFAULT_TIMING);
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
-            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.event = new Event(defaultTitle, defaultTiming, defaultDescription, defaultTags);
+            this.event = new Event(defaultTitle, defaultTiming, defaultDescription);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
@@ -54,17 +49,6 @@ public class EventBuilder {
         return this;
     }
 
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Event} that we are building.
-     */
-    public EventBuilder withTags(String... tags) {
-        try {
-            this.event.setTags(SampleDataUtil.getTagSet(tags));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
-        }
-        return this;
-    }
 
     /**
      * Sets the {@code Timing} of the {@code Event} that we are building.

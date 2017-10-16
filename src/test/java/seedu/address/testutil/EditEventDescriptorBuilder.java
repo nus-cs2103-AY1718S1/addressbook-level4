@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -31,7 +30,6 @@ public class EditEventDescriptorBuilder {
         descriptor.setTitle(event.getTitle());
         descriptor.setTiming(event.getTiming());
         descriptor.setDescription(event.getDescription());
-        descriptor.setTags(event.getTags());
     }
 
     /**
@@ -66,19 +64,6 @@ public class EditEventDescriptorBuilder {
             ParserUtil.parseDescription(Optional.of(description)).ifPresent(descriptor::setDescription);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("description is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditEventDescriptor}
-     * that we are building.
-     */
-    public EditEventDescriptorBuilder withTags(String... tags) {
-        try {
-            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
         }
         return this;
     }

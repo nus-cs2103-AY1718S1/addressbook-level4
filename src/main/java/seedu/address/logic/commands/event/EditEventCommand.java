@@ -3,13 +3,11 @@ package seedu.address.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -23,7 +21,6 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing event in the address book.
@@ -50,7 +47,7 @@ public class EditEventCommand extends UndoableCommand {
     private final EditEventDescriptor editEventDescriptor;
 
     /**
-     * @param index                of the event in the filtered event list to edit
+     * @param index               of the event in the filtered event list to edit
      * @param editEventDescriptor details to edit the event with
      */
     public EditEventCommand(Index index, EditEventDescriptor editEventDescriptor) {

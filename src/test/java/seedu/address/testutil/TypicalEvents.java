@@ -13,13 +13,13 @@ import seedu.address.model.event.ReadOnlyEvent;
 public class TypicalEvents {
 
     public static final ReadOnlyEvent BIRTHDAY = new EventBuilder().withTitle("Jack's Birthday")
-            .withTiming("1900-2300").withDescription("Celebrating Jack's 21st").withTags("birthday").build();
+            .withTiming("1900-2300").withDescription("Celebrating Jack's 21st").build();
     public static final ReadOnlyEvent ANNIVERSARY = new EventBuilder().withTitle("Wedding Anniversary")
-            .withTiming("0000-2359").withDescription("2nd Wedding Anniversary").withTags("love").build();
+            .withTiming("0000-2359").withDescription("2nd Wedding Anniversary").build();
     public static final ReadOnlyEvent EXAM = new EventBuilder().withTitle("CS2103 Final Exam")
-            .withTiming("1300-1500").withDescription("We are screwed").withTags("exam").build();
+            .withTiming("1300-1500").withDescription("We are screwed").build();
     public static final ReadOnlyEvent MOURN = new EventBuilder().withTitle("Bai Ah Gong")
-            .withTiming("1900-2300").withDescription("@ CCK Cemetery").withTags("family").build();
+            .withTiming("1900-2300").withDescription("@ CCK Cemetery").build();
 
     private TypicalEvents() {
     } // prevents instantiation

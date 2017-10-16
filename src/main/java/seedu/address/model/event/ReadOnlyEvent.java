@@ -1,10 +1,6 @@
 package seedu.address.model.event;
 
-import java.util.Set;
-
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * A read-only immutable interface for an Event in the addressbook.

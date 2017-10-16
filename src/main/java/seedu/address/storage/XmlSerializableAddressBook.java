@@ -78,7 +78,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
-        final ObservableList<ReadOnlyEvent> events =  this.events.stream().map(event -> {
+        final ObservableList<ReadOnlyEvent> events = this.events.stream().map(event -> {
             try {
                 return event.toModelType();
             } catch (IllegalValueException e) {

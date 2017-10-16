@@ -1,10 +1,5 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -13,7 +8,6 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
-import seedu.address.model.tag.Tag;
 
 /**
  * JAXB-friendly version of the Event.

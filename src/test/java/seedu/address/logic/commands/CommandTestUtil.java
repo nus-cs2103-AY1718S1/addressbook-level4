@@ -3,10 +3,12 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +80,16 @@ public class CommandTestUtil {
     public static final String VALID_TAG_IMPORTANT = "important";
     public static final String VALID_TAG_LEISURE = "leisure";
 
+    public static final String TITLE_MIDTERM = " " + PREFIX_NAME + VALID_TITLE_MIDTERM;
+    public static final String TITLE_SOCCER = " " + PREFIX_NAME + VALID_TITLE_SOCCER;
+    public static final String TIMING_MIDTERM = " " + PREFIX_TIMING + VALID_TIMING_MIDTERM;
+    public static final String TIMING_SOCCER = " " + PREFIX_TIMING + VALID_TIMING_SOCCER;
+    public static final String DESCRIPTION_MIDTERM = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_MIDTERM;
+    public static final String DESCRIPTION_SOCCER = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_SOCCER;
+
+    public static final String INVALID_TITLE = " " + PREFIX_NAME + "";
+    public static final String INVALID_TIMING = " " + PREFIX_TIMING + "700-900";
+
     public static final EditEventCommand.EditEventDescriptor DESC_MIDTERM;
     public static final EditEventCommand.EditEventDescriptor DESC_SOCCER;
 
@@ -90,9 +102,9 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM)
-                .withDescription(VALID_DESCRIPTION_MIDTERM).withTags(VALID_TAG_IMPORTANT).build();
+                .withDescription(VALID_DESCRIPTION_MIDTERM).build();
         DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER).withTiming(VALID_TIMING_SOCCER)
-                .withDescription(VALID_DESCRIPTION_SOCCER).withTags(VALID_TAG_LEISURE).build();
+                .withDescription(VALID_DESCRIPTION_SOCCER).build();
     }
 
     /**

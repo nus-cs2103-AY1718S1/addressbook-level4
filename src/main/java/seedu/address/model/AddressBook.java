@@ -218,8 +218,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the given event {@code target} in the list with {@code editedReadOnlyEvent}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyEvent}.
-     *                                  another existing event in the list.
-     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     * another existing event in the list.
+     *
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
             throws EventNotFoundException {

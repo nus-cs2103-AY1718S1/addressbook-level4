@@ -35,7 +35,7 @@ public class EventList implements Iterable<Event> {
     /**
      * Replaces the event {@code target} in the list with {@code editedEvent}.
      *
-     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException {

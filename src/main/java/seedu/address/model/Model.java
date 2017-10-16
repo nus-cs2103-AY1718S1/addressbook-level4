@@ -78,7 +78,7 @@ public interface Model {
     /**
      * Replaces the given event {@code target} with {@code editedPerson}.
      *
-     * @throws EventNotFoundException  if {@code target} could not be found in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException;
 
