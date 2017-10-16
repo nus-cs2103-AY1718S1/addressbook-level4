@@ -128,11 +128,11 @@ public class FindCommand extends Command {
         ArrayList<String> matchedNames = new ArrayList<>();
         ArrayList<String> emailList = new ArrayList<>();
         for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
-            emailList.add(model.getAddressBook().getPersonList().get(i).getEmail().toString());
+            emailList.add(model.getAddressBook().getPersonList().get(i).getEmail().toString().toLowerCase());
         }
         for (int i = 0; i < emailKeywords.size(); i++) {
             for (int j = 0; j < emailList.size(); j++) {
-                if (emailList.get(j).contains(emailKeywords.get(i))) {
+                if (emailList.get(j).contains(emailKeywords.get(i).toLowerCase())) {
                     matchedNames.add(model.getAddressBook().getPersonList().get(j).getName().toString());
                 }
             }
