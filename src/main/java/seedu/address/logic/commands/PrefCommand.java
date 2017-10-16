@@ -1,13 +1,11 @@
-package seedu.address.logic;
+package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Edits the details of an existing person in the address book.
  */
-public class prefCommand extends UndoableCommand {
+public class PrefCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "pref";
     public static final String COMMAND_ALIAS = "p";
@@ -21,7 +19,7 @@ public class prefCommand extends UndoableCommand {
 
     /**
      */
-    public prefCommand() {
+    public PrefCommand() {
     }
 
     @Override
@@ -37,7 +35,7 @@ public class prefCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof prefCommand)) {
+        if (!(other instanceof PrefCommand)) {
             return false;
         }
         return true;
