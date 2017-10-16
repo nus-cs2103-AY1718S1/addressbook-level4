@@ -71,8 +71,8 @@ public class PersonCard extends UiPart<Region> {
         });
         groups.getChildren()
               .forEach(label -> label
-                                     .setStyle("-fx-background-color: mediumblue;" +
-                                               "-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
+                                     .setStyle("-fx-background-color: mediumblue;"
+                                               + "-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
     }
 
     private void initTags(ReadOnlyPerson person) {
