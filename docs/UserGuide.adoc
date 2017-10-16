@@ -330,6 +330,10 @@ There is no need to save manually.
 
 Commands and parameters will be suggested as you type, where applicable.
 
+=== Autocomplete commands
+
+You can type the first few letters of the commands you want to use, then place TAB to have it autocompleted.
+
 === Exporting the data : `export`
 
 [NOTE]
