@@ -159,11 +159,11 @@ public class CommandBoxTest extends GuiUnitTest {
         mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
         guiRobot.write("101010101010");
-        mySandBox.positionCaret(mySandBox.getText().length()/2);
-        assertFalse(mySandBox.getCaretPosition() ==0);
-        assertFalse(mySandBox.getCaretPosition()==mySandBox.getText().length());
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
         guiRobot.push(KeyCode.ALT);
-        assertFalse(mySandBox.getCaretPosition()==mySandBox.getText().length());
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
         assertTrue(mySandBox.getCaretPosition() == 0);
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() > 0);
@@ -173,7 +173,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
         guiRobot.write("101010");
         guiRobot.write("     ");
-        assertFalse(mySandBox.getCaretPosition() ==0);
+        assertFalse(mySandBox.getCaretPosition() == 0);
         guiRobot.push(KeyCode.ALT);
         assertTrue(mySandBox.getCaretPosition() == 0);
         assertNotNull(mySandBox.getCaretPosition());
@@ -184,7 +184,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
         guiRobot.write("     ");
         guiRobot.write("101010");
-        assertFalse(mySandBox.getCaretPosition() ==0);
+        assertFalse(mySandBox.getCaretPosition() == 0);
         guiRobot.push(KeyCode.ALT);
         assertTrue(mySandBox.getCaretPosition() == 5);
         assertNotNull(mySandBox.getCaretPosition());

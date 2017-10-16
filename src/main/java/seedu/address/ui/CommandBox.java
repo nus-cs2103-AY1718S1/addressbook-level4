@@ -101,7 +101,6 @@ public class CommandBox extends UiPart<Region> {
                 shiftCaretRightByWord();
                 break;
             case RIGHT:
-                keyEvent.consume();
                 boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
                 if (isCaretWithin) {
                     break;
@@ -139,7 +138,7 @@ public class CommandBox extends UiPart<Region> {
      * a) Caret is at far left or
      * b) "_" is found
      * <p>
-     * 3. If "_" is present on left of Caret, shift left until 2 Condition holds
+     * 3. If "_" is present on left of Caret, shift left until 2. Condition holds
      * Run Step 2
      */
     private void shiftCaretLeftByWord() {
@@ -157,13 +156,36 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Shifts the caret right to the right of the last character of the next word
+     * <p>
+     * 1. If Caret is at far right, break
+     * <p>
+     * 2. If Char is present on right of Caret, shift right until
+     * a) Caret is at far right or
+     * b) "_" is found
+     * <p>
+     * 3. If "_" is present on right of Caret, shift right until 2. Condition holds
+     * Run Step 2
      */
     private void shiftCaretRightByWord() {
-
+        int newCaretPosition = commandTextField.getCaretPosition();
+        int maxAchievablePosition = commandTextField.getText().length();
+        if (newCaretPosition == maxAchievablePosition) {
+            return;
+        } else if (isEmptyAfter(newCaretPosition)) {
+            newCaretPosition = shiftRightIgnoringSpaces(newCaretPosition, maxAchievablePosition);
+            newCaretPosition = shiftRightIgnoringWords(newCaretPosition, maxAchievablePosition);
+        } else {
+            newCaretPosition = shiftRightIgnoringWords(newCaretPosition, maxAchievablePosition);
+        }
+        commandTextField.positionCaret(newCaretPosition);
     }
 
     /**
      * Shifts the caret left, ignoring all empty spaces
+     * <p>
+     * Note: Will not implement exception throwing here as shiftCaretLeftByWord is set up in such a way
+     * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
+     * which is impossible to resolve
      * <p>
      * Pre-Condition 1: Current caret position must have an empty space string on the left.
      * It must never be called if there is a possibility of the string before
@@ -184,7 +206,43 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Shifts the caret right, ignoring all empty spaces
+     * <p>
+     * Note: Will not implement exception throwing here as shiftCaretRightByWord is set up in such a way
+     * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
+     * which is impossible to resolve
+     * <p>
+     * Pre-Condition 1: Current caret position must have an empty space string on the right.
+     * It must never be called if there is a possibility of the string after
+     * it being not an empty space
+     * <p>
+     * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
+     * of it being at most right position
+     */
+    private int shiftRightIgnoringSpaces(int newCaretPosition, int maxAchievablePosition) {
+        int caretHolder = newCaretPosition;
+        for (int i = caretHolder; i < maxAchievablePosition; i++) {
+            if (!isEmptyAfter(caretHolder)) {
+                break;
+            }
+            caretHolder += 1;
+        }
+        return caretHolder;
+    }
+
+    /**
      * Shifts the caret left, ignoring all char
+     * <p>
+     * Note: Will not implement exception throwing here as shiftCaretLeftByWord is set up in such a way
+     * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
+     * which is impossible to resolve
+     * <p>
+     * Pre-Condition 1: Current caret position must have an empty space string on the left.
+     * It must never be called if there is a possibility of the string before
+     * it being not an empty space
+     * <p>
+     * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
+     * of it being 0
      */
     private int shiftLeftIgnoringWords(int newCaretPosition) {
         int caretHolder = newCaretPosition;
@@ -198,6 +256,31 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Shifts the caret right, ignoring all char
+     * <p>
+     * Note: Will not implement exception throwing here as shiftCaretRightByWord is set up in such a way
+     * that pre-conditions as follows are met. Do not want to write code which will affect test coverage
+     * which is impossible to resolve
+     * <p>
+     * Pre-Condition 1: Current caret position must have an empty space string on the right.
+     * It must never be called if there is a possibility of the string before
+     * it being not an empty space
+     * <p>
+     * Pre-Condition 2: newCaretPosition should never be in the situation where there is a possibility
+     * of it being at most right position
+     */
+    private int shiftRightIgnoringWords(int newCaretPosition, int maxAchievablePosition) {
+        int caretHolder = newCaretPosition;
+        for (int i = caretHolder; i < maxAchievablePosition; i++) {
+            if (isEmptyAfter(caretHolder)) {
+                break;
+            }
+            caretHolder += 1;
+        }
+        return caretHolder;
+    }
+
+    /**
      * Returns true if string element before currentCaretPosition index is empty
      */
     private boolean isEmptyBefore(int currentCaretPosition) {
@@ -206,6 +289,14 @@ public class CommandBox extends UiPart<Region> {
         return (" ".equals(convertToString));
     }
 
+    /**
+     * Returns true if string element after currentCaretPosition index is empty
+     */
+    private boolean isEmptyAfter(int currentCaretPosition) {
+        Character charAfter = commandTextField.getText().charAt(currentCaretPosition);
+        String convertToString = Character.toString(charAfter);
+        return (" ".equals(convertToString));
+    }
 
     /**
      * Adds the next prefix required for the input
