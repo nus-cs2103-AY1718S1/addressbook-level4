@@ -6,11 +6,15 @@ import static org.junit.Assert.fail;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -18,6 +22,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTagsCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -36,6 +41,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -102,6 +108,30 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_ALIAS + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_addtags() throws Exception {
+        Person person = new PersonBuilder().build();
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        Set<Tag> tags = ParserUtil.parseTags(tagsList);
+        AddTagsCommand command = (AddTagsCommand) parser.parseCommand(AddTagsCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
+        assertEquals(new AddTagsCommand(INDEX_FIRST_PERSON, tags), command);
+    }
+
+    @Test
+    public void parseCommand_addtags_alias() throws Exception {
+        Person person = new PersonBuilder().build();
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        Set<Tag> tags = ParserUtil.parseTags(tagsList);
+        AddTagsCommand command = (AddTagsCommand) parser.parseCommand(AddTagsCommand.COMMAND_ALIAS + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
+        assertEquals(new AddTagsCommand(INDEX_FIRST_PERSON, tags), command);
     }
 
     @Test
