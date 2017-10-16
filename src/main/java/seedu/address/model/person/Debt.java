@@ -11,15 +11,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Debt {
 
-    public static final String MESSAGE_DEBT_CONSTRAINTS =
-            "Debt can only contain numbers, and should have 1 or more digits";
-    public static final String DEBT_VALIDATION_REGEX = "\\d+";
+    public static final String MESSAGE_DEBT_CONSTRAINTS = "Debt must have at least 1 digit and be either "
+            + "a positive integer or a positive number with two decimal places";
+    // validation regex validates empty string. Check for presence of at least 1 digit is needed.
+    public static final String DEBT_VALIDATION_REGEX = "^(?=.*\\d)\\d*(?:\\.\\d\\d)?$";
     public final String value;
 
     /**
      * Validates given debt.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given debt string is invalid.
      */
     public Debt(String debt) throws IllegalValueException {
         requireNonNull(debt);
@@ -34,7 +35,7 @@ public class Debt {
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidDebt(String test) {
-        return test.matches(DEBT_VALIDATION_REGEX);
+        return test.matches(DEBT_VALIDATION_REGEX) && test.length() >= 1;
     }
 
     @Override
