@@ -70,7 +70,6 @@ public class CommandBox extends UiPart<Region> {
         switch (keyEvent.getCode()) {
         case UP:
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
@@ -95,24 +94,7 @@ public class CommandBox extends UiPart<Region> {
             if (isCaretWithin) {
                 break;
             } else {
-                String finalText;
-                if (containsPrefix("name")) {
-                    finalText = concatPrefix(PREFIX_NAME);
-                } else if (containsPrefix("phone")) {
-                    finalText = concatPrefix(PREFIX_PHONE);
-                } else if (containsPrefix("email")) {
-                    finalText = concatPrefix(PREFIX_EMAIL);
-                } else if (containsPrefix("address")) {
-                    finalText = concatPrefix(PREFIX_ADDRESS);
-                } else if (containsPrefix("bloodtype")) {
-                    finalText = concatPrefix(PREFIX_BLOODTYPE);
-                } else if (containsPrefix("all")) {
-                    finalText = concatPrefix(PREFIX_TAG);
-                } else {
-                    break;
-                }
-                commandTextField.setText(finalText);
-                commandTextField.positionCaret(finalText.length());
+                addsNextPrefix();
                 break;
             }
         default:
@@ -131,6 +113,30 @@ public class CommandBox extends UiPart<Region> {
      */
     public void shiftCaretRightByWord(){
 
+    }
+
+    /**
+     * Adds the next prefix required for the input
+     */
+    public void addsNextPrefix(){
+        String finalText;
+        if (containsPrefix("name")) {
+            finalText = concatPrefix(PREFIX_NAME);
+        } else if (containsPrefix("phone")) {
+            finalText = concatPrefix(PREFIX_PHONE);
+        } else if (containsPrefix("email")) {
+            finalText = concatPrefix(PREFIX_EMAIL);
+        } else if (containsPrefix("address")) {
+            finalText = concatPrefix(PREFIX_ADDRESS);
+        } else if (containsPrefix("bloodtype")) {
+            finalText = concatPrefix(PREFIX_BLOODTYPE);
+        } else if (containsPrefix("all")) {
+            finalText = concatPrefix(PREFIX_TAG);
+        } else {
+            return;
+        }
+        commandTextField.setText(finalText);
+        commandTextField.positionCaret(finalText.length());
     }
 
     /**
