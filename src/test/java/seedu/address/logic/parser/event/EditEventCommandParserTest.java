@@ -135,7 +135,8 @@ public class EditEventCommandParserTest {
         String userInput = targetIndex.getOneBased() + TIMING_MIDTERM + DESCRIPTION_MIDTERM
                 + TIMING_MIDTERM + DESCRIPTION_MIDTERM + TIMING_SOCCER + DESCRIPTION_SOCCER;
 
-        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTiming(VALID_TIMING_SOCCER)
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
+                .withTiming(VALID_TIMING_SOCCER)
                 .withDescription(VALID_DESCRIPTION_SOCCER).build();
 
         EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
