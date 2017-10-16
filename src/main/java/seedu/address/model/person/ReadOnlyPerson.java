@@ -22,6 +22,9 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<DateOfBirth> dobProperty();
     DateOfBirth getDateOfBirth();
+
+    String getReason();
+
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 

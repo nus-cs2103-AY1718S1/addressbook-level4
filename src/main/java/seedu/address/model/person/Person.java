@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
 
 import java.util.Objects;
 import java.util.Set;
@@ -22,6 +23,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DateOfBirth> dob;
+
+    private String reason;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -115,6 +118,13 @@ public class Person implements ReadOnlyPerson {
     @Override
     public DateOfBirth getDateOfBirth() {
         return dob.get();
+    }
+  
+    public String getReason() {
+        Address a = this.getAddress();
+        Name n = this.getName();
+        this.reason = String.format(SHOWING_WHY_MESSAGE, n, a);
+        return reason;
     }
 
     /**
