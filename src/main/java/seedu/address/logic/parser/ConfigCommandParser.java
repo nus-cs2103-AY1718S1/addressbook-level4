@@ -6,13 +6,11 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jdk.nashorn.internal.runtime.ParserException;
-import seedu.address.commons.core.Config;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.configCommands.AddPropertyCommand;
 import seedu.address.logic.commands.configCommands.ChangeTagColorCommand;
 import seedu.address.logic.commands.configCommands.ConfigCommand;
 import seedu.address.logic.commands.configCommands.ConfigCommand.ConfigType;
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.configCommands.ImportCalenderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
