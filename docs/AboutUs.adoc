@@ -4,53 +4,45 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+ConnectUs was developed by the W15-B3 team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Daniel Kwang
+image::danielweide.png[width="150", align="left"]
+{empty}[https://github.com/danielweide[github]] [<<danielweide#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Testing, Code quality +
+In-charge of: Logic Component
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Jasmine See
+image::jasminesee.png[width="150", align="left"]
+{empty}[http://github.com/jasminesee[github]] [<<jasminesee#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Deliverable and Dateline, Integration +
+In-charge of: Model Component
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Joshua Lim
+image::blaqkrow.png[width="150", align="left"]
+{empty}[http://github.com/blaqkrow[github]] [<<blaqkrow#, portfolio>>]
 
-Role: Developer +
-Responsibilities: UI
+Role: Scheduling and tracking, Integration  +
+In-charge of: UI Component
 
 '''
+
+=== Lim Shunyong
+image::limshunyong.png[width="150", align="left"]
+{empty}[http://github.com/limshunyong[github]] [<<limshunyong#, portfolio>>]
+
+Role: Code quality, Documentation  +
+In-charge of: Storage Component
+
+'''
+

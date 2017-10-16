@@ -42,11 +42,12 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
+        ObservableList<Integer> index = personListView.getSelectionModel().getSelectedIndices();
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new PersonPanelSelectionChangedEvent(newValue, index.get(0)));
                     }
                 });
     }
