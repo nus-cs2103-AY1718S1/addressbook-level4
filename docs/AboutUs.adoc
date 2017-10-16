@@ -46,7 +46,7 @@ Responsibilities: UI + Storage
 '''
 
 === Jiang Lingshuo
-image::yl_coder.jpg[width="150", align="left"]
+image::lingshuo.jpg[width="150", align="left"]
 {empty}[http://github.com/JiangLingshuo[github]] [<<lingshuo#, portfolio>>]
 
 Role: Developer +
