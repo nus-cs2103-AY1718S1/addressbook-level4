@@ -41,23 +41,23 @@ public class StringUtil {
     }
 
     /**
-     * Returns true if the {@code emailsentence} contains the {@code email}.
+     * Returns true if the {@code emailsentence} contains the {@code word}.
      *   Ignores case, but a full word match is required.
      *   <br>examples:<pre>
      *       containsEmailgnoreCase("abc@example.com", "e/example") == true
      *       containsEmailgnoreCase(("abc@example.com", "example") == false
-     *       containsEmailgnoreCase(("abc@example.com", "e/EXAMPLE") == true//Case insensitive
+     *       containsEmailgnoreCase(("abc@example.com", "e/   EXAMPLE") == true//Case insensitive
      *       </pre>
      * @param emailSentence cannot be null
-     * @param word cannot be null, cannot be empty, must be a email domain with .com
+     * @param word cannot be null, cannot be empty, must be a valid  email domain
      */
     public static boolean containsEmailIgnoreCase(String emailSentence, String word) {
         requireNonNull(emailSentence);
         requireNonNull(word);
 
         String preppedWord = word.trim();
-        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\d{3,}").length == 1, "Word parameter should be a single word");
+        checkArgument(!preppedWord.isEmpty(), "Email parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Email parameter should have a valid email domain");
 
         String preppedEmailSentence = emailSentence.substring(emailSentence.indexOf('@') + 1);
         String finalPreppedEmailSentence = preppedEmailSentence.substring(0,preppedEmailSentence.indexOf('.'));
@@ -68,11 +68,12 @@ public class StringUtil {
 
 
     /**
-     * Returns true if the {@code phoneSentence} contains the {@code email}.
+     * Returns true if the {@code phoneSentence} contains the {@code word}.
      *   Ignores case, but a full word match is required.
      *   <br>examples:<pre>
-     *       ontainsPhoneIgnoreCase("abc@example.com", "e/example") == true
-     *       ontainsPhoneIgnoreCase(("abc@example.com", "example") == false
+     *      containsPhoneIgnoreCase("99998888", "p/8888") == true
+     *      containsPhoneIgnoreCase("99998888", "e/9999 8888") == true
+     *      containsPhoneIgnoreCase(("99998888", "999 8888") == false
      *       </pre>
      * @param phoneSentence cannot be null
      * @param word cannot be null, cannot be empty, must be a email domain with .com
@@ -82,13 +83,52 @@ public class StringUtil {
         requireNonNull(word);
 
         String preppedPhone = word.trim();
-        checkArgument(!preppedPhone.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedPhone.split("\\s+").length == 1, "Word parameter should be a single word");
+        checkArgument(!preppedPhone.isEmpty(), "Phone parameter cannot be empty");
+        checkArgument(preppedPhone.split("\\s{4}").length == 1, "Email parameter should consist of at least 4 digits");
+        String[] phonePreppedSentence = phoneSentence.split("(?<=\\G.{4})");
 
-        return phoneSentence.equalsIgnoreCase(preppedPhone);
 
+        for (String phoneInSentence : phonePreppedSentence) {
+            if (phoneInSentence.matches(preppedPhone )) {
+                return true;
+
+            }
+        }
+        return false;
     }
 
+
+
+
+    /**
+     * Returns true if the {@code phoneSentence} contains the {@code word}.
+     *   Ignores case, but a full word match is required.
+     *   <br>examples:<pre>
+     *      containsPhoneIgnoreCase("99998888", "p/8888") == true
+     *      containsPhoneIgnoreCase("99998888", "e/9999 8888") == true
+     *      containsPhoneIgnoreCase(("99998888", "999 8888") == false
+     *       </pre>
+     * @param phoneSentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a email domain with .com
+     */
+    public static boolean containsAddressIgnoreCase(String phoneSentence, String word) {
+        requireNonNull(phoneSentence);
+        requireNonNull(word);
+
+        String preppedPhone = word.trim();
+        checkArgument(!preppedPhone.isEmpty(), "Phone parameter cannot be empty");
+        checkArgument(preppedPhone.split("\\s{4}").length == 1, "Email parameter should consist of at least 4 digits");
+        String[] phoneInPreppedSentence = phoneSentence.split("(?<=\\G.{4})");
+
+
+        for (String phoneInSentence : phoneInPreppedSentence) {
+            if (phoneInSentence.matches(preppedPhone )) {
+                return true;
+
+            }
+        }
+        return false;
+    }
     /**
      * Returns a detailed message of the t, including the stack trace.
      */
