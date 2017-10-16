@@ -21,10 +21,12 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods used for parsing strings in the various *Parser classes.
+ * Contains utility methods used for parsing strings in the various {@link Parser} classes.<br>
+ *
  * {@code ParserUtil} contains methods that take in {@code Optional} as parameters. However, it goes against Java's
- * convention (see https://stackoverflow.com/a/39005452) as {@code Optional} should only be used a return type.
- * Justification: The methods in concern receive {@code Optional} return values from other methods as parameters and
+ * convention (see https://stackoverflow.com/a/39005452) as {@code Optional} should only be used a return type.<br>
+ *
+ * <b>Justification:</b> The methods in concern receive {@code Optional} return values from other methods as parameters and
  * return {@code Optional} values based on whether the parameters were present. Therefore, it is redundant to unwrap the
  * initial {@code Optional} before passing to {@code ParserUtil} as a parameter and then re-wrap it into an
  * {@code Optional} return value inside {@code ParserUtil} methods.
@@ -50,6 +52,8 @@ public class ParserUtil {
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
+     *
+     * TODO: Use a generic parseProperty method to replace all methods below.
      */
     public static Optional<Name> parseName(Optional<String> name)
             throws IllegalValueException, PropertyNotFoundException {
