@@ -229,12 +229,68 @@ There is no need to save manually.
 
 == Coming in v2.0
 
+=== Ability to create private accounts: `create`
+
+Allow user to have a private contact list that is protected by login username and password +
+
+Format: `create u/USERNAME p/PASSWORD`
+
+[NOTE]
+Usernames need to be unique but not passwords. +
+After the create command is issued, a security question will appear where user will need to provide an answer. +
+The answer will be used if the user forgets his password.
+
+Examples:
+
+* `create u/johndoeuser p/abcd1234`
+
 === Ability to login/logout: `login`/`logout`
 
-=== Add a to-do note to contact: `todo`
+Allow user to login to their private account to access the contact list +
+
+Format to login: `login u/USERNAME p/PASSWORD`
+Format to logout: `logout`
+
+[NOTE]
+Account is automatically loggedout when the app is closed. +
+Logout feature can be used if user wants to access the public contact list without closing the app
+
+Examples:
+
+* `login u/johndoeuser p/abcd1234`
+* `logout`
+
+=== Add a remark note to contact: `remark`
+
+Adds remarks to a person existing in the address book based on their index +
+Or to remove remarks based on person's index and remark index +
+
+Format to add remark: `remark PERSONINDEX r/REMARK` +
+Format to remove remark: `remark PERSONINDEX REMARKINDEX`
+
+[TIP]
+A person can have any number of remarks (including 0)
+
+Examples:
+
+* `remark 1 r/Have a beer with him on Sunday`
+* `remark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
+* `remark 1 1`
+* `remark 2 1`
 
 === Link facebook page to contact: `link`
 
+Adds a facebook link to a person existing in the address book based on their index +
+
+Format: `link PERSONINDEX l/WEBSITEURL` +
+
+[TIP]
+A person can have only one link, any changes will update the existing link to be the new link +
+Only facebook links are accepted
+
+Examples:
+
+* `link 1 l/https://www.facebook.com/john.doe`
 
 == FAQ
 
