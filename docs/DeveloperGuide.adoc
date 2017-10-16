@@ -721,7 +721,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to help page whenever I forget how to use the app
 
 |`* * *` |user |add a person |record name, phone number, email and address
 
@@ -729,15 +729,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |find a person by middle or last name |accurately locate details of persons without having to go through the entire list
-
-|`* * *` |user |click buttons to work in the app |use the app more conveniently
-
-|`* * *` |user |add custom fields |store special info about a person
+|`* * *` |user |add custom fields |store special info about a person e.g. favourite food
 
 |`* * *` |user |list contacts in alphabetical order |locate persons more easily
 
-|`* * *` |user |edit fields |use the app more easily
+|`* * *` |user |edit fields |
 
 |`* * *` |user |add multiple instances of the same field e.g. multiple phone numbers |do not have to store additional email, phone, etc in a fresh contact
 
@@ -745,21 +741,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |back up the addressbook (save as...) |know where to look when addressbook is accidentally deleted
 
-|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |have aesthetically pleasing UI |
 
-|`* *` |user |find a person by a custom search criterion |help recognize a person without knowledge of name
+|`* *` |user |find a person by phone number |help recognize a person without knowledge of name
 
 |`* *` |teacher |list individual fields e.g. phone number |mass message students
 
 |`* *` |user |display favorite contacts on top of all contacts |easily reach favorite people
 
 |`* *` |user |alternate English and Chinese in a custom field |accommodate to the Chinese population
-
-|`* *` |user |see the details of a person in an organised manner |use the app more easily
 
 |`* *` |user |list contacts according to custom groups |easily reach a certain group of contacts
 
@@ -774,7 +766,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |display frequency of contact information retrieval |know which contacts I visit more frequently
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -842,29 +833,21 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to find a person
-2.  AddressBook shows an example of find person message
-3.  User follows the format and provide the name of the person
-4.  AddressBook finds the person
+1.  User type in the name of the desired person in the search bar
+2.  AddressBook displays the list of matched persons in the panel
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. User uses the wrong format.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 * 3b. Name given by the user is not in the AddressBook
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. AddressBook displays nothing.
 +
-Use case resumes at step 2.
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Change language
@@ -889,14 +872,6 @@ Use case ends.
 Use case resumes at step 2.
 
 
-
-
-
-
-
-
-{More to be added}
-
 [appendix]
 == Non Functional Requirements
 
@@ -913,11 +888,10 @@ Use case resumes at step 2.
 .  Should be able to change the font type and size easily.
 .  Changes of the address book should be saved in a log file.
 
-{More to be added}
-
 [appendix]
 == Glossary
 
+.  Search bar: the upper right-hand-side bar which allows convenient searching
 .  Address Book: The specific book that the user is using the application on.
 .  Format: The way in which command is entered.
 .  History: Commands entered previously.
