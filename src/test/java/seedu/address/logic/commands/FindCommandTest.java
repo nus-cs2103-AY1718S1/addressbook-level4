@@ -78,7 +78,8 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split(ONE_OR_MORE_SPACES_REGEX))));
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput
+                        .split(ONE_OR_MORE_SPACES_REGEX))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
