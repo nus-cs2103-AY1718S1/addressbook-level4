@@ -28,6 +28,10 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
      */
     @Override
     public AddAppointmentCommand parse(String userInput) throws ParseException {
+
+        if(userInput.split(" ").length == 1) {
+            return new AddAppointmentCommand();
+        }
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_DATE);
 

@@ -2,9 +2,12 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
@@ -102,6 +105,29 @@ public class UniquePersonList implements Iterable<Person> {
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
+
+
+    /**
+     * @return the backing list that is sorted by appointment dates
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByAppointment() {
+
+        internalList.sort((o1, o2) -> {
+            if (o1.getAppointment().getDate() != null && o2.getAppointment().getDate() != null && o2.getAppointment().getDate().before(o1.getAppointment().getDate())) {
+                 return 1;
+             } else {
+                 return -1;
+             }
+         });
+
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     *
+     * @return the list as an unmodifiable list and sorted by appointment
+     */
+
 
     @Override
     public Iterator<Person> iterator() {

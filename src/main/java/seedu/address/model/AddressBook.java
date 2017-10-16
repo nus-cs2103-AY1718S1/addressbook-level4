@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
@@ -183,6 +184,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    public ObservableList<ReadOnlyPerson> getPersonListSortByAppointment() {
+        return persons.asObservableListSortedByAppointment();
     }
 
     @Override
