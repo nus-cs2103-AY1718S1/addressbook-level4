@@ -77,7 +77,7 @@ public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
      * @return true if tag in {@code descriptor} present but not match tag of {@code person}
      */
     private boolean isTagNotMatchedIfPresent(ReadOnlyPerson person) {
-        if(descriptor.getTags().isPresent()) {
+        if (descriptor.getTags().isPresent()) {
             Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
             Iterator<Tag> personIterator = person.getTags().iterator();
             while (descriptorIterator.hasNext()) {
