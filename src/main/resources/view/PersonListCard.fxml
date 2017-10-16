@@ -30,7 +30,7 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
             <ImageView fx:id="pinIcon" fitHeight="16.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
-                  <Insets left="150.0" />
+                  <Insets />
                </HBox.margin></ImageView>
       </HBox>
       <FlowPane fx:id="tags" />
