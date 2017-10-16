@@ -21,6 +21,19 @@ include::../UserGuide.adoc[tag=multiple]
 
 ---
 
+=== Enhancement Added: Find persons by name, tags and email
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 Adding multiple persons will aid users (e.g. tutors) who need to add multiple persons, and it would be too tedious to add them one by one. With the new feature implemented it would improve such users convenience in using the software.
