@@ -129,7 +129,9 @@ public class Person implements ReadOnlyPerson {
     /**
      * Replaces this person's groups with the groups in the argument group set.
      */
-    public void setGroups(Set<Group> replacement) { groups.set(new UniqueGroupList(replacement)); }
+    public void setGroups(Set<Group> replacement) {
+        groups.set(new UniqueGroupList(replacement));
+    }
 
     /**
      * Adds a group to this person's groups.
