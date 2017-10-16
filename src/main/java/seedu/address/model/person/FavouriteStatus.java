@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a Person's favourite status in the address book.
  * Guarantees: immutable; is always valid
