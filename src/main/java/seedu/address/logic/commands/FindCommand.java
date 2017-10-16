@@ -26,9 +26,10 @@ public class FindCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS]\n"
-            + "Example: " + COMMAND_WORD + " alice john "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "alice john "
+            + PREFIX_PHONE + "91234567 98765432 "
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25";
 
     private final NameContainsKeywordsPredicate predicate;
 
