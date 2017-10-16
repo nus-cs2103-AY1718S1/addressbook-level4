@@ -11,16 +11,17 @@ public class FavouriteStatus {
     public final boolean isFavourite;
 
     public FavouriteStatus(boolean isFavourite) {
-        requireNonNull(isFavourite);
         this.isFavourite = isFavourite;
     }
 
     public boolean getStatus() {
         return isFavourite;
     }
-    
+
     @Override
-    public String toString() { return (isFavourite ? "Favourite" : ""); }
+    public String toString() {
+        return (isFavourite ? "Favourite" : "");
+    }
 
     @Override
     public boolean equals(Object other) {
