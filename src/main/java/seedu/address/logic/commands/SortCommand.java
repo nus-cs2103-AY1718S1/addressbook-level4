@@ -20,7 +20,6 @@ public class SortCommand extends Command {
             + ": Sort all contacts names in alphabetical order. ";
 
     public static final String MESSAGE_SUCCESS = "All contacts are sorted alphabetically by name.";
-    public static final String MESSAGE_LIST_EMPTY = "No contacts to be sorted in AddressBook.";
 
     private ArrayList<ReadOnlyPerson> contactList;
 

@@ -103,9 +103,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<ReadOnlyPerson> sortByPersonName() throws NullPointerException {
-        if (filteredPersons.size() == 0) {
-            return filteredPersons;
-        }
         return addressBook.listOfPersonNameSorted();
     }
 
