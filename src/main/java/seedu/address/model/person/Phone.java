@@ -15,7 +15,8 @@ public class Phone {
             "Users are to label their numbers with HP: (HandPhone number) H: (Home number) or O: (Office number)\n "
                     + "For example, HP: 91234567 H: 97287288 O: 34987987.\n "
                     + "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "(?!.*[ ]{2})(?=(?:.*\\d){3})[(HPO:)0-9 ]+";
+    public static final String PHONE_VALIDATION_REGEX = "(?=(?:.*\\d){3})"
+            + "(student/)[0-9]+( parent/)[0-9]+";
     public final String value;
 
     /**
@@ -39,9 +40,20 @@ public class Phone {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 
+    /**
+     * Replace all occurrence of "/" with ":" and capitalise first letter of student and parent.
+     */
+    public String changeToAppropriateUiFormat(String value) {
+
+        value = value.replace("/", ": ");
+        value = value.replace("s", "S");
+        value = value.replace("p", "P");
+        return value;
+    }
+
     @Override
     public String toString() {
-        return value;
+        return changeToAppropriateUiFormat(value);
     }
 
     @Override
