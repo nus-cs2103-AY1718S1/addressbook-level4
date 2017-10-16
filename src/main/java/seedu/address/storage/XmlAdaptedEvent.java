@@ -27,9 +27,6 @@ public class XmlAdaptedEvent {
     @XmlElement(required = true)
     private String description;
 
-    @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
-
     /**
      * Constructs an XmlAdaptedEvent.
      * This is the no-arg constructor that is required by JAXB.
@@ -47,27 +44,18 @@ public class XmlAdaptedEvent {
         title = source.getTitle().toString();
         timing = source.getTiming().toString();
         description = source.getDescription().toString();
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
-        }
     }
 
     /**
-     * Converts this jaxb-friendly adapted event object into the model's Event object.
+     * Converts this jaxb-friendly adapted event objet into the model's Event object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted event
      */
     public Event toModelType() throws IllegalValueException {
-        final List<Tag> eventTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            eventTags.add(tag.toModelType());
-        }
         final Title title = new Title(this.title);
         final Timing timing = new Timing(this.timing);
         final Description description = new Description(this.description);
-        final Set<Tag> tags = new HashSet<>(eventTags);
-        return new Event(title, timing, description, tags);
+        return new Event(title, timing, description);
     }
 }
 

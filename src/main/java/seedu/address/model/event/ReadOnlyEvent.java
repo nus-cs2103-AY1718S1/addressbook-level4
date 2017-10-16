@@ -23,10 +23,6 @@ public interface ReadOnlyEvent {
 
     Description getDescription();
 
-    ObjectProperty<UniqueTagList> tagProperty();
-
-    Set<Tag> getTags();
-
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -47,9 +43,7 @@ public interface ReadOnlyEvent {
                 .append(" Timing: ")
                 .append(getTiming())
                 .append(" Description: ")
-                .append(getDescription())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append(getDescription());
         return builder.toString();
     }
 }

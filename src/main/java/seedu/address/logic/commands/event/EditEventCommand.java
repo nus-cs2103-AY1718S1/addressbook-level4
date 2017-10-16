@@ -39,7 +39,6 @@ public class EditEventCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "TITLE] "
             + "[" + PREFIX_TIMING + "TIMING] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_TIMING + "1300-1500 "
             + PREFIX_DESCRIPTION + "New description for event x";
@@ -73,9 +72,8 @@ public class EditEventCommand extends UndoableCommand {
         Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
         Timing updatedTiming = editEventDescriptor.getTiming().orElse(eventToEdit.getTiming());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
-        Set<Tag> updatedTags = editEventDescriptor.getTags().orElse(eventToEdit.getTags());
 
-        return new Event(updatedTitle, updatedTiming, updatedDescription, updatedTags);
+        return new Event(updatedTitle, updatedTiming, updatedDescription);
     }
 
     @Override
@@ -124,7 +122,6 @@ public class EditEventCommand extends UndoableCommand {
         private Title title;
         private Timing timing;
         private Description description;
-        private Set<Tag> tags;
 
         public EditEventDescriptor() {
         }
@@ -133,14 +130,13 @@ public class EditEventCommand extends UndoableCommand {
             this.title = toCopy.title;
             this.timing = toCopy.timing;
             this.description = toCopy.description;
-            this.tags = toCopy.tags;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.title, this.timing, this.description, this.tags);
+            return CollectionUtil.isAnyNonNull(this.title, this.timing, this.description);
         }
 
         public Optional<Title> getTitle() {
@@ -167,14 +163,6 @@ public class EditEventCommand extends UndoableCommand {
             this.description = description;
         }
 
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
-        }
-
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
-        }
-
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -192,8 +180,7 @@ public class EditEventCommand extends UndoableCommand {
 
             return getTitle().equals(e.getTitle())
                     && getTiming().equals(e.getTiming())
-                    && getDescription().equals(e.getDescription())
-                    && getTags().equals(e.getTags());
+                    && getDescription().equals(e.getDescription());
         }
     }
 }

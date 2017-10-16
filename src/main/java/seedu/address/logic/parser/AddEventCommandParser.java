@@ -3,10 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -17,7 +15,6 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
-import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddEventCommand object
@@ -40,7 +37,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
      */
     public AddEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMING, PREFIX_DESCRIPTION, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMING, PREFIX_DESCRIPTION);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_TIMING, PREFIX_DESCRIPTION)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
@@ -50,9 +47,8 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             Title title = ParserUtil.parseTitle(argMultimap.getValue(PREFIX_NAME)).get();
             Timing timing = ParserUtil.parseTiming(argMultimap.getValue(PREFIX_TIMING)).get();
             Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyEvent event = new Event(title, timing, description, tagList);
+            ReadOnlyEvent event = new Event(title, timing, description);
 
             return new AddEventCommand(event);
         } catch (IllegalValueException ive) {

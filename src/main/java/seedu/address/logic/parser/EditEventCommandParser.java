@@ -32,7 +32,7 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
     public EditEventCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMING, PREFIX_DESCRIPTION, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMING, PREFIX_DESCRIPTION);
 
         Index index;
 
@@ -48,7 +48,6 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
             ParserUtil.parseTiming(argMultimap.getValue(PREFIX_TIMING)).ifPresent(editEventDescriptor::setTiming);
             ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION))
                     .ifPresent(editEventDescriptor::setDescription);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editEventDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

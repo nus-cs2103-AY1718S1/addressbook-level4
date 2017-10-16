@@ -37,20 +37,9 @@
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-            <AnchorPane minHeight="30.0" prefHeight="40.0" prefWidth="200.0">
-                <children>
-                    <ButtonBar maxHeight="45.0" minHeight="30.0" prefHeight="40.0" prefWidth="320.0">
-                        <buttons>
-                            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="198.0" text="Contacts"/>
-                            <Button mnemonicParsing="false" prefHeight="31.0" text="Events"/>
-                        </buttons>
-                        <padding>
-                            <Insets right="15.0"/>
-                        </padding>
-                    </ButtonBar>
-                </children>
-            </AnchorPane>
+
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
         </VBox>
 
         <StackPane fx:id="browserPlaceholder" prefWidth="340">

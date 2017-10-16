@@ -4,7 +4,6 @@ import javafx.beans.binding.Bindings;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -36,14 +35,11 @@ public class EventCard extends UiPart<Region> {
     private Label timing;
     @FXML
     private Label description;
-    @FXML
-    private FlowPane tags;
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
-        initTags(event);
         bindListeners(event);
     }
 
@@ -55,14 +51,6 @@ public class EventCard extends UiPart<Region> {
         title.textProperty().bind(Bindings.convert(event.titleProperty()));
         timing.textProperty().bind(Bindings.convert(event.timingProperty()));
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
-        event.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
-    }
-
-    private void initTags(ReadOnlyEvent event) {
-        event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     @Override
