@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.Calendar;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddAppointmentParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -46,7 +45,7 @@ public class AddAppointmentCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        if(appointment == null) {
+        if (appointment == null) {
             model.listAppointment();
             return new CommandResult("Rearranged contacts to show upcoming appointments.");
         }

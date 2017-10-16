@@ -1,11 +1,13 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -47,5 +49,19 @@ public class AddAppointmentParserTest {
         } catch (ParseException e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void parseEmptyExpression() {
+
+        //No name and no date will just call the parser to return a command with no attributes initialized
+        try {
+            AddAppointmentCommand command = parser.parse("appointment");
+            assertTrue(command.getAppointment() == null);
+        } catch (ParseException e) {
+            fail(e.getMessage());
+        }
+
+
     }
 }

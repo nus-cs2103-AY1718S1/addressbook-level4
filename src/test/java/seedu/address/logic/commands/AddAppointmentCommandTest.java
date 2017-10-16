@@ -62,6 +62,13 @@ public class AddAppointmentCommandTest {
 
         //Command success
         assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet " + appointment.toString());
+
+        //No appointment set
+        command = new AddAppointmentCommand();
+        command.setData(model);
+        result = command.execute();
+        assertEquals(result.feedbackToUser, "Rearranged contacts to show upcoming appointments.");
+
     }
 
 }
