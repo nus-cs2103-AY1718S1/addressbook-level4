@@ -60,6 +60,6 @@ public interface Model {
      * Sorts the list in alphabetical order.
      * @throws NullPointerException if {@code contactList} is null.
      */
-    boolean sortByPersonName(ArrayList<ReadOnlyPerson> contactList);
+    ObservableList<ReadOnlyPerson> sortByPersonName();
 
 }

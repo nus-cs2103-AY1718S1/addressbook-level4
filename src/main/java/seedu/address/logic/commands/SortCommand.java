@@ -31,10 +31,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        Boolean isNotEmpty = model.sortByPersonName(contactList);
-        if (isNotEmpty == false) {
-            return new CommandResult(MESSAGE_LIST_EMPTY);
-        }
+        model.sortByPersonName();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
