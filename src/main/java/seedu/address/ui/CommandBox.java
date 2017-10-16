@@ -100,24 +100,23 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
-        boolean commandIsInvalid;
         try {
-            commandIsInvalid = false;
+            final boolean isInvalid = false;
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, commandIsInvalid));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, isInvalid));
 
         } catch (CommandException | ParseException e) {
-            commandIsInvalid = true;
+            final boolean isInvalid = true;
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage(), commandIsInvalid));
+            raise(new NewResultAvailableEvent(e.getMessage(), isInvalid));
         }
     }
 
