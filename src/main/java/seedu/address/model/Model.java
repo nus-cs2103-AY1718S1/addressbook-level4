@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicateEventException;
@@ -36,6 +37,7 @@ public interface Model {
 
     /** Sorts the events list according to date/time */
     void sortEventList();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -45,6 +47,16 @@ public interface Model {
      */
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    /**
+     * Replaces the given person {@code target} with {@code editedPerson}.
+     *
+     * @throws DuplicateEventException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -69,5 +81,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
-
 }

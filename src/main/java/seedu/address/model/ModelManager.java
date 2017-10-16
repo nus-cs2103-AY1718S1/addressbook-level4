@@ -89,6 +89,15 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+
+        addressBook.updateEvent(target, editedEvent);
+        indicateAddressBookChanged();
+    }
+
 
     @Override
     public void sortEventList() {

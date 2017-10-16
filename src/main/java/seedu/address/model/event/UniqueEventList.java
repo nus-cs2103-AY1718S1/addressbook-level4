@@ -67,25 +67,26 @@ public class UniqueEventList implements Iterable<Event> {
     /**
      * Replaces the person {@code target} in the list with {@code editedEvent}.
      *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicateEventException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
-    public void setPerson(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicatePersonException,
-            PersonNotFoundException {
+    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
+            EventNotFoundException {
 
         requireNonNull(editedEvent);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new EventNotFoundException();
         }
 
         if (!target.equals(editedEvent) && internalList.contains(editedEvent)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateEventException();
         }
 
         internalList.set(index, new Event(editedEvent));
     }
+
 
     /**
      * Removes the equivalent person from the list.
