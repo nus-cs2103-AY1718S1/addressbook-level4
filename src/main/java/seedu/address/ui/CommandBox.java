@@ -2,11 +2,15 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -22,20 +26,45 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final int TIME_SINCE_TYPING = 300;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private Image keyboardIdle;
+    private Image keyboardTyping;
+    private Image keyboardError;
+    private PauseTransition pause;
+
 
     @FXML
     private TextField commandTextField;
 
+    @FXML
+    private ImageView keyboardIcon;
+
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        loadKeyboardIcons();
+        keyboardIcon.setImage(keyboardIdle);
+        pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    public void setFocus() {
+        commandTextField.requestFocus();
+    }
+
+    /**
+     * Load images for keyboard icons in the command box.
+     */
+    private void loadKeyboardIcons() {
+        keyboardIdle = new Image(getClass().getResourceAsStream("/images/keyboard.png"));
+        keyboardTyping = new Image(getClass().getResourceAsStream("/images/keyboardTyping.png"));
+        keyboardError = new Image(getClass().getResourceAsStream("/images/keyboardError.png"));
     }
 
     /**
@@ -130,15 +159,26 @@ public class CommandBox extends UiPart<Region> {
 
     /**
      * Sets the command box style to use the default style.
+     * {@code keyboardTyping} icon changes to {@code keyboardIdle} when there is no change
+     * to text field after some time.
      */
-    private void setStyleToDefault() {
+    protected void setStyleToDefault() {
+        ObservableList<String> styleClass = commandTextField.getStyleClass();
+
+        keyboardIcon.setImage(keyboardTyping);
+        pause.setOnFinished(event -> {
+            if (!styleClass.contains(ERROR_STYLE_CLASS)) {
+                keyboardIcon.setImage(keyboardIdle);
+            }
+        });
+        pause.playFromStart();
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     /**
      * Sets the command box style to indicate a failed command.
      */
-    private void setStyleToIndicateCommandFailure() {
+    protected void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
@@ -146,6 +186,7 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+        keyboardIcon.setImage(keyboardError);
     }
 
 }
