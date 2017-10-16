@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -30,12 +31,14 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
         
-        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL);
 
         String trimmedArgsName;
         String trimmedArgsTag;
+        String trimmedArgsEmail;
         String[] keywordNameList;
         String[] keywordTagList;
+        String[] keywordEmailList;
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
         
         try {
@@ -55,6 +58,15 @@ public class FindCommandParser implements Parser<FindCommand> {
                 }
                 keywordTagList = trimmedArgsTag.split("\\s+");
                 mapKeywords.put(PREFIX_TAG.toString(), Arrays.asList(keywordTagList));
+            }
+
+            if (argumentMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+                trimmedArgsEmail = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_EMAIL)).get().trim();
+                if (trimmedArgsEmail.isEmpty()) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                }
+                keywordEmailList = trimmedArgsEmail.split("\\s+");
+                mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
             }
             
         } catch (IllegalValueException ive) {

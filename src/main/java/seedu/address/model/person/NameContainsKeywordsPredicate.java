@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -30,6 +31,11 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
         if (keywords.containsKey(PREFIX_TAG.toString()) && !keywords.get(PREFIX_TAG.toString()).isEmpty()) {
             result = result || person.containTags(keywords.get(PREFIX_TAG.toString()));
+        }
+
+        if (keywords.containsKey(PREFIX_EMAIL.toString()) && !keywords.get(PREFIX_EMAIL.toString()).isEmpty()) {
+            result = result || keywords.get(PREFIX_EMAIL.toString()).stream()
+                    .anyMatch(keyword -> person.getEmail().value.contains(keyword));
         }
         
         return result;
