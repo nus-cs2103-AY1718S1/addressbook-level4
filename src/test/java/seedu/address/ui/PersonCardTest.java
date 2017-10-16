@@ -22,12 +22,16 @@ public class PersonCardTest extends GuiUnitTest {
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithNoTags, 1);
+        //Pane color should be odd
+        assertTrue(personCard.getHBoxColor().equals(PersonCard.PANE_COLOR_ODD));
 
         // with tags
         Person personWithTags = new PersonBuilder().build();
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
+        //Pane color should be even
+        assertTrue(personCard.getHBoxColor().equals(PersonCard.PANE_COLOR_EVEN));
 
         // changes made to Person reflects on card
         guiRobot.interact(() -> {

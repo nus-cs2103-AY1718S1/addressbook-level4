@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -78,7 +79,7 @@ public class ToggleTagCommandTest {
 
         resetAddressBook();
 
-        //When tags is present
+        //When tag can be found in addressBook
         command = new ToggleTagColorCommand(true, "friends", "blue");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         assertFalse(command.execute().feedbackToUser.equals("No such tag"));
@@ -114,8 +115,21 @@ public class ToggleTagCommandTest {
         assertTrue("tagColor set to random".equals(commandResult.feedbackToUser));
     }
 
+    @Test
+    public void checkNotNull() throws CommandException {
+
+        ToggleTagColorCommand command = new ToggleTagColorCommand(true, "nosuchtag", "blue");
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        assertNotNull(command.execute());
+        assertNotNull(command);
+
+    }
+
     private void resetAddressBook() {
         model = new ModelManager(new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build(),
                 new UserPrefs());
     }
+
+
 }
