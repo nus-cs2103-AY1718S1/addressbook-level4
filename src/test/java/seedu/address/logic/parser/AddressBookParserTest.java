@@ -35,6 +35,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowFavouriteCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -91,10 +92,10 @@ public class AddressBookParserTest {
     public void parseCommand_favourite() throws Exception {
         FavouriteCommand command = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_1 + " "
                 + INDEX_FIRST_PERSON.getOneBased());
-        FavouriteCommand command2 = (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_2 + " "
+        FavouriteCommand abbreviatedCommand =
+                (FavouriteCommand) parser.parseCommand(FavouriteCommand.COMMAND_WORD_2 + " "
                 + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
-        assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command2);
     }
 
     @Test
@@ -183,6 +184,12 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " "
                 + INDEX_SECOND_PERSON.getOneBased() + " " + PREFIX_TAG + tagName);
         assertEquals(new AddTagCommand(indexes, toAdd), command);
+    }
+  
+    @Test
+    public void parseCommand_showFavourite() throws Exception {
+        assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
+        assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_2 + " 3") instanceof ShowFavouriteCommand);
     }
 
     @Test
