@@ -983,7 +983,7 @@ Use case resumes at step 6.
 
 *MSS*
 
-1.  User requests to sort a list persons
+1.  User requests to sort a list of persons
 2.  AddressBook sorts a list of persons alphanumerically by name
 3.  AddressBook shows all sorted persons in the sorted list
 +
