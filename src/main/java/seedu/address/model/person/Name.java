@@ -8,7 +8,7 @@ import java.util.List;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Person's name in the rolodex.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {

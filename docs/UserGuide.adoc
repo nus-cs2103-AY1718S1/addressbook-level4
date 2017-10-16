@@ -22,8 +22,8 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `rolodex.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Rolodex.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -33,7 +33,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Rolodex.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -56,7 +56,7 @@ Format: `help` or `h`
 
 === Adding a person: `add` or `a`
 
-Adds a person to the address book +
+Adds a person to the rolodex +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
         or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -71,7 +71,7 @@ Examples:
 // tag::list[]
 === Listing all persons : `list` or `l`
 
-Shows a list of all persons in the address book, sorted by the specified sort order or default sort order. +
+Shows a list of all persons in the rolodex, sorted by the specified sort order or default sort order. +
 Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]`
 
 ****
@@ -96,7 +96,7 @@ Examples:
 
 === Editing a person : `edit` or `e`
 
-Edits an existing person in the address book. +
+Edits an existing person in the rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
         or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -116,9 +116,9 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 // tag::find[]
-=== Locating persons in address book: `find` or `f` or `search`
+=== Locating persons in rolodex: `find` or `f` or `search`
 
-Finds persons in the address book. +
+Finds persons in the rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
@@ -177,7 +177,7 @@ Returns an error (do not count as search arguments).
 
 === Deleting a person : `delete` or `d`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the rolodex. +
 Format: `delete INDEX` or `d INDEX`
 
 ****
@@ -190,7 +190,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the rolodex.
 * `find Betsy` +
 `d 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -210,7 +210,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the rolodex.
 * `find Betsy` +
 `s 1` +
 Selects the 1st person in the results of the `find` command.
@@ -228,12 +228,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the rolodex to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the rolodex's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -277,7 +277,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the address book. +
+Clears all entries from the rolodex. +
 Format: `clear` or `c`
 
 === Keyboard Shortcuts
@@ -291,13 +291,13 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Rolodex data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Rolodex folder.
 
 == Command Summary
 

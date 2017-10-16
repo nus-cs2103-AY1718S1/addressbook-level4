@@ -16,7 +16,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
-public class SelectCommandSystemTest extends AddressBookSystemTest {
+public class SelectCommandSystemTest extends RolodexSystemTest {
     @Test
     public void select() {
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
@@ -53,14 +53,14 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select the current selected card -> selected */
         assertCommandSuccess(command, middleIndex);
 
-        /* Case: filtered person list, select index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, select index within bounds of rolodex but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        invalidIndex = getModel().getAddressBook().getPersonList().size();
+        invalidIndex = getModel().getRolodex().getPersonList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* Case: filtered person list, select index within bounds of address book and person list -> selected */
+        /* Case: filtered person list, select index within bounds of rolodex and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assert validIndex.getZeroBased() < getModel().getLatestPersonList().size();
         command = SelectCommand.COMMAND_WORD_ABBREV + " " + validIndex.getOneBased();
@@ -82,9 +82,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREV + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: select from empty address book -> rejected */
+        /* Case: select from empty rolodex -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == 0;
+        assert getModel().getRolodex().getPersonList().size() == 0;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -94,12 +94,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * box displays the success message of executing select command with the {@code expectedSelectedCardIndex}
      * of the selected person, and the model related components equal to the current model.
      * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
      * browser url and selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see RolodexSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
@@ -124,10 +124,10 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see RolodexSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

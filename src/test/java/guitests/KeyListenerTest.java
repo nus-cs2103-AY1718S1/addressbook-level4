@@ -15,7 +15,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 
-public class KeyListenerTest extends AddressBookGuiTest {
+public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForFocusOnCommandBox() {
