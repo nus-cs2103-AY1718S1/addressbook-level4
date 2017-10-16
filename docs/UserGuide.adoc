@@ -199,7 +199,7 @@ Examples:
 `schedule 3 d/15-01-2018 act/Play basketball` +
 Associates the specified schedule with the 3rd person in the address book.
 * `find Betsy` +
-`schedule 1 d/07-12-2019` +
+`schedule 1 d/25-12 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
 === Getting email addresses : `copy` [Coming in v2.0]
@@ -328,6 +328,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Locate* : `locate INDEX` +
 e.g.`locate 2`[Coming in v2.0]
+* *Schedule* : `schedule INDEX d/DATE act/ACTIVITY` +
+e.g. `schedule 1 d/25-12 act/Christmas dinner`
 * *Copy* : `copy INDEX [OTHER INDICES]...` +
 e.g.`copy 1 2` [Coming in v2.0]
 * *History* : `history`
