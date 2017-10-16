@@ -38,6 +38,13 @@ public class Debt {
         return test.matches(DEBT_VALIDATION_REGEX) && test.length() >= 1;
     }
 
+    /**
+     * Returns the double value represented by the string {@code value}
+     */
+    public double toNumber() {
+        return Double.valueOf(value);
+    }
+
     @Override
     public String toString() {
         return value;
