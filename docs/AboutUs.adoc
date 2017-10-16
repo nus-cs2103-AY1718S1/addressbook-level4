@@ -36,3 +36,10 @@ Role: Developer +
 Responsibilities: Deliverables and deadlines, Code quality, In charge of Logic component
 
 '''
+
+=== Alex Foo
+image::alexfoodw.png[width="150", align="left"]
+{empty}[http://github.com/alexfoodw[github]] [<<alexfoodw#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Integration, Documentation, Intellij Expert, In charge of Model component
