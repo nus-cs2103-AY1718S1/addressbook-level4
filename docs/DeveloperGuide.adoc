@@ -378,6 +378,10 @@ When the command word `filter` is typed into UniCity, `AddressBookParser` will c
 `FilterCommandParser` then takes in the command argument(s), delimits the arguments if there are more than one keyword separated by spaces, wraps them with
 the `TagContainsKeywordsPredicate` class before parsing them into the FilterCommand constructor.
 
+The figure below shows the sequence diagram when `LogicManager` executes the filter command.
+
+image::filtercommandsequencediagram.png[width="800"]
+
 Upon execution, the `FilterCommand` filters the list of contacts whose tags contains the tag words in the predicates. This is achieved with the help of the `updateFilteredPersonList(predicate)`
 method from the `ModelManager` class.
 
