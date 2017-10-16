@@ -979,6 +979,28 @@ Use case ends.
 +
 Use case ends.
 
+=== Use case:  Find
+
+*MSS*
+
+1.  User requests to find persons with keywords
+2.  AddressBook show a list of person(s) found with the keywords
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The input format is invalid
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+* 2a. The addressbook is empty
+** 2a1. AddressBook returns list of 0 person found.
++
+Use case ends.
+
 [appendix]
 == Non Functional Requirements
 
