@@ -42,7 +42,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
-    private PersonListPanel groupListPanel; //to be changed to GroupListPanel object
+    private GroupListPanel groupListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -136,7 +136,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        groupListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        groupListPanel = new GroupListPanel(logic.getFilteredPersonList()); //logic needs to get groupList instead
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();

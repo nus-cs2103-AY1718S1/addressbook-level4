@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,13 +8,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.HashMap;
+import java.util.Random;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+public class GroupCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "GroupListCard.fxml";
 
     /**
      * An enum that contains the different tag colours.
@@ -41,16 +41,24 @@ public class PersonCard extends UiPart<Region> {
     public final ReadOnlyPerson person;
 
     @FXML
-    private HBox cardPane;
+    private HBox groupCardPane;
     @FXML
-    private Label name;
+    private Label groupName;
     @FXML
-    private Label id;
+    private Label groupId;
+    @FXML
+    private Label groupPhone;
+    @FXML
+    private Label groupAddress;
+    @FXML
+    private Label groupEmail;
+    @FXML
+    private FlowPane groupTags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public GroupCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        id.setText(displayedIndex + ". ");
+        groupId.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
     }
@@ -60,8 +68,12 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        groupName.textProperty().bind(Bindings.convert(person.nameProperty()));
+        groupPhone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        groupAddress.textProperty().bind(Bindings.convert(person.addressProperty()));
+        groupEmail.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            groupTags.getChildren().clear();
             initTags(person);
         });
     }
@@ -72,6 +84,7 @@ public class PersonCard extends UiPart<Region> {
         }
 
         return tagColourSet.get(tagName);
+
     }
 
     /**
@@ -82,6 +95,7 @@ public class PersonCard extends UiPart<Region> {
             tag -> {
                 Label tagLabel = new Label(tag.tagName);
                 tagLabel.setStyle("-fx-background-color: " + setTagColour(tag.tagName));
+                groupTags.getChildren().add(tagLabel);
             });
     }
 
@@ -94,13 +108,13 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof GroupCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
-        return id.getText().equals(card.id.getText())
+        GroupCard card = (GroupCard) other;
+        return groupId.getText().equals(card.groupId.getText())
                 && person.equals(card.person);
     }
 }
