@@ -390,11 +390,38 @@ For example, `Hansen Johannah` can be found by typing `Han Johan` in the search 
 but `Hansen Jonannah` cannot be found because the prefix `Johan` is not in any part of the full name.
 
 ==== Sequence diagram
-image::SearchbarSequenceDiagram.png[width="800"]
+image::SearchBarSequenceDiagram.png[width="800"]
 
 ==== Design considerations
+---
+**Aspect:** parsing search text +
+**Alternative 1 (current choice):** dedicated parser for search text +
+**Pros:** modularity, ease of implementation +
+**Cons:** added complexity of abstraction for parsing at the highest level, decreases cohesion. +
+**Alternative 2:** integrate search parsing to `AddressBookparser` using a flag +
+**Pros:** cohesion maintained +
+**Cons:** modularity compromised, harder to implement a second parameter in original parser; heterogeneous nature of
+inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 
+---
+**Aspect:** execution of search command +
+**Alternative 1 (current choice):** dedicated execution in Logic interface with independent `executeSearch()` method +
+**Pros:** modularity, ease of implementation and maintenance +
+**Cons:** decrease cohesion of Logic component slightly +
+**Alternative 2:** integrate into `execute()` method using a flag +
+**Pros:** cohesion in `execute()` is maintained +
+**Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
 
+---
+{stub to be copied and pasted later on for further entries}
+
+**Aspect:** +
+**Alternative 1 (current choice):** +
+**Pros:**  +
+**Cons:** +
+**Alternative 2:** +
+**Pros:**   +
+**Cons:**
 
 
 == Documentation
