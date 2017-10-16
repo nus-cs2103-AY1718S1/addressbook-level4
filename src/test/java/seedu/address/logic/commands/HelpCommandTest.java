@@ -28,11 +28,60 @@ public class HelpCommandTest {
 
     @Test
     public void execute_validCommandIdentifier_success() throws Exception {
-        CommandResult commandResultWord = getHelpCommand("delete").execute();
-        CommandResult commandResultAlias = getHelpCommand("d").execute();
+        CommandResult commandResultWord = getHelpCommand("help").execute();
+        CommandResult commandResultAlias = getHelpCommand("h").execute();
+        assertEquals(HelpCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(HelpCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
+        commandResultWord = getHelpCommand("add").execute();
+        commandResultAlias = getHelpCommand("a").execute();
+        assertEquals(AddCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(AddCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("list").execute();
+        commandResultAlias = getHelpCommand("l").execute();
+        assertEquals(ListCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(ListCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("edit").execute();
+        commandResultAlias = getHelpCommand("e").execute();
+        assertEquals(EditCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(EditCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("find").execute();
+        commandResultAlias = getHelpCommand("f").execute();
+        assertEquals(FindCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(FindCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("delete").execute();
+        commandResultAlias = getHelpCommand("d").execute();
         assertEquals(DeleteCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(DeleteCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("history").execute();
+        commandResultAlias = getHelpCommand("his").execute();
+        assertEquals(HistoryCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(HistoryCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("undo").execute();
+        commandResultAlias = getHelpCommand("u").execute();
+        assertEquals(UndoCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(UndoCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("redo").execute();
+        commandResultAlias = getHelpCommand("r").execute();
+        assertEquals(RedoCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(RedoCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("clear").execute();
+        commandResultAlias = getHelpCommand("c").execute();
+        assertEquals(ClearCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(ClearCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("exit").execute();
+        commandResultAlias = getHelpCommand("q").execute();
+        assertEquals(ExitCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(ExitCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
     }
 
     @Test
