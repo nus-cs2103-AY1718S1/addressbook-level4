@@ -23,9 +23,9 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code AddTagCommand}.
  */
-public class RemoveTagCommandTest {
+public class AddTagCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -37,15 +37,15 @@ public class RemoveTagCommandTest {
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
-        Tag toRemove = new Tag("owesMoney");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+        Tag toAdd = new Tag("owesMoney");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
 
-        String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS, toRemove);
+        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(indexes, toRemove);
+        expectedModel.addTag(indexes, toAdd);
 
-        assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }
 
     /**
@@ -56,16 +56,16 @@ public class RemoveTagCommandTest {
         showFirstPersonOnly(model);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
-        Tag toRemove = new Tag("friends");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+        Tag toAdd = new Tag("classmate");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
 
-        String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS, toRemove);
+        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, toAdd);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         showFirstPersonOnly(expectedModel);
-        expectedModel.removeTag(indexes, toRemove);
+        expectedModel.addTag(indexes, toAdd);
 
-        assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }
 
     /**
@@ -76,10 +76,10 @@ public class RemoveTagCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(outOfBoundIndex);
-        Tag toRemove = new Tag("friends");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
 
-        assertCommandFailure(removeTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(addTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
     }
 
@@ -95,52 +95,38 @@ public class RemoveTagCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        Tag toRemove = new Tag("friends");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
 
-        assertCommandFailure(removeTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(addTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
-     * Tests failure of an unfiltered persons list with valid input indexes but a tag that doesn't exist
+     * Tests failure of an unfiltered persons list with valid input indexes but a tag that exists in every person
      */
     @Test
     public void execute_invalidTagUnfilteredList_failure() throws Exception {
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
-        Tag toRemove = new Tag("hello");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
 
-        assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_NO_SUCH_TAG);
+        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
     }
 
     /**
-     * Tests failure of a filtered persons list with valid input indexes but a tag that doesn't exist
+     * Tests failure of a filtered persons list with valid input indexes but a tag that exists in every person
      */
     @Test
     public void execute_invalidTagFilteredList_failure() throws Exception {
         showFirstPersonOnly(model);
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
-        Tag toRemove = new Tag("hello");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
+        Tag toAdd = new Tag("friends");
+        AddTagCommand addTagCommand = prepareCommand(indexes, toAdd);
 
-        assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_NO_SUCH_TAG);
-    }
-
-    /**
-     * Tests failure of an unfiltered persons list with valid input indexes but a tag that exists outside of the
-     * target indexes
-     */
-    @Test
-    public void execute_validTagNotInUnFilteredList_failure() throws Exception {
-        ArrayList<Index> indexes = new ArrayList<Index>();
-        indexes.add(INDEX_FIRST_PERSON);
-        Tag toRemove = new Tag("owesMoney");
-        RemoveTagCommand removeTagCommand = prepareCommand(indexes, toRemove);
-
-        assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_NO_SUCH_TAG);
+        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
     }
 
     @Test
@@ -152,10 +138,10 @@ public class RemoveTagCommandTest {
         indexes2.add(INDEX_SECOND_PERSON);
         Tag firstTag = new Tag("friends");
         Tag secondTag = new Tag("lecturer");
-        final RemoveTagCommand standardCommand = new RemoveTagCommand(indexes1, firstTag);
+        final AddTagCommand standardCommand = new AddTagCommand(indexes1, firstTag);
 
         // same values -> returns true
-        RemoveTagCommand commandWithSameValues = new RemoveTagCommand(indexes1, firstTag);
+        AddTagCommand commandWithSameValues = new AddTagCommand(indexes1, firstTag);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -168,18 +154,18 @@ public class RemoveTagCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different target indexes -> returns false
-        assertFalse(standardCommand.equals(new RemoveTagCommand(indexes2, firstTag)));
+        assertFalse(standardCommand.equals(new AddTagCommand(indexes2, firstTag)));
 
         // different target tag -> returns false
-        assertFalse(standardCommand.equals(new RemoveTagCommand(indexes1, secondTag)));
+        assertFalse(standardCommand.equals(new AddTagCommand(indexes1, secondTag)));
     }
 
     /**
-     * Returns an {@code RemoveTagCommand} with parameters {@code targetIndexes} and {@code toRemove}
+     * Returns an {@code AddTagCommand} with parameters {@code targetIndexes} and {@code toAdd}
      */
-    private RemoveTagCommand prepareCommand(ArrayList<Index> targetIndexes, Tag toRemove) {
-        RemoveTagCommand removeTagCommand = new RemoveTagCommand(targetIndexes, toRemove);
-        removeTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return removeTagCommand;
+    private AddTagCommand prepareCommand(ArrayList<Index> targetIndexes, Tag toAdd) {
+        AddTagCommand addTagCommand = new AddTagCommand(targetIndexes, toAdd);
+        addTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addTagCommand;
     }
 }
