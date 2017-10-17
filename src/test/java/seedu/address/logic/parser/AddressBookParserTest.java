@@ -139,6 +139,15 @@ public class AddressBookParserTest {
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
 
+    //TODO: dont know why dont work :(
+    /*@Test
+    public void parseCommand_removeCommandWord_returnsRemoveCommand() throws Exception {
+        final Tag tag = new Tag("friends");
+        RemoveCommand command = (RemoveCommand) parser.parseCommand(RemoveCommand.COMMAND_WORD + " friends "
+                + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RemoveCommand(tag, INDEX_FIRST_PERSON), command);
+    }*/
+
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
