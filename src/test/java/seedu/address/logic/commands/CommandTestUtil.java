@@ -45,13 +45,6 @@ public class CommandTestUtil {
     public static final String VALID_VENUE_EVENT1 = "Mels crib";
     public static final String VALID_VENUE_EVENT2 = "Bobs crib";
 
-    public static final String VALID_CONFIG_TAG_COLOR = " --set-tag-color ";
-    public static final String VALID_TAG_COLOR = " #7db9a1";
-    public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
-    public static final String VALID_CONFIG_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
-    public static final String VALID_CONFIG_IMPORT_CALENDER = " --import-calendar ";
-    public static final String VALID_CONFIG_URL = " https://www.url.com/";
-
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
@@ -71,6 +64,16 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final String VALID_CONFIG_TAG_COLOR = " --set-tag-color ";
+    public static final String VALID_TAG_COLOR = " #7db9a1";
+    public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
+    public static final String VALID_CONFIG_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
+    public static final String VALID_CONFIG_IMPORT_CALENDER = " --import-calendar ";
+    public static final String VALID_CONFIG_URL = " https://www.url.com/";
+
+    public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
+    public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
 
     static {
         PropertyManager.initializePropertyManager();

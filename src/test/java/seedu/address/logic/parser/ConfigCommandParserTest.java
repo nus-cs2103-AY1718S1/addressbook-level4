@@ -1,5 +1,8 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONFIG_TYPE;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONFIG_VALUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_ADD_PROPERTY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_IMPORT_CALENDER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_NEW_PROPERTY;
@@ -7,10 +10,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_TAG_COLO
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_URL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.configs.AddPropertyCommand;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
@@ -33,5 +38,11 @@ public class ConfigCommandParserTest {
         // Test for ImportCalenderCommand
         expected = new ImportCalenderCommand("https://www.url.com/");
         assertParseSuccess(parser, VALID_CONFIG_IMPORT_CALENDER + VALID_CONFIG_URL, expected);
+    }
+
+    @Test
+    public void parse_invalidConfigType_expectException() {
+        assertParseFailure(parser, INVALID_CONFIG_TYPE + INVALID_CONFIG_VALUE,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
     }
 }
