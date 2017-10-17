@@ -30,34 +30,42 @@ public class TypicalPersons {
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255").withFormClass("12S23").withPostalCode("279392").withTags("friends").build();
+            .withPhone("student/97272031 parent/97979797")
+            .withFormClass("12S23").withPostalCode("279392").withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withPhone("98765432")
+            .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com")
+            .withPhone("student/97272031 parent/97979797")
             .withFormClass("12S23").withPostalCode("279392").withTags("owesMoney", "friends").build();
-    public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
+    public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("heinz@example.com").withAddress("wall street").withFormClass("12S23")
             .withPostalCode("279392").build();
-    public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
+    public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("cornelia@example.com").withAddress("10th street").withFormClass("12S23")
             .withPostalCode("279392").build();
-    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("werner@example.com").withAddress("michegan ave").withFormClass("12S23").withPostalCode("279392")
             .build();
-    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("lydia@example.com").withAddress("little tokyo").withFormClass("12S23").withPostalCode("279392")
             .build();
-    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("anna@example.com").withAddress("4th street").withFormClass("12S23").withPostalCode("279392")
             .build();
 
     // Manually added
-    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("stefan@example.com").withAddress("little india").withFormClass("12S23").withPostalCode("987527")
             .build();
-    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller")
+            .withPhone("student/97272031 parent/97979797")
             .withEmail("hans@example.com").withAddress("chicago ave").withFormClass("12S23").withPostalCode("123456")
             .build();
-
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withFormClass(VALID_FORMCLASS_AMY)

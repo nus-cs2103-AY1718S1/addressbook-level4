@@ -59,6 +59,17 @@ public class GuiTestAssert {
     }
 
     /**
+     * Replace all occurrence of "/" with ":" and capitalise first letter of student and parent.
+     */
+    public String changeToAppropriateUiFormat(String value) {
+
+        value = value.replace("/", ": ");
+        value = value.replace("s", "S");
+        value = value.replace("p", "P");
+        return value;
+    }
+
+    /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
