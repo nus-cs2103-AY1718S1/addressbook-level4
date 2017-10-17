@@ -51,8 +51,6 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadMeetingPage(ReadOnlyMeeting meeting) {
-        //System.out.printf("Enter starting location: ");
-        //Scanner sc = new Scanner()
         loadPage(GOOGLE_MAP_SEARCH_URL_PREFIX + meeting.getPlace().value.replaceAll(" ", "+")
                 + GOOGLE_MAP_SEARCH_URL_SUFFIX);
     }
