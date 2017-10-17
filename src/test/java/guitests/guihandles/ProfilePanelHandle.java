@@ -11,18 +11,18 @@ import javafx.scene.web.WebView;
 /**
  * A handler for the {@code ProfilePanel} of the UI.
  */
-public class BrowserPanelHandle extends NodeHandle<Node> {
+public class ProfilePanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
+    public static final String PROFILE_ID = "#profile";
 
     private boolean isWebViewLoaded = true;
 
     private URL lastRememberedUrl;
 
-    public BrowserPanelHandle(Node browserPanelNode) {
-        super(browserPanelNode);
+    public ProfilePanelHandle(Node profilePanelNode) {
+        super(profilePanelNode);
 
-        WebView webView = getChildNode(BROWSER_ID);
+        WebView webView = getChildNode(PROFILE_ID);
         WebEngine engine = webView.getEngine();
         new GuiRobot().interact(() -> engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.RUNNING) {
@@ -37,7 +37,7 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      * Returns the {@code URL} of the currently loaded page.
      */
     public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(BROWSER_ID));
+        return WebViewUtil.getLoadedUrl(getChildNode(PROFILE_ID));
     }
 
     /**

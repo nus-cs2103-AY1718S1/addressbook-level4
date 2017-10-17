@@ -1,24 +1,22 @@
 package seedu.address.ui;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
-import seedu.address.model.person.ReadOnlyPerson;
 
-import java.net.URL;
+import guitests.guihandles.ProfilePanelHandle;
+import seedu.address.model.person.ReadOnlyPerson;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class ProfilePanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 
     private ProfilePanel profilePanel;
+    //private ProfilePanelHandle profilePanelHandle;
 
     @Before
     public void setUp() {
@@ -26,6 +24,9 @@ public class ProfilePanelTest extends GuiUnitTest {
 
         guiRobot.interact(() -> profilePanel = new ProfilePanel());
         uiPartRule.setUiPart(profilePanel);
+
+
+       // profilePanelHandle = new ProfilePanelHandle(profilePanel.getRoot());
 
     }
 
