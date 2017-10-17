@@ -39,7 +39,7 @@ public class Birthday {
             return true;
         }
 
-        if (birthday == BIRTHDAY_NULL) {
+        if (test == BIRTHDAY_NULL) {
             return true;
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
