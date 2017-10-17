@@ -9,9 +9,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -51,6 +54,48 @@ public class LogicManagerTest {
     public void execute_validCommand_notLoggedIn() {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void execute_listAlias_notLoggedIn() {
+        String listCommand = ListCommand.COMMAND_ALIAS;
+        assertCommandSuccess(listCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void execute_clearCommand_notLoggedIn() {
+        String clearCommand = ClearCommand.COMMAND_WORD;
+        assertCommandSuccess(clearCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void execute_clearAlias_notLoggedIn() {
+        String clearCommand = ClearCommand.COMMAND_ALIAS;
+        assertCommandSuccess(clearCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void execute_undoCommand_notLoggedIn() {
+        String undoCommand = UndoCommand.COMMAND_WORD;
+        assertCommandSuccess(undoCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void execute_undoAlias_notLoggedIn() {
+        String undoCommand = UndoCommand.COMMAND_WORD;
+        assertCommandSuccess(undoCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void executeRedoCommand_notLoggedIn() {
+        String redoCommand = RedoCommand.COMMAND_WORD;
+        assertCommandSuccess(redoCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void executeRedoAlias_notLoggedIn() {
+        String redoCommand = RedoCommand.COMMAND_WORD;
+        assertCommandSuccess(redoCommand, MESSAGE_NOT_LOGGED_IN, model);
     }
 
     @Test
