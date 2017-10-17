@@ -57,6 +57,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTAL_CODE))
                     .ifPresent(editPersonDescriptor::setPostalCode);
             ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).ifPresent(editPersonDescriptor::setDebt);
+            ParserUtil.parseInterestForEdit(argMultimap.getValue(PREFIX_INTEREST))
+                    .ifPresent(editPersonDescriptor::setInterest);
             ParserUtil.parseDeadlineForEdit(argMultimap.getValue(PREFIX_DEADLINE))
                     .ifPresent(editPersonDescriptor::setDeadline);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);

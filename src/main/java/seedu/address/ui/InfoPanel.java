@@ -31,7 +31,7 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General location: ";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
-    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: $";
+    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID = "Date repaid: ";
