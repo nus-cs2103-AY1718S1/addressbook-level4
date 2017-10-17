@@ -12,8 +12,12 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+//import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
+
 
 /**
  * A list of meetings that enforces uniqueness between its elements and does not allow nulls.
@@ -29,6 +33,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyMeeting> mappedList = EasyBind.map(internalList, (meeting) -> meeting);
 
+
+
     /**
      * Returns true if the list contains an equivalent meeting as the given argument.
      */
@@ -37,15 +43,44 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         return internalList.contains(toCheck);
     }
 
+    public boolean diffNameOfMeeting(ReadOnlyMeeting toCheck) {
+        for (Meeting meeting : internalList) {
+            if (toCheck.getDate().equals(meeting.getDate())) {
+                if (!toCheck.getName().equals(meeting.getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean diffLocationOfMeeting(ReadOnlyMeeting toCheck) {
+        for (Meeting meeting : internalList) {
+            if (toCheck.getDate().equals(meeting.getDate())) {
+                if (!toCheck.getPlace().equals(meeting.getPlace())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Adds a meeting to the list.
      *
      * @throws DuplicateMeetingException if the meeting to add is a duplicate of an existing meeting in the list.
      */
-    public void add(ReadOnlyMeeting toAdd) throws DuplicateMeetingException {
+    public void add(ReadOnlyMeeting toAdd) throws DuplicateMeetingException, MeetingClashException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateMeetingException();
+        }
+        else if (diffNameOfMeeting(toAdd)) {
+            throw new MeetingClashException();
+
+        }
+        else if (diffLocationOfMeeting(toAdd)){
+            throw new MeetingClashException();
         }
         internalList.add(new Meeting(toAdd));
         internalList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
@@ -92,7 +127,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException {
+    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
+    MeetingClashException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
         for (final ReadOnlyMeeting meeting : meetings) {
             DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");

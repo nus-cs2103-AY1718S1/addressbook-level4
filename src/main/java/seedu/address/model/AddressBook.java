@@ -18,6 +18,7 @@ import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 //import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -66,7 +67,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException {
+    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
+            MeetingClashException {
         this.meetings.setMeetings(meetings);
     }
 
@@ -86,9 +88,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         try {
             setMeetings(newData.getMeetingList());
-        } catch (DuplicateMeetingException e) {
-            assert false : "AddressBooks should not have duplicate meetings";
+        } catch (DuplicateMeetingException | MeetingClashException e) {
+            assert false : "AddressBooks should not have duplicate or clashing meetings";
         }
+
+
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -119,7 +123,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicateMeetingException if an equivalent meeting of the same date and time already exists.
      */
-    public void addMeeting(ReadOnlyMeeting m) throws DuplicateMeetingException, MeetingBeforeCurrDateException {
+    public void addMeeting(ReadOnlyMeeting m) throws DuplicateMeetingException, MeetingBeforeCurrDateException,
+            MeetingClashException {
         Meeting newMeeting = new Meeting(m);
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime currDate = LocalDateTime.now();
