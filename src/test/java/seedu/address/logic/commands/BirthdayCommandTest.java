@@ -18,6 +18,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Birthday;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for BirthdayCommand
@@ -36,10 +37,10 @@ public class BirthdayCommandTest {
 
     @Test
     public void equals() {
-        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON, VALID_BIRTHDAY_AMY);
+        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_AMY));
 
         //same value -> returns true
-        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON, VALID_BIRTHDAY_AMY);
+        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         //same object -> returns true
@@ -52,16 +53,16 @@ public class BirthdayCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         //different index -> returns false
-        assertFalse(standardCommand.equals(new BirthdayCommand(INDEX_SECOND_PERSON, VALID_BIRTHDAY_AMY)));
+        assertFalse(standardCommand.equals(new BirthdayCommand(INDEX_SECOND_PERSON, new Birthday(VALID_BIRTHDAY_AMY))));
 
         //different birthdays -> returns false
-        assertFalse(standardCommand.equals(new BirthdayCommand(INDEX_FIRST_PERSON, VALID_BIRTHDAY_BOB)));
+        assertFalse(standardCommand.equals(new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_BOB))));
     }
     /**
      * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
      */
     private BirthdayCommand prepareCommand(Index index, String birthday) {
-        BirthdayCommand birthdayCommand = new BirthdayCommand(index, birthday);
+        BirthdayCommand birthdayCommand = new BirthdayCommand(index, new Birthday(birthday));
         birthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return birthdayCommand;
     }

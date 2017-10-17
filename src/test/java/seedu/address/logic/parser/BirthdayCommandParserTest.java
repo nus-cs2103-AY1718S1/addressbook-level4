@@ -10,13 +10,14 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BirthdayCommand;
+import seedu.address.model.person.Birthday;
 
 public class BirthdayCommandParserTest {
     private BirthdayCommandParser parser = new BirthdayCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final String birthday = "06/01/1995";
+        final Birthday birthday = new Birthday("06/01/1995");
 
         //have birthdays
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -26,7 +27,7 @@ public class BirthdayCommandParserTest {
 
         //no birthdays
         userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString();
-        expectedCommand = new BirthdayCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

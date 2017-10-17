@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Birthday;
 
 /**
  + * Changes the birthday of an existing person in the address book.
@@ -25,13 +26,13 @@ public class BirthdayCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Birthday: %2$s";
 
     private final Index index;
-    private final String birthday;
+    private final Birthday birthday;
 
     /**
      * @param index    of the person in the filtered person list to edit birthday
      * @param birthday of the person
      */
-    public BirthdayCommand(Index index, String birthday) {
+    public BirthdayCommand(Index index, Birthday birthday) {
         requireNonNull(index);
         requireNonNull(birthday);
 
