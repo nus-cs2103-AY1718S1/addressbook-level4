@@ -1,9 +1,8 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
+/**
+ Shows the status of whether a person is a favourite contact.
+ */
 public class Favourite {
 
     public final boolean favourite;
@@ -13,7 +12,7 @@ public class Favourite {
      */
     public Favourite(boolean toFavourite) {
 
-            this.favourite = toFavourite;
+        this.favourite = toFavourite;
     }
 
     public Favourite() {

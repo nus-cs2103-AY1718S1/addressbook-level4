@@ -6,11 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import static java.awt.Color.green;
-import static java.awt.SystemColor.text;
 
 /**
  * An UI component that displays information of a {@code Person}.
