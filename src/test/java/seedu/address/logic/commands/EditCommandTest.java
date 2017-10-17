@@ -194,10 +194,10 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_LESSON, TYPICAL_MA1101R);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_LESSON, DESC_MA1101R);
 
         // same values -> returns true
-        EditLessonDescriptor copyDescriptor = new EditLessonDescriptor(TYPICAL_MA1101R);
+        EditLessonDescriptor copyDescriptor = new EditLessonDescriptor(DESC_MA1101R);
         EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_LESSON, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -211,10 +211,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_LESSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_LESSON, DESC_MA1101R)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_LESSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_LESSON, DESC_CS2101)));
     }
 
     /**

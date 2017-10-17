@@ -14,18 +14,13 @@ public class ListCommandParserTest {
     private ListCommandParser parser = new ListCommandParser();
 
     @Test
-    public void parse_listAddress_returnsListCommand() {
-        assertParseSuccess(parser, " address", new ListCommand(ListCommand.ATTRIBUTE_ADDRESS));
+    public void parse_listLocation_returnsListCommand() {
+        assertParseSuccess(parser, " address", new ListCommand(ListCommand.LOCATION_KEYWORD));
     }
 
     @Test
-    public void parse_listEmail_returnsListCommand() {
-        assertParseSuccess(parser, " email", new ListCommand(ListCommand.ATTRIBUTE_EMAIL));
-    }
-
-    @Test
-    public void parse_listPhone_returnsListCommand() {
-        assertParseSuccess(parser, " phone", new ListCommand(ListCommand.ATTRIBUTE_PHONE));
+    public void parse_listModule_returnsListCommand() {
+        assertParseSuccess(parser, " email", new ListCommand(ListCommand.MODULE_KEYWORD));
     }
 
     @Test
