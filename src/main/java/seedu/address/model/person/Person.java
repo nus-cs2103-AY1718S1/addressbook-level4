@@ -103,15 +103,6 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setDateAdded(DateAdded dateAdded) {
-        this.dateAdded.set(requireNonNull(dateAdded));
-    }
-
-    @Override
-    public ObjectProperty<DateAdded> dateAddedProperty() {
-        return dateAdded;
-    }
-
     @Override
     public DateAdded getDateAdded() {
         return dateAdded.get();

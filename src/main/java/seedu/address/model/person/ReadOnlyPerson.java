@@ -22,7 +22,6 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-    ObjectProperty<DateAdded> dateAddedProperty();
     DateAdded getDateAdded();
 
     /**
