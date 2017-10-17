@@ -10,8 +10,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.sun.deploy.util.StringUtils;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -24,19 +26,34 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
-     * and returns an EditCommand object for execution.
+     * and returns an TagAddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public TagAddCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        String[] argsArray = args.trim().split(" ");
-        String newTag = argsArray[0];
+        String newTag;
+        int lastIndex = 0;
+        String[] argsArray;
+        if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+        newTag = argsArray[0];
+        for (int i = 1; i < argsArray.length; i++) {
+            if (!argsArray[i].matches("\\d?")) {
+                newTag = newTag.concat(" " + argsArray[i]);
+                lastIndex = i;
+            }
+        }
         HashSet<String> tagSet = new HashSet<>();
         tagSet.add(newTag);
         ArrayList<Index> index = new ArrayList<>();
 
+        if (lastIndex == argsArray.length - 1) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+
         try {
-            for (int i = 1; i < argsArray.length; i++) {
+            for (int i = lastIndex + 1; i < argsArray.length; i++) {
                 index.add(ParserUtil.parseIndex(argsArray[i]));
             }
         } catch (IllegalValueException ive) {
