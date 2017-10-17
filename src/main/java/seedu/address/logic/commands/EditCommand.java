@@ -17,6 +17,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -102,8 +103,9 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        DateAdded updatedDateAdded = editPersonDescriptor.getDateAdded().orElse(personToEdit.getDateAdded());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedDateAdded);
     }
 
     @Override
@@ -134,6 +136,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private DateAdded dateAdded;
 
         public EditPersonDescriptor() {}
 
@@ -143,6 +146,7 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.dateAdded = toCopy.dateAdded;
         }
 
         /**
@@ -190,6 +194,11 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        //No editing of date added value;
+        public Optional<DateAdded> getDateAdded() {
+            return Optional.ofNullable(dateAdded);
         }
 
         @Override

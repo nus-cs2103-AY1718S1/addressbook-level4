@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -32,7 +33,9 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            DateAdded defaultDateAdded = new DateAdded();
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags, defaultDateAdded);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
