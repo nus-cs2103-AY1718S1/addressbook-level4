@@ -12,12 +12,12 @@
          <content>
             <AnchorPane fx:id="anchorPane" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
                <children>
-                   <Label fx:id="name" styleClass="particular-name" />
+                   <Label fx:id="name" styleClass="particular-name" layoutX = "2.0" text="\$name" />
                   <VBox layoutX="14.0" layoutY="72.0"  spacing="3.0">
-                         <Label fx:id="phone" styleClass="particular-field" />
-                         <Label fx:id="address" styleClass="particular-field" />
-                         <Label fx:id="dob" styleClass="particular-field" />
-                         <Label fx:id="email" styleClass="particular-field" />
+                         <Label fx:id="phone" styleClass="particular-field"  text="\$phone" />
+                         <Label fx:id="address" styleClass="particular-field" text="\$address" />
+                         <Label fx:id="dob" styleClass="particular-field" text="\$dob" />
+                         <Label fx:id="email" styleClass="particular-field" text="\$email" />
                   </VBox>
                </children>
             </AnchorPane>

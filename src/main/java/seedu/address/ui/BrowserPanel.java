@@ -22,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class BrowserPanel extends UiPart<Region> {
 
+    private static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -50,7 +51,7 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        //loadDefaultPage();
+        loadDefaultPage();
         registerAsAnEventHandler(this);
     }
 
@@ -62,10 +63,13 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads a default HTML file with a background that matches the general theme.
      */
-   /* private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }*/
+   private void loadDefaultPage() {
+       name.setText(DEFAULT_MESSAGE);
+       phone.setText("");
+       address.setText("");
+       dob.setText("");
+       email.setText("");
+    }
 
 
     private void bindListeners(ReadOnlyPerson person) {
