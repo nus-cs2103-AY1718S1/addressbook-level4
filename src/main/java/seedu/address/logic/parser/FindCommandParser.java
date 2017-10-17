@@ -10,6 +10,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindSpecificCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.EmailContainsSpecifiedKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsSpecifiedKeywordsPredicate;
 import seedu.address.model.person.TagContainsSpecifiedKeywordsPredicate;
 
@@ -64,6 +65,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindSpecificCommand(new NameContainsKeywordsPredicate(Arrays.asList(keyWords)));
         } else if (prefix.equals("p/")) {
             return new FindSpecificCommand(new PhoneContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
+        } else if (prefix.equals("e/")){
+            return new FindSpecificCommand(new EmailContainsSpecifiedKeywordsPredicate(Arrays.asList(arguments.trim())));
         } else if (prefix.equals("t/")) {
             return new FindSpecificCommand(new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
         }
