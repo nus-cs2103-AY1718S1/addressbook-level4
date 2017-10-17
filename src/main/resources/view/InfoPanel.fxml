@@ -7,6 +7,8 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 <StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
       <children>
@@ -66,6 +68,13 @@
             </children>
          </TextFlow>
          <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" />
+         <Text fx:id="nearbyPersonField" fill="gray" styleClass="window_small_label" text="Other contacts nearby: " />
+         <HBox fx:id="nearbyPersonList" minHeight="200" prefHeight="200" prefWidth="340">
+            <padding>
+               <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS"/>
+         </HBox>
       </children>
    </VBox>
 </StackPane>
