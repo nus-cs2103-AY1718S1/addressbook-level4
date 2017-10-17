@@ -362,30 +362,48 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 
 == Command Summary
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear` or `c`
-* *Delete* : `delete INDEX` or `d INDEX`+
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
-e.g. `find James Jake Jhon` or `find friends n/desc`
-* *List* : `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]`
-e.g. `list` or `list n/desc`
-* *Help* : `help` or `h`
-* *Select* : `select INDEX` or `s INDEX` +
-e.g.`select 2`
-* *History* : `history` or `his` or `past`
-* *Undo* : `undo` or `u`
-* *Redo* : `redo` or `r`
+[width=90%, cols="1,9"]
+|===
+| Command | Format
+
+.3+| Add | add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...
+         | a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...
+         | *E.g.* add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague
+.2+| Clear | clear
+           | c
+.3+| Delete | delete INDEX
+            | d INDEX
+            | *E.g.* delete 3
+.3+| Edit | edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...
+          | e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...
+          | *E.g.* edit 2 n/James Lee e/jameslee@example.com
+.4+| Find | find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]
+          | f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]
+          | search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | *E.g.* find James Jake Jhon *or* find friends n/desc
+.3+| List | list [SORT_ARGUMENTS]
+          | l [SORT_ARGUMENTS]
+          | *E.g.* list *or* list n/desc
+.2+| Help | help
+          | h
+.3+| Select | select INDEX
+            | s INDEX
+            | *E.g.* select 2
+.3+| History | history
+             | his
+             | past
+.2+| Undo | undo
+          | u
+.2+| Redo | redo
+          | r
+|===
 
 // tag::shortcut[]
 == Keyboard Shortcuts
 
 === Command Shortcuts
 
-[width=70%]
+[width=50%, cols="2,4"]
 |===
 | Shortcut | Purpose
 
@@ -399,7 +417,7 @@ e.g.`select 2`
 
 === Navigation/Selection Shortcuts
 
-[width=70%]
+[width=50%, cols="2,4"]
 |===
 | Shortcut | Purpose
 
