@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Rubrika - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W15-B1/Main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -38,6 +38,31 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+
+== What's New in Version 1.1
+
+=== Autocomplete
+
+`Tab` key now automatically completes your incomplete command stub.
+Use it to automatically generate a command 'skeleton' from an incomplete command word input.
+Future enhancements will allow autocompletion of names, addresses and more.
+
+Examples:
+
+* `c` becomes `clear` after pressing `Tab` once
+* nothing happens to `b` (no command starting with letter `b`)
+* `h` becomes `history`, and then `help` if you press `Tab` again
+
+=== Remarks
+
+A person can have an optional property known as remark now.
+Add a remark or modify the remark of an existing person through `remark` command.
+
+Examples:
+
+* `list` +
+`remark 1 r/Likes to swim` +
+Attaches `Likes to swim` as remark to first person on the list.
 
 == Features
 
@@ -95,6 +120,16 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Editing a person's remark: `remark`
+
+Edits the remark of the person identified by the index number used in the last person listing. +
+Format: `remark INDEX r/REMARK`
+
+Examples:
+* `list` +
+`remark 1 r/Snores loudly` +
+Attaches `Snores loudly` as remark to first person on the list.
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -140,10 +175,11 @@ Deletes the 1st person in the results of the `find` command.
 === Deleting a tag : `removetag`
 
 Removes a tag from every person in the list in the address book. +
-Format: `removetag TAGNAME`
+Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
 
 ****
-Option to remove a tag for selected people coming soon in V2.0
+removetag command available since v1.1 +
+Option to remove a tag for selected people since V1.2
 
 ****
 
@@ -157,6 +193,17 @@ Examples:
 * `list` +
 `removetag friends` +
 Deletes the tag `friends` from everyone in the address book.
+
+* `list` +
+`find John` +
+`removetag 1 enemy` +
+Deletes tag `enemy` from the first person in the list shown in the address book.
+
+=== Sorting the list: `sort`
+
+****
+Coming soon in v2.0
+****
 
 === Selecting a person : `select`
 
@@ -258,6 +305,16 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Autocomplete
+
+Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input.
+
+Examples:
+
+* `c` becomes `clear` after pressing `Tab` once
+* nothing happens to `b` (no command starting with letter `b`)
+* `h` becomes `history`, and then `help` if you press `Tab` again
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -265,13 +322,14 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *RemoveTag* : `removetag TAGNAME` +
-e.g `removetag friends`
+* *RemoveTag* : `removetag TAGNAME` or `removetag INDEX TAGNAME` +
+e.g `removetag friends` +
+e.g `removetag 3 enemy`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -283,15 +341,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-
-== Command Shortcut Summary
-* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-* *Clear* : `c`
-* *Delete* : `d INDEX`
-* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-* *Find* : `f KEYWORD [MORE_KEYWORDS]`
-* *List* : `l`
-* *Select* : `s INDEX`
-* *History* : `h`
-* *Undo* : `u`
-* *Redo* : `r`
+* *Remark* : `remark` +
+e.g. `remark 4 r/Sneezes a lot`
+* *RemoveTag* : `removetag TAGNAME` +
+e.g `removetag friends`

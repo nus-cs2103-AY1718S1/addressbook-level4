@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -87,8 +89,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
-
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
+
         for (int i = 0; i < list.size(); i++) {
             ReadOnlyPerson person = list.get(i);
             Person newPerson = new Person(person);
@@ -100,6 +102,19 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updatePerson(person, newPerson);
         }
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        List<ReadOnlyPerson> list = getFilteredPersonList();
+        ReadOnlyPerson person = list.get(index.getZeroBased());
+        Person newPerson = new Person(person);
+        Set<Tag> tagList = newPerson.getTags();
+        tagList = new HashSet<>(tagList);
+        tagList.remove(tag);
+
+        newPerson.setTags(tagList);
+        addressBook.updatePerson(person, newPerson);
     }
 
     //=========== Filtered Person List Accessors =============================================================
