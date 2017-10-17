@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.exceptions.EmptyFieldException;
-import sun.invoke.empty.Empty;
 
 /**
  * Represents a Person's phone number in the address book.
