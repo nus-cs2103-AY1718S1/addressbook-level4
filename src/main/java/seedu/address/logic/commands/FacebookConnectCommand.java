@@ -7,10 +7,10 @@ import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Connects the addressbook to a personal Facebook account.
