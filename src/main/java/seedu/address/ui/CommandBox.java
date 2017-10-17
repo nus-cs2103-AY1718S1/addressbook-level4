@@ -24,21 +24,6 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
-    private final String[] COMMANDS = {
-        "add",
-        "edit",
-        "select",
-        "delete",
-        "clear",
-        "backup",
-        "find",
-        "list",
-        "history",
-        "exit",
-        "help",
-        "undo",
-        "redo"
-    };
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -51,7 +36,6 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        TextFields.bindAutoCompletion(commandTextField, COMMANDS);
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -73,7 +57,8 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
+            // Update textfield autocomplete options
+            // TextFields.bindAutoCompletion(commandTextField, COMMANDS);
         }
     }
 
