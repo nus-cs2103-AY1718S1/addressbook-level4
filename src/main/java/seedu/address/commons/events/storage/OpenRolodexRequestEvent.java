@@ -7,6 +7,16 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class OpenRolodexRequestEvent extends BaseEvent {
 
+    private final String filePath;
+
+    public OpenRolodexRequestEvent(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
