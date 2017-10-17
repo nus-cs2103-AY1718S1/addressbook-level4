@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.meeting.MeetingContainsKeywordsPredicate;
-import seedu.address.model.meeting.ReadOnlyMeeting;
 
+/**
+ * Tests that a {@code ReadOnlyMeeting}'s {@code Meeting} matches any of the keywords given.
+ */
 public class MeetingContainsKeywordsPredicate implements Predicate<ReadOnlyMeeting> {
     private final List<String> keywords;
 

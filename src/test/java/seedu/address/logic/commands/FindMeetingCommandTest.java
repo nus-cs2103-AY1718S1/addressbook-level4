@@ -64,7 +64,7 @@ public class FindMeetingCommandTest {
 
 
     /**
-     * Parses {@code userInput} into a {@code FindCommand}.
+     * Parses {@code userInput} into a {@code FindMeetingCommand}.
      */
     private FindMeetingCommand prepareCommand(String userInput) {
         FindMeetingCommand command =
@@ -76,7 +76,7 @@ public class FindMeetingCommandTest {
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code FilteredList<ReadOnlyMeeting>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindMeetingCommand command, String expectedMessage, List<ReadOnlyMeeting> expectedList) {
