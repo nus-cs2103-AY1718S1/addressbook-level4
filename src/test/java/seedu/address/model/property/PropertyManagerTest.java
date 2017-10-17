@@ -28,6 +28,7 @@ public class PropertyManagerTest {
         assertEquals("email", PropertyManager.getPropertyFullName("e"));
         assertEquals("phone", PropertyManager.getPropertyFullName("p"));
         assertEquals("address", PropertyManager.getPropertyFullName("a"));
+        assertEquals("dateTime", PropertyManager.getPropertyFullName("dt"));
     }
 
     @Test
