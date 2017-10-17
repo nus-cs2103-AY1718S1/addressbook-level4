@@ -38,8 +38,9 @@ public abstract class ConfigCommand extends Command {
         TO_ENUM_CONFIG_TYPE.put("import-calendar", ConfigType.IMPORT_CALENDAR);
     }
 
+    protected String configValue;
+
     private ConfigType configType;
-    private String configValue;
 
     public ConfigCommand(ConfigType configType, String configValue) {
         this.configType = configType;
