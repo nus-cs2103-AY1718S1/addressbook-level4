@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
