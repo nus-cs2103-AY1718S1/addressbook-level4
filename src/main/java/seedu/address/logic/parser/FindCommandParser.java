@@ -3,13 +3,13 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAPPING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -79,13 +79,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             List<String> address = argMultimap.getAllValues(PREFIX_ADDRESS);
             List<String> trimmedAddress = prepareArguments(address);
             predicate = new AddressContainsKeywordsPredicate(trimmedAddress);
-        } else if (targetPrefix.equals(PREFIX_TAG)) {
+        } else {
             List<String> tagList = argMultimap.getAllValues(PREFIX_TAG);
             List<String> trimmedTagList = prepareArguments(tagList);
             predicate = new TagContainsKeywordsPredicate(trimmedTagList);
-        } else {
-            throw new ParseException("Something bad has happened during parsing. Please contact the project team!");
         }
+        assert(PREFIX_MAPPING.containsValue(targetPrefix));
+
         return new FindCommand(predicate);
     }
 
@@ -94,15 +94,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @param args
      */
     private static List<Prefix> getPrefixes(String args) {
-        HashMap<String, Prefix> prefixMapping = new HashMap<>();
-        prefixMapping.put("n/", PREFIX_NAME);
-        prefixMapping.put("a/", PREFIX_ADDRESS);
-        prefixMapping.put("e/", PREFIX_EMAIL);
-        prefixMapping.put("p/", PREFIX_PHONE);
-        prefixMapping.put("t/", PREFIX_TAG);
         List<Prefix> prefixesInList = new ArrayList<>();
-
-        for (Map.Entry<String, Prefix> entry : prefixMapping.entrySet()) {
+        for (Map.Entry<String, Prefix> entry : PREFIX_MAPPING.entrySet()) {
             if (args.contains(entry.getKey())) {
                 prefixesInList.add(entry.getValue());
             }
