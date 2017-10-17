@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author lawwman
 /**
@@ -32,7 +33,7 @@ public class Debt {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person debt.
      */
     public static boolean isValidDebt(String test) {
         return test.matches(DEBT_VALIDATION_REGEX) && test.length() >= 1;
@@ -56,8 +57,11 @@ public class Debt {
     /**
      * Deducts an indicated amount from debt
      */
-    public void deductFromDebt(Debt amount) {
-        Double newValue = toNumber(value) + toNumber(amount.value);
+    public void deductFromDebt(Debt amount) throws CommandException {
+        if (toNumber(amount.toString()) > toNumber(value)) {
+            throw new CommandException("Amount to deduct from debt cannot be more than debt itself");
+        }
+        Double newValue = toNumber(value) - toNumber(amount.value);
         value = Double.toString(newValue);
     }
 
