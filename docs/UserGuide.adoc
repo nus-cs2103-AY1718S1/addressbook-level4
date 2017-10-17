@@ -176,6 +176,23 @@ Returns whole list +
 `sort` +
 Return a list sorted by name lexicographically
 
+=== Highlighting keywords: `color`
+
+Highlight the command keywords. +
+Format: `color enable/disable`
+
+****
+* The color command will either enable or disable the coloring of command keywords in the command box.
+****
+
+Examples:
+
+* `color enable` +
+All command keywords will be highlighted +
+
+* `color disable` +
+All command keywords will not be highlighted +
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
