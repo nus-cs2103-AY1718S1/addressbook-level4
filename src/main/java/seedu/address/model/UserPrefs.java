@@ -92,7 +92,6 @@ public class UserPrefs {
      *
      * @param input
      * @return true if username is valid
-     * @return false if username is invalid
      */
     public boolean checkUsername(String input) {
         return username.equals(input);
