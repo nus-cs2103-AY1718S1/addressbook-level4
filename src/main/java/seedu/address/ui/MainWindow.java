@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private MapsPanel mapsPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -140,6 +141,16 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+
+    /**
+     * Changes browser view to a Maps View.
+     */
+    void changeMapsView() {
+        mapsPanel = new MapsPanel();
+        browserPlaceholder.getChildren().removeAll();
+        browserPlaceholder.getChildren().add(mapsPanel.getRoot());
     }
 
     void hide() {
