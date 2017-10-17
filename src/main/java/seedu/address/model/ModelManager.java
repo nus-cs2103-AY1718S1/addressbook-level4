@@ -101,6 +101,11 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tag);
     }
 
+    @Override
+    public ObservableList<ReadOnlyPerson> sortByPersonName() throws NullPointerException {
+        return addressBook.listOfPersonNameSorted();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

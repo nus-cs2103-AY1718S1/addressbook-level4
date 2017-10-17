@@ -202,6 +202,27 @@ Selects the 1st person in the results of the `find` command.
 `s 3` (`select 3` command) +
 Selects the 3rd person in the address book.
 
+=== Sorting all persons : `sort`
+
+Shows a list of all persons in the address book sorted in alphabetical order. +
+Format: `sort` +
+Shorthand: `st`
+
+****
+* Sorts the addressbook in alphabetical order.
+* The sort is case insensitive. e.g `hans` will match `Hans`
+* If addressbook is empty, sort does nothing.
+****
+
+Examples:
+
+* `list` +
+`sort` +
+Sorts the list in alphabetical order.
+* `find Betsy` +
+`st` +
+Sorts the list in alphabetical order.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -310,6 +331,7 @@ e.g. `findtags computing NUS engineering`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
