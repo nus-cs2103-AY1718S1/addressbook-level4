@@ -5,23 +5,16 @@ import static seedu.address.commons.core.Messages.MESSAGE_MEETING_LISTED_OVERVIE
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.junit.Test;
 
-import com.sun.istack.internal.FinalArrayList;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.MeetingContainsKeywordsPredicate;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 
