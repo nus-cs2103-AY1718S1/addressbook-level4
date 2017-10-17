@@ -17,6 +17,13 @@ image:githubicon.png[Github Icon, 40, 40, link="https://github.com/OscarWang114"
 Role: Developer +
 Responsibilities:
 
+=== Pujitha Desiraju
+image::PujithaDesiraju.jpg[width="150", align="left"]
+{empty}[https://github.com/Pujitha97[github]] [<<pujithadesiraju#, portfolio>>]
+
+Role: Developer +
+Responsibilities:
+
 === Jaryl Tan aka Juxarius
 image::jaryltan.jpg[width="150", align="left"]
 image:githubicon.png[Github Icon, 40, 40, link="https://github.com/Juxarius"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/jaryltan.adoc"]

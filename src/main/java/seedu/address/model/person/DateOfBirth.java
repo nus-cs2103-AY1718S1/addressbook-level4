@@ -21,17 +21,24 @@ public class DateOfBirth {
     public final String finalDateOfBirth;
 
     /**
+     * Initialise a DateOfBirth object with value of empty String. This can ONLY be used in the default field of
+     * {@code AddPersonOptionalFieldDescriptor}
+     */
+    public DateOfBirth() {
+        this.finalDateOfBirth = "";
+    }
+
+    /**
      * Validates given Date of Birth.
      *
-     * @throws IllegalValueException if given name string is invalid.
+     * @throws IllegalValueException if given date of birth string is invalid.
      */
     public DateOfBirth(String dob) throws IllegalValueException {
         requireNonNull(dob);
-        String trimmedDateOfBirth = dob.trim();
-        if (!isValidDateOfBirth(trimmedDateOfBirth)) {
+        if (!isValidDateOfBirth(dob)) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
-        this.finalDateOfBirth = trimmedDateOfBirth;
+        this.finalDateOfBirth = dob;
     }
 
     /**
@@ -43,6 +50,13 @@ public class DateOfBirth {
     @Override
     public String toString() {
         return finalDateOfBirth;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DateOfBirth // instanceof handles nulls
+                && this.finalDateOfBirth.equals(((DateOfBirth) other).finalDateOfBirth)); // state check
     }
 
     @Override
