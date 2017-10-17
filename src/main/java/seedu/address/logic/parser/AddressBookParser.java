@@ -72,7 +72,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         case RemoveTagCommand.COMMAND_WORD:
-            return new RemoveTagParser().parse(arguments);
+            return new RemoveTagCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
