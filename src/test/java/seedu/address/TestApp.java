@@ -1,9 +1,5 @@
 package seedu.address;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.function.Supplier;
-
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -20,6 +16,10 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Supplier;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -95,7 +95,7 @@ public class TestApp extends MainApp {
      */
     public Model getModel() {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
-        ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        ModelHelper.setFilteredList(copy, model.getFilteredLessonList());
         return copy;
     }
 

@@ -1,21 +1,6 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.controlsfx.control.textfield.TextFields;
-
 import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -28,12 +13,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
+import org.controlsfx.control.textfield.TextFields;
 import seedu.address.commons.core.LogsCenter;
-
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.commons.events.ui.ColorKeywordEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -41,6 +25,18 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Logger;
+
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -67,6 +63,7 @@ public class CommandBox extends UiPart<Region> {
     private HashMap<String, String> keywordColorMap;
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
+    private boolean enableHighlight = false;
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -172,71 +169,74 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Command input changed event.
      */
     private void listenCommandInputChanged() {
-        String allTextInput = commandTextField.getText();
-        String[] inputArray = allTextInput.split(" ");
-        int index = 0;
+        if(enableHighlight){
+            String allTextInput = commandTextField.getText();
+            String[] inputArray = allTextInput.split(" ");
+            int index = 0;
 
-        configInActiveTag();
-        configInactiveKeyword();
+            configInActiveTag();
+            configInactiveKeyword();
 
-        try {
-            tester.parseCommand(allTextInput);
-            commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
-            checkBox.setGraphic(tick);
+            try {
+                tester.parseCommand(allTextInput);
+                commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+                checkBox.setGraphic(tick);
 
-        } catch (ParseException e) {
-            commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
-            checkBox.setGraphic(cross);
-        }
-
-
-        for (int i = 0; i < inputArray.length; i++) {
-            String text = inputArray[i];
-
-            //Command Keyword
-            if (i == 0 && validCommandKeyword(text)) {
-                configActiveKeyword(text);
+            } catch (ParseException e) {
+                commandTextField.setStyle("-fx-border-color: red; -fx-border-width: 2");
+                checkBox.setGraphic(cross);
             }
 
-            //Name
-            if (text.contains(prefixList.get(NAME))) {
-                index = allTextInput.indexOf(prefixList.get(NAME));
-                configActiveTag(index, prefixList.get(NAME));
-            }
 
-            //Email
-            if (text.contains(prefixList.get(EMAIL))) {
-                index = allTextInput.indexOf(prefixList.get(EMAIL));
-                configActiveTag(index, prefixList.get(EMAIL));
-            }
+            for (int i = 0; i < inputArray.length; i++) {
+                String text = inputArray[i];
 
-            //Phone
-            if (text.contains(prefixList.get(PHONE))) {
-                index = allTextInput.indexOf(prefixList.get(PHONE));
-                configActiveTag(index, prefixList.get(PHONE));
-            }
+                //Command Keyword
+                if (i == 0 && validCommandKeyword(text)) {
+                    configActiveKeyword(text);
+                }
 
-            //Address
-            if (text.contains(prefixList.get(ADDRESS))) {
-                index = allTextInput.indexOf(prefixList.get(ADDRESS));
-                configActiveTag(index, prefixList.get(ADDRESS));
-            }
+                //Name
+                if (text.contains(prefixList.get(NAME))) {
+                    index = allTextInput.indexOf(prefixList.get(NAME));
+                    configActiveTag(index, prefixList.get(NAME));
+                }
 
-            //Tag
-            if (text.contains(prefixList.get(TAG))) {
-                ArrayList<Integer> tagList = getTagIndexList(allTextInput);
-                for (int j = 0; j < tagList.size(); j++) {
-                    index = tagList.get(j);
-                    configActiveTag(index, index + prefixList.get(TAG));
+                //Email
+                if (text.contains(prefixList.get(EMAIL))) {
+                    index = allTextInput.indexOf(prefixList.get(EMAIL));
+                    configActiveTag(index, prefixList.get(EMAIL));
+                }
+
+                //Phone
+                if (text.contains(prefixList.get(PHONE))) {
+                    index = allTextInput.indexOf(prefixList.get(PHONE));
+                    configActiveTag(index, prefixList.get(PHONE));
+                }
+
+                //Address
+                if (text.contains(prefixList.get(ADDRESS))) {
+                    index = allTextInput.indexOf(prefixList.get(ADDRESS));
+                    configActiveTag(index, prefixList.get(ADDRESS));
+                }
+
+                //Tag
+                if (text.contains(prefixList.get(TAG))) {
+                    ArrayList<Integer> tagList = getTagIndexList(allTextInput);
+                    for (int j = 0; j < tagList.size(); j++) {
+                        index = tagList.get(j);
+                        configActiveTag(index, index + prefixList.get(TAG));
+                    }
+                }
+
+                //font size
+                if (text.contains(prefixList.get(FONT_SIZE))) {
+                    index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
+                    configActiveTag(index, prefixList.get(FONT_SIZE));
                 }
             }
-
-            //font size
-            if (text.contains(prefixList.get(FONT_SIZE))) {
-                index = allTextInput.indexOf(prefixList.get(FONT_SIZE));
-                configActiveTag(index, prefixList.get(FONT_SIZE));
-            }
         }
+
     }
 
     private ArrayList<Integer> getTagIndexList(String allTextInput) {
@@ -382,6 +382,11 @@ public class CommandBox extends UiPart<Region> {
     @Subscribe
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
+    }
+
+    @Subscribe
+    private void handleColorKeywordEvent(ColorKeywordEvent event) {
+        setEnableHighlight(event.isEnabled);
     }
 
     /**
@@ -558,6 +563,13 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * Sets the command box to enable highlighting of command keywords
+     */
+    public void setEnableHighlight(boolean enableHighlight) {
+        this.enableHighlight = enableHighlight;
     }
 
 }
