@@ -11,26 +11,26 @@ import seedu.address.model.person.UniquePersonList;
 public class Group {
 
     private String groupName;
-    private String groupType;
+    private String groupComment;
 
-    public Group (String groupName, String groupType) {
+    public Group (String groupName, String groupComment) {
         this.groupName = groupName;
-        this.groupType = groupType;
+        this.groupComment = groupComment;
     }
 
     public String getGroupName () {
         return groupName;
     }
 
-    public String getGroupType () {
-        return groupType;
+    public String getgroupComment () {
+        return groupComment;
     }
 
     public void setGroupName (String groupName) {
         this.groupName = groupName;
     }
 
-    public void setGroupType (String groupType) {
-        this.groupType = groupType;
+    public void setgroupComment (String groupComment) {
+        this.groupComment = groupComment;
     }
 }
