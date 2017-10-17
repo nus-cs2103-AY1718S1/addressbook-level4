@@ -20,7 +20,7 @@ public class TagAddCommandParserTest {
     private TagAddCommandParser parser = new TagAddCommandParser();
 
     @Test
-    public void parse_missingParts_failure() {
+    public void parseMissingPartsFailure() {
         // no index specified
         assertParseFailure(parser, TAGADD_COMMAND + SPACE + VALID_TAG_FRIEND, MESSAGE_INVALID_FORMAT);
 

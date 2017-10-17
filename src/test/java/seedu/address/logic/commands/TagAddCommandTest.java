@@ -26,7 +26,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class TagAddCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_tagAdd_singlePerson_success() throws Exception {
+    public void executeTagAddSinglePersonSuccess() throws Exception {
         showFirstPersonOnly(model);
 
         Set<Tag> singleTagSet = new HashSet<Tag>();
@@ -67,7 +66,7 @@ public class TagAddCommandTest {
 
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
+    public void executeInvalidPersonIndexUnfilteredListFailure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(outOfBoundIndex);
@@ -82,7 +81,7 @@ public class TagAddCommandTest {
      * but smaller than size of address book
      */
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
+    public void executeInvalidPersonIndexFilteredListFailure() {
         showFirstPersonOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
@@ -114,7 +113,7 @@ public class TagAddCommandTest {
         assertTrue(standardCommand.equals(standardCommand));
 
         // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        assertFalse(standardCommand==null);
 
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
