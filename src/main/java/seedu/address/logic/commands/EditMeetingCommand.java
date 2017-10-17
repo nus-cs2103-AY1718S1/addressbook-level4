@@ -16,6 +16,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.NameMeeting;
+import seedu.address.model.meeting.PersonToMeet;
+import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
@@ -37,7 +39,7 @@ public class EditMeetingCommand extends UndoableCommand {
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_DATE + "01012017 12:00 "
+            + PREFIX_DATE + "01-01-2017 12:00 "
             + PREFIX_LOCATION + "Clementi MRT";
 
     public static final String MESSAGE_EDIT_MEETING_SUCCESS = "Edited Meeting: %1$s";
@@ -68,7 +70,8 @@ public class EditMeetingCommand extends UndoableCommand {
         }
 
         ReadOnlyMeeting meetingToEdit = lastShownList.get(index.getZeroBased());
-        Meeting editedMeeting = createEditedMeeting(meetingToEdit, editMeetingDescriptor);
+        Meeting editedMeeting = createEditedMeeting(meetingToEdit, editMeetingDescriptor,
+                meetingToEdit.getPersonName(), meetingToEdit.getPersonPhone());
 
         try {
             model.updateMeeting(meetingToEdit, editedMeeting);
@@ -86,15 +89,15 @@ public class EditMeetingCommand extends UndoableCommand {
      * edited with {@code editMeetingDescriptor}.
      */
     private static Meeting createEditedMeeting(ReadOnlyMeeting meetingToEdit,
-                                              EditMeetingDescriptor editMeetingDescriptor) {
+                                               EditMeetingDescriptor editMeetingDescriptor, PersonToMeet person,
+                                               PhoneNum phone) {
         assert meetingToEdit != null;
 
         NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
         DateTime updatedDate = editMeetingDescriptor.getDate().orElse(meetingToEdit.getDate());
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
-        //Set<Tag> updatedTags = editMeetingDescriptor.getTags().orElse(meetingToEdit.getTags());
 
-        return new Meeting(updatedName, updatedDate, updatedPlace);
+        return new Meeting(updatedName, updatedDate, updatedPlace, person, phone);
     }
 
     @Override
