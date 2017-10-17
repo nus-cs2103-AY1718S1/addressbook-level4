@@ -138,7 +138,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person by email in address book, keyword is same as email but of different case -> 2 person found */
+        /* Case: find person by email in address book, keyword is same as email but of different case
+         * ->2 person found
+         */
         command = FindCommand.COMMAND_WORD + " e/ " + " JoHnD@EXAMPLE.com  corneLIA@example.COM";
         ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
@@ -173,7 +175,9 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find person by address in address book, keyword is same as address but of different case -> 1 person found */
+        /* Case: find person by address in address book, keyword is same as address but of different case
+         * -> 1 person found
+         */
         command = FindCommand.COMMAND_WORD + " a/ " + " 10TH StrEEt";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
