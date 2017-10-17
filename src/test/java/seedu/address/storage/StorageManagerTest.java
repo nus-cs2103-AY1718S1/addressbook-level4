@@ -3,6 +3,7 @@ package seedu.address.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
 import static seedu.address.testutil.TypicalPersons.getTypicalRolodex;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlRolodexStorage rolodexStorage = new XmlRolodexStorage(getTempFilePath("ab"));
+        XmlRolodexStorage rolodexStorage = new XmlRolodexStorage(getTempFilePath("ab" + ROLODEX_FILE_EXTENSION));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(rolodexStorage, userPrefsStorage);
     }
