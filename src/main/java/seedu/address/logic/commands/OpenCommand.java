@@ -15,7 +15,8 @@ public class OpenCommand extends Command {
     public static final String COMMAND_WORD_ABBREV = "o"; //TODO: Add `cd` and `ls` abbreviations
 
     public static final String MESSAGE_OPENING = "Opened file: %1$s";
-    public static final String MESSAGE_NOT_EXIST = "Unable to find %1$s. Use the new command for creating a new file.";
+    public static final String MESSAGE_NOT_EXIST = "Unable to find `%1$s`. "
+            + "Use the `new` command for creating a new file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
             + "Reloads the application using the rolodex supplied at the given file path. \n"
             + "Parameters: [FILEPATH] \n"
