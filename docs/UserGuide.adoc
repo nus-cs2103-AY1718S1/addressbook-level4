@@ -302,8 +302,10 @@ When typing in the command bar, various key bindings consists of different funct
 
 ****
 * Escape: Clears entire command box text field
-* Alt: Shifts text cursor all the way to the left
-* Control: Shifts text cursor all the way to the right
+* Alt: Shifts text cursor to the left of an existing word/previous word
+* Control: Shifts text cursor to the right of an existing word/previous word
+* Shift-Alt: Shifts text cursor all the way to the left
+* Shift-Control: Shifts text cursor all the way to the right
 * Right: Activate Add Command shortcut if conditions are right +
 Condition 1: Add Command shortcut will trigger only if the caret is at the end of the line +
 Condition 2: "Add" or "A" must be the first word & character respectively at the start of the line
@@ -433,7 +435,13 @@ e.g.`s 2`
 
 === Keyboard Shortcut
 * *Escape* : Clears entire command box text field
-* *Alt* : Shifts text cursor all the way to the left
-* *Control* : Shifts text cursor all the way to the right
+* *Alt* : Shifts text cursor to the
+- Start of the word if cursor is in a word or
+- Start of previous word if cursor is not in a word
+* *Control* : Shifts text cursor to the
+- End of the word if cursor is in a word or
+- End of the next word if cursor is not in a word
+* *Shift-Alt* : Shifts text cursor all the way to the left
+* *Shift-Control* : Shifts text cursor all the way to the right
 * *Right* : Add Command Shortcut will trigger if the caret is at the end of the line +
 or "Add" or "A" is present at the start of the line.
