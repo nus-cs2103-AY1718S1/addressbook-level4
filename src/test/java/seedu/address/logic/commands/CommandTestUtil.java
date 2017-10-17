@@ -65,6 +65,19 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final String VALID_CONFIG_TAG_COLOR = " --set-tag-color ";
+    public static final String VALID_TAG_COLOR = " #7db9a1";
+    public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
+    public static final String VALID_CONFIG_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
+    public static final String VALID_CONFIG_IMPORT_CALENDER = " --import-calendar ";
+    public static final String VALID_CONFIG_URL = " https://www.url.com/";
+
+    public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
+    public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
+    public static final String INVALID_TAG_COLOR = " bee";
+    public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
+    public static final String INVALID_URL = " https://123,tg/";
+
     static {
         PropertyManager.initializePropertyManager();
 
