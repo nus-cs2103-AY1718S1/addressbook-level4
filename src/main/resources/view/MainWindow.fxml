@@ -9,15 +9,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="wholeBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
+    <URL value="@WhiteTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+      <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme" />
+         <MenuItem mnemonicParsing="false" onAction="#handleWhiteTheme" text="White Theme" />
+         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />

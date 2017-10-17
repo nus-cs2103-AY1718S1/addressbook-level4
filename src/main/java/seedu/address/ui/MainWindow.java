@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -38,6 +39,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Scene scene;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -47,10 +49,22 @@ public class MainWindow extends UiPart<Region> {
     private DeleteButton deleteButton;
 
     @FXML
+    private VBox wholeBox;
+
+    @FXML
     private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private MenuItem blackMenuItem;
+
+    @FXML
+    private MenuItem whiteMenuItem;
+
+    @FXML
+    private MenuItem greenMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -82,6 +96,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        this.scene = scene;
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -212,6 +227,56 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    @FXML
+    private void handleBlackTheme() {
+      //  Scene scene = new Scene(getRoot());
+        Scene newScene = primaryStage.getScene();
+     //   System.out.println(wholeBox.getStyle());
+        wholeBox = new VBox();
+        System.out.println(wholeBox.getStylesheets());
+
+       // wholeBox.setStyle("view/DarkTheme.css");
+        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css");
+        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css", "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
+       // wholeBox.getStylesheets().addAll("view/DarkTheme.css", "view/Extensions.css");
+        //wholeBox.getStylesheets().clear();
+       // wholeBox.getStylesheets().add(getClass().getResource("@DarkTheme.css").toExternalForm());
+        //        if(scene.getStylesheets().contains("view/DarkTheme.css") ) {
+//            scene.getStylesheets().remove("view/DarkTheme.css");
+//        }
+//        scene.getStylesheets().remove("view/WhiteTheme.css");
+//        scene.getStylesheets().add("view/DarkTheme.css");
+//        primaryStage.setScene(scene);
+//        System.out.println(scene.getStylesheets());
+      //  Scene newScene = primaryStage.getScene();
+        System.out.println(wholeBox.getStylesheets());
+        primaryStage.setScene(new Scene(wholeBox));
+        primaryStage.show();
+       // show();
+
+    }
+
+
+    @FXML
+    private void handleWhiteTheme() {
+    //    Scene scene = new Scene(getRoot());
+//        if(scene.getStylesheets().contains("view/WhiteTheme.css") ) {
+//            scene.getStylesheets().remove("view/WhiteTheme.css");
+//        }
+//        scene.getStylesheets().remove("view/DarkTheme.css");
+//        scene.getStylesheets().add("view/WhiteTheme.css");
+//        Scene newScene = primaryStage.getScene();
+//        System.out.println(newScene.getStylesheets());
+     //   show();
+        wholeBox = new VBox();
+        System.out.println(wholeBox.getStylesheets());
+        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css");
+        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css", "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
+        System.out.println(wholeBox.getStylesheets());
+        primaryStage.setScene(new Scene(wholeBox));
+        //show();
+
+    }
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
