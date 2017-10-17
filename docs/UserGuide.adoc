@@ -277,7 +277,7 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 // tag::autocomplete[]
-== Autocomplete 
+== Autocomplete
 
 Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input.
 
@@ -289,6 +289,7 @@ Examples:
 // end::autocomplete[]
 
 == FAQ
+
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
