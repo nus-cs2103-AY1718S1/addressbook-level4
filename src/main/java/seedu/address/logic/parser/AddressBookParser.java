@@ -64,7 +64,7 @@ public class AddressBookParser {
             //Fallthrough
 
         case LocateCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+            return new LocateCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             //Fallthrough

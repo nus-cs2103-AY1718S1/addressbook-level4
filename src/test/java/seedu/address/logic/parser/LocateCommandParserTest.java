@@ -15,7 +15,7 @@ import seedu.address.logic.commands.LocateCommand;
  */
 public class LocateCommandParserTest {
 
-    private SelectCommandParser parser = new SelectCommandParser();
+    private LocateCommandParser parser = new LocateCommandParser();
 
     @Test
     public void parse_validArgs_returnsSelectCommand() {
