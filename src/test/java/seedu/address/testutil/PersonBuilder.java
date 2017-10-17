@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FormClass;
+import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_FORMCLASS = "6E1";
+    public static final String DEFAULT_GRADES = "123.0";
     public static final String DEFAULT_POSTALCODE = "123456";
     public static final String DEFAULT_TAGS = "friends";
 
@@ -36,11 +38,11 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             FormClass defaultFormClass = new FormClass(DEFAULT_FORMCLASS);
+            Grades defaultGrades = new Grades(DEFAULT_GRADES);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTALCODE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultFormClass,
-                    defaultPostalCode,
-                    defaultTags);
+                    defaultGrades, defaultPostalCode, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -96,6 +98,17 @@ public class PersonBuilder {
             this.person.setFormClass(new FormClass(formClass));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("formClass is expected to be unique.");
+        }
+        return this;
+    }
+    /**
+     * Sets the {@code Grades} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGrades(String grades){
+        try {
+            this.person.setGrades(new Grades(grades));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("grades are expected to be unique.");
         }
         return this;
     }
