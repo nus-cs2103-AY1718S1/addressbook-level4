@@ -235,11 +235,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Adds and image for a person. The image has to be in the following directory: +
 src/main/resources/images/
 
-Format: `picture p/NAME i/IMAGE`
+Format: `image p/NAME i/IMAGE`
 
 Example:
 
-* `picture p/John Doe i/imageofjohn.jpg`
+* `image p/John Doe i/imageofjohn.jpg`
 
 === Loading pre-existing address book : `load`
 
