@@ -40,9 +40,9 @@ public class EventBuilder {
     /**
      * Sets the {@code EventName} of the {@code Event} that we are building.
      */
-    public EventBuilder withEventName(String EventName) {
+    public EventBuilder withEventName(String eventName) {
         try {
-            this.event.setName(new EventName(EventName));
+            this.event.setName(new EventName(eventName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }

@@ -43,7 +43,9 @@ public abstract class Command {
         this.model = model;
     }
 
-    public final String getCommandText() {
+    //=========== Support for getter/setter of commandBox text ========================================================
+
+    final String getCommandText() {
         return commandText;
     }
 

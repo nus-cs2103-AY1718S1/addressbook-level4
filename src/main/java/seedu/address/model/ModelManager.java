@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.regex.PatternSyntaxException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,8 @@ import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -68,6 +71,23 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //=========== Model support for property component =============================================================
+
+    /**
+     * Adds a new customize property to {@code PropertyManager}.
+     *
+     * @throws DuplicatePropertyException if there already exists a property with the same {@code shortName}.
+     * @throws PatternSyntaxException if the given regular expression contains invalid syntax.
+     */
+    @Override
+    public void addProperty(String shortName, String fullName, String message, String regex)
+            throws DuplicatePropertyException, PatternSyntaxException {
+        PropertyManager.addNewProperty(shortName, fullName, message, regex);
+        indicateAddressBookChanged();
+    }
+
+    //=========== Model support for contact component =============================================================
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -81,6 +101,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Replaces the given person {@code target} with {@code editedPerson}.
+     *
+     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -98,12 +125,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-
-    @Override
-    public void sortEventList() {
-        addressBook.sortEventList();
-        indicateAddressBookChanged();
-    }
 
     /**
      * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
@@ -126,6 +147,14 @@ public class ModelManager extends ComponentManager implements Model {
         Set<Tag> newTags = new HashSet<>(addressBook.getTagList());
         newTags.remove(tag);
         addressBook.setTags(newTags);
+    }
+
+    //=========== Model support for activity component =============================================================
+
+    @Override
+    public void sortEventList() {
+        addressBook.sortEventList();
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -151,23 +180,32 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Activity List Accessors =============================================================
+
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
         return FXCollections.unmodifiableObservableList(filteredEvents);
     }
 
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
     @Override
     public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -187,5 +225,4 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredEvents.equals(other.filteredEvents);
     }
-
 }

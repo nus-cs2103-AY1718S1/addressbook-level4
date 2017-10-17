@@ -37,7 +37,7 @@ public class EventListPanel extends UiPart<Region> {
         ObservableList<EventCard> mappedList = EasyBind.map(
                 eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
         eventListView.setItems(mappedList);
-        eventListView.setCellFactory(listView -> new eventListViewCell());
+        eventListView.setCellFactory(listView -> new EventListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -70,7 +70,7 @@ public class EventListPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code EventCard}.
      */
-    class eventListViewCell extends ListCell<EventCard> {
+    class EventListViewCell extends ListCell<EventCard> {
 
         @Override
         protected void updateItem(EventCard event, boolean empty) {
