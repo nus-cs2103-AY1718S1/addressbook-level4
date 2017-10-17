@@ -85,6 +85,7 @@ public class RolodexParser {
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD_ABBREV:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
