@@ -74,6 +74,9 @@ public class CommandTestUtil {
 
     public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
     public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
+    public static final String INVALID_TAG_COLOR = " bee";
+    public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
+    public static final String INVALID_URL = " https://123,tg/";
 
     static {
         PropertyManager.initializePropertyManager();
