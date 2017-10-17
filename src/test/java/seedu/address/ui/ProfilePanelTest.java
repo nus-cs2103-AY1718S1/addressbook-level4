@@ -41,7 +41,6 @@ public class ProfilePanelTest extends GuiUnitTest {
         assertEquals(emptyText, profilePanelHandle.getAddress());
 
         // select Stub Person
-        
         postNow(selectionChangedEventStub);
 
         ReadOnlyPerson expectedSelectedPerson = ALICE;
