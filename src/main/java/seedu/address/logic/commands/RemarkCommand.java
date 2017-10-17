@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.person.Remark;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -24,7 +25,7 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark %2$s";
 
     private final Index index;
-    private final String remark;
+    private final Remark remark;
 
     /**
      * @param index of the person in the filtered person list to edit remark
@@ -32,7 +33,7 @@ public class RemarkCommand extends UndoableCommand {
      * @return
      * @throws CommandException
      */
-    public RemarkCommand(Index index, String remark) {
+    public RemarkCommand(Index index, Remark remark) {
         requireNonNull(index);
         requireNonNull(remark);
 
