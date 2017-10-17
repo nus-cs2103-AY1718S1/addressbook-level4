@@ -1,12 +1,16 @@
 package seedu.address.ui;
 
+import static java.util.stream.Collectors.toCollection;
+
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -24,18 +28,25 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     private static final String FXML = "NearbyPersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(NearbyPersonListPanel.class);
 
+    private ReadOnlyPerson currentPerson;
+
     @FXML
     private ListView<PersonCard> nearbyPersonListView;
 
-    public NearbyPersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+    public NearbyPersonListPanel(ObservableList<ReadOnlyPerson> personList, ReadOnlyPerson person) {
         super(FXML);
+        currentPerson = person;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+        ObservableList<ReadOnlyPerson> nearbyList = personList.stream()
+                .filter(readOnlyPerson -> readOnlyPerson.isSameCluster(currentPerson))
+                .filter(readOnlyPerson -> !readOnlyPerson.isSameStateAs(currentPerson))
+                .collect(toCollection(FXCollections::observableArrayList));
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                nearbyList, (person) -> new PersonCard(person, nearbyList.indexOf(person) + 1));
         nearbyPersonListView.setItems(mappedList);
         nearbyPersonListView.setCellFactory(listView -> new NearbyPersonListViewCell());
         setEventHandlerForSelectionChangeEvent();

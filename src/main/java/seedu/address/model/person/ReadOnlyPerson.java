@@ -36,6 +36,11 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
 
     /**
+     * Returns true if both are in same cluster.
+     */
+    boolean isSameCluster(ReadOnlyPerson other);
+
+    /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {

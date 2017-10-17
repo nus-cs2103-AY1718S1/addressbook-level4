@@ -114,7 +114,7 @@ public class InfoPanel extends UiPart<Region> {
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID);
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         bindListeners(person);
-        nearbyPersonListPanel = new NearbyPersonListPanel(logic.getFilteredPersonList());
+        nearbyPersonListPanel = new NearbyPersonListPanel(logic.getFilteredPersonList(), person);
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
 
