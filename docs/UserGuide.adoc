@@ -40,11 +40,21 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == V2.0 Features
 
-Focused on increasing ease of use for addressbook
+Make the addressbook more useful to a tourguide
 
 [NOTE]
 ====
-Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists.
+Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists. Since v1.1
+====
+
+[NOTE]
+====
+Each person now can be assigned a group. The group is used to sort people into specific tours for the tourguide. Since v1.2
+====
+
+[NOTE]
+====
+Ability to filter the UI display to only display selected groups. Coming V2.0
 ====
 
 
