@@ -24,7 +24,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s):\n%1$s";
 
     private ArrayList<Index> targetIndexArraylist;
 
@@ -38,6 +38,7 @@ public class DeleteCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String result = "";
+        String people = "";
 
         for (Index i : targetIndexArraylist) {
             if (i.getZeroBased() >= lastShownList.size()) {
@@ -52,10 +53,10 @@ public class DeleteCommand extends UndoableCommand {
                 assert false : "The target person cannot be missing";
             }
 
-            result += String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete) + "\n";
-
-
+            people += personToDelete + "\n";
         }
+
+        result = String.format(MESSAGE_DELETE_PERSON_SUCCESS, people);
 
         return new CommandResult(result);
     }
