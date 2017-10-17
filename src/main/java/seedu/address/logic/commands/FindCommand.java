@@ -15,6 +15,9 @@ public class FindCommand extends Command {
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD
+            + " [PERSON 1] "
+            + " [PERSON 2]";
 
     private final NameContainsKeywordsPredicate predicate;
 
