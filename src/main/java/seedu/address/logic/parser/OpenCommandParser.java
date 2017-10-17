@@ -19,6 +19,7 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      */
     public OpenCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+        trimmedArgs.replace("\\", "/");
         if (trimmedArgs.isEmpty()
                 || !trimmedArgs.matches(FILEPATH_REGEX)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
