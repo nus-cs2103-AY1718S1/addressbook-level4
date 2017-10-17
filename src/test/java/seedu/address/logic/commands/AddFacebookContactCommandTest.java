@@ -9,6 +9,7 @@ public class AddFacebookContactCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         //assertCommandSuccess(prepareCommand(), model, AddFacebookContactCommand.MESSAGE_VERSION_ONE_TEST, model);
+        assert true;
     }
 
     /**
