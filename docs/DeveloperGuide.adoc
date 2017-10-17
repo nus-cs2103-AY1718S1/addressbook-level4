@@ -746,6 +746,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |sort persons by tags|locate a group of people that belongs to the same category
 
 |`*` |user |sort persons by address|locate a group of people from living in the same area
+
+|`*` |user |find a group of people with the same tags|list all contacts with the same tag
 |=======================================================================
 
 {More to be added}
@@ -809,6 +811,29 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: List contacts with the same tag
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows list of persons.
+3.  User request to list all contacts with specific tag.
+4.  AddressBook shows contacts with the specific tag
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The parameter given is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 === Use case: Clear all
 
 *MSS*
