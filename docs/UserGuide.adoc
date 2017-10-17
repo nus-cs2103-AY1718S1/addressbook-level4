@@ -127,7 +127,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `edit 3 Clementi Ave 3` +
 Edits all the persons with the third address shown in the address list to be `Clementi Ave 3` (Assume user types `list address` first).
 
-=== Locating persons by name: `find`
+=== Locating persons by attributes: `find`
 
 Finds persons whose names, address, email, phone number contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -154,7 +154,7 @@ in their email and phone number
 `find tianlan` +
 Returns any email contain `tianlan` word in the emails
 
-=== Locating persons by name: `sort`
+=== Sorting persons by attributes: `sort`
 
 Sort the existing list. +
 Format: `sort KEYWORD`
