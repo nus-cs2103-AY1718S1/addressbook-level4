@@ -200,6 +200,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -727,9 +728,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person | save my contacts in the App
+|`* * *` |user |add a new person/event | save my contacts in the App / plan my schedule in the App
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person/event |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
@@ -738,6 +739,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |frequent user |import contacts from iCloud, Google+, Facebook,etc. |sync all my contacts
 
 |`* *` |busy user |set notification before an event starts/ends |avoid missing important issues
+
+|`* *` |busy user |auto-sort my events by date/time |be clear of possible clashes in scheduling in school
 
 |`* *` |careful user |_soft delete_ my contacts/events |get them back manually if it is a mistake
 
@@ -762,13 +765,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add person
+=== Use case: Add person / event
 
 *MSS*
 
-1. User inputs text to console to add person.
-2. Address Book acknowledges and adds person to the list.
-3. Address Book is updated with a latest list of persons.
+1. User inputs text to console to add person/event.
+2. Address Book acknowledges and adds person/event to the list.
+3. Address Book is updated with a latest list of persons/events.
 +
 Use case ends.
 
@@ -809,11 +812,11 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Edit person
+=== Use case: Edit person/event
 
 *MSS*
 
-1.  User requests to edit a specific person in the list.
+1.  User requests to edit a specific person/event in the list.
 2.  AddressBook updates itself.
 +
 Use case ends.
@@ -835,14 +838,14 @@ Use case ends.
 Use case resumes at step 1.
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete person/event
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list persons/events
+2.  AddressBook shows a list of persons/events
+3.  User requests to delete a specific person/event in the list
+4.  AddressBook deletes the person/event
 +
 Use case ends.
 

@@ -131,28 +131,34 @@ component.
 
 Format: `help`
 
-=== Adding a person/event : `add`
+=== Adding a person/event : `add(E)`
 
 Adds a person/event to the application. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `addE n/NAME d/DATE_TIME a/EMAIL a/ADDRESS `
 
 [TIP]
-A person/event can have any number of tags (including 0).
+A person can have any number of tags (including 0).
+Events added will be automatically sorted by date/time
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `addE n/Does Birthday d/25122015 20:30 a/Does crib `
+* `addE n/Betsy Birthday d/25122016 21:30 a/Betsy crib `
 
-=== Listing all persons/events : `list`
+
+=== Listing all persons/events : `list(E)`
 
 Shows a list of all persons/events in the application. +
 Format: `list`
 
-=== Editing a person/event : `edit`
+=== Editing a person/event : `edit(E)`
 
 Edits an existing person/event in the application. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `editE INDEX [n/NAME] [d/DATE_TIME] [a/ADDRESS]`
 
 ****
 * Edits the person/event at the specified `INDEX`. The index refers to the index number shown in the last listing.
@@ -170,6 +176,11 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+* `editE 1 n/Telegram Birthday` +
+Edits the name of the 1st event to be `Telegram Birthday`.
+
+* `editE 2 d/25102017 21:30` +
+Edits the date of the 2nd event to be `25102017 21:30`.
 === Locating persons/events by any property : `find`
 
 Finds events whose corresponding field(s) contain any of the given keywords. +
@@ -195,10 +206,10 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person/event : `delete`
+=== Deleting a person/event : `delete(E)`
 
 Deletes the specified person/event from the application. +
-Format: `delete INDEX`
+Format: `delete(E) INDEX`
 
 ****
 * Deletes the person/event at the specified `INDEX`.
@@ -209,11 +220,11 @@ Format: `delete INDEX`
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete(E) 2` +
+Deletes the 2nd person/event in the address book.
 * `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`delete(E) 1` +
+Deletes the 1st person/event in the results of the `find` command.
 
 === Selecting a person/event: `select`
 
