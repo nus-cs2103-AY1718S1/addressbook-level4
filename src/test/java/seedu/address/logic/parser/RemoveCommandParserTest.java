@@ -13,7 +13,7 @@ public class RemoveCommandParserTest {
     private RemoveCommandParser parser = new RemoveCommandParser();
 
     // TODO: dont know why this test fails :(
-   /* @Test
+    /* @Test
     public void parse_validArgs_returnsRemoveCommand() throws Exception {
         Tag tag = new Tag("friends");
         RemoveCommand removeCommand = new RemoveCommand(tag, INDEX_SECOND_PERSON);
@@ -22,12 +22,14 @@ public class RemoveCommandParserTest {
 
     @Test
     public void parse_invalidArgsNoIndex_throwsParseException() {
-        assertParseFailure(parser, "a ball", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a ball", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RemoveCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_invalidArgsWithIndex_throwsParseException() {
-        assertParseFailure(parser, "a ball 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a ball 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RemoveCommand.MESSAGE_USAGE));
     }
 
     @Test

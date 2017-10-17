@@ -48,7 +48,7 @@ public class RemoveCommandTest {
         Tag tagToRemove = new Tag("enemy");
         Index index = null;
 
-        RemoveCommand removeCommand = prepareCommand(tagToRemove, index );
+        RemoveCommand removeCommand = prepareCommand(tagToRemove, index);
 
         String expectedMessage =  "Tag: " + tagToRemove.toString() + RemoveCommand.MESSAGE_TAG_NOT_FOUND
                 + " address book.";
@@ -93,11 +93,11 @@ public class RemoveCommandTest {
     public void equals() throws Exception {
         Tag firstTag = new Tag("friends");
         Tag secondTag = new Tag("owesMoney");
-        RemoveCommand removeFirstCommand = new RemoveCommand(firstTag,null);
-        RemoveCommand removeSecondCommand = new RemoveCommand(secondTag,null);
+        RemoveCommand removeFirstCommand = new RemoveCommand(firstTag, null);
+        RemoveCommand removeSecondCommand = new RemoveCommand(secondTag, null);
         RemoveCommand removeThirdCommand = new RemoveCommand(firstTag, INDEX_FIRST_PERSON);
-        RemoveCommand removeFourthCommand = new RemoveCommand(firstTag,INDEX_SECOND_PERSON);
-        RemoveCommand removeFifthCommand = new RemoveCommand(secondTag,INDEX_FIRST_PERSON);
+        RemoveCommand removeFourthCommand = new RemoveCommand(firstTag, INDEX_SECOND_PERSON);
+        RemoveCommand removeFifthCommand = new RemoveCommand(secondTag, INDEX_FIRST_PERSON);
 
         // same object -> returns true (no Index)
         assertTrue(removeFirstCommand.equals(removeFirstCommand));
