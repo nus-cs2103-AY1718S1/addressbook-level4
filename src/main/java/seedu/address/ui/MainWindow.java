@@ -7,10 +7,12 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -41,7 +43,6 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private MapsPanel mapsPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -63,6 +64,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane websiteButtonbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -136,21 +140,14 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
+        WebsiteButtonBar websiteButtonBar = new WebsiteButtonBar();
+        websiteButtonbarPlaceholder.getChildren().add(websiteButtonBar.getRoot());
+
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-    }
-
-
-    /**
-     * Changes browser view to a Maps View.
-     */
-    void changeMapsView() {
-        mapsPanel = new MapsPanel();
-        browserPlaceholder.getChildren().removeAll();
-        browserPlaceholder.getChildren().add(mapsPanel.getRoot());
     }
 
     void hide() {
