@@ -166,7 +166,7 @@ public class ModelManager extends ComponentManager implements Model {
      *
      * @param tag
      * @param toDelete
-     * @return Set<Tag> of new Person to be updated
+     * @return Set of Tags of new Person to be updated
      */
     private Set<Tag> deleteTag(Tag tag, Person toDelete) {
         Set<Tag> oldTags = toDelete.getTags();
