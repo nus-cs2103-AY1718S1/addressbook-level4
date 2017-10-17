@@ -50,10 +50,19 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` `h`
+=== Viewing help : `help` `h` _[Coming in v2.0]
 
-Format: `help`
- (or) `h`
+Format: `help command`
+ (or) `h command`
+
+ ****
+ * Shows the command usage of the given command name.
+ ****
+
+ Example:
+
+ * `help list`
+Show the usage of command `list`.
 
 === Adding a person: `add` `create` `put`
 
@@ -152,9 +161,9 @@ Returns list of persons sorted by phone in descending order
 === Deleting a person : `delete` `remove` `-`
 
 Deletes a group of people from the address book. +
-Format:'delete INDEX,INDEX ...'
-(or)'remove INDEX,INDEX ...'
-(or)'- INDEX,INDEX ...'
+Format:'delete INDEX INDEX ...'
+(or)'remove INDEX INDEX ...'
+(or)'- INDEX INDEX ...'
 
 ****
 * Deletes the people at these given specified `INDEX`.
@@ -165,13 +174,13 @@ Format:'delete INDEX,INDEX ...'
 Examples:
 
 * `list` +
-`delete 1,2` +
+`delete 1 2` +
 Deletes the 1st and 2nd person in the address book.
 * `list` +
-`remove 1,3` +
+`remove 1 3` +
 Deletes the 1st and 3rd person in the address book.
 * `list` +
-`- 2,3` +
+`- 2 3` +
 Deletes the 2nd and 3rd person in the address book.
 * `find Betsy` +
 `delete 1` +
@@ -210,6 +219,26 @@ Examples:
 * `list` +
 `t-remove friends 2 3` +
 Removes the tag friends from the 2nd and 3rd person in the address book.
+
+=== Find the person(s) with given tags: `t-find` _[Coming in v2.0]
+Format: `t-find TAG TAG..`
+
+****
+* Find the person(s) with given tags;
+* The results show the people who fulfills at least one of the tags given.
+****
+
+Examples:
+
+* `t-find friend classmate`
+Shows all the people with tag `friend` or tag `classmate`.
+
+=== Making a backup address book: `export` _[Coming in v2.0]
+Format: `export PATH`
+
+****
+* Export all the information of contacts to the given local address.
+****
 
 === Selecting a person : `select` `choose`
 
