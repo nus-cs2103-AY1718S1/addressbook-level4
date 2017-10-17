@@ -23,7 +23,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         try {
             ArrayList<Index> indexArrayList = new ArrayList<Index>();
             String[] indexArray = args.split(" ");
-           // start looping from i = 1 as the first element in the array is an empty string
+            // start looping from i = 1 as the first element in the array is an empty string
             for (int i = 1; i < indexArray.length; i++) {
                 Index index = ParserUtil.parseIndex(indexArray[i]);
                 indexArrayList.add(index);
