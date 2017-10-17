@@ -115,28 +115,30 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 === Locating persons by different attributes: `find` `search` `get`
 
 Finds persons whose specified attributes contain any of the given keywords. +
-Format: `find [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
-(or)`search [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
-(or)`get [NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
+Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
+(or)`search [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
+(or)`get [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* The person can be found by searching any substring of the name. e.g. `hn` will match `John`
-* Name is searched by default without any tag required.
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search for `Name` `Email` `Address` is case insensitive. e.g `hans` will match `Hans`, `Clementi Street` will match `clementi street`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* The person can be found by searching any substring of the attibute. e.g. `hn` will match `John`, `1234` will match `98123476`.
+* A prefix is required before entering a different type of keyword.
+* Each prefix should appear at most once with its keywords grouping behind. e.g. `n/alice bob`.
+* Searching by multiple keywords of the same type is allowed except for `Address` type.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 * At least one of the optional fields must be provided.
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
 * `search p/98765432` +
 Returns the person having phone number `98765432`
 * `get e/johndoe@gmail.com` +
 Returns the person having email `johndoe@gmail.com`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/Betsy Tim John a/clementi street` +
+Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi Street`
 
 === Sorting list of persons: `sort`
 
