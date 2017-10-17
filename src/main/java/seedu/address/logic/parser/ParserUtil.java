@@ -83,7 +83,7 @@ public class ParserUtil {
      */
     public static Optional<Avatar> parseAvatar(Optional<String> avatar_image_path) throws IllegalValueException {
         // Return default Avatar image if empty
-        return avatar_image_path.isPresent() ? Optional.of(new Avatar(avatar_image_path.get())) : Optional.of(new Avatar());
+        return avatar_image_path.isPresent() ? Optional.of(new Avatar(Avatar.getDirectoryPath(avatar_image_path.get()))) : Optional.of(new Avatar());
     }
 
     /**
