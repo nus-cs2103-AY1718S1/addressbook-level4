@@ -48,6 +48,9 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label remark;
+    @FXML
+    private Label appointment;
+
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -55,10 +58,12 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
-        setHBoxColor(displayedIndex);
+        setStyle(displayedIndex);
+
     }
 
-    private void setHBoxColor(int displayedIndex) {
+    private void setStyle(int displayedIndex) {
+        appointment.setStyle("-fx-font-weight: bold");
         color = displayedIndex % 2 == 0 ? PANE_COLOR_EVEN : PANE_COLOR_ODD;
         cardPane.setStyle("-fx-background-color: " + color);
     }
@@ -74,6 +79,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         bloodType.textProperty().bind(Bindings.convert(person.bloodTypeProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        appointment.textProperty().bind(Bindings.convert(person.appointmentProperty()));
     }
 
     /**

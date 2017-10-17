@@ -26,7 +26,8 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
-
+    ObjectProperty<Appointment> appointmentProperty();
+    Appointment getAppointment();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */

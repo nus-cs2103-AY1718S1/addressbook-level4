@@ -50,11 +50,13 @@ public class ToggleTagColorCommand extends Command {
         return new CommandResult(message);
     }
 
+    /**
+     * Check if
+     * (a) Object is the same object
+     * (b) Object is an instance of the object and that toSet, tag and color are the same
+     */
     @Override
     public boolean equals(Object other) {
-        // Check if
-        // (a) Object is the same object
-        // (b) Object is an instance of the object and that toSet, tag and color are the same
         return other == this // short circuit if same object
                 || (other instanceof ToggleTagColorCommand // instanceof handles nulls
                 && this.tag.equals(((ToggleTagColorCommand) other).tag))
@@ -71,8 +73,8 @@ public class ToggleTagColorCommand extends Command {
 
     /**
      * Helper method to check if the tagList contains such a tag name
-     * @param tagList
-     * @param tagString
+     * @param tagList - ObservableList type with elements of Tag type
+     * @param tagString - Tag to check if it is within the list of tags (tagList)
      */
     private boolean containsTag(ObservableList<Tag> tagList, String tagString) {
 

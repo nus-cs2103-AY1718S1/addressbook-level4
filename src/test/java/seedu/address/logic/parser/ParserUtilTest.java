@@ -236,5 +236,4 @@ public class ParserUtilTest {
 
         assertEquals(expectedRemark, actualRemark.get());
     }
-
 }

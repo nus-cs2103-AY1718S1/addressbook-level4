@@ -63,7 +63,7 @@ public class RemarkCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(personIndex.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getBloodType(),
-                personToEdit.getTags(), this.remark);
+                personToEdit.getTags(), this.remark, personToEdit.getAppointment());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -76,11 +76,13 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(outputCorrectTypeOfSuccessMessage(editedPerson));
     }
 
+    /**
+     * Checks if
+     * (a) Object is the same object
+     * (b) Object is an instance of the object and that personIndex and remarkString are the same
+     */
     @Override
     public boolean equals(Object other) {
-        // Check if
-        // (a) Object is the same object
-        // (b) Object is an instance of the object and that personIndex and remarkString are the same
         return other == this // short circuit if same object
                 || (other instanceof RemarkCommand // instanceof handles nulls
                 && this.personIndex.equals(((RemarkCommand) other).personIndex))
