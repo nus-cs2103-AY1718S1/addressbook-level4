@@ -59,6 +59,10 @@ public interface Model {
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
+    /** Updates the given event */
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException;
+
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
