@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -20,6 +21,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.group.Group;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -45,8 +47,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Set<Group> groupList = ParserUtil.parseGroups(argMultimap.getAllValues(PREFIX_GROUP));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, tagList, groupList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
