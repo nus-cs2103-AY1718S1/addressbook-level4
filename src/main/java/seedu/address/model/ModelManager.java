@@ -83,8 +83,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-   @Override
-   public UserPrefs getUserPrefs() {
+    @Override
+    public UserPrefs getUserPrefs() {
         return userPrefs;
     }
 

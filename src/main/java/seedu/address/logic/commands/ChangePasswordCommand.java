@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
+/**
+ * Changes a user's password
+ */
 public class ChangePasswordCommand extends Command {
     public static final String COMMAND_WORD = "changepw";
 
@@ -25,7 +28,8 @@ public class ChangePasswordCommand extends Command {
     public CommandResult execute() throws CommandException {
         if (model.getUserPrefs().changePassword(username, oldPw, newPw)) {
             return new CommandResult(MESSAGE_CHANGE_SUCCESS);
-        } else
+        } else {
             return new CommandResult(MESSAGE_WRONG_CREDENTIALS);
+        }
     }
 }

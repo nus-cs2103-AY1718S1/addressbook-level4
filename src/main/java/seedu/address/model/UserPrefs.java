@@ -86,16 +86,29 @@ public class UserPrefs {
      * @retrun false if password is invalid
      */
     public boolean checkPassword(String input) {
-        return password.equals(hashBySHA256(input));
+        return password.equals(hashBySha256(input));
     }
 
+    /**
+     *
+     * @param input
+     * @return true if username is valid
+     * @return false if username is invalid
+     */
     public boolean checkUsername(String input) {
         return username.equals(input);
     }
 
+    /**
+     *
+     * @param user
+     * @param oldPw
+     * @param newPw
+     * @return true if password is changed successfully
+     */
     public boolean changePassword(String user, String oldPw, String newPw) {
         if (checkPassword(oldPw) && checkUsername(user)) {
-            password = hashBySHA256(newPw);
+            password = hashBySha256(newPw);
             return true;
         } else {
             return false;
@@ -107,7 +120,7 @@ public class UserPrefs {
      * @param input
      * @return a String that is hashed using SHA-256
      */
-    public String hashBySHA256(String input) {
+    public String hashBySha256(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(input.getBytes());
