@@ -13,12 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -27,12 +29,20 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_NAME_JAMES = "James Wong";
+    public static final String VALID_NAME_LUCY = "Lucy Lee";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
+    public static final String VALID_PHONE_JAMES = "33333333";
+    public static final String VALID_PHONE_LUCY = "44444444";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
+    public static final String VALID_EMAIL_JAMES = "james@example.com";
+    public static final String VALID_EMAIL_LUCY = "lucy@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_ADDRESS_JAMES = "Block 231, James Street 2";
+    public static final String VALID_ADDRESS_LUCY = "Block 132, Lucy Street 4";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
@@ -53,10 +63,11 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final TagAddCommand.TagAddDescriptor DESC_JAMES;
+    public static final TagAddCommand.TagAddDescriptor DESC_LUCY;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -65,6 +76,12 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_JAMES = new TagAddDescriptor(new PersonBuilder().withName(VALID_NAME_JAMES)
+                .withPhone(VALID_PHONE_JAMES).withEmail(VALID_EMAIL_JAMES).withAddress(VALID_ADDRESS_JAMES)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build());
+        DESC_LUCY = new TagAddDescriptor(new PersonBuilder().withName(VALID_NAME_LUCY)
+                .withPhone(VALID_PHONE_LUCY).withEmail(VALID_EMAIL_LUCY).withAddress(VALID_ADDRESS_LUCY)
+                .withTags(VALID_TAG_FRIEND).build());
     }
 
     /**
