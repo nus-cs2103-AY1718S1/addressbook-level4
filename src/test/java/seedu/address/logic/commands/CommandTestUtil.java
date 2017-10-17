@@ -40,8 +40,8 @@ public class CommandTestUtil {
 
     public static final String VALID_NAME_EVENT1 = "Mel Birthday";
     public static final String VALID_NAME_EVENT2 = "Bobs Birthday";
-    public static final String VALID_DATE_EVENT1 = "25122017 08:30pm";
-    public static final String VALID_DATE_EVENT2 = "25022018 08:45pm";
+    public static final String VALID_DATE_EVENT1 = "25122017 08:30";
+    public static final String VALID_DATE_EVENT2 = "25022018 08:45";
     public static final String VALID_VENUE_EVENT1 = "Mels crib";
     public static final String VALID_VENUE_EVENT2 = "Bobs crib";
 
