@@ -239,7 +239,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            assert false: "There should be no duplicate when updating the debt of a person";
+            assert false : "There should be no duplicate when updating the debt of a person";
         }
     }
     //@@author
