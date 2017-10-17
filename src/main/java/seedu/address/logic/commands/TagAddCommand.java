@@ -60,9 +60,9 @@ public class TagAddCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        StringBuilder EditedPersonDisplay = new StringBuilder();
+        StringBuilder editedPersonDisplay = new StringBuilder();
 
-        for (int i = 0; i< index.size(); i++) {
+        for (int i = 0; i < index.size(); i++) {
             if (index.get(i).getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
@@ -80,17 +80,20 @@ public class TagAddCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            EditedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
+            editedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
             if (i != index.size() - 1) {
-                EditedPersonDisplay.append("\n");
+                editedPersonDisplay.append("\n");
             }
         }
-        return new CommandResult(EditedPersonDisplay.toString());
+        return new CommandResult(editedPersonDisplay.toString());
     }
 
-    public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable){
+    /**
+     * @param unmodifiable tag List
+     */
+    public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable) {
         Set<Tag> modifiable = new HashSet<>();
-        for(Tag t : unmodifiable){
+        for (Tag t : unmodifiable) {
             modifiable.add(t);
         }
         return modifiable;
@@ -194,7 +197,9 @@ public class TagAddCommand extends UndoableCommand {
             this.address = address;
         }
 
-        public Optional<Address> getAddress() { return Optional.ofNullable(address); }
+        public Optional<Address> getAddress() {
+            return Optional.ofNullable(address);
+        }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
