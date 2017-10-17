@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -73,10 +74,12 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_birthday() throws Exception {
-        BirthdayCommand command = (BirthdayCommand) parser.parseCommand(BirthdayCommand.COMMAND_WORD);
-        assertTrue(command instanceof BirthdayCommand);
+        final String birthday = "05/01/1995";
+        BirthdayCommand command = (BirthdayCommand) parser.parseCommand(BirthdayCommand.COMMAND_WORD + " "
+        + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_BIRTHDAY + birthday);
+        assertEquals(new BirthdayCommand(INDEX_FIRST_PERSON, birthday), command);
     }
-    
+
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
