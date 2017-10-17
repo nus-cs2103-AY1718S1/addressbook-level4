@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConnectUs - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -247,15 +247,28 @@ Returns any person having tags `friends` or `bestFriends`
 * `t friends classmates colleagues` +
 Returns any person having tags `friends`, `classmates`, or `colleagues`
 
+=== Removing tags : `rtag`
+
+Removes tag from all persons with tags that is specified by the keywords. +
+Format: `rtag KEYWORD [MORE_KEYWORDS]` or `rt KEYWORD [MORE_KEYWORDS]`
+
+****
+* The keyword is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
+* Any tags of all persons that matches the keyword will be removed e.g. `friends classmates` will remove tags `friends`, `classmates` from all persons
+****
+
+Examples:
+
+* `rtag friends` +
+Removes "friends" tag from all persons
+* `rt friends classmates colleagues` +
+Removes "friends", "classmates", "colleagues" tag from all persons
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear` or `c`
-
-=== Sorts the address book : `sort`
-
-Sorts the contacts in the address book based on name. +
-Format: `sort`
 
 === Exiting the program : `exit`
 
@@ -291,6 +304,7 @@ e.g.`select 2`
 * *Sort* : `sort`
 * *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
 e.g. `tag friends classmates`
+* *Remove Tag* : `rtag KEYWORD [MORE_KEYWORDS]`
 
 == Command Shortcuts Summary
 
@@ -311,4 +325,5 @@ e.g.`select 2`
 * *Redo* : `r`
 * *Sort* : `ss`
 * *Tag*  : `t`
+* *Remove Tag*  : `rt`
 

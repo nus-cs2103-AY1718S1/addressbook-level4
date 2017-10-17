@@ -14,8 +14,7 @@ public class NewResultAvailableEvent extends BaseEvent {
         this.message = message;
         if (message.equals("Unknown command")) {
             unknownCommandEntered = true;
-        }
-        else {
+        } else {
             unknownCommandEntered = false;
         }
     }

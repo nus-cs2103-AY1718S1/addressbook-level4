@@ -71,8 +71,7 @@ public class PersonCard extends UiPart<Region> {
             Label tagLabel = new Label(tag.tagName);
             if (tag.tagName.equals("colleagues")) {
                 tagLabel.setStyle("-fx-background-color: red;");
-            }
-            else if (tag.tagName.equals("friends")) {
+            } else if (tag.tagName.equals("friends")) {
                 tagLabel.setStyle("-fx-background-color: greenyellow;");
             } else {
                 tagLabel.setStyle("-fx-background-color: grey;");

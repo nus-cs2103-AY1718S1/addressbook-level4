@@ -25,5 +25,6 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
     public PersonCard getNewSelection() {
         return newSelection;
     }
-    public int getSelectionIndex() { return  selectionIndex; }
+    public int getSelectionIndex() {
+        return  selectionIndex; }
 }
