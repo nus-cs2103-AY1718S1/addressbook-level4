@@ -32,6 +32,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String optionPrefix = CommandOptionUtil.getOptionPrefix(trimmedArgs);
         String optionArgs = CommandOptionUtil.getOptionArgs(optionPrefix, trimmedArgs);
 
+        // returns FindCommand by parsing {@code optionPrefix}
         switch (optionPrefix) {
         case FindCommand.PREFIX_FIND_IN_DETAIL:
             return new FindOptionInDetail(optionArgs).parse();
