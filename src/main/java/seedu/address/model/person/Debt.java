@@ -57,9 +57,9 @@ public class Debt {
     /**
      * Deducts an indicated amount from debt
      */
-    public void deductFromDebt(Debt amount) throws CommandException {
+    public void deductFromDebt(Debt amount) throws IllegalValueException {
         if (toNumber(amount.toString()) > toNumber(value)) {
-            throw new CommandException("Amount to deduct from debt cannot be more than debt itself");
+            throw new IllegalValueException("Amount to deduct from debt cannot be more than debt itself");
         }
         Double newValue = toNumber(value) - toNumber(amount.value);
         value = Double.toString(newValue);
