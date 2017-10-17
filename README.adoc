@@ -1,4 +1,4 @@
-= Contact Pro Plus
+= Contact+ Pro
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 

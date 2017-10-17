@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Contact+ Pro - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,9 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T14-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T14-B4`
+
+The App is developer based on address-book level 4 by team `See-du`
 
 == Setting up
 
@@ -800,7 +802,7 @@ Use case resumes at step 2.
 
 *MSS*
 
-1. User requests to find person by name
+1. User requests to find person by name, address, phone, email or tag
 2. AddressBook searches for person with the specified name and displays to user
 
 

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Contact+ Pro - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,11 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T14-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T14-B4`
+
+The App is developer based on address-book level 4 by team `See-du`
 
 == Quick Start
 
@@ -94,13 +96,13 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+*Unrestricted search
+Finds persons whose names, addresses, phones, emails or tags contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -111,6 +113,24 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+*Restricted search
+Finds persons with one of the attributes: names, addresses, phones, emails or tags +
+contains any of the given keywords. +
+Format: `find [PREFIX/KEYWORD]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* If multiple prefixes are provided, the search will only search based on the search term +
+with highest priority in the order: name > phone > address > email > tag
+****
+
+Examples:
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find t/cs2103` +
+Returns any person having tags `cs2103`
 
 === Searching all persons whose name starts with a certain alphabet: 'listalp'
 

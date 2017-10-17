@@ -68,4 +68,14 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Returns a partially {@return encoded URL} from a {@params s}
+     */
+    public static String partiallyEncode(String s) {
+        requireNonNull(s);
+        return s.replaceAll(" ", "+")
+                .replaceAll(",", "%2C")
+                .replaceAll("#", "%23");
+    }
 }

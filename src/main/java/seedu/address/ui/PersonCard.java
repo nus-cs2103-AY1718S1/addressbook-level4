@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -27,9 +28,10 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
+    private static HashMap<String, String> labelColor = new HashMap<String, String>();
 
     public final ReadOnlyPerson person;
-    private HashMap<String, String> labelColor;
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -84,16 +86,14 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Prepare a HashMap of colors to link tagname with a color
+     * Prepare a HashMap of some default colors to link {@code tagName} with a color
      */
     private void initLabelColor() {
-        labelColor = new HashMap<String, String>();
         labelColor.put("colleagues", "red");
         labelColor.put("friends", "blue");
         labelColor.put("family", "brown");
         labelColor.put("neighbours", "purple");
         labelColor.put("classmates", "green");
-        labelColor.put("unknown", "grey");
     }
 
     /**
@@ -103,7 +103,10 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> {
             Label label = new Label(tag.tagName);
             String color = getColor(tag.tagName);
-            label.setStyle("-fx-background-color: " + color);
+            label.setPrefHeight(23);
+            label.setStyle("-fx-background-color: " + color + "; "
+                    + "-fx-border-radius: 15 15 15 15; "
+                    + "-fx-background-radius: 15 15 15 15;");
             tags.getChildren().add(label);
         });
     }
@@ -121,10 +124,22 @@ public class PersonCard extends UiPart<Region> {
 
 
     /**
-     * Get color from the hashmap. If not found, classify as unknown
+     * Get color from the hashmap. If not found, generate a new index and a random color
+     * @param tagName specify the index
+     * @return a color string
      */
     private String getColor(String tagName) {
-        return labelColor.containsKey(tagName) ? labelColor.get(tagName) : labelColor.get("unknown");
+        if (labelColor.containsKey(tagName)) {
+            return labelColor.get(tagName);
+        } else {
+            Random random = new Random();
+            // create a big random number - maximum is ffffff (hex) = 16777215 (dez)
+            int nextInt = random.nextInt(256 * 256 * 256);
+            // format it as hexadecimal string (with hashtag and leading zeros)
+            String colorCode = String.format("#%06x", nextInt);
+            labelColor.put(tagName, colorCode);
+            return labelColor.get(tagName);
+        }
     }
 
     @Override

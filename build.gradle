@@ -148,6 +148,17 @@ class AddressBookTest extends Test {
     }
 }
 
+//help me with my gradle test:p
+task giangTests(type: AddressBookTest) {
+    include 'systemtests/**'
+    exclude 'guitests/**'
+    exclude 'seedu/address/ui/**'
+
+    jacoco {
+        destinationFile = new File("${buildDir}/jacoco/test.exec")
+    }
+}
+
 task guiTests(type: AddressBookTest) {
     include 'guitests/**'
     include 'systemtests/**'
@@ -157,7 +168,6 @@ task guiTests(type: AddressBookTest) {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
     }
 }
-
 
 task nonGuiTests(type: AddressBookTest) {
     include 'seedu/address/**'
@@ -180,6 +190,7 @@ task headless << {
     guiTests.setHeadless()
     nonGuiTests.setHeadless()
     allTests.setHeadless()
+    giangTests.setHeadless()
 }
 
 // Makes sure that headless properties are set before running tests

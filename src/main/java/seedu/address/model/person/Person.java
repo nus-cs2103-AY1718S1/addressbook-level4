@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -146,6 +147,14 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
+    }
+
+    /**
+     * Returns an immutable List of tagName
+     */
+    @Override
+    public List<String> getTagsString() {
+        return tags.get().toStringList();
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {

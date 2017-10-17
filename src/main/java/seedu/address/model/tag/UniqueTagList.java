@@ -3,8 +3,10 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -128,6 +130,18 @@ public class UniqueTagList implements Iterable<Tag> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
+    }
+
+    /**
+     * Convert the list of tags into
+     * @return an list of String of tagName
+     */
+    public List<String> toStringList() {
+        List<String> result = new ArrayList<>();
+        for (Tag tag : internalList) {
+            result.add(tag.tagName);
+        }
+        return result;
     }
 
     /**

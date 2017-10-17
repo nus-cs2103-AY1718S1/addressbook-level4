@@ -19,6 +19,8 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
  */
 public class ResultDisplay extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
+    public static final String WELCOME_STYLE_CLASS = "success";
+    public static final String WELCOME_MESSAGE = "Welcome to Contact Plus pro!";
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
 
@@ -32,6 +34,7 @@ public class ResultDisplay extends UiPart<Region> {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
+        Platform.runLater(() -> displayed.setValue(WELCOME_MESSAGE));
     }
 
     @Subscribe
@@ -64,5 +67,4 @@ public class ResultDisplay extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
 }
