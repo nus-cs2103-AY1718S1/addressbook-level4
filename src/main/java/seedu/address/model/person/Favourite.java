@@ -19,7 +19,9 @@ public class Favourite {
         this.favourite = false;
     }
 
-    public boolean checkFavourite() { return favourite; }
+    public boolean checkFavourite() {
+        return favourite;
+    }
 
     public String toString() {
         return (true) ? "true" : "false";

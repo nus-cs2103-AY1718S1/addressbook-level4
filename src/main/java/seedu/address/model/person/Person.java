@@ -125,7 +125,9 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public Favourite getFavourite() { return favourite.get(); }
+    public Favourite getFavourite() {
+        return favourite.get();
+    }
 
     @Override
     public ObjectProperty<Favourite> favouriteProperty() {

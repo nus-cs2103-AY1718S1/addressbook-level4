@@ -20,6 +20,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Favourites an exisiting contact
+ */
 public class FavouriteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "favourite";
