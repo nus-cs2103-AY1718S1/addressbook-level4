@@ -24,6 +24,7 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    Group getGroup();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
