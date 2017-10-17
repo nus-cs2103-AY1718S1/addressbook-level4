@@ -411,7 +411,7 @@ image::ColorKeywordActivityDiagram.png[width="900"]
 **Cons:** This method breaks encapsulation and fails to follow standard java code style.
 // end::colorKeyword[]
 
-=== list mechanism
+=== List mechanism
 
 The list mechanism is facilitated by an enumeration class `ListingUnit`. Each time user list by different attributes, the static variable `currentListingUnit` in the Enumeration class is reset.
 [NOTE]
@@ -426,7 +426,7 @@ image::ListCommandSeqDiagram.png[width="900"]
 ==== Design Considerations
 
 **Aspect:** Implementation of `ListCommand` +
-**Alternative 1 (current choice):**  Update static variable `currentListingUnit` to the corresponding listingUnit and use event bus to inform UI the change of listingUit.
+**Alternative 1 (current choice):**  Update static variable `currentListingUnit` to the corresponding listingUnit and use event bus to inform UI the change of listingUnit.
 **Pros:** One global variable that records current listingUnit
 **Cons:** Hard for new developers to understand the event center mechanism. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
