@@ -8,6 +8,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.person.Person;
 
+/**
+ * Represents a life insurance in LISA.
+ * Guarantees: details are present and not null.
+ */
 public class LifeInsurance extends Insurance {
 
     private ObjectProperty<Person> owner;
