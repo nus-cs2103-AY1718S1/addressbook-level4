@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
  * Represents an insurance.
  */
 public abstract class Insurance {
-    
+
     private ObjectProperty<Person> owner;
     private ObjectProperty<Person> insured;
     private ObjectProperty<Person> beneficiary;
