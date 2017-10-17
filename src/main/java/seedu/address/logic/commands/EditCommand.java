@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
@@ -23,6 +24,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -50,6 +52,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_POSTAL_CODE + "POSTAL CODE] "
             + "[" + PREFIX_DEBT + "DEBT] "
+            + "[" + PREFIX_INTEREST + "INTEREST] "
             + "[" + PREFIX_DEADLINE + "DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -111,11 +114,12 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
+        Interest updatedInterest = editPersonDescriptor.getInterest().orElse(personToEdit.getInterest());
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
-                updatedDebt, updatedDeadline, updatedTags);
+                updatedDebt, updatedInterest, updatedDeadline, updatedTags);
     }
 
     @Override
@@ -147,6 +151,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private PostalCode postalCode;
         private Debt debt;
+        private Interest interest;
         private Deadline deadline;
         private Set<Tag> tags;
 
@@ -159,6 +164,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
             this.debt = toCopy.debt;
+            this.interest = toCopy.interest;
             this.deadline = toCopy.deadline;
             this.tags = toCopy.tags;
         }
@@ -168,7 +174,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.postalCode,
-            this.debt, this.deadline, this.tags);
+            this.debt, this.interest, this.deadline, this.tags);
         }
 
         public void setName(Name name) {
@@ -218,6 +224,13 @@ public class EditCommand extends UndoableCommand {
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
         }
+        public void setInterest(Interest interest) {
+            this.interest = interest;
+        }
+
+        public Optional<Interest> getInterest() {
+            return Optional.ofNullable(interest);
+        }
 
         public void setDeadline(Deadline deadline) {
             this.deadline = deadline;
@@ -256,6 +269,7 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getPostalCode().equals(e.getPostalCode())
                     && getDebt().equals(e.getDebt())
+                    && getInterest().equals(e.getInterest())
                     && getDeadline().equals(e.getDeadline())
                     && getTags().equals(e.getTags());
         }

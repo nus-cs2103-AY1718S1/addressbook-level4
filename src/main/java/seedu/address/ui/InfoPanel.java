@@ -31,6 +31,7 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
+    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
@@ -66,6 +67,10 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label debt;
     @FXML
+    private Text interestField;
+    @FXML
+    private Label interest;
+    @FXML
     private Text dateBorrowField;
     @FXML
     private Label dateBorrow;
@@ -98,6 +103,7 @@ public class InfoPanel extends UiPart<Region> {
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         clusterField.setText(MESSAGE_INFO_CLUSTER_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
+        interestField.setText(MESSAGE_INFO_INTEREST_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
         deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID_FIELD);
@@ -116,6 +122,7 @@ public class InfoPanel extends UiPart<Region> {
         cluster.textProperty().bind(Bindings.convert(person.clusterProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
+        interest.textProperty().bind(Bindings.convert(person.interestProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
         deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
         dateRepaid.textProperty().bind(Bindings.convert(person.dateRepaidProperty()));
@@ -181,6 +188,7 @@ public class InfoPanel extends UiPart<Region> {
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && cluster.getText().equals(infoPanel.cluster.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
+                && interest.getText().equals(infoPanel.interest.getText())
                 && email.getText().equals(infoPanel.email.getText())
                 && deadline.getText().equals(infoPanel.deadline.getText())
                 && dateBorrow.getText().equals(infoPanel.dateBorrow.getText())

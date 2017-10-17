@@ -19,6 +19,12 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
+               <Text fx:id="interestField" fill="GREY" styleClass="window_small_label" text="Interest: " />
+               <Label fx:id="interest" styleClass="window_small_label" text="\$interest" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
                <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="HP: " />
                <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
             </children>
