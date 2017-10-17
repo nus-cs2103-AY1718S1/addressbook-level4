@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -44,5 +45,27 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /*
+     * Clears the filters that have been applied to the filterd person list
+     */
+
+    void clearFiltersOnPersonList();
+
+    /**
+     * Updates the filter of the filtered tag list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredPersonByTagList(Predicate<ReadOnlyPerson> predicate);
+
+    /** Returns an unmodifiable view of the filtered tag list */
+    ObservableList<ReadOnlyPerson> getFilteredPersonByTagList();
+
+    /**
+     * Deletes a specified tag from contacts in AddressBook
+     *
+     * @param t a tag object containing the information of the tag to delete
+     */
+    void deleteTag(Tag t) throws DuplicatePersonException, PersonNotFoundException;
 
 }

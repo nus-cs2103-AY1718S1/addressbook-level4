@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +14,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyPerson> filteredPersonsByTags;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersonsByTags =  new FilteredList<>(this.addressBook.getPersonList());
     }
 
     public ModelManager() {
@@ -81,6 +87,33 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void deleteTag(Tag t) {
+        // Get all contacts in AddressBook
+        ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
+        try {
+            for (ReadOnlyPerson unmodifiablePerson : persons) {
+                Person updatedPerson = new Person(unmodifiablePerson);
+                // Remove the desired tag from every person where applicable
+                Set<Tag> tags = new HashSet<>(updatedPerson.getTags());
+                if (tags.contains(t)) {
+                    tags.remove(t);
+                    updatedPerson.setTags(tags);
+                    addressBook.updatePerson(unmodifiablePerson, updatedPerson);
+                }
+            }
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        } catch (DuplicatePersonException dpe) {
+            assert false : "Update will cause two contacts to be the same";
+        }
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonByTagList() {
+        return FXCollections.unmodifiableObservableList(filteredPersonsByTags);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -96,6 +129,17 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredPersonByTagList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredPersonsByTags.setPredicate(predicate);
+    }
+
+    @Override
+    public void clearFiltersOnPersonList() {
+        filteredPersons.setPredicate(dummy -> true);
     }
 
     @Override

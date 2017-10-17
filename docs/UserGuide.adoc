@@ -57,14 +57,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER p2/PHONE_NUMBER or '-' e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+A person can add the symbol '-' if a second phone number is not required for the contact
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 p2/61234567 or '-' e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
@@ -75,7 +76,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [p2/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -112,6 +113,86 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by tag: `search`
+
+Searches persons whose tag names contain any of the given keywords. +
+Format: `search KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case sensitive. e.g `Friends` will not match `friends`
+* The order of the keywords does not matter. e.g. `friends colleague` is the same as `colleague friends`
+* Only the tag name is searched.
+* Only full tag name will be accepted e.g. `friends` will not match `fri`
+* Result displays "Unknown tag" if no person has the tag
+* Alias for "search" is "st"
+* Persons's tag names matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends colleague` will return persons with `friends`, or `colleague` tag
+****
+
+Examples:
+* `search friends` +
+Returns `John Alice`
+* `search fri` +
+Returns `Unknown tag`
+
+=== Add second phone number for a person
+
+Add the second phone number for a person by using prefix "p2/" +
+Format: `COMMAND_WORD PARAMETERS p2/PHONE_NUMBER OTHER_PARAMETERS`
+
+****
+* Input "p2/-" for add command, when no second phone number is provided.
+* The order of the parameters does not matter. e.g. `p/87435783 p2/54729635` is the same as `p2/749374658 p/97453735`
+****
+
+Examples:
+* `add n/John Doe p/98765432 p2/73624789 e/johnd@example.com a/John street, block 123, #01-01` +
+* `edit 1 p/91234567 p2/73624789 e/johndoe@example.com` +
+
+=== Locating persons by multiple criteria: `multifilter`
+
+Finds persons whose names, phone no., emails and addresses, +
+match a set of specified criteria. +
+Format: `multifilter [n/NAME] [p/PHONE NO.] [e/EMAIL] [a/ADDRESS]`
+
+****
+* The alias for this command is `mf`. That means that you can type +
+`mf` instead of `multifilter`.
+* The search is case-insensitive for all fields. e.g `mf n/hans` will +
+match `Hans`.
+* The search performs a substring match. This means that the 'mf n/a' +
+will match both `alice` and `Hans` since both contain the letter `a`,
+* The order of the fields does not matter. +
+e.g.`mf n/hans e/a@ex.com` and `mf e/a@ex.com n/hans` +
+both mean the same thing.
+* Matching is performed based on ALL the criteria. +
+i.e. `mf n/a p/9` will find the contact `matt` with a phone no. of `999`
+but it will not find the contact `alice` with a phone no. of `888`.
+* None of the fields are compulsory. i.e. you can use `mf p/999` to find +
+contacts whose phone no. contain `999` and `mf e/yahoo` to find +
+contacts whose emails contain `yahoo` without entering the rest of the fields.
+* If only `mf` is entered, all contacts will be displayed.
+* `mf p/987 e/gmail` +
+Contact `alice` with phone no. `9876` and email `a@gmail.com` +
+will be matched. Contact `Bob` with phone no. `987` and email `a@yahoo.com`
+will not be matched
+****
+
+Examples:
+
+* `mf a/gey` +
+Returns contacts whose address contain `gey`
+* `mf` +
+Returns all contacts
+* `mf n/iv p/9 e/g a/ge` +
+Returns contacts who match ALL of the following criteria: +
+1. Name contains `iv`
+2. Phone no. contains `9`
+3. Email contains `g`
+4. Address contains `ge`
+
+An example of a matching contact for this command would be +
+`Ivan` that has phone no. `999`, email `g@y.com` and address `123 geylang road`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -131,6 +212,20 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Deleting a tag : `deletetag`
+
+Deletes the specified tag from the address book. +
+Format: `delete tag_name`
+
+****
+* Deletes the tag with the specified `tag_name` from all records.
+****
+
+Examples:
+
+* `deletetag friends` +
+Deletes the tag "friends" from all records in the address book.
 
 === Selecting a person : `select`
 
@@ -234,12 +329,12 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER p2/ PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 p2/33335555 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [p2/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
