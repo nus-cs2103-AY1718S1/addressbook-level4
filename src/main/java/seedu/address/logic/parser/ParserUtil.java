@@ -11,12 +11,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.font.FontSize;
-import seedu.address.model.module.TimeSlot;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Code;
 import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.TimeSlot;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

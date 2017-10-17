@@ -1,8 +1,8 @@
 package seedu.address.model.module;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Lesson's group number in the application.
@@ -23,9 +23,9 @@ public class Group {
     public Group(String group) throws IllegalValueException {
         requireNonNull(group);
         String trimmedGroup = group.trim();
-//        if (!isValidGroup(trimmedGroup)) {
-//            throw new IllegalValueException(MESSAGE_GROUP_CONSTRAINTS);
-//        }
+        if (!isValidGroup(trimmedGroup)) {
+            throw new IllegalValueException(MESSAGE_GROUP_CONSTRAINTS);
+        }
         this.value = trimmedGroup;
     }
 

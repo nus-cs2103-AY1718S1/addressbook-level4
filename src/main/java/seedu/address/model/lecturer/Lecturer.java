@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Lecturer {
 
     public static final String MESSAGE_LECTURER_CONSTRAINTS = "Lecturer names should be alphabetic";
-    public static final String LECTURER_VALIDATION_REGEX = "[a-zA-X]*";
+    public static final String LECTURER_VALIDATION_REGEX = "[^\\s].*";
 
     public final String lecturerName;
 
@@ -44,7 +44,9 @@ public class Lecturer {
     }
 
     @Override
-    public int hashCode() { return lecturerName.hashCode(); }
+    public int hashCode() {
+        return lecturerName.hashCode();
+    }
 
     /**
      * Format state as text for viewing.

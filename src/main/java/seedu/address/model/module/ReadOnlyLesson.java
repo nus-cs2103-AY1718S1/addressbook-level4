@@ -1,15 +1,16 @@
 package seedu.address.model.module;
 
-import javafx.beans.property.ObjectProperty;
+import java.util.Set;
 
+import javafx.beans.property.ObjectProperty;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 
-import java.util.Set;
+
 
 
 /**
- * A read-only immutable interface for a Person in the addressbook.
+ * A read-only immutable interface for a Lesson in the application.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyLesson {

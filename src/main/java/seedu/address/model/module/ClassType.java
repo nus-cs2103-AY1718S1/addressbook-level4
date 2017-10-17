@@ -1,8 +1,8 @@
 package seedu.address.model.module;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Lesson's class type in the application.
@@ -10,7 +10,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class ClassType {
     public static final String MESSAGE_CLASSTYPE_CONSTRAINTS =
-            "Class type can only contain numbers, and should be at least 3 digits long";
+            "Class type can only be 'lec' or 'tut' ";
     public static final String CLASSTYPE_VALIDATION_REGEX = "[a-zA-Z]{3}";
     public final String value;
 
@@ -22,9 +22,9 @@ public class ClassType {
     public ClassType(String classType) throws IllegalValueException {
         requireNonNull(classType);
         String trimmedClassType = classType.trim();
-//        if (!isValidClassType(trimmedClassType)) {
-//            throw new IllegalValueException(MESSAGE_CLASSTYPE_CONSTRAINTS);
-//        }
+        if (!isValidClassType(trimmedClassType)) {
+            throw new IllegalValueException(MESSAGE_CLASSTYPE_CONSTRAINTS);
+        }
         this.value = trimmedClassType;
     }
 
