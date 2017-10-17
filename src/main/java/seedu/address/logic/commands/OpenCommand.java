@@ -14,15 +14,15 @@ public class OpenCommand extends Command {
     public static final String COMMAND_WORD = "open";
     public static final String COMMAND_WORD_ABBREV = "o"; //TODO: Add `cd` and `ls` abbreviations
 
-    public static final String MESSAGE_OPENING = "Opened file: %1$s";
+    public static final String MESSAGE_OPENING = "Opening file: %1$s";
     public static final String MESSAGE_NOT_EXIST = "Unable to find `%1$s`. "
-            + "Use the `new` command for creating a new file.";
+            + "Use the `" + NewCommand.COMMAND_WORD + "` command for creating a new file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
-            + "Reloads the application using the rolodex supplied at the given file path. \n"
-            + "Parameters: [FILEPATH] \n"
-            + "Example: open C:/CS2103/MyRolodex.rldx";
+            + "Reloads the application using the rolodex supplied at the given file path.\n"
+            + "Parameters: [FILEPATH]\n"
+            + "Example: open C:/Documents/MyRolodex.rldx";
 
-    public final String filePath;
+    private final String filePath;
 
     public OpenCommand(String filePath) {
         this.filePath = filePath;
