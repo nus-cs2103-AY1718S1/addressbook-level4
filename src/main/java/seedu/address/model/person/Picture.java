@@ -9,7 +9,7 @@ public class Picture {
     public static final int PIC_HEIGHT = 100;
 
     public static final String BASE_URL = System.getProperty("user.dir")
-            + "/src/main/resources/contact_images/";
+            + "/data/contact_images/";
 
     public static final String PLACEHOLDER_IMAGE = "placeholder_person.png";
 
