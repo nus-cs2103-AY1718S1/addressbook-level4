@@ -76,9 +76,8 @@ public class ListByBloodtypeCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private ListByBloodtypeCommand prepareCommand(String userInput) {
-        ListByBloodtypeCommand command =
-                new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate
-                        (Arrays.asList(userInput.split("\\s+"))));
+        ListByBloodtypeCommand command = new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(
+                Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

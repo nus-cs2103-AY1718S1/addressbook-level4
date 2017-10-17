@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collections;
@@ -17,24 +18,24 @@ public class BloodtypeContainsKeywordPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("AB");
         List<String> secondPredicateKeywordList = Collections.singletonList("O-");
 
-        BloodtypeContainsKeywordPredicate firstPredicate
-                = new BloodtypeContainsKeywordPredicate(firstPredicateKeywordList);
-        BloodtypeContainsKeywordPredicate secondPredicate
-                = new BloodtypeContainsKeywordPredicate(secondPredicateKeywordList);
+        BloodtypeContainsKeywordPredicate firstPredicate =
+                new BloodtypeContainsKeywordPredicate(firstPredicateKeywordList);
+        BloodtypeContainsKeywordPredicate secondPredicate =
+                new BloodtypeContainsKeywordPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        BloodtypeContainsKeywordPredicate firstPredicateCopy
-                = new BloodtypeContainsKeywordPredicate(firstPredicateKeywordList);
+        BloodtypeContainsKeywordPredicate firstPredicateCopy =
+                new BloodtypeContainsKeywordPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
         assertFalse(firstPredicate.equals(1));
 
         // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        assertNotNull(firstPredicate);
 
         // different blood type -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
@@ -43,8 +44,8 @@ public class BloodtypeContainsKeywordPredicateTest {
     @Test
     public void testBloodtypeContainsKeywordsReturnsTrue() {
         // One keyword
-        BloodtypeContainsKeywordPredicate predicate
-                = new BloodtypeContainsKeywordPredicate(Collections.singletonList("AB"));
+        BloodtypeContainsKeywordPredicate predicate =
+                new BloodtypeContainsKeywordPredicate(Collections.singletonList("AB"));
         assertTrue(predicate.test(new PersonBuilder().withBloodType("AB").build()));
 
         // Mixed-case keywords
