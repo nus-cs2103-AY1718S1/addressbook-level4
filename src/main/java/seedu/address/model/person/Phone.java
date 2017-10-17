@@ -38,7 +38,7 @@ public class Phone {
                 throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
             }
             phones.add(s);
-            phoneStr += s + "\n";
+            phoneStr += s + " ";
 
         }
         this.phonelist = phones;
