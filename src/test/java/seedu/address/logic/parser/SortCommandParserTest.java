@@ -38,14 +38,14 @@ public class SortCommandParserTest {
 
     @Test
     public void parse_optionalSortOrderArg_success() {
-        assertParseSuccess(parser,WHITESPACE + CliSyntax.PREFIX_NAME.toString(), new SortCommand("n/", false));
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_NAME.toString(), new SortCommand("n/", false));
     }
 
     @Test
     public void parse_validArgs_success() {
 
         // No arguments supplied
-        assertParseSuccess(parser,"", new SortCommand("n/", false));
+        assertParseSuccess(parser, "", new SortCommand("n/", false));
 
         // Valid args to sort by name in ascending order
         assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_NAME.toString(),

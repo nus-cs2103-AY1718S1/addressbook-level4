@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.getEmptyAddressBook;
 import static seedu.address.testutil.TypicalPersons.getSortedAddressBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getEmptyAddressBook;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,8 +32,10 @@ public class SortCommandTest {
     private Model modelSortedByPhoneInReverse = new ModelManager(getSortedAddressBook("phone", true), new UserPrefs());
     private Model modelSortedByEmail = new ModelManager(getSortedAddressBook("email", false), new UserPrefs());
     private Model modelSortedByEmailInReverse = new ModelManager(getSortedAddressBook("email", true), new UserPrefs());
-    private Model modelSortedByAddress = new ModelManager(getSortedAddressBook("address", false), new UserPrefs());
-    private Model modelSortedByAddressInReverse = new ModelManager(getSortedAddressBook("address", true), new UserPrefs());
+    private Model modelSortedByAddress = new ModelManager(
+            getSortedAddressBook("address", false), new UserPrefs());
+    private Model modelSortedByAddressInReverse = new ModelManager(
+            getSortedAddressBook("address", true), new UserPrefs());
 
     @Test
     public void constructor_nullSortOrder_throwsNullPointerException() {

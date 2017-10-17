@@ -90,20 +90,20 @@ public class TypicalPersons {
         List<ReadOnlyPerson> personList;
 
         switch(type) {
-            case "name":
-                personList = getTypicalPersons();
-                break;
-            case "phone":
-                personList = getTypicalPersonsSortedByPhone();
-                break;
-            case "email":
-                personList = getTypicalPersonsSortedByEmail();
-                break;
-            case "address":
-                personList = getTypicalPersonsSortedByAddress();
-                break;
-            default:
-                personList = getTypicalPersons();
+        case "name":
+            personList = getTypicalPersons();
+            break;
+        case "phone":
+            personList = getTypicalPersonsSortedByPhone();
+            break;
+        case "email":
+            personList = getTypicalPersonsSortedByEmail();
+            break;
+        case "address":
+            personList = getTypicalPersonsSortedByAddress();
+            break;
+        default:
+            personList = getTypicalPersons();
         }
 
         if (isReverseOrder) {
@@ -122,7 +122,7 @@ public class TypicalPersons {
     }
 
     public static List<ReadOnlyPerson> getTypicalPersonsSortedByPhone() {
-        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL,BENSON));
+        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL, BENSON));
     }
 
     public static List<ReadOnlyPerson> getTypicalPersonsSortedByEmail() {
