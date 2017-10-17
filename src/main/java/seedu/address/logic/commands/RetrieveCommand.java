@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.tag.TagContainsKeywordPredicate;
 
 /**
  * Lists all contacts having a certain tag in the address book.
@@ -9,30 +9,30 @@ public class RetrieveCommand extends Command {
 
     public static final String COMMAND_WORD = "retrieve";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Retrieves all persons belonging to the specified tag "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Retrieves all persons belonging to an existing tag "
             + "and displays them as a list with index numbers.\n"
             + "Parameters: TAGNAME\n"
             + "Example: " + COMMAND_WORD + " friends";
 
-    public static final String MESSAGE_SUCCESS = "Command under development";
-    public static final String MESSAGE_EMPTY_ARGS = "Please provide a tag's name! \n%1$s";
+    public static final String MESSAGE_EMPTY_ARGS = "Please provide a tag name! \n%1$s";
 
-    private final String tagName;
+    private final TagContainsKeywordPredicate predicate;
 
-    public RetrieveCommand(String tagName) {
-        this.tagName = tagName;
+    public RetrieveCommand(TagContainsKeywordPredicate predicate) {
+        this.predicate = predicate;
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-        throw new CommandException(MESSAGE_SUCCESS);
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof RetrieveCommand // instanceof handles nulls
-                && this.tagName.equals(((RetrieveCommand) other).tagName)); // state check
+                && this.predicate.equals(((RetrieveCommand) other).predicate)); // state check
     }
 
 }

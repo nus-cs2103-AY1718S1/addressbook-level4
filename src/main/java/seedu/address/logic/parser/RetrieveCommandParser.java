@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.TagContainsKeywordPredicate;
 
 /**
  * Parses input arguments and creates a new RetrieveCommand object
@@ -19,7 +20,7 @@ public class RetrieveCommandParser implements Parser<RetrieveCommand> {
             throw new ParseException(
                     String.format(RetrieveCommand.MESSAGE_EMPTY_ARGS, RetrieveCommand.MESSAGE_USAGE));
         }
-        return new RetrieveCommand(trimmedArgs);
+        return new RetrieveCommand(new TagContainsKeywordPredicate(trimmedArgs));
     }
 
 }
