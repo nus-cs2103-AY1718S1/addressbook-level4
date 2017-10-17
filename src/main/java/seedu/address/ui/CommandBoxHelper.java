@@ -15,6 +15,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -110,6 +111,13 @@ public class CommandBoxHelper extends UiPart<Region> {
         case 'l':
             if (checkSubset(ListCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue(ListCommand.COMMAND_WORD + "\n");
+            } else {
+                helperText.setValue("");
+            }
+            break;
+        case 'p':
+            if (checkSubset(PrefCommand.COMMAND_WORD, commandString)) {
+                helperText.setValue(PrefCommand.COMMAND_WORD + "\n");
             } else {
                 helperText.setValue("");
             }
