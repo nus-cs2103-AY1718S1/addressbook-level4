@@ -5,12 +5,15 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -42,6 +45,11 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
+    private ContactTab contactTab;
+    private EventTab eventTab;
+    private NotificationButton notificationButton;
+    private CalendarButton calendarButton;
     private Config config;
     private UserPrefs prefs;
 
@@ -58,10 +66,25 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane eventListPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private AnchorPane eventTabPlaceholder;
+
+    @FXML
+    private AnchorPane contactTabPlaceholder;
+
+    @FXML
+    private AnchorPane notificationButtonPlaceholder;
+
+    @FXML
+    private AnchorPane calendarButtonPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -133,6 +156,9 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        //eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -142,6 +168,48 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author yangshuang
+        contactTab = new ContactTab();
+        contactTabPlaceholder.getChildren().add(contactTab.getRoot());
+        contactTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
+                EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (personListPanelPlaceholder.getChildren().isEmpty()) {
+                    contactTabPlaceholder.setStyle("-fx-background-color:"
+                            + " #00bfff");
+                    eventTabPlaceholder.setStyle("-fx-background-color:"
+                                   + " #6495ed");
+
+                    personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+                }
+            }
+        });
+
+        eventTab = new EventTab();
+        eventTabPlaceholder.getChildren().add(eventTab.getRoot());
+        eventTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
+                EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!personListPanelPlaceholder.getChildren().isEmpty()) {
+                    eventTabPlaceholder.setStyle("-fx-background-color:"
+                            + " #00bfff");
+                    contactTabPlaceholder.setStyle("-fx-background-color:"
+                            + " #6495ed");
+                    personListPanelPlaceholder.getChildren().remove(0);
+                }
+            }
+        });
+
+        notificationButton = new NotificationButton();
+        notificationButtonPlaceholder.getChildren().add(notificationButton
+                .getRoot());
+
+        calendarButton = new CalendarButton();
+        calendarButtonPlaceholder.getChildren().add(calendarButton
+                .getRoot());
     }
 
     void hide() {
