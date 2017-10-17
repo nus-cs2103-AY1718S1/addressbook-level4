@@ -29,6 +29,8 @@ public interface Model {
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
