@@ -1,8 +1,5 @@
 package seedu.address.model.person;
 
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
-
 /**
  * Class for group feature
  * A group is a field in the person object used to filter UI display

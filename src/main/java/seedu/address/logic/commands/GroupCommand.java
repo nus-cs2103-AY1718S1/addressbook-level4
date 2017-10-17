@@ -12,8 +12,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class GroupCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "group";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " [group name] [names to add to group]. Example: " +
-            COMMAND_WORD + " Vietnam Trip Grant Ali Joey";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " [group name] [names to add to group]. Example: "
+            + COMMAND_WORD + " Vietnam Grant Ali Joey";
 
     private final String groupName;
     private final List<String> names;

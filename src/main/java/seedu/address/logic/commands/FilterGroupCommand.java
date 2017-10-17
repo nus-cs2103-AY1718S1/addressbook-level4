@@ -3,12 +3,15 @@ package seedu.address.logic.commands;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.GroupContainsKeywordsPredicate;
 
+/**
+ * Attempts to filter the UI display based on the group provided in the argument
+ */
 public class FilterGroupCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "filter";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD +  "Filters the displayed addressbook to present only " +
-            "the people in the group entered. Example: "+ COMMAND_WORD + "Ho Chi Minh Tour Group";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + "Filters the displayed addressbook to present only "
+            + "the people in the group entered. Example: " + COMMAND_WORD + "Ho Chi Minh Tour Group";
 
     public static final String MESSAGE_PARAMETERS = "[Group]";
 

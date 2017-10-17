@@ -143,7 +143,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Group getGroup() { return group.get(); }
+    public Group getGroup() {
+        return group.get();
+    }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;

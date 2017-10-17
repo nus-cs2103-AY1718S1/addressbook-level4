@@ -45,7 +45,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
     private List<String> makeNameList (String[] input) {
         List<String> nameList = new ArrayList<>();
 
-        for (int i = 1; i < input.length ;i++) {
+        for (int i = 1; i < input.length; i++) {
             nameList.add(input[i]);
         }
 

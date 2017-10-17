@@ -10,7 +10,7 @@ public class GroupContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
     private String groupFilter;
 
-    public GroupContainsKeywordsPredicate (String group){
+    public GroupContainsKeywordsPredicate (String group) {
         this.groupFilter = group;
     }
 
@@ -24,5 +24,5 @@ public class GroupContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
         return other == this // short circuit if same object
                 || (other instanceof GroupContainsKeywordsPredicate // instanceof handles nulls
                 && this.groupFilter.equals(((GroupContainsKeywordsPredicate) other).groupFilter)); // state check
-        }
+    }
 }
