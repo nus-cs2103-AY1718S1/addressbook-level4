@@ -9,7 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -100,13 +99,5 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         return new ImportCommand(p);
     }
 
-    /**
-     * Takes in a ReadOnlyPerson argument
-     * and returns an AddCommand object for execution.
-     */
-    public AddCommand addPeople(ReadOnlyPerson p) {
-
-        return new AddCommand(p);
-    }
 
 }
