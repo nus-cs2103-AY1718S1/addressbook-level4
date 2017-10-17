@@ -1,17 +1,10 @@
 package seedu.address.logic.commands;
 
-
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
 import org.junit.Test;
-
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 
 public class AddFacebookContactCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    //private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
