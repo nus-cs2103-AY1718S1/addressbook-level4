@@ -287,6 +287,17 @@ Clears all entries from the address book. +
 Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
+=== Adding a profile picture: `picture` or `pic` _(Coming in V2.0)_
+
+Adds a profile picture to the specified person in the address book. +
+Format: `picture INDEX FILE_DIRECTORY` or `pic INDEX FILE_DIRECTORY`
+
+Examples:
+
+* `picture 1 C:\Users\John\Pictures\my_pic.png`
+* `pic 3 C:\Users\Alice\Pictures\Contacts\john.png`
+
+
 === Exiting the program : `exit`
 
 Exits the program. +
