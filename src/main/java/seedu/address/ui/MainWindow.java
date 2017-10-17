@@ -45,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
     private DeleteButton deleteButton;
+    private EmailButton emailButton;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -66,6 +67,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane deleteButtonPlaceholder;
+
+    @FXML
+    private StackPane emailButtonPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -133,6 +137,9 @@ public class MainWindow extends UiPart<Region> {
 
         deleteButton = new DeleteButton(logic, 0);
         deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
+        
+        emailButton = new EmailButton();
+        emailButtonPlaceholder.getChildren().add(emailButton.getRoot());
 
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
