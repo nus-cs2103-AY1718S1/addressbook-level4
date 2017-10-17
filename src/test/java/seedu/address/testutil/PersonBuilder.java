@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import java.util.Set;
 
-import com.sun.org.apache.regexp.internal.RE;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -106,6 +105,14 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     *  Sets the {@code Remark} of the {@code Preson} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.person.setRemark(new Remark(remark));
         return this;
     }
 
