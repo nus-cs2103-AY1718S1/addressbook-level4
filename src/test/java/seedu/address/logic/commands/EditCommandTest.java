@@ -2,17 +2,12 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
+import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -20,16 +15,15 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.testutil.EditLessonDescriptorBuilder;
+import seedu.address.testutil.LessonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -40,48 +34,48 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person editedPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+        Lesson editedLesson = new LessonBuilder().build();
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder(editedLesson).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateLesson(model.getFilteredLessonList().get(0), editedLesson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
-        ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
+        Index indexLastLesson = Index.fromOneBased(model.getFilteredLessonList().size());
+        ReadOnlyLesson lastLesson = model.getFilteredLessonList().get(indexLastLesson.getZeroBased());
 
-        PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+        LessonBuilder lessonInList = new LessonBuilder(lastLesson);
+        Lesson editedLesson = lessonInList.withCode(VALID_CODE_CS2101).withClassType(VALID_CLASSTYPE_CS2101)
+                .withGroup(VALID_GROUP_CS2101).build();
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101)
+                .withClassType(VALID_CLASSTYPE_CS2101).withGroup(VALID_GROUP_CS2101).build();
+        EditCommand editCommand = prepareCommand(indexLastLesson, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(lastPerson, editedPerson);
+        expectedModel.updateLesson(lastLesson, editedLesson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
-        ReadOnlyPerson editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON, new EditLessonDescriptor());
+        ReadOnlyLesson editedLesson = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -90,113 +84,94 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() throws Exception {
-        showFirstPersonOnly(model);
+        showFirstLessonOnly(model);
 
-        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+        ReadOnlyLesson lessonInFilteredList = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        Lesson editedLesson = new LessonBuilder(lessonInFilteredList).withCode(VALID_CODE_CS2101).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON,
+                new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101).build());
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateLesson(model.getFilteredLessonList().get(0), editedLesson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_editSpecifiedAddress_success() throws Exception {
-        Person editedPerson = new PersonBuilder().build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAddress().value);
-        ListingUnit.setCurrentListingUnit(ListingUnit.ADDRESS);
+    public void execute_editSpecifiedModule_success() throws Exception {
+        Lesson editedLesson = new LessonBuilder().build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON, editedLesson.getCode().fullCodeName);
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ADDRESS_SUCCESS, editedPerson.getAddress());
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_MODULE_SUCCESS, editedLesson.getCode());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        for (ReadOnlyPerson p : expectedModel.getFilteredPersonList()) {
-            if (p.getAddress().equals(model.getFilteredPersonList().get(0).getAddress())) {
-                ReadOnlyPerson editTo = new Person(p.getName(), p.getPhone(), p.getEmail(),
-                        editedPerson.getAddress(), p.getTags());
-                expectedModel.updatePerson(p, editTo);
+        for (ReadOnlyLesson p : expectedModel.getFilteredLessonList()) {
+            if (p.getCode().equals(model.getFilteredLessonList().get(0).getCode())) {
+                ReadOnlyLesson editTo = new Lesson(p.getClassType(), p.getLocation(), p.getGroup(),
+                        p.getTimeSlot(), editedLesson.getCode(), p.getLecturers());
+                expectedModel.updateLesson(p, editTo);
             }
         }
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_editSpecifiedEmail_success() throws Exception {
-        Person editedPerson = new PersonBuilder().build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getEmail().value);
-        ListingUnit.setCurrentListingUnit(ListingUnit.EMAIL);
+    public void execute_editSpecifiedLocation_success() throws Exception {
+        Lesson editedLesson = new LessonBuilder().build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON, editedLesson.getLocation().value);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_EMAIL_SUCCESS, editedPerson.getEmail());
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LOCATION_SUCCESS, editedLesson.getLocation());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        for (ReadOnlyPerson p : expectedModel.getFilteredPersonList()) {
-            if (p.getEmail().equals(model.getFilteredPersonList().get(0).getEmail())) {
-                ReadOnlyPerson editTo = new Person(p.getName(), p.getPhone(), editedPerson.getEmail(),
-                        p.getAddress(), p.getTags());
-                expectedModel.updatePerson(p, editTo);
+        for (ReadOnlyLesson p : expectedModel.getFilteredLessonList()) {
+            if (p.getLocation().equals(model.getFilteredLessonList().get(0).getLocation())) {
+                ReadOnlyLesson editTo = new Lesson(p.getClassType(), editedLesson.getLocation(), p.getGroup(),
+                        p.getTimeSlot(), p.getCode(), p.getLecturers());
+                expectedModel.updateLesson(p, editTo);
             }
         }
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+
     @Test
-    public void execute_editSpecifiedPhone_success() throws Exception {
-        Person editedPerson = new PersonBuilder().build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getPhone().value);
-        ListingUnit.setCurrentListingUnit(ListingUnit.PHONE);
+    public void execute_duplicateLessonUnfilteredList_failure() {
+        Lesson firstLesson = new Lesson(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder(firstLesson).build();
+        EditCommand editCommand = prepareCommand(INDEX_SECOND_LESSON, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PHONE_SUCCESS, editedPerson.getPhone());
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        for (ReadOnlyPerson p : expectedModel.getFilteredPersonList()) {
-            if (p.getPhone().equals(model.getFilteredPersonList().get(0).getPhone())) {
-                ReadOnlyPerson editTo = new Person(p.getName(), editedPerson.getPhone(), p.getEmail(),
-                        p.getAddress(), p.getTags());
-                expectedModel.updatePerson(p, editTo);
-            }
-        }
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_LESSON);
     }
 
     @Test
-    public void execute_duplicatePersonUnfilteredList_failure() {
-        Person firstPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
-        EditCommand editCommand = prepareCommand(INDEX_SECOND_PERSON, descriptor);
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+    public void execute_duplicateLessonFilteredList_failure() {
+        showFirstLessonOnly(model);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        // edit lesson in filtered list into a duplicate in address book
+        ReadOnlyLesson lessonInList = model.getAddressBook().getLessonList().get(INDEX_SECOND_LESSON.getZeroBased());
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON,
+                new EditLessonDescriptorBuilder(lessonInList).build());
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_LESSON);
     }
 
     @Test
-    public void execute_duplicatePersonFilteredList_failure() {
-        showFirstPersonOnly(model);
-
-        // edit person in filtered list into a duplicate in address book
-        ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder(personInList).build());
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
-
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-    }
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+    public void execute_invalidLessonIndexUnfilteredList_failure() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
     /**
@@ -204,26 +179,26 @@ public class EditCommandTest {
      * but smaller than size of address book
      */
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
-        showFirstPersonOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+    public void execute_invalidLessonIndexFilteredList_failure() {
+        showFirstLessonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_LESSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getLessonList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
+                new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101).build());
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_LESSON, TYPICAL_MA1101R);
 
         // same values -> returns true
-        EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        EditLessonDescriptor copyDescriptor = new EditLessonDescriptor(TYPICAL_MA1101R);
+        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_LESSON, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -236,16 +211,16 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_LESSON, DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_LESSON, DESC_BOB)));
     }
 
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
-    private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
+    private EditCommand prepareCommand(Index index, EditLessonDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
