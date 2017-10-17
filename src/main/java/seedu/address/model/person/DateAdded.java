@@ -41,7 +41,7 @@ public class DateAdded {
 
     }
 
-    public Date getDateObject(){
+    public Date getDateObject() {
         return dateAdded;
     }
 
