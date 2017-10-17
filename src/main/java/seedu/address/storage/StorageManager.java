@@ -77,6 +77,10 @@ public class StorageManager extends ComponentManager implements Storage {
         rolodexStorage.saveRolodex(rolodex, filePath);
     }
 
+    @Override
+    public void setNewRolodexStorage(RolodexStorage newRolodexStorage) {
+        rolodexStorage = newRolodexStorage;
+    }
 
     @Override
     @Subscribe
