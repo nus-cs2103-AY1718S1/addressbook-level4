@@ -2,20 +2,19 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-import javax.sql.rowset.Predicate;
 
 /**
  + * Changes the birthday of an existing person in the address book.
@@ -31,7 +30,7 @@ public class BirthdayCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_BIRTHDAY + "[BIRTHDAY]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_BIRTHDAY + "01011995";
+            + PREFIX_BIRTHDAY + "01/JAN/1995";
 
     public static final String MESSAGE_ADD_BIRTHDAY_SUCCESS = "Added birthday to Person: %$1s";
     public static final String MESSAGE_DELETE_BIRTHDAY_SUCCESS = "Remove birthday from Person: %1$s";
@@ -41,7 +40,7 @@ public class BirthdayCommand extends UndoableCommand {
     private final Birthday birthday;
 
     /**
-     * @param index    of the person in the filtered person list to edit birthday
+     * @param index of the person in the filtered person list to edit birthday
      * @param birthday of the person
      */
     public BirthdayCommand(Index index, Birthday birthday) {
@@ -71,7 +70,7 @@ public class BirthdayCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }

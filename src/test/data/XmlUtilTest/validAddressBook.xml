@@ -26,7 +26,7 @@
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
-        <birthday isPrivate="false">11/01/1995</birthday>
+        <birthday isPrivate="false">11/JAN/1995</birthday>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -54,7 +54,7 @@
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
-        <birthday isPrivate="false">12/01/1995</birthday>
+        <birthday isPrivate="false">12/JAN/1995</birthday>
     </persons>
     <persons>
         <name>Martin Mueller</name>
