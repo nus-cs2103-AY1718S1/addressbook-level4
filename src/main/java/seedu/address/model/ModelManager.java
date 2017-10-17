@@ -16,7 +16,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.RolodexChangedEvent;
 import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -25,64 +25,64 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the rolodex data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final Rolodex rolodex;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final SortedList<ReadOnlyPerson> sortedPersons;
     private Predicate<ReadOnlyPerson> predicate;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given rolodex and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyRolodex rolodex, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(rolodex, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with rolodex: " + rolodex + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.rolodex = new Rolodex(rolodex);
+        filteredPersons = new FilteredList<>(this.rolodex.getPersonList());
         sortedPersons = new SortedList<>(filteredPersons);
         updateSortComparator(null);
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new Rolodex(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-        indicateAddressBookChanged();
+    public void resetData(ReadOnlyRolodex newData) {
+        rolodex.resetData(newData);
+        indicateRolodexChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyRolodex getRolodex() {
+        return rolodex;
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+    private void indicateRolodexChanged() {
+        raise(new RolodexChangedEvent(rolodex));
     }
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
+        rolodex.removePerson(target);
+        indicateRolodexChanged();
     }
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
+        rolodex.addPerson(person);
         updateSortComparator(null);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicateRolodexChanged();
     }
 
     @Override
@@ -90,20 +90,20 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        rolodex.updatePerson(target, editedPerson);
+        indicateRolodexChanged();
     }
 
     @Override
     public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
-        for (ReadOnlyPerson person: addressBook.getPersonList()) {
+        for (ReadOnlyPerson person: rolodex.getPersonList()) {
             Person newPerson = new Person(person);
 
             Set<Tag> newTags = new HashSet<>(newPerson.getTags());
             newTags.remove(tag);
             newPerson.setTags(newTags);
 
-            addressBook.updatePerson(person, newPerson);
+            rolodex.updatePerson(person, newPerson);
         }
     }
 
@@ -111,7 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code addressBook}
+     * {@code rolodex}
      */
     @Override
     public ObservableList<ReadOnlyPerson> getLatestPersonList() {
@@ -144,7 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
+        return rolodex.equals(other.rolodex)
                 && getLatestPersonList().equals(other.getLatestPersonList());
     }
 

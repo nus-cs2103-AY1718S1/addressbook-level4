@@ -14,8 +14,8 @@ import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.SortArgument;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.Rolodex;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -86,12 +86,12 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the rolodex and the filtered person list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        Rolodex expectedRolodex = new Rolodex(actualModel.getRolodex());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getLatestPersonList());
 
         try {
@@ -99,16 +99,16 @@ public class CommandTestUtil {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedRolodex, actualModel.getRolodex());
             assertEquals(expectedFilteredList, actualModel.getLatestPersonList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s rolodex.
      */
     public static void showFirstPersonOnly(Model model) {
-        ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
+        ReadOnlyPerson person = model.getRolodex().getPersonList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
         model.updateFilteredPersonList(new PersonDataContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
@@ -116,7 +116,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s rolodex.
      */
     public static void deleteFirstPerson(Model model) {
         ReadOnlyPerson firstPerson = model.getLatestPersonList().get(0);
@@ -128,7 +128,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s latest list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s latest list to show only the first person in the {@code model}'s rolodex.
      */
     public static void sortAllPersons(Model model, SortArgument argument) {
         model.updateSortComparator(Arrays.asList(argument));

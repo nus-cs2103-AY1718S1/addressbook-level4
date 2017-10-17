@@ -20,7 +20,7 @@ import static seedu.address.logic.parser.SortUtil.setupArguments;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRolodex;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,9 +33,9 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.parser.SortArgument;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.Rolodex;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -44,7 +44,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalRolodex(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -195,14 +195,14 @@ public class FindCommandTest {
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     *     - the {@code Rolodex} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        Rolodex expectedRolodex = new Rolodex(model.getRolodex());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getLatestPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
+        assertEquals(expectedRolodex, model.getRolodex());
     }
 }

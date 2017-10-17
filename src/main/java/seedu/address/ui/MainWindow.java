@@ -30,7 +30,7 @@ import seedu.address.ui.util.PersonDetailPanel;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/rolodex_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 600;
@@ -43,6 +43,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private PersonDetailPanel personDetailPanel;
     private PersonListPanel personListPanel;
+    private CommandBox commandBox;
     private Config config;
     private UserPrefs prefs;
 
@@ -87,6 +88,14 @@ public class MainWindow extends UiPart<Region> {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    /**
+     * Set key listeners for handling keyboard shortcuts.
+     */
+    protected void setKeyListeners() {
+        KeyListener keyListener = new KeyListener(logic, this, personListPanel, commandBox);
+        keyListener.handleKeyPress();
     }
 
     private void setAccelerators() {
@@ -137,10 +146,10 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getRolodexFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -204,10 +213,6 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
     }
 
     @Subscribe

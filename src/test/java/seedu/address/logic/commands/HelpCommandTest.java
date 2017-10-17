@@ -15,7 +15,7 @@ public class HelpCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void execute_help_success() {
+    public void executeHelpSuccess() {
         CommandResult result = new HelpCommand().execute();
         assertEquals(SHOWING_HELP_MESSAGE, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);

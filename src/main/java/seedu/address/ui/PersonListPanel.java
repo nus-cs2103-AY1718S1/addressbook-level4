@@ -37,6 +37,10 @@ public class PersonListPanel extends UiPart<Region> {
         return personListView;
     }
 
+    public void setFocus() {
+        personListView.requestFocus();
+    }
+
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));

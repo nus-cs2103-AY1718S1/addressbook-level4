@@ -1,14 +1,14 @@
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyRolodex;
 
-/** Indicates the AddressBook in the model has changed*/
-public class AddressBookChangedEvent extends BaseEvent {
+/** Indicates the Rolodex in the model has changed*/
+public class RolodexChangedEvent extends BaseEvent {
 
-    public final ReadOnlyAddressBook data;
+    public final ReadOnlyRolodex data;
 
-    public AddressBookChangedEvent(ReadOnlyAddressBook data) {
+    public RolodexChangedEvent(ReadOnlyRolodex data) {
         this.data = data;
     }
 

@@ -24,6 +24,13 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Returns true if the text field is focused.
+     */
+    public boolean isFocused() {
+        return getRootNode().isFocused();
+    }
+
+    /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */

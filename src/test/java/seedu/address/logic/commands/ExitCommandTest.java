@@ -15,7 +15,7 @@ public class ExitCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void execute_exit_success() {
+    public void executeExitSuccess() {
         CommandResult result = new ExitCommand().execute();
         assertEquals(MESSAGE_EXIT_ACKNOWLEDGEMENT, result.feedbackToUser);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ExitAppRequestEvent);

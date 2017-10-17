@@ -10,7 +10,7 @@ import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name roughly match any of
+ * Finds and lists all persons in rolodex whose name roughly match any of
  * the argument keywords up to code-specified word length limits.
  * Keyword matching is case insensitive.
  */
