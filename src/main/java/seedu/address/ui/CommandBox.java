@@ -143,22 +143,18 @@ public class CommandBox extends UiPart<Region> {
      * 4. If Caret is between word, execute normal delete method
      * 5. If Character is on the left and " " is on the right, delete chunk on left
      */
-    public void deleteByChunk() {
+    private void deleteByChunk() {
         int originalCaretPosition = commandTextField.getCaretPosition();
         int newCaretPosition = commandTextField.getCaretPosition();
         int mostRight = commandTextField.getText().length();
         if (newCaretPosition == 0) {
             return;
         } else if (newCaretPosition == mostRight) {
-            if(isEmptyBefore(newCaretPosition)){
-                newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
-            }else{
-                newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
-            }
+            newCaretPosition = farRightDeleteChunk(newCaretPosition);
         } else if (isEmptyBefore(newCaretPosition)) {
             newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
-        } else if (!isEmptyBefore(newCaretPosition) && !isEmptyAfter(newCaretPosition)){
-            newCaretPosition -=1;
+        } else if (!isEmptyBefore(newCaretPosition) && !isEmptyAfter(newCaretPosition)) {
+            newCaretPosition -= 1;
         } else {
             newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
         }
@@ -167,21 +163,39 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Deletes chunk in the situation where caret is at the far right
+     */
+    private int farRightDeleteChunk(int newCaretPosition) {
+        if (isEmptyBefore(newCaretPosition)) {
+            return shiftLeftIgnoringSpaces(newCaretPosition);
+        } else {
+            return shiftLeftIgnoringWords(newCaretPosition);
+        }
+    }
+
+
+    /**
      * Forms a new word with all string elements between the two parameters removed
      */
-    public void setNewWord(int newCaretPosition, int originalCaretPosition) {
+    private void setNewWord(int newCaretPosition, int originalCaretPosition) {
+        String before = commandTextField.getText().substring(0, newCaretPosition);
         String answer;
-        if (originalCaretPosition == 0) {
-            answer = "";
-        }else if (originalCaretPosition == commandTextField.getText().length()){
-            answer = commandTextField.getText().substring(0,newCaretPosition);
-        }
-        else {
-            String before = commandTextField.getText().substring(0, newCaretPosition);
+        if (atEitherEnds(originalCaretPosition)) {
+            answer = before;
+        } else {
             String after = commandTextField.getText().substring(originalCaretPosition);
             answer = before + after;
         }
         commandTextField.setText(answer);
+    }
+
+    /**
+     * Checks if caret is at either ends
+     */
+    private boolean atEitherEnds(int originalCaretPosition) {
+        boolean atFarLeft = (originalCaretPosition == 0);
+        boolean atFarRight = (originalCaretPosition == commandTextField.getText().length());
+        return atFarLeft || atFarRight;
     }
 
     /**
