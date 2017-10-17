@@ -1,4 +1,4 @@
-package seedu.address.commons.exceptions;
+package seedu.address.email.exceptions;
 
 /**
  *  Exception when the given string is not a valid email

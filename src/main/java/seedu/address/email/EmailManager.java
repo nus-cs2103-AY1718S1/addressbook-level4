@@ -1,107 +1,108 @@
 package seedu.address.email;
 
-import seedu.address.commons.exceptions.NotAnEmailException;
-import seedu.address.model.person.Address;
+import seedu.address.email.exceptions.EmailSendFailedException;
+import seedu.address.email.exceptions.LoginFailedException;
+import seedu.address.email.exceptions.NotAnEmailException;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.nio.channels.SeekableByteChannel;
 import java.util.Properties;
 
 public class EmailManager implements Email {
-    private Session currentSession;
     private String currentEmail;
+    private Authenticator currentAuthenticator;
+    private Properties properties_SMTP;
+    private Properties properties_IMAP;
 
     public EmailManager() {
-        currentSession = null;
         currentEmail = null;
+        currentAuthenticator = null;
+        properties_SMTP = new Properties();
+        properties_IMAP = System.getProperties();
+        init();
     }
 
+
     @Override
-    public Session login(String email, String password) throws NotAnEmailException, NoSuchProviderException {
-        Properties props = System.getProperties();
-        props.setProperty("mail.store.protocol", "imaps");
-
-        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("phungtuanhoang1996@gmail.com", "zasxcdfv");
-            }
-        });
-
-        Store store = session.getStore("imaps");
-        try {
-            store.connect("imap.googlemail.com","phungtuanhoang1996@gmail.com", "zasxcdfv");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-
-        Message emailMessage = new MimeMessage(session);
-
-        try {
-            emailMessage.setFrom(new InternetAddress("phungtuanhoang1996@gmail.com"));
-            emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse("phungtuanhoang1996@yahoo.com"));
-            emailMessage.setSubject("Test");
-            emailMessage.setText("Test");
-
-            Transport.send(emailMessage);
-        } catch (AddressException e) {
-
-        } catch (MessagingException e) {
-
-        }
-
-
-
-        /*
-        Properties properties = new Properties();
-        properties.put("mail.pop3s.host", "pop.gmail.com");
-        properties.put("mail.pop3s.port", "995");
-        properties.put("mail.pop3s.starttls.enable", true);
-
-        Session emailSession = Session.getInstance(properties, new Authenticator() {
-            @Override
+    public void login(String email, String password) throws LoginFailedException {
+        Authenticator newAuthenticator = new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(email, password);
             }
-        });
+        };
 
-        currentSession = emailSession;
-        currentEmail = email;
-
-        Store store = emailSession.getStore("pop3s");
+        Session session = Session.getDefaultInstance(properties_IMAP, newAuthenticator);
 
         try {
-            store.connect();
+            Store store = session.getStore("imaps");
+            store.connect("imap.googlemail.com", email, password);
+            this.currentEmail = email;
+            this.currentAuthenticator = newAuthenticator;
+        } catch (NoSuchProviderException e) {
+            throw new LoginFailedException("No such email provider");
         } catch (MessagingException e) {
-            System.out.println("Exception");
+            throw new LoginFailedException("It could be one of the following reasons: \n"
+                                    + "1. Your Internet connection is not working\n"
+                                    + "2. Your email and password combination is not correct\n"
+                                    + "3. Allow less secure apps is not enable in your Gmail account");
+        }
+    }
+
+    @Override
+    public String[] checkEmails() {
+        return new String[0];
+    }
+
+    @Override
+    public void sendEmail(String[] recipients, String subject, String body) throws NotAnEmailException, EmailSendFailedException {
+        //Parse email string into internet addresses
+        InternetAddress[] recipientsAddresses = new InternetAddress[recipients.length];
+        for (int i = 0; i < recipients.length; i++) {
+            try {
+                recipientsAddresses[i] = new InternetAddress(recipients[i]);
+            } catch (AddressException e) {
+                throw new NotAnEmailException();
+            }
         }
 
-        return emailSession;
-        */
-        return null;
-    }
+        //Create a new MIME message
+        try {
+            Session session = Session.getInstance(properties_SMTP, this.currentAuthenticator);
 
-    @Override
-    public void sendEmail(Session session, String recipient, String title, String message) throws NotAnEmailException, MessagingException {
-        Message emailMessage = new MimeMessage(session);
+            Message emailMessage = new MimeMessage(session);
+            emailMessage.setFrom(new InternetAddress(currentEmail));
+            emailMessage.setRecipients(Message.RecipientType.TO, recipientsAddresses);
+            emailMessage.setSubject(subject);
+            emailMessage.setText(body);
 
-        emailMessage.setFrom(new InternetAddress(currentEmail));
-        emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-        emailMessage.setSubject(title);
-        emailMessage.setText(message);
+            Transport.send(emailMessage);
 
-        Transport.send(emailMessage);
-    }
+        } catch (MessagingException e) {
+            throw new EmailSendFailedException("It could be one of the following reasons: \n"
+                                        + "1. Your Internet connection is not working\n"
+                                        + "2. One or more of the recipients' emails does not exist");
+        }
 
-    @Override
-    public Session getSession() {
-        return this.currentSession;
     }
 
     @Override
     public String getEmail() {
-        return null;
+        return currentEmail;
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return (currentAuthenticator != null);
+    }
+
+    private void init() {
+        this.properties_IMAP.setProperty("mail.store.protocol", "imaps");
+
+        this.properties_SMTP.put("mail.smtp.auth", "true");
+        this.properties_SMTP.put("mail.smtp.starttls.enable", "true");
+        this.properties_SMTP.put("mail.smtp.host", "smtp.gmail.com");
+        this.properties_SMTP.put("mail.smtp.port", "587");
     }
 }

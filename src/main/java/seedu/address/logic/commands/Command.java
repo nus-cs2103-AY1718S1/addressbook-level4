@@ -14,6 +14,7 @@ public abstract class Command {
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
+    protected Email emailManager;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
