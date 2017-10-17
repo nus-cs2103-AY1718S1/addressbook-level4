@@ -11,19 +11,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * The Browser Panel of the App.
+ * The Profile Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class ProfilePanel extends UiPart<Region> {
 
-    private static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
-    private static final String FXML = "BrowserPanel.fxml";
+    public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
+    private static final String FXML = "ProfilePanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -44,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private Label email;
 
-    public BrowserPanel() {
+    public ProfilePanel() {
         super(FXML);
         scrollPane.setFitToWidth(true);
         anchorPane.prefWidthProperty().bind(scrollPane.widthProperty());
@@ -80,6 +78,8 @@ public class BrowserPanel extends UiPart<Region> {
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
+
+    public String getName() { return name.getText(); }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {

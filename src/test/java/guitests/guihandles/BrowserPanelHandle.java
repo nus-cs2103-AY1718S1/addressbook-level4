@@ -9,7 +9,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 /**
- * A handler for the {@code BrowserPanel} of the UI.
+ * A handler for the {@code ProfilePanel} of the UI.
  */
 public class BrowserPanelHandle extends NodeHandle<Node> {
 
