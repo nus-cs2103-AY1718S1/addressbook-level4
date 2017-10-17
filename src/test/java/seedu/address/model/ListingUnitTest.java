@@ -9,21 +9,18 @@ public class ListingUnitTest {
     @Test
     public void test_setListingUnit() {
 
-        // set current listing unit to be person
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
-        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.PERSON));
+        // set current listing unit to be lesson
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON));
 
-        // set current listing unit to be address
-        ListingUnit.setCurrentListingUnit(ListingUnit.ADDRESS);
-        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.ADDRESS));
+        // set current listing unit to be location
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
+        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION));
 
-        // set current listing unit to be email
-        ListingUnit.setCurrentListingUnit(ListingUnit.EMAIL);
-        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.EMAIL));
+        // set current listing unit to be module
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE));
 
-        // set current listing unit to be phone
-        ListingUnit.setCurrentListingUnit(ListingUnit.PHONE);
-        assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.PHONE));
 
     }
 }
