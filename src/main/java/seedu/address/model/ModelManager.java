@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -60,7 +61,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -123,37 +126,61 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
+    public void removeTag(Tag tag, Index index) throws DuplicatePersonException, PersonNotFoundException {
         int totalSize = addressBook.getPersonList().size();
         Boolean tagExist = false;
 
-        for (int i = 0; i < totalSize; i++) {
-            ReadOnlyPerson toDelete = addressBook.getPersonList().get(i);
+        if (index != null) {
+            int targetIndex = index.getZeroBased();
+            Person toDelete =  new Person(addressBook.getPersonList().get(targetIndex));
             Person toUpdate = new Person(toDelete);
-
             Set<Tag> oldTags = toDelete.getTags();
-            Set<Tag> newTags = new HashSet<>();
 
-
-            Iterator<Tag> it = oldTags.iterator();
-            while (it.hasNext()) {
-                Tag checkTag = it.next();
-                String current = checkTag.tagName;
-                String toCheck = tag.tagName;
-                if (!current.equals(toCheck)) {
-                    newTags.add(checkTag);
-                }
-            }
-
+            Set<Tag> newTags = deleteTag(tag, toDelete);
             if (!(newTags.size() == oldTags.size())) {
                 toUpdate.setTags(newTags);
-                addressBook.updatePerson(toDelete, toUpdate);
                 tagExist = true;
+                addressBook.updatePerson(toDelete, toUpdate);
+            }
+        } else {
+            for (int i = 0; i < totalSize; i++) {
+                Person toDelete = new Person(addressBook.getPersonList().get(i));
+                Person toUpdate = new Person(toDelete);
+                Set<Tag> oldTags = toDelete.getTags();
+
+                Set<Tag> newTags = deleteTag(tag, toDelete);
+                if (!(newTags.size() == oldTags.size())) {
+                    toUpdate.setTags(newTags);
+                    tagExist = true;
+                    addressBook.updatePerson(toDelete, toUpdate);
+                }
             }
         }
+
         if (!tagExist) {
             throw new PersonNotFoundException();
         }
     }
 
+    /**
+     *
+     * @param tag
+     * @param toDelete
+     * @return Set of Tags of new Person to be updated
+     */
+    private Set<Tag> deleteTag(Tag tag, Person toDelete) {
+        Set<Tag> oldTags = toDelete.getTags();
+        Set<Tag> newTags = new HashSet<>();
+
+        Iterator<Tag> it = oldTags.iterator();
+        while (it.hasNext()) {
+            Tag checkTag = it.next();
+            String current = checkTag.tagName;
+            String toCheck = tag.tagName;
+            if (!current.equals(toCheck)) {
+                newTags.add(checkTag);
+            }
+        }
+        return newTags;
+    }
 }
