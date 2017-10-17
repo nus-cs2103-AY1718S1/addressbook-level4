@@ -33,10 +33,12 @@ public class LogicManager extends ComponentManager implements Logic {
         this.autoCompleteList = new AutoComplete(model);
     }
 
+    @Override
     public void updateAutoCompleteList(String userInput) {
         autoCompleteList.updateAutoCompleteList(userInput);
     }
 
+    @Override
     public String[] getAutoCompleteList() {
         return autoCompleteList.getAutoCompleteList();
     }
