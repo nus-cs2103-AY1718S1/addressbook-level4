@@ -31,6 +31,11 @@ public class MeetingCard extends UiPart<Region> {
     private Label date;
     @FXML
     private Label place;
+    @FXML
+    private Label person;
+    @FXML
+    private Label phoneNum;
+
 
     public MeetingCard(ReadOnlyMeeting meeting, int displayedIndex) {
         super(FXML);
@@ -47,6 +52,8 @@ public class MeetingCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
         date.textProperty().bind(Bindings.convert(meeting.dateProperty()));
         place.textProperty().bind(Bindings.convert(meeting.placeProperty()));
+        person.textProperty().bind(Bindings.convert(meeting.personMeetProperty()));
+        phoneNum.textProperty().bind(Bindings.convert(meeting.phoneMeetProperty()));
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime meetingDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
         LocalDateTime currDate = LocalDateTime.now();

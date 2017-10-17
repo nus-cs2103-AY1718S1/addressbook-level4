@@ -11,12 +11,12 @@ public interface ReadOnlyMeeting {
     NameMeeting getName();
     ObjectProperty<DateTime> dateProperty();
     DateTime getDate();
-    //ObjectProperty<LocalTime> timeProperty();
-    //LocalTime getTime();
     ObjectProperty<Place> placeProperty();
     Place getPlace();
-    //ObjectProperty<UniqueTagList> tagProperty();
-    //Set<Tag> getTags();
+    ObjectProperty<PersonToMeet> personMeetProperty();
+    PersonToMeet getPersonName();
+    ObjectProperty<PhoneNum> phoneMeetProperty();
+    PhoneNum getPersonPhone();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
