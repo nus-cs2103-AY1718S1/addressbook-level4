@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FormClass;
+import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
@@ -80,6 +81,16 @@ public class ParserUtil {
     public static Optional<FormClass> parseFormClass(Optional<String> formClass) throws IllegalValueException {
         requireNonNull(formClass);
         return formClass.isPresent() ? Optional.of(new FormClass(formClass.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> grades} into an {@code Optional<PostalCode>} if {@code grades}
+     * is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Grades> parseGrades(Optional<String> grades) throws IllegalValueException {
+        requireNonNull(grades);
+        return grades.isPresent() ? Optional.of(new Grades(grades.get())) : Optional.empty();
     }
 
     /**
