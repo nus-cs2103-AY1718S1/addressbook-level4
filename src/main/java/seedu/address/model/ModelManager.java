@@ -104,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException{
+    public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
         ArrayList<ReadOnlyPerson> notImportantPersons = new ArrayList<ReadOnlyPerson>();
         ArrayList<ReadOnlyPerson> importantPersons = new ArrayList<ReadOnlyPerson>();
 
@@ -116,7 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
 
             String keyword = "[important]";
 
-            if (!taglist.stream().anyMatch(tag -> keyword.contains(tag.toString().toLowerCase()))){
+            if (!taglist.stream().anyMatch(tag -> keyword.contains(tag.toString().toLowerCase()))) {
                 notImportantPersons.add(oldPerson);
             } else {
                 importantPersons.add(oldPerson);
@@ -128,13 +128,13 @@ public class ModelManager extends ComponentManager implements Model {
                 importantPersons.add(notImportantPersons.get(j));
             }
 
-            for (int k = 0; k < importantPersons.size(); k++){
-               if (!addressBook.removePerson(importantPersons.get(k))){
-                   throw new PersonNotFoundException();
-               }
+            for (int k = 0; k < importantPersons.size(); k++) {
+                if (!addressBook.removePerson(importantPersons.get(k))) {
+                    throw new PersonNotFoundException();
+                }
             }
 
-            for (int s = 0; s < importantPersons.size(); s++){
+            for (int s = 0; s < importantPersons.size(); s++) {
                 addressBook.addPerson(importantPersons.get(s));
             }
 
