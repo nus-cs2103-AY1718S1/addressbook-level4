@@ -47,14 +47,14 @@ public class XmlRolodexStorageTest {
 
     @Test
     public void read_missingFileEmptyResult() throws Exception {
-        assertFalse(readRolodex("NonExistentFile.xml").isPresent());
+        assertFalse(readRolodex("NonExistentFile.rldx").isPresent());
     }
 
     @Test
     public void readNotXmlFormatExceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
-        readRolodex("NotXmlFormatRolodex.xml");
+        readRolodex("NotRldxFormatRolodex.rldx");
 
         /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
          * That means you should not have more than one exception test in one method
@@ -63,7 +63,7 @@ public class XmlRolodexStorageTest {
 
     @Test
     public void readAndSaveRolodexAllInOrderSuccess() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempRolodex.xml";
+        String filePath = testFolder.getRoot().getPath() + "TempRolodex.rldx";
         Rolodex original = getTypicalRolodex();
         XmlRolodexStorage xmlRolodexStorage = new XmlRolodexStorage(filePath);
 
@@ -90,7 +90,7 @@ public class XmlRolodexStorageTest {
     @Test
     public void saveRolodexNullRolodexThrowsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        saveRolodex(null, "SomeFile.xml");
+        saveRolodex(null, "SomeFile.rldx");
     }
 
     @Test

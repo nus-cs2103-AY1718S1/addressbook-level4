@@ -7,6 +7,6 @@
       "y" : 100
     }
   },
-  "rolodexFilePath": "rolodex.xml",
+  "rolodexFilePath": "default.rldx",
   "rolodexName": "TypicalRolodexName"
 }
