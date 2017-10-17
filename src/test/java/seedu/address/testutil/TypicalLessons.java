@@ -1,5 +1,13 @@
 package seedu.address.testutil;
 
+import seedu.address.model.AddressBook;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
@@ -12,14 +20,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2101
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.model.AddressBook;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -62,18 +62,18 @@ public class TypicalLessons {
             .withLecturers("Damith").build();
     public static final ReadOnlyLesson CS2103T_L1 = new LessonBuilder().withCode("CS2103T")
             .withClassType("Lec").withLocation("LT19")
-            .withGroup("1").withTimeSlot("FRI[1400-1600]")
-            .withLecturers("Damith").build();
+            .withGroup("1").withTimeSlot("FRI[1400-1600]").build();
+
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final ReadOnlyLesson AMY = new LessonBuilder().withCode(VALID_CODE_MA1101R)
+    public static final ReadOnlyLesson TYPICAL_MA1101R = new LessonBuilder().withCode(VALID_CODE_MA1101R)
                 .withClassType(VALID_CLASSTYPE_MA1101R).withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R)
                 .withTimeSlot(VALID_TIMESLOT_MA1101R).withLecturers(VALID_LECTURER_MA1101R).build();
-    public static final ReadOnlyLesson BOB = new LessonBuilder().withCode(VALID_CODE_CS2101)
+    public static final ReadOnlyLesson TYPICAL_CS2101 = new LessonBuilder().withCode(VALID_CODE_CS2101)
             .withClassType(VALID_CLASSTYPE_CS2101).withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
             .withTimeSlot(VALID_TIMESLOT_CS2101).withLecturers(VALID_LECTURER_CS2101).build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_MA1101R = "MA1101R"; // A keyword that matches MEIER
 
     private TypicalLessons() {} // prevents instantiation
 
