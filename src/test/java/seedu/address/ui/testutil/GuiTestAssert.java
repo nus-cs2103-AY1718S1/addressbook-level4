@@ -1,14 +1,14 @@
 package seedu.address.ui.testutil;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.module.ReadOnlyLesson;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -45,7 +45,7 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, ReadOnlyLesson... persons) {
         for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+            assertCardDisplaysPerson(persons[i], personListPanelHandle.getLessonListCardHandle(i));
         }
     }
 
