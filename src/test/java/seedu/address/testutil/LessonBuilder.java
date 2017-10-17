@@ -2,7 +2,13 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.*;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.TimeSlot;
 import seedu.address.model.util.SampleDataUtil;
 
 import java.util.Set;
@@ -10,7 +16,7 @@ import java.util.Set;
 /**
  * A utility class to help with building Person objects.
  */
-public class PersonBuilder { //TODO: change the name to LessonBuilder
+public class LessonBuilder { //TODO: change the name to LessonBuilder
 
     public static final String DEFAULT_CODE = "CS2103T";
     public static final String DEFAULT_CLASS_TYPE = "LEC";
@@ -21,7 +27,7 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
 
     private Lesson lesson;
 
-    public PersonBuilder() {
+    public LessonBuilder() {
         try {
             Code defaultCode = new Code(DEFAULT_CODE);
             ClassType defaultClassType = new ClassType(DEFAULT_CLASS_TYPE);
@@ -39,14 +45,14 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
     /**
      * Initializes the LessonBuilder with the data of {@code readOnlyLesson}.
      */
-    public PersonBuilder(ReadOnlyLesson readOnlyLesson) {
+    public LessonBuilder(ReadOnlyLesson readOnlyLesson) {
         this.lesson = new Lesson(readOnlyLesson);
     }
 
     /**
      * Sets the {@code Code} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withCode(String code) {
+    public LessonBuilder withCode(String code) {
         try {
             this.lesson.setCodeType(new Code(code));
         } catch (IllegalValueException ive) {
@@ -58,7 +64,7 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
     /**
      * Parses the {@code lecturers} into a {@code Set<Lecturers>} and set it to the {@code Lesson} that we are building.
      */
-    public PersonBuilder withLecturers(String... lecturers) {
+    public LessonBuilder withLecturers(String... lecturers) {
         try {
             this.lesson.setTags(SampleDataUtil.getLecturerSet(lecturers));//TODO: need to change the setTag method name to setLecturer in Lesson class
         } catch (IllegalValueException ive) {
@@ -70,7 +76,7 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
     /**
      * Sets the {@code TimeSlot} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withTimeSlot(String timeSlot) {
+    public LessonBuilder withTimeSlot(String timeSlot) {
         try {
             this.lesson.setTimeSlot(new TimeSlot(timeSlot));
         } catch (IllegalValueException ive) {
@@ -82,7 +88,7 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
     /**
      * Sets the {@code Location} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withLocation(String location) {
+    public LessonBuilder withLocation(String location) {
         try {
             this.lesson.setLocation(new Location(location));
         } catch (IllegalValueException ive) {
@@ -94,7 +100,7 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
     /**
      * Sets the {@code Group} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withGroup(String group) {
+    public LessonBuilder withGroup(String group) {
         try {
             this.lesson.setGroupType(new Group(group));
         } catch (IllegalValueException ive) {
@@ -106,7 +112,7 @@ public class PersonBuilder { //TODO: change the name to LessonBuilder
     /**
      * Sets the {@code ClassType} of the {@code Lesson} that we are building.
      */
-    public PersonBuilder withClassType(String classType) {
+    public LessonBuilder withClassType(String classType) {
         try {
             this.lesson.setClassType(new ClassType(classType));
         } catch (IllegalValueException ive) {
