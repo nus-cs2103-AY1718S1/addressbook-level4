@@ -36,19 +36,9 @@ public class SortCommandParser implements Parser<SortCommand> {
         if (args.equals("")) {
             args = " n/";
         }
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
-
-        /**
-         *  Invalid command arguments would result in a loaded preamble
-         */
-        if (!argMultimap.getPreamble().equals("")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-
-        if (argMultimap.size() == 1) {
-            field = PREFIX_NAME.getPrefix();
-        }
 
         argMultimap.getValue(PREFIX_NAME).ifPresent(setOrder(PREFIX_NAME));
         argMultimap.getValue(PREFIX_PHONE).ifPresent(setOrder(PREFIX_PHONE));
