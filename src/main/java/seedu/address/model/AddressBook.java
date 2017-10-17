@@ -236,6 +236,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         Deadline deadline = target.getDeadline();
         Set<Tag> tags = target.getTags();
         Person editedPerson = new Person(name, phone, email, address, postalCode, newDebt, deadline, tags);
+        editedPerson.setDateBorrow(target.getDateBorrow());
         try {
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
