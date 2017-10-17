@@ -16,7 +16,7 @@ public class PhoneContainsKeywordsPredicateTest {
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("85355255");
-        List<String> secondPredicateKeywordList = Arrays.asList("8535", "5255");
+        List<String> secondPredicateKeywordList = Arrays.asList("85355255", "99995255");
 
         PhoneContainsKeywordsPredicate firstPredicate = new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
         PhoneContainsKeywordsPredicate secondPredicate = new PhoneContainsKeywordsPredicate(secondPredicateKeywordList);
@@ -41,15 +41,15 @@ public class PhoneContainsKeywordsPredicateTest {
     @Test
     public void test_phoneContainsKeywords_returnsTrue() {
         // One email domain
-        PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.singletonList("gmail"));
+        PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.singletonList("85355255"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
-        // Multiple email domains
-        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("gmail", "yahoo"));
+        //Searching multiple phone numbers with varing digits
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("85355255", "89898989"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
-        // Mixed-case keywords
-        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("GmAil", "YAhoo"));
+        // Searching phone number using 4 digits
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("8535", "5255"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
     }
