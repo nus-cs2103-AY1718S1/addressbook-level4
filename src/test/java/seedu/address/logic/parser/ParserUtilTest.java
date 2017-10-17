@@ -22,6 +22,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
@@ -34,6 +35,7 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_POSTAL_CODE = "00111";
     private static final String INVALID_DEBT = "1234a";
+    private static final String INVALID_INTEREST = "one";
     private static final String INVALID_DEADLINE = "0-0-2017";
     private static final String INVALID_TAG = "#friend";
 
@@ -43,6 +45,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_POSTAL_CODE = "321123";
     private static final String VALID_DEBT = "1234";
+    private static final String VALID_INTEREST = "1";
     private static final String VALID_DEADLINE = "11-11-2020";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
@@ -145,6 +148,31 @@ public class ParserUtilTest {
         Optional<Debt> actualDebt = ParserUtil.parseDebt(Optional.of(VALID_DEBT));
 
         assertEquals(expectedDebt, actualDebt.get());
+    }
+
+    @Test
+    public void parseInterest_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseInterest(null);
+    }
+
+    @Test
+    public void parseInterest_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseInterest(Optional.of(INVALID_INTEREST));
+    }
+
+    @Test
+    public void parseInterestForEdit_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseInterestForEdit(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseInterest_validValue_returnsInterest() throws Exception {
+        Interest expectedInterest = new Interest(VALID_INTEREST);
+        Optional<Interest> actualInterest = ParserUtil.parseInterest(Optional.of(VALID_INTEREST));
+
+        assertEquals(expectedInterest, actualInterest.get());
     }
 
     @Test
