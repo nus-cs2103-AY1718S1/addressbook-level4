@@ -64,8 +64,7 @@ public class CommandTestUtil {
     public static final String INVALID_DOB_DESC = " " + PREFIX_DOB; // empty string not allowed for dob
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-    public static final String EXCEPTION_EMPTYADDRESS = "a/ field is empty";
-    public static final String EXCEPTION_EMPTYTAG = "t/ field is empty";
+    public static final String EXCEPTION_EMPTYFIELD = "%1$s field is empty";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

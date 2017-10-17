@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EXCEPTION_EMPTYADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.EXCEPTION_EMPTYFIELD;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DOB_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -32,6 +32,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -149,7 +150,7 @@ public class AddCommandParserTest {
         // autofilled address
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + DOB_DESC_BOB + ADDRESS_EMPTY_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                EXCEPTION_EMPTYADDRESS);
+                String.format(EXCEPTION_EMPTYFIELD, PREFIX_ADDRESS.getPrefix()));
 
         // invalid dob
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
