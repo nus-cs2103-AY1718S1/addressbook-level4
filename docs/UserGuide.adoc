@@ -284,5 +284,11 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Sort* : `sort KEYWORD` +
+e.g `sort name`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Coming in v2.0
+
+. Quickstart tutorial for first time users of Bluebird
