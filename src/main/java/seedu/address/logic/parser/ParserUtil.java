@@ -93,7 +93,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> activity} into an {@code Optional<Activity> if {@code activity} is present.
+     * Parses a {@code Optional<String activity} into an {@code Optional<Activity>} if {@code activity} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Activity> parseActivity(Optional<String> activity) throws IllegalValueException {
