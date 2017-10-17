@@ -402,14 +402,13 @@ image::ColorKeywordActivityDiagram.png[width="900"]
 
 ==== Design Considerations
 
-Aspect: Implementation of ColorKeywordCommand
-Alternative 1 (current choice): Update boolean variable "isEnable" in the command box by calling event to set the status of this variable.
-Pros: Since only command box will be updated, using event center will maintain a good data encapsulation.
-Cons: Hard for new developers to understand the event center mechanism.
-
-Alternative 2: Declare a global boolean variable
-Pros: Easier for new developer to design
-Cons: This method breaks encapsulation and fails to follow standard java code style.
+**Aspect:** Implementation of `ColorKeywordCommand` +
+**Alternative 1 (current choice):**  Update boolean variable "isEnable" in the command box by calling event to set the status of this variable. +
+**Pros:** Since only command box will be updated, using event center will maintain a good data encapsulation. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 1 (current choice):** Declare a global boolean variable +
+**Pros:** Easier for new developer to design +
+**Cons:** This method breaks encapsulation and fails to follow standard java code style.
 // end::colorKeyword[]
 
 === Logging
