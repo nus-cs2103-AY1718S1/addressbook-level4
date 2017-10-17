@@ -335,8 +335,8 @@ Format: `config --set-tag-color TAG_NAME COLOR`
 ****
 * By default, the application will use a random color to display each tag. The same tags are displayed using the same
 color, different tags are _usually_ displayed using different colors.
-* The value of the parameter `COLOR` should be a valid RGB value. You can pick the RGB value of your favorite
-color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* The value of the parameter `COLOR` should be a valid RGB value (in hexadecimal, starting with a `#`). You can pick the
+RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
 ****
 
 ==== Import calendar : `config --import-calendar`
