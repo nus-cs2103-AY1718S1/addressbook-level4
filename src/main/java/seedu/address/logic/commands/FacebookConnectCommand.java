@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
