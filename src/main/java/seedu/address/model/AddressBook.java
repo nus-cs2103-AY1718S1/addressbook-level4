@@ -194,11 +194,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(persons, tags);
     }
 
-    /*
-    * remove all tags that matches with a string
+    /**
+     * Remove tag from persson
+     * Returns true if tag is successfully removed
      */
+    public boolean removeTag(String str) {
+        if (persons.removeTag(str)) {
+            tags.removeTag(str);
+            resetData(this);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    public void removeTag(String str) {
-        persons.removeTag(str);
+    public void sort() {
+        persons.sort();
     }
 }

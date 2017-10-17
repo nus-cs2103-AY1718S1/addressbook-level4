@@ -2,9 +2,14 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -13,6 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -122,11 +128,43 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * find search through list of persons and tags, remove tag
+     * Sort based on alphabetical order
      */
-    public void removeTag(String str) {
-        for (Person p : internalList) {
-            p.removeTag(str);
+    public void sort() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getName().fullName.compareTo(o2.getName().fullName);
+            }
+        });
+    }
+
+    /**
+     * Remove tag from contact
+     */
+    public boolean removeTag(String str) {
+        boolean checker1 = false;
+        int checker2;
+        for (Person p: internalList) {
+            checker2 = 0;
+            List<Tag> taglist = new ArrayList<Tag>();
+            Set<Tag> tagset = p.getTags();
+            for (Tag tag : tagset) {
+                if (!tag.isSame(str)) {
+                    taglist.add(tag);
+                } else {
+                    checker1 = true;
+                    checker2++;
+                }
+            }
+            if (checker2 > 0) {
+                Set<Tag> replacement = new HashSet<Tag>(taglist);
+                p.setTags(replacement);
+            }
         }
+        if (checker1) {
+            setPersons(this);
+        }
+        return checker1;
     }
 }
