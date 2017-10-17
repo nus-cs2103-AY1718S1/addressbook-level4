@@ -81,7 +81,7 @@ public class LogicManagerTest {
     }
 
     /**
-     * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     * Executes the command, confirms that the exceptions is thrown and that the result message is correct.
      *
      * @see #assertCommandBehavior(Class, String, String, Model)
      */
@@ -91,7 +91,7 @@ public class LogicManagerTest {
     }
 
     /**
-     * Executes the command, confirms that the result message is correct and that the expected exception is thrown,
+     * Executes the command, confirms that the result message is correct and that the expected exceptions is thrown,
      * and also confirms that the following two parts of the LogicManager object's state are as expected:<br>
      * - the internal model manager data are same as those in the {@code expectedModel} <br>
      * - {@code expectedModel}'s address book was saved to the storage file.

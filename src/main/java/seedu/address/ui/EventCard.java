@@ -20,7 +20,7 @@ public class EventCard extends UiPart<Region> {
      * keywords in JavaFX.
      * As a consequence, UI elements' variable titles cannot be set to such
      * keywords
-     * or an exception will be thrown by JavaFX during runtime.
+     * or an exceptions will be thrown by JavaFX during runtime.
      *
      * @see
      * <a href="https://github.com/se-edu/addressbook-level4/issues/336">The
