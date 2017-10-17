@@ -102,9 +102,9 @@ public class SortCommandTest {
         getSortCommandForPerson(CliSyntax.PREFIX_ADDRESS.toString(), false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
-        //Test comparator - sort by address
-        expectedList.sort((o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()));
-        getSortCommandForPerson("z/", false, modelStub).execute();
+        //Test comparator - sort by date added
+        expectedList.sort(Comparator.comparing(o -> o.getDateAdded().getDateObject()));
+        getSortCommandForPerson(CliSyntax.PREFIX_DATEADDED.toString(), false, modelStub).execute();
         assertEquals(expectedList, modelStub.personsAdded);
 
     }

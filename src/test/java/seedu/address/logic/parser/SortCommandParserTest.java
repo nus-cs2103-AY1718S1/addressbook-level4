@@ -54,6 +54,9 @@ public class SortCommandParserTest {
         assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_ADDRESS
                 + SortCommand.BY_ASCENDING, new SortCommand("a/", false));
 
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_DATEADDED
+                + SortCommand.BY_ASCENDING, new SortCommand("t/", false));
+
         assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_NAME
                 + SortCommand.BY_DESCENDING, new SortCommand("n/", true));
 
@@ -66,6 +69,8 @@ public class SortCommandParserTest {
         assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_ADDRESS
                 + SortCommand.BY_DESCENDING, new SortCommand("a/", true));
 
+        assertParseSuccess(parser, WHITESPACE + CliSyntax.PREFIX_DATEADDED
+                + SortCommand.BY_DESCENDING, new SortCommand("t/", true));
 
     }
 }

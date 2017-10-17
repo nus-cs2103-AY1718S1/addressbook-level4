@@ -27,6 +27,7 @@ public class SortCommand extends UndoableCommand {
     private static final String PREFIX_PHONE_SORT = "p/";
     private static final String PREFIX_EMAIL_SORT = "e/";
     private static final String PREFIX_ADDRESS_SORT = "a/";
+    private static final String PREFIX_DATEADDED_SORT = "t/";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts list of all contacts by their attributes,"
             + " defaults to name when no parameters found and ascending when order not specified.\n"
@@ -92,6 +93,9 @@ public class SortCommand extends UndoableCommand {
             return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
                     o2.getAddress().toString()
             );
+        case PREFIX_DATEADDED_SORT:
+            sortTypeReadable = "date added";
+            return Comparator.comparing(o -> o.getDateAdded().getDateObject());
         default:
             sortTypeReadable = "name";
             return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(

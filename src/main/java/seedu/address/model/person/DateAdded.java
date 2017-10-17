@@ -41,6 +41,10 @@ public class DateAdded {
 
     }
 
+    public Date getDateObject(){
+        return dateAdded;
+    }
+
     @Override
     public String toString() {
         return format.format(dateAdded);
