@@ -325,21 +325,29 @@ e.g.`select 2`
 
 === Command Shortcuts
 
-* `ctrl` + `l` : List command
-* `ctrl` + `h` : History command
-* `ctrl` + `z` : Undo command
-* `ctrl` + `y` : Redo command
-* `ctrl` + `shift` + `d` : Clear command
+[width=70%]
+|===
+| Shortcut | Purpose
+
+| kbd:[Ctrl + H] | View history
+| kbd:[Ctrl + Z] | Undo last command
+| kbd:[Ctrl + Y] | Redo last command
+| kbd:[Ctrl + Shift + D] | Clear contact list
+|===
 
 === Navigation/Selection Shortcuts
 
-* `enter` : Selects the command box
-* `esc` : Deselects the command box +
-+
-When the command box is not in selection: +
+[width=70%]
+|===
+| Shortcut | Purpose
 
-* `↑` or `↓` : Scrolls the contact list +
-* `ctrl` + `d` : Deletes selected contact (not implemented yet)
+| kbd:[Enter] | Select the command box
+| kbd:[Esc] | Deselect the command box
+2.+| When the command box is not in selection:
+| kbd:[↑] and kbd:[↓] | Scroll the contact list
+| kbd:[Ctrl + D] | Delete the selected contact _(Coming in V2.0)_
+|===
+
 // end::excludeNavbar[]
 
 ifndef::env-github[]
