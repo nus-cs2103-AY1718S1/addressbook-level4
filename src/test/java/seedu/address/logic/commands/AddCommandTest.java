@@ -166,7 +166,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException {
+        public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+                IllegalValueException {
             fail("This method should not be called.");
         }
 
