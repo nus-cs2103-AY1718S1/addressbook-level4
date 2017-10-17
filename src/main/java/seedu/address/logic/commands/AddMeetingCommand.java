@@ -34,9 +34,9 @@ public class AddMeetingCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. \n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
-            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_LOCATION + "LOCATION \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "

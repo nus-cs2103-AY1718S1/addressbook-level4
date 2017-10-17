@@ -26,7 +26,6 @@ public interface ReadOnlyMeeting {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDate().equals(this.getDate())
-                //&& other.getTime().equals(this.getTime())
                 && other.getPlace().equals(this.getPlace()));
     }
 
@@ -36,10 +35,12 @@ public interface ReadOnlyMeeting {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append("\nMeeting with: ")
+                .append(getPersonName())
+                .append("\nContact Number: ")
+                .append(getPersonPhone())
                 .append("\nDate and Time: ")
                 .append(getDate())
-                //.append(" Time: ")
-                //.append(getTime())
                 .append("\nLocation: ")
                 .append(getPlace());
         return builder.toString();
