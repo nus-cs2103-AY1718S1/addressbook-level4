@@ -1,5 +1,17 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
+import seedu.address.testutil.EditLessonDescriptorBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
@@ -9,18 +21,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
-import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -42,17 +42,17 @@ public class CommandTestUtil {
     public static final String VALID_FONT_SIZE_XSMALL = "xsmall";
     public static final String VALID_FONT_SIZE_SMALL = "small";
 
-    public static final String CODE_DESC_A1101R = " " + PREFIX_MODULE_CODE + VALID_CODE_MA1101R;
+    public static final String CODE_DESC_MA1101R = " " + PREFIX_MODULE_CODE + VALID_CODE_MA1101R;
     public static final String CODE_DESC_CS2101 = " " + PREFIX_MODULE_CODE + VALID_CODE_CS2101;
-    public static final String CLASSTYPE_DESC_A1101R = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_MA1101R;
+    public static final String CLASSTYPE_DESC_MA1101R = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_MA1101R;
     public static final String CLASSTYPE_DESC_CS2101 = " " + PREFIX_CLASS_TYPE + VALID_CLASSTYPE_CS2101;
-    public static final String VENUE_DESC_A1101R = " " + PREFIX_VENUE + VALID_VENUE_MA1101R;
+    public static final String VENUE_DESC_MA1101R = " " + PREFIX_VENUE + VALID_VENUE_MA1101R;
     public static final String VENUE_DESC_CS2101 = " " + PREFIX_VENUE + VALID_VENUE_CS2101;
-    public static final String GROUP_DESC_A1101R = " " + PREFIX_GROUP + VALID_GROUP_MA1101R;
+    public static final String GROUP_DESC_MA1101R = " " + PREFIX_GROUP + VALID_GROUP_MA1101R;
     public static final String GROUP_DESC_CS2101 = " " + PREFIX_GROUP + VALID_GROUP_CS2101;
-    public static final String TIMESLOT_DESC_A1101R = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_MA1101R;
+    public static final String TIMESLOT_DESC_MA1101R = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_MA1101R;
     public static final String TIMESLOT_DESC_CS2101 = " " + PREFIX_TIME_SLOT + VALID_TIMESLOT_CS2101;
-    public static final String LECTURER_DESC_FRIEND = " " + PREFIX_LECTURER + VALID_LECTURER_MA1101R;
+    public static final String LECTURER_DESC_MA1101R = " " + PREFIX_LECTURER + VALID_LECTURER_MA1101R;
     public static final String LECTURER_DESC_CS2101 = " " + PREFIX_LECTURER + VALID_LECTURER_CS2101;
     public static final String FONT_SIZE_DESC_XSMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_XSMALL;
     public static final String FONT_SIZE_DESC_SMALL = " " + PREFIX_FONT_SIZE + VALID_FONT_SIZE_SMALL;

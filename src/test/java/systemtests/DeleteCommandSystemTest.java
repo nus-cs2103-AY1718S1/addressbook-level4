@@ -1,25 +1,24 @@
 package systemtests;
 
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
-import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-
 import org.junit.Test;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS;
+import static seedu.address.testutil.TestUtil.getLastIndex;
+import static seedu.address.testutil.TestUtil.getMidIndex;
+import static seedu.address.testutil.TestUtil.getPerson;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -32,9 +31,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
+        ReadOnlyLesson deletedPerson = removePerson(expectedModel, INDEX_FIRST_LESSON);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the last person in the list -> deleted */
@@ -60,18 +59,18 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered person list, delete index within bounds of address book and person list -> deleted */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        Index index = INDEX_FIRST_LESSON;
+        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
         assertCommandSuccess(index);
 
         /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        int invalidIndex = getModel().getAddressBook().getLessonList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
         /* --------------------- Performing delete operation while a person card is selected ------------------------ */
 
@@ -83,7 +82,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         selectPerson(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
@@ -98,9 +97,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getAddressBook().getPersonList().size() + 1);
+                getModel().getAddressBook().getLessonList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
@@ -116,11 +115,11 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
      * @return the removed person
      */
-    private ReadOnlyPerson removePerson(Model model, Index index) {
-        ReadOnlyPerson targetPerson = getPerson(model, index);
+    private ReadOnlyLesson removePerson(Model model, Index index) {
+        ReadOnlyLesson targetPerson = getPerson(model, index);
         try {
-            model.deletePerson(targetPerson);
-        } catch (PersonNotFoundException pnfe) {
+            model.deleteLesson(targetPerson);
+        } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
         }
         return targetPerson;
@@ -133,8 +132,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        ReadOnlyPerson deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        ReadOnlyLesson deletedPerson = removePerson(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedPerson);
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);

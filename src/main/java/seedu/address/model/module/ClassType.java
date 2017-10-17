@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class ClassType {
     public static final String MESSAGE_CLASSTYPE_CONSTRAINTS =
-            "Class type can only contain numbers, and should be at least 3 digits long";
+            "Class type can only be 'lec' or 'tut' ";
     public static final String CLASSTYPE_VALIDATION_REGEX = "[a-zA-Z]{3}";
     public final String value;
 

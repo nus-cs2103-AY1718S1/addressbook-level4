@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -29,12 +29,13 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
-    public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+    public static void assertCardDisplaysPerson(ReadOnlyLesson expectedLesson, PersonCardHandle actualCard) {
+        assertEquals(expectedLesson.getCode().fullCodeName, actualCard.getName());
+        assertEquals(expectedLesson.getClassType().value, actualCard.getPhone());
+        assertEquals(expectedLesson.getLocation().value, actualCard.getEmail());
+        assertEquals(expectedLesson.getGroup().value, actualCard.getAddress());
+        assertEquals(expectedLesson.getTimeSlot().value, actualCard.getAddress());
+        assertEquals(expectedLesson.getLecturers().stream().map(lecturer -> lecturer.lecturerName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
 
@@ -42,7 +43,7 @@ public class GuiTestAssert {
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, ReadOnlyPerson... persons) {
+    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, ReadOnlyLesson... persons) {
         for (int i = 0; i < persons.length; i++) {
             assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
         }
@@ -52,8 +53,8 @@ public class GuiTestAssert {
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
+    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyLesson> persons) {
+        assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyLesson[0]));
     }
 
     /**
