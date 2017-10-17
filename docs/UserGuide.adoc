@@ -143,22 +143,26 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 === Sorting list of persons: `sort`
 
 Sorts the full list of persons based on the specified attribute +
-Format: `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]`
+Format: `sort [n/(ASC OR DSC)]`
 
 ****
 * Sort command only accepts one attribute.
-* The list can be sorted by one of the following attribute: name, phone, email, address
+* The list can be sorted by one of the following attribute: name, phone, email, address, time added
 * Sorting order depends on the specified choice.
 * The `ASC` signifies sorting in ascending order.
 * The `DSC` signifies sorting in descending order.
+* Entering command without any argument will default to name in ascending order
+* Entering command without specifying order will default to ascending order.
 ****
 
 Examples:
 
-* `sort n/ASC` +
-Returns list of persons sorted by names in ascending order
-* `sort p/DSC` +
-Returns list of persons sorted by phone in descending order
+* `sort` +
+Returns list of persons sorted by name added in ascending order
+* `sort p/ASC` +
+Returns list of persons sorted by phone in ascending order
+* `sort t/DSC` +
+Returns list of persons sorted by time added in descending order
 
 === Deleting a person : `delete` `remove` `-`
 

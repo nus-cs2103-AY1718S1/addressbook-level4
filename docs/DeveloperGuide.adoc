@@ -796,92 +796,79 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add contact by name
+=== Use case: Add contact
 
 *MSS*
 
-1.  User input command to add contact: add [NAME]
-2.  Address book launches a window prompting user to fill in required fields (phone number, address...)
-3.  User fill in required fields and confirms inputted values
-4.  Address book stores contact entered and shows “Added” message
+1.  User input command to add contact: add n/[NAME] p/[PHONE] e/[EMAIL] a/[ADDRESS]
+2.  Address book stores contact and outputs success message
+
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. User enters incomplete contact information with missing fields
+* 2a. User enters incomplete contact information with missing fields
 +
 [none]
-** 3a1. Address book shows warning and prompt user to fill in missing fields.
+** 2a1. Address book shows error message
 +
-Use case resumes at step 3.
-
-* *a. User exits from the “add” window
+Use case ends.
++
+Use case ends.
+[none]
+* 2b. Similar contact already exist in Address Book
++
+[none]
+** 2b1. Address book shows error message
 +
 Use case ends.
 
 [discrete]
-=== Use case: Edit contact by name
+=== Use case: Edit contact
 
 *MSS*
 
-1.  User input command to edit contact: edit [NAME]
-2.  Address book returns list of users with given name
-3.  User input appends index to command
-4.  Address book launches a window prompting user to edit contacts
-5.  User edit contact details and confirms inputted values
-6.  Address book updates contact details
+1.  User input command to edit contact: edit INDEX n/[NAME] p/[PHONE] e/[EMAIL] a/[ADDRESS]
+2.  Address book edits relevant contact details and outputs success message
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. No contacts with given name
+* 2a. Invalid index inputted
 +
 [none]
-** 2a1. Address book notify no user found
+** 2a1. Address book shows error message
 +
 Use case ends.
 
-* 2b. Only one contact match with given name
+* 2b. No attributes was inputted
 +
 [none]
-** 2b1. Address book deletes user and outputs result
-+
-Use case ends.
-
-* *a. User exits from the “edit” window
+** 2b1. Address book shows error message
 +
 Use case ends.
 
 [discrete]
-=== Use case: Delete contact by name
+=== Use case: Delete contact
 
 *MSS*
 
-1.  User input command to delete contact: delete [NAME]
-2.  Address book returns list of users with given name
-3.  User input appends index to command
-4.  Address book deletes user and outputs result
+1.  User input command to delete contact: delete INDEX
+2.  Address delete contact from list and outputs success message
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. No contacts with given name
+* 2a. Invalid index inputted
 +
 [none]
-** 2a1. Address book notify no user found
-+
-Use case ends.
-
-* 2b. Only one contact match with given name
-+
-[none]
-** 2b1. Address book deletes user and outputs result
+** 2a1. Address book shows error message
 +
 Use case ends.
 
@@ -937,14 +924,28 @@ Use case ends.
 
 *MSS*
 
-1.  User request to sort the persons in address book
-2.  Address book shows the sortable attributes and request user to select one
-3.  User selects an attribute to sort by and if ascending or descending
-4.  Address book shows the sorted list to user
+1.  User input command to sort contacts: sort [PREFIX]/[ORDER]
+2.  Address book sorts contacts and output sorted list
 +
 Use case ends.
 
 *Extensions*
+
+[none]
+* 2a. No arguments inputted
++
+[none]
+** 2a1. Address book sorts contacts by name in ascending order and output sorted list
++
+Use case ends.
+
+[none]
+* 2a. No sort order inputted
++
+[none]
+** 2a1. Address book sort by inputted attribute in ascending order and output sorted list
++
+Use case ends.
 
 [none]
 * 2a. The address book is empty
@@ -954,62 +955,13 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. User enters an invalid attribute
+* 2a. Invalid arguments inputted
 +
 [none]
-** 3a1. Address book shows an error message
+** 2a1. Address book shows an error message
 +
 Use case ends.
 
-[discrete]
-=== Use case: Route to contact’s address
-
-*MSS*
-
-1.  User inputs command to locate contact: map [name]
-2.  Address book returns list of users with given name
-3.  User input appends index to command
-4.  System launches Google Maps with destination set to contact’s home address
-5.  User input source address in Google Maps and select enter
-6.  Google Maps displays route from source to destination
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 5a. User is only interested in know where is contact’s address
-+
-Use case ends.
-
-* 5*a. User decides to move on to other commands
-+
-[none]
-** 5*a1. Address book removes Google Map from view
-+
-Use case ends.
-
-[discrete]
-=== Use case: Search Recycle list
-
-*MSS*
-
-1.  User input command to list previously deleted contacts: bin
-2.  Address book display a list of previously deleted contacts
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. No contacts have been deleted before
-+
-[none]
-** 2a1. Address book shows an empty list message
-+
-Use case ends.
-
-[appendix]
 == Non Functional Requirements
 
 .  Address book should have restricted access.
