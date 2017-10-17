@@ -16,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -36,7 +37,7 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID = "Date repaid: ";
-    private static final String MESSAGE_INFO_NEARBY_PERSON_FIELD = "Other contacts nearby: ";
+    private static final String MESSAGE_INFO_NEARBY_PERSON_FIELD = "All contacts in this area: ";
 
     private Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -114,6 +115,13 @@ public class InfoPanel extends UiPart<Region> {
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID);
         nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         bindListeners(person);
+    }
+
+    /**
+     * Resets the Nearby Person List Panel
+     * @param person the selected person to display the nearby contacts of
+     */
+    public void resetNearbyPersonListPanel(ReadOnlyPerson person) {
         nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
         nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
@@ -216,6 +224,13 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+        resetNearbyPersonListPanel(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection().person);
     }
