@@ -25,7 +25,7 @@ public class ProfilePanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    public ReadOnlyPerson person;
+    private ReadOnlyPerson person;
 
     @FXML
     private ScrollPane scrollPane;
@@ -53,25 +53,31 @@ public class ProfilePanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Updates selected person
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
         this.person = person;
         bindListeners(person);
     }
 
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Load default page with empty fields and default message
      */
-   private void loadDefaultPage() {
-       name.setText(DEFAULT_MESSAGE);
-       phone.setText("");
-       address.setText("");
-       dob.setText("");
-       email.setText("");
+    private void loadDefaultPage() {
+        name.setText(DEFAULT_MESSAGE);
+        phone.setText("");
+        address.setText("");
+        dob.setText("");
+        email.setText("");
     }
 
-
+    /**
+     * To be called everytime a new person is selected and bind all information for real-time update
+     * @param person
+     */
     private void bindListeners(ReadOnlyPerson person) {
-
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
@@ -82,6 +88,6 @@ public class ProfilePanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-       loadPersonPage(event.getNewSelection().person);
+        loadPersonPage(event.getNewSelection().person);
     }
 }
