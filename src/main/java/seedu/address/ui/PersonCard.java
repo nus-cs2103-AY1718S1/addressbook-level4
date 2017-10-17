@@ -176,7 +176,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setStyle("-fx-font-size: " + fontSize + ";");
         address.setStyle("-fx-font-size: " + fontSize + ";");
         email.setStyle("-fx-font-size: " + fontSize + ";");
-        tags.setStyle("-fx-font-size: " + fontSize + ";");
+        tags.getChildren().forEach(node -> node.setStyle("-fx-font-size: " + fontSize + ";"));
     }
 
     private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
