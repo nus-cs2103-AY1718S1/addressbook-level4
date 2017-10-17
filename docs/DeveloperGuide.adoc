@@ -394,7 +394,7 @@ public class AddTagCommand extends UndoableCommand {
 **Cons:** Additional memory required to create a new `Person` instance. +
 **Alternative 2:** Just edit the `Tag` set directly +
 **Pros:** No need to instantiate new `Person` instance. Easy to implement. +
-**Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage. 
+**Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage.
 // end::addremovetag[]
 
 === Logging
