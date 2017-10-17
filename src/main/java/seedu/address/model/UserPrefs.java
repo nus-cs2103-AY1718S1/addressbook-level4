@@ -83,7 +83,6 @@ public class UserPrefs {
      *
      * @param input (Password typed in command line)
      * @return true if password is valid
-     * @retrun false if password is invalid
      */
     public boolean checkPassword(String input) {
         return password.equals(hashBySha256(input));
