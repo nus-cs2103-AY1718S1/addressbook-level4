@@ -1,5 +1,5 @@
 
-= AddressBook Level 4 - User Guide
+= MedNus - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -14,22 +14,30 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T17-B2/main.git
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+==Introduction
+
+MedNus is a custom address book made for doctors. You can find many different features available in MedNus that are +
+useful for doctors. You can record appointments you have with patients, take note of the blood type of your patients +
+by using MedNus as a reference and more. MedNus also comes with unique UI theme and tag colors. You can make use +
+of keyboard shortcuts to make use of MedNus more efficiently as well.
+
+This user guide comes with instructions and examples to help you get used to using MedNus.
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Make sure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  You can download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  You can type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
@@ -38,7 +46,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  You can refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
@@ -52,17 +60,19 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
-
+You can use the `help` command to access the User Guide from MedNus. +
+You can also click the `Help` at the top left corner of MedNus. +
+The User Guide will show you how to use MedNus. +
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
+You can add a person to the address book by following the format below. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
 Shorthand Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+You can add any number of tags for a person or none at all.
 
 Examples:
 
@@ -73,70 +83,75 @@ Examples:
 === Listing persons - All / By tag : `list`
 
 * *Listing all persons* +
-Shows a list of all persons in the address book. +
+You can use `list` to show a list of all persons in the address book. +
 Format: `list` +
 Shorthand Format: `l`
 
 * *Listing persons by tag* +
-Shows a list of persons in the address book containing any of the input`tag` +
+You can show a list of people with specific tag(s) by following the format below. +
 Format: `list TAG1 TAG2...` +
  +
 Examples: +
 `list colleagues friends` +
-Lists all contacts with the tag `colleagues` and/or `friends`.
+This will list all contacts with the tag `colleagues`, `friends` or both.
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
+You can edit the information of a person you have added in the address book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
 Shorthand Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* The `edit` command edits the person at the specified `INDEX`.
+* The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* You can check the index using the `list` command.
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* The current information will be replaced with the new information added during editing.
+* When editing tags, the existing tags of the person will be removed i.e you have to add all tags again when editing.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `e 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+The phone number and email address of the 1st person are changed to `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+The name of the 2nd person is changed to `Betsy Crower` and all existing tags are removed.
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+You can find people whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]` +
 Shorthand Format: `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* You can only search for names.
+* Only full words will be matched. e.g. You cannot type `Han` to search for names with keyword `Hans`.
+* People matching at least one keyword will be returned (i.e. `OR` search). +
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
 * `f John` +
-Returns `john` and `John Doe`
+Returns any `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+You can delete a specific person from the address book. +
+Format: `delete INDEX` +
 Shorthand Format: `d INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* The person at the specified `INDEX` is deleted.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* You can check the index using the `list` command.
 ****
 
 Examples:
@@ -150,14 +165,15 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+You can select a person based on their index number. +
+Format: `select INDEX` +
 Shorthand Format: `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* You can check the index using the `list` command.
 ****
 
 Examples:
@@ -171,8 +187,8 @@ Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+You can list all the commands that you have entered in reverse chronological order. +
+Format: `history` +
 Shorthand Format: `h`
 
 [NOTE]
@@ -184,7 +200,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
 Shorthand Format: `u`
 
 [NOTE]
@@ -210,8 +226,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+You can reverse the most recent `undo` command. +
+Format: `redo` +
 Shorthand Format: `r`
 
 Examples:
@@ -234,35 +250,35 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+You can clear all entries in the address book. +
+Format: `clear` +
 Shorthand Format: `c`
 
 === Set Tag Color Mode : `tagcolor`
 
-Sets random colors to all tags OR remove colors. +
+You can set random colors to all tags OR remove colors. +
 Format: `tagcolor random/off` +
 Shorthand Format: `tc random/off`
 
-Sets a color to a specific tag type. +
+You can set a color to a specific tag type. +
 Format: `tagcolor TAGNAME COLOR` +
 Shorthand Format: `tc TAGNAME COLOR`
 
 [NOTE]
 ====
 Only certain colors can be specified.  +
-To see all the colors that can be specified, refer from +
+You can see all the colors that can be specified in the following link +
 https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor +
-and input the color name in english or in hexadecimal form
+and input the color name in english or in hexadecimal form.
 ====
 
 === Set appointment: `appointment`
 
-Set appointment to a specific contact +
+You can set an appointment to a specific contact. +
 Format: `appointment n/NAME d/YYYY/MM/DD HH:MM` +
 Shorthand format: `apt n/NAME d/YYYY/MM/DD HH:MM`
 
-Sort list by appointment dates. +
+You can sort list by appointment dates. +
 Format: `appointment` +
 Shorthand format: `appointment`
 
@@ -270,13 +286,13 @@ Shorthand format: `appointment`
 ====
 You can only set dates that are after current time. (i.e. you can set a time to yesterday)
 
-Take note the name is case-sensitive.
+The name entered is case-sensitive. e.g. `hans` will match `Hans`.
 
 ====
 
 === Adding/Removing Remarks to a person : `remark`
 
-Adds/Remove a remark from an existing person in the address book. +
+You can add or remove a remark from an existing person in the address book. +
 Format: `remark INDEX [r/REMARK]`
 
 Adding a Remark: You can add a remark by typing 'r/' followed by the remarks
@@ -298,6 +314,7 @@ Clears the existing remark for the 1st person in the list.
 
 === KeyBoard Shortcuts [Since v1.2]
 
+You can use keyboard shortcuts to use the address book more efficiently.
 When typing in the command bar, various key bindings consists of different functions.
 
 ****
@@ -383,13 +400,15 @@ described condition
 
 === Exiting the program : `exit`
 
-Exits the program. +
+You can exit MedNus by using the `exit` command. +
+You can also exit MedNus by clicking on `File` in the top left corner +
+and clicking on `Exit`. +
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+MedNus data are saved in the hard disk automatically after any command that changes the data. +
+You do not need to save manually.
 
 == FAQ
 
