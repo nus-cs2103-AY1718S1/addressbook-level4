@@ -32,7 +32,6 @@ public class GroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADD_GROUP_SUCCESS = "Added Person to group: %1$s";
     // public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Removed Person from group: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_GROUP = "This person already belongs to that group.";
 
     private final Index index;
@@ -61,20 +60,21 @@ public class GroupCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         UniqueGroupList editedGroups = new UniqueGroupList(personToEdit.getGroups());
 
+        Person editedPerson;
         try {
             editedGroups.add(group);
-            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+            editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), editedGroups.toSet(), personToEdit.getTags());
             model.updatePerson(personToEdit, editedPerson);
-            model.updateFilteredPersonList(p ->true);
-            return new CommandResult(generateSuccessMessage(editedPerson));
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException("The person cannot be duplicated when adding to a group");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         } catch (UniqueGroupList.DuplicateGroupException dge) {
             throw new CommandException(MESSAGE_DUPLICATE_GROUP);
         }
+        model.updateFilteredPersonList(p ->true);
+        return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
