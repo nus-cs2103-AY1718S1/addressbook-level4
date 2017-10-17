@@ -22,16 +22,11 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<Company> company;
-    private ObjectProperty<Position> position;
-    private ObjectProperty<Status> status;
-    private ObjectProperty<Priority> priority;
-    private ObjectProperty<Note> note;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
-     * Constructor without optional fields. Every field must be present and not null.
+     * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
@@ -39,83 +34,6 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        //if Person is called without Company, Position, and Status parameters, initialize them to "NIL".
-        //if Person is called without Priority, initialize it to L. Note is initialized to "NIL" in all cases
-        //as it is meant to be added after creating the person.
-        try {
-            this.company = new SimpleObjectProperty<>(new Company("NIL"));
-            this.position = new SimpleObjectProperty<>(new Position("NIL"));
-            this.status = new SimpleObjectProperty<>(new Status("NIL"));
-            this.priority = new SimpleObjectProperty<>(new Priority("L"));
-            this.note = new SimpleObjectProperty<>(new Note("NIL"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-    }
-
-    /**
-     * Constructor including all optional fields except Note. Every field must be present and not null.
-     * @param name
-     * @param phone
-     * @param email
-     * @param address
-     * @param company
-     * @param position
-     * @param status
-     * @param priority
-     * @param tags
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
-                  Status status, Priority priority, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, company, position, status, priority, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.company = new SimpleObjectProperty<>(company);
-        this.position = new SimpleObjectProperty<>(position);
-        this.status = new SimpleObjectProperty<>(status);
-        this.priority = new SimpleObjectProperty<>(priority);
-        //Note is initialized to "NIL" as it is meant to be added after creating the person.
-        try {
-            this.note = new SimpleObjectProperty<>(new Note("NIL"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-    }
-
-    /**
-     * Constructor including all fields. Every field must be present and not null.
-     * @param name
-     * @param phone
-     * @param email
-     * @param address
-     * @param company
-     * @param position
-     * @param status
-     * @param priority
-     * @param note
-     * @param tags
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
-                  Status status, Priority priority, Note note, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, company, position, status, priority, note, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.company = new SimpleObjectProperty<>(company);
-        this.position = new SimpleObjectProperty<>(position);
-        this.status = new SimpleObjectProperty<>(status);
-        this.priority = new SimpleObjectProperty<>(priority);
-        this.note = new SimpleObjectProperty<>(note);
-
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -125,8 +43,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getCompany(), source.getPosition(), source.getStatus(), source.getPriority(),
-                source.getNote(), source.getTags());
+                source.getTags());
     }
 
     @Override
@@ -184,45 +101,6 @@ public class Person implements ReadOnlyPerson {
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
-
-    public void setCompany(Company company) { this.company.set(requireNonNull(company)); }
-
-    @Override
-    public Company getCompany() { return company.get(); }
-
-    @Override
-    public ObjectProperty<Company> companyProperty() { return company; }
-
-    public void setPosition(Position position) { this.position.set(position); }
-
-    @Override
-    public Position getPosition() { return position.get(); }
-
-    public ObjectProperty<Position> positionProperty() { return position; }
-
-    @Override
-    public Status getStatus() { return status.get(); }
-
-    @Override
-    public ObjectProperty<Status> statusProperty() { return status; }
-
-    public void setStatus(Status status) { this.status.set(status); }
-
-    @Override
-    public Priority getPriority() { return priority.get(); }
-
-    @Override
-    public ObjectProperty<Priority> priorityProperty() { return priority; }
-
-    public void setPriority(Priority priority) { this.priority.set(priority); }
-
-    @Override
-    public Note getNote() { return note.get(); }
-
-    @Override
-    public ObjectProperty<Note> noteProperty() { return note; }
-
-    public void setNote(Note note) { this.note.set(note); }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

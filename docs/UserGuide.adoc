@@ -1,4 +1,4 @@
-﻿= AddressBook Level 4 - User Guide
+= AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -40,19 +40,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
-*Information on each of the commands*
-
-* 22 different types of commands available for a more user-friendly environment.
-* Each of the command has at least one synonyms/aliases.
-** This allows the user to have a variety of choices of commands instead of having to remember or to execute the `help`
-window every time one forgets it.
-* In the examples given below for each command, note that all commands written there are interchangeable with its synonyms/aliases
-====
-
-[NOTE]
-====
-Most command can be interchangeable with the relevant substitute command listed below.
-====
 
 ====
 *Command Format*
@@ -69,10 +56,8 @@ Format: `help`
 
 === Adding a person: `add`
 
-Synonyms/Aliases for the command: `a`, `create`, `input`, `insert` +
-`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -80,20 +65,17 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager pr/L p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
-Synonyms/Aliases for the command: `l`, `show`, `display` +
 Shows a list of all persons in the address book. +
-Format: `list` / `show` / `display`
+Format: `list`
 
 === Editing a person : `edit`
 
-Synonyms/Aliases for the command: `e`, `change`, `modify`, `revise` +
-`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -110,26 +92,8 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Exporting of person's data command: `export`
-
-`Coming in v2.0` +
-Synonyms/Aliases: `ex` +
-Exports the data into an excel file. +
-Format: `export` / `ex`
-
-****
-* Export persons data
-* Client(s) data will be stored in an excel format
-****
-
-Examples:
-
-* `export` +
-Exports the data of everyone in the list in an excel file.
-
 === Locating persons by name: `find`
 
-Synonyms/Aliases for the command: `f`, `look`, `search`, `check` +
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -150,7 +114,6 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Synonyms/Aliases for the command: `d`, `remove`, `throw`, `erase` +
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
@@ -171,7 +134,6 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
-Synonyms/Aliases for the command: `s`, `choose`, `pick` +
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -192,53 +154,13 @@ Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
-Synonyms/Aliases for the command: `h`, `past` +
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` / `h` / `past
+Format: `history`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
-
-== Mass import of person's data command: `import`
-
-`Coming in v2.0` +
-Imports the data into a ... +
-Format: `import`
-
-****
-* Import persons data
-****
-
-Examples:
-
-* `import` [filename] +
-Imports the file and store it in [app].
-
-=== Displaying user's schedule command: `schedule`
-
-`Coming in v2.0` +
-Displays user's schedule
-Format: `schedule` / `calendar`
-
-Example:
-
-* `schedule` +
-Displays user's schedule.
-
-=== App opens at startup of user's OS command: `startup`
-
-`Coming in v2.0` +
-Set the app to open at the startup of user's OS by typing yes/no after the command +
-Format: `startup` ANSWER
-
-Example:
-
-* `startup` ANSWER +
-Checks if ANSWER is yes/no and perform the relevant answer choice. +
-* `startup` yes +
-Sets opening app at startup of user's OS yes.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -290,62 +212,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Sorting all entries : `sort`
-
-`Coming in v2.0` +
-Sorts list by name or priority. +
-Format: `sort [NAME_OR_PRIORITY]`
-
-Examples:
-* `sort name`
-
-* `sort priority`
-
-=== Adding notes to persons : `note`
-
-`Coming in v2.0` +
-Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
-Format: `note [PERSON] [STRING]`
-
-Examples:
-* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
-
-=== View all persons with a specific tag : `tag`
-
-`Coming in v2.0` +
-Displays a list of all persons with a specific tag. +
-Format: `tag [TAG]`
-
-Examples:
-* `tag friend`
-
-=== View all persons from a specific company : `company`
-
-`Coming in v2.0` +
-Displays a list of all persons from a specific company. +
-Format: `company [COMPANY]`
-
-Examples:
-* `company ABC Foods`
-
-=== View a person's address on Google Maps within the app : `address`
-
-`Coming in v2.0` +
-Searches for the person's address on Google Maps and displays the result within the app. +
-Format: `address [PERSON]`
-
-Examples:
-* `address John Doe`
-
-=== Send an email to a person : `email`
-
-`Coming in v2.0` +
-Opens the user's default email client loaded with the person's email in the To: field. +
-Format: `email [PERSON]`
-
-Examples:
-* `email John Doe`
-
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -353,9 +219,8 @@ Format: `clear`
 
 === Exiting the program : `exit`
 
-Synonyms/Aliases for the command: `quit` +
 Exits the program. +
-Format: `exit` / `quit`
+Format: `exit`
 
 === Saving the data
 
@@ -368,13 +233,9 @@ There is no need to save manually.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
-[NOTE]
-====
-Most commands are interchangeable with the relevant substitute command listed above.
-====
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/ABC Foods po/CEO pr/HIGH t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -389,9 +250,3 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Sort* : `sort`
-* *Note* : `note`
-* *View tag* : `tag`
-* *View company* : `company`
-* *View address* : `address`
-* *Email* : `email`
