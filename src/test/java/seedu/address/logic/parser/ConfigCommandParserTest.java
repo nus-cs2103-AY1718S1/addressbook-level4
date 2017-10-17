@@ -15,7 +15,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.configs.AddPropertyCommand;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
