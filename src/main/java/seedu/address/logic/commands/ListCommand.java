@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import facebook4j.FacebookException;
+
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
@@ -16,6 +18,12 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        ConnectFacebookCommand a = new ConnectFacebookCommand();
+        try {
+            a.authUser();
+        } catch (FacebookException e) {
+            e.printStackTrace();
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
