@@ -42,7 +42,7 @@ public interface Model {
      * @throws TagNotFoundException if the tag is not found in tag list of address book
      * @throws IllegalValueException if the input value is not alphanumeric
      */
-    void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException, PersonNotFoundException;
+    void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

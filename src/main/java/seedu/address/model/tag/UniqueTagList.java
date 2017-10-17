@@ -1,8 +1,8 @@
 package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_TAG_NOT_FOUND;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_TAG_NOT_FOUND;
 
 import java.util.HashSet;
 import java.util.Iterator;

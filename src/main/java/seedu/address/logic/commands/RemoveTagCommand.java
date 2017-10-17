@@ -1,11 +1,9 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_INPUT;
-import static seedu.address.commons.core.Messages.MESSAGE_TAG_NOT_FOUND;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 
 
@@ -22,6 +20,8 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " friend";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
+    public static final String MESSAGE_TAG_NOT_FOUND = "Tag is not found.";
+
 
     private final String targetTag;
 
@@ -34,11 +34,9 @@ public class RemoveTagCommand extends UndoableCommand {
         try {
             model.removeTag(targetTag);
         } catch (IllegalValueException ive) {
-            throw new CommandException(MESSAGE_INVALID_INPUT);
+            assert false : MESSAGE_INVALID_INPUT;
         } catch (TagNotFoundException tnfe) {
             throw new CommandException(MESSAGE_TAG_NOT_FOUND);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The person to be updated is not found.";
         }
 
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, targetTag));

@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -42,16 +41,9 @@ public class RemoveTagCommandTest {
         String tagNameToBeRemoved = VALID_TAG_FRIEND + "ddd";
         RemoveTagCommand removeTagCommand = prepareCommand(tagNameToBeRemoved);
 
-        assertCommandFailure(removeTagCommand, model, Messages.MESSAGE_TAG_NOT_FOUND);
+        assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_TAG_NOT_FOUND);
     }
 
-    @Test
-    public void execute_invalidTagName_throwsCommandException() throws Exception {
-        String invalidTagName = VALID_TAG_FRIEND + "!!!";
-        RemoveTagCommand removeTagCommand = prepareCommand(invalidTagName);
-
-        assertCommandFailure(removeTagCommand, model, Messages.MESSAGE_INVALID_INPUT);
-    }
 
     @Test
     public void equals() {

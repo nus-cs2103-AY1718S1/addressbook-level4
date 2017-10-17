@@ -125,8 +125,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        public void removeTag(String tagToBeRemoved) throws TagNotFoundException,
-                IllegalValueException, PersonNotFoundException {
+        public void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException {
             fail("This method should not be called.");
         }
 
