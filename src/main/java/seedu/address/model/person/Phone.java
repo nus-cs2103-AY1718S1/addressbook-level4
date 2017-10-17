@@ -2,6 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -14,20 +18,43 @@ public class Phone {
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+    //    public final String value;
     public final String value;
+    public final ArrayList<String> phonelist;
 
     /**
      * Validates given phone number.
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
+
+    public Phone(List<String> phone) throws IllegalValueException {
+        requireNonNull(phone);
+        String phoneStr = "";
+        ArrayList<String> phones = new ArrayList<String>();
+        for (String s : phone) {
+            String trimmedPhone = s.trim();
+            if (!isValidPhone(trimmedPhone)) {
+                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+            }
+            phones.add(s);
+            phoneStr += s + "\n";
+
+        }
+        this.phonelist = phones;
+        value = phoneStr;
+    }
+
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
+        ArrayList<String> phones = new ArrayList<String>();
         String trimmedPhone = phone.trim();
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
-        this.value = trimmedPhone;
+        phones.add(phone);
+        this.phonelist = phones;
+        this.value = phone;
     }
 
     /**
@@ -39,7 +66,7 @@ public class Phone {
 
     @Override
     public String toString() {
-        return value;
+        return value.toString();
     }
 
     @Override
