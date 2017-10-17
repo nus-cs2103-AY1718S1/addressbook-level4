@@ -302,8 +302,10 @@ Format: `picture INDEX FILE_DIRECTORY` or `pic INDEX FILE_DIRECTORY`
 
 Examples:
 
-* `picture 1 C:\Users\John\Pictures\my_pic.png`
-* `pic 6 C:\Users\Alice\Pictures\Contacts\john.png`
+* `picture 1 C:\Users\John\Pictures\my_pic.png` +
+Sets the profile picture of the 1st person to `my_pic.png`.
+* `pic 6 C:\Users\Alice\Pictures\Contacts\john.png` +
+Sets the profile picture of the 6th person to `john.png`.
 
 The second example is illustrated in greater detail here:
 
@@ -316,6 +318,25 @@ image::profile_pic_before.png[width="500"]
 3. If the command is entered correctly, you should see the updated profile picture as specified in the `FILE_DIRECTORY` of the command.
 +
 image::profile_pic_after.png[width="500"]
+
+=== Adding a remark: `remark` or `note` _(Coming in V2.0)_
+
+Adds a remark to the specified person in the address book. +
+Format: `remark INDEX [r/REMARK]` or `note INDEX [r/REMARK]`
+
+****
+* Adds a remark to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* An existing remark will be replaced.
+****
+
+Examples:
+
+* `remark 1 r/Likes fishing` +
+Sets the remark of the 1st person to `Likes fishing`.
+* `note 1 r/` +
+Removes the remark for the 1st person.
 
 
 === Exiting the program : `exit`
