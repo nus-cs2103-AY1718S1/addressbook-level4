@@ -19,7 +19,6 @@ public class SortCommand extends UndoableCommand {
     public static final String REVERSE_ORDER = "r";
 
     public static final String MESSAGE_SORT_PERSON_SUCCESS = "Sorted address book by %1$s in %2$s order.";
-    public static final String MESSAGE_MULTIPLE_ATTRIBUTE_ERROR = "Only one field can be entered.";
     public static final String MESSAGE_EMPTY_LIST = "No person(s) to sort.";
 
     private static final String PREFIX_NAME_FIELD = "n/";
@@ -46,10 +45,10 @@ public class SortCommand extends UndoableCommand {
     private String order = "ascending";
 
     /**
-     * @param field     specify which field to sort by
+     * @param field          specify which field to sort by
      * @param isReverseOrder specify if sorting is to be in reverse order
      */
-    public SortCommand(String field, boolean isReverseOrder) {
+    public SortCommand(String field, Boolean isReverseOrder) {
         requireNonNull(field);
         requireNonNull(isReverseOrder);
 
@@ -79,30 +78,39 @@ public class SortCommand extends UndoableCommand {
 
     private Comparator<ReadOnlyPerson> getSortComparator(String field) {
         switch (field) {
-        case PREFIX_NAME_FIELD:
-            this.sortBy = "name";
-            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()
-            );
-        case PREFIX_PHONE_FIELD:
-            this.sortBy = "phone";
-            return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(
+            case PREFIX_NAME_FIELD:
+                this.sortBy = "name";
+                return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()
+                );
+            case PREFIX_PHONE_FIELD:
+                this.sortBy = "phone";
+                return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(
                         o2.getPhone().toString()
-            );
-        case PREFIX_EMAIL_FIELD:
-            this.sortBy = "email";
-            return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(
+                );
+            case PREFIX_EMAIL_FIELD:
+                this.sortBy = "email";
+                return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(
                         o2.getEmail().toString()
-            );
-        case PREFIX_ADDRESS_FIELD:
-            this.sortBy = "address";
-            return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
+                );
+            case PREFIX_ADDRESS_FIELD:
+                this.sortBy = "address";
+                return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
                         o2.getAddress().toString()
-            );
-        default:
-            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
+                );
+            default:
+                return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
                         o2.getName().toString()
-            );
+                );
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && field.equals(((SortCommand) other).field)
+                && REVERSE_ORDER.equals(((SortCommand) other).REVERSE_ORDER));
+
     }
 
 }
