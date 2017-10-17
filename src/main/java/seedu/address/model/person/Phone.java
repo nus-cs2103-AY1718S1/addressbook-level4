@@ -38,7 +38,7 @@ public class Phone {
                 throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
             }
             phones.add(s);
-            phoneStr += s + " ";
+            phoneStr += s + "\n";
 
         }
         this.phonelist = phones;
@@ -49,7 +49,7 @@ public class Phone {
         requireNonNull(phone);
 
         // new
-        String[] numbers = phone.split(" ");
+        String[] numbers = phone.split("\n");
 
         ArrayList<String> phones = new ArrayList<String>();
 
