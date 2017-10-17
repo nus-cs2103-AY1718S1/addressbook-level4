@@ -31,7 +31,16 @@ public class EmailManager implements Email {
             }
         });
 
+        currentSession = emailSession;
         currentEmail = email;
+
+        Store store = emailSession.getStore("pop3s");
+
+        try {
+            store.connect();
+        } catch (MessagingException e) {
+            System.out.println("Exception");
+        }
 
         return emailSession;
     }
@@ -44,7 +53,17 @@ public class EmailManager implements Email {
         emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
         emailMessage.setSubject(title);
         emailMessage.setText(message);
-        
+
         Transport.send(emailMessage);
+    }
+
+    @Override
+    public Session getSession() {
+        return this.currentSession;
+    }
+
+    @Override
+    public String getEmail() {
+        return null;
     }
 }

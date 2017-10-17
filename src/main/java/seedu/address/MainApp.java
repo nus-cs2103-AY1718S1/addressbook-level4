@@ -18,6 +18,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.email.Email;
+import seedu.address.email.EmailManager;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -51,6 +53,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected Email email;
 
 
     @Override
@@ -73,7 +76,9 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        email = new EmailManager();
+
+        logic = new LogicManager(model, email);
 
         ui = new UiManager(logic, config, userPrefs);
 

@@ -31,4 +31,8 @@ public interface Email {
      * @throws MessagingException if the emails were failed to send
      */
     public void sendEmail(Session session, String recipient, String title, String message) throws NotAnEmailException, MessagingException;
+
+    public Session getSession();
+
+    public String getEmail();
 }
