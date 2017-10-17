@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_LOGGED_IN;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import org.junit.Rule;
@@ -44,6 +45,18 @@ public class LogicManagerTest {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listCommand);
+    }
+
+    @Test
+    public void execute_validCommand_notLoggedIn() {
+        String listCommand = ListCommand.COMMAND_WORD;
+        assertCommandSuccess(listCommand, MESSAGE_NOT_LOGGED_IN, model);
+    }
+
+    @Test
+    public void execute_invalidCommandFormat_notLoggedIn() {
+        String invalidCommand = "uicfhmowqewca";
+        assertCommandSuccess(invalidCommand, MESSAGE_NOT_LOGGED_IN, model);
     }
 
     @Test
