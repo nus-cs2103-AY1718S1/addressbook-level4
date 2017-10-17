@@ -3,6 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.PersonCard;
 
+//@@author khooroko
 /**
  * Represents a selection change in the Nearby Person List Panel
  */

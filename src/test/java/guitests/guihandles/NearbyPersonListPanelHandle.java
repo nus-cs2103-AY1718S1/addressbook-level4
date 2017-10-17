@@ -7,8 +7,9 @@ import javafx.scene.control.ListView;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.PersonCard;
 
+//@@author khooroko
 /**
- * Provides a handle for {@code NEarbyPersonListPanel} containing the list of {@code PersonCard}.
+ * Provides a handle for {@code NearbyPersonListPanel} containing the list of {@code PersonCard}.
  */
 public class NearbyPersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     public static final String NEARBY_PERSON_LIST_VIEW_ID = "#nearbyPersonListView";

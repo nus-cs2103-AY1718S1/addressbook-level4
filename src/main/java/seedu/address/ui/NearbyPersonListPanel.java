@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author khooroko
 /**
  * Panel containing the list of nearby persons.
  */
