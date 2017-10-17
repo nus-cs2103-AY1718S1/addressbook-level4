@@ -123,7 +123,7 @@ public class StringUtil {
 
         String preppedAddress = word.trim();
         checkArgument(!preppedAddress.isEmpty(), "Address parameter cannot be empty");
-        checkArgument(preppedAddress.split("\\s+").length == 1, "Address parameter should be a single word");
+        checkArgument(preppedAddress.split("\\s+").length ==1, "Address parameter should be a single word");
 
 
         List<String> tempAddress = Arrays.asList(addressSentence.split("\\s+"));
