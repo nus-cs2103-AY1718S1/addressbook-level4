@@ -34,7 +34,8 @@ public class RemoveCommandParserTest {
 
     @Test
     public void parse_validArgsWithInvalidIndex_throwsParseException() {
-        assertParseFailure(parser, "friends 0?", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "friends 0?", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RemoveCommand.MESSAGE_USAGE));
     }
 
 }
