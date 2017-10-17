@@ -345,6 +345,57 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::addremovetag[]
+=== Adding/Removing a tag
+
+Adding or removing a tag is facilitated by `AddTagCommand` and `DeleteTagCommand`, which are subclasses of `UndoableCommand`. These commands work by changing the value of the `Tag` objects associated with the contact.
+
+These commands take in an integer and a string as arguments. The command is first parsed in `AddressBookParser` to identify it as the appropriate command. It will then be parsed by `AddTagCommandParser` or `DeleteTagCommandParser`, to parse the index, which was the integer argument, and the `Tag`, which was represented by the string argument. Invalid indexes and tags will be handled by throwing an exception. This is how `AddTagCommandParser` is implemented:
+[source, java]
+----
+public class AddTagCommandParser implements Parser<AddTagCommand> {
+    public AddTagCommand parse(String args) throws ParseException {
+        try {
+            // ... parse `Index` and `Tag` and pass it to `AddTagCommand` ...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+To update the `Tag` objects associated with a `Person`, the set of `Tag` objects of that `Person` is copied to a new set. The new data is then modified, then copied into a newly created `Person` instance. This is implemented as follows:
+[source, java]
+----
+public class AddTagCommand extends UndoableCommand {
+    // ... variables, constructor, other methods ...
+    private final Tag newTag;
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... fetch personToEdit ...
+
+        Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
+        // ... check if tag is duplicated ...
+        Person editedPerson = new Person(personToEdit);
+        oldTags.add(newTag);
+        editedPerson.setTags(oldTags);
+
+        // ... try to replace personToEdit with editedPerson ...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Changing the `Tag` objects of the selected `Person` +
+**Alternative 1 (current choice):** Copy set of `Tag` objects to a newly created set. Modify the newly created set. Then create a copy of the selected `Person` instance and replace its set of `Tag` objects. +
+**Pros:** Ensures that the original value will be unchanged, which is important in the event that updating the `Person` instance fails in a later stage. +
+**Cons:** Additional memory required to create a new `Person` instance. +
+**Alternative 2:** Just edit the `Tag` set directly +
+**Pros:** No need to instantiate new `Person` instance. Easy to implement. +
+**Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage. 
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
