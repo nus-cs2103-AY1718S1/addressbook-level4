@@ -160,7 +160,7 @@ public class MainWindow extends UiPart<Region> {
     private void setTheme(String themeUrl) {
         this.getPrimaryStage().getScene().getStylesheets().clear();
         this.getPrimaryStage().getScene().getStylesheets().add(MainApp.class
-                .getResource("/view" + themeUrl).toExternalForm());
+                .getResource("/view/" + themeUrl).toExternalForm());
         this.currentTheme = themeUrl;
         browserPanel.loadDefaultPage(themeUrl);
     }

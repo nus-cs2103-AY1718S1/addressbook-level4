@@ -24,7 +24,7 @@ public abstract class UiPart<T> {
     /**
      * Resource folder where Theme files are stored.
      */
-    public static final String THEME_FILE_FOLDER = "/view/themes";
+    public static final String THEME_FILE_FOLDER = "themes";
 
     /**
      * Individual theme files url
