@@ -236,10 +236,10 @@ addPhotoCommandparser will then return a addPhotoCommand to be executed in the L
 
 ---
 
-**Aspect:** Choice of how Image data type is obtained from filepath + 
+**Aspect:** Choice of how Image data type is obtained from filepath +
 **Alternative 1(current choice):** Using Image object to represent an photo of a contact. +
 **Pros:** Works well with JavaFx scenebuilder as Image class can be passed into ImageView class to load the image. +
-**Cons:** Might present a problem if our team chooses to use alternative GUI generators, Image class might not be applicable to generate an Image. 
+**Cons:** Might present a problem if our team chooses to use alternative GUI generators, Image class might not be applicable to generate an Image. +
 **Alternative 2:** Using a String to represent the filepath of the photo. +
 **Pros:** Do not have to go through multiple stages of conversion to represent the photo as an Image object. +
 **Cons:** Unable to pass String into ImageView class in Javafx to load an image. Therefore still have to convert into an Image object to pass through to ImageView class. Thus, using Image Object to represent a photo makes more sense.

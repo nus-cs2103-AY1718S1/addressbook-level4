@@ -42,7 +42,6 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar totalPersons;
     @FXML
     private StatusBar saveLocationStatus;
-    
     public StatusBarFooter(String saveLocation, int totalPersons) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
@@ -76,7 +75,6 @@ public class StatusBarFooter extends UiPart<Region> {
     private void setTotalPersons(int totalPersons) {
         this.totalPersons.setText(totalPersons + " person(s) total");
     }
-    
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
