@@ -55,7 +55,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void edit() throws Exception {
         Model model = getModel();
-
+        executeCommand("password");
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 
         /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
