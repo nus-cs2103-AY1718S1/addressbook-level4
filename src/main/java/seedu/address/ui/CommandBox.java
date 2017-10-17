@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import javafx.animation.PauseTransition;
@@ -36,6 +37,11 @@ public class CommandBox extends UiPart<Region> {
     private Image keyboardTyping;
     private Image keyboardError;
     private PauseTransition pause;
+    private int anchorPosition;
+    private int caretPosition;
+    private String selectedText = "";
+    private String input;
+    private int JUMP_TO_NEXT_FIELD = 3;
 
 
     @FXML
@@ -47,6 +53,8 @@ public class CommandBox extends UiPart<Region> {
     private String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
     "list", "redo", "select", "undo"};
 
+    private String[] fieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX", "KEYWORD"};
+
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
@@ -55,7 +63,9 @@ public class CommandBox extends UiPart<Region> {
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         TextFields.bindAutoCompletion(commandTextField, commandList);
+        input = commandTextField.getText().trim().toLowerCase();
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        //commandTextField.textProperty().addListener(((observable, oldValue, newValue) -> autocomplete()));
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -89,6 +99,8 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            autocomplete();
         default:
             // let JavaFx handle the keypress
         }
@@ -178,6 +190,34 @@ public class CommandBox extends UiPart<Region> {
         });
         pause.playFromStart();
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        commandTextField.requestFocus();
+        if (commandTextField.getText().equals("add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS")) {
+            commandTextField.selectRange(6, 10);
+        } else if (Arrays.asList(fieldList).contains(selectedText)) {
+            System.out.println("unequal");
+            commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
+            selectedText = "";
+        }
+    }
+
+    protected void autocomplete() {
+        input = commandTextField.getText().trim().toLowerCase();
+        if (Arrays.asList(commandList).contains(input)) {
+            switch (input) {
+                case "add":
+                    replaceText("add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS");
+                    break;
+                default:
+            }
+
+        } else {
+            int currentPosition = commandTextField.getCaretPosition();
+            commandTextField.positionCaret(currentPosition + JUMP_TO_NEXT_FIELD);
+            commandTextField.selectNextWord();
+            anchorPosition = commandTextField.getAnchor();
+            caretPosition = commandTextField.getCaretPosition();
+            selectedText = commandTextField.getSelectedText().toString().trim();
+        }
     }
 
     /**
