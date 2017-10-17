@@ -6,6 +6,9 @@ import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
 import seedu.address.model.event.EventVenue;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 
 /**
@@ -14,18 +17,18 @@ import seedu.address.model.event.ReadOnlyEvent;
 public class EventBuilder {
 
     public static final String DEFAULT_EVENT_NAME = "Hack Your Way 2017";
-    public static final String DEFAULT_TIME = "25102010 12:00am";
+    public static final String DEFAULT_TIME = "25102010 12:00";
     public static final String DEFAULT_VENUE = "123, Clementi West Ave 6, #08-123";
 
     private Event event;
 
     public EventBuilder() {
         try {
-            EventName defaultEventName = new EventName(DEFAULT_EVENT_NAME);
+            Name defaultEventName = new Name(DEFAULT_EVENT_NAME);
             EventTime defaultTime = new EventTime(DEFAULT_TIME);
-            EventVenue defaultVenue = new EventVenue(DEFAULT_VENUE);
+            Address defaultVenue = new Address(DEFAULT_VENUE);
             this.event = new Event(defaultEventName, defaultTime, defaultVenue);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
     }
@@ -40,10 +43,10 @@ public class EventBuilder {
     /**
      * Sets the {@code EventName} of the {@code Event} that we are building.
      */
-    public EventBuilder withEventName(String EventName) {
+    public EventBuilder withEventName(String name) {
         try {
-            this.event.setName(new EventName(EventName));
-        } catch (IllegalValueException ive) {
+            this.event.setName(new Name(name));
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
         return this;
@@ -53,8 +56,8 @@ public class EventBuilder {
      */
     public EventBuilder withVenue(String address) {
         try {
-            this.event.setVenue(new EventVenue(address));
-        } catch (IllegalValueException ive) {
+            this.event.setVenue(new Address(address));
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("venue is expected to be unique.");
         }
         return this;
