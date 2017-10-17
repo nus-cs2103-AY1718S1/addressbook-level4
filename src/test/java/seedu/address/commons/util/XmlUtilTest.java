@@ -91,6 +91,14 @@ public class XmlUtilTest {
                 builder.withPerson(new PersonBuilder().build()).withTag("Friends").build());
 
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
+
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        assertEquals((new AddressBook(dataToWrite)).toString(), (new AddressBook(dataFromFile)).toString());
+
+        dataToWrite = new XmlSerializableAddressBook(
+                builder.withPerson(new PersonBuilder().build()).withGroup("Bamboo").build());
+        XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
+
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
         assertEquals((new AddressBook(dataToWrite)).toString(), (new AddressBook(dataFromFile)).toString());
     }
