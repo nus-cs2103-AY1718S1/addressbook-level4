@@ -124,7 +124,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateEvent(target, editedEvent);
         indicateAddressBookChanged();
     }
-    
     /**
      * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
      * TODO: Further investigate potential problems with this method.
