@@ -978,6 +978,46 @@ Use case resumes at step 2.
 +
 Use case resumes at step 6.
 
+[discrete]
+=== Use case: Add a remark
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to add/update the remark to a specific person in the list
+4. AddressBook add/update the remark of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify a remark to add.
++
+[none]
+** 3b1. AddressBook overwrites the previous remark and replaced it with an empty remark.
++
+Use case ends.
+
+* 3c. User updates valid remark with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
