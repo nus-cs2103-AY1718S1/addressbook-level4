@@ -76,15 +76,17 @@ public class AddressBookParser {
         case ListCommand.SHORTHAND_COMMAND_WORD:
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+        case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.SHORTHAND_COMMAND_WORD:
             return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
+        case ExitCommand.COMMAND_WORD:
+        case ExitCommand.SHORTHAND_COMMAND_WORD:
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+        case HelpCommand.COMMAND_WORD:
+        case HelpCommand.SHORTHAND_COMMAND_WORD:
             return new HelpCommand();
-
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.SHORTHAND_COMMAND_WORD:
