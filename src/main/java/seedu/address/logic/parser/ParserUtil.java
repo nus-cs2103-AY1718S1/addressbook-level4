@@ -70,7 +70,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<HomeNumber> parseHomeNumber(Optional<String> homeNumber) throws IllegalValueException {
-        requireNonNull(HomeNumber);
+        requireNonNull(homeNumber);
         return homeNumber.isPresent() ? Optional.of(new HomeNumber(homeNumber.get())) : Optional.empty();
     }
 

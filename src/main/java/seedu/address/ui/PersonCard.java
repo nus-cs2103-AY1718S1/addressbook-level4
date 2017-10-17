@@ -42,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label homeNumber;
+    @FXML
     private Label address;
     @FXML
     private Label email;
@@ -69,6 +71,7 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        homeNumber.textProperty().bind(Bindings.convert(person.homeNumberProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         schEmail.textProperty().bind(Bindings.convert(person.schEmailProperty()));
