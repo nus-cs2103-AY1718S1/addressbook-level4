@@ -17,6 +17,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void clear() {
         final Model defaultModel = getModel();
+        executeCommand("password");
 
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
