@@ -115,8 +115,9 @@ public class AddEventCommandTest {
         public void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
             fail("This method should not be called.");
         }
+
         @Override
-        public void sortEventList()  {
+        public void sortEventList() {
         }
 
         @Override
@@ -170,21 +171,6 @@ public class AddEventCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
      * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */
     private class ModelStubThrowingDuplicateEventException extends ModelStub {
@@ -200,7 +186,7 @@ public class AddEventCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the event being added.
      */
     private class ModelStubAcceptingEventAdded extends ModelStub {
         final ArrayList<Event> eventsAdded = new ArrayList<>();
@@ -215,22 +201,4 @@ public class AddEventCommandTest {
             return new AddressBook();
         }
     }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
 }

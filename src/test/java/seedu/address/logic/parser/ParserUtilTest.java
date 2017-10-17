@@ -34,7 +34,7 @@ public class ParserUtilTest {
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_TIME = "25062006 09:39pm";
+    private static final String VALID_TIME = "25062006 09:39";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
@@ -132,7 +132,7 @@ public class ParserUtilTest {
         assertEquals(expectedPhone, actualPhone.get());
     }
     @Test
-    public void parseTime_validValue_returnsPhone() throws Exception {
+    public void parseTime_validValue_returnsTime() throws Exception {
         DateTime expectedTime = new DateTime(VALID_TIME);
         Optional<DateTime> actualTime = ParserUtil.parseTime(Optional.of(VALID_TIME));
 

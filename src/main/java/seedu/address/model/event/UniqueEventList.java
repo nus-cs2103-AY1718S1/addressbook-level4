@@ -2,6 +2,8 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,8 +59,9 @@ public class UniqueEventList implements Iterable<Event> {
      *
      */
     public void sortEvents() {
-        internalList.sort((e1, e2) -> (e1.getTime().toString()
-                .compareTo(e2.getTime().toString())));
+        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("ddMMyyy HH:mm");
+        internalList.sort((e1, e2) -> (LocalDateTime.parse(e1.getTime().toString(), sdf)
+                .compareTo(LocalDateTime.parse(e2.getTime().toString(), sdf))));
     }
 
     /**

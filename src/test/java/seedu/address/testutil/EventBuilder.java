@@ -14,7 +14,7 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
  */
 public class EventBuilder {
 
-    public static final String DEFAULT_EVENT_NAME = "Hack Your Way 2017";
+    public static final String DEFAULT_EVENT_NAME = "Hack 2016";
     public static final String DEFAULT_TIME = "25102010 12:00";
     public static final String DEFAULT_VENUE = "123, Clementi West Ave 6, #08-123";
 
