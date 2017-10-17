@@ -35,7 +35,9 @@ public class EventListPanel extends UiPart<Region> {
 
     private void setConnections(ObservableList<ReadOnlyEvent> eventList) {
         ObservableList<EventCard> mappedList = EasyBind.map(
-                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
+                eventList, (event) -> new EventCard(event, eventList.indexOf
+                        (event)
+                        + 1));
         eventListView.setItems(mappedList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -45,7 +47,8 @@ public class EventListPanel extends UiPart<Region> {
         eventListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in event list panel changed to"
+                                + " : '" + newValue + "'");
                         raise(new EventPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -68,7 +71,8 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code EventCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code
+     * EventCard}.
      */
     class EventListViewCell extends ListCell<EventCard> {
 

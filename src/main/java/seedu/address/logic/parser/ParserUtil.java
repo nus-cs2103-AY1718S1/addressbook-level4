@@ -10,13 +10,15 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.event.Description;
-import seedu.address.model.event.Timing;
-import seedu.address.model.event.Title;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Priority;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -84,31 +86,48 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
+     * Parses a {@code Optional<String> company} into an {@code Optional<Company>} if {@code company} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Title> parseTitle(Optional<String> title) throws IllegalValueException {
-        requireNonNull(title);
-        return title.isPresent() ? Optional.of(new Title(title.get())) : Optional.empty();
+    public static Optional<Company> parseCompany(Optional<String> company) throws IllegalValueException {
+        requireNonNull(company);
+        return company.isPresent() ? Optional.of(new Company(company.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> timing} into an {@code Optional<Timing>} if {@code timing} is present.
+     * Parses a {@code Optional<String> position} into an {@code Optional<Position>} if {@code position} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Timing> parseTiming(Optional<String> timing) throws IllegalValueException {
-        requireNonNull(timing);
-        return timing.isPresent() ? Optional.of(new Timing(timing.get())) : Optional.empty();
+    public static Optional<Position> parsePosition(Optional<String> position) throws IllegalValueException {
+        requireNonNull(position);
+        return position.isPresent() ? Optional.of(new Position(position.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> description} into an {@code Optional<Description>} if {@code description} is
-     * present.
+     * Parses a {@code Optional<String> status} into an {@code Optional<Status>} if {@code status} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Description> parseDescription(Optional<String> description) throws IllegalValueException {
-        requireNonNull(description);
-        return description.isPresent() ? Optional.of(new Description(description.get())) : Optional.empty();
+    public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
+        requireNonNull(status);
+        return status.isPresent() ? Optional.of(new Status(status.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>} if {@code priority} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(new Priority(priority.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> note} into an {@code Optional<Note>} if {@code note} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Note> parseNote(Optional<String> note) throws IllegalValueException {
+        requireNonNull(note);
+        return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
 
     /**

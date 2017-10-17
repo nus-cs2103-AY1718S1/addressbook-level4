@@ -38,7 +38,7 @@ public class Title {
      * Returns true if a given string is a valid event title.
      */
     public static boolean isValidTitle(String test) {
-        return !test.equals("") && test.matches(TITLE_VALIDATION_REGEX);
+        return test.matches(TITLE_VALIDATION_REGEX);
     }
 
 
