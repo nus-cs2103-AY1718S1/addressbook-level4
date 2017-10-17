@@ -26,8 +26,8 @@ public class RemoveTagCommandTest {
 
     @Test
     public void execute_validTagNameWhichExists_success() throws Exception {
-        String tagNameToBeRemoved = VALID_TAG_FRIEND;
-        RemoveTagCommand removeTagCommand = prepareCommand(VALID_TAG_FRIEND);
+        String tagNameToBeRemoved = "owesMoney";
+        RemoveTagCommand removeTagCommand = prepareCommand("owesMoney");
 
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS, tagNameToBeRemoved);
 
@@ -63,7 +63,7 @@ public class RemoveTagCommandTest {
 
         // same values -> returns true
         RemoveTagCommand removeFirstCommandCopy = new RemoveTagCommand(VALID_TAG_FRIEND);
-        assertTrue(removeFirstCommand.equals(removeFirstCommand));
+        assertTrue(removeFirstCommand.equals(removeFirstCommandCopy));
 
         // different types -> returns false
         assertFalse(removeFirstCommand.equals(1));
@@ -76,7 +76,7 @@ public class RemoveTagCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code RemoveTagCommand} with the parameter {@code index}.
      */
     private RemoveTagCommand prepareCommand(String tagToBeRemoved) {
         RemoveTagCommand removeTagCommand = new RemoveTagCommand(tagToBeRemoved);

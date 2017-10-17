@@ -13,12 +13,12 @@ import seedu.address.model.person.exceptions.TagNotFoundException;
  * Remove a tag from the tag lists of the address book and all persons in the address book
  */
 public class RemoveTagCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "remove";
+    public static final String COMMAND_WORD = "removeTag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ":Removes the tag identified by the user input from the tag lists of the address book and all"
             + " persons in the address book.\n"
-            + "Parameters: TAG NAME (must be alphanumeric)\n"
+            + "Parameters: TAGNAME (must be alphanumeric)\n"
             + "Example: " + COMMAND_WORD + " friend";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
@@ -28,7 +28,6 @@ public class RemoveTagCommand extends UndoableCommand {
     public RemoveTagCommand(String targetTag) {
         this.targetTag = targetTag;
     }
-
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -41,7 +40,6 @@ public class RemoveTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The person to be updated is not found.";
         }
-
 
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, targetTag));
     }

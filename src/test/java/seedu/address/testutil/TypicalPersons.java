@@ -2,24 +2,14 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_CEDAR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_DELON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_CEDAR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_DELON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CEDAR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_DELON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_CEDAR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_DELON;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FATTIE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MUSHROOM;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +18,6 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-
-
-
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -46,12 +33,15 @@ public class TypicalPersons {
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
+            .withTags("friends", "enemy")
             .withEmail("heinz@example.com").withAddress("wall street").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+            .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
             .withEmail("werner@example.com").withAddress("michegan ave").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+            .withTags(VALID_TAG_FRIEND, "owesMoney")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").build();
@@ -67,15 +57,6 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
-    public static final ReadOnlyPerson CEDAR = new PersonBuilder().withName(VALID_NAME_CEDAR)
-            .withPhone(VALID_PHONE_CEDAR)
-            .withEmail(VALID_EMAIL_CEDAR).withAddress(VALID_ADDRESS_CEDAR).withTags(VALID_TAG_FRIEND, VALID_TAG_FATTIE)
-            .build();
-    public static final ReadOnlyPerson DELON = new PersonBuilder().withName(VALID_NAME_DELON)
-            .withPhone(VALID_PHONE_DELON)
-            .withEmail(VALID_EMAIL_DELON).withAddress(VALID_ADDRESS_DELON).withTags(VALID_TAG_FRIEND,
-                    VALID_TAG_FATTIE, VALID_TAG_MUSHROOM)
             .build();
 
 
@@ -99,6 +80,6 @@ public class TypicalPersons {
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, CEDAR, DELON, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }
