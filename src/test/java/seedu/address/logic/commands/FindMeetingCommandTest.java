@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.*;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_MEETING_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -72,7 +75,8 @@ public class FindMeetingCommandTest {
      *     - the {@code FilteredList<ReadOnlyMeeting>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindMeetingCommand command, String expectedMessage, List<ReadOnlyMeeting> expectedList) {
+    private void assertCommandSuccess(FindMeetingCommand command, String expectedMessage,
+                                      List<ReadOnlyMeeting> expectedList) {
         List<ReadOnlyMeeting> expectedMeetingList = model.getFilteredMeetingList();
         CommandResult commandResult = command.execute();
 
