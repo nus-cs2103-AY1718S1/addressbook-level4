@@ -33,14 +33,20 @@ public class PrefCommandParser implements Parser<PrefCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public PrefCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        String[] splitArgs = args.trim().split("\\s+");
+        String prefKey, newPrefValue;
+        newPrefValue = "";
+
+        if (splitArgs.length > 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrefCommand.MESSAGE_USAGE));
+        } else if (splitArgs.length == 2) {
+            // The second argument is optional
+            newPrefValue = splitArgs[1].trim();
         }
 
-        String prefKey = trimmedArgs;
+        prefKey = splitArgs[0].trim();
 
-        return new PrefCommand(prefKey);
+        return new PrefCommand(prefKey, newPrefValue);
     }
 }
