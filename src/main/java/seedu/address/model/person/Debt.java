@@ -28,7 +28,8 @@ public class Debt {
         if (!isValidDebt(trimmedDebt)) {
             throw new IllegalValueException(MESSAGE_DEBT_CONSTRAINTS);
         }
-        this.value = trimmedDebt;
+        this.value = String.format("%.2f", Double.valueOf(trimmedDebt));
+
     }
 
     /**
@@ -50,7 +51,7 @@ public class Debt {
      */
     public void addToDebt(Debt amount) {
         Double newValue = toNumber(value) + toNumber(amount.value);
-        value = Double.toString(newValue);
+        value = String.format("%.2f", newValue);
     }
 
     /**
@@ -61,7 +62,7 @@ public class Debt {
             throw new IllegalValueException("Amount to deduct from debt cannot be more than debt itself");
         }
         Double newValue = toNumber(value) - toNumber(amount.value);
-        value = Double.toString(newValue);
+        value = String.format("%.2f", newValue);
     }
 
     @Override
