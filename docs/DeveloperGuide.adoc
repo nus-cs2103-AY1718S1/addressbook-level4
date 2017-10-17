@@ -72,6 +72,20 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
+==== Configuring Rolodex `.rldx` extensions
+
+Rolodex files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
+
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+. Select `Editor` > `File Types`
+. Under `Recognized File Types`, highlight the `XML` option
+. In the lower tab under registered patterns, click `+` on the side. A new prompt should appear as seen in the picture below
+. Enter `.rldx` and click `ok`, then click `apply`
+
+image::RegisterRldx.png[width="600"]
+
+You are now configured to use `.rldx` files with intellij.
+
 ==== Updating documentation to match your fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
