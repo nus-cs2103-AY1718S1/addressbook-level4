@@ -191,7 +191,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Sets date borrowed of a person the the given DateBorrow.
+     * Sets date borrowed of a person in the given {@dateBorrow}.
      * @param dateBorrow must not be null.
      */
     public void setDateBorrow(DateBorrow dateBorrow) {
@@ -230,7 +230,7 @@ public class Person implements ReadOnlyPerson {
 
     //@@author
     /**
-     * Sets date borrowed of a person the the given DateBorrow.
+     * Sets date repaid of a person in the given {@dateRepaid}.
      * @param dateRepaid must not be null.
      */
     public void setDateRepaid(DateRepaid dateRepaid) {
