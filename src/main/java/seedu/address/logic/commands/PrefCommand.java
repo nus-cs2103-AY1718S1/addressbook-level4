@@ -25,8 +25,8 @@ public class PrefCommand extends Command {
     public static final String MESSAGE_PREF_KEY_NOT_FOUND = "Invalid preference key: %1$s";
     public static final String MESSAGE_ACCESSING_PREF_ERROR = "Unable to read preference value for %1$s";
 
-    private static String prefKey;
-    private static String newPrefValue = "";
+    private String prefKey;
+    private String newPrefValue = "";
 
     /**
      */
@@ -103,8 +103,12 @@ public class PrefCommand extends Command {
             return false;
         }
 
-        return (Objects.equals(prefKey, ((PrefCommand) other).prefKey)
-                && (Objects.equals(newPrefValue, ((PrefCommand) other).newPrefValue)));
+        return Objects.equals(this.toString(), ((PrefCommand) other).toString());
+    }
+
+    @Override
+    public String toString() {
+        return prefKey + ": " + newPrefValue;
     }
 
 }
