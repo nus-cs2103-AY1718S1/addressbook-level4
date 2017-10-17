@@ -2,7 +2,6 @@ package seedu.address.model.tag;
 
 import java.util.function.Predicate;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -10,26 +9,22 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class TagContainsKeywordPredicate implements Predicate<ReadOnlyPerson> {
 
-    private final String keyword;
+    private final Tag tag;
 
-    public TagContainsKeywordPredicate(String keyword) {
-        this.keyword = keyword;
+    public TagContainsKeywordPredicate(Tag tag) {
+        this.tag = tag;
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        try {
-            return person.getTags().contains(new Tag(keyword));
-        } catch (IllegalValueException e) {
-            throw new IllegalArgumentException("Tag name is expected to be alphanumeric.");
-        }
+        return person.getTags().contains(tag);
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TagContainsKeywordPredicate // instanceof handles nulls
-                && this.keyword.equals(((TagContainsKeywordPredicate) other).keyword)); // state check
+                && this.tag.equals(((TagContainsKeywordPredicate) other).tag)); // state check
     }
 
 }

@@ -1,7 +1,9 @@
 package seedu.address.logic.parser;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordPredicate;
 
 /**
@@ -20,7 +22,12 @@ public class RetrieveCommandParser implements Parser<RetrieveCommand> {
             throw new ParseException(
                     String.format(RetrieveCommand.MESSAGE_EMPTY_ARGS, RetrieveCommand.MESSAGE_USAGE));
         }
-        return new RetrieveCommand(new TagContainsKeywordPredicate(trimmedArgs));
+        try {
+            return new RetrieveCommand(new TagContainsKeywordPredicate(new Tag(trimmedArgs)));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
     }
 
 }
