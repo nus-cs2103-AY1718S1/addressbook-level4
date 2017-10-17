@@ -158,10 +158,16 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         if (!tagExist) {
-                throw new PersonNotFoundException();
+            throw new PersonNotFoundException();
         }
     }
 
+    /**
+     *
+     * @param tag
+     * @param toDelete
+     * @return Set<Tag> of new Person to be updated
+     */
     private Set<Tag> deleteTag(Tag tag, Person toDelete) {
         Set<Tag> oldTags = toDelete.getTags();
         Set<Tag> newTags = new HashSet<>();

@@ -46,19 +46,18 @@ public class RemoveCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String SUCCESS_MESSAGE;
-        String NOT_FOUND;
+        String successMessage;
+        String notFound;
 
         if (index != null) {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            SUCCESS_MESSAGE = MESSAGE_REMOVE_SUCCESS + " from index " + index.getOneBased() + ".";
-            NOT_FOUND = "Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + " index " + index.getOneBased() + ".";
-        }
-        else {
-            SUCCESS_MESSAGE = MESSAGE_REMOVE_SUCCESS + " from address book.";
-            NOT_FOUND = "Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + " address book.";
+            successMessage = MESSAGE_REMOVE_SUCCESS + " from index " + index.getOneBased() + ".";
+            notFound = "Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + " index " + index.getOneBased() + ".";
+        } else {
+            successMessage = MESSAGE_REMOVE_SUCCESS + " from address book.";
+            notFound = "Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + " address book.";
         }
 
 
@@ -68,9 +67,9 @@ public class RemoveCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new CommandException(NOT_FOUND);
+            throw new CommandException(notFound);
         }
-        return new CommandResult(String.format(SUCCESS_MESSAGE, tag));
+        return new CommandResult(String.format(successMessage, tag));
 
     }
 
