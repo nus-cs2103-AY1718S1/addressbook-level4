@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.web.WebView?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser"/>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+   <ScrollPane prefHeight="600.0" prefWidth="800.0">
+     <content>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="789.0" />
+     </content>
+   </ScrollPane>
 </StackPane>
