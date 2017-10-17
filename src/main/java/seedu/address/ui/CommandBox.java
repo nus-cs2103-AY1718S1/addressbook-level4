@@ -152,7 +152,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            if(helperContainer.getChildren().contains(commandBoxHelper.getRoot())
+            if (helperContainer.getChildren().contains(commandBoxHelper.getRoot())
                     && commandBoxHelper.isMainSelected()) {
                 commandTextField.setText(commandBoxHelper.getHelperText());
                 hideHelper();
