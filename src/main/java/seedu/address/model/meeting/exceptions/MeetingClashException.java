@@ -9,6 +9,6 @@ public class MeetingClashException extends IllegalValueException {
 
     public MeetingClashException() {
             super("Operation would result in clashing meetings");
-        }
+    }
 }
 
