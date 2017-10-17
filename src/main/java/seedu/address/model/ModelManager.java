@@ -137,7 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
             Set<Tag> oldTags = toDelete.getTags();
 
             Set<Tag> newTags = deleteTag(tag, toDelete);
-            if(!(newTags.size() == oldTags.size())) {
+            if (!(newTags.size() == oldTags.size())) {
                 toUpdate.setTags(newTags);
                 tagExist = true;
                 addressBook.updatePerson(toDelete, toUpdate);
@@ -167,7 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
         Set<Tag> newTags = new HashSet<>();
 
         Iterator<Tag> it = oldTags.iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Tag checkTag = it.next();
             String current = checkTag.tagName;
             String toCheck = tag.tagName;
