@@ -184,7 +184,8 @@ public abstract class AddressBookSystemTest {
         String selectedCardLocation = getParcelListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_MAP_URL_PREFIX + selectedCardLocation.substring(selectedCardLocation.length() - 6));
+            expectedUrl = new URL(GOOGLE_MAP_URL_PREFIX
+                    + selectedCardLocation.substring(selectedCardLocation.length() - 6));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
