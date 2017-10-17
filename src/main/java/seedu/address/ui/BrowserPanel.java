@@ -34,7 +34,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public BrowserPanel() {
         super(FXML);
-
+        browser.getEngine().setUserAgent(DEFAULT_PAGE.replace("Macintosh‌​; ", ""));
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
@@ -43,6 +43,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadPersonPage(ReadOnlyPerson person) {
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
 
