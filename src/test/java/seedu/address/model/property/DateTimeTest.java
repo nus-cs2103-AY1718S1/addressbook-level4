@@ -22,8 +22,8 @@ public class DateTimeTest {
 
         // valid time
         assertTrue(DateTime.isValidTime("25122015 08:30"));
-        assertTrue(DateTime.isValidTime("14022014 13:30"));
-        assertTrue(DateTime.isValidTime("09021924 23:30"));
+        assertTrue(DateTime.isValidTime("14122016 13:30"));
+        assertTrue(DateTime.isValidTime("09121924 23:30"));
 
     }
 }
