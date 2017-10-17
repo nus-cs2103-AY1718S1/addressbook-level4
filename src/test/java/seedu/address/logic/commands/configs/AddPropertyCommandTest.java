@@ -14,8 +14,12 @@ public class AddPropertyCommandTest {
     }
 
     @Test
-    public void execute_addNewProperty_success() {
+    public void execute_addNewProperty_success() throws Exception {
+        ConfigCommand command = new AddPropertyCommand(VALID_CONFIG_NEW_PROPERTY, "b", "birthday",
+                "something", "[^\\s].*");
 
+        // It should not throw any exception here. The command should succeed.
+        command.execute();
     }
 
     @Test
