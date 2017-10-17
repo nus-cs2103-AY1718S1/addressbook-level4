@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="contactTab"
-            styleClass="contactsTab"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="calendarButton"
             xmlns="http://javafx.com/javafx/8">
 </AnchorPane>

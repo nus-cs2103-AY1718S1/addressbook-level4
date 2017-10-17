@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @@author yangshuang -->
+
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -37,31 +39,41 @@
 
     <SplitPane dividerPositions="0.15, 0.85" prefHeight="50.0" prefWidth="200.0">
         <items>
-            <AnchorPane>
-               <children>
-                  <ImageView fx:id="settingPlaceholder" fitHeight="30.0"
-                             fitWidth="30.0"
-                             pickOnBounds="true" preserveRatio="true" >
-                  </ImageView>
-               </children>
-            </AnchorPane>
+            <HBox alignment="TOP_LEFT">
+                <padding>
+                    <Insets bottom="10" left="20" right="10" top="10" />
+                </padding>
+                <AnchorPane fx:id="calendarButtonPlaceholder" >
+                   <children>
+                      <ImageView fitHeight="30.0"
+                                 fitWidth="30.0"
+                                 pickOnBounds="true" preserveRatio="true" >
+                          <Image url="/images/calendar.png">
+                          </Image>
+                      </ImageView>
+                   </children>
+                </AnchorPane>
+            </HBox>
             <StackPane fx:id="commandBoxPlaceholder" minHeight="60.0"
                        styleClass="commandBox" VBox.vgrow="NEVER">
                 <padding>
                     <Insets bottom="5" left="10" right="10" top="5" />
                 </padding>
             </StackPane>
-            <HBox alignment="CENTER">
+            <HBox alignment="TOP_RIGHT">
+                <padding>
+                    <Insets bottom="10" left="10" right="20" top="10" />
+                </padding>
                 <AnchorPane fx:id="notificationButtonPlaceholder">
-                <children>
-                    <ImageView
-                               fitHeight="30.0" fitWidth="30.0"
-                               pickOnBounds="true" preserveRatio="true" >
-                        <image>
-                            <Image url="/images/notification.png"/>
-                        </image>
-                    </ImageView>
-                </children>
+                    <children>
+                        <ImageView
+                                   fitHeight="30.0" fitWidth="30.0"
+                                   pickOnBounds="true" preserveRatio="true" >
+                            <image>
+                                <Image url="/images/notification.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
                 </AnchorPane>
             </HBox>
         </items>

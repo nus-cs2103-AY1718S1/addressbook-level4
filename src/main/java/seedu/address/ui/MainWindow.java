@@ -49,6 +49,7 @@ public class MainWindow extends UiPart<Region> {
     private ContactTab contactTab;
     private EventTab eventTab;
     private NotificationButton notificationButton;
+    private CalendarButton calendarButton;
     private Config config;
     private UserPrefs prefs;
 
@@ -81,6 +82,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private AnchorPane notificationButtonPlaceholder;
+
+    @FXML
+    private AnchorPane calendarButtonPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -201,6 +205,10 @@ public class MainWindow extends UiPart<Region> {
 
         notificationButton = new NotificationButton();
         notificationButtonPlaceholder.getChildren().add(notificationButton
+                .getRoot());
+
+        calendarButton = new CalendarButton();
+        calendarButtonPlaceholder.getChildren().add(calendarButton
                 .getRoot());
     }
 

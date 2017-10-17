@@ -5,7 +5,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
 /**
- * An UI component that displays information of a {@code Event}.
+ * An UI component that direct users to {@code Event}.
+ *    //@@author yangshuang
  */
 public class EventTab extends UiPart<Region> {
 

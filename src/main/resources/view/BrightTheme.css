@@ -1,3 +1,5 @@
+/* @@author yangshuang */
+
 .background {
     -fx-background-color: derive(white, 100%);
     background-color: white; /* Used in the default.html file */
