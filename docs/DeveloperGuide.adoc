@@ -773,11 +773,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |sync contact details with social media |receive notification if contact details are not updated
 
-|`**` |user | have a password protected system| protect personal data when not using
+|`* *` |user | have a password protected system| protect personal data when not using
 
 |`*` |user | check contact’s facebook profile| remember who that friend is
 
-|`**` |user | know what error he made during use| avoid making similar mistakes
+|`* *` |user | know what error he made during use| avoid making similar mistakes
 
 |`*` |user | be able to copy/send emails with a click| send emails to the contacts efficiently
 
@@ -787,7 +787,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user who is colorblind| be able to customise text colour| be able to see the text
 
-|`**` |user who is farsighted| be able to customise font size| be able to see the text clearly
+|`* *` |user who is farsighted| be able to customise font size| be able to see the text clearly
 
 |`*` |user| sort certain persons by where they stay| know where is a convenient meetup location
 
@@ -898,7 +898,10 @@ Use case resumes at step 2.
 4.  AddressBook requests for password again to confirm
 5.  User enters password again
 6.  AddressBook sets up password and stores data in a .xml file
-7.  User needs to type in password every time at start before user can use any commands, other than help
+7.  AddressBook requests for answer to a predetermined security question.
+8.  User enters answer
+9.  AddressBook stores security answer in a .xml file linked to the account
+10.  User needs to type in login to get his private addressbook, else it will show a public addressbook
 +
 Use case ends.
 
@@ -920,15 +923,19 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-* 7a. User type wrong password
+* 10a. User type wrong password
 +
-** 7a1. AddressBook reveals first and last letter of password.
+** 10a1. AddressBook reveals first and last letter of password.
 +
-** 7a2. User has forgotten the password
+** 10a2. User has forgotten the password
 +
-** 7a3. AddressBook prompts user to check the .xml that stores the password
+** 10a3. AddressBook prompts user to provide security answer
 +
-Use case resumes at step 7.
+** 10a4. AddressBook check if it match the answer from .xml file
++
+** 10a4. AddressBook reveals the password if correct
++
+Use case resumes at step 10.
 
 [discrete]
 === Use case: Sort certain persons by their address
@@ -1034,9 +1041,9 @@ Use case ends.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should work when not connected to the internet even if some functions are disabled.
 .  Commands should be intuitive, concise and easy to remember so that the user does not have to refer to help repeatedly.
-.  Text size should be sufficiently large.
+.  Text size should be sufficiently large (at least font size 10).
 .  Should not cause crashes when invalid commands are entered.
-.  A user should only be able to enter a certain amount of words into the command line.
+.  A user should only be able to enter a certain amount of words into the command line (does not exceed 100words).
 .  Should respond fast (~2 seconds) to any commands.
 .  Should include user-friendly instructions.
 .  Should have a feature to transfer contacts from one account to another.

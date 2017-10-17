@@ -71,6 +71,7 @@ public class RemoveCommand extends UndoableCommand {
             throw new CommandException("Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + NOT_FOUND);
         }
         return new CommandResult(String.format(MESSAGE_REMOVE_SUCCESS + SUCCESS_MESSAGE, tag.toString()));
+
     }
 
 

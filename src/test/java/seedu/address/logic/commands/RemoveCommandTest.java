@@ -49,7 +49,7 @@ public class RemoveCommandTest {
     }
 
     @Test
-    public void equals() throws Exception{
+    public void equals() throws Exception {
         Tag firstTag = new Tag("friends");
         Tag secondTag = new Tag("owesMoney");
         RemoveCommand removeFirstCommand = new RemoveCommand(firstTag);
