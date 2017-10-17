@@ -54,4 +54,22 @@ public class BorrowCommand extends UndoableCommand {
 
         return new CommandResult(String.format(MESSAGE_BORROW_SUCCESS, personThatBorrowed.getName(), amount));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof BorrowCommand)) {
+            return false;
+        }
+
+        // state check
+        BorrowCommand e = (BorrowCommand) other;
+        return targetIndex.equals(e.targetIndex)
+                && amount.equals(e.amount);
+    }
 }
