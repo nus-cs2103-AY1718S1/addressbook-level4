@@ -3,31 +3,27 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.stub.ModelStub;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.EventNotFoundException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EventBuilder;
 
 public class AddEventCommandTest {
@@ -54,7 +50,7 @@ public class AddEventCommandTest {
 
     @Test
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
+        AddEventModelStub modelStub = new ModelStubThrowingDuplicateEventException();
         Event validEvent = new EventBuilder().build();
 
         thrown.expect(CommandException.class);
@@ -97,82 +93,34 @@ public class AddEventCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * Inherit from default {@link ModelStub}, however, modifying {@link #sortEventList} so that it will not fail.
      */
-    private class ModelStub implements Model {
+    private class AddEventModelStub extends ModelStub {
+        @Override
+        public void sortEventList()  {
+
+        }
+    }
+
+    /**
+     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     */
+    private class ModelStubThrowingDuplicatePersonException extends AddEventModelStub {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void sortEventList() {
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
+            throw new DuplicatePersonException();
         }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
-            fail("This method should not be called.");
+            return new AddressBook();
         }
     }
 
     /**
      * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */
-    private class ModelStubThrowingDuplicateEventException extends ModelStub {
+    private class ModelStubThrowingDuplicateEventException extends AddEventModelStub {
         @Override
         public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
             throw new DuplicateEventException();
@@ -185,9 +133,9 @@ public class AddEventCommandTest {
     }
 
     /**
-     * A Model stub that always accept the event being added.
+     * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingEventAdded extends ModelStub {
+    private class ModelStubAcceptingEventAdded extends AddEventModelStub {
         final ArrayList<Event> eventsAdded = new ArrayList<>();
 
         @Override
@@ -200,4 +148,22 @@ public class AddEventCommandTest {
             return new AddressBook();
         }
     }
+
+    /**
+     * A Model stub that always accept the person being added.
+     */
+    private class ModelStubAcceptingPersonAdded extends AddEventModelStub {
+        final ArrayList<Person> personsAdded = new ArrayList<>();
+
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            personsAdded.add(new Person(person));
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
 }
