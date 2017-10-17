@@ -15,8 +15,8 @@ public class Phone {
             "Users are to enter their numbers in this format, p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)\n"
                     + "For example, p/ student/97271111 parent/97979797\n"
                     + "Phone numbers can only contain numbers, and should be exactly 8 digits";
-    public static final String PHONE_VALIDATION_REGEX = "(student/)(\\d\\d\\d\\d\\d\\d\\d\\d)"
-            + "( parent/)(\\d\\d\\d\\d\\d\\d\\d\\d)";
+    public static final String PHONE_VALIDATION_REGEX = "(Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)"
+            + "( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
     public final String value;
 
     /**
@@ -27,6 +27,7 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
+        trimmedPhone = changeToAppropriateUiFormat(trimmedPhone);
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
@@ -43,13 +44,13 @@ public class Phone {
     /**
      * Replace all occurrence of "/" with ":" and capitalise first letter of student and parent.
      */
-    /*public String changeToAppropriateUiFormat(String value) {
+    public static String changeToAppropriateUiFormat(String value) {
 
         value = value.replace("/", ": ");
         value = value.replace("s", "S");
         value = value.replace("p", "P");
         return value;
-    }*/
+    }
 
     @Override
     public String toString() {
