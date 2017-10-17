@@ -4,13 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
-import guitests.guihandles.ProfilePanelHandle;
-import seedu.address.model.person.ReadOnlyPerson;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import guitests.guihandles.ProfilePanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.ReadOnlyPerson;
 
 public class ProfilePanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
@@ -43,15 +42,14 @@ public class ProfilePanelTest extends GuiUnitTest {
 
         // select Stub Person
         postNow(selectionChangedEventStub);
+        
+        ReadOnlyPerson expectedSelectedPerson = ALICE;
 
-
-       ReadOnlyPerson expectedSelectedPerson = ALICE;
-
-       assertEquals(expectedSelectedPerson.getName().toString(), profilePanelHandle.getName());
-       assertEquals(expectedSelectedPerson.getEmail().toString(), profilePanelHandle.getEmail());
-       assertEquals(expectedSelectedPerson.getPhone().toString(), profilePanelHandle.getPhone());
-       assertEquals(expectedSelectedPerson.getDateOfBirth().toString(), profilePanelHandle.getDateOfBirth());
-       assertEquals(expectedSelectedPerson.getAddress().toString(), profilePanelHandle.getAddress());
+        assertEquals(expectedSelectedPerson.getName().toString(), profilePanelHandle.getName());
+        assertEquals(expectedSelectedPerson.getEmail().toString(), profilePanelHandle.getEmail());
+        assertEquals(expectedSelectedPerson.getPhone().toString(), profilePanelHandle.getPhone());
+        assertEquals(expectedSelectedPerson.getDateOfBirth().toString(), profilePanelHandle.getDateOfBirth());
+        assertEquals(expectedSelectedPerson.getAddress().toString(), profilePanelHandle.getAddress());
 
     }
 }

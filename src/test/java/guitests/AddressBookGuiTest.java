@@ -9,11 +9,11 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;

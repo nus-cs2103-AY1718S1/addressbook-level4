@@ -15,11 +15,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
