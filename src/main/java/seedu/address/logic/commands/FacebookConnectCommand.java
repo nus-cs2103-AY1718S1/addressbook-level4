@@ -3,13 +3,13 @@ package seedu.address.logic.commands;
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
-import seedu.address.logic.commands.exceptions.CommandException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Connects the addressbook to a personal Facebook account.
@@ -17,12 +17,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class FacebookConnectCommand extends Command {
     public static final String COMMAND_WORD = "facebook connect";
     public static final String COMMAND_ALIAS = "fbconnect";
-
     public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
 
-    private static String FACEBOOK_DOMAIN = "https://www.facebook.com/";
-    private static String APP_ID = "1985095851775955";
-    private String accessToken;
+    private static String domain = "https://www.facebook.com/";
+    private static String appID = "1985095851775955";
     private static String commaSeparetedPermissions = "user_about_me,email,publish_actions,user_birthday,"
             + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
             + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
@@ -33,9 +31,9 @@ public class FacebookConnectCommand extends Command {
             + "user_actions.news,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,"
             + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
             + "instagram_manage_insights,read_audience_network_insights,read_insights";
-
-    private static String AUTH_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + APP_ID
-            + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=" + commaSeparetedPermissions;
+    private static String AUTH_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
+            + "&redirect_uri=" + domain + "&scope=" + commaSeparetedPermissions;
+    private String accessToken;
 
 
     public static String getAuthUrl() {
@@ -66,7 +64,7 @@ public class FacebookConnectCommand extends Command {
             }
         }
 
-        if(accessToken != null){
+        if (accessToken != null) {
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             throw new CommandException("Error in Facebook Authorisation");
