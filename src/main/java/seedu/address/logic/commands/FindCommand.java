@@ -55,7 +55,7 @@ public class FindCommand extends Command {
                 currentKeywords = emailKeywords;
             } else if (parameters[i].equals(PREFIX_ADDRESS.getPrefix())) {
                 currentKeywords = addressKeywords;
-            } else {
+            } else if (!parameters[i].equals("")) {
                 currentKeywords.add(parameters[i]);
             }
         }
