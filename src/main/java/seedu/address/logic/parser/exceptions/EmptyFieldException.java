@@ -9,8 +9,8 @@ import seedu.address.logic.parser.Prefix;
 
 public class EmptyFieldException extends ParseException {
 
-    Prefix emptyFieldPrefix;
-    Index index;
+    private Prefix emptyFieldPrefix;
+    private Index index;
     /**
      * @param message should contain information on the empty field.
      */
@@ -35,7 +35,7 @@ public class EmptyFieldException extends ParseException {
     }
 
     public Prefix getEmptyFieldPrefix() {
-        return emptyFieldPrefix ;
+        return emptyFieldPrefix;
     }
 
     public Index getIndex() {
