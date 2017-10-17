@@ -15,11 +15,11 @@ public class PhoneContainsKeywordsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("gmail");
-        List<String> secondPredicateKeywordList = Arrays.asList("gmail", "yahoo");
+        List<String> firstPredicateKeywordList = Collections.singletonList("85355255");
+        List<String> secondPredicateKeywordList = Arrays.asList("8535", "5255");
 
-        EmailContainsKeywordsPredicate firstPredicate = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
-        EmailContainsKeywordsPredicate secondPredicate = new EmailContainsKeywordsPredicate(secondPredicateKeywordList);
+        PhoneContainsKeywordsPredicate firstPredicate = new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
+        PhoneContainsKeywordsPredicate secondPredicate = new PhoneContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
@@ -39,17 +39,17 @@ public class PhoneContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_emailContainsKeywords_returnsTrue() {
+    public void test_phoneContainsKeywords_returnsTrue() {
         // One email domain
-        EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.singletonList("gmail"));
+        PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.singletonList("gmail"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
 
         // Multiple email domains
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("gmail", "yahoo"));
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("gmail", "yahoo"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
 
         // Mixed-case keywords
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("GmAil", "YAhoo"));
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("GmAil", "YAhoo"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
 
     }
@@ -57,15 +57,15 @@ public class PhoneContainsKeywordsPredicateTest {
     @Test
     public void test_emailDoesNotContainKeywords_returnsFalse() {
         // Zero email domain
-        EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.emptyList());
+        PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
 
-        // Non-matching keyword
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("yahoo"));
-        assertFalse(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
+        // phone with 3 digits
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("853"));
+        assertFalse(predicate.test(new PersonBuilder().withEmail("85355255").build()));
 
-        // Keywords match phone, name and address, but does not match email
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("12345", "Alice", "Main", "Street"));
+        // Keywords match email, name and address, but does not match phone
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("alice@gmail.com", "Alice", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }

@@ -57,7 +57,7 @@ public class AddressContainsKeywordsPredicateTest {
 
     @Test
     public void test_addressDoesNotContainKeywords_returnsFalse() {
-        // Zero email domain
+        // Zero address parmeter
         AddressContainsKeywordsPredicate predicate = new AddressContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
 
