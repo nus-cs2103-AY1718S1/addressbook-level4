@@ -15,7 +15,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class UnbanCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unban";
-    public static final String COMMAND_WORD_ALIAS = "unban";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Unban a person identified by the index number used in the last person listing from blacklist.\n"

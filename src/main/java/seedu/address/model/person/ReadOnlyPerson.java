@@ -77,9 +77,11 @@ public interface ReadOnlyPerson {
                 .append(" Interest: ")
                 .append(getInterest())
                 .append("Date borrowed: ")
+                .append(" Date borrowed: ")
                 .append(getDateBorrow())
                 .append(" Deadline: ")
                 .append(getDeadline())
+                .append(" Date Repaid: ")
                 .append(getDateRepaid())
                 .append(" Tags: ");
         getTags().forEach(builder::append);

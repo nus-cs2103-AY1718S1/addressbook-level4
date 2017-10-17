@@ -29,12 +29,12 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
-    private static final String MESSAGE_INFO_CLUSTER_FIELD = "General location: ";
+    private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
     private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
-    private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date borrowed: ";
+    private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
-    private static final String MESSAGE_INFO_DATE_REPAID = "Date repaid: ";
+    private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -106,7 +106,7 @@ public class InfoPanel extends UiPart<Region> {
         interestField.setText(MESSAGE_INFO_INTEREST_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
         deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
-        dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID);
+        dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID_FIELD);
         bindListeners(person);
     }
 

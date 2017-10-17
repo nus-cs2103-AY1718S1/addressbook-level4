@@ -24,7 +24,7 @@ public class DateBorrow {
 
     /**
      * Creates a copy of the DateBorrow object with a set date.
-     * @param date
+     * @param date must be a valid date
      */
     public DateBorrow(String date) {
         value = date;

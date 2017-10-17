@@ -58,8 +58,9 @@ public class TypicalPersons {
             .withPostalCode("616111").withPhone("9482427").withDebt("12").withDeadline(Deadline.NO_DEADLINE_SET)
             .withEmail("lydia@example.com").withInterest(Interest.NO_INTEREST_SET).withAddress("little tokyo").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45").withInterest(Interest.NO_INTEREST_SET)
-            .withDeadline(Deadline.NO_DEADLINE_SET).withAddress("4th street").build();
+            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45")
+            .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
+            .withAddress("4th street").build();
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withEmail("alice@example.com")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("85355255").withInterest(Interest.NO_INTEREST_SET)

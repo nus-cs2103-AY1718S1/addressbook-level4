@@ -78,6 +78,8 @@ public class CommandTestUtil {
     // of [1-12]
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
+    public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
@@ -135,7 +137,7 @@ public class CommandTestUtil {
      */
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        final String[] splitName = person.getName().fullName.split(ONE_OR_MORE_SPACES_REGEX);
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
@@ -146,7 +148,7 @@ public class CommandTestUtil {
      */
     public static void showFirstBlacklistedPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getBlacklistedPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        final String[] splitName = person.getName().fullName.split(ONE_OR_MORE_SPACES_REGEX);
         model.updateFilteredBlacklistedPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredBlacklistedPersonList().size() == 1;

@@ -35,8 +35,8 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_POSTAL_CODE + person.getPostalCode().value + " ");
-        sb.append(PREFIX_DEBT + person.getDebt().value + " ");
         sb.append(PREFIX_INTEREST + person.getInterest().value + " ");
+        sb.append(PREFIX_DEBT + person.getDebt().toString() + " ");
         sb.append(PREFIX_DEADLINE + person.getDeadline().value + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

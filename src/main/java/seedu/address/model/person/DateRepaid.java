@@ -17,7 +17,7 @@ public class DateRepaid {
 
     /**
      * Creates a copy of the DateRepaid object with a set date.
-     * @param date
+     * @param date must be a valid date
      */
     public DateRepaid(String date) {
         value = date;

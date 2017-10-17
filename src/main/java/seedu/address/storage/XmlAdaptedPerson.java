@@ -69,8 +69,8 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         postalCode = source.getPostalCode().value;
-        debt = source.getDebt().value;
         interest = source.getInterest().value;
+        debt = source.getDebt().toString();
         dateBorrow = source.getDateBorrow().value;
         deadline = source.getDeadline().value;
         dateRepaid = source.getDateRepaid().value;

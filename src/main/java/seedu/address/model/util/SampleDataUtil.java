@@ -26,7 +26,7 @@ public class SampleDataUtil {
         try {
             return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                    new Address("Blk 30 Geylang Street 29, #06-40"), new PostalCode("398362"),
+                    new Address("Blk 30 Geylang Street 29, #06-40"), new PostalCode("418362"),
                     new Debt("10000"), new Interest(Interest.NO_INTEREST_SET),
                     new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
@@ -42,7 +42,7 @@ public class SampleDataUtil {
                     new Debt("50"), new Interest(Interest.NO_INTEREST_SET),
                     new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("family")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                    new Address("Blk 47 Tampines Street 20, #17-35"), new PostalCode("535047"),
+                    new Address("Blk 47 Tampines Street 20, #17-35"), new PostalCode("515047"),
                     new Debt("90000"), new Interest(Interest.NO_INTEREST_SET),
                     new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),

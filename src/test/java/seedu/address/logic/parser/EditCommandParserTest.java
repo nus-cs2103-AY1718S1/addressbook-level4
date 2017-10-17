@@ -108,7 +108,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_DEBT_DESC, Debt.MESSAGE_DEBT_CONSTRAINTS); // invalid debt
         assertParseFailure(parser, "1" + INVALID_INTEREST_DESC,
                 Interest.MESSAGE_INTEREST_CONSTRAINTS); // invalid interest
-        assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC, Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
+        assertParseFailure(parser, "1" + INVALID_DEADLINE_DESC,
+                Deadline.MESSAGE_DEADLINE_CONSTRAINTS); // invalid deadline
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -133,8 +134,8 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND + POSTAL_CODE_DESC_BOB
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + DEBT_DESC_AMY + DEADLINE_DESC_AMY
-                + INTEREST_DESC_AMY;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + DEBT_DESC_AMY
+                + DEADLINE_DESC_AMY + INTEREST_DESC_AMY;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)

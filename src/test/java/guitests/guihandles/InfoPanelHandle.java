@@ -102,7 +102,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
         this.clusterText = getChildNode(CLUSTER_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
-        this.interestText= getChildNode(INTEREST_FIELD_FIELD_ID);
+        this.interestText = getChildNode(INTEREST_FIELD_FIELD_ID);
         this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
         this.deadlineText = getChildNode(DEADLINE_FIELD_FIELD_ID);
         this.dateRepaidText = getChildNode(DATE_REPAID_FIELD_FIELD_ID);
@@ -128,7 +128,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return debtLabel.getText();
     }
 
-    public String getInterest() { return interestLabel.getText(); }
+    public String getInterest() {
+        return interestLabel.getText();
+    }
 
     public String getDateBorrow() {
         return dateBorrowLabel.getText();
@@ -174,7 +176,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return debtText.getText();
     }
 
-    public String getInterestField() { return interestText.getText(); }
+    public String getInterestField() {
+        return interestText.getText();
+    }
 
     public String getDateBorrowField () {
         return dateBorrowText.getText();
