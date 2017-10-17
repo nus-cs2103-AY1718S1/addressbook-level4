@@ -95,8 +95,13 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
      * Creates an {@link AddPropertyCommand}.
      */
     private AddPropertyCommand checkAddProperty(String value) throws ParseException {
+        /*
+        * Hack here: ArgumentTokenizer requires a whitespace before each prefix to count for an occurrence. Thus, we
+        * have to explicitly add a whitespace before the string so as to successfully extract the first prefix.
+        */
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(value, PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX);
+                ArgumentTokenizer.tokenize(" " + value,
+                        PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX);
         if (!ParserUtil.arePrefixesPresent(argMultimap,
                 PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
