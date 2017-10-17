@@ -49,7 +49,7 @@ public class AddressContainsKeywordsPredicateTest {
         assertTrue(predicate.test(new PersonBuilder().withAddress("123, JurongWest Ave 6, #08-111").build()));
 
         // Mixed-case keywords
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("JuRONG"));
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("JuRONG","WESt"));
         assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
 
     }
