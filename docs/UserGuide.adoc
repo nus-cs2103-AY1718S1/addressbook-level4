@@ -55,7 +55,7 @@ Searches for all persons containing `friends` tag or `family` tag.
 
 === Enhanced RemoveTag command
 
-Now, you can specify which person you want to remove the tag from, or only remove the tag specified from all persons selected, but not from everyone on the list.
+Now, you can specify which person you want to remove the tag from and not just remove from everyone on the list.
 
 == Features
 
