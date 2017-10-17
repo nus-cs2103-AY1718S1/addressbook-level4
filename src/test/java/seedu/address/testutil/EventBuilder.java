@@ -6,6 +6,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 
@@ -19,6 +20,10 @@ public class EventBuilder {
     public static final String DEFAULT_VENUE = "123, Clementi West Ave 6, #08-123";
 
     private Event event;
+
+    static {
+        PropertyManager.initializePropertyManager();
+    }
 
     public EventBuilder() {
         try {

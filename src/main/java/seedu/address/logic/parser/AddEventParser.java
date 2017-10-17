@@ -17,8 +17,9 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
+
 /**
- * Parses input arguments and creates a new AddEventCommand object
+ * Parses input arguments and creates a new AddCommand object
  */
 public class AddEventParser implements Parser<AddEventCommand> {
 
@@ -37,9 +38,10 @@ public class AddEventParser implements Parser<AddEventCommand> {
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            DateTime time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).get();
+            DateTime dateTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).get();
             Address venue = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            ReadOnlyEvent event = new Event(name, time, venue);
+
+            ReadOnlyEvent event = new Event(name, dateTime, venue);
 
             return new AddEventCommand(event);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
