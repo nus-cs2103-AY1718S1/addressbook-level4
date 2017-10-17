@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
@@ -36,7 +38,7 @@ public class TagAddCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " [friends] "
             + "1 2 3 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_ADD_TAG_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -58,25 +60,40 @@ public class TagAddCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        StringBuilder EditedPersonDisplay = new StringBuilder();
 
-        if (index.get(0).getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        for (int i = 0; i< index.size(); i++) {
+            if (index.get(i).getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            ReadOnlyPerson personToEdit = lastShownList.get(index.get(i).getZeroBased());
+            Set<Tag> originalTagList = personToEdit.getTags();
+            Set<Tag> modifiableTagList = createModifiableTagSet(originalTagList);
+            modifiableTagList.addAll(tagAddDescriptor.getTags());
+            tagAddDescriptor.setTags(modifiableTagList);
+            Person editedPerson = createEditedPerson(personToEdit, tagAddDescriptor);
+            try {
+                model.updatePerson(personToEdit, editedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            EditedPersonDisplay.append(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
+            if (i != index.size() - 1) {
+                EditedPersonDisplay.append("\n");
+            }
         }
+        return new CommandResult(EditedPersonDisplay.toString());
+    }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.get(0).getZeroBased());
-        Set<Tag> originalTagList = personToEdit.getTags();
-        tagAddDescriptor.getTags().addAll(originalTagList);
-        Person editedPerson = createEditedPerson(personToEdit, tagAddDescriptor);
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+    public Set<Tag> createModifiableTagSet(Set<Tag> unmodifiable){
+        Set<Tag> modifiable = new HashSet<>();
+        for(Tag t : unmodifiable){
+            modifiable.add(t);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
-
+        return modifiable;
     }
 
     /**
@@ -104,7 +121,7 @@ public class TagAddCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof TagAddCommand)) {
             return false;
         }
 
@@ -134,6 +151,13 @@ public class TagAddCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.tags = toCopy.tags;
         }
+        public TagAddDescriptor(ReadOnlyPerson toCopy) {
+            this.name = toCopy.getName();
+            this.phone = toCopy.getPhone();
+            this.email = toCopy.getEmail();
+            this.address = toCopy.getAddress();
+            this.tags = toCopy.getTags();
+        }
 
         /**
          * Returns true if at least one field is edited.
@@ -141,6 +165,36 @@ public class TagAddCommand extends UndoableCommand {
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.tags);
         }
+
+        public void setName(Name name) {
+            this.name = name;
+        }
+
+        public Optional<Name> getName() {
+            return Optional.ofNullable(name);
+        }
+
+        public void setPhone(Phone phone) {
+            this.phone = phone;
+        }
+
+        public Optional<Phone> getPhone() {
+            return Optional.ofNullable(phone);
+        }
+
+        public void setEmail(Email email) {
+            this.email = email;
+        }
+
+        public Optional<Email> getEmail() {
+            return Optional.ofNullable(email);
+        }
+
+        public void setAddress(Address address) {
+            this.address = address;
+        }
+
+        public Optional<Address> getAddress() { return Optional.ofNullable(address); }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
