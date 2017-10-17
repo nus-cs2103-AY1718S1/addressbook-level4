@@ -70,7 +70,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PersonBuilder withTags(String... tags) {
         try {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
@@ -90,6 +90,7 @@ public class PersonBuilder {
         }
         return this;
     }
+
     /**
      * Sets the {@code FormClass} of the {@code Person} that we are building.
      */
@@ -101,10 +102,11 @@ public class PersonBuilder {
         }
         return this;
     }
+
     /**
      * Sets the {@code Grades} of the {@code Person} that we are building.
      */
-    public PersonBuilder withGrades(String grades){
+    public PersonBuilder withGrades(String grades) {
         try {
             this.person.setGrades(new Grades(grades));
         } catch (IllegalValueException ive) {
@@ -112,6 +114,7 @@ public class PersonBuilder {
         }
         return this;
     }
+
     /**
      * Sets the {@code PostalCode} of the {@code Person} that we are building.
      */

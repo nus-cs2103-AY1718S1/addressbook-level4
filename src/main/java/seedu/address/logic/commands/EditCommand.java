@@ -116,8 +116,8 @@ public class EditCommand extends UndoableCommand {
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFormClass, updatedGrades, updatedPostalCode,
-                updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFormClass, updatedGrades,
+                updatedPostalCode, updatedTags);
     }
 
     @Override
@@ -170,8 +170,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.formClass, this.grades,
-                    this.postalCode, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.formClass,
+                    this.grades, this.postalCode, this.tags);
         }
 
         public void setName(Name name) {
