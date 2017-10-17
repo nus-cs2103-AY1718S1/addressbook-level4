@@ -50,13 +50,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_remark() throws Exception {
-        AddFacebookContactCommand command =
-                (AddFacebookContactCommand) parser.parseCommand(AddFacebookContactCommand.COMMAND_WORD);
-        assertTrue(command instanceof AddFacebookContactCommand);
-    }
-
-    @Test
     public void parseCommand_addAlias() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(person));
