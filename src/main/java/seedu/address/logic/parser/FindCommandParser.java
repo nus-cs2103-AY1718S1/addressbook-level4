@@ -19,6 +19,7 @@ import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 
 /**
@@ -26,9 +27,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
-    public static final String MESSAGE_PHONE_VALIDATION =
-            "Phone numbers can only contain numbers, and should be at 4 or 8 digits long";
     private Predicate<ReadOnlyPerson> predicate;
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -40,17 +40,16 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT));
+        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL,PREFIX_TAG)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         String[] keywords = args.substring(args.indexOf('/') + 1).trim().split("\\s+");
         keywordsPredicate(args, argMultimap, keywords);
 
         return new FindCommand(predicate);
-
-
     }
+
     /**
      * Allocate the given {@code} of arguments fpr each predicate
      * and returns an FindCommand object for execution.
@@ -64,9 +63,11 @@ public class FindCommandParser implements Parser<FindCommand> {
             predicate = new EmailContainsKeywordsPredicate(Arrays.asList(keywords));
         } else if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             predicate = new AddressContainsKeywordsPredicate(Arrays.asList(keywords));
+        } else if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            predicate = new TagContainsKeywordsPredicate(Arrays.asList(keywords));
         } else if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             if (!validPhoneNumbers(keywords)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(PhoneContainsKeywordsPredicate.MESSAGE_PHONE_VALIDATION));
             }
             String preppedPhone = args.substring(args.indexOf('/') + 1).trim();
             String[] keywordsPhone = preppedPhone.replaceAll("\\s", "").split("(?<=\\G.{4})");

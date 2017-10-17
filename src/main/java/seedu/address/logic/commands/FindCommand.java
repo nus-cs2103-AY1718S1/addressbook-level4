@@ -1,11 +1,14 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.function.Predicate;
 
-import static seedu.address.logic.parser.CliSyntax.*;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -25,11 +28,15 @@ public class FindCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + "  "  + PREFIX_EMAIL + "google";
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_EMAIL + "google"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_NAME + "alan"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_PHONE + "98989898" + "(by 4 digits or 8 digits search)"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_ADDRESS + "Geylang"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_TAG + "friends";
 
     private final Predicate<ReadOnlyPerson> predicate;
 
-    public FindCommand(Predicate<ReadOnlyPerson>predicate) {
+    public FindCommand(Predicate<ReadOnlyPerson> predicate) {
         this.predicate = predicate;
     }
 

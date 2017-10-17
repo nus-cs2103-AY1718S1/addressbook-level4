@@ -15,6 +15,9 @@ public class PhoneContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
         this.keywords = keywords;
     }
 
+    public static final String MESSAGE_PHONE_VALIDATION =
+            "Phone numbers can only contain numbers, and should be at 4 or 8 digits long";
+
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
