@@ -87,4 +87,5 @@ public class FindMeetingCommandTest {
         assertEquals(expectedList, model.getFilteredMeetingList());
         assertEquals(expectedMeetingList, model.getFilteredMeetingList());
     }
+    
 }
