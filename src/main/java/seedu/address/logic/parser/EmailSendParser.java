@@ -4,6 +4,7 @@ import seedu.address.logic.commands.EmailSendCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 public class EmailSendParser implements Parser<EmailSendCommand> {
 
@@ -13,7 +14,7 @@ public class EmailSendParser implements Parser<EmailSendCommand> {
 
         String[] arguments = userInput.split("\"");
 
-        if (arguments.length != 6) throw new ParseException(EmailSendCommand.MESSAGE_WRONG_ARGUMENTS);
+        if (arguments.length != 6) throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
         else {
             String[] email = arguments[1].split(";");
             return new EmailSendCommand(email, arguments[3], arguments[5]);

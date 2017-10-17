@@ -117,7 +117,7 @@ public class AddMultipleCommandTest {
      */
     private AddMultipleCommand getAddMultipleCommandForPerson(ArrayList<ReadOnlyPerson> personList, Model model) {
         AddMultipleCommand command = new AddMultipleCommand(personList);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
 

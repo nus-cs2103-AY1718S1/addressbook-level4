@@ -20,7 +20,6 @@ public class EmailSendCommand extends Command {
                                             + "Requires an logged in email using email_login\n"
                                             + "Parameters: email_send \"[RECIPIENTS]\" \"[TITLE]\" \"[BODY]\" \n"
                                             + "Example: email_send \"example@gmail.com;example2@yahoo.com\" \"Test\" \"Test Body\"";
-    public static final String MESSAGE_WRONG_ARGUMENTS = "Wrong arguments";
 
     public EmailSendCommand(String[] recipients, String title, String body) {
         this.recipients = recipients;

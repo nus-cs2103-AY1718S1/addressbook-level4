@@ -11,6 +11,10 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailManager implements Email {
+    public static final String MESSAGE_LOGIN_FAILED = "It could be one of the following reasons: \n"
+            + "1. Your Internet connection is not working\n"
+            + "2. Your email and password combination is not correct\n"
+            + "3. Allow less secure apps is not enable in your Gmail account";
     private String currentEmail;
     private Authenticator currentAuthenticator;
     private Properties properties_SMTP;
@@ -43,10 +47,7 @@ public class EmailManager implements Email {
         } catch (NoSuchProviderException e) {
             throw new LoginFailedException("No such email provider");
         } catch (MessagingException e) {
-            throw new LoginFailedException("It could be one of the following reasons: \n"
-                                    + "1. Your Internet connection is not working\n"
-                                    + "2. Your email and password combination is not correct\n"
-                                    + "3. Allow less secure apps is not enable in your Gmail account");
+            throw new LoginFailedException(MESSAGE_LOGIN_FAILED);
         }
     }
 

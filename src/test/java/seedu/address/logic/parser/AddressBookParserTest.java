@@ -25,6 +25,7 @@ import seedu.address.model.person.Comment;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import javax.mail.internet.AddressException;
 
 public class AddressBookParserTest {
     @Rule
@@ -145,4 +146,15 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
+    @Test
+    public void parseCommand_emaillogin() throws ParseException {
+        assertTrue(parser.parseCommand("email_login \"example@ab.c\" \"password\"") instanceof EmailLoginCommand);
+    }
+
+    @Test
+    public void parseCommand_emailsend() throws ParseException {
+        assertTrue(parser.parseCommand("email_send \"example@ab.c\" \"title\" \"body\"") instanceof EmailSendCommand);
+    }
+
 }
