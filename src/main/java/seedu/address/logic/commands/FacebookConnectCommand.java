@@ -3,12 +3,12 @@ package seedu.address.logic.commands;
 import facebook4j.Facebook;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -31,13 +31,13 @@ public class FacebookConnectCommand extends Command {
             + "user_actions.news,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,"
             + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
             + "instagram_manage_insights,read_audience_network_insights,read_insights";
-    private static String AUTH_URL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
+    private static String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
             + "&redirect_uri=" + domain + "&scope=" + commaSeparetedPermissions;
     private String accessToken;
 
 
     public static String getAuthUrl() {
-        return AUTH_URL;
+        return authUrl;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class FacebookConnectCommand extends Command {
         System.setProperty("webdriver.chrome.driver", "chromedriver");
 
         WebDriver driver = new ChromeDriver();
-        driver.get(AUTH_URL);
+        driver.get(authUrl);
         while (true) {
             if (driver.getCurrentUrl().contains("facebook.com/?#access_token")) {
                 Pattern p = Pattern.compile("access_token=(.*?)\\&");
