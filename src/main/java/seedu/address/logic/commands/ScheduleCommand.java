@@ -26,12 +26,14 @@ public class ScheduleCommand extends UndoableCommand {
 
     public static final String COMMAND_ALIAS = "sc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedules an Activity with a person. "
-            + "Parameters: "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Schedules an Activity with a person.\n"
+            + "Parameters: INDEX "
             + PREFIX_DATE + "DATE "
-            + PREFIX_ACTIVITY + "ACTIVITY";
+            + PREFIX_ACTIVITY + "ACTIVITY\n"
+            + MESSAGE_GET_MORE_HELP;
 
-    public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Added schedule with Person: %1$s";
+    public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Scheduled an activity with %1$s";
 
     private final Index index;
     private final Schedule schedule;
@@ -67,7 +69,7 @@ public class ScheduleCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_SUCCESS, personToEdit));
+        return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_SUCCESS, personToEdit.getName()));
     }
 
     @Override
