@@ -11,7 +11,7 @@ import seedu.address.model.UserPrefs;
 /**
  * Edits the details of an existing person in the address book.
  */
-public class PrefCommand extends UndoableCommand {
+public class PrefCommand extends Command {
 
     public static final String COMMAND_WORD = "pref";
     public static final String COMMAND_ALIAS = "p";
@@ -35,7 +35,7 @@ public class PrefCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         String currentPrefValue = "";
         currentPrefValue = readPrefValue(prefKey);
