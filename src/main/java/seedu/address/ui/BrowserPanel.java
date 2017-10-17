@@ -20,14 +20,13 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     private static final String FXML = "BrowserPanel.fxml";
-    public final ReadOnlyPerson person;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    public ReadOnlyPerson person;
+
     @FXML
     private Label name;
-    @FXML
-    private Label id;
     @FXML
     private Label phone;
     @FXML
@@ -37,19 +36,28 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private Label email;
 
-    public BrowserPanel(ReadOnlyPerson person, int displayedIndex) {
+    public BrowserPanel() {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        this.person = person;
-        id.setText(displayedIndex + ". ");
-        bindListeners(person);
-
         //loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+
+    private void loadPersonPage(ReadOnlyPerson person) {
+        this.person = person;
+        bindListeners(person);
+    }
+
+    /**
+     * Loads a default HTML file with a background that matches the general theme.
+     */
+   /* private void loadDefaultPage() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }*/
 
 
     private void bindListeners(ReadOnlyPerson person) {
