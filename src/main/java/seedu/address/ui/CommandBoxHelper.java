@@ -1,10 +1,10 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,7 +29,7 @@ public class CommandBoxHelper extends UiPart<Region> {
     private ArrayList<String> helpList;
 
     @FXML
-    private ListView<helperCard> commandBoxHelperList;
+    private ListView<HelperCard> commandBoxHelperList;
 
 
     public CommandBoxHelper(Logic logic) {
@@ -53,7 +53,7 @@ public class CommandBoxHelper extends UiPart<Region> {
         }
 
         for (int i = 0; i < logic.getCommandList().size(); i++) {
-            if(checkSubset(logic.getCommandList().get(i), commandString, firstChar)) {
+            if (checkSubset(logic.getCommandList().get(i), commandString, firstChar)) {
                 helpList.add(logic.getCommandList().get(i));
             }
         }
@@ -80,7 +80,8 @@ public class CommandBoxHelper extends UiPart<Region> {
         if (!commandBoxHelperList.getSelectionModel().isSelected(0)) {
             commandBoxHelperList.getSelectionModel().selectFirst();
         } else {
-            commandBoxHelperList.getSelectionModel().select(commandBoxHelperList.getSelectionModel().getSelectedIndex()+1);
+            commandBoxHelperList.getSelectionModel().select(
+                    commandBoxHelperList.getSelectionModel().getSelectedIndex() + 1);
         }
     }
 
@@ -91,7 +92,8 @@ public class CommandBoxHelper extends UiPart<Region> {
         if (!commandBoxHelperList.getSelectionModel().isSelected(0)) {
             commandBoxHelperList.getSelectionModel().selectFirst();
         } else {
-            commandBoxHelperList.getSelectionModel().select(commandBoxHelperList.getSelectionModel().getSelectedIndex()-1);
+            commandBoxHelperList.getSelectionModel().select(
+                    commandBoxHelperList.getSelectionModel().getSelectedIndex() - 1);
         }
     }
 
@@ -100,8 +102,8 @@ public class CommandBoxHelper extends UiPart<Region> {
      * @return true if selected, false otherwise
      */
     public boolean isMainSelected() {
-        for (int i = 0; i<=helpList.size(); i++) {
-            if(commandBoxHelperList.getSelectionModel().isSelected(i)) {
+        for (int i = 0; i <= helpList.size(); i++) {
+            if (commandBoxHelperList.getSelectionModel().isSelected(i)) {
                 return true;
             }
         }
@@ -109,12 +111,13 @@ public class CommandBoxHelper extends UiPart<Region> {
     }
 
     /**
-     * Getter method for each helperCard in the commandBoxHelperList
-     * @return String of each helperCard
+     * Getter method for each HelperCard in the commandBoxHelperList
+     * @return String of each HelperCard
      */
     public String getHelperText() {
-        for(int i = 0; i <= logic.getCommandTemplateList().size(); i++) {
-            if (logic.getCommandTemplateList().get(i).contains(commandBoxHelperList.getSelectionModel().getSelectedItem().getText())) {
+        for (int i = 0; i <= logic.getCommandTemplateList().size(); i++) {
+            if (logic.getCommandTemplateList().get(i).contains(
+                    commandBoxHelperList.getSelectionModel().getSelectedItem().getText())) {
                 return logic.getCommandTemplateList().get(i);
             }
         }
@@ -142,7 +145,8 @@ public class CommandBoxHelper extends UiPart<Region> {
     private void clearListView() {
         try {
             helpList.clear();
-            ArrayList<helperCard> selectedItemsCopy = new ArrayList<>(commandBoxHelperList.getSelectionModel().getSelectedItems());
+            ArrayList<HelperCard> selectedItemsCopy = new ArrayList<>(
+                    commandBoxHelperList.getSelectionModel().getSelectedItems());
             commandBoxHelperList.getItems().removeAll(selectedItemsCopy);
         } catch (Exception e) {
             logger.info(e.getMessage() + " no items in the list!");
@@ -150,8 +154,8 @@ public class CommandBoxHelper extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<String> commandList) {
-        ObservableList<helperCard> mappedList = EasyBind.map(
-                commandList, (commandString) -> new helperCard(commandString));
+        ObservableList<HelperCard> mappedList = EasyBind.map(
+                commandList, (commandString) -> new HelperCard(commandString));
         commandBoxHelperList.setItems(mappedList);
         commandBoxHelperList.setCellFactory(listView -> new CommandListViewCell());
     }
@@ -159,10 +163,10 @@ public class CommandBoxHelper extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
-    class CommandListViewCell extends ListCell<helperCard> {
+    class CommandListViewCell extends ListCell<HelperCard> {
 
         @Override
-        protected void updateItem(helperCard command, boolean empty) {
+        protected void updateItem(HelperCard command, boolean empty) {
             super.updateItem(command, empty);
 
             if (empty || command == null) {

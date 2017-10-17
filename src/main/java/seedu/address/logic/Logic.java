@@ -3,7 +3,6 @@ package seedu.address.logic;
 import java.util.List;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;

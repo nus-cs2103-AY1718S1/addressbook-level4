@@ -5,7 +5,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
-public class helperCard extends UiPart<Region> {
+/**
+ * A ui component that displays commands in the command helper box
+ */
+public class HelperCard extends UiPart<Region> {
 
     private static final String FXML = "HelperCard.fxml";
 
@@ -17,7 +20,7 @@ public class helperCard extends UiPart<Region> {
     @FXML
     private Label command;
 
-    public helperCard(String commandString) {
+    public HelperCard(String commandString) {
         super(FXML);
         this.commandString = commandString;
         command.textProperty().setValue(commandString);

@@ -89,7 +89,8 @@ public class CommandBox extends UiPart<Region> {
             }
             break;
         case TAB:
-            if(helperContainer.getChildren().contains(commandBoxHelper.getRoot()) && commandBoxHelper.isMainSelected()) {
+            if (helperContainer.getChildren().contains(commandBoxHelper.getRoot())
+                    && commandBoxHelper.isMainSelected()) {
                 try {
                     commandTextField.setText(commandBoxHelper.getHelperText());
                     hideHelper();
@@ -151,7 +152,8 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            if(helperContainer.getChildren().contains(commandBoxHelper.getRoot()) && commandBoxHelper.isMainSelected()) {
+            if(helperContainer.getChildren().contains(commandBoxHelper.getRoot())
+                    && commandBoxHelper.isMainSelected()) {
                 commandTextField.setText(commandBoxHelper.getHelperText());
                 hideHelper();
             } else {
