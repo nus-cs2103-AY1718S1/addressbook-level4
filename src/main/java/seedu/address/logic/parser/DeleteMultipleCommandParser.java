@@ -28,7 +28,6 @@ public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand
         ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));
         Collections.reverse(list);
         ArrayList<Index> arrayOfIndex = new ArrayList<Index>();
-        
         for(int n = 0; n < list.size(); n++ ) {
             String indexString = list.get(n);
             int foo = Integer.parseInt(indexString) - 1;

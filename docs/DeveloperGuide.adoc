@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T10-B4/main/tree/master //made edits, initially addressbook-level4 
+:repoURL: https://github.com/CS2103AUG2017-T10-B4/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -754,7 +754,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |undo a command |get back the contact I just deleted 
+|`* *` |user |undo a command |get back the contact I just deleted
 
 |`* *` |user |redo a command |do not have to retype the same command
 
@@ -882,7 +882,7 @@ Use case ends.
 .  System should be able to keep all private tagged information confidential.
 .  System should open the help page when user enters an invalid entry.
 .  System should be easy to maintain in event of malfunction.
-   
+
 
 
 [appendix]

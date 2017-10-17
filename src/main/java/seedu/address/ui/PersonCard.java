@@ -21,7 +21,6 @@ public class PersonCard extends UiPart<Region> {
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
     //Declarations of the colors, HashMap and random generator
-    
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -56,7 +55,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
     }
     //The method below retrieves the color for the specific tag
-    private static String getColorForTag(String tagValue) { 
+    private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
