@@ -16,6 +16,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -96,6 +98,14 @@ public class RolodexParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_WORD_ABBREV:
             return new RedoCommand();
+
+        case OpenCommand.COMMAND_WORD:
+        case OpenCommand.COMMAND_WORD_ABBREV:
+            return new OpenCommandParser().parse(arguments);
+
+        case NewCommand.COMMAND_WORD:
+        case NewCommand.COMMAND_WORD_ABBREV:
+            return new NewCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
