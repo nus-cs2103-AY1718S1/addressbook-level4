@@ -58,7 +58,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
 Shorthand Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
 
 [TIP]
@@ -85,23 +85,10 @@ Examples: +
 `list colleagues friends` +
 Lists all contacts with the tag `colleagues` and/or `friends`.
 
-=== Listing persons by blood type : `bloodtype` [Since v1.2]
-
-Shows a list of persons in the address book with the blood type. +
-Format: `bloodtype BLOODTYPE` +
-Shorthand Format: `bt BLOODTYPE`
-+
-Examples: +
-`bloodtype A` +
-List persons with blood type A. +
-`bt ab+` +
-List persons with  blood type AB+. +
-Take note that BLOODTYPE is case insensitive.
-
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
 Shorthand Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
 
 ****
@@ -122,7 +109,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
+Format: `find KEYWORD [MORE_KEYWORDS]`
 Shorthand Format: `f KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -143,7 +130,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX` +
+Format: `delete INDEX`
 Shorthand Format: `d INDEX`
 
 ****
@@ -164,7 +151,7 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` +
+Format: `select INDEX`
 Shorthand Format: `s INDEX`
 
 ****
@@ -185,7 +172,7 @@ Selects the 1st person in the results of the `find` command.
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` +
+Format: `history`
 Shorthand Format: `h`
 
 [NOTE]
@@ -197,7 +184,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
+Format: `undo`
 Shorthand Format: `u`
 
 [NOTE]
@@ -224,7 +211,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo` +
+Format: `redo`
 Shorthand Format: `r`
 
 Examples:
@@ -248,7 +235,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear` +
+Format: `clear`
 Shorthand Format: `c`
 
 === Set Tag Color Mode : `tagcolor`
