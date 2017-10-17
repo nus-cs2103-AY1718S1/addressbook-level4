@@ -1,10 +1,6 @@
 package seedu.address.logic.commands;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.types.User;
 import facebook4j.Facebook;
-import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
 import org.openqa.selenium.WebDriver;
@@ -18,9 +14,13 @@ import java.util.regex.Pattern;
  * Connects the addressbook to Facebook account.
  */
 public class ConnectFacebookCommand extends Command {
+    public static final String COMMAND_WORD = "connectfacebook";
+    public static final String COMMAND_ALIAS = "connectfb";
+
+    public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
+
     private String domain = "https://www.facebook.com/";
     private String appID = "1985095851775955";
-    private String appSecret = "db87f417d41ee3a04d234059032f31fb";
     private String accessToken;
     private String authURL = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
             + "&redirect_uri=" + domain + "&scope=user_about_me,email,publish_actions,user_birthday,"
@@ -44,9 +44,8 @@ public class ConnectFacebookCommand extends Command {
             + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
             + "instagram_manage_insights,read_audience_network_insights,read_insights";
 
-
-
-    public void authUser() throws FacebookException {
+    @Override
+    public CommandResult execute() throws CommandException {
         System.setProperty("webdriver.chrome.driver", "chromedriver");
 
         WebDriver driver = new ChromeDriver();
@@ -61,27 +60,13 @@ public class ConnectFacebookCommand extends Command {
                 accessToken = m.group(1);
                 driver.quit();
 
-                /*
-                FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-                User me = fbClient.fetchObject("me", User.class);
-                System.out.println(me);
-                System.out.println(me.getEmail());
-                */
-
                 Facebook facebook = new FacebookFactory().getInstance();
                 facebook.setOAuthPermissions(commaSeparetedPermissions);
                 facebook.setOAuthAccessToken(new AccessToken(accessToken, null));
-                System.out.printf(String.valueOf(facebook.getOAuthAccessTokenInfo()));
-                //User me = facebook.getMe();
-//                System.out.printf(String.valueOf(me));
-//                System.out.println(me.getEmail());
-
+                break;
             }
         }
-    }
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        return null;
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
