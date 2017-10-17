@@ -81,4 +81,9 @@ public interface Model {
      * Updates the list shown in Person List Panel to the requested list.
      */
     void changeListTo(String listName);
+
+    /**
+     * Retrieves the full list of persons
+     */
+    ObservableList<ReadOnlyPerson> getAllPersons();
 }

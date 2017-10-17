@@ -3,7 +3,6 @@ package seedu.address.ui;
 import static java.util.stream.Collectors.toCollection;
 
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.fxmisc.easybind.EasyBind;
 
