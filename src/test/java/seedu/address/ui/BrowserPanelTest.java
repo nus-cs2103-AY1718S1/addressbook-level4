@@ -20,6 +20,7 @@ import guitests.guihandles.BrowserPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.MainApp;
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.DisplayGmapEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -41,7 +42,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
         gmapEventStub = new DisplayGmapEvent(Index.fromOneBased(1));
 
-        guiRobot.interact(() -> browserPanel = new BrowserPanel(TYPICAL_PERSONS));
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(TYPICAL_PERSONS, GuiSettings.DEFAULT_THEME));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
@@ -51,7 +52,8 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void display() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+        assertEquals(expectedDefaultPageUrl + "?theme=" + GuiSettings.DEFAULT_THEME,
+                browserPanelHandle.getLoadedUrl().toExternalForm());
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
