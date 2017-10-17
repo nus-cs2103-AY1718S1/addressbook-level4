@@ -26,7 +26,6 @@ public class EmailButton extends UiPart<Region> {
 
     @FXML
     private Button emailButton;
-    
     public EmailButton() {
         super(FXML);
         registerAsAnEventHandler(this);
@@ -37,7 +36,6 @@ public class EmailButton extends UiPart<Region> {
      */
     @FXML
     private void handleEmailButtonPressed() throws CommandException, ParseException, IOException {
-        
         OpenEmailClient emailClient = new OpenEmailClient(this.selectedEmail);
         emailClient.sendMail();
     }

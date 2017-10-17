@@ -137,7 +137,6 @@ public class MainWindow extends UiPart<Region> {
 
         deleteButton = new DeleteButton(logic, 0);
         deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
-        
         emailButton = new EmailButton();
         emailButtonPlaceholder.getChildren().add(emailButton.getRoot());
 

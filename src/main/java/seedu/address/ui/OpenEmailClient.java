@@ -16,7 +16,6 @@ public class OpenEmailClient {
      * Handles the opening of email client
      */
     public OpenEmailClient(String mailTo) {
-        
         this.mailTo = mailTo.trim();
     }
 
@@ -28,8 +27,8 @@ public class OpenEmailClient {
      */
     public void sendMail () throws IOException {
 
-            URI uri = URI.create("mailto:" + this.mailTo);
-            desktop.mail(uri);
+        URI uri = URI.create("mailto:" + this.mailTo);
+        desktop.mail(uri);
 
     }
 }
