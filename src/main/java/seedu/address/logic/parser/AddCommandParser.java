@@ -19,6 +19,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,9 +47,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            // add command does not allow adding schedule straight away
+            Schedule schedule = new Schedule(new ScheduleDate(""), new Activity(""));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, schedule, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
