@@ -18,8 +18,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import sun.invoke.empty.Empty;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -52,7 +54,9 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
+            parseDetagsForEdit(argMultimap.getAllValues(PREFIX_DELTAG)).ifPresent(editPersonDescriptor::setTagsToDel);
+        } catch (EmptyFieldException efe) {
+            throw new EmptyFieldException(efe, index);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -67,7 +71,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
+     * return an EmptyFieldException which will trigger an autofill
      */
     private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
         assert tags != null;
@@ -75,8 +79,27 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (tags.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
+        if (tags.size() == 1 && tags.contains("")) {
+            throw new EmptyFieldException(PREFIX_TAG);
+        }
+        return Optional.of(ParserUtil.parseTags(tags));
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * return an EmptyFieldException which will trigger an autofill
+     */
+    private Optional<Set<Tag>> parseDetagsForEdit(Collection<String> tags) throws IllegalValueException {
+        assert tags != null;
+
+        if (tags.isEmpty()) {
+            return Optional.empty();
+        }
+        if (tags.size() == 1 && tags.contains("")) {
+            throw new EmptyFieldException(PREFIX_DELTAG);
+        }
+        return Optional.of(ParserUtil.parseTags(tags));
     }
 
 }
