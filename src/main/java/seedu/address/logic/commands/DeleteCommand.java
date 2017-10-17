@@ -35,7 +35,7 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_LESSON_SUCCESS = "Deleted Lesson: %1$s";
     public static final String MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS = "Deleted location: %1$s";
-    public static final String MESSAGE_DELETE_PERSON_WITH_MODULE_SUCCESS = "Deleted Module: %1$s";
+    public static final String MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS = "Deleted Module: %1$s";
 
     private final Index targetIndex;
 
@@ -107,7 +107,7 @@ public class DeleteCommand extends UndoableCommand {
         }
         model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_WITH_MODULE_SUCCESS, code));
+        return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, code));
     }
 
 

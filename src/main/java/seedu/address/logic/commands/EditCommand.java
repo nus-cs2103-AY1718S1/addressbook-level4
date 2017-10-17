@@ -38,14 +38,14 @@ import seedu.address.model.module.predicates.UniqueLocationPredicate;
 
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing lesson in the address book.
  */
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the lesson identified "
+            + "by the index number used in the last lesson listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_MODULE_CODE + "CODE] "
@@ -59,10 +59,8 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_VENUE + "LT25";
 
     public static final String MESSAGE_EDIT_LESSON_SUCCESS = "Edited Lesson: %1$s";
-    public static final String MESSAGE_EDIT_CLASS_TYPE_SUCCESS = "Edited Class Type: %1$s";
-    public static final String MESSAGE_EDIT_GROUP_SUCCESS = "Edited Group: %1$s";
     public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
-    public static final String MESSAGE_EDIT_TIME_SLOT_SUCCESS = "Edited Time Slot: %1$s";
+    public static final String MESSAGE_EDIT_MODULE_SUCCESS = "Edited Location: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book.";
 
@@ -161,7 +159,7 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target lesson cannot be missing");
         }
     }
 
@@ -185,12 +183,12 @@ public class EditCommand extends UndoableCommand {
                 }
             }
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
-            return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedCode));
+            return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target lesson cannot be missing");
         }
 
     }
@@ -238,8 +236,8 @@ public class EditCommand extends UndoableCommand {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the lesson with. Each non-empty field value will replace the
+     * corresponding field value of the lesson.
      */
     public static class EditLessonDescriptor {
         private Code code;

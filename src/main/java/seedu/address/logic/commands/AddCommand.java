@@ -38,7 +38,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_LECTURER + "Ma Siu Lun";
 
     public static final String MESSAGE_SUCCESS = "New lesson added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This lesson already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book";
 
     private final Lesson toAdd;
 
@@ -56,7 +56,7 @@ public class AddCommand extends UndoableCommand {
             model.addLesson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateLessonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_LESSON);
         }
 
     }

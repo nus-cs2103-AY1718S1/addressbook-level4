@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,57 +20,39 @@ public class ListCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private ListCommand listPersonCommand;
-    private ListCommand listAddressCommand;
-    private ListCommand listEmailCommand;
-    private ListCommand listPhoneCommand;
+    private ListCommand listModuleCommand;
+    private ListCommand listLocationCommand;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        listPersonCommand = new ListCommand();
-        listAddressCommand = new ListCommand("address");
-        listEmailCommand = new ListCommand("email");
-        listPhoneCommand = new ListCommand("phone");
+        listModuleCommand = new ListCommand("modules");
+        listLocationCommand = new ListCommand("locations");
 
-        listPersonCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        listAddressCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        listEmailCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        listPhoneCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
+        listModuleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listLocationCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listPersonCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
-                ListCommand.DEFAULT_LISTING_ELEMENT), expectedModel);
+        assertCommandSuccess(listModuleCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.MODULE_KEYWORD), expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
-        showFirstPersonOnly(model);
-        assertCommandSuccess(listPersonCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
-                ListCommand.DEFAULT_LISTING_ELEMENT), expectedModel);
+    public void execute_listIsFiltered_showsAllModules() {
+        showFirstLessonOnly(model);
+        assertCommandSuccess(listModuleCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.MODULE_KEYWORD), expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsAllAddress() {
-        assertCommandSuccess(listAddressCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
-                ListCommand.ATTRIBUTE_ADDRESS), expectedModel);
+    public void execute_listIsFiltered_showsAllLocations() {
+        assertCommandSuccess(listLocationCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.LOCATION_KEYWORD), expectedModel);
     }
 
-    @Test
-    public void execute_listIsFiltered_showsAllEmail() {
-        assertCommandSuccess(listEmailCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
-                ListCommand.ATTRIBUTE_EMAIL), expectedModel);
-    }
-
-    @Test
-    public void execute_listIsFiltered_showsAllPhone() {
-        assertCommandSuccess(listPhoneCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
-                ListCommand.ATTRIBUTE_PHONE), expectedModel);
-    }
 
 }
