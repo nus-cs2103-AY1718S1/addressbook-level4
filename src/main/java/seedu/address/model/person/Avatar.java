@@ -18,6 +18,10 @@ public class Avatar {
 
     public ObjectProperty<Image> avatarImage;
 
+    public static String getDirectoryPath(String imageFile) {
+        return AVATARS_DIRECTORY + imageFile;
+    }
+
     public Avatar() {
         // Default object -> 'generic' avatar
         this.avatarFilePath = DEFAULT_AVATAR_IMAGE_PATH;
@@ -26,7 +30,7 @@ public class Avatar {
     }
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
-        this.avatarFilePath = AVATARS_DIRECTORY + avatarFilePath;
+        this.avatarFilePath = avatarFilePath;
         if(validFile(this.avatarFilePath)) {
             Image imgObj = new Image(this.avatarFilePath);
             this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
