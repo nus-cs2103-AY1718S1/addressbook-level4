@@ -42,14 +42,13 @@ public class FindSpecificCommandParser implements Parser<FindSpecificCommand> {
         final String arguments = matcher.group("arguments");
 
         String[] keyWords = arguments.split("\\s+");
-        String email_arg = arguments.trim();
 
         if (prefix.equals("n/")) {
             return new FindSpecificCommand(new NameContainsKeywordsPredicate(Arrays.asList(keyWords)));
         } else if (prefix.equals("p/")) {
             return new FindSpecificCommand(new PhoneContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
         } else if (prefix.equals("e/")) {
-            return new FindSpecificCommand(new EmailContainsSpecifiedKeywordsPredicate(Arrays.asList(email_arg)));
+            return new FindSpecificCommand(new EmailContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
         } else if (prefix.equals("t/")) {
             return new FindSpecificCommand(new TagContainsSpecifiedKeywordsPredicate(Arrays.asList(keyWords)));
         } else {
