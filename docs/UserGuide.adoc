@@ -39,30 +39,23 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== What's New in Version 1.1
+== What's New in Version 1.2
 
-=== Autocomplete
+=== Optimized Autocomplete
 
-`Tab` key now automatically completes your incomplete command stub.
-Use it to automatically generate a command 'skeleton' from an incomplete command word input.
-Future enhancements will allow autocompletion of names, addresses and more.
+Autocomplete should be running slightly faster, with slightly less strain on the processor.
 
-Examples:
+=== FindTag
 
-* `c` becomes `clear` after pressing `Tab` once
-* nothing happens to `b` (no command starting with letter `b`)
-* `h` becomes `history`, and then `help` if you press `Tab` again
+Finds all persons whose tags contain any of the specified tags (not case-sensitive) and displays them as a list with index numbers. +
+Format: `findtag TAG [MORE_TAGS]...`
 
-=== Remarks
+Example: `findtag friends family` +
+Searches for all persons containing `friends` tag or `family` tag.
 
-A person can have an optional property known as remark now.
-Add a remark or modify the remark of an existing person through `remark` command.
+=== Enhanced RemoveTag command
 
-Examples:
-
-* `list` +
-`remark 1 r/Likes to swim` +
-Attaches `Likes to swim` as remark to first person on the list.
+Now, you can specify which person you want to remove the tag from and not just remove from everyone on the list.
 
 == Features
 
@@ -83,7 +76,6 @@ Format: `help`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-		`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -97,13 +89,11 @@ Examples:
 
 Shows a list of all persons in the address book. +
 Format: `list`
-		`l`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-		`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -117,7 +107,7 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `e 2 n/Betsy Crower t/` +
+* `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Editing a person's remark: `remark`
@@ -134,7 +124,6 @@ Attaches `Snores loudly` as remark to first person on the list.
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
-		`f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -148,14 +137,13 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `f Betsy Tim John` +
+* `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
-		`d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -169,7 +157,7 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`d 1` +
+`delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
 === Deleting a tag : `removetag`
@@ -209,7 +197,6 @@ Coming soon in v2.0
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
-		`s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -223,14 +210,13 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`s 1` +
+`select 1` +
 Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
-		`h`
 
 [NOTE]
 ====
@@ -242,7 +228,6 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
-		`u`
 
 [NOTE]
 ====
@@ -257,7 +242,7 @@ Examples:
 
 * `select 1` +
 `list` +
-`u` +
+`undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
@@ -269,7 +254,6 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 Reverses the most recent `undo` command. +
 Format: `redo`
-		`r`
 
 Examples:
 
@@ -285,7 +269,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`r` (reapplies the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
@@ -293,7 +277,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
-		`c`
 
 === Exiting the program : `exit`
 
@@ -305,6 +288,7 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::autocomplete[]
 == Autocomplete
 
 Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input.
@@ -314,6 +298,7 @@ Examples:
 * `c` becomes `clear` after pressing `Tab` once
 * nothing happens to `b` (no command starting with letter `b`)
 * `h` becomes `history`, and then `help` if you press `Tab` again
+// end::autocomplete[]
 
 == FAQ
 
