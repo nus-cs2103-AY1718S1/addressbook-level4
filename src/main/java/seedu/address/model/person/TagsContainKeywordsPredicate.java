@@ -23,17 +23,17 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>
      * @return
      */
     private String stringifySetTags(Set<Tag> setTags) {
-        StringBuilder setTagsString = new StringBuilder();
-        final String Delimiter = " ";
+        StringBuilder TagsString = new StringBuilder();
+        final String stop = " ";
 
         Iterator<Tag> tagIterator = setTags.iterator();
         while (tagIterator.hasNext()) {
             Tag checkingTag = tagIterator.next();
-            setTagsString.append(checkingTag.tagName);
-            setTagsString.append(Delimiter);
+            TagsString.append(checkingTag.tagName);
+            TagsString.append(stop);
         }
 
-        return setTagsString.toString();
+        return TagsString.toString();
     }
 
     @Override
