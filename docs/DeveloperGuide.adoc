@@ -723,93 +723,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |organised user |sort contacts by different attributes, ascending/descending order |look for specific contact easily
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |organised user |classify my contacts by a tag |find the relevant people under a tag quickly
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |desperate user |find contact by substring of name |find a person even if I forget the exact contact name
 
-|`* * *` |user |sort contacts by different attributes, ascending/descending order |look for specific contact easily
-
-|`* * *` |user |classify my contacts by a tag |find the relevant people under a tag quickly
-
-|`* * *` |user |find contact by substring of name |find a person even if I forget the exact contact name
-
-|`* * *` |user |find specific contacts by attributes other than name |find out the contact’s name
-
-|`* * *` |user |add in contact information |update my contact list
-
-|`* * *` |user |remove contact |keep the contact list concise
+|`* * *` |forgetful user |find specific contacts by attributes other than name |find out the contact’s name
 
 |`* * *` |lazy user |launch commands by keying in shortcuts |save time
 
-|`* * *` |user |change the color theme/background image of the product |have a nice visual experience
+|`* * *` |organised user |have different colors for tag to specify its priority |have a finer classification
 
-|`* * *` |user |have a separate prompt for add users |choose not to remember the full command
+|`* * *` |logical user |sort contacts chronologically by either ascending or descending order |keep track of my records
 
-|`* * *` |user |have a separate prompt for edit users |choose not to remember the full command
+|`* * *` |forgetful user |type in alias of commands |choose not to remember specific commands
 
-|`* * *` |organised user |have different classification for tag to multiple contacts |have a finer classification by event
-
-|`* * *` |user |sort contacts by chronological order (most recently added) |keep track of my records
-
-|`* * *` |user |trace back the commands I entered before |enter commands more conveniently
-
-|`* * *` |user |type in intuitive commands(add, insert, put) |choose not to remember specific commands
-
-|`* * *` |user |delete multiple users by index |perform batch deletion
-
-|`* * *` |user |delete users by name |choose not to search for the contact’s index before deletion
-
-|`* * *` |user |edit user by inputting name |choose not to search for the contact’s index before editing
+|`* * *` |lazy user |delete multiple user by index |perform batch deletion
 
 |`* * *` |worried user |export my contact list to a backup file (separate from data/addressbook.xml) |restore my contact list in case corruption happens
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |particular user |change the color theme/background image of the product |have a nice visual experience
+
+|`* *` |paranoid user |hide private contact details by default |minimize chance of someone else seeing them by accident
 
 |`* *` |power user |launch a shell version of the product |operate without the clutter
 
-|`* *` |user |record schedules with my contacts (like a calendar) | keep track of my upcoming events
+|`* *` |organised user |record schedules with my contacts (like a calendar) | keep track of my upcoming events
 
-|`* *` |user |see my contact’s address on google map |know which area do they resides in visually and know how far is it from my current location
+|`* *` |dedicated user |see my contact’s address on google map |meet them for project
 
-|`* *` |power user |exclude words in my searches |filter my search result
+|`* *` |power user |copy contact details to clipboard | have quick access to contact details in plaintext
 
-|`* *` |user |copy contact details to clipboard | have quick access to contact details in plaintext
+|`* *` |sociable user |store social media information for contacts |keep track
 
-|`* *` |user |store social media information for contacts |keep track
+|`* *` |friendly user |find out the route from one contact’s address to my home address |know the way to my contact’s home
 
-|`* *` |user |find out the route from one contact’s address to my home address |know the way to my contact’s home
-
-|`* *` |user |synchronize contact information with all devices |choose not to update one by one
+|`* *` |frequent user |synchronize contact information with all devices |choose not to update one by one
 
 |`* *` |forgetful user |input events based on natural language |add in events easily
 
 |`* *` |careless user |specify number of times to undo/redo with in input parameter |save time
 
-|`* *` |user |get a list of contacts that I removed (like a Recycle bin) |recover the accidentally deleted ones
+|`* *` |careless user |get a list of contact that I removed (like a Recycle bin) |recover the accidentally deleted ones
 
-|`* *` |user |remove a contact permanently from the deleted contact list (like empty Recycle bin) |keep the contact list clean
+|`* *` |paranoid user |remove all contacts permanently from the deleted contact list |clear my records
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |power user |exclude words in my searches |filter my search result
 
-|`*` |user |send an email from the product (launch the system’s default mailto:) |do something with the contacts
+|`*` |efficient user |send an email from the program (launch the system’s default mailto:) |do something with the contacts
 
-|`*` |user |customize the URL of my contact (instead of the default google page) |be up to date with how my contacts are doing
+|`*` |sociable user |customize the URL of my contact (instead of the default google page) |be up to date with how my contacts are doing
 
-|`*` |user |get notification on contacts’ birthdays |send birthday wishes
+|`*` |friendly user |get notification on contacts’ birthdays |send birthday wishes
 
-|`*` |user |get notification on upcoming events |choose not to remember mentally
+|`*` |forgetful user |get notification on upcoming events |choose not to remember mentally
 
-|`*` |user |store standalone events (does not involve anyone in the contact list) |keep track of my schedule
+|`*` |forgetful user |store standalone events (does not involve anyone in the contact list) |keep track of my schedule
 
-|`*` |user |tag the hobbies of contacts |know what to do with friends in parties
+|`*` |friendly user |tag the hobbies of contacts |get closer to them
 
-|`*` |user |get contact details by scanning QR code |choose not to type manually
+|`*` |lazy user |get contact details by scanning QR code |choose not to type manually
 
-|`*` |user |find date matches |meet new friends
+|`*` |friendly user |find date matches |meet new friends
 
-|`*` |user |share events online for people to see |people can join me
+|`*` |sociable user |share events online for people to see |people can join me
 |=======================================================================
 
 [appendix]
@@ -1036,12 +1014,11 @@ Use case ends.
 
 .  Address book should have restricted access.
 .  System should responds within 2 seconds.
-.  Address book source should be open sources.
+.  Address book source should be open sourced.
 .  Should work on both 32bit and 64bit.
-.  Users need consent before they can access other people's contact list.
-.  Instructions should be clear and straightforward.
-.  Users are able to type short commands (less than 50 characters) and achieve what they want.
-.  The address book product should offer free online service.
+.  Instructions should be in logical abbreviations of their functions.
+.  Users are able to type short commands (less than 80 characters) to achieve what they want.
+.  The address book product should to free to all users.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
@@ -1061,83 +1038,6 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
-....
-
-[[add]]
-add
-
-....
-A command that adds a person to the address book
-....
-
-[[edit]]
-edit
-
-....
-A command that updates the contact details of a person
-....
-
-[[delete]]
-delete
-
-....
-A command that removes a person from the address book list
-....
-
-[[exit]]
-exit
-
-....
-A command that closes the address book application
-....
-
-[[list]]
-list
-
-....
-A command that lists all contacts in the address book
-....
-
-[[find]]
-find
-
-....
-A command that searches for a person by name
-....
-
-[[undo]]
-undo
-
-....
-A command that reverses changes made to the contacts list
-....
-
-[[redo]]
-redo
-
-....
-A command that changes address book’s state to before its last ‘Undo’ command
-....
-
-[[clear]]
-clear
-
-....
-A command that deletes all contacts
-....
-
-[[help]]
-help
-
-....
-A command that launches the help window
-....
-
-[[tags]]
-tags
-
-....
-An attribute which can be assigned to a contact
 ....
 
 [[index]]

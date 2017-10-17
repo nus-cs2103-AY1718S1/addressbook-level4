@@ -70,6 +70,20 @@ public class PersonBuilder {
     }
 
     /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and append it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withATags(String ... tags) {
+        try {
+            Set<Tag> newTags = SampleDataUtil.getTagSet(tags);
+            newTags.addAll(this.person.getTags());
+            this.person.setTags(newTags);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
