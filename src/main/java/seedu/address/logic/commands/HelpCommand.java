@@ -104,6 +104,13 @@ public class HelpCommand extends Command {
             commandResult = RedoCommand.MESSAGE_USAGE;
             break;
 
+        case ScheduleCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case ScheduleCommand.COMMAND_WORD:
+            commandResult = ScheduleCommand.MESSAGE_USAGE;
+            break;
+
         case SelectCommand.COMMAND_ALIAS:
             //Fallthrough
 
