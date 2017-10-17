@@ -28,13 +28,16 @@ public class SortCommandParser implements Parser<SortCommand> {
 
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
+
+        if (!args.matches("^|( [npea]/(r)?)$")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+
+        if (args.equals("")) {
+            args = " n/";
+        }
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
-
-        if (argMultimap.size() > 2) {
-            throw new ParseException(String.format(SortCommand.MESSAGE_MULTIPLE_ATTRIBUTE_ERROR,
-                    SortCommand.MESSAGE_USAGE));
-        }
 
         /**
          *  Invalid command arguments would result in a loaded preamble

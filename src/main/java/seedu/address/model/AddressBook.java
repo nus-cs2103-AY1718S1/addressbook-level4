@@ -120,8 +120,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Sorts persons in address book.
      */
 
-    public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws NoPersonsException {
-        persons.sort(sortType, isDescending);
+    public void sortPerson(Comparator<ReadOnlyPerson> sortComparator, boolean isReverseOrder)
+            throws NoPersonsException {
+        persons.sort(sortComparator, isReverseOrder);
     }
 
     /**

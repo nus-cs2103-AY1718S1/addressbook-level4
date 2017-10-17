@@ -84,8 +84,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws NoPersonsException {
-        addressBook.sortPerson(sortType, isDescending);
+    public void sortPerson(Comparator<ReadOnlyPerson> sortComparator, boolean isReverseOrder)
+            throws NoPersonsException {
+        addressBook.sortPerson(sortComparator, isReverseOrder);
     }
 
     //=========== Filtered Person List Accessors =============================================================
