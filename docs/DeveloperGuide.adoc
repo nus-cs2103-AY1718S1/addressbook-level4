@@ -255,7 +255,7 @@ Therefore, in the first example, `"98765432"` is passed as the argument. In the 
 According to `PHONE_VALIDATION_REGEX`, the former passes the validation while the latter throws an `IllegalValueException`.
 Overall, this guarantees that the user input will always be validated.
 
-If the phone tag is not provided, e.g. `add n/John Doe`, the no-argument constructor is used.
+If the phone tag is not provided, e.g. `add n/John Doe e/johnd@email.com`, the no-argument constructor is used.
 It sets the `value` of the `Phone` object to an empty string without any validation.
 
 ----
@@ -266,6 +266,16 @@ public Phone() {
 
 The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, and `[d/DATE_OF_BIRTH]`.
 `[t/TAG]...` uses a different implementation and will not be covered in this section.
+
+Due to this implementation, the field attribute of a `Person` object can never be `null`.
+If a field is not provided during input, an object with the value of an empty string will still be created and assigned to the corresponding attribute in `Person`.
+
+
+An alternative implementation would be "Do not create the field object at all if it is not specified in the user input".
+This approach is more flexible, but may require resolving `null` value problems when adding and editing a person.
+
+
+
 // end::add[]
 
 // tag::undoredo[]
