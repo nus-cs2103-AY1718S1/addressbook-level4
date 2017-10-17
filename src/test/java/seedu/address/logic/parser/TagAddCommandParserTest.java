@@ -30,7 +30,7 @@ public class TagAddCommandParserTest {
         // no user input
         assertParseFailure(parser, TAGADD_COMMAND, MESSAGE_INVALID_FORMAT);
     }
-/*
+    /*
     @Test
     public void parse_tagAdd_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
