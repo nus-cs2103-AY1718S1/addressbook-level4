@@ -1,3 +1,4 @@
+.gitignore
 build/
 .gradle/
 .checkstyle
@@ -8,6 +9,7 @@ lib/*
 *.log
 *.log.*
 *.csv
+runtests.sh
 config.json
 src/test/data/sandbox/
 preferences.json
