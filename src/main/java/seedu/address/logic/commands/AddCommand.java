@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
@@ -27,6 +28,7 @@ public class AddCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
+            + PREFIX_HOME_NUMBER + "HOME NUMBER "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_SCH_EMAIL + "SCHOOL EMAIL "
             + PREFIX_WEBSITE + "WEBSITE "
@@ -36,6 +38,7 @@ public class AddCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
+            + PREFIX_HOME_NUMBER + "65822291 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_SCH_EMAIL + "e0001111@u.nus.edu "
             + PREFIX_WEBSITE + "https://www.facebook.com/johnDoe"

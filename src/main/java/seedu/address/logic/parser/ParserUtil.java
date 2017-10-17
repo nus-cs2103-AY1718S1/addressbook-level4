@@ -13,6 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HomeNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.SchEmail;
@@ -62,6 +63,15 @@ public class ParserUtil {
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> home number} into an {@code Optional<HomeNumber>} if {@code homeNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<HomeNumber> parseHomeNumber(Optional<String> homeNumber) throws IllegalValueException {
+        requireNonNull(HomeNumber);
+        return homeNumber.isPresent() ? Optional.of(new HomeNumber(homeNumber.get())) : Optional.empty();
     }
 
     /**

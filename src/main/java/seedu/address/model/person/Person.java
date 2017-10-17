@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import org.omg.CORBA.OBJECT_NOT_EXIST;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,6 +21,7 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<HomeNumber> homeNumber;
     private ObjectProperty<Email> email;
     private ObjectProperty<SchEmail> schEmail;
     private ObjectProperty<Website> website;
@@ -30,13 +32,14 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, SchEmail schEmail,
+    public Person(Name name, Phone phone, HomeNumber homeNumber, Email email, SchEmail schEmail,
                   Website website, Address address,
                   Birthday birthday, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, birthday, tags);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.homeNumber = new SimpleObjectProperty<>(homeNumber);
         this.email = new SimpleObjectProperty<>(email);
         this.schEmail = new SimpleObjectProperty<>(schEmail);
         this.website = new SimpleObjectProperty<>(website);
@@ -51,7 +54,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
 
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getSchEmail(),
+        this(source.getName(), source.getPhone(), source.getHomeNumber(), source.getEmail(), source.getSchEmail(),
                 source.getWebsite(), source.getAddress(),
                 source.getBirthday(), source.getTags());
     }
@@ -82,6 +85,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Phone getPhone() {
         return phone.get();
+    }
+
+    public void setHomeNumber(HomeNumber homeNumber) {
+        this.homeNumber.set(requireNonNull(homeNumber));
+    }
+
+    @Override
+    public ObjectProperty<HomeNumber> homeNumberProperty() {
+        return homeNumber;
+    }
+
+    @Override
+    public HomeNumber getHomeNumber() {
+        return homeNumber.get();
     }
 
     public void setEmail(Email email) {
