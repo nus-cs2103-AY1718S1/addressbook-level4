@@ -33,8 +33,6 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private VBox personParticular;
-    @FXML
     private Label name;
     @FXML
     private Label phone;
@@ -71,6 +69,7 @@ public class BrowserPanel extends UiPart<Region> {
 
 
     private void bindListeners(ReadOnlyPerson person) {
+
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));

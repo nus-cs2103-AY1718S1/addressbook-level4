@@ -6,20 +6,18 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane fx:id="scrollPane" prefHeight="600.0" prefWidth="800.0" styleClass="anchor-pane">
          <content>
             <AnchorPane fx:id="anchorPane" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
                <children>
-                  <VBox id="personParticular" layoutX="14.0" layoutY="14.0"  spacing="5.0">
-                     <children>
-                         <Label fx:id="name" styleClass="cell_small_label" text="\$name" />
-                         <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-                         <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-                         <Label fx:id="dob" styleClass="cell_small_label" text="\$dob" />
-                         <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-                     </children>
+                   <Label fx:id="name" styleClass="particular-name" />
+                  <VBox layoutX="14.0" layoutY="72.0"  spacing="3.0">
+                         <Label fx:id="phone" styleClass="particular-field" />
+                         <Label fx:id="address" styleClass="particular-field" />
+                         <Label fx:id="dob" styleClass="particular-field" />
+                         <Label fx:id="email" styleClass="particular-field" />
                   </VBox>
                </children>
             </AnchorPane>
