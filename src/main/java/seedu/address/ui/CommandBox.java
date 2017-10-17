@@ -79,35 +79,35 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleStandardPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            keyEvent.consume();
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        case ESCAPE:
-            keyEvent.consume();
-            commandTextField.setText("");
-            break;
-        case ALT:
-            keyEvent.consume();
-            shiftCaretLeftByWord();
-            break;
-        case CONTROL:
-            keyEvent.consume();
-            shiftCaretRightByWord();
-            break;
-        case RIGHT:
-            boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
-            if (isCaretWithin) {
+            case UP:
+                keyEvent.consume();
+                navigateToPreviousInput();
                 break;
-            } else {
-                addsNextPrefix();
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
                 break;
-            }
-        default:
+            case ESCAPE:
+                keyEvent.consume();
+                commandTextField.setText("");
+                break;
+            case ALT:
+                keyEvent.consume();
+                shiftCaretLeftByWord();
+                break;
+            case CONTROL:
+                keyEvent.consume();
+                shiftCaretRightByWord();
+                break;
+            case RIGHT:
+                boolean isCaretWithin = commandTextField.getCaretPosition() < commandTextField.getText().length();
+                if (isCaretWithin) {
+                    break;
+                } else {
+                    addsNextPrefix();
+                    break;
+                }
+            default:
         }
     }
 
@@ -116,16 +116,72 @@ public class CommandBox extends UiPart<Region> {
      */
     private void handleShiftPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case ALT:
-            keyEvent.consume();
-            commandTextField.positionCaret(0);
-            break;
-        case CONTROL:
-            keyEvent.consume();
-            commandTextField.positionCaret(commandTextField.getText().length());
-            break;
-        default:
+            case ALT:
+                keyEvent.consume();
+                commandTextField.positionCaret(0);
+                break;
+            case CONTROL:
+                keyEvent.consume();
+                commandTextField.positionCaret(commandTextField.getText().length());
+                break;
+            case DELETE:
+            case BACK_SPACE:
+                keyEvent.consume();
+                deleteByChunk();
+                break;
+            default:
         }
+    }
+
+    /**
+     * Deletes the word or a chunk of blank spaces on the left.
+     * Does not matter if caret is at end of text or between lines. Method will automatically
+     * detect and execute.
+     * 1. If Caret is at far left, break;
+     * 2. If Caret is at far right, check if left side is blank or word and execute appropriately
+     * 3. If " " is present on the left of Caret, delete all blank spaces before
+     * 4. If Caret is between word, execute normal delete method
+     * 5. If Character is on the left and " " is on the right, delete chunk on left
+     */
+    public void deleteByChunk() {
+        int originalCaretPosition = commandTextField.getCaretPosition();
+        int newCaretPosition = commandTextField.getCaretPosition();
+        int mostRight = commandTextField.getText().length();
+        if (newCaretPosition == 0) {
+            return;
+        } else if (newCaretPosition == mostRight) {
+            if(isEmptyBefore(newCaretPosition)){
+                newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
+            }else{
+                newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
+            }
+        } else if (isEmptyBefore(newCaretPosition)) {
+            newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
+        } else if (!isEmptyBefore(newCaretPosition) && !isEmptyAfter(newCaretPosition)){
+            newCaretPosition -=1;
+        } else {
+            newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
+        }
+        setNewWord(newCaretPosition, originalCaretPosition);
+        commandTextField.positionCaret(newCaretPosition);
+    }
+
+    /**
+     * Forms a new word with all string elements between the two parameters removed
+     */
+    public void setNewWord(int newCaretPosition, int originalCaretPosition) {
+        String answer;
+        if (originalCaretPosition == 0) {
+            answer = "";
+        }else if (originalCaretPosition == commandTextField.getText().length()){
+            answer = commandTextField.getText().substring(0,newCaretPosition);
+        }
+        else {
+            String before = commandTextField.getText().substring(0, newCaretPosition);
+            String after = commandTextField.getText().substring(originalCaretPosition);
+            answer = before + after;
+        }
+        commandTextField.setText(answer);
     }
 
     /**
@@ -323,18 +379,18 @@ public class CommandBox extends UiPart<Region> {
      */
     private boolean containsPrefix(String element) {
         switch (element) {
-        case "name":
-            return (!containsName() && addPollSuccessful());
-        case "phone":
-            return (!containsPhone() && addPollSuccessful());
-        case "email":
-            return (!containsEmail() && addPollSuccessful());
-        case "address":
-            return (!containsAddress() && addPollSuccessful());
-        case "bloodtype":
-            return (!containsBloodtype() && addPollSuccessful());
-        default:
-            return (containsAllCompulsoryPrefix() && addPollSuccessful());
+            case "name":
+                return (!containsName() && addPollSuccessful());
+            case "phone":
+                return (!containsPhone() && addPollSuccessful());
+            case "email":
+                return (!containsEmail() && addPollSuccessful());
+            case "address":
+                return (!containsAddress() && addPollSuccessful());
+            case "bloodtype":
+                return (!containsBloodtype() && addPollSuccessful());
+            default:
+                return (containsAllCompulsoryPrefix() && addPollSuccessful());
 
         }
     }
