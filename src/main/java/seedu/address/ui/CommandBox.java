@@ -58,7 +58,8 @@ public class CommandBox extends UiPart<Region> {
             break;
         default:
             // Update textfield autocomplete options
-            // TextFields.bindAutoCompletion(commandTextField, COMMANDS);
+            logic.updateAutoCompleteList(commandTextField.getText());
+            TextFields.bindAutoCompletion(commandTextField, logic.getAutoCompleteList());
         }
     }
 
