@@ -4,6 +4,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -33,8 +35,8 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
         try {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
-            StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE)).get();
-            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
+            StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE));
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
 
             ReadOnlyTask task = new Task(description, startDate, deadline);
 

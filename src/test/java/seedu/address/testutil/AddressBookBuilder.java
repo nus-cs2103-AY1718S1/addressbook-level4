@@ -5,6 +5,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * A utility class to help with building Addressbook objects.
@@ -26,11 +28,14 @@ public class AddressBookBuilder {
     /**
      * Adds a new {@code Person} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(ReadOnlyPerson person) {
+    public AddressBookBuilder withPerson(ReadOnlyPerson person, ReadOnlyTask task) {
         try {
             addressBook.addPerson(person);
+            addressBook.addTask(task);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
+        } catch (DuplicateTaskException dte) {
+            throw new IllegalArgumentException("task is expected to be unique");
         }
         return this;
     }

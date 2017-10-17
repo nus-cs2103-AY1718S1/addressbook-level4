@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -107,17 +108,17 @@ public class ParserUtil {
      * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
+    public static StartDate parseStartDate(String date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new StartDate(date.get())) : Optional.empty();
+        return new StartDate(date) ;
     }
 
     /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<Deadline>} if {@code date} is present.
+     * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
+    public static Deadline parseDeadline(String date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new Deadline(date.get())) : Optional.empty();
+        return new Deadline(date);
     }
 }

@@ -1,30 +1,31 @@
 package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
-
-import java.time.LocalDate;
-import java.util.Optional;
+import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents the Starting Date of a given task in the application.
+ * Represents the Date of a single task or event in the application.
  * Guarantees: immutable; is valid as declared in {@link TaskDates#formatDate(String)}
  */
-public class StartDate extends TaskDates {
+public class SingleEventDate extends TaskDates {
 
-    public final LocalDate date;
+    public final Date date;
 
     /**
-     * Validates given starting date.
+     * Validates given event date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public StartDate(String date) throws IllegalValueException {
+    public SingleEventDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        //this.date = date.isEmpty() ? Optional.empty() : Optional.of(TaskDates.formatDate(trimmedDate));
-        this.date = TaskDates.formatDate(date);
+        this.date = formatDate(trimmedDate);
+    }
+
+    public SingleEventDate(Date date) {
+        this.date = date;
     }
 
     @Override
@@ -43,5 +44,4 @@ public class StartDate extends TaskDates {
     public int hashCode() {
         return date.hashCode();
     }
-
 }

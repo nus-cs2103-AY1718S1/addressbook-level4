@@ -2,7 +2,8 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -12,7 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Deadline extends TaskDates {
 
-    public final Date date;
+    public final LocalDate date;
 
     /**
      * Validates given deadline date.
@@ -22,11 +23,8 @@ public class Deadline extends TaskDates {
     public Deadline(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        this.date = formatDate(trimmedDate);
-    }
-
-    public Deadline(Date date) {
-        this.date = date;
+        //this.date = date.isEmpty() ? Optional.empty() : Optional.of(formatDate(trimmedDate));
+        this.date = TaskDates.formatDate(date);
     }
 
     @Override
