@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.StringTokenizer;
+
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -19,15 +22,25 @@ public class RemoveCommandParser implements Parser<RemoveCommand> {
      */
     public RemoveCommand parse(String args) throws ParseException {
         Tag toRemove;
+        Index index = null;
+
+        StringTokenizer st = new StringTokenizer(args, " ");
 
         try {
-            toRemove = new Tag(args);
-            return new RemoveCommand(toRemove);
+            toRemove = new Tag(st.nextToken());
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
         }
 
+        if (st.hasMoreTokens()) {
+            try {
+                index = ParserUtil.parseIndex(st.nextToken());
+            } catch (IllegalValueException ive) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
+            }
+        }
+        return new RemoveCommand(toRemove, index);
     }
 
 }
