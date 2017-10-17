@@ -23,12 +23,22 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private AutoComplete autoCompleteList;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        this.autoCompleteList = new AutoComplete(model);
+    }
+
+    public void updateAutoCompleteList(String userInput) {
+        autoCompleteList.updateAutoCompleteList(userInput);
+    }
+
+    public String[] getAutoCompleteList() {
+        return autoCompleteList.getAutoCompleteList();
     }
 
     @Override
