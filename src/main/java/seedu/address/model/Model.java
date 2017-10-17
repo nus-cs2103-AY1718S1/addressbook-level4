@@ -52,7 +52,7 @@ public interface Model {
 
     /** Sorts the events list according to date/time */
     void sortEventList();
-    
+
     /** Adds an event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
