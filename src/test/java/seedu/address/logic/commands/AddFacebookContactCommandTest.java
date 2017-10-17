@@ -1,14 +1,10 @@
 package seedu.address.logic.commands;
 
-//import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.parser.AddFacebookContactParser;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -25,10 +21,12 @@ public class AddFacebookContactCommandTest {
     /**
      * Returns an {@code AddFacebookContactCommand}.
      */
+    /*
     private AddFacebookContactCommand prepareCommand() throws ParseException {
         AddFacebookContactCommand newCommand = new AddFacebookContactParser().parse("Khairul Rusydi");
 
         newCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return newCommand;
     }
+    */
 }
