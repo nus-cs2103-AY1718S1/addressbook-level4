@@ -163,6 +163,8 @@ public class MainApp extends Application {
             initializedConfig = new Config();
         }
 
+        initializedConfig.setAppTitle("Contact+ Pro");
+
         //Update config file in case it was missing to begin with or there are new/unused fields
         try {
             ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);
