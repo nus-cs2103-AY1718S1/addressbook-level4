@@ -14,7 +14,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private String password = null;
+    private String password = "admin";
+    private String username = "admin";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -85,6 +86,28 @@ public class UserPrefs {
      * @retrun false if password is invalid
      */
     public boolean checkPassword(String input) {
+        return password.equals(hashBySHA256(input));
+    }
+
+    public boolean checkUsername(String input) {
+        return username.equals(input);
+    }
+
+    public boolean changePassword(String user, String oldPw, String newPw) {
+        if (checkPassword(oldPw) && checkUsername(user)) {
+            password = hashBySHA256(newPw);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param input
+     * @return a String that is hashed using SHA-256
+     */
+    public String hashBySHA256(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(input.getBytes());
@@ -94,9 +117,10 @@ public class UserPrefs {
             for (int i = 0; i < mdBytes.length; i++) {
                 hexString.append(Integer.toString((mdBytes[i] & 0xff) + 0x100, 16).substring(1));
             }
-            return password.equals(hexString.toString());
+            return hexString.toString();
+
         } catch (NoSuchAlgorithmException e) {
-            return false;
+            return "No Such Algorithm Exception";
         }
     }
 }
