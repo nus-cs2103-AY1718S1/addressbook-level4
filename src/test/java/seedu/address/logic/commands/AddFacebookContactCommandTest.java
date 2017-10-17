@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class AddFacebookContactCommandTest {
@@ -9,7 +10,7 @@ public class AddFacebookContactCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         //assertCommandSuccess(prepareCommand(), model, AddFacebookContactCommand.MESSAGE_VERSION_ONE_TEST, model);
-        assert true;
+        Assert.assertTrue(true);
     }
 
     /**
