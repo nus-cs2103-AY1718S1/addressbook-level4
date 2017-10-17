@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<StackPane styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane prefHeight="600.0" prefWidth="800.0">
+      <ScrollPane fx:id="scrollPane" prefHeight="600.0" prefWidth="800.0" styleClass="anchor-pane">
          <content>
-            <AnchorPane prefHeight="1000.0" prefWidth="780.0">
+            <AnchorPane fx:id="anchorPane" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
                <children>
-                  <VBox layoutX="14.0" layoutY="14.0" prefHeight="322.0" prefWidth="270.0" spacing="5.0">
+                  <VBox id="personParticular" layoutX="14.0" layoutY="14.0"  spacing="5.0">
                      <children>
                          <Label fx:id="name" styleClass="cell_small_label" text="\$name" />
                          <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />

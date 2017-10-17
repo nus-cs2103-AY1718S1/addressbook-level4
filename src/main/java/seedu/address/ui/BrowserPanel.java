@@ -8,7 +8,10 @@ import javafx.beans.binding.Bindings;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -26,6 +29,12 @@ public class BrowserPanel extends UiPart<Region> {
     public ReadOnlyPerson person;
 
     @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private VBox personParticular;
+    @FXML
     private Label name;
     @FXML
     private Label phone;
@@ -38,7 +47,8 @@ public class BrowserPanel extends UiPart<Region> {
 
     public BrowserPanel() {
         super(FXML);
-
+        scrollPane.setFitToWidth(true);
+        anchorPane.prefWidthProperty().bind(scrollPane.widthProperty());
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
