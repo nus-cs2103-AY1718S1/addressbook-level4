@@ -79,8 +79,6 @@ public class ProfilePanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
-    public String getName() { return name.getText(); }
-
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -16,7 +16,7 @@ public class ProfilePanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 
     private ProfilePanel profilePanel;
-    //private ProfilePanelHandle profilePanelHandle;
+    private ProfilePanelHandle profilePanelHandle;
 
     @Before
     public void setUp() {
@@ -25,22 +25,33 @@ public class ProfilePanelTest extends GuiUnitTest {
         guiRobot.interact(() -> profilePanel = new ProfilePanel());
         uiPartRule.setUiPart(profilePanel);
 
-
-       // profilePanelHandle = new ProfilePanelHandle(profilePanel.getRoot());
+        profilePanelHandle = new ProfilePanelHandle(profilePanel.getRoot());
 
     }
 
     @Test
     public void display() throws Exception {
-        // default web page
-        String expectedDefaultName = ProfilePanel.DEFAULT_MESSAGE;
-        assertEquals(expectedDefaultName, profilePanel.getName());
+        // default profile page
+        final String expectedDefaultName = ProfilePanel.DEFAULT_MESSAGE;
+        final String emptyText = "";
 
-        // associated web page of a person
+        assertEquals(expectedDefaultName, profilePanelHandle.getName());
+        assertEquals(emptyText, profilePanelHandle.getEmail());
+        assertEquals(emptyText, profilePanelHandle.getPhone());
+        assertEquals(emptyText, profilePanelHandle.getDateOfBirth());
+        assertEquals(emptyText, profilePanelHandle.getAddress());
+
+        // select Stub Person
         postNow(selectionChangedEventStub);
 
+
        ReadOnlyPerson expectedSelectedPerson = ALICE;
-       assertEquals(ALICE, profilePanel.person);
+
+       assertEquals(expectedSelectedPerson.getName().toString(), profilePanelHandle.getName());
+       assertEquals(expectedSelectedPerson.getEmail().toString(), profilePanelHandle.getEmail());
+       assertEquals(expectedSelectedPerson.getPhone().toString(), profilePanelHandle.getPhone());
+       assertEquals(expectedSelectedPerson.getDateOfBirth().toString(), profilePanelHandle.getDateOfBirth());
+       assertEquals(expectedSelectedPerson.getAddress().toString(), profilePanelHandle.getAddress());
 
     }
 }
