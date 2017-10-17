@@ -32,7 +32,6 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommand extends UndoableCommand {
 
-    public static final String COMMAND_ALIAS = "e";
     public static final String COMMAND_WORD = "edit";
     public static final String COMMAND_USAGE = COMMAND_WORD + " <index> " + PREFIX_NAME + "<NAME>";
 
@@ -45,7 +44,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " (or " + COMMAND_ALIAS + ")" + " 1 "
+            + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
