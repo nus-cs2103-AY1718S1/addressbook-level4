@@ -9,8 +9,9 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
@@ -34,19 +35,22 @@ public class BrowserPanel extends UiPart<Region> {
     private WebView browser;
 
     @FXML
-    private GridPane mainDetailsPane;
+    private StackPane socialIcon1Placeholder;
 
     @FXML
-    private GridPane socialIconsPane;
+    private StackPane socialIcon2Placeholder;
 
     @FXML
-    private StackPane socialIcon1Placeholder, socialIcon2Placeholder, socialIcon3Placeholder, socialIcon4Placeholder, contactImagePlaceholder;
+    private StackPane socialIcon3Placeholder;
+
+    @FXML
+    private StackPane socialIcon4Placeholder;
+
+    @FXML
+    private StackPane contactImagePlaceholder;
 
     @FXML
     private VBox contactDetailsVBox;
-
-    @FXML
-    private ImageView contactImage;
 
 
     public BrowserPanel() {
@@ -62,13 +66,13 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setContactImage(){
+    private void setContactImage() {
         contactImagePlaceholder.setStyle(
                 "-fx-background-image: url(\"images/emptyavatar.png\");"
         );
     }
 
-    private void setContactDetails(){
+    private void setContactDetails() {
         contactDetailsVBox.setSpacing(30);
         contactDetailsVBox.getChildren().addAll(
                 new Label("Name: name here"),
@@ -79,11 +83,21 @@ public class BrowserPanel extends UiPart<Region> {
         contactDetailsVBox.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 20");
     }
 
-    private void setIcons(){
-        StackPane[] socialIconPlaceholders = {socialIcon1Placeholder, socialIcon2Placeholder, socialIcon3Placeholder, socialIcon4Placeholder};
-        String[] imgURLs = {"images/facebook.png", "images/twitter.png", "images/instagram.png", "images/googleplus.png"};
-        for(int i=0;i<4;i++){
-            socialIconPlaceholders[i].setStyle("-fx-background-image: url("+imgURLs[i]+"); ");
+    private void setIcons() {
+        StackPane[] socialIconPlaceholders = {
+            socialIcon1Placeholder,
+            socialIcon2Placeholder,
+            socialIcon3Placeholder,
+            socialIcon4Placeholder
+        };
+        String[] imgUrls = {
+            "images/facebook.png",
+            "images/twitter.png",
+            "images/instagram.png",
+            "images/googleplus.png"
+        };
+        for (int i = 0; i < 4; i++) {
+            socialIconPlaceholders[i].setStyle("-fx-background-image: url(" + imgUrls[i] + "); ");
         }
     }
 
