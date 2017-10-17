@@ -4,12 +4,16 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventList;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -25,7 +29,9 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final EventList events;
     private final UniqueTagList tags;
+    private final UniqueTagList eventTags;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,9 +43,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new EventList();
+        eventTags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -97,9 +106,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncMasterTagListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
@@ -116,8 +124,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
      */
     private void syncMasterTagListWith(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -136,9 +144,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
+     *
+     * @see #syncMasterTagListWith(Person)
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
@@ -146,6 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
@@ -154,6 +164,35 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    /**
+     * Removes a tag from all persons in the list if they have it
+     *
+     * @param tag Tag to be removed
+     */
+    public void removeTagFromAll(Tag tag) {
+        Iterator<Person> iter = persons.iterator();
+        while (iter.hasNext()) {
+            iter.next().removeTag(tag);
+        }
+    }
+
+    //// event-level operations
+
+    /**
+     * Adds an event to the address book.
+     * Also checks the new event's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the events to point to those in {@link #tags}.
+     */
+    public void addEvent(ReadOnlyEvent e) {
+        Event newEvent = new Event(e);
+        // TODO: create a master list for tags and update it
+        // syncMasterTagListWith(newEvent);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        events.add(newEvent);
     }
 
     //// tag-level operations
@@ -166,7 +205,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -178,6 +217,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
     }
 
     @Override
