@@ -47,12 +47,26 @@ public class Phone {
 
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
+
+        // new
+        String[] numbers = phone.split(" ");
+
         ArrayList<String> phones = new ArrayList<String>();
-        String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+
+        // new
+        for (int i = 0; i < numbers.length; i++) {
+            String trimmedPhone = numbers[i].trim();
+            if (!isValidPhone(trimmedPhone)) {
+                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+            }
+            phones.add(numbers[i]);
         }
-        phones.add(phone);
+
+//        String trimmedPhone = phone.trim();
+//        if (!isValidPhone(trimmedPhone)) {
+//            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+//        }
+//        phones.add(phone);
         this.phonelist = phones;
         this.value = phone;
     }
