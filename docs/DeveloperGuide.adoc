@@ -411,6 +411,33 @@ image::ColorKeywordActivityDiagram.png[width="900"]
 **Cons:** This method breaks encapsulation and fails to follow standard java code style.
 // end::colorKeyword[]
 
+// tag::customise[]
+=== Customise mechanism
+
+The customise mechanism is facilitated by both the link:#event-bus[`Event Bus`] and an enumeration class `FontSizeUnit`. Currently, `CustomiseCommand` only supports changing the font size of the application. Each time `CustomiseCommand` is executed, it will raise a `ChangedFontSizeEvent` via `EventCenter` according to the user specified parameter as well as update the `currentFontSizeUnit`.
+
+[NOTE]
+The `FontSizeUnit` enumeration is to set a global static variable `currentFontSizeUnit` so that `PersonCard` is able to follow the current font size whenever it is called.
+
+The following link:#sequence-diagram[sequence diagram] shows how the customise command operation works:
+
+image::CustomiseCommandSeqDiagram.png[width="900"]
+
+The following link:#sequence-diagram[activity diagram] summarize what happens when an user execute customise command.
+
+image::CustomiseCommandActivityDiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `CustomiseCommand` +
+**Alternative 1 (current choice):** Update static variable `currentFontSizeUnit` to the corresponding `fontSizeUnit` and use `EventBus` to inform `UI` the change of `fontSizeUnit`.
+**Pros:** One global variable that records current `fontSizeUnit`. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentFontSizeUnit` +
+**Pros:** No need for extra enumeration class and easier for new developers to design. +
+**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
+// end::customise[]
+
 === List mechanism
 
 The list mechanism is facilitated by an enumeration class `ListingUnit`. Each time user list by different attributes, the static variable `currentListingUnit` in the Enumeration class is reset.
@@ -427,10 +454,10 @@ image::ListCommandSeqDiagram.png[width="900"]
 
 **Aspect:** Implementation of `ListCommand` +
 **Alternative 1 (current choice):**  Update static variable `currentListingUnit` to the corresponding listingUnit and use event bus to inform UI the change of listingUnit.
-**Pros:** One global variable that records current listingUnit
+**Pros:** One global variable that records current listingUnit. +
 **Cons:** Hard for new developers to understand the event center mechanism. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
-**Pros:** No need for extra enumeration class.
+**Pros:** No need for extra enumeration class. +
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface.
 // end::colorKeyword[]
 
