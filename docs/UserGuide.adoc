@@ -220,7 +220,7 @@ Examples:
 `t-remove friends 2 3` +
 Removes the tag friends from the 2nd and 3rd person in the address book.
 
-===Find the person(s) with given tags: `t-find` _[Coming in v2.0]
+=== Find the person(s) with given tags: `t-find` _[Coming in v2.0]
 Format: `t-find TAG TAG..`
 
 ****
