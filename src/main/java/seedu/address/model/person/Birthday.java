@@ -10,7 +10,7 @@ import static java.util.Objects.requireNonNull;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person's birthday have to be in the format DDMMYYYY or blank";
+            "Person's birthday have to be in the format DD/MM/YYYY or blank";
 
     public final String value;
 
