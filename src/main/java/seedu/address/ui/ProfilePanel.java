@@ -30,7 +30,7 @@ public class ProfilePanel extends UiPart<Region> {
     @FXML
     private ScrollPane scrollPane;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane profilePanel;
     @FXML
     private Label name;
     @FXML
@@ -45,7 +45,7 @@ public class ProfilePanel extends UiPart<Region> {
     public ProfilePanel() {
         super(FXML);
         scrollPane.setFitToWidth(true);
-        anchorPane.prefWidthProperty().bind(scrollPane.widthProperty());
+        profilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
