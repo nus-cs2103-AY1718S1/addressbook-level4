@@ -53,12 +53,12 @@ public class RemoveCommand extends UndoableCommand {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            SUCCESS_MESSAGE = " from index " + index.getOneBased() + ".";
-            NOT_FOUND = " index " + index.getOneBased() + ".";
+            SUCCESS_MESSAGE = MESSAGE_REMOVE_SUCCESS + " from index " + index.getOneBased() + ".";
+            NOT_FOUND = "Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + " index " + index.getOneBased() + ".";
         }
         else {
-            SUCCESS_MESSAGE = " from address book.";
-            NOT_FOUND = " address book.";
+            SUCCESS_MESSAGE = MESSAGE_REMOVE_SUCCESS + " from address book.";
+            NOT_FOUND = "Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + " address book.";
         }
 
 
@@ -68,9 +68,9 @@ public class RemoveCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new CommandException("Tag: " + tag.toString() + MESSAGE_TAG_NOT_FOUND + NOT_FOUND);
+            throw new CommandException(NOT_FOUND);
         }
-        return new CommandResult(String.format(MESSAGE_REMOVE_SUCCESS + SUCCESS_MESSAGE, tag.toString()));
+        return new CommandResult(String.format(SUCCESS_MESSAGE, tag));
 
     }
 
