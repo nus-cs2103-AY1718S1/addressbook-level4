@@ -727,11 +727,43 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |view the history of commands |check my previous commands
+
+|`* * *` |user |undo the previous command |revert my changes
+
+|`* * *` |user |edit the particulars of a person |i can update or make amendments to the particulars of any contact
+
+|`* * *` |user |add multiple Tags to a person |i can filter and search for contacts with a particular keyword in their tagNames
+
+|`* * *` |user |list out every contact's information at once |retrieve information of all my contacts
+
+|`* * *` |user |clear all contacts |have an empty addressbook
+
+|`* * *` |user |redo the previously undone command |retrieve the previous change
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |heavy user |use commands in short forms |input and execute my commands faster
+
+|`* * *` |heavy user |schedule meetings with the contacts |have a record and be reminded on when i am meeting them
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |new user |view the list of all commands available |i can understand the functions of each command
+
+|`* *` |forgetful user |add multiple Tags to each contact |in case i forget the person's name, his or her contact can still be found through keywords in their Tags
+
+|`* *` |frequent user |save School Email Address(sub-email) to a contact |i can access the person's school email if required
+
+|`* *` |frequent user |create groups for contacts according to the keywords in their Tags |i can view all the contacts of each group with one search
+
+|`*` |user that is bad at recalling people by their name|insert(or link) a picture of the person |i can double check that i retrieved the correct contact and also help me to recall how the person looks like
+
+|`* *` |lazy and forgetful user |filter contacts by certain fields with keywords |still filter and search with certain keywords of other field instead of name only
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if i need it
 |=======================================================================
 
 {More to be added}
@@ -767,7 +799,109 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: View history
+
+*MSS*
+
+1.  User requests to view history of commands
+2.  AddressBook shows a list of previously entered commands
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1.  User requests to undo the previous command
+2.  AddressBook undo the previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no more commands to undo.
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
+
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1.  User request to clear AddressBook
+2.  AddressBook clears the list of person
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User request to redo previous undone command
+2.  AddressBook redo the previous undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no previous undone command to redo
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Schedule meeting with person
+
+*MSS*
+
+1.  User requests to find person with name keywords
+2.  AddressBook shows a list of persons with keywords
+3.  User requests to add schedule of a specific person in the list
+4.  AddressBook shows lists of meetings
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
