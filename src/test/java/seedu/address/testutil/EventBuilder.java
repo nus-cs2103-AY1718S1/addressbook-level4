@@ -2,11 +2,9 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventName;
-import seedu.address.model.event.EventTime;
-import seedu.address.model.event.EventVenue;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
@@ -25,7 +23,7 @@ public class EventBuilder {
     public EventBuilder() {
         try {
             Name defaultEventName = new Name(DEFAULT_EVENT_NAME);
-            EventTime defaultTime = new EventTime(DEFAULT_TIME);
+            DateTime defaultTime = new DateTime(DEFAULT_TIME);
             Address defaultVenue = new Address(DEFAULT_VENUE);
             this.event = new Event(defaultEventName, defaultTime, defaultVenue);
         } catch (IllegalValueException | PropertyNotFoundException ive) {
@@ -41,7 +39,7 @@ public class EventBuilder {
     }
 
     /**
-     * Sets the {@code EventName} of the {@code Event} that we are building.
+     * Sets the {@code Name} of the {@code Event} that we are building.
      */
     public EventBuilder withEventName(String name) {
         try {
@@ -68,8 +66,8 @@ public class EventBuilder {
      */
     public EventBuilder withDateTime(String time) {
         try {
-            this.event.setDateTime(new EventTime(time));
-        } catch (IllegalValueException ive) {
+            this.event.setDateTime(new DateTime(time));
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("Date and Time are expected to be unique.");
         }
         return this;

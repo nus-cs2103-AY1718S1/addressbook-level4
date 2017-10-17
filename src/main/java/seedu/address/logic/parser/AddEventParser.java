@@ -11,10 +11,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventName;
-import seedu.address.model.event.EventTime;
-import seedu.address.model.event.EventVenue;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * Parses input arguments and creates a new AddEventCommand object
@@ -35,14 +36,13 @@ public class AddEventParser implements Parser<AddEventCommand> {
         }
 
         try {
-            EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME)).get();
-            EventTime time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).get();
-            EventVenue venue = ParserUtil.parseVenue(argMultimap.getValue(PREFIX_ADDRESS)).get();
-
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            DateTime time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).get();
+            Address venue = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             ReadOnlyEvent event = new Event(name, time, venue);
 
             return new AddEventCommand(event);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }

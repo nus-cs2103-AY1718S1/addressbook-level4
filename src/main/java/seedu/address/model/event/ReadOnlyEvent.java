@@ -2,6 +2,7 @@ package seedu.address.model.event;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 
 /**
@@ -13,8 +14,8 @@ public interface ReadOnlyEvent {
 
     ObjectProperty<Name> nameProperty();
     Name getName();
-    ObjectProperty<EventTime> timeProperty();
-    EventTime getTime();
+    ObjectProperty<DateTime> timeProperty();
+    DateTime getTime();
     ObjectProperty<Address> venueProperty();
     Address getVenue();
 

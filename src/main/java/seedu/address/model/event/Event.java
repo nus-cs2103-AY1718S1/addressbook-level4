@@ -8,6 +8,7 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
 
 /**
@@ -17,13 +18,13 @@ import seedu.address.model.property.Name;
 public class Event implements ReadOnlyEvent {
 
     private ObjectProperty<Name> name;
-    private ObjectProperty<EventTime> time;
+    private ObjectProperty<DateTime> time;
     private ObjectProperty<Address> venue;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, EventTime time, Address venue) {
+    public Event(Name name, DateTime time, Address venue) {
         requireAllNonNull(name, time, venue);
         this.name = new SimpleObjectProperty<>(name);
         this.time = new SimpleObjectProperty<>(time);
@@ -51,16 +52,16 @@ public class Event implements ReadOnlyEvent {
         return name.get();
     }
 
-    public void setDateTime(EventTime time) {
+    public void setDateTime(DateTime time) {
         this.time.set(requireNonNull(time));
     }
 
     @Override
-    public EventTime getTime() {
+    public DateTime getTime() {
         return time.get();
     }
     @Override
-    public ObjectProperty<EventTime> timeProperty() {
+    public ObjectProperty<DateTime> timeProperty() {
         return time;
     }
 
