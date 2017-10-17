@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
@@ -101,7 +102,9 @@ public class PrefCommand extends Command {
         if (!(other instanceof PrefCommand)) {
             return false;
         }
-        return true;
+
+        return (Objects.equals(prefKey, ((PrefCommand) other).prefKey)
+                && (Objects.equals(newPrefValue, ((PrefCommand) other).newPrefValue)));
     }
 
 }
