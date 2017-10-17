@@ -14,7 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Updates debt field by amount that has been repaid by person
  */
-public class BorrowCommand extends UndoableCommand{
+public class BorrowCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "borrow";
 
