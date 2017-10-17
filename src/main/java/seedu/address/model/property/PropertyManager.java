@@ -60,6 +60,11 @@ public class PropertyManager {
                 addNewProperty("a", "address",
                         "Person addresses can take any values, and it should not be blank",
                         "[^\\s].*");
+                // Adds time/date as a pre-loaded property.
+                addNewProperty("dt", "dateTime", "Event date & time must be numbers "
+                        + "followed by ddmmyyyy hh:mm", "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
+                        + "(\\s((0[1-9]|1[012])"
+                        + ":([0-5][0-9]))?$)");
             } catch (DuplicatePropertyException dpe) {
                 throw new AssertionError("PreLoaded properties cannot be invalid", dpe);
             }

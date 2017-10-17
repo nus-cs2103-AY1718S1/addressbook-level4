@@ -7,6 +7,8 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.Name;
 
 /**
  * Represents an Event in the address book.
@@ -14,14 +16,14 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class Event implements ReadOnlyEvent {
 
-    private ObjectProperty<EventName> name;
+    private ObjectProperty<Name> name;
     private ObjectProperty<EventTime> time;
-    private ObjectProperty<EventVenue> venue;
+    private ObjectProperty<Address> venue;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(EventName name, EventTime time, EventVenue venue) {
+    public Event(Name name, EventTime time, Address venue) {
         requireAllNonNull(name, time, venue);
         this.name = new SimpleObjectProperty<>(name);
         this.time = new SimpleObjectProperty<>(time);
@@ -35,17 +37,17 @@ public class Event implements ReadOnlyEvent {
         this(source.getName(), source.getTime(), source.getVenue());
     }
 
-    public void setName(EventName name) {
+    public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }
 
     @Override
-    public ObjectProperty<EventName> nameProperty() {
+    public ObjectProperty<Name> nameProperty() {
         return name;
     }
 
     @Override
-    public EventName getName() {
+    public Name getName() {
         return name.get();
     }
 
@@ -62,17 +64,17 @@ public class Event implements ReadOnlyEvent {
         return time;
     }
 
-    public void setVenue(EventVenue venue) {
+    public void setVenue(Address venue) {
         this.venue.set(requireNonNull(venue));
     }
 
     @Override
-    public ObjectProperty<EventVenue> venueProperty() {
+    public ObjectProperty<Address> venueProperty() {
         return venue;
     }
 
     @Override
-    public EventVenue getVenue() {
+    public Address getVenue() {
         return venue.get();
     }
 
