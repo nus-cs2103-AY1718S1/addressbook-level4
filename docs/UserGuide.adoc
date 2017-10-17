@@ -42,20 +42,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Make the addressbook more useful to a tourguide
 
-[NOTE]
-====
+=== Autocomplete
 Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text red if not suitable command exists. Since v1.1
-====
+===
 
-[NOTE]
-====
+=== Groups: `group`
 Each person now can be assigned a group. The group is used to sort people into specific tours for the tourguide. Since v1.2
-====
+===
 
-[NOTE]
-====
+=== Group Filter: `filter`
 Ability to filter the UI display to only display selected groups. Coming V2.0
-====
+===
 
 
 == Features
