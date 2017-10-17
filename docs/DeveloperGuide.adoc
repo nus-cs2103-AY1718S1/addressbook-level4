@@ -10,7 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 :repoURL: https://github.com/CS2103AUG2017-T12-B4/main
+
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
