@@ -329,10 +329,12 @@ e.g.`select 2`
 |===
 | Shortcut | Purpose
 
+| kbd:[Ctrl + L] | List all contacts
 | kbd:[Ctrl + H] | View history
 | kbd:[Ctrl + Z] | Undo last command
 | kbd:[Ctrl + Y] | Redo last command
 | kbd:[Ctrl + Shift + D] | Clear contact list
+| kbd:[F1] | View help window
 |===
 
 === Navigation/Selection Shortcuts
@@ -346,6 +348,7 @@ e.g.`select 2`
 2.+| When the command box is not in selection:
 | kbd:[↑] and kbd:[↓] | Scroll the contact list
 | kbd:[Ctrl + D] | Delete the selected contact _(Coming in V2.0)_
+| kbd:[Alt + F4] | Exit the application
 |===
 
 // end::excludeNavbar[]
