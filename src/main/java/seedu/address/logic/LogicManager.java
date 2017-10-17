@@ -51,6 +51,7 @@ public class LogicManager extends ComponentManager implements Logic {
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
+            autoCompleteList.resetAutocompleteList();
             return result;
         } finally {
             history.add(commandText);

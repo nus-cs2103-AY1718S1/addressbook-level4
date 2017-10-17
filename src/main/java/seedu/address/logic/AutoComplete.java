@@ -45,6 +45,8 @@ public class AutoComplete {
         return newAutoCompleteList;
     }
 
+    public void resetAutocompleteList() {
+        this.autoCompleteList = BASECOMMANDS;
     }
 
     public String[] getAutoCompleteList() {
