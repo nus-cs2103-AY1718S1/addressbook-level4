@@ -48,6 +48,7 @@ public class MainWindow extends UiPart<Region> {
     private EventListPanel eventListPanel;
     private ContactTab contactTab;
     private EventTab eventTab;
+    private NotificationButton notificationButton;
     private Config config;
     private UserPrefs prefs;
 
@@ -77,6 +78,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private AnchorPane contactTabPlaceholder;
+
+    @FXML
+    private AnchorPane notificationButtonPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -148,8 +152,8 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-//        eventListPanel = new EventListPanel(logic.getFilteredEventList());
-//        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+//      eventListPanel = new EventListPanel(logic.getFilteredEventList());
+//      eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -166,18 +170,18 @@ public class MainWindow extends UiPart<Region> {
         contactTabPlaceholder.getChildren().add(contactTab.getRoot());
         contactTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
                 EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if(personListPanelPlaceholder.getChildren().isEmpty()) {
-                            contactTabPlaceholder.setStyle("-fx-background-color:" +
-                                    " #00bfff");
-                            personListPanelPlaceholder.getChildren().add
-                                    (personListPanel.getRoot());
-                            eventTabPlaceholder.setStyle("-fx-background-color:" +
-                                    " #6495ed");
-                        }
-                    }
-                });
+            @Override
+            public void handle(MouseEvent event) {
+                if (personListPanelPlaceholder.getChildren().isEmpty()) {
+                    contactTabPlaceholder.setStyle("-fx-background-color:"
+                            + " #00bfff");
+                    eventTabPlaceholder.setStyle("-fx-background-color:"
+                                   + " #6495ed");
+
+                    personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+                }
+            }
+        });
 
         eventTab = new EventTab();
         eventTabPlaceholder.getChildren().add(eventTab.getRoot());
@@ -185,15 +189,19 @@ public class MainWindow extends UiPart<Region> {
                 EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(!personListPanelPlaceholder.getChildren().isEmpty()) {
-                    eventTabPlaceholder.setStyle("-fx-background-color:" +
-                            " #00bfff");
+                if (!personListPanelPlaceholder.getChildren().isEmpty()) {
+                    eventTabPlaceholder.setStyle("-fx-background-color:"
+                            + " #00bfff");
+                    contactTabPlaceholder.setStyle("-fx-background-color:"
+                            + " #6495ed");
                     personListPanelPlaceholder.getChildren().remove(0);
-                    contactTabPlaceholder.setStyle("-fx-background-color:" +
-                            " #6495ed");
                 }
             }
         });
+
+        notificationButton = new NotificationButton();
+        notificationButtonPlaceholder.getChildren().add(notificationButton
+                .getRoot());
     }
 
     void hide() {

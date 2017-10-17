@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@BrightTheme.css" />
@@ -39,27 +41,35 @@
                <children>
                   <ImageView fx:id="settingPlaceholder" fitHeight="30.0"
                              fitWidth="30.0"
-                             pickOnBounds="true" preserveRatio="true" />
+                             pickOnBounds="true" preserveRatio="true" >
+                  </ImageView>
                </children>
             </AnchorPane>
-            <StackPane fx:id="commandBoxPlaceholder" minHeight="80.0" styleClass="commandBox" VBox.vgrow="NEVER">
+            <StackPane fx:id="commandBoxPlaceholder" minHeight="60.0"
+                       styleClass="commandBox" VBox.vgrow="NEVER">
                 <padding>
                     <Insets bottom="5" left="10" right="10" top="5" />
                 </padding>
             </StackPane>
-            <AnchorPane>
+            <HBox alignment="CENTER">
+                <AnchorPane fx:id="notificationButtonPlaceholder">
                 <children>
-                    <ImageView fx:id="notificationPlaceholder"
-                               fitHeight="30.0"
-                               fitWidth="30.0"
-                               pickOnBounds="true" preserveRatio="true" />
+                    <ImageView
+                               fitHeight="30.0" fitWidth="30.0"
+                               pickOnBounds="true" preserveRatio="true" >
+                        <image>
+                            <Image url="/images/notification.png"/>
+                        </image>
+                    </ImageView>
                 </children>
-            </AnchorPane>
+                </AnchorPane>
+            </HBox>
         </items>
     </SplitPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="List" minWidth="150" prefWidth="200" SplitPane.resizableWithParent="false">
+        <VBox fx:id="List" minWidth="150" prefWidth="200"
+              prefHeight="400" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="5" left="5" right="5" top="5" />
             </padding>
