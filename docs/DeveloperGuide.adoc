@@ -411,6 +411,30 @@ image::ColorKeywordActivityDiagram.png[width="900"]
 **Cons:** This method breaks encapsulation and fails to follow standard java code style.
 // end::colorKeyword[]
 
+=== List mechanism
+
+The list mechanism is facilitated by an enumeration class `ListingUnit`. Each time user list by different attributes, the static variable `currentListingUnit` in the Enumeration class is reset.
+[NOTE]
+The default listing (without parameter) is to list all persons.
+When list by attribute, for example, `list address`, the `currentListingUnit` will be set to `ADDRESS` and show a list of all addresses.
+
+The following link:#sequence-diagram[sequence diagram] shows how the list command operation works:
+
+image::ListCommandSeqDiagram.png[width="900"]
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ListCommand` +
+**Alternative 1 (current choice):**  Update static variable `currentListingUnit` to the corresponding listingUnit and use event bus to inform UI the change of listingUnit.
+**Pros:** One global variable that records current listingUnit
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
+**Pros:** No need for extra enumeration class.
+**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface.
+// end::colorKeyword[]
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
