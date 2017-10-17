@@ -292,10 +292,30 @@ Keyboard shortcut: kbd:[Ctrl+Shift+D]
 Adds a profile picture to the specified person in the address book. +
 Format: `picture INDEX FILE_DIRECTORY` or `pic INDEX FILE_DIRECTORY`
 
+****
+* Adds a profile picture to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The `FILE_DIRECTORY` indicates the location of the profile picture to be added.
+* An existing profile picture will be replaced.
+****
+
 Examples:
 
 * `picture 1 C:\Users\John\Pictures\my_pic.png`
-* `pic 3 C:\Users\Alice\Pictures\Contacts\john.png`
+* `pic 6 C:\Users\Alice\Pictures\Contacts\john.png`
+
+The second example is illustrated in greater detail here:
+
+1. Before the addition of profile pictures, the contact list is loaded with the default avatar image as shown below.
++
+image::profile_pic_before.png[width="500"]
++
+2. `pic 6 C:\Users\Alice\Pictures\Contacts\john.png` is entered in the command box with the valid `FILE_DIRECTORY`.
++
+3. If the command is entered correctly, you should see the updated profile picture as specified in the `FILE_DIRECTORY` of the command.
++
+image::profile_pic_after.png[width="500"]
 
 
 === Exiting the program : `exit`
