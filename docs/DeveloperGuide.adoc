@@ -743,11 +743,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see the people a person is related to |find people related to a person
 
-|`* * *` |user |see the history of commands I have typed |keep track of what I have done to my address book
-
 |`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
 
 |`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
+
+|`* *` |user |see the history of commands I have typed |keep track of what I have done to my address book
 
 4+| Find operations
 
