@@ -361,7 +361,7 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 
 The following link:#activity-diagram[activity diagram] summarize what happens when an user execute sort command.
 
-image::SortCommandActivityDiagram.png[width="900"]
+image::sortCommandactivitydiagram.png[width="900"]
 
 ==== Design Considerations
 
