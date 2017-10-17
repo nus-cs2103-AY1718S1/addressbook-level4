@@ -48,4 +48,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     *  Sort everyone in addressbook by searchCount
+     * @author Sri-vatsa
+     */
+    void sortPersonListBySearchCount();
 }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -128,6 +129,7 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
+
 
     @Override
     public boolean equals(Object other) {

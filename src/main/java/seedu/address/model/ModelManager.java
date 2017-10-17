@@ -3,7 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -115,6 +115,22 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //=========== Sort addressBook methods =============================================================
+
+    /***
+     * Sorts persons in Addressbook by searchCount
+     * @author Sri-vatsa
+     */
+    @Override
+    public void sortPersonListBySearchCount() {
+        addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+
+    //=========== Util methods =============================================================
 
     @Override
     public boolean equals(Object obj) {

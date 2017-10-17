@@ -31,8 +31,7 @@ public class SearchData {
     }
 
     /**
-     *
-     * @return
+     * Increases search count by 1 each time it is called
      */
     public void IncrementSearchCount() {
         int searchCountInt = Integer.parseInt(this.searchCount);

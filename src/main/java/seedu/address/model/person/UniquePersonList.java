@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * @see CollectionUtil# elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -119,4 +120,40 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+
+
+
+    /***
+     * sort addressbook persons by number of times they were searched for
+     * @author Sri-vatsa
+     */
+    public void sortBySearchCount () {
+        internalList.sort(new ReadOnlyPersonComparator());
+    }
+
+    /**
+     * Custom Comparator class to compare two ReadOnlyPerson Objects by their search Count
+     * @author Sri-vatsa
+     */
+    public class ReadOnlyPersonComparator implements Comparator<ReadOnlyPerson> {
+
+        public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
+
+            int personASearchCount = Integer.parseInt(o1.getSearchData().getSearchCount());
+            int personBSearchCount = Integer.parseInt(o2.getSearchData().getSearchCount());
+
+            if (personASearchCount > personBSearchCount) {
+                return -1;
+            } else if (personASearchCount < personBSearchCount){
+                return 1;
+            } else {
+                return 0;
+            }
+
+        }
+
+    }
+
+
 }
