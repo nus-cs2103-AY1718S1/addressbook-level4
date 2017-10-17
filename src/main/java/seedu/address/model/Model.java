@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -81,4 +82,10 @@ public interface Model {
      * Updates the list shown in Person List Panel to the requested list.
      */
     void changeListTo(String listName);
+
+    /**
+     * Increase the debt of a person by the amount indicated
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException;
 }
