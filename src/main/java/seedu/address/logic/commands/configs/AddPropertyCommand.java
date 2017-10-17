@@ -12,9 +12,9 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
  * Adds a new property to the application.
  */
 public class AddPropertyCommand extends ConfigCommand {
-    private static final String MESSAGE_DUPLICATE_PROPERTY =
+    static final String MESSAGE_DUPLICATE_PROPERTY =
             "Another property with the same short name already exists in the application.";
-    private static final String MESSAGE_INVALID_REGEX = "The regular expression you provide is invalid.";
+    static final String MESSAGE_INVALID_REGEX = "The regular expression you provide is invalid.";
 
     private final String shortName;
     private final String fullName;
