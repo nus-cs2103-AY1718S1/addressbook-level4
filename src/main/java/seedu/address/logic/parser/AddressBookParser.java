@@ -88,7 +88,7 @@ public class AddressBookParser {
 
         case PrefCommand.COMMAND_WORD:
         case PrefCommand.COMMAND_ALIAS:
-            return new PrefCommand();
+            return new PrefCommand(arguments);
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:

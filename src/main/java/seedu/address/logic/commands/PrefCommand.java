@@ -17,14 +17,17 @@ public class PrefCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PREF_SUCCESS = "Edited preference: %1$s";
     public static final String MESSAGE_NOT_EDITED = "Please enter the new value for the preference";
 
+    private static String prefKey;
+
     /**
      */
-    public PrefCommand() {
+    public PrefCommand(String prefKey) {
+        this.prefKey = prefKey;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        return new CommandResult("Command not implemented");
+        return new CommandResult(prefKey);
     }
 
     @Override
