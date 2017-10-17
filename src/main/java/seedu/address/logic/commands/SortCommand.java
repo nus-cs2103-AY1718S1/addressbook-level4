@@ -45,7 +45,7 @@ public class SortCommand extends UndoableCommand {
     private String order = "ascending";
 
     /**
-     * @param field          specify which field to sort by
+     * @param field     specify which field to sort by
      * @param isReverseOrder specify if sorting is to be in reverse order
      */
     public SortCommand(String field, Boolean isReverseOrder) {
@@ -78,29 +78,29 @@ public class SortCommand extends UndoableCommand {
 
     private Comparator<ReadOnlyPerson> getSortComparator(String field) {
         switch (field) {
-            case PREFIX_NAME_FIELD:
-                this.sortBy = "name";
-                return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()
-                );
-            case PREFIX_PHONE_FIELD:
-                this.sortBy = "phone";
-                return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(
+        case PREFIX_NAME_FIELD:
+            this.sortBy = "name";
+            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()
+            );
+        case PREFIX_PHONE_FIELD:
+            this.sortBy = "phone";
+            return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(
                         o2.getPhone().toString()
-                );
-            case PREFIX_EMAIL_FIELD:
-                this.sortBy = "email";
-                return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(
+            );
+        case PREFIX_EMAIL_FIELD:
+            this.sortBy = "email";
+            return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(
                         o2.getEmail().toString()
-                );
-            case PREFIX_ADDRESS_FIELD:
-                this.sortBy = "address";
-                return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
+            );
+        case PREFIX_ADDRESS_FIELD:
+            this.sortBy = "address";
+            return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
                         o2.getAddress().toString()
-                );
-            default:
-                return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
+            );
+        default:
+            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
                         o2.getName().toString()
-                );
+            );
         }
     }
 
@@ -114,3 +114,5 @@ public class SortCommand extends UndoableCommand {
     }
 
 }
+
+
