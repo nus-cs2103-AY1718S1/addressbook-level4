@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConTag - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -55,7 +55,21 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Alias: `h`
 
-Format: `help`
+Shows the usage of the specific command identified. If no command is specified, opens help window. +
+Format: `help [COMMAND_IDENTIFIER]`
+
+[TIP]
+A command identifier includes all existing commands and their aliases.
+
+[NOTE]
+You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`.
+
+Examples:
+
+* `help` (without command identifier)
+* `help add` (using command word)
+* `help a` (using alias)
+
 
 === Adding a person: `add`
 
@@ -65,7 +79,7 @@ Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 
 Examples:
 
@@ -167,6 +181,26 @@ Locates the 2nd person's address in the address book.
 * `find Betsy` +
 `select 1` +
 Locates the 1st person's address in the results of the `find` command.
+
+=== Scheduling an activity: `schedule` [Coming in v2.0]
+
+Alias: `sc`
+
+Schedules an activity with a person in the contact list. +
+Format: `schedule INDEX d/DATE act/ACTIVITY
+
+****
+* DATE must follow DD-MM-YYYY or DD-MM format
+****
+
+Examples:
+
+* `list` +
+`schedule 3 d/15-01-2018 act/Play basketball` +
+Associates the specified schedule with the 3rd person in the address book.
+* `find Betsy` +
+`schedule 1 d/25-12 act/Christmas dinner` +
+Associates the specified schedule with the 1st person in the results of the `find` command.
 
 === Getting email addresses : `copy` [Coming in v2.0]
 
@@ -294,6 +328,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Locate* : `locate INDEX` +
 e.g.`locate 2`[Coming in v2.0]
+* *Schedule* : `schedule INDEX d/DATE act/ACTIVITY` +
+e.g. `schedule 1 d/25-12 act/Christmas dinner` [Coming in v2.0]
 * *Copy* : `copy INDEX [OTHER INDICES]...` +
 e.g.`copy 1 2` [Coming in v2.0]
 * *History* : `history`

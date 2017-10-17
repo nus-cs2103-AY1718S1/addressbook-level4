@@ -15,13 +15,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class LocateCommand extends Command {
 
     public static final String COMMAND_WORD = "locate";
-
     public static final String COMMAND_ALIAS = "lc";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Locates the address of the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located the Address of Person %1$s";
 

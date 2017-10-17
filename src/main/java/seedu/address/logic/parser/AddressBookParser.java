@@ -106,7 +106,7 @@ public class AddressBookParser {
             //Fallthrough
 
         case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
+            return new HelpCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             //Fallthrough
