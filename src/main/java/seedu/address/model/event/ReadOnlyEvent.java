@@ -1,6 +1,9 @@
 package seedu.address.model.event;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
+import seedu.address.model.property.Name;
 
 /**
  * A read-only immutable interface for an Event in the addressbook.
@@ -9,12 +12,12 @@ import javafx.beans.property.ObjectProperty;
 
 public interface ReadOnlyEvent {
 
-    ObjectProperty<EventName> nameProperty();
-    EventName getName();
-    ObjectProperty<EventTime> timeProperty();
-    EventTime getTime();
-    ObjectProperty<EventVenue> venueProperty();
-    EventVenue getVenue();
+    ObjectProperty<Name> nameProperty();
+    Name getName();
+    ObjectProperty<DateTime> timeProperty();
+    DateTime getTime();
+    ObjectProperty<Address> venueProperty();
+    Address getVenue();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

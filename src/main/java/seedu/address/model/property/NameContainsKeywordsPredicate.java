@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -20,6 +21,14 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().getValue(), keyword));
+    }
+
+    /**
+     * Overrides method test for ReadOnlyEvent
+     */
+    public boolean test(ReadOnlyEvent event) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getName().getValue(), keyword));
     }
 
     @Override

@@ -76,7 +76,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         final ObservableList<ReadOnlyEvent> events = this.events.stream().map(p -> {
             try {
                 return p.toModelType();
-            } catch (IllegalValueException e) {
+            } catch (IllegalValueException | PropertyNotFoundException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;
