@@ -56,11 +56,11 @@ public class BirthdayCommandTest {
         String expectedMessage = String.format(BirthdayCommand.MESSAGE_DELETE_BIRTHDAY_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-                expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
     }
-/*
+    /*
     @Test
     public void execute_filteredList_success() throws Exception {
                 showFirstPersonOnly(model);
@@ -77,7 +77,8 @@ public class BirthdayCommandTest {
 
         assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
     }
-*/
+    */
+
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -104,10 +105,12 @@ public class BirthdayCommandTest {
 
     @Test
     public void equals() {
-        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_AMY));
+        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON,
+                new Birthday(VALID_BIRTHDAY_AMY));
 
         // same values -> returns true
-        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_AMY));
+        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON,
+                new Birthday(VALID_BIRTHDAY_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
