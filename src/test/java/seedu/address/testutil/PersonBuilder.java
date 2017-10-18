@@ -119,6 +119,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Appoint} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAppoint(String appoint) {
+        this.person.setAppoint(new Appoint(appoint));
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }
