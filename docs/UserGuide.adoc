@@ -232,7 +232,7 @@ Favourites the 2nd person in the address book.
 `favourite 1` +
 Favourites the 1st person in the results of the `find` command.
 * `list` +
-`favourite 1` +t
+`favourite 1` +
 Favourites the 1st person in the address book.
 `favourite 1` +
 Unfavourite the 1st person in the address book.
