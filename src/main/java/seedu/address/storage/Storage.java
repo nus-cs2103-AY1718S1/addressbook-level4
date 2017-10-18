@@ -29,6 +29,8 @@ public interface Storage extends RolodexStorage, UserPrefsStorage {
     @Override
     void saveRolodex(ReadOnlyRolodex rolodex) throws IOException;
 
+    RolodexStorage getExistingRolodexStorage();
+
     void setNewRolodexStorage(RolodexStorage storage);
 
     /**

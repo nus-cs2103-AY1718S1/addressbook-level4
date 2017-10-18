@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
 import static seedu.address.testutil.TypicalPersons.getTypicalRolodex;
@@ -27,12 +28,14 @@ public class StorageManagerTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
+    private XmlRolodexStorage rolodexStorage;
+    private JsonUserPrefsStorage userPrefsStorage;
     private StorageManager storageManager;
 
     @Before
     public void setUp() {
-        XmlRolodexStorage rolodexStorage = new XmlRolodexStorage(getTempFilePath("ab" + ROLODEX_FILE_EXTENSION));
-        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
+        rolodexStorage = new XmlRolodexStorage(getTempFilePath("ab" + ROLODEX_FILE_EXTENSION));
+        userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(rolodexStorage, userPrefsStorage);
     }
 
@@ -40,6 +43,10 @@ public class StorageManagerTest {
         return testFolder.getRoot().getPath() + fileName;
     }
 
+    @Test
+    public void assertGetUserPrefsFilePath() {
+        assertEquals(storageManager.getUserPrefsFilePath(), userPrefsStorage.getUserPrefsFilePath());
+    }
 
     @Test
     public void prefsReadSave() throws Exception {
@@ -80,6 +87,14 @@ public class StorageManagerTest {
                                              new JsonUserPrefsStorage("dummy"));
         storage.handleRolodexChangedEvent(new RolodexChangedEvent(new Rolodex()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    @Test
+    public void assertSetNewRolodexStorageDifferentStorage() {
+        RolodexStorage currentRoldexStorage = storageManager.getExistingRolodexStorage();
+        storageManager.setNewRolodexStorage(new XmlRolodexStorage("data/"));
+        assertFalse(currentRoldexStorage.getRolodexFilePath().equals(
+                storageManager.getExistingRolodexStorage().getRolodexFilePath()));
     }
 
 

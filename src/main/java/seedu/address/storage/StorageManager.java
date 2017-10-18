@@ -78,6 +78,11 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
+    public RolodexStorage getExistingRolodexStorage() {
+        return rolodexStorage;
+    }
+
+    @Override
     public void setNewRolodexStorage(RolodexStorage newRolodexStorage) {
         rolodexStorage = newRolodexStorage;
     }
