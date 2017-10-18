@@ -180,7 +180,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-  
+
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
