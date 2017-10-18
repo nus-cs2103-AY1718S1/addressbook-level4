@@ -141,9 +141,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
-            fail("This method should not be called.");
-        }
+        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException { }
     }
 
     /**
@@ -158,6 +156,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
+            throw new DuplicatePersonException();
         }
     }
 
