@@ -59,7 +59,8 @@ public class PersonInformationPanel extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
-    private void loadDefaultScreen() {this.person = null;}
+    private void loadDefaultScreen() {
+        this.person = null; }
 
     /**
      * loads the selected person's information to be displayed.
