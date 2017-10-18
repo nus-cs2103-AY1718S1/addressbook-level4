@@ -11,6 +11,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -34,24 +36,9 @@ public class RemarkCommandTest {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withRemark("Some remark").build();
 
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRemark().value);
+        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_deleteRemark_success() throws Exception {
-        Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        editedPerson.setRemark(new Remark(""));
-
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRemark().toString());
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -65,7 +52,7 @@ public class RemarkCommandTest {
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList)
                 .withRemark("Some remark").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getRemark().value);
+        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, "Some remark");
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
 
@@ -102,17 +89,21 @@ public class RemarkCommandTest {
      * Returns a {@code RemarkCommand} with the parameter {@code index} and {@code remark}
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
-        RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
+        ArrayList<Remark> remarks = new ArrayList<>();
+        remarks.add(new Remark(remark));
+        RemarkCommand remarkCommand = new RemarkCommand(index, remarks);
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }
 
     @Test
     public void equals() {
-        final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
+        ArrayList<Remark> remarksAmy = new ArrayList<>();
+        remarksAmy.add(new Remark(VALID_REMARK_AMY));
+        final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, remarksAmy);
 
         // same values -> returns true
-        RemarkCommand commandWithSameValues = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
+        RemarkCommand commandWithSameValues = new RemarkCommand(INDEX_FIRST_PERSON, remarksAmy);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -125,9 +116,11 @@ public class RemarkCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, remarksAmy)));
 
+        ArrayList<Remark> remarksBob = new ArrayList<>();
+        remarksBob.add(new Remark(VALID_REMARK_BOB));
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, remarksBob)));
     }
 }

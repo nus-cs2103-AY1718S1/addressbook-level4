@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +31,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    private static final Integer ONE_REMARK = 1;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -89,5 +92,20 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code Collection<String> remarks} into a {@code ArrayList<Remark>}.
+     */
+    public static ArrayList<Remark> parseRemarks(Collection<String> remarks) throws IllegalValueException {
+        requireNonNull(remarks);
+        final ArrayList<Remark> remarkArrayList = new ArrayList<>();
+        for (String remarkString : remarks) {
+            remarkArrayList.add(new Remark(remarkString));
+        }
+        if (remarkArrayList.size() < ONE_REMARK) {
+            remarkArrayList.add(new Remark(""));
+        }
+        return remarkArrayList;
     }
 }
