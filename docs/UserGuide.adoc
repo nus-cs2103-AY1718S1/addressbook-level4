@@ -26,16 +26,16 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::UI(GROUP).png[width="790"]
+image::UI(ScheduBook).png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`delete`** `3` : deletes the 3rd contact shown in the current list
+* *`exit`* : exits the application
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
@@ -57,7 +57,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -68,18 +68,25 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Adding a meeting: `addmeeting`
-Upcoming in V2.0: addmeeting by index of person in Contacts
+Upcoming in V2.0 (Since V1.2): addmeeting by index of person in Contacts +
+Since V1.2: Shows name of contact whom user is meeting with along with the contact's phone number
 
 Adds a meeting to the address book +
-Format: `addmeeting n/NAME d/DATE_TIME l/LOCATION`
+Format: `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]`
 
-[Note]
+[NOTE]
 Input format for Date and Time is "DD-MM-YYYY HH:MM"
+
+****
+* Adds meeting with person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer 1,2,3, ...
+* Meeting with multiple people at the same timing for an event is possible. i.e Group meeting
+* When adding a new meeting, you will be prompted to change the date and time of meeting if it will result in a clash with an existing meeting.
+****
 
 Examples:
 
-* `addmeeting n/John Doe d/31-10-2017 21:00 l/School of Computing, NUS`
-* `addmeeting n/Betsy Crowe d/27-12-2017 08:30 l/iCube Auditorium, NUS`
+* `addmeeting 1 n/John Doe d/31-10-2017 21:00 l/School of Computing, NUS`
+* `addmeeting 2 n/Betsy Crowe d/27-12-2017 08:30 l/iCube Auditorium, NUS`
 
 === Listing all persons : `list`
 
@@ -253,10 +260,10 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Addmeeting* `addmeeting n/NAME d/DATE_TIME l/LOCATION` +
-e.g. `addmeeting n/Mary Jane d/22-11-2017 l/Vivo City`
+* *Addmeeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
+e.g. `addmeeting 5 n/Mary Jane d/22-11-2017 l/Vivo City`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
