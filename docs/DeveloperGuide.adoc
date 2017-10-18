@@ -930,6 +930,37 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use Case: Remove tag of multiple person
+
+1. User requests to list people.
+2. Addressbook lists all contacts.
+3. User requests to detag a specific tag of multiple person using their index.
+4. Addressbook removes tag of all specified contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3b. The given tag is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 [appendix]
 == Non Functional Requirements
 
