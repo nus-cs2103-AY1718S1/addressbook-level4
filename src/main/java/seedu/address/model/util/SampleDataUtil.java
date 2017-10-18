@@ -40,8 +40,8 @@ public class SampleDataUtil {
             throw new AssertionError("sample data cannot be invalid", e);
         }
     }
-
-
+    
+    
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();

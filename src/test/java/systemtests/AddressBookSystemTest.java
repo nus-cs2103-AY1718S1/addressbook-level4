@@ -118,7 +118,7 @@ public abstract class AddressBookSystemTest {
      * Displays all lessons in the address book.
      */
     protected void showAllLessons() {
-        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(ListCommand.COMMAND_WORD + " module");
         assert getModel().getAddressBook().getLessonList().size() == getModel().getFilteredLessonList().size();
     }
 
