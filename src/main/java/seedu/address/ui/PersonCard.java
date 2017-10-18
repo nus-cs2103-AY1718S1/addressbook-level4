@@ -77,7 +77,6 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-    
     /**
     *javadoc comment
      */
