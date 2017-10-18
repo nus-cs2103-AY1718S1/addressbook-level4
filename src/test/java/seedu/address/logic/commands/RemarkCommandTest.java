@@ -98,12 +98,12 @@ public class RemarkCommandTest {
 
     @Test
     public void equals() {
-        ArrayList<Remark> remarksAMY = new ArrayList<>();
-        remarksAMY.add(new Remark(VALID_REMARK_AMY));
-        final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, remarksAMY);
+        ArrayList<Remark> remarksAmy = new ArrayList<>();
+        remarksAmy.add(new Remark(VALID_REMARK_AMY));
+        final RemarkCommand standardCommand = new RemarkCommand(INDEX_FIRST_PERSON, remarksAmy);
 
         // same values -> returns true
-        RemarkCommand commandWithSameValues = new RemarkCommand(INDEX_FIRST_PERSON, remarksAMY);
+        RemarkCommand commandWithSameValues = new RemarkCommand(INDEX_FIRST_PERSON, remarksAmy);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -116,11 +116,11 @@ public class RemarkCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, remarksAMY)));
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, remarksAmy)));
 
-        ArrayList<Remark> remarksBOB = new ArrayList<>();
-        remarksBOB.add(new Remark(VALID_REMARK_BOB));
+        ArrayList<Remark> remarksBob = new ArrayList<>();
+        remarksBob.add(new Remark(VALID_REMARK_BOB));
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, remarksBOB)));
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, remarksBob)));
     }
 }
