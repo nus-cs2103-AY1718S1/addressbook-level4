@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.BaseEvent;
@@ -25,14 +26,14 @@ public class KeyListener {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Logic logic;
-    private MainWindow mainWindow;
+    private Region mainNode;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
 
-    public KeyListener(Logic logic, MainWindow mainWindow, PersonListPanel personListPanel,
+    public KeyListener(Logic logic, Region mainNode, PersonListPanel personListPanel,
                        CommandBox commandBox) {
         this.logic = logic;
-        this.mainWindow = mainWindow;
+        this.mainNode = mainNode;
         this.personListPanel = personListPanel;
         this.commandBox = commandBox;
     }
@@ -41,7 +42,7 @@ public class KeyListener {
      * Handles key press events
      */
     public void handleKeyPress() {
-        mainWindow.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             commandBox.setStyleToDefault();
             executeKeyEvent(event);
         });
