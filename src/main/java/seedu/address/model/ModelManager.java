@@ -139,7 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
 
-        if (contactList.equals(filteredPersons)){
+        if (contactList.equals(filteredPersons)) {
             return false;
         }
 

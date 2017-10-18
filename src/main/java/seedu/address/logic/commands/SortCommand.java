@@ -36,8 +36,7 @@ public class SortCommand extends Command {
         Boolean isNotEmpty = model.sortPersonByName(contactList);
         if (isNotEmpty == null) {
             return new CommandResult(MESSAGE_EMPTY_LIST);
-        }
-        else if(!isNotEmpty){
+        } else if (!isNotEmpty) {
             return new CommandResult(MESSAGE_ALREADY_SORTED);
         }
         return new CommandResult(MESSAGE_SUCCESS);
