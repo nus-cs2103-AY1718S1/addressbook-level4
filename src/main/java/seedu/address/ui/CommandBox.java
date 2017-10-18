@@ -104,6 +104,7 @@ public class CommandBox extends UiPart<Region> {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
+            displayImageForCommand();
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
@@ -115,6 +116,21 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
+     * Displays images for command inputted in command box.
+     */
+    private void displayImageForCommand() {
+        String commandEntered = commandTextField.getText().split(" ")[0];
+        switch (commandEntered) {
+        case "add":
+        case "list":
+        case "sort":
+        case "edit":
+        default:
+            commandTextField.setStyle("-fx-background-image: null");
         }
     }
 
@@ -140,7 +156,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
-
+        commandTextField.setStyle("-fx-background-image: url(/images/error.png)");
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }

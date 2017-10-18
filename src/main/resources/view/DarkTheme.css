@@ -321,6 +321,9 @@
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+    -fx-background-size: inherit;
 }
 
 #filterField, #personListPanel, #personWebpage {
