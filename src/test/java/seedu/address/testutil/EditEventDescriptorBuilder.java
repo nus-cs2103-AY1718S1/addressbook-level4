@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * A utility class to help with building EditEventDescriptor objects.
@@ -37,8 +38,8 @@ public class EditEventDescriptorBuilder {
      */
     public EditEventDescriptorBuilder withName(String name) {
         try {
-            ParserUtil.parseEventName(Optional.of(name)).ifPresent(descriptor::setName);
-        } catch (IllegalValueException ive) {
+            ParserUtil.parseName(Optional.of(name)).ifPresent(descriptor::setName);
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("name is expected to be unique.");
         }
         return this;
@@ -50,7 +51,7 @@ public class EditEventDescriptorBuilder {
     public EditEventDescriptorBuilder withTime(String dateTime) {
         try {
             ParserUtil.parseTime(Optional.of(dateTime)).ifPresent(descriptor::setTime);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("date/time is expected to be unique.");
         }
         return this;
@@ -61,8 +62,8 @@ public class EditEventDescriptorBuilder {
      */
     public EditEventDescriptorBuilder withVenue(String venue) {
         try {
-            ParserUtil.parseVenue(Optional.of(venue)).ifPresent(descriptor::setVenue);
-        } catch (IllegalValueException ive) {
+            ParserUtil.parseAddress(Optional.of(venue)).ifPresent(descriptor::setVenue);
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new IllegalArgumentException("Venue is expected to be unique.");
         }
         return this;

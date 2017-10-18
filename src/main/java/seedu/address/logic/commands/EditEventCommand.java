@@ -14,11 +14,13 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.EventName;
-import seedu.address.model.event.EventVenue;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
+import seedu.address.model.property.Name;
+
 /**
  * Edits the details of an existing person in the address book.
  */
@@ -87,9 +89,9 @@ public class EditEventCommand extends UndoableCommand {
                                              EditEventDescriptor editEventDescriptor) {
         assert eventToEdit != null;
 
-        EventName updatedName = editEventDescriptor.getName().orElse(eventToEdit.getName());
-        EventTime updatedTime = editEventDescriptor.getTime().orElse(eventToEdit.getTime());
-        EventVenue updatedVenue = editEventDescriptor.getVenue().orElse(eventToEdit.getVenue());
+        Name updatedName = editEventDescriptor.getName().orElse(eventToEdit.getName());
+        DateTime updatedTime = editEventDescriptor.getTime().orElse(eventToEdit.getTime());
+        Address updatedVenue = editEventDescriptor.getVenue().orElse(eventToEdit.getVenue());
 
         return new Event(updatedName, updatedTime, updatedVenue);
     }
@@ -117,9 +119,9 @@ public class EditEventCommand extends UndoableCommand {
      * corresponding field value of the person.
      */
     public static class EditEventDescriptor {
-        private EventName name;
-        private EventTime time;
-        private EventVenue venue;
+        private Name name;
+        private DateTime time;
+        private Address venue;
 
         public EditEventDescriptor() {}
 
@@ -136,27 +138,27 @@ public class EditEventCommand extends UndoableCommand {
             return CollectionUtil.isAnyNonNull(this.name, this.time, this.venue);
         }
 
-        public void setName(EventName name) {
+        public void setName(Name name) {
             this.name = name;
         }
 
-        public Optional<EventName> getName() {
+        public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
 
-        public void setTime(EventTime time) {
+        public void setTime(DateTime time) {
             this.time = time;
         }
 
-        public Optional<EventTime> getTime() {
+        public Optional<DateTime> getTime() {
             return Optional.ofNullable(time);
         }
 
-        public void setVenue(EventVenue venue) {
+        public void setVenue(Address venue) {
             this.venue = venue;
         }
 
-        public Optional<EventVenue> getVenue() {
+        public Optional<Address> getVenue() {
             return Optional.ofNullable(venue);
         }
 

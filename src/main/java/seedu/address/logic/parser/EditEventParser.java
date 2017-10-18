@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 
 /**
@@ -38,10 +39,10 @@ public class EditEventParser implements Parser<EditEventCommand> {
 
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
         try {
-            ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editEventDescriptor::setName);
+            ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editEventDescriptor::setName);
             ParserUtil.parseTime(argMultimap.getValue(PREFIX_DATE_TIME)).ifPresent(editEventDescriptor::setTime);
-            ParserUtil.parseVenue(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editEventDescriptor::setVenue);
-        } catch (IllegalValueException ive) {
+            ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editEventDescriptor::setVenue);
+        } catch (IllegalValueException | PropertyNotFoundException ive) {
             throw new ParseException(ive.getMessage());
         }
 
