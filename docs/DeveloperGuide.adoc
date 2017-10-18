@@ -786,7 +786,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [discrete]
 === Use case: Delete person
-
 *MSS*
 
 1.  User requests to list persons
@@ -847,18 +846,27 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+=== Use case: Search by phone
+#Pre-condition :The identitifed phone exist in AddressBook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to search for phone number by inputting 4 or 8 digits
+4. AddressBook successfully find the persons with matching phone numbers
++
+Use case ends.
+
 **Extensions**
 
 2a. The list is empty
 
 > Use case ends
 
-3a. The given tag is invalid
+3a. The given phone number is invalid
 
 > 3a1. AddressBook shows an error message
   Use case resumes at step 2
-
-5a. User disconfirm the changes
 
 > Use case ends
 
