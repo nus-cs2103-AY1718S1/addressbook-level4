@@ -27,11 +27,11 @@ public class DeleteCommand extends UndoableCommand {
     private boolean exist = false;
     private int numofinvalid = 0;
 
-    private ArrayList<Index> targetIndex = new ArrayList<>();
+    private ArrayList<Index> targetIndexs = new ArrayList<>();
     private String target = "";
 
     public DeleteCommand(ArrayList<Index> targetIndex) {
-        this.targetIndex = targetIndex;
+        this.targetIndexs = targetIndex;
     }
     public DeleteCommand(String target) {
         this.target = target;
@@ -43,7 +43,7 @@ public class DeleteCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
         ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
-        if (target != null) {
+        if (target != "") {
             for (ReadOnlyPerson p: lastShownList) {
                 if (p.getName().fullName.equals(target)) {
                     personstodelete.add(p);
@@ -52,7 +52,7 @@ public class DeleteCommand extends UndoableCommand {
                 }
             }
         } else {
-            for (Index s: targetIndex) {
+            for (Index s: targetIndexs) {
                 if (s.getZeroBased() >= lastShownList.size()) {
                     allvalid = false;
                     numofinvalid++;
@@ -80,8 +80,9 @@ public class DeleteCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.target.equals(((DeleteCommand) other).target))
-                || (other instanceof DeleteCommand
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                && this.targetIndexs.equals(((DeleteCommand) other).targetIndexs))
+                && (other instanceof DeleteCommand
+                && this.target.equals(((DeleteCommand) other).target)); // state check
     }
 }
+
