@@ -23,6 +23,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -86,7 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public FavouriteListPredicate getFavouriteListPredicate() {
-        return new FavourListPredicate(favourList);
+        return new FavouriteListPredicate(favouriteList);
     }
 
 
