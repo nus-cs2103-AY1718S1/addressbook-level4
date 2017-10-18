@@ -28,11 +28,11 @@ public class FindCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_EMAIL + "google"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_NAME + "alan"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_PHONE + "98989898" + "(by 4 digits or 8 digits search)"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_ADDRESS + "Geylang"
-            + "Example: " + COMMAND_WORD + "  " + PREFIX_TAG + "friends";
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_EMAIL + "google\n"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_NAME + "alan\n"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_PHONE + "98989898" + " (by 4 digits or 8 digits search)\n"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_ADDRESS + "Geylang\n"
+            + "Example: " + COMMAND_WORD + "  " + PREFIX_TAG + "friends\n";
 
     private final Predicate<ReadOnlyPerson> predicate;
 
