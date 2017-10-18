@@ -6,25 +6,27 @@ package seedu.address.model.person;
 public class Favorite {
 
     public static final String MESSAGE_FAVORITE_CONSTRAINTS = "Only prefix is required.";
-    private Boolean value;
+    private boolean value;
 
     /**
-     * This allows user to supply just the prefix (/f) alone during Add and Edit Person.
+     * Allow only 'true' or 'false' values specified in AddCommandParser, EditCommandParser and test files.
+     * If user specifies "f/"  : pass in 'true'
+     * If user specifies "uf/" : pass in 'false'
      */
-    public Favorite(Boolean isFav) throws NullPointerException {
-        if (isFav == null) {
-            throw new NullPointerException("favorite status cannot be empty");
-        }
+    public Favorite(boolean isFav) {
         this.value = isFav;
     }
 
-    /*
-     * Getter method
+    /**
+     * Getter-method for returning favorite status
      */
     public boolean isFavorite() {
         return this.value;
     }
 
+    /**
+     * Formats 'true'/'false' values to "Yes"/"No" Strings to be displayed to user
+     */
     @Override
     public String toString() {
         return isFavorite() ? "Yes" : "No";
@@ -34,12 +36,12 @@ public class Favorite {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Favorite // instanceof handles nulls
-                && this.value.equals(((Favorite) other).value)); // state check
+                && this.value == (((Favorite) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Boolean.hashCode(value);
     }
 
 }

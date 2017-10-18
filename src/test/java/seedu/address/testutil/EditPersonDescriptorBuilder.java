@@ -88,12 +88,8 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Favorite} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withFavorite(Boolean favorite) {
-        try {
-            descriptor.setFavorite(new Favorite(favorite));
-        } catch (NullPointerException npe) {
-            throw new NullPointerException("favorite status cannot be empty");
-        }
+    public EditPersonDescriptorBuilder withFavorite(boolean favorite) {
+        descriptor.setFavorite(new Favorite(favorite));
         return this;
     }
 

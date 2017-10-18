@@ -32,7 +32,7 @@ public class XmlAdaptedPerson {
     private String address;
 
     @XmlElement
-    private Boolean favorite;
+    private boolean favorite;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 

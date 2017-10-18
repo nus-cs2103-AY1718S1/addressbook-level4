@@ -209,9 +209,7 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()
                 + FAVORITE_DESC_NO + FAVORITE_DESC_YES + FAVORITE_DESC_NO;
-        assertParseFailure(parser, userInput,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                EditCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
     }
 
     @Test
