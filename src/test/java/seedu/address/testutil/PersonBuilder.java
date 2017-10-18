@@ -22,7 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_FAVORITE = "yes";
+    public static final Boolean DEFAULT_FAVORITE = true;
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -112,11 +112,11 @@ public class PersonBuilder {
     /**
      * Sets the {@code Favorite} of the {@code Person} that we are building.
      */
-    public PersonBuilder withFavorite(String favorite) {
+    public PersonBuilder withFavorite(Boolean favorite) {
         try {
             this.person.setFavorite(new Favorite(favorite));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("favorite is expected to be unique.");
+        } catch (NullPointerException npe) {
+            throw new NullPointerException("favorite status cannot be empty");
         }
         return this;
     }

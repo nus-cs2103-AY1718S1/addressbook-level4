@@ -96,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
      * Changes the star metaphor image for each {@code Person} according to their favorite status
      */
     private void initFav(ReadOnlyPerson person) {
-        if (person.getFavorite().toString().equals(Favorite.FavoriteStatus.no.toString())) {
+        if (!person.getFavorite().isFavorite()) {
             favorite.setImage(null);
         }
     }

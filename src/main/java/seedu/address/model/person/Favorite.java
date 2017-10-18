@@ -1,53 +1,33 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
 /**
  * Represents a Favorite status in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidFavoriteStatus(String)}
  */
 public class Favorite {
 
-    /**
-     * Default favorite statuses
-     */
-    public enum FavoriteStatus {
-        yes,
-        no;
-    }
-
-    public static final String MESSAGE_FAVORITE_CONSTRAINTS =
-            "Favorite status can only be either 'yes' or 'no'";
-
-    public static final String FAVORITE_VALIDATION_REGEX = "yes|no";
-
-    public final String value;
+    public static final String MESSAGE_FAVORITE_CONSTRAINTS = "Only prefix is required.";
+    private Boolean value;
 
     /**
-     * Validates given favorite status.
-     *
-     * @throws IllegalValueException if given favorite status string is invalid.
+     * This allows user to supply just the prefix (/f) alone during Add and Edit Person.
      */
-    public Favorite(String favorite) throws IllegalValueException {
-        requireNonNull(favorite);
-        if (!isValidFavoriteStatus(favorite)) {
-            throw new IllegalValueException(MESSAGE_FAVORITE_CONSTRAINTS);
+    public Favorite(Boolean isFav) throws NullPointerException {
+        if (isFav == null) {
+            throw new NullPointerException("favorite status cannot be empty");
         }
-        this.value = favorite;
+        this.value = isFav;
     }
 
-    /**
-     * Returns true if a given string is a valid favorite status.
+    /*
+     * Getter method
      */
-    public static boolean isValidFavoriteStatus(String test) {
-        return test.matches(FAVORITE_VALIDATION_REGEX);
+    public boolean isFavorite() {
+        return this.value;
     }
 
     @Override
     public String toString() {
-        return value;
+        return isFavorite() ? "Yes" : "No";
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -87,11 +88,11 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Favorite} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withFavorite(String favorite) {
+    public EditPersonDescriptorBuilder withFavorite(Boolean favorite) {
         try {
-            ParserUtil.parseFavorite(Optional.of(favorite)).ifPresent(descriptor::setFavorite);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("favorite is expected to be unique.");
+            descriptor.setFavorite(new Favorite(favorite));
+        } catch (NullPointerException npe) {
+            throw new NullPointerException("favorite status cannot be empty");
         }
         return this;
     }

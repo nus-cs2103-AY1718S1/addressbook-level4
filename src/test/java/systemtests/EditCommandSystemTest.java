@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_NO;
 import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_YES;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_FAVORITE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_FAV_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -202,7 +202,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid favorite -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_FAVORITE_DESC,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_FAV_DESC,
                 Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */

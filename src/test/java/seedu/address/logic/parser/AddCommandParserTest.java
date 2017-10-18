@@ -5,11 +5,10 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_NO;
 import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_YES;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_FAVORITE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_FAV_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -103,13 +102,13 @@ public class AddCommandParserTest {
                         + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
-        // multiple favorite statuses - last favorite status accepted
+        // multiple similar favorite statuses accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD
                         + NAME_DESC_BOB
                         + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB
-                        + FAVORITE_DESC_NO
+                        + FAVORITE_DESC_YES
                         + FAVORITE_DESC_YES
                         + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
@@ -240,15 +239,15 @@ public class AddCommandParserTest {
                         + TAG_DESC_FRIEND,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
-        // invalid favorite status
+        // invalid favorite
         assertParseFailure(parser, AddCommand.COMMAND_WORD
                         + NAME_DESC_BOB
                         + PHONE_DESC_BOB
                         + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB
-                        + INVALID_FAVORITE_DESC
+                        + INVALID_FAV_DESC
                         + TAG_DESC_HUSBAND
-                        + TAG_DESC_FRIEND,
+                        + TAG_DESC_HUSBAND,
                 Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
 
         // invalid tag

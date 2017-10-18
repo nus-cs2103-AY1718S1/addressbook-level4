@@ -5,11 +5,10 @@ import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_NO;
 import static seedu.address.logic.commands.CommandTestUtil.FAVORITE_DESC_YES;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_FAVORITE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_FAV_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
@@ -74,7 +73,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   "
                 + ADDRESS_DESC_AMY + "   "
-                + FAVORITE_DESC_NO + "   "
                 + TAG_DESC_FRIEND + " ";
         assertCommandSuccess(command, toAdd);
 
@@ -95,7 +93,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + FAVORITE_DESC_NO
                 + TAG_DESC_FRIEND;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
@@ -108,7 +105,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + FAVORITE_DESC_NO
                 + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
@@ -285,7 +281,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + INVALID_FAVORITE_DESC;
+                + INVALID_FAV_DESC;
         assertCommandFailure(command, Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */

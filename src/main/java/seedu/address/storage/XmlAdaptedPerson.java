@@ -32,7 +32,7 @@ public class XmlAdaptedPerson {
     private String address;
 
     @XmlElement
-    private String favorite;
+    private Boolean favorite;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        favorite = source.getFavorite().value;
+        favorite = source.getFavorite().isFavorite();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
