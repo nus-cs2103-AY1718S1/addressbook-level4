@@ -9,9 +9,9 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FRIENDS;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FAMILY;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_COLLEAGUES;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FRIENDS;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_OWESMONEY;
 
 import org.junit.Test;
