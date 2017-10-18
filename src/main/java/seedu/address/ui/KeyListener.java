@@ -64,8 +64,6 @@ public class KeyListener {
 
             } else if (keys.get("DELETE_SELECTION").match(keyEvent)) {
                 // TODO: add support for deletion at selected list
-                // Dummy action
-                personListPanel.setFocus();
 
             } else {
                 // Execute key events for command words
