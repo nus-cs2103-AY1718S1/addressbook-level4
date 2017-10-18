@@ -368,9 +368,9 @@ public class SortCommand extends Command {
 The sort is case insensitive.
 
 The following sequence diagram shows how the undo operation works:
-image::SortSequenceDiagram.png[width="800"]
+image::docs/images/SortSequenceDiagram.png[width="800"]
 
-When the user calls ‘sort’ or ‘st’ to sort the contacts in AddressBook, the Model will take in an ArrayList named contactList from the Parser.
+When the user calls ‘sort’ or ‘st’ to sort the contacts in cherBook, the Model will take in an ArrayList named contactList from the Parser.
 
 Upon a successful sort, contacts are displayed in alphabetical order.
 If an empty list is given, the address book will return with message: “No contacts to be sorted”.
