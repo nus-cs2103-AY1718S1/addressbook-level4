@@ -21,7 +21,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
-        assertEquals(expectedCard.getHomeNumber(),actualCard.getHomeNumber());
+        assertEquals(expectedCard.getHomeNumber(), actualCard.getHomeNumber());
         assertEquals(expectedCard.getSchEmail(), actualCard.getSchEmail());
         assertEquals(expectedCard.getWebsite(), actualCard.getWebsite());
         assertEquals(expectedCard.getName(), actualCard.getName());

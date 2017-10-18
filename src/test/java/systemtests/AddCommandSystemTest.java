@@ -247,7 +247,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing website -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
-                +EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+                + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 

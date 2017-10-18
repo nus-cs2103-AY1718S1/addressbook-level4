@@ -70,7 +70,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return phoneLabel.getText();
     }
 
-    public String getHomeNumber(){
+    public String getHomeNumber() {
         return homeNumberLabel.getText();
     }
 
