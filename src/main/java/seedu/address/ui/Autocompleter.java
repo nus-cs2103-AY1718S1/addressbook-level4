@@ -29,15 +29,15 @@ public class Autocompleter {
      */
     public String autocomplete(String commandBoxText) {
         String[] commandBoxTextArray = commandBoxText.trim().split("\\s+");
-        String autocompletedText = commandBoxText;
-        if (commandBoxTextArray.length == 0) {
+        String autocompleteText = commandBoxText;
+        if (commandBoxText.equals("")) {
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP, false));
         } else if (commandBoxTextArray.length == 1) {
-            autocompletedText = processOneWordAutocomplete(commandBoxTextArray[0]);
+            autocompleteText = processOneWordAutocomplete(commandBoxTextArray[0]);
         } else {
 
         }
-        return autocompletedText;
+        return autocompleteText;
     }
 
     private String processOneWordAutocomplete(String commandBoxText) {
@@ -51,7 +51,7 @@ public class Autocompleter {
      * @return ArrayList of possible autocomplete results
      */
     private ArrayList<String> getClosestCommands (String commandBoxText) {
-        ArrayList<String> possibleResults = new ArrayList<String>();
+        ArrayList<String> possibleResults = new ArrayList<>();
         Arrays.stream(commandList)
                 .filter(s -> isPossibleMatch(commandBoxText, s))
                 .forEach(s -> possibleResults.add(s));
