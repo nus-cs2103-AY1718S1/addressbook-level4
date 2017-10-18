@@ -54,11 +54,6 @@ public interface Model {
     void setTagColor(boolean toSet, String tag, String color);
 
     /**
-     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
-     */
-    void deletePersonsWithTag(Tag tag);
-
-    /**
      * Deletes all persons in the {@code AddressBook} who have any of the {@code tags}.
      */
     void deletePersonsByTags(Set<Tag> tags);
