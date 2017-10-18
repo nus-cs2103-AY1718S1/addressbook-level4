@@ -32,49 +32,49 @@ public class AutocompleterTest extends GuiUnitTest {
     @Test
     public void autocomplete() throws Exception {
         // default result text
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
         // autocomplete with empty string
         String autocompleteResult = autocompleter.autocomplete(EMPTY_STRING);
         assertEquals(autocompleteResult, EMPTY_STRING);
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(PROMPT_USER_TO_USE_HELP_MESSAGE, resultDisplayHandle.getText());
 
         // lowercase autocomplete with only one autocomplete option
         autocompleteResult = autocompleter.autocomplete("a");
         assertEquals(autocompleteResult, ADD_COMMAND_WORD);
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
         // uppercase autocomplete with only one autocomplete option
         autocompleteResult = autocompleter.autocomplete("A");
         assertEquals(autocompleteResult, ADD_COMMAND_WORD);
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
         // mix uppercase and lowercase autocomplete with only one autocomplete option
         autocompleteResult = autocompleter.autocomplete("Ed");
         assertEquals(autocompleteResult, EDIT_COMMAND_WORD);
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
         // lowercase autocomplete with multiple autocomplete options
         autocompleteResult = autocompleter.autocomplete("e");
         assertEquals(autocompleteResult, "e");
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
 
         // uppercase autocomplete with multiple autocomplete options
         autocompleteResult = autocompleter.autocomplete("E");
         assertEquals(autocompleteResult, "E");
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
 
         // autocomplete with no possible options
         autocompleteResult = autocompleter.autocomplete("Z");
         assertEquals(autocompleteResult, "Z");
-        guiRobot.pauseForHuman();
+        guiRobot.pauseForEvent();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
     }
