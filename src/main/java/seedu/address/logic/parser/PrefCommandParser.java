@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Objects;
+
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -21,7 +23,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
         String newPrefValue;
         newPrefValue = "";
 
-        if (splitArgs.length > 2) {
+        if (splitArgs.length > 2 || (splitArgs.length == 1 && Objects.equals(splitArgs[0], ""))) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrefCommand.MESSAGE_USAGE));
         } else if (splitArgs.length == 2) {
