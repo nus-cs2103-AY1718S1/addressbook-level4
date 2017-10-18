@@ -1,6 +1,8 @@
 package seedu.address.commons.util;
 
-import seedu.address.model.tag.Tag;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -8,9 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -19,7 +19,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 public class StringUtil {
 
     /**
-     * Returns true if the {@code sentence} contains the {@code word}.
+     * Returns true if the {@code sentence} contains the {@code searchWord}.
      * Ignores case, but a full word match is required.
      * <br>examples:<pre>
      *       containsNameIgnoreCase("ABc def", "abc") == true
@@ -27,14 +27,14 @@ public class StringUtil {
      *       containsNameIgnoreCase("ABc def", "AB") == false //not a full word match
      *       </pre>
      *
-     * @param sentence cannot be null
-     * @param word     cannot be null, cannot be empty, must be a single word
+     * @param sentence   cannot be null
+     * @param searchWord cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsNameIgnoreCase(String sentence, String word) {
+    public static boolean containsNameIgnoreCase(String sentence, String searchWord) {
         requireNonNull(sentence);
-        requireNonNull(word);
+        requireNonNull(searchWord);
 
-        String preppedWord = word.trim();
+        String preppedWord = searchWord.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
@@ -49,7 +49,7 @@ public class StringUtil {
     }
 
     /**
-     * Returns true if the {@code emailsentence} contains the {@code word}.
+     * Returns true if the {@code emailsentence} contains the {@code searchWord}.
      * Ignores case, but a full word match is required.
      * <br>examples:<pre>
      *       containsEmailgnoreCase("abc@example.com", "e/example") == true
@@ -58,15 +58,15 @@ public class StringUtil {
      *       </pre>
      *
      * @param emailSentence cannot be null
-     * @param word          cannot be null, cannot be empty, must be a valid  email domain
+     * @param searchWord    cannot be null, cannot be empty, must be a valid  email domain
      */
-    public static boolean containsEmailIgnoreCase(String emailSentence, String word) {
+    public static boolean containsEmailIgnoreCase(String emailSentence, String searchWord) {
         requireNonNull(emailSentence);
-        requireNonNull(word);
+        requireNonNull(searchWord);
 
-        String preppedWord = word.trim();
+        String preppedWord = searchWord.trim();
         checkArgument(!preppedWord.isEmpty(), "Email parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Email parameter should have a valid email domain");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Email parameter should be a single word");
 
         String preppedEmailSentence = emailSentence.substring(emailSentence.indexOf('@') + 1);
         String finalPreppedEmailSentence = preppedEmailSentence.substring(0, preppedEmailSentence.indexOf('.'));
@@ -77,7 +77,7 @@ public class StringUtil {
 
 
     /**
-     * Returns true if the {@code phoneSentence} contains the {@code word}.
+     * Returns true if the {@code phoneSentence} contains the {@code searchWord}.
      * Ignores case, but numbers must be either 4 digits or 8 digits.
      * <br>examples:<pre>
      *      containsPhoneIgnoreCase("99998888", "p/8888") == true
@@ -86,15 +86,15 @@ public class StringUtil {
      *       </pre>
      *
      * @param phoneSentence cannot be null
-     * @param word          cannot be null, cannot be empty, must be 4 digits or 8 digits
+     * @param searchWord    cannot be null, cannot be empty, must be 4 digits or 8 digits only
      */
-    public static boolean containsPhoneIgnoreCase(String phoneSentence, String word) {
+    public static boolean containsPhoneIgnoreCase(String phoneSentence, String searchWord) {
         requireNonNull(phoneSentence);
-        requireNonNull(word);
+        requireNonNull(searchWord);
 
-        String preppedPhone = word.trim();
+        String preppedPhone = searchWord.trim();
         checkArgument(!preppedPhone.isEmpty(), "Phone parameter cannot be empty");
-        checkArgument(preppedPhone.split("(?<=\\G.{4})").length == 1, "Phone parameter should have at least 4 digits");
+        checkArgument(preppedPhone.split("\\s+").length == 1, "Phone numbers parameter should be a single word");
         String[] phonePreppedSentence = phoneSentence.split("(?<=\\G.{4})");
 
 
@@ -109,45 +109,47 @@ public class StringUtil {
 
 
     /**
-     * Returns true if the {@code addressSentence } contains the {@code word}.
+     * Returns true if the {@code addressSentence } contains the {@code searchWord}.
      * Ignores case, but a full word match is required.
      * <br>examples:<pre>
-     *      containsAddressIgnoreCase("99998888", "a/Geylang") == true
-     *      containsAddressIgnoreCase("99998888", "e/Gey lanf") == false
+     *      containsAddressIgnoreCase("123, Jurong West Ave 6, #08-111", "a/#08-111") == true
+     *      containsAddressIgnoreCase("123, Jurong West Ave 6, #08-111", "a/#08-111","123") == true
+     *      containsAddressIgnoreCase("123, Jurong West Ave 6, #08-111", "e/JUrong") == true
+     *      containsAddressIgnoreCase("123, Jurong West Ave 6, #08-111", "e/JUrongWest") == false
      *       </pre>
      *
      * @param addressSentence cannot be null
-     * @param word            cannot be null, cannot be empty, must be 4 digits or 8 digits
+     * @param searchWord      cannot be null, cannot be empty, must be 4 digits or 8 digits
      */
-    public static boolean containsAddressIgnoreCase(String addressSentence, String word) {
+    public static boolean containsAddressIgnoreCase(String addressSentence, String searchWord) {
         requireNonNull(addressSentence);
-        requireNonNull(word);
+        requireNonNull(searchWord);
 
-        String preppedAddress = word.trim();
+        String preppedAddress = searchWord.trim();
         checkArgument(!preppedAddress.isEmpty(), "Address parameter cannot be empty");
         checkArgument(preppedAddress.split("\\s+").length == 1, "Address parameter should be a single word");
 
 
-        List<String> tempAddress = Arrays.asList(addressSentence.split("\\s+"));
+        List<String> tempAddress = Arrays.asList(addressSentence.replaceAll(",", "").split("\\s+"));
         return tempAddress.stream().anyMatch(preppedAddress::equalsIgnoreCase);
     }
 
     /**
-     * Returns true if the {@code tagSet } contains the {@code word}.
+     * Returns true if the {@code tagSet } contains the {@code searchWord}.
      * Ignores case, but a full word match is required.
      * <br>examples:<pre>
-     *      containsAddressIgnoreCase("99998888", "a/Geylang") == true
-     *      containsAddressIgnoreCase("99998888", "e/Gey lanf") == false
+     *      containsTagIgnoreCase("friends", "a/FRIend") == true
+     *      containsTagIgnoreCase("friends", "e/FRIENd") == false
      *       </pre>
      *
-     * @param tagSet cannot be null
-     * @param word   cannot be null, cannot be empty, must be at least a a single word
+     * @param tagSet     cannot be null
+     * @param searchWord cannot be null, cannot be empty, must be at least a a single word
      */
-    public static boolean containsTagIgnoreCase(Collection<Tag> tagSet, String word) {
+    public static boolean containsTagIgnoreCase(Collection<Tag> tagSet, String searchWord) {
         requireAllNonNull(tagSet);
-        requireNonNull(word);
+        requireNonNull(searchWord);
 
-        String preppedTag = word.trim();
+        String preppedTag = searchWord.trim();
         checkArgument(!preppedTag.isEmpty(), "Tag parameter cannot be empty");
         checkArgument(preppedTag.split("\\s+").length == 1, "Tag parameter should be a single word");
         String[] tempTag = preppedTag.split("\\s+");

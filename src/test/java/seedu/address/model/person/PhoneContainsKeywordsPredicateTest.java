@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -18,14 +19,14 @@ public class PhoneContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("85355255");
         List<String> secondPredicateKeywordList = Arrays.asList("85355255", "99995255");
 
-        PhoneContainsKeywordsPredicate firstPredicate = new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
-        PhoneContainsKeywordsPredicate secondPredicate = new PhoneContainsKeywordsPredicate(secondPredicateKeywordList);
+        Predicate<ReadOnlyPerson> firstPredicate = new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
+        Predicate<ReadOnlyPerson> secondPredicate = new PhoneContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        EmailContainsKeywordsPredicate firstPredicateCopy = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        Predicate<ReadOnlyPerson> firstPredicateCopy = new PhoneContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -40,12 +41,12 @@ public class PhoneContainsKeywordsPredicateTest {
 
     @Test
     public void test_phoneContainsKeywords_returnsTrue() {
-        // One email domain
-        PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.singletonList("85355255"));
+        // One phone number of 4 digits
+        Predicate<ReadOnlyPerson> predicate = new PhoneContainsKeywordsPredicate(Collections.singletonList("8535"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
         //Searching multiple phone numbers with varying digits
-        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("85355255", "89898989"));
+        predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("8535", "8989"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
         // Searching phone number using 4 digits
@@ -57,7 +58,7 @@ public class PhoneContainsKeywordsPredicateTest {
     @Test
     public void test_emailDoesNotContainKeywords_returnsFalse() {
         // Zero phone numbers
-        PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.emptyList());
+        Predicate<ReadOnlyPerson> predicate = new PhoneContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
         // phone with 3 digits

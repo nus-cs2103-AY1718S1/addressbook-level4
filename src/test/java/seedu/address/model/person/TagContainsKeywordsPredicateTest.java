@@ -6,6 +6,7 @@ import seedu.address.testutil.PersonBuilder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -15,17 +16,17 @@ public class TagContainsKeywordsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("gmail");
-        List<String> secondPredicateKeywordList = Arrays.asList("gmail", "yahoo");
+        List<String> firstPredicateKeywordList = Collections.singletonList("friends");
+        List<String> secondPredicateKeywordList = Arrays.asList("neighbours");
 
-        EmailContainsKeywordsPredicate firstPredicate = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
-        EmailContainsKeywordsPredicate secondPredicate = new EmailContainsKeywordsPredicate(secondPredicateKeywordList);
+        Predicate<ReadOnlyPerson> firstPredicate = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
+        Predicate<ReadOnlyPerson> secondPredicate = new TagContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        EmailContainsKeywordsPredicate firstPredicateCopy = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        Predicate<ReadOnlyPerson> firstPredicateCopy = new TagContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -40,33 +41,33 @@ public class TagContainsKeywordsPredicateTest {
 
     @Test
     public void test_emailContainsKeywords_returnsTrue() {
-        // One email domain
-        EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.singletonList("gmail"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
+        // exact match
+        Predicate<ReadOnlyPerson> predicate = new TagContainsKeywordsPredicate(Collections.singletonList("friends"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
 
-        // Multiple email domains
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("gmail", "yahoo"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
+        // Multiple tags
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friends", "teachers"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
 
         // Mixed-case keywords
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("GmAil", "YAhoo"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("frIEnds"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
 
     }
 
     @Test
     public void test_emailDoesNotContainKeywords_returnsFalse() {
         // Zero email domain
-        EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
+        Predicate<ReadOnlyPerson> predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends").build()));
 
         // Non-matching keyword
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("yahoo"));
-        assertFalse(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("friEND"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("friends").build()));
 
-        // Keywords match phone, name and address, but does not match email
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("12345", "Alice", "Main", "Street"));
+        // Keywords match phone, name and address, but does not match tag
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("12345", "Alice", "Main", "Street"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+                .withEmail("alice@email.com").withTags("friends").withAddress("Main Street").build()));
     }
 }
