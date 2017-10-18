@@ -765,6 +765,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |write down remarks for a contact |record specific information about the contact
 
+|`* *` |user |to create new task|keep track on ongoing task and stay on track
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |choose the colour for my contact's tag |differentiate contact's with different tags just by looking at them
