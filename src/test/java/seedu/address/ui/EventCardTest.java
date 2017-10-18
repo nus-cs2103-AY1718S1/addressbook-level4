@@ -19,27 +19,19 @@ public class EventCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        // no tags
-        Event eventWithNoTags = new EventBuilder().withTags(new String[0])
-                .build();
-        EventCard eventCard = new EventCard(eventWithNoTags, 1);
-        uiPartRule.setUiPart(eventCard);
-        assertCardDisplay(eventCard, eventWithNoTags, 1);
 
-        // with tags
-        Event eventWithTags = new EventBuilder().build();
-        eventCard = new EventCard(eventWithTags, 2);
+        Event event = new EventBuilder().build();
+        EventCard eventCard = new EventCard(event, 2);
         uiPartRule.setUiPart(eventCard);
-        assertCardDisplay(eventCard, eventWithTags, 2);
+        assertCardDisplay(eventCard, event, 2);
 
         // changes made to Event reflects on card
         guiRobot.interact(() -> {
-            eventWithTags.setTitle(MEET_JOHN.getTitle());
-            eventWithTags.setTiming(MEET_JOHN.getTiming());
-            eventWithTags.setDescription(MEET_JOHN.getDescription());
-            eventWithTags.setTags(MEET_JOHN.getTags());
+            event.setTitle(MEET_JOHN.getTitle());
+            event.setTiming(MEET_JOHN.getTiming());
+            event.setDescription(MEET_JOHN.getDescription());
         });
-        assertCardDisplay(eventCard, eventWithTags, 2);
+        assertCardDisplay(eventCard, event, 2);
     }
 
     @Test
