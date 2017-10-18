@@ -148,7 +148,7 @@ public class AddCommandTest {
 
         @Override
         public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
-
+            fail("This method should not be called.");
         }
 
         @Override

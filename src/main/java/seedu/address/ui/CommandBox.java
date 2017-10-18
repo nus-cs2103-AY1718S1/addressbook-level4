@@ -47,12 +47,13 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     private static final String TAG_PREFIX = "prefix";
 
-    private static final int NAME = 0;
-    private static final int EMAIL = 1;
-    private static final int PHONE = 2;
-    private static final int ADDRESS = 3;
-    private static final int TAG = 4;
-    private static final int FONT_SIZE = 5;
+    private static final int CODE = 0;
+    private static final int CLASSTYPE = 1;
+    private static final int VENUE = 2;
+    private static final int GROUP = 3;
+    private static final int TIMESLOT = 4;
+    private static final int LECTURER = 5;
+    private static final int FONT_SIZE = 6;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -123,13 +124,12 @@ public class CommandBox extends UiPart<Region> {
      */
     private void configPrefixList() {
         prefixList = new ArrayList<>();
-        prefixList.add(CliSyntax.PREFIX_CLASS_TYPE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_MODULE_CODE.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_GROUP.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_LECTURER.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_TIME_SLOT.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_CLASS_TYPE.getPrefix());
         prefixList.add(CliSyntax.PREFIX_VENUE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_GROUP.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_TIME_SLOT.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_LECTURER.getPrefix());
         prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
     }
 
@@ -179,7 +179,6 @@ public class CommandBox extends UiPart<Region> {
             configInactiveKeyword();
             configBorderColor(allTextInput);
 
-
             for (int i = 0; i < inputArray.length; i++) {
                 String text = inputArray[i];
 
@@ -188,36 +187,42 @@ public class CommandBox extends UiPart<Region> {
                     configActiveKeyword(text);
                 }
 
-                //Name
-                if (text.contains(prefixList.get(NAME))) {
-                    index = allTextInput.indexOf(prefixList.get(NAME));
-                    configActiveTag(index, prefixList.get(NAME));
+                //Code
+                if (text.contains(prefixList.get(CODE))) {
+                    index = allTextInput.indexOf(prefixList.get(CODE));
+                    configActiveTag(index, prefixList.get(CODE));
                 }
 
-                //Email
-                if (text.contains(prefixList.get(EMAIL))) {
-                    index = allTextInput.indexOf(prefixList.get(EMAIL));
-                    configActiveTag(index, prefixList.get(EMAIL));
+                //Class type
+                if (text.contains(prefixList.get(CLASSTYPE))) {
+                    index = allTextInput.indexOf(prefixList.get(CLASSTYPE));
+                    configActiveTag(index, prefixList.get(CLASSTYPE));
                 }
 
-                //Phone
-                if (text.contains(prefixList.get(PHONE))) {
-                    index = allTextInput.indexOf(prefixList.get(PHONE));
-                    configActiveTag(index, prefixList.get(PHONE));
+                //Venue
+                if (text.contains(prefixList.get(VENUE))) {
+                    index = allTextInput.indexOf(prefixList.get(VENUE));
+                    configActiveTag(index, prefixList.get(VENUE));
                 }
 
-                //Address
-                if (text.contains(prefixList.get(ADDRESS))) {
-                    index = allTextInput.indexOf(prefixList.get(ADDRESS));
-                    configActiveTag(index, prefixList.get(ADDRESS));
+                //Group
+                if (text.contains(prefixList.get(GROUP))) {
+                    index = allTextInput.indexOf(prefixList.get(GROUP));
+                    configActiveTag(index, prefixList.get(GROUP));
                 }
 
-                //Tag
-                if (text.contains(prefixList.get(TAG))) {
+                //Time slot
+                if (text.contains(prefixList.get(TIMESLOT))) {
+                    index = allTextInput.indexOf(prefixList.get(TIMESLOT));
+                    configActiveTag(index, prefixList.get(TIMESLOT));
+                }
+
+                //Lecturer
+                if (text.contains(prefixList.get(LECTURER))) {
                     ArrayList<Integer> tagList = getTagIndexList(allTextInput);
                     for (int j = 0; j < tagList.size(); j++) {
                         index = tagList.get(j);
-                        configActiveTag(index, index + prefixList.get(TAG));
+                        configActiveTag(index, index + prefixList.get(LECTURER));
                     }
                 }
 
@@ -235,7 +240,7 @@ public class CommandBox extends UiPart<Region> {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
         while (index < allTextInput.length()) {
-            int newIndex = allTextInput.indexOf(prefixList.get(TAG), index);
+            int newIndex = allTextInput.indexOf(prefixList.get(LECTURER), index);
             if (newIndex == -1) {
                 break;
             }
@@ -282,9 +287,7 @@ public class CommandBox extends UiPart<Region> {
             checkBox.setGraphic(cross);
         }
     }
-
-
-
+    
 
     /**
      * Configure command keyword when appeared on Command Box
@@ -296,7 +299,7 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.setVisible(true);
 
         keywordLabel.getStyleClass().clear();
-        Insets leftInset = new Insets(0, 0, 0, 13);
+        Insets leftInset = new Insets(0, 0, 0, 14);
 
         switch (fontIndex) {
         case 1:
@@ -309,7 +312,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         case 3:
             keywordLabel.getStyleClass().add("keyword-label-default");
-            leftInset = new Insets(0, 0, 0, 14);
+            leftInset = new Insets(0, 0, 0, 15);
             break;
         case 4:
             keywordLabel.getStyleClass().add("keyword-label-large");
@@ -327,8 +330,9 @@ public class CommandBox extends UiPart<Region> {
         stackPane.setMargin(keywordLabel, leftInset);
 
         String color = keywordColorMap.get(commandKeyword);
-        keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
-                + "-fx-text-fill: red;");
+//        keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
+//                + "-fx-text-fill: red;");
+        keywordLabel.setStyle(("-fx-text-fill: " + color));
         keywordLabel.toFront();
     }
 
@@ -381,8 +385,11 @@ public class CommandBox extends UiPart<Region> {
         stackPane.setAlignment(tagLabel, Pos.CENTER_LEFT);
         stackPane.setMargin(tagLabel, leftInset);
 
-        tagLabel.setStyle("-fx-background-color:yellow;\n "
-                + "-fx-text-fill: red; ");
+//        tagLabel.setStyle("-fx-background-color:yellow;\n "
+//                + "-fx-text-fill: red; ");
+
+        tagLabel.setStyle("-fx-text-fill: yellow");
+
         tagLabel.setVisible(true);
         tagLabel.toFront();
     }

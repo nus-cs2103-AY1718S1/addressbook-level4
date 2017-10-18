@@ -63,8 +63,8 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multipleLessonsFound() {
-        String expectedMessage = String.format(MESSAGE_LESSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("1101R");
+        String expectedMessage = String.format(MESSAGE_LESSONS_LISTED_OVERVIEW, 4);
+        FindCommand command = prepareCommand("MA1101R");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(MA1101R_L1, MA1101R_L2, MA1101R_T1, MA1101R_T2));
     }
 
