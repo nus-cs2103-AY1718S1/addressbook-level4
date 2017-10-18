@@ -41,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
+    private ReadOnlyPerson selectedPerson;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -180,6 +181,23 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void changeListTo(String listName) {
         raise(new ChangeInternalListEvent(listName));
+    }
+
+    /**
+     * Sets the selected person to the specified person.
+     * @param person the person that is selected.
+     */
+    @Override
+    public void setSelectedPerson(ReadOnlyPerson person) {
+        this.selectedPerson = person;
+    }
+
+    /**
+     * Returns the currently selected {@code ReadOnlyPerson}.
+     */
+    @Override
+    public ReadOnlyPerson getSelectedPerson() {
+        return selectedPerson;
     }
 
     //=========== Filtered Person List Accessors =============================================================
