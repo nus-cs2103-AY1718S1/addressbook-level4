@@ -361,6 +361,86 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism sorts the names of people inside the `addressbook` which
+is inside the 'ModelManager'. It organizes the position of the people existing in
+the addressbook based on their names in an alphabetical order. The sort command inherits
+from UndoableCommand.
+
+From Figure 5.2.1 below, it is visible that `SortCommand` inherits from `UndoableCommand`
+which is an extra layer between abstract `Command` class in which the SortCommand
+can be undoable, where the previous state of the address book before sorting
+is saved.
+
+image::SortCommandLogicClassDiagram.PNG[width="800"]
+Figure 5.2.1 SortCommand Logic Class Diagram
+
+Suppose a user has an unorganized list of contacts and executes the
+`SortCommand` to organize his contacts based on their names in an
+alphabetical order.
+
+The execution of SortCommand is processed in this way:
+
+. User will execute a new `SortCommand` so as to sort the address book.
+. This is carried out by `model.sort()` in `executeUndoableCommand()`.
+. The `internalList` of the address book is accessed and is sorted through a `lambda` function which
+  compares the name of everyone and necessarily switches the position between contacts throughout the `internalList` by comparing names between person r1 and r2 sequentially.
+. After `internalList` is sorted, function `updateFilterPersonList(PREDICATE_SHOW_ALL_PERSONS)` is called
+  to update the list being filtered and also call an event `indicatedAddressBookChanged()`
+  to update the `PersonListPanel` of the GUI being shown.
+
+Code of SortCommand :
+[source,java]
+----
+public class SortCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sort();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+Sort method inside ModelManager.java :
+[source,java]
+----
+@Override
+public synchronized void sort() {
+    addressBook.sort();
+    updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    indicateAddressBookChanged();
+}
+----
+
+Sort method inside UniquePersonList.java :
+[source,java]
+----
+public void sort() {
+    internalList.sort((r1, r2) -> (
+            r1.getName().toString().compareTo(r2.getName().toString())));
+}
+
+----
+
+
+
+==== Design Considerations
+
+
+//end::sort[]
+
+// tag::accessWebsite[]
+=== Access Website mechanism
+
+The access website mechanism is
+
+==== Design Considerations
+
+
+//end::accessWebsite[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
