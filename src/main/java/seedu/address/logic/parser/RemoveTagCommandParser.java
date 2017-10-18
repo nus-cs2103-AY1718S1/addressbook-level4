@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new RemoveTagCommand object
  */
 public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     private final ArrayList<Tag> tagToRemove = new ArrayList<>();
