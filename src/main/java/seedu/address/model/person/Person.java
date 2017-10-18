@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DateOfBirth> dob;
-    private LifeInsurance lifeInsurance;
+    private ReadOnlyInsurance lifeInsurance;
 
     private String reason;
 
@@ -51,12 +51,15 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
+        if(source.getLifeInsurance() != null) {
+            this.lifeInsurance = source.getLifeInsurance();
+        }
     }
 
-    public Person(ReadOnlyPerson source, LifeInsurance lifeInsur) {
+    public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        this.lifeInsurance = lifeInsur;
+        this.lifeInsurance = lifeInsurance;
     }
 
     public void setName(Name name) {
