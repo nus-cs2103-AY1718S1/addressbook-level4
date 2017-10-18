@@ -28,7 +28,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
     private static final Pattern TAG_COLOR_FORMAT =
-            Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
+            Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+#(?<tagNewColor>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
     private static final Pattern URL_FORMAT =  Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]"
             + "{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)");
 

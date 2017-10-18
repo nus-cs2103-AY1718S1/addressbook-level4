@@ -161,6 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void setTagColor(Tag tag, String color) {
         TagColorManager.setColor(tag, color);
+        indicateAddressBookChanged();
     }
 
     //=========== Model support for activity component =============================================================
