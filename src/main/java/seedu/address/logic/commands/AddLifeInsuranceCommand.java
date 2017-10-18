@@ -114,7 +114,7 @@ public class AddLifeInsuranceCommand extends UndoableCommand {
     /**
      * Check if all the Person parameters required to create an insurance are inside the list
      */
-    public boolean arePersonsAllInList(List<ReadOnlyPerson> list, String owner, String insured, String beneficiary){
+    public boolean arePersonsAllInList(List<ReadOnlyPerson> list, String owner, String insured, String beneficiary) {
         boolean ownerFlag = false;
         boolean insuredFlag = false;
         boolean beneficiaryFlag = false;
