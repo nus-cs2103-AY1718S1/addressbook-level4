@@ -130,7 +130,9 @@ public class Person implements ReadOnlyPerson {
         return favourite;
     }
 
-    public void setFavourite(boolean favourite) { this.favourite = favourite; }
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
 
     @Override
     public boolean equals(Object other) {

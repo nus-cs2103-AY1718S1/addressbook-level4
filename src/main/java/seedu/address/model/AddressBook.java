@@ -107,11 +107,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+
+        UniquePersonList notFavouriteList = new UniquePersonList();
+        UniquePersonList favouriteList = new UniquePersonList();
+        for (ReadOnlyPerson person : persons) {
+            if (person.getFavourite()) {
+                favouriteList.add(person);
+            } else {
+                notFavouriteList.add(person);
+            }
+        }
+        persons.setPersons(favouriteList);
+        for (ReadOnlyPerson person : notFavouriteList) {
+            persons.add(person);
+        }
     }
 
     /**
