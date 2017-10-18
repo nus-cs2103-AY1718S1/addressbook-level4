@@ -166,6 +166,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         while (iter.hasNext()) {
             iter.next().removeTag(tag);
         }
+        tags.remove(tag); //remove tag from Master Tag List
     }
 
     //// tag-level operations
