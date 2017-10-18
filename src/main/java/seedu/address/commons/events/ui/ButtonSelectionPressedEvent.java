@@ -9,18 +9,18 @@ import seedu.address.ui.PersonCard;
 public class ButtonSelectionPressedEvent extends BaseEvent {
 
 
-    private final PersonCard newSelection;
+    private final String buttonPressed;
 
-    public ButtonSelectionPressedEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
+    public ButtonSelectionPressedEvent(String buttonPressed) {
+        this.buttonPressed = buttonPressed;
+    }
+    
+    public String getButtonPressed() {
+        return this.buttonPressed;
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
+        return this.buttonPressed;
     }
 }
