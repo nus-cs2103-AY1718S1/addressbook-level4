@@ -1,13 +1,11 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,16 +54,5 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
 
         assertCardDisplaysPerson(expectedPerson, actualCard);
         assertEquals(Integer.toString(1) + ". ", actualCard.getId());
-    }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_SECOND_EVENT);
-        guiRobot.pauseForHuman();
-
-        PersonCardHandle expectedCard = nearbyPersonListPanelHandle
-                .getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        PersonCardHandle selectedCard = nearbyPersonListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedCard, selectedCard);
     }
 }
