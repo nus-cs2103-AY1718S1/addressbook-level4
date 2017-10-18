@@ -16,6 +16,8 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@BrightTheme.css" />
@@ -39,43 +41,30 @@
 
     <SplitPane dividerPositions="0.15, 0.85" prefHeight="50.0" prefWidth="200.0">
         <items>
-            <HBox alignment="TOP_LEFT">
+            <StackPane alignment="TOP_LEFT" fx:id="calendarButton">
                 <padding>
                     <Insets bottom="10" left="20" right="10" top="10" />
                 </padding>
-                <AnchorPane fx:id="calendarButtonPlaceholder" >
-                   <children>
-                      <ImageView fitHeight="30.0"
-                                 fitWidth="30.0"
-                                 pickOnBounds="true" preserveRatio="true" >
-                          <Image url="/images/calendar.png">
-                          </Image>
-                      </ImageView>
-                   </children>
-                </AnchorPane>
-            </HBox>
+                <ImageView fitHeight="30.0"
+                           fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
+                    <Image url="/images/calendar.png"/>
+                </ImageView>
+            </StackPane>
             <StackPane fx:id="commandBoxPlaceholder" minHeight="60.0"
                        styleClass="commandBox" VBox.vgrow="NEVER">
                 <padding>
                     <Insets bottom="5" left="10" right="10" top="5" />
                 </padding>
             </StackPane>
-            <HBox alignment="TOP_RIGHT">
+            <StackPane alignment="TOP_RIGHT" fx:id="notificationButton">
                 <padding>
                     <Insets bottom="10" left="10" right="20" top="10" />
                 </padding>
-                <AnchorPane fx:id="notificationButtonPlaceholder">
-                    <children>
-                        <ImageView
-                                   fitHeight="30.0" fitWidth="30.0"
-                                   pickOnBounds="true" preserveRatio="true" >
-                            <image>
-                                <Image url="/images/notification.png"/>
-                            </image>
-                        </ImageView>
-                    </children>
-                </AnchorPane>
-            </HBox>
+                <ImageView fitHeight="30.0"
+                           fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
+                    <Image url="/images/notification.png"/>
+                </ImageView>
+            </StackPane>
         </items>
     </SplitPane>
 
@@ -85,25 +74,20 @@
             <padding>
                 <Insets bottom="5" left="5" right="5" top="5" />
             </padding>
-            <SplitPane dividerPositions="0.5" prefHeight="50.0" prefWidth="200.0">
-                <items>
-                    <AnchorPane fx:id="contactTabPlaceholder" minHeight="50.0"
-                                minWidth="0.0"
-                                prefHeight="50.0" prefWidth="100.0"
-                                styleClass="contactsTab">
-                        <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="100.0" text="Contacts" textAlignment="CENTER" textFill="white" />
-                    </AnchorPane>
-                    <AnchorPane fx:id="eventTabPlaceholder" minHeight="50.0"
-                                minWidth="0.0"
-                                prefHeight="50.0" prefWidth="100.0"
-                                styleClass="eventsTab">
-                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="Events" textAlignment="CENTER" textFill="white" />
-                    </AnchorPane>
-                </items>
-            </SplitPane>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-            <StackPane fx:id="eventListPanePlaceholder" VBox.vgrow="ALWAYS" />
-
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
+                     tabMinWidth="120.0" minHeight="50" styleClass="tabPane"
+                     VBox.vgrow="ALWAYS" prefHeight="500.0" prefWidth="200.0">
+                <tabs>
+                    <Tab fx:id="contactTab" styleClass="contactsTab"
+                         text="Contacts">
+                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                    </Tab>
+                    <Tab fx:id="eventTab" styleClass="eventsTab"
+                         closable="false" text="Events">
+                        <StackPane fx:id="eventListPanePlaceholder" VBox.vgrow="ALWAYS" />
+                    </Tab>
+                </tabs>
+            </TabPane>
         </VBox>
 
         <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500" styleClass="background">

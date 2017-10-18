@@ -314,17 +314,37 @@
 .contactsTab {
     -fx-background-color: #6495ed;
     -fx-background-radius: 10 0 0 0;
+    -fx-text-fill: white;
 }
 
 .eventsTab {
     -fx-background-color: #6495ed;
     -fx-background-radius: 0 10 0 0;
+    -fx-text-fill: white;
 }
 
 .commandBox {
     -fx-border-color: #1e90ff;
     -fx-border-radius: 10 10 10 10;
     -fx-background-color: white;
+}
+
+.tabPane {
+    -fx-border-radius: 10 10 0 0;
+    -fx-border-color: transparent;
+}
+
+.tab-down-button {
+-fx-padding: 0;
+}
+
+.tab-down-button .arrow {
+-fx-padding: 0;
+}
+
+
+.transparentButton {
+    -fx-background-color:transparent;
 }
 
 #cardPane {

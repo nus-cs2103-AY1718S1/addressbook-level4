@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.Stack;
 import java.util.logging.Logger;
+
+import javax.swing.text.html.ImageView;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -9,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -45,11 +50,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
-    private EventListPanel eventListPanel;
-    private ContactTab contactTab;
-    private EventTab eventTab;
-    private NotificationButton notificationButton;
-    private CalendarButton calendarButton;
+    //private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -75,16 +76,19 @@ public class MainWindow extends UiPart<Region> {
     private StackPane statusbarPlaceholder;
 
     @FXML
-    private AnchorPane eventTabPlaceholder;
+    private TabPane tabPane;
 
     @FXML
-    private AnchorPane contactTabPlaceholder;
+    private Tab eventTab;
 
     @FXML
-    private AnchorPane notificationButtonPlaceholder;
+    private Tab contactTab;
 
     @FXML
-    private AnchorPane calendarButtonPlaceholder;
+    private StackPane notificationButton;
+
+    @FXML
+    private StackPane calendarButton;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -168,48 +172,6 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
-        //@@author yangshuang
-        contactTab = new ContactTab();
-        contactTabPlaceholder.getChildren().add(contactTab.getRoot());
-        contactTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (personListPanelPlaceholder.getChildren().isEmpty()) {
-                    contactTabPlaceholder.setStyle("-fx-background-color:"
-                            + " #00bfff");
-                    eventTabPlaceholder.setStyle("-fx-background-color:"
-                                   + " #6495ed");
-
-                    personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-                }
-            }
-        });
-
-        eventTab = new EventTab();
-        eventTabPlaceholder.getChildren().add(eventTab.getRoot());
-        eventTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (!personListPanelPlaceholder.getChildren().isEmpty()) {
-                    eventTabPlaceholder.setStyle("-fx-background-color:"
-                            + " #00bfff");
-                    contactTabPlaceholder.setStyle("-fx-background-color:"
-                            + " #6495ed");
-                    personListPanelPlaceholder.getChildren().remove(0);
-                }
-            }
-        });
-
-        notificationButton = new NotificationButton();
-        notificationButtonPlaceholder.getChildren().add(notificationButton
-                .getRoot());
-
-        calendarButton = new CalendarButton();
-        calendarButtonPlaceholder.getChildren().add(calendarButton
-                .getRoot());
     }
 
     void hide() {
