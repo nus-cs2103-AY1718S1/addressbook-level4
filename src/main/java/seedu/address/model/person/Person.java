@@ -51,7 +51,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        if(source.getLifeInsurance() != null) {
+        if (source.getLifeInsurance() != null) {
             this.lifeInsurance = source.getLifeInsurance();
         }
     }

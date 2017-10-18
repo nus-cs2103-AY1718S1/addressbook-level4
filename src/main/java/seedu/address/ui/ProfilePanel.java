@@ -106,8 +106,8 @@ public class ProfilePanel extends UiPart<Region> {
         } else {
             owner.textProperty().bind(Bindings.convert(person.getLifeInsurance().getOwner().nameProperty()));
             insured.textProperty().bind(Bindings.convert(person.getLifeInsurance().getInsured().nameProperty()));
-            beneficiary.textProperty().bind(Bindings.convert(person.getLifeInsurance().
-                    getBeneficiary().nameProperty()));
+            beneficiary.textProperty().bind(Bindings.convert(person.getLifeInsurance()
+                    .getBeneficiary().nameProperty()));
             premium.textProperty().bind(Bindings.convert(person.getLifeInsurance().premiumProperty()));
             contractPath.textProperty().bind(Bindings.convert(person.getLifeInsurance().contractPathProperty()));
             signingDate.textProperty().bind(Bindings.convert(person.getLifeInsurance().signingDateProperty()));
