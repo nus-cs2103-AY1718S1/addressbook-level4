@@ -2,14 +2,16 @@ package seedu.address.commons.util;
 
 import seedu.address.model.tag.Tag;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.lang.reflect.Array;
-import java.util.*;
 
 /**
  * Helper functions for handling strings.
@@ -123,7 +125,7 @@ public class StringUtil {
 
         String preppedAddress = word.trim();
         checkArgument(!preppedAddress.isEmpty(), "Address parameter cannot be empty");
-        checkArgument(preppedAddress.split("\\s+").length ==1, "Address parameter should be a single word");
+        checkArgument(preppedAddress.split("\\s+").length == 1, "Address parameter should be a single word");
 
 
         List<String> tempAddress = Arrays.asList(addressSentence.split("\\s+"));
@@ -150,15 +152,15 @@ public class StringUtil {
         checkArgument(preppedTag.split("\\s+").length == 1, "Tag parameter should be a single word");
         String[] tempTag = preppedTag.split("\\s+");
 
-        for (Tag tag: tagSet) {
+        for (Tag tag : tagSet) {
             for (String tagToCheck : tempTag) {
-                if (tagToCheck.equalsIgnoreCase(tag.tagName))
+                if (tagToCheck.equalsIgnoreCase(tag.tagName)) {
                     return true;
+                }
             }
         }
-
-return false;
-}
+        return false;
+    }
 
     /**
      * Returns a detailed message of the t, including the stack trace.

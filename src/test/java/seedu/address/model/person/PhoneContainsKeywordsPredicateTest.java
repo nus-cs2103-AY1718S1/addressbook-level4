@@ -1,15 +1,15 @@
 package seedu.address.model.person;
 
-import org.junit.Test;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
+import seedu.address.testutil.PersonBuilder;
 
 public class PhoneContainsKeywordsPredicateTest {
 
@@ -44,7 +44,7 @@ public class PhoneContainsKeywordsPredicateTest {
         PhoneContainsKeywordsPredicate predicate = new PhoneContainsKeywordsPredicate(Collections.singletonList("85355255"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
-        //Searching multiple phone numbers with varing digits
+        //Searching multiple phone numbers with varying digits
         predicate = new PhoneContainsKeywordsPredicate(Arrays.asList("85355255", "89898989"));
         assertTrue(predicate.test(new PersonBuilder().withPhone("85355255").build()));
 
