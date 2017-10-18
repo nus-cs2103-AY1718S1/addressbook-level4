@@ -80,11 +80,9 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicateMeetingException();
-        }
-        else if (diffNameOfMeeting(toAdd)) {
+        } else if (diffNameOfMeeting(toAdd)) {
             throw new MeetingClashException();
-        }
-        else if (diffLocationOfMeeting(toAdd)) {
+        } else if (diffLocationOfMeeting(toAdd)) {
             throw new MeetingClashException();
         }
         internalList.add(new Meeting(toAdd));
@@ -108,11 +106,9 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         if (!target.equals(editedMeeting) && internalList.contains(editedMeeting)) {
             throw new DuplicateMeetingException();
-        }
-        else if (diffNameOfMeeting(editedMeeting)) {
+        } else if (diffNameOfMeeting(editedMeeting)) {
             throw new MeetingClashException();
-        }
-        else if (diffLocationOfMeeting(editedMeeting)) {
+        } else if (diffLocationOfMeeting(editedMeeting)) {
             throw new MeetingClashException();
         }
 
