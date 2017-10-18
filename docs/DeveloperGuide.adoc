@@ -364,6 +364,52 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::multiple[]
+=== Add multiple persons feature
+
+The feature to add multiple persons is facilitated by `AddMultipleCommand` which is a command that extends `UndoableCommand` i.e. `AddMultipleCommand` execution method is `executeUndoableCommand`.
+
+`AddMultipleCommand` adds new persons in a similar fashion with the existing `AddCommand`. Both uses the method, `addPerson`, of the model to add a given person. Furthermore, both commands parses the persons particulars similarly.
+
+Nevertheless, there are subtle differences between `AddMultipleCommand` and `AddCommand`. Below are characteristics that pertains to `AddMultipleCommand`:
+
+****
+1.  The `AddMultipleCommand` parses persons' particulars from data of a `.txt` file instead of user argument inputs.
+2.  The `AddMultipleCommand` user argument inputs is a file name of the file that contains persons' particulars.
+3.  The `AddMultipleCommand` is an independent command by itself i.e. calling undo/redo will undo/redo the entire data that was changed in the storage e.g. `Bob`, `Tom` and `Kat` was added, undoing will remove `Bob`, `Tom` and `Kat`.
+****
+
+The following sequence diagram shows how the add multiple persons operation works:
+
+image::AddMultipleCommandSequenceDiagram.png[width="800"]
+
+
+*Parsing of persons' particulars*
+
+The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file name and the data that contains in the `.txt` file.
+
+As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line. 
+The result of the parsed data is stored in an `ArrayList`, then it is returned with the construction of `AddMultipleCommand`.
+
+*Implementation as an independent Undoable/Redoable command*
+
+The `AddMultipleCommand` contains two `ArrayList`; One `Person` array list to facilitate adding new persons and one `ReadOnlyPerson` array list to facilitate deletion of persons in the event of unexpected result that requires the command to roll back.
+
+The user executes a new `AddMultipleCommand`, `multiple personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
+
+After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser` while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
+The below is a graphical representation of two examples `ArrayList`.
+
+image::AddMultipleCommandInitializationDiagram.png[width="800"]
+
+A variable `numberOfPersonsAdded` is used to keep track of `Person` added sequentially to the storage from `toAdd`.
+In the event when an error occur, a loop is initiated to delete the `ReadOnlyPerson` that contain in `readOnlyPeople` sequentially; the number of times the loop runs is based on `numberOfPersonsAdded`.
+As such, no persons will be stored in the storage if the execution fails.
+
+image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
+
+// end::multiple[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
