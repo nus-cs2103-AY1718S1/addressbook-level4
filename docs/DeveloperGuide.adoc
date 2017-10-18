@@ -458,7 +458,7 @@ updated list of tags.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `UndoableCommand` +
+**Aspect:** Implementation of `deleteTagCommand` +
 **Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
 **Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
 correctly iterate through all the lists of tags. +
