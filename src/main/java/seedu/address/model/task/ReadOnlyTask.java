@@ -38,5 +38,4 @@ public interface ReadOnlyTask {
                 .append(getDeadline());
         return builder.toString();
     }
-
 }
