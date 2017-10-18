@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -26,6 +25,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author khooroko
 /**
  * Contains integration tests (interaction with the Model) for {@code NearbyCommand}.
  */

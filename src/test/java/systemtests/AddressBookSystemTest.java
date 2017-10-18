@@ -20,6 +20,7 @@ import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.InfoPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.NearbyPersonListPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -28,6 +29,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NearbyCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
@@ -74,6 +76,10 @@ public abstract class AddressBookSystemTest {
 
     public PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
+    }
+
+    public NearbyPersonListPanelHandle getNearbyPersonListPanel() {
+        return getInfoPanel().getNearbyPersonListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -127,6 +133,14 @@ public abstract class AddressBookSystemTest {
     protected void selectPerson(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
+    }
+
+    /**
+     * Selects the person at {@code index} of the displayed nearby list.
+     */
+    protected void selectNearbyPerson(Index index) {
+        executeCommand(NearbyCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getNearbyPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 
     /**

@@ -73,7 +73,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void backupAddressBookReadSave() throws  Exception {
+    public void backupAddressBookReadSave() throws Exception {
         AddressBook original = getTypicalAddressBook();
         storageManager.saveAddressBook(original);
         storageManager.backupAddressBook();
