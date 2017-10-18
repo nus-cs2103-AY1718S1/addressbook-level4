@@ -31,7 +31,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
-    private long timestamp;
+    private String timestamp;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -53,7 +53,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        timestamp = source.getTimestamp().value;
+        timestamp = source.getTimestamp().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -74,7 +74,12 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-        final Timestamp timestamp = new Timestamp(this.timestamp);
+        final Timestamp timestamp;
+        if(this.timestamp.equals("null")) {
+            timestamp = new Timestamp(0);
+        }else{
+            timestamp = new Timestamp(this.timestamp);
+        }
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, timestamp, tags);
     }
