@@ -57,13 +57,15 @@ public abstract class UndoableCommand extends Command {
      * @param currentList cannot be null.
      */
     private void updateCurrentDisplayedList(String currentList) {
+
         switch (currentList) {
 
-            case "blacklist":
-                model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-                break;
-            default:
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        case "blacklist":
+            model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+            break;
+
+        default:
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
     }
 

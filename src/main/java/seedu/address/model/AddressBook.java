@@ -83,17 +83,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns {@UniquePersonList} of all blacklisted persons in the existing data of this {@code AddressBook} with {@code newData}.
+     * Returns {@UniquePersonList} of all blacklisted persons
+     * in the existing data of this {@code AddressBook} with {@code newData}.
      */
     public UniquePersonList getBlacklistedPersons() {
         UniquePersonList blacklistedPersons = new UniquePersonList();
         for (Person person : persons.getInternalList()) {
-            if (person.getIsBlacklisted())
+            if (person.getIsBlacklisted()) {
                 try {
                     blacklistedPersons.add(person);
                 } catch (DuplicatePersonException e) {
                     assert false : "This is not possible as prior checks have been done";
                 }
+            }
         }
         return blacklistedPersons;
     }
