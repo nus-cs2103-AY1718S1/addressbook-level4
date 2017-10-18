@@ -30,6 +30,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResizeCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -113,6 +114,14 @@ public class AddressBookParserTest {
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
         }
+    }
+
+    @Test
+    public void parseCommand_resize() throws Exception {
+        ResizeCommand command = (ResizeCommand) parser.parseCommand(
+                ResizeCommand.COMMAND_WORD
+                        + String.format(" %d %d", ResizeCommand.MAX_WIDTH, ResizeCommand.MAX_HEIGHT));
+        assertEquals(new ResizeCommand(ResizeCommand.MAX_WIDTH, ResizeCommand.MAX_HEIGHT), command);
     }
 
     @Test

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= AddressBookX - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -53,12 +53,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
-Shorthand Alias: `hp`
+Shorthand Alias: `hp` +
 Format: `help`
 
 === Adding a person: `add`
 
-Shorthand Alias: `a`
+Shorthand Alias: `a` +
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -73,13 +73,13 @@ Examples:
 
 === Listing all persons : `list`
 
-Shorthand Alias: `l`
+Shorthand Alias: `l` +
 Shows a list of all persons in the address book. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Shorthand Alias: `e`
+Shorthand Alias: `e` +
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -121,7 +121,7 @@ Adds the `9pmclass` tag to the 2nd person.
 
 === Making a note: `note`
 
-Shorthand Alias: 'n'
+Shorthand Alias: 'n' +
 Makes a note for an existing person in the address book. +
 Format: `note INDEX [n/Note]`
 
@@ -142,7 +142,7 @@ Removes all existing notes from the 3rd person
 
 === Locating persons by name: `find`
 
-Shorthand Alias: `f`
+Shorthand Alias: `f` +
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -165,7 +165,7 @@ Returns `John Watson`
 
 === Locating persons by tags: `filter`
 
-Shorthand Alias: `ft`
+Shorthand Alias: `ft` +
 Finds persons who are tagged with any of the given tags from the current list. +
 Format: `filter TAG [MORE_TAGS]`
 
@@ -187,7 +187,7 @@ Returns any person tagged with `family` or `friends`
 
 === Deleting a person : `delete`
 
-Shorthand Alias: `d`
+Shorthand Alias: `d` +
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
@@ -211,7 +211,7 @@ Deletes the 4th person in the address book.
 
 === Deleting a tag : `deletetag`
 
-Shorthand Alias: `dt`
+Shorthand Alias: `dt` +
 Deletes the specified tag from the address book. +
 Format: `deletetag TAGNAME`
 
@@ -229,7 +229,7 @@ Deletes the tag `class2101` from all contacts in the address book.
 
 === Selecting a person : `select`
 
-Shorthand Alias: `s`
+Shorthand Alias: `s` +
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -251,15 +251,33 @@ Selects the 1st person in the results of the `find` command.
 `s 7` +
 Selects the 7th person in the address book.
 
+=== Resize the main window : `resize`
+
+Shorthand Alias: `rs` +
+Resize the main window to the specified width and height in pixels +
+Format: `resize WIDTH HEIGHT`
+
+****
+* Resize the MainWindows to the specified WIDTH and HEIGHT.
+* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+****
+
+Examples:
+
+* `resize 1280 720` +
+Resize the main window to 1280*720.
+* `rs 1000 600` +
+Resize the main window to 1000*600.
+
 === Creating a backup : `backup`
 
-Shorthand Alias: `b`
+Shorthand Alias: `b` +
 Creates a backup file to store the data in address book. +
 Format: `backup`
 
 === Listing entered commands : `history`
 
-Shorthand Alias: `hx`
+Shorthand Alias: `hx` +
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
@@ -271,7 +289,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Shorthand Alias: `u`
+Shorthand Alias: `u` +
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
@@ -298,7 +316,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Shorthand Alias: `r`
+Shorthand Alias: `r` +
 Reverses the most recent `undo` command. +
 Format: `redo`
 
@@ -322,13 +340,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Shorthand Alias: `c`
+Shorthand Alias: `c` +
 Clears all entries from the address book. +
 Format: `clear`
 
 === Exiting the program : `exit`
 
-Shorthand Alias: `q`
+Shorthand Alias: `q` +
 Exits the program. +
 Format: `exit`
 
