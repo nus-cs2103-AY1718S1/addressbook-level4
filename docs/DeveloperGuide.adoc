@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bamboo - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -729,17 +729,177 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |careless user |undo a previous command |undo commands with typing mistakes
+
+|`* * *` |user |sort persons by desired attribute |list persons in desired order
+
+|`* * *` |user |see when a person was added |list persons by date added
+
+|`* * *` |user |redo a previous command |repeatedly launch frequent commands
+
+|`* * *` |lazy user |type shorthand commands |save time
+
+|`* * *` |lazy user |mark a person as "Favourite" |always find "Favourited" contacts easily
+
+|`* * *` |impatient user |delete multiple persons |save time
+
+|`* * *` |organised user |create a group |organise persons by groups
+
+|`* * *` |organised user |edit a group |change details of a group
+
+|`* * *` |organised user |add a person to a group |
+
+|`* * *` |organised user |delete a person in a group |remove a person that is longer in a group
+
+|`* * *` |organised user |list persons in a group |see persons in the same group
+
+|`* * *` |organised user |delete a group |remove groups that are no longer needed
+
+|`* * *` |organised user |list groups |see all groups that I have
+
+|`* * *` |forgetful user |add a person's photo |remember a person's face
+
+|`* *` |organised user |move a person to another group |shift a person when he/she changes group
+
+|`* *` |user |add a person's calendar |see their schedule
+
+|`* *` |busy user |find a common schedule with a person |meet them without schedule conflicts
+
+|`* *` |user | customize the look and feel of the applicaiton |use the application with a comfortable UI
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |add in contacts even if missing info for some fields |administrate contacts with only part of info known
 
-{More to be added}
+|`* *` |user |import/export saved contact-list to/from the address book |allow for contact transfers to other address books and/or backups
+
+|`* *` |forgetful user |see commands suggestions when I input wrong commands |enter the right commands
+
+|`* *` |forgetful user |look up contacts with partial name or initials |view list of contacts with eligible information
+
+|`* *` |careless user |get a list of possible contacts similiar to search keywords used |find correct contacts even with command typos
+
+|`* *` |social user |be able to connect the application to social media |see social media information related to my contacts
+
+|`*` |user |have a text search bar for contacts |find contacts faster instead of using "find" command
+
+|`*` |user |keep track of and display frequently looked up contacts |quick access to frequently viewed contacts
+
+|`*` |user |amend contact information |all information can be updated
+
+|`*` |user |clean up all contacts immediately |fast construct a new list of contacts
+
+|`*` |user |have an auto-complete command function in CLI |enter commands faster, increasing convenience
+
+|`*` |user |have each contact have a "comments" field |take notes for specific contacts
+
+|`*` |user |have displayed list of contacts display only "phone number" or "all info" |browse through contact list faster
+
+|`*` |user |link the application to online contact backup services |manage contact backups and synchronisation between devices
+
+|`*` |paranoid user |have application and it's data file locked with a password |feel safe knowing my contact list will not be stolen and copied
+
+|`*` |user |selectively import/export contacts to/from a file |transfer contacts to or recieve contacts from another application user
+
+|`*` |fellow developer |have a plug-in system to allow new modules to be used |plug in new functionalities such as a calender and/or appointment system
+|=======================================================================
 
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add person to list
+4.  AddressBook adds and shows updated list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given person detail is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit details of a specific person in the list
+4.  AddressBook edits the person details and shows the updated person details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given detail or value is invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to find person whose name matches any given keywords
+4.  AddressBook retrieves and displays the person(s)
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. No keyword is given.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. No person matches keyword
++
+[none]
+** 3b1. AddressBook shows no person.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Delete person
@@ -767,25 +927,59 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
-
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  The GUI should complement the command line by providing a clean and easy to read interface.
+.  The addressbook should never encounter a single error while in use.
+.  A new user should be able to pick up and be able to use the application easily.
 
 [appendix]
 == Glossary
+
+[[command]]
+Command(s)
+
+....
+Keywords that are used to do certain tasks. The list of commands for the application can be accessed by typing "help" in the application. All commands extend the "Command" class
+....
+
+[[eventscenter]]
+Events Center
+
+....
+The events center is a module in the application that handles any user inputs or events that occur, reducing direct coupling between components
+....
+
+[[jdk]]
+Java Development Kit
+
+....
+The development kit that is required for developing the application (default location is "C:\Program Files\Java\jdkx.x.x_xxx", where the x's denote the version number)
+....
+
+[[json]]
+JavaScript Object Notation
+
+....
+An easy-to-read data storage format
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+
+[[parser]]
+Parser
+
+....
+Parsers are used to verify the format of commands used. e.g. Adding a contact while parsing given parameters such as email and tags
 ....
 
 [[private-contact-detail]]
@@ -795,19 +989,30 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[tag]]
+Tag(s)
 
-*Product Name*
+....
+The label(s) attached to a contact for the purpose of identification or related groupings
+....
 
-Author: ...
+[[travisci]]
+Travis Continuous Integration
 
-Pros:
+....
+Travis-CI is a build automation tool that helps developers understand if their application is working by building, testing and reporting on the build sequences the developer has configured
+....
 
-* ...
-* ...
+[[ui]]
+User Interface
 
-Cons:
+....
+The user interface is a front-facing component and is what the user sees. It is used to show information, as well as get user input for different operations such as adding and deleting contacts
+....
 
-* ...
-* ...
+[[undoredostack]]
+Undo/redo stack mechanism
+
+....
+The application's state(s) that are stored on two stacks, which allow undo's and redo's, reverting the state of the application to before or after commands are run respectively
+....
