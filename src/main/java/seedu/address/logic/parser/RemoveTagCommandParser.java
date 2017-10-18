@@ -21,9 +21,15 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     public RemoveTagCommand parse(String args) throws ParseException {
         Index index = null;
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+        }
+
+        if (trimmedArgs.split(" ").length >= 3) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
         }
 
         try {

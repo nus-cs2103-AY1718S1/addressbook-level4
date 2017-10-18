@@ -20,17 +20,19 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String COMMAND_USAGE = COMMAND_WORD + " ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes specified tag\n"
-            + "Parameters: TAG (must be a string)";
+            + "Parameters: TAG (must be a string)\n"
+            + "Paramaters: INDEX (must be a positive integer) TAG (must be a string)";
 
     public static final String MESSAGE_SUCCESS = "Tag removed";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_NOT_DELETED = "Tag not deleted";
+    public static final String MESSAGE_EXCEEDTAGNUM = "Please only type one TAG to be removed";
 
     private final Tag toRemove;
     private final Optional<Index> index;
 
     /**
-     * Creates an RemoveTagCommand to remove the specified {@code Tag}
+     * Creates an RemoveTagCommand to remove the specified {@code Tag} from a (@code Index) if given.
      */
     public RemoveTagCommand (Tag tag) {
         this.toRemove = tag;
@@ -64,7 +66,7 @@ public class RemoveTagCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof RemoveTagCommand // instanceof handles nulls
-                && this.toRemove.equals(((RemoveTagCommand) other).toRemove)
+                && this.toRemove.equals(((RemoveTagCommand) other).toRemove) // state check
                 && this.index.equals(((RemoveTagCommand) other).index)); // state check
     }
 
