@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.picture = new SimpleObjectProperty<>(new Picture());
-        this.timestamp = new SimpleObjectProperty<>((timestamp));
+        this.timestamp = new SimpleObjectProperty<>(timestamp);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -125,6 +126,10 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Timestamp getTimestamp() {
         return timestamp.get();
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp.set(requireNonNull(timestamp));
     }
 
     /**
