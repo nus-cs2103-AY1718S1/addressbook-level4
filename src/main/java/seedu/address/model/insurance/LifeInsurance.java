@@ -26,19 +26,19 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private ObjectProperty<ReadOnlyPerson> beneficiary;
     private DoubleProperty premium;
     private StringProperty contractPath;
-    private ObjectProperty<LocalDate> signingDate;
-    private ObjectProperty<LocalDate> expiryDate;
+    private StringProperty signingDate;
+    private StringProperty expiryDate;
 
     public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
-                         Double premium, String contractPath, LocalDate signingDate, LocalDate expiryDate) {
+                         Double premium, String contractPath, String signingDate, String expiryDate) {
         requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
         this.owner = new SimpleObjectProperty<>(owner);
         this.insured = new SimpleObjectProperty<>(insured);
         this.beneficiary = new SimpleObjectProperty<>(beneficiary);
         this.premium = new SimpleDoubleProperty(premium);
         this.contractPath = new SimpleStringProperty(contractPath);
-        this.signingDate = new SimpleObjectProperty<>(signingDate);
-        this.expiryDate = new SimpleObjectProperty<>(expiryDate);
+        this.signingDate = new SimpleStringProperty(signingDate);
+        this.expiryDate = new SimpleStringProperty(expiryDate);
     }
 
     /**
@@ -119,31 +119,31 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return contractPath.get();
     }
 
-    public void setSigningDate(LocalDate signingDate) {
+    public void setSigningDate(String signingDate) {
         this.signingDate.set(requireNonNull(signingDate));
     }
 
     @Override
-    public ObjectProperty<LocalDate> signingDateProperty() {
+    public StringProperty signingDateProperty() {
         return signingDate;
     }
 
     @Override
-    public LocalDate getSigningDate() {
+    public String getSigningDate() {
         return signingDate.get();
     }
 
-    public void setExpiryDate(LocalDate expiryDate) {
+    public void setExpiryDate(String expiryDate) {
         this.expiryDate.set(requireNonNull(expiryDate));
     }
 
     @Override
-    public ObjectProperty<LocalDate> expiryDateProperty() {
+    public StringProperty expiryDateProperty() {
         return expiryDate;
     }
 
     @Override
-    public LocalDate getExpiryDate() {
+    public String getExpiryDate() {
         return expiryDate.get();
     }
 }

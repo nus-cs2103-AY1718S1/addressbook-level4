@@ -1,7 +1,5 @@
 package seedu.address.model.insurance;
 
-import java.time.LocalDate;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -22,8 +20,8 @@ public interface ReadOnlyInsurance {
     Double getPremium();
     StringProperty contractPathProperty();
     String getContractPath();
-    ObjectProperty<LocalDate> signingDateProperty();
-    LocalDate getSigningDate();
-    ObjectProperty<LocalDate> expiryDateProperty();
-    LocalDate getExpiryDate();
+    StringProperty signingDateProperty();
+    String getSigningDate();
+    StringProperty expiryDateProperty();
+    String getExpiryDate();
 }
