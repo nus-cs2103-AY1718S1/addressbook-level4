@@ -47,7 +47,7 @@ public class CheckCommandsParser {
         final String[] subUndoCommands = new String[] {"undo", "u"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
         final String[] subDeleteEventsCommands = new String[] { "eventdel", "delevent", "deleteevent",
-                "eventdelete", "de", "ed" };
+            "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
 
