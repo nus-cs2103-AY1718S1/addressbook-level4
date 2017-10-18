@@ -49,9 +49,9 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success_2() throws Exception {
+    public void execute_validIndexUnfilteredList_success_two() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ReadOnlyPerson personToDelete_2 = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyPerson secondToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
 
         personsToDelete1.clear();
         personsToDelete1.add(INDEX_FIRST_PERSON);
@@ -64,7 +64,7 @@ public class DeleteCommandTest {
         ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         expectedModel1.deletePerson(personToDelete);
-        expectedModel1.deletePerson(personToDelete_2);
+        expectedModel1.deletePerson(secondToDelete);
 
         assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
     }
@@ -152,7 +152,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidNameFilteredList_throwsCommandException() {
-        model = new ModelManager(getTypicalAddressBook(),new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         personsToDelete1.clear();
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());

@@ -161,7 +161,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_h() throws Exception {
+    public void parseCommand_second() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_2) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD_2 + " 3") instanceof HelpCommand);
     }

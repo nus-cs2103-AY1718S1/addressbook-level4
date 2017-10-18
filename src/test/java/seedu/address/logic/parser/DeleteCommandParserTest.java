@@ -34,7 +34,7 @@ public class DeleteCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsDeleteCommand_1() {
+    public void parse_validArgs_returnsDeleteCommand_one() {
         ArrayList<Index> todelete = new ArrayList<>();
         todelete.add(INDEX_FIRST_PERSON);
         todelete.add(INDEX_SECOND_PERSON);
@@ -42,7 +42,7 @@ public class DeleteCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsDeleteCommand_2() {
+    public void parse_validArgs_returnsDeleteCommand_two() {
         ArrayList<Index> todelete = new ArrayList<>();
         todelete.add(INDEX_FIRST_PERSON);
         assertParseSuccess(parser, "n/Alice Pauline", new DeleteCommand("Alice Pauline"));
@@ -54,13 +54,13 @@ public class DeleteCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException_1() {
+    public void parse_invalidArgs_throwsParseException_one() {
         assertParseFailure(parser, "n/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
 
 
     @Test
-    public void parse_invalidArgs_throwsParseException_2() {
+    public void parse_invalidArgs_throwsParseException_two() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
 }
