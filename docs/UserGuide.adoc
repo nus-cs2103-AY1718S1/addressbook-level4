@@ -69,11 +69,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `help` `Since v1.0`
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` `Since v1.0`
 
 Adds a person to the address book +
 Format: `add n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
@@ -92,13 +92,13 @@ Examples:
 * `a n/Jane Doe p/ student/97272031 parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01`
 * `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/ student/97272231 parent/97979997 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` `Since v1.0`
 
 Shows a list of all persons in the address book. +
 Format: `list` +
 Shorthand: `l`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` `Since v1.0`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
@@ -123,7 +123,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` `Since v1.0`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` +
@@ -148,7 +148,7 @@ Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by tags: `findtags`
+=== Locating persons by tags: `findtags` `Since v1.1`
 
 Finds persons whose tags contain all of the given keywords. +
 Format: `findtags KEYWORD [MORE_KEYWORDS]` +
@@ -173,7 +173,7 @@ Returns any person having the tag `friends`
 * `ft Betsy Tim John` +
 Returns any person having both `friends` and `owesMoney` tags
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` `Since v1.0`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX` +
@@ -197,7 +197,7 @@ Deletes the 1st person in the results of the `find` command.
 `d 3` (`delete 3` command) +
 Deletes the 3rd person in the address book.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` `Since v1.0`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX` +
@@ -221,7 +221,7 @@ Selects the 1st person in the results of the `find` command.
 `s 3` (`select 3` command) +
 Selects the 3rd person in the address book.
 
-=== Sorting all persons : `sort`
+=== Sorting all persons : `sort` `Since v1.2`
 
 Shows a list of all persons in the address book sorted in alphabetical order. +
 Format: `sort` +
@@ -242,7 +242,7 @@ Sorts the list in alphabetical order.
 `st` +
 Sorts the list in alphabetical order.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` `Since v1.0`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
@@ -254,7 +254,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` `Since v1.0`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
@@ -285,7 +285,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `l` (`list` comand) +
 `u` ( `undo` command reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` `Since v1.0`
 
 Reverses the most recent `undo` command. +
 Format: `redo` +
@@ -313,12 +313,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `delete 1` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` `Since v1.0`
 
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` `Since v1.0`
 
 Exits the program. +
 Format: `exit`
@@ -342,9 +342,9 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | Find | `f` + | `f KEYWORD [MORE_KEYWORDS]` +
 | Findtags | `ft` + | `ft KEYWORD [MORE_KEYWORDS]` +
 | List | `l` + | `l` +
-| Help |  | `help` +
+| Help | NA | `help` +
 | Select | `s` + | `s INDEX` +
-| Sort |  | `sort` +
+| Sort | `st` | `sort` +
 | History | `h` + | `h` +
 | Undo | `u` + | `u` +
 | Redo | `r` + | `r` +
