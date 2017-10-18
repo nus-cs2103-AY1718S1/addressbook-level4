@@ -228,6 +228,40 @@ Example:
 `comment 2 c/Likes to play computer games.` +
 Selects the 2nd person in the address book and adds the above comment. 
 
+=== Login using Gmail or Yahoo Account: `email_login`
+
+Logs in with a Gmail or Yahoo account to allow sending emails +
+Format: `email_login "[EMAIL]" "[PASSWORD]"`
+
+****
+* `"[EMAIL]"` is the email used to login. Example: `"cs2013testacc@gmail.com"`
+* `"[PASSWORD]"` is the passwor. Example: `"testpass"`
+****
+
+Example: 
+****
+* `email_login "cs2103testacc@gmail.com" "testpass"`
+****
+
+=== Sending an email to a list of recipients: `email_send`
+
+Sends an email to a list of recipients. Requires an logged in email using `email_login` +
+Format: `email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"`
+
+****
+* `"[RECIPIENTS]"` is the list of recipients, separated by `;`. Example: `"cs2103testacc@gmail.com;cs2103test@yahoo.com"`
+* `"[TITLE]"` is the title of the email. Example: `"Change of class schedule"`
+* `"[BODY]"` is the body of the message. Example: `"The class schedule is changed to 4 pm"`
+****
+
+Example:
+****
+* `email_send "cs2103testacc@gmail.com" "Test Title" "Test Body"` +
+    send an email with given title and body to a single recipient.
+* `email_send "cs2103testacc@gmail.com;cs2103testacc@yahoo.com" "Test Title" "Test Body"` +
+send  an email with given title and body to a list of recipients.
+****
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -327,6 +361,10 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Email Login*: `email_login "[EMAIL]" "PASSWORD"` +
+    e.g. `email_login "cs2103testacc@gmail.com" "testpass"`
+* *Email Send*: `email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"` +
+e.g. `email_send "firstemail@gmail.com;secondemail@yahoo.com" "Test title" "Test Body"`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
