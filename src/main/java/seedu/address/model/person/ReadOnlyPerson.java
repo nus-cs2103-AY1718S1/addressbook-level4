@@ -29,23 +29,23 @@ public interface ReadOnlyPerson {
     Address getAddress();
 
     ObjectProperty<Company> companyProperty();
-  
+
     Company getCompany();
-  
+
     ObjectProperty<Position> positionProperty();
-  
+
     Position getPosition();
-  
+
     ObjectProperty<Status> statusProperty();
-  
+
     Status getStatus();
-  
+
     ObjectProperty<Priority> priorityProperty();
-  
+
     Priority getPriority();
-  
+
     ObjectProperty<Note> noteProperty();
-  
+
     Note getNote();
 
     ObjectProperty<UniqueTagList> tagProperty();

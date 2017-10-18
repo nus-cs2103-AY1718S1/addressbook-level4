@@ -206,7 +206,7 @@ public class EditCommand extends UndoableCommand {
         public void setEmail(Email email) {
             this.email = email;
         }
-      
+
         public void setAddress(Address address) {
             this.address = address;
         }
