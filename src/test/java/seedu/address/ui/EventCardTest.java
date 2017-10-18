@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalEvents.MEET_JOHN;
+import static seedu.address.testutil.TypicalEvents.BIRTHDAY;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysEvent;
 
 import org.junit.Test;
@@ -27,9 +27,9 @@ public class EventCardTest extends GuiUnitTest {
 
         // changes made to Event reflects on card
         guiRobot.interact(() -> {
-            event.setTitle(MEET_JOHN.getTitle());
-            event.setTiming(MEET_JOHN.getTiming());
-            event.setDescription(MEET_JOHN.getDescription());
+            event.setTitle(BIRTHDAY.getTitle());
+            event.setTiming(BIRTHDAY.getTiming());
+            event.setDescription(BIRTHDAY.getDescription());
         });
         assertCardDisplay(eventCard, event, 2);
     }

@@ -17,13 +17,11 @@ public class EventCardHandle extends NodeHandle<Node> {
     private static final String TITLE_FIELD_ID = "#title";
     private static final String TIMING_FIELD_ID = "#timing";
     private static final String DESCRIPTION_FIELD_ID = "#description";
-    private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
     private final Label titleLabel;
     private final Label timingLabel;
     private final Label descriptionLabel;
-    private final List<Label> tagLabels;
 
     public EventCardHandle(Node cardNode) {
         super(cardNode);
@@ -32,13 +30,6 @@ public class EventCardHandle extends NodeHandle<Node> {
         this.titleLabel = getChildNode(TITLE_FIELD_ID);
         this.timingLabel = getChildNode(TIMING_FIELD_ID);
         this.descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
-
-        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
-        this.tagLabels = tagsContainer
-                .getChildrenUnmodifiable()
-                .stream()
-                .map(Label.class::cast)
-                .collect(Collectors.toList());
     }
 
     public String getId() {
@@ -57,10 +48,4 @@ public class EventCardHandle extends NodeHandle<Node> {
         return descriptionLabel.getText();
     }
 
-    public List<String> getTags() {
-        return tagLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
-    }
 }
