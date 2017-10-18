@@ -120,6 +120,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Birthday getBirthday() {
         return birthday.get();
+    }
 
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
