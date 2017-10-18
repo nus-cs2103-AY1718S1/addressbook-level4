@@ -7,6 +7,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.task.ReadOnlyTask;
 
+/**
+ * An UI component that displays information of a {@code Task}.
+ */
 public class TaskCard extends UiPart<Region> {
 
     private static final String FXML = "TaskCard.fxml";
@@ -35,6 +38,10 @@ public class TaskCard extends UiPart<Region> {
         bindListeners(task);
     }
 
+    /**
+     * Binds the individual UI elements to observe their respective {@code Task} properties
+     * so that they will be notified of any changes.
+     */
     private void bindListeners(ReadOnlyTask task) {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         startDate.textProperty().bind(Bindings.convert(task.startDateProperty()));
