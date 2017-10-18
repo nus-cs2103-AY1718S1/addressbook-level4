@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.logging.Logger;
 
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
