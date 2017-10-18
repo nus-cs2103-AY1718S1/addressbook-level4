@@ -42,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(ReadOnlyLesson lesson) {
+    private void loadLessonPage(ReadOnlyLesson lesson) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + lesson.getCode().fullCodeName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
@@ -69,6 +69,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleLessonPanelSelectionChangedEvent(LessonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().lesson);
+        loadLessonPage(event.getNewSelection().lesson);
     }
 }

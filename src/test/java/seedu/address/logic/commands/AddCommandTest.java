@@ -115,11 +115,10 @@ public class AddCommandTest {
         }
 
         @Override
-        public FavouriteListPredicate getFavouriteListPredicate(){
+        public FavouriteListPredicate getFavouriteListPredicate() {
             fail("This method should not be called.");
             return null;
         }
-
 
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
@@ -148,7 +147,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException{
+        public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
             fail("This method should not be called.");
         }
 
