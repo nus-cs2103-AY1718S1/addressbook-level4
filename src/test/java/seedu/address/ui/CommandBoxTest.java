@@ -155,8 +155,9 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.ENTER);
 
         // text in text filed is in uppercase
-        guiRobot.push(new KeyCodeCombination(KeyCode.A, KeyCombination.SHIFT_DOWN));
-        assertInputHistory(KeyCode.TAB, "add");
+        guiRobot.push(new KeyCodeCombination(KeyCode.L, KeyCombination.SHIFT_DOWN));
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
+        guiRobot.push(KeyCode.ENTER);
 
         // text in text filed is in mix of uppercase and lowercase
         guiRobot.push(new KeyCodeCombination(KeyCode.E, KeyCombination.SHIFT_DOWN));

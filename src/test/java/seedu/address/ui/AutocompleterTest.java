@@ -13,14 +13,14 @@ public class AutocompleterTest extends GuiUnitTest {
     private static final String ADD_COMMAND_WORD = "add";
     private static final String EDIT_COMMAND_WORD = "edit";
     private static final String MULTIPLE_RESULTS_MESSAGE = "Multiple matches found:" + "\n" + "edit" + "\t" + "exit";
-    private static String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
+    private static final String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
             + "into the command box";
 
     private ResultDisplayHandle resultDisplayHandle;
     private Autocompleter autocompleter;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         ResultDisplay resultDisplay = new ResultDisplay();
         uiPartRule.setUiPart(resultDisplay);
 
@@ -67,7 +67,7 @@ public class AutocompleterTest extends GuiUnitTest {
 
         // uppercase autocomplete with multiple autocomplete options
         autocompleteResult = autocompleter.autocomplete("E");
-        assertEquals(autocompleteResult, "e");
+        assertEquals(autocompleteResult, "E");
         guiRobot.pauseForHuman();
         assertEquals(MULTIPLE_RESULTS_MESSAGE, resultDisplayHandle.getText());
 
@@ -77,11 +77,6 @@ public class AutocompleterTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
         assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
 
-        // autocomplete with no possible options
-        autocompleteResult = autocompleter.autocomplete("Z");
-        assertEquals(autocompleteResult, "Z");
-        guiRobot.pauseForHuman();
-        assertEquals(EMPTY_STRING, resultDisplayHandle.getText());
     }
 
 }

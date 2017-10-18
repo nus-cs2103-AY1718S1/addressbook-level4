@@ -12,14 +12,14 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
  */
 public class Autocompleter {
 
-    private static String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
+    private static final String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
             + "into the command box";
-    private static String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
+    private static final String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
 
-    private static  String EMPTY_STRING = "";
+    private static final  String EMPTY_STRING = "";
 
-    private final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
-        "redo", "select", "undo"};
+    private static final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
+        "list", "redo", "select", "undo"};
 
 
     public Autocompleter() {
@@ -32,7 +32,7 @@ public class Autocompleter {
      * @return autocomplete text
      */
     public String autocomplete(String commandBoxText) {
-        String[] commandBoxTextArray = commandBoxText.toLowerCase().trim().split("\\s+");
+        String[] commandBoxTextArray = commandBoxText.trim().split("\\s+");
         String autocompleteText = commandBoxText;
         if (commandBoxText.equals(EMPTY_STRING)) {
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
@@ -50,15 +50,15 @@ public class Autocompleter {
     private String processOneWordAutocomplete(String commandBoxText) {
         ArrayList<String> possibleResults = getClosestCommands(commandBoxText);
         switch (possibleResults.size()) {
-            case 0:
-                clearResultsWindow();
-                return commandBoxText;
-            case 1:
-                clearResultsWindow();
-                return possibleResults.get(0);
-            default:
-                displayMultipleResults(possibleResults);
-                return commandBoxText;
+        case 0:
+            clearResultsWindow();
+            return commandBoxText;
+        case 1:
+            clearResultsWindow();
+            return possibleResults.get(0);
+        default:
+            displayMultipleResults(possibleResults);
+            return commandBoxText;
         }
     }
 
@@ -70,7 +70,7 @@ public class Autocompleter {
     private ArrayList<String> getClosestCommands (String commandBoxText) {
         ArrayList<String> possibleResults = new ArrayList<>();
         Arrays.stream(commandList)
-                .filter(s -> isPossibleMatch(commandBoxText, s))
+                .filter(s -> isPossibleMatch(commandBoxText.toLowerCase(), s))
                 .forEach(s -> possibleResults.add(s));
         return possibleResults;
     }
@@ -81,7 +81,7 @@ public class Autocompleter {
      * @param commandWord
      */
     private boolean isPossibleMatch(String commandBoxText, String commandWord) {
-         return (commandBoxText.length() < commandWord.length()
+        return (commandBoxText.length() < commandWord.length()
                 && commandBoxText.equals(commandWord.substring(0, commandBoxText.length())));
     }
 
@@ -91,13 +91,13 @@ public class Autocompleter {
      */
     private void displayMultipleResults(ArrayList<String> results) {
         String resultToDisplay = MULTIPLE_RESULT_MESSAGE + ":\n";
-        for(String result : results) {
+        for (String result : results) {
             resultToDisplay += result + "\t";
         }
         raise(new NewResultAvailableEvent(resultToDisplay.trim(), false));
     }
 
-    private void clearResultsWindow(){
+    private void clearResultsWindow() {
         raise(new NewResultAvailableEvent(EMPTY_STRING, false));
     }
 
