@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.function.Predicate;
+import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Appointment;
@@ -56,6 +57,11 @@ public interface Model {
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      */
     void deletePersonsWithTag(Tag tag);
+
+    /**
+     * Deletes all persons in the {@code AddressBook} who have any of the {@code tags}.
+     */
+    void deletePersonsWithTags(Set<Tag> tags);
 
     /**
      * Adds appoints to a person
