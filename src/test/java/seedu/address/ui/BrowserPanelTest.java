@@ -45,6 +45,9 @@ public class BrowserPanelTest extends GuiUnitTest {
                 + ALICE.getAddress().postalCode.value.substring(1));
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedParcelUrl, browserPanelHandle.getLoadedUrl());
+
+        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + 6;
+        String actualParcelUrl = browserPanelHandle.getLoadedUrl().toString().substring(0, correctUrlLength);
+        assertEquals(expectedParcelUrl.toString(), actualParcelUrl);
     }
 }
