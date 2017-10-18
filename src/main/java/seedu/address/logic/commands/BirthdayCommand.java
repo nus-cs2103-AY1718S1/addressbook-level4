@@ -75,6 +75,10 @@ public class BirthdayCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * @param personToEdit
+     * @return
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!birthday.value.isEmpty()) {
             return String.format(MESSAGE_ADD_BIRTHDAY_SUCCESS, personToEdit);
