@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -17,17 +19,13 @@ public class RemarkCommandParserTest {
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final Remark remark = new Remark("Some remark.");
+        ArrayList<Remark> remarksNothing = new ArrayList<>();
+        remarksNothing.add(new Remark(""));
 
-        // have remarks
+        //if no remarks
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_REMARK.toString() + " " + remark;
-        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, remark);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // no remarks
-        userInput = targetIndex.getOneBased() + " " + PREFIX_REMARK.toString();
-        expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, new Remark(""));
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_REMARK.toString();
+        RemarkCommand expectedCommand = new RemarkCommand(INDEX_FIRST_PERSON, remarksNothing);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
