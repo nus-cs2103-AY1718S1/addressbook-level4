@@ -20,6 +20,7 @@ import seedu.address.logic.Username;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BlacklistCommand;
+import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -35,6 +36,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -88,6 +90,16 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_borrow() throws Exception {
+        String toBorrow = "5000";
+        Debt debtAmount = new Debt(toBorrow);
+        BorrowCommand expectedBorrowCommand = new BorrowCommand(INDEX_FIRST_PERSON, debtAmount);
+        BorrowCommand borrowCommand = (BorrowCommand) parser.parseCommand(BorrowCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + toBorrow);
+        assertEquals(expectedBorrowCommand, borrowCommand);
     }
 
     @Test

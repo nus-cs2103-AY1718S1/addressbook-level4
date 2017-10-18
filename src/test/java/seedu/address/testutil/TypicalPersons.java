@@ -64,7 +64,7 @@ public class TypicalPersons {
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withEmail("alice@example.com")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("85355255").withInterest(Interest.NO_INTEREST_SET)
-            .withTags("friends").build();
+            .withTags("friends").withPostalCode("623123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
             .withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
