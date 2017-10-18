@@ -9,10 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
-
-import org.controlsfx.control.spreadsheet.Grid;
-
-import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -22,14 +18,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 
 public class CalendarView extends UiPart<Region> {
 
@@ -68,7 +62,13 @@ public class CalendarView extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    // Registers handlers on the time slot to manage selecting a range of slots in the grid.
+    /**
+     * Registers handlers on the time slot to manage selecting a range of
+     * slots in the grid.
+     *
+     * @param timeSlot selected
+     * @param mouseAnchor where the mouse is at
+     */
 
     private void registerDragHandlers(TimeSlot timeSlot, ObjectProperty<TimeSlot> mouseAnchor) {
         timeSlot.getView().setOnDragDetected(event -> {
@@ -87,15 +87,20 @@ public class CalendarView extends UiPart<Region> {
         timeSlot.getView().setOnMouseReleased(event -> mouseAnchor.set(null));
     }
 
+    /**
+     * Initialize all timeslots
+     *
+     * @param calendarView gridPane of the calendar
+     */
     private void initSlots(GridPane calendarView) {
         ObjectProperty<TimeSlot> mouseAnchor = new SimpleObjectProperty<>();
 
-        for (LocalDate date = startOfWeek.get(); ! date.isAfter(endOfWeek.get());
+        for (LocalDate date = startOfWeek.get(); !date.isAfter(endOfWeek.get());
              date = date.plusDays(1)) {
-            int slotIndex = 1 ;
+            int slotIndex = 1;
 
             for (LocalDateTime startTime = date.atTime(firstSlotStart);
-                 ! startTime.isAfter(date.atTime(lastSlotStart));
+                 !startTime.isAfter(date.atTime(lastSlotStart));
                  startTime = startTime.plus(slotLength)) {
 
 
@@ -105,15 +110,20 @@ public class CalendarView extends UiPart<Region> {
                 registerDragHandlers(timeSlot, mouseAnchor);
 
                 calendarView.add(timeSlot.getView(), timeSlot.getDayOfWeek().getValue(), slotIndex);
-                slotIndex++ ;
+                slotIndex++;
             }
         }
     }
 
+    /**
+     * Initialize header dates (horizontal axis)
+     *
+     * @param calendarView gridPane of the calendar
+     */
     private void initDateHeader(GridPane calendarView) {
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("E\nMMM d");
 
-        for (LocalDate date = startOfWeek.get(); ! date.isAfter(endOfWeek.get());
+        for (LocalDate date = startOfWeek.get(); !date.isAfter(endOfWeek.get());
              date = date.plusDays(1)) {
             Label label = new Label(date.format(dayFormatter));
             label.setPadding(new Insets(1));
@@ -123,17 +133,22 @@ public class CalendarView extends UiPart<Region> {
         }
     }
 
+    /**
+     * Initialize header time (vertical axis)
+     *
+     * @param calendarView gridPane of the calendar
+     */
     private void initDateTimeHeader(GridPane calendarView) {
-        int slotIndex = 1 ;
+        int slotIndex = 1;
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
         for (LocalDateTime startTime = today.get().atTime(firstSlotStart);
-             ! startTime.isAfter(today.get().atTime(lastSlotStart));
+             !startTime.isAfter(today.get().atTime(lastSlotStart));
              startTime = startTime.plus(slotLength)) {
             Label label = new Label(startTime.format(timeFormatter));
             label.setPadding(new Insets(2));
             GridPane.setHalignment(label, HPos.RIGHT);
             calendarView.add(label, 0, slotIndex);
-            slotIndex++ ;
+            slotIndex++;
         }
     }
 
@@ -149,32 +164,40 @@ public class CalendarView extends UiPart<Region> {
 
     // Finally we note that x <= y <= z or z <= y <= x if and only if (y-x)*(z-y) >= 0.
 
+    /**
+     * Check whether a time slot is between the other two time slots
+     *
+     * @param testSlot slot used for testing
+     * @param startSlot starting time slot
+     * @param endSlot ending time slot
+     */
     private boolean isBetween(TimeSlot testSlot, TimeSlot startSlot, TimeSlot endSlot) {
 
         boolean daysBetween = testSlot.getDayOfWeek().compareTo(startSlot.getDayOfWeek())
-                * endSlot.getDayOfWeek().compareTo(testSlot.getDayOfWeek()) >= 0 ;
+                * endSlot.getDayOfWeek().compareTo(testSlot.getDayOfWeek())
+                >= 0;
 
         boolean timesBetween = testSlot.getTime().compareTo(startSlot.getTime())
-                * endSlot.getTime().compareTo(testSlot.getTime()) >= 0 ;
+                * endSlot.getTime().compareTo(testSlot.getTime()) >= 0;
 
-        return daysBetween && timesBetween ;
+        return daysBetween && timesBetween;
     }
 
-    // Class representing a time interval, or "Time Slot", along with a view.
-    // View is just represented by a region with minimum size, and style class.
-
-    // Has a selected property just to represent selection.
+    /** Class representing a time interval, or "Time Slot", along with a view.
+     * View is just represented by a region with minimum size, and style class.
+     * Has a selected property just to represent selection.
+     */
 
     public static class TimeSlot {
 
-        private final LocalDateTime start ;
-        private final Duration duration ;
-        private final Region view ;
+        private final LocalDateTime start;
+        private final Duration duration;
+        private final Region view;
 
         private final BooleanProperty selected = new SimpleBooleanProperty();
 
         public final BooleanProperty selectedProperty() {
-            return selected ;
+            return selected;
         }
 
         public final boolean isSelected() {
@@ -186,8 +209,8 @@ public class CalendarView extends UiPart<Region> {
         }
 
         public TimeSlot(LocalDateTime start, Duration duration) {
-            this.start = start ;
-            this.duration = duration ;
+            this.start = start;
+            this.duration = duration;
 
             view = new Region();
             view.setMinSize(80, 20);
@@ -200,19 +223,19 @@ public class CalendarView extends UiPart<Region> {
         }
 
         public LocalDateTime getStart() {
-            return start ;
+            return start;
         }
 
         public LocalTime getTime() {
-            return start.toLocalTime() ;
+            return start.toLocalTime();
         }
 
         public DayOfWeek getDayOfWeek() {
-            return start.getDayOfWeek() ;
+            return start.getDayOfWeek();
         }
 
         public Duration getDuration() {
-            return duration ;
+            return duration;
         }
 
         public Node getView() {

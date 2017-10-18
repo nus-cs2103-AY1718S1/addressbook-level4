@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
-import java.util.Stack;
 import java.util.logging.Logger;
-
-import javax.swing.text.html.ImageView;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -19,7 +16,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -180,17 +176,16 @@ public class MainWindow extends UiPart<Region> {
         calendarView = new CalendarView();
         calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
                 EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if(!browserPlaceholder.getChildren().contains(calendarView.getRoot())){
-                            browserPlaceholder.getChildren().add(calendarView
-                                    .getRoot());
-                        } else {
-                            browserPlaceholder.getChildren().remove
-                                    (calendarView.getRoot());
-                        }
-                    }
-                });
+            @Override
+            public void handle(MouseEvent event) {
+                if (!browserPlaceholder.getChildren().contains(calendarView
+                        .getRoot())) {
+                    browserPlaceholder.getChildren().add(calendarView.getRoot());
+                } else {
+                    browserPlaceholder.getChildren().remove(calendarView.getRoot());
+                }
+            }
+        });
     }
 
     void hide() {
