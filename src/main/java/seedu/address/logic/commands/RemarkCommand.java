@@ -73,14 +73,6 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
-    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remark.value.isEmpty()) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
-        } else {
-            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
-        }
-    }
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -97,5 +89,13 @@ public class RemarkCommand extends UndoableCommand {
         RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index)
                 && remark.equals(e.remark);
+    }
+
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        if (!remark.value.isEmpty()) {
+            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
+        }
     }
 }

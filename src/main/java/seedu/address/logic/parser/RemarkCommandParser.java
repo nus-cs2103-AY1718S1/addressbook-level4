@@ -15,7 +15,7 @@ import seedu.address.model.person.Remark;
  * and returns an RemarkCommand object for execution.
  * @throws ParseException if the user input does not conform the expected format
  */
-public class RemarkCommandParser implements Parser<RemarkCommand>{
+public class RemarkCommandParser implements Parser<RemarkCommand> {
     @Override
     public RemarkCommand parse(String args) throws ParseException {
         requireNonNull(args);
