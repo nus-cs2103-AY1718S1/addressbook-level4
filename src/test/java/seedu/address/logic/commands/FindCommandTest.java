@@ -9,9 +9,12 @@ import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -23,6 +26,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -75,8 +79,21 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) {
-        FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        ArrayList<String> keywords = new ArrayList<>();
+        Predicate<ReadOnlyPerson> predicate = null;
+        StringTokenizer st = new StringTokenizer(userInput, " ");
+        if (st.hasMoreTokens()) {
+            while (st.hasMoreTokens()) {
+                keywords.add(st.nextToken());
+            }
+
+            if (userInput.contains("t/")) {
+                predicate = new TagContainsKeywordsPredicate(keywords);
+            }
+        } else {
+            predicate = new NameContainsKeywordsPredicate(keywords);
+        }
+        FindCommand command = new FindCommand(predicate);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
