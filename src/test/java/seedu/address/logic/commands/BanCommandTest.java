@@ -51,21 +51,6 @@ public class BanCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-
-        ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        BanCommand banCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(BanCommand.MESSAGE_BAN_PERSON_SUCCESS, personToBan);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addBlacklistedPerson(personToBan);
-
-        assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstPersonOnly(model);
 

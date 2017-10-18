@@ -32,6 +32,8 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<UniqueTagList> tags;
 
+    private boolean isBlacklisted = false;
+
     /**
      * Every field must be present and not null.
      */
@@ -62,6 +64,7 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
+        this.isBlacklisted = source.getIsBlacklisted();
     }
 
     /**
@@ -212,7 +215,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Sets date borrowed of a person in the given {@dateBorrow}.
+     * Sets date borrowed of a person in the given {@code dateBorrow}.
      * @param dateBorrow must not be null.
      */
     public void setDateBorrow(DateBorrow dateBorrow) {
@@ -249,9 +252,25 @@ public class Person implements ReadOnlyPerson {
         return deadline.get();
     }
 
+    /**
+     * Returns boolean status of a person's blacklist-status.
+     */
+    @Override
+    public boolean getIsBlacklisted() {
+        return isBlacklisted;
+    }
+
+    /**
+     * Sets boolean status of a person's blacklist-status using the value of {@param isBlacklisted}.
+     */
+    @Override
+    public void setIsBlacklisted(boolean isBlacklisted) {
+        this.isBlacklisted = isBlacklisted;
+    }
+
     //@@author
     /**
-     * Sets date repaid of a person in the given {@dateRepaid}.
+     * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.
      */
     public void setDateRepaid(DateRepaid dateRepaid) {
@@ -288,10 +307,10 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    @Override
     /**
      * Returns true if both are in same cluster.
      */
+    @Override
     public boolean isSameCluster(ReadOnlyPerson other) {
         return other.getCluster().equals(this.getCluster());
     }
