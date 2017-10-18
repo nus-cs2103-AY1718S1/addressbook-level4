@@ -323,7 +323,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleShiftDelete() {
+    public void handleShiftDeleteTestOne() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
 
         //Test 1: Test for empty input
@@ -372,6 +372,12 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() > 0);
+
+    }
+
+    @Test
+    public void handleShiftDeleteTestTwo() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
 
         //Test 4a: Test for blank space + test word input caret at most right
         mySandBox.clear();
@@ -429,11 +435,10 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 4);
         mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
-
     }
 
     @Test
-    public void handleShiftBackSpace() {
+    public void handleShiftBackSpaceTestOne() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
 
         //Test 1: Test for empty input
@@ -482,6 +487,12 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() > 0);
+
+    }
+
+    @Test
+    public void handleShiftBackSpaceTestTwo() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
 
         //Test 4a: Test for blank space + test word input caret at most right
         mySandBox.clear();
@@ -539,7 +550,6 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 4);
         mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
-
     }
 
     @Test
