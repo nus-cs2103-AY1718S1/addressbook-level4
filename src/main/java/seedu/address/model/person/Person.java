@@ -22,18 +22,20 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Birthday> birthday;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,7 +44,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
                 source.getTags());
     }
 
@@ -102,6 +104,21 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -138,6 +155,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    /**
+     * @param replacement
+     */
+    public void resetData(ReadOnlyPerson replacement) {
+        requireNonNull(replacement);
+
+        this.setName(replacement.getName());
+        this.setPhone(replacement.getPhone());
+        this.setEmail(replacement.getEmail());
+        this.setAddress(replacement.getAddress());
+        this.setBirthday(replacement.getBirthday());
+        this.setTags(replacement.getTags());
     }
 
 }
