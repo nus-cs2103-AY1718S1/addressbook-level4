@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Picture getPicture();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Timestamp> timestampProperty();
+    Timestamp getTimestamp();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
