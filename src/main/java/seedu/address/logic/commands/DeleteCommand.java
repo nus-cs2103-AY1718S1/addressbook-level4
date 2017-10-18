@@ -32,6 +32,12 @@ public class DeleteCommand extends UndoableCommand {
         this.targetIndexArraylist = targetIndexArraylist;
     }
 
+    public DeleteCommand(Index targetIndex) {
+        ArrayList<Index> targetIndexArrayList = new ArrayList<Index>();
+        targetIndexArrayList.add(targetIndex);
+        this.targetIndexArraylist = targetIndexArraylist;
+    }
+
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
