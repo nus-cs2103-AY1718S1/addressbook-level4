@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -235,9 +236,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         PostalCode postalCode = target.getPostalCode();
         Debt newDebt = target.getDebt();
         newDebt.addToDebt(amount);
+        Interest interest = target.getInterest();
         Deadline deadline = target.getDeadline();
         Set<Tag> tags = target.getTags();
-        Person editedPerson = new Person(name, phone, email, address, postalCode, newDebt, deadline, tags);
+        Person editedPerson = new Person(name, phone, email, address, postalCode, newDebt, interest, deadline, tags);
         editedPerson.setDateBorrow(target.getDateBorrow());
         try {
             persons.setPerson(target, editedPerson);
