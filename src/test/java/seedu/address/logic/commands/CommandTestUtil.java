@@ -92,6 +92,10 @@ public class CommandTestUtil {
         try {
 
             CommandResult result = command.execute();
+//            System.out.println("after");
+//            for (int i = 0; i < actualModel.getFilteredLessonList().size(); i++) {
+//                System.out.println(actualModel.getFilteredLessonList().get(i));
+//            }
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {

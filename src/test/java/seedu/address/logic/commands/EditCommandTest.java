@@ -22,6 +22,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 import seedu.address.testutil.LessonBuilder;
 
@@ -42,6 +43,11 @@ public class EditCommandTest {
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updateFilteredLessonList(
+                new FixedCodePredicate(expectedModel.getFilteredLessonList().get(0).getCode()));
+        model.updateFilteredLessonList(
+                new FixedCodePredicate(model.getFilteredLessonList().get(0).getCode()));
+
         expectedModel.updateLesson(model.getFilteredLessonList().get(0), editedLesson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -64,7 +70,18 @@ public class EditCommandTest {
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        expectedModel.updateFilteredLessonList(
+                new FixedCodePredicate(expectedModel.getFilteredLessonList().get(indexLastLesson.getZeroBased()).getCode()));
+        model.updateFilteredLessonList(
+                new FixedCodePredicate(model.getFilteredLessonList().get(indexLastLesson.getZeroBased()).getCode()));
+
         expectedModel.updateLesson(lastLesson, editedLesson);
+
+        System.out.println("after");
+        for (int i = 0; i < expectedModel.getFilteredLessonList().size(); i++) {
+            System.out.println(expectedModel.getFilteredLessonList().get(i));
+        }
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
