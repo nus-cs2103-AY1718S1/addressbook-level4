@@ -73,7 +73,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return remarkLabel.getText();
     }
 
-    public String getBirthday() {return birthdayLabel.getText(); }
+    public String getBirthday() { return birthdayLabel.getText(); }
 
 
     public List<String> getTags() {
