@@ -368,8 +368,8 @@ Certain properties of the application can be controlled (e.g App name, logging l
 === Filter by tag mechanism
 
 The filter by tag mechanism logic is implemented by the TagContainsKeywordsPredicate which lies under Model. The keywords inputted by the user is put into a List<String> and
-then parses into TagContainsKeywordsPredicate which will test against the list of tags of each person and returns true for the person that has the tags similar to the keywords.
-After which, the filtered list is updated by the predicate returned by TagContainsKeywordsPredicate and the filtered list is shown to the user.
+then parses into TagContainsKeywordsPredicate which will test against the list of tags of each person and returns true for the person that has the tags similar to the keywords. +
+After which, the filtered list is updated by the predicate returned by TagContainsKeywordsPredicate and the filtered list is shown to the user. +
 The tag command is not undoable so it will just override execute().
 
 ==== Design Considerations
@@ -384,14 +384,17 @@ The tag command is not undoable so it will just override execute().
 // tag::removetag[]
 === Remove tag mechanism
 
-The remove tag mechanism is implemented by Logic and Model. When parsing the command,the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>.
+The remove tag mechanism is implemented by Logic and Model. When parsing the command,the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
 In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under logic, each Tag inside the ArrayList<Tag> is then sent to the removeTag method which is implemented by the
-ModelManager which implements Model. The method removes any tags of a person that matches the tag in the ArrayList.
+ModelManager which implements Model. The method removes any tags of a person that matches the tag in the ArrayList. +
 The logic also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
 [NOTE]
 If the keywords is not identical to any of the existing tag names, CommandResult will notify the user that no tags has been removed.
 
 The remove tag command is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
+
+The following sequence diagram shows how the remove tag operation works:
+image::removeTag_sequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 **Aspect:** Implementation logic of `RemoveTagCommand` +
