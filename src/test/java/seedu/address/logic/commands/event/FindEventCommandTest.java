@@ -1,6 +1,8 @@
 package seedu.address.logic.commands.event;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalEvents.BIRTHDAY;
 import static seedu.address.testutil.TypicalEvents.EXAM;
@@ -87,7 +89,8 @@ public class FindEventCommandTest {
      * - the {@code FilteredList<ReadOnlyEvent>} is equal to {@code expectedList}<br>
      * - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindEventCommand command, String expectedMessage, List<ReadOnlyEvent> expectedList) {
+    private void assertCommandSuccess(FindEventCommand command, String expectedMessage,
+                                      List<ReadOnlyEvent> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

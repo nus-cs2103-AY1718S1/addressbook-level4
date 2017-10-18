@@ -96,11 +96,11 @@ public class CheckCommandsParser {
             finalUserCommand = "select";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
-        } else if(!Collections.disjoint(userInputCommand, commandsForEventAddCommands)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForEventAddCommands)) {
             finalUserCommand = "eventadd";
-        } else if(!Collections.disjoint(userInputCommand, commandsForEventDeleteCommands)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForEventDeleteCommands)) {
             finalUserCommand = "eventdel";
-        } else if(!Collections.disjoint(userInputCommand, commandsForEventEditCommands)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForEventEditCommands)) {
             finalUserCommand = "eventedit";
         }
         return finalUserCommand;
