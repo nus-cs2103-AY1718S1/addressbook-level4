@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -32,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final SortedList<ReadOnlyPerson> sortedFilteredPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,6 +47,21 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        sortedFilteredPersons = new SortedList<>(filteredPersons);
+        // Moves favourite contacts to the top of the list
+        sortedFilteredPersons.setComparator(new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+                boolean v1 = p1.getFavouriteStatus().getStatus();
+                boolean v2 = p2.getFavouriteStatus().getStatus();
+                if ( v1 && !v2 ) {
+                    return -1;
+                } else if ( !v1 && v2 ) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
     }
 
     public ModelManager() {
@@ -98,7 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+        return FXCollections.unmodifiableObservableList(sortedFilteredPersons);
     }
 
     @Override
