@@ -55,7 +55,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
-* You can use the arrow keys to select commands that are displayed and press tab to make it autofill for you in the command line `Coming in v2.0`
+* You can use the arrow keys to select commands that are displayed and press enter or tab to make it autofill for you in the command line.
 +
 image::commandboxhelper.PNG[width="790"]
 +
