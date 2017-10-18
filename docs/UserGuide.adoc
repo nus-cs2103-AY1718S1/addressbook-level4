@@ -160,7 +160,7 @@ Deletes the 1st and 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Locating a person's address : `locate` [Coming in v2.0]
+=== Locating a person's address : `locate` [Since v1.2]
 
 Alias: `lc`
 
