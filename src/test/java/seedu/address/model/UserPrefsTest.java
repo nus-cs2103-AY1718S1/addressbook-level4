@@ -67,15 +67,19 @@ public class UserPrefsTest {
     public void assertEqualsDifferentGuiSettingsReturnsFalse() {
         userPrefs.setGuiSettings(501, 500, 0, 0);
         assertFalse(userPrefs.equals(new UserPrefs()));
+        assertFalse(guiSettings.equals(userPrefs.getGuiSettings()));
 
         userPrefs.setGuiSettings(500, 501, 0, 0);
         assertFalse(userPrefs.equals(new UserPrefs()));
+        assertFalse(guiSettings.equals(userPrefs.getGuiSettings()));
 
         userPrefs.setGuiSettings(500, 500, 1, 0);
         assertFalse(userPrefs.equals(new UserPrefs()));
+        assertFalse(guiSettings.equals(userPrefs.getGuiSettings()));
 
         userPrefs.setGuiSettings(500, 500, 0, 1);
         assertFalse(userPrefs.equals(new UserPrefs()));
+        assertFalse(guiSettings.equals(userPrefs.getGuiSettings()));
     }
 
     @Test

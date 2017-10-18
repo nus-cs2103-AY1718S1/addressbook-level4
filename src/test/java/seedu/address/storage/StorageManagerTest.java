@@ -28,13 +28,12 @@ public class StorageManagerTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private XmlRolodexStorage rolodexStorage;
     private JsonUserPrefsStorage userPrefsStorage;
     private StorageManager storageManager;
 
     @Before
     public void setUp() {
-        rolodexStorage = new XmlRolodexStorage(getTempFilePath("ab" + ROLODEX_FILE_EXTENSION));
+        XmlRolodexStorage rolodexStorage = new XmlRolodexStorage(getTempFilePath("ab" + ROLODEX_FILE_EXTENSION));
         userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(rolodexStorage, userPrefsStorage);
     }
