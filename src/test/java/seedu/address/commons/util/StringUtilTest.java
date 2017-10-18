@@ -155,5 +155,56 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    //---------------- Tests for isLettersOnly --------------------------------------
 
+    @Test
+    public void isLettersOnly() {
+
+        // empty strings
+        assertFalse(StringUtil.isLettersOnly("")); // Boundary value
+        assertFalse(StringUtil.isLettersOnly("  "));
+
+        // contains number
+        assertFalse(StringUtil.isLettersOnly("1"));
+        assertFalse(StringUtil.isLettersOnly("john1"));
+
+        // string with white space
+        assertFalse(StringUtil.isLettersOnly(" john ")); // Leading/trailing spaces
+
+        // EP: valid options, should return true
+        assertTrue(StringUtil.isLettersOnly("john"));
+        assertTrue(StringUtil.isLettersOnly("John"));
+        assertTrue(StringUtil.isLettersOnly("Boom Shakalaka"));
+    }
+
+    //---------------- Tests for isStringOption --------------------------------------
+
+    @Test
+    public void isStringOption() {
+
+        // empty strings
+        assertFalse(StringUtil.isStringOption("")); // Boundary value
+        assertFalse(StringUtil.isStringOption("  "));
+
+        // does not contain a prefix option indicator
+        assertFalse(StringUtil.isStringOption("a"));
+
+        // contains number
+        assertFalse(StringUtil.isStringOption("-1"));
+        assertFalse(StringUtil.isStringOption("-e1"));
+
+        // capital letter
+        assertFalse(StringUtil.isStringOption("-T"));
+
+        // options with white space
+        assertFalse(StringUtil.isStringOption(" -p ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isStringOption("- p"));  // Spaces in the middle
+
+        // EP: valid options, should return true
+        assertTrue(StringUtil.isStringOption("-n"));
+        assertTrue(StringUtil.isStringOption("-p"));
+        assertTrue(StringUtil.isStringOption("-e"));
+        assertTrue(StringUtil.isStringOption("-a"));
+        assertTrue(StringUtil.isStringOption("-t"));
+    }
 }

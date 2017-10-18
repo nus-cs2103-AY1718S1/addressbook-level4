@@ -8,8 +8,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-// import seedu.address.commons.core.EventsCenter;
-// import seedu.address.commons.events.logic.ContactAltDeletionEvent;
 
 /**
  * Deletes a person identified using its last displayed index from the address book.
@@ -33,9 +31,6 @@ public class DeleteAltCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
-        // EventsCenter.getInstance().post(new ContactAltDeletionEvent(targetName));
-
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
