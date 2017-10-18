@@ -10,11 +10,13 @@ public class Timestamp {
     LocalDateTime creationTime = null;
     LocalDateTime expiryTime = null; //after construction, a null expiryTime means this person will not expire
 
+    public final long value;
     public Timestamp(long day) {
         creationTime = LocalDateTime.now();
         if (day > 0) {
             expiryTime = creationTime.plusDays(day);
         }
+        value = day;
     }
 
     public LocalDateTime getCreationTime(){
