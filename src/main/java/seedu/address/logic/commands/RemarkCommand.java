@@ -9,11 +9,12 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 
 /**
  * Changes the remark of an existing person in the address book.
@@ -47,6 +48,14 @@ public class RemarkCommand extends UndoableCommand {
 
         this.index = index;
         this.remark = remark;
+    }
+
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        if (!remark.value.isEmpty()) {
+            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
+        }
     }
 
     @Override
@@ -89,13 +98,5 @@ public class RemarkCommand extends UndoableCommand {
         RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index)
                 && remark.equals(e.remark);
-    }
-
-    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remark.value.isEmpty()) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
-        } else {
-            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
-        }
     }
 }
