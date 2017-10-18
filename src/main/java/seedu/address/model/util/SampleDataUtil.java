@@ -23,17 +23,17 @@ public class SampleDataUtil {
     public static Lesson[] getSampleLessons() {
         try {
             return new Lesson[]{
-                new Lesson(new ClassType("LEC"), new Location("LT19"), new Group("SL1"),
+                new Lesson(new ClassType("LEC"), new Location("LT19"), new Group("1"),
                     new TimeSlot("FRI[1400-1600]"), new Code("CS2103T"), getLecturerSet("Damith")),
-                new Lesson(new ClassType("TUT"), new Location("COM1-0207"), new Group("T01"),
+                new Lesson(new ClassType("TUT"), new Location("COM1-0207"), new Group("1"),
                     new TimeSlot("TUE[1000-1100]"), new Code("CS2103T"), getLecturerSet("David")),
-                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("SL1"),
+                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("1"),
                     new TimeSlot("WED[1200-1400]"), new Code("MA1101R"), getLecturerSet("Ma Siu Lun")),
-                new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("T01"),
+                new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("1"),
                     new TimeSlot("MON[0900-1000]"), new Code("MA1101R"), getLecturerSet("LI Sheng")),
-                new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("T02"),
+                new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("2"),
                     new TimeSlot("MON[1000-1100]"), new Code("MA1101R"), getLecturerSet("LI Sheng")),
-                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("SL2"),
+                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("2"),
                     new TimeSlot("THU[1600-1800]"), new Code("MA1101R"), getLecturerSet("Smith"))
             };
         } catch (IllegalValueException e) {
