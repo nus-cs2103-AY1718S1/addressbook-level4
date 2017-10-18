@@ -381,6 +381,29 @@ Not intuitive to manage group by managing Person.
 
 // end::undoredo[]
 
+// tag::searching[]
+=== Searching mechanism
+Here, searching entails the autocomplete function, finding mechanism and suggesting mechanism.
+The search mechanism is done with user's usability in mind and is fully implemented such that it is most intuitive to use for the users.
+
+==== Autocomplete function
+The autocomplete function mimics the behaviour of familiar Unix-based command lines. The autocomplete function is managed by a class `AutocompleteManager`,
+whose function `attemptAutocomplete` searches for the string starting with the specified characters in the string array provided and will return the
+string if a unique match is present. +
+
+==== Finding mechanism
+The find function currently matches name in the address book if those name starts with the find keyword. Whenever the a find event is triggered, the address book
+will filter the address book based on the predicate provided, the mechanism of which is specified by `NameContainsKeywordsPredicate` class.
+This class overrides the `test` function to filter the list based on `containsWordsStartWithString`, a `StringUtil` method which returns whether
+a string starts with another string. For example, 'Dav' will return 'Dave' +
+Looking forward, the finding mechanism will be more flexible, by implementing fuzzy search mechanism which allows returning
+close matches. For example, 'Dve' will return 'Dave' or 'Dove'. +
+
+==== Suggesting mechanism
+The suggestion mechanism will be a hybrid of the above two functionalities, in which suggestion, whether commands or a match string inside the addressbook
+will be shown as the user type commands. This has not been implemented but will be a UI-heavy component that anchor on the fuzzy search logic.
+// end::searching[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

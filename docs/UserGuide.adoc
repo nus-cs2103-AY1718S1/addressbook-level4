@@ -127,6 +127,26 @@ Returns any person having names starting with `Betsy`, `Tim`, or `John`
 * `f Nam` +
 Returns `Nam`
 
+=== Locating persons by tag: `findtag` (alias `ft`)
+
+Finds persons who has a tag that matches the given keyword. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]` or `ft KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `CS2103 Groupmate` will match `Groupmate CS2103`
+* Only the tag is searched.
+****
+
+Examples:
+
+* `find friends` +
+Returns `Alex Yeoh` and `Bernice Yu`
+* `find colleagues` +
+Returns 'bernice Yu' and 'Roy Balakrishnan'
+* `ft Malay` +
+Returns `Adil`
+
 === Deleting a person : `delete` (alias `del`)
 
 Deletes the specified person from the address book. +
@@ -329,6 +349,10 @@ There is no need to save manually.
 === Suggestions as you type
 
 Commands and parameters will be suggested as you type, where applicable.
+
+=== Autocomplete commands
+
+You can type the first few letters of the commands you want to use, then place TAB to have it autocompleted.
 
 === Exporting the data : `export`
 
