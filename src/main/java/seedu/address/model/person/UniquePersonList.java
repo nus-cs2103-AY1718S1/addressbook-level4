@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -35,6 +36,15 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    public ObservableList<Person> getInternalList() {
+        return internalList;
+    }
+
+
+    public int getIndexOf(ReadOnlyPerson key) {
+        return internalList.indexOf(key);
+    }
+
     /**
      * Adds a person to the list.
      *
@@ -46,6 +56,19 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+    }
+
+    /**
+     * Adds a person to the list in a specific position.
+     *
+     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     */
+    public void add(int index, ReadOnlyPerson toAdd) throws DuplicatePersonException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicatePersonException();
+        }
+        internalList.add(index, new Person(toAdd));
     }
 
     /**
