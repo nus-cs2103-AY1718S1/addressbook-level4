@@ -110,7 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @param tags all persons containing this tag will be deleted
      */
     @Override
-    public void deletePersonsWithTags(Set<Tag> tags) {
+    public void deletePersonsByTags(Set<Tag> tags) {
         for (Tag tag : tags) {
             deletePersonsWithTag(tag);
         }
