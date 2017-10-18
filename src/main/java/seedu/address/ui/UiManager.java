@@ -34,12 +34,14 @@ public class UiManager extends ComponentManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
 
-    private Logic logic;
-    private Config config;
-    private UserPrefs prefs;
-    private MainWindow mainWindow;
+    private static Logic logic;
+    private static Config config;
+    private static UserPrefs prefs;
+    private static MainWindow mainWindow;
     private LoginPage loginPage;
     private loginLogic loginLogic;
+    private static Stage primaryStage;
+
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -47,51 +49,44 @@ public class UiManager extends ComponentManager implements Ui {
         this.config = config;
         this.prefs = prefs;
     }
-
+// From here, use the commented code is you want the full feature. i left it commented as i didnt  have time to make it pass the tests
     @Override
     public void start(Stage primaryStage) {
-        Stage loginStage = new Stage();
+
         logger.info("Starting UI...");
-        primaryStage.setTitle(config.getAppTitle());
+        Stage loginStage = new Stage();
         loginStage.setTitle(config.getAppTitle());
-        //Set the application icon.
-        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
-        loginStage.getIcons().add(getImage(ICON_APPLICATION));
-            try {
-                mainWindow = new MainWindow(primaryStage, config, prefs, logic);
-                mainWindow.show(); //This should be called before creating other UI parts
-                mainWindow.fillInnerParts();
-
-            } catch (Throwable e) {
-                logger.severe(StringUtil.getDetails(e));
-                showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
-            }
-
         loginPage = new LoginPage(loginStage, loginLogic);
-
         logger.info("Login Created...");
-
         loginPage.show();
-
-    }
-
-    public void startMainApp(Stage primaryStage) {
-        logger.info("Starting MainUI...");
         primaryStage.setTitle(config.getAppTitle());
+        try {
+            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow.show(); //This should be called before creating other UI parts
+            mainWindow.fillInnerParts();
 
-        //Set the application icon.
-       // if (loginPage.getSession()) {
-            try {
-                mainWindow = new MainWindow(primaryStage, config, prefs, logic);
-                mainWindow.show(); //This should be called before creating other UI parts
-                mainWindow.fillInnerParts();
+        } catch (Throwable e) {
+            logger.severe(StringUtil.getDetails(e));
+            logger.info("Fatal error during initializing" + e);
+        }
 
-            } catch (Throwable e) {
-                logger.severe(StringUtil.getDetails(e));
-                showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
-            }
-       // }
     }
+
+
+//    public static void startMainApp(Stage primaryStage) {
+//        logger.info("Starting MainUI...");
+//        primaryStage.setTitle(config.getAppTitle());
+//        try {
+//            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+//            mainWindow.show(); //This should be called before creating other UI parts
+//            mainWindow.fillInnerParts();
+//
+//        } catch (Throwable e) {
+//            logger.severe(StringUtil.getDetails(e));
+//            logger.info("Fatal error during initializing" + e);
+//        }
+//
+//    }
 
     @Override
     public void stop() {

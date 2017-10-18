@@ -43,7 +43,7 @@ public class LoginPage extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
-    private loginLogic logic;
+    private final loginLogic logic = new loginLogic();
     private static boolean session;
 
     // Independent Ui parts residing in this Ui container
@@ -60,9 +60,6 @@ public class LoginPage extends UiPart<Region> {
     private TextField passwordTextField;
 
 
-
-
-
     public LoginPage(Stage primaryStage, loginLogic logic) {
 
 
@@ -70,7 +67,6 @@ public class LoginPage extends UiPart<Region> {
 
         // Set dependencies
         this.primaryStage = primaryStage;
-        this.logic = logic;
         logger.info("login finished");
 
         // Configure the UI
@@ -83,23 +79,22 @@ public class LoginPage extends UiPart<Region> {
     }
 
     @FXML
-    private  void handleCommandInputChanged() {
-            logger.info("enter registered");
-            boolean result = logic.execute(usernameTextField.getText(), passwordTextField.getText());
-            session = result;
-            // process result of the command
-            logger.info(usernameTextField.getText());
-            logger.info(passwordTextField.getText());
-            logger.info("Result: " + result);
-            if (session){
-                
-        primaryStage.close();
-
+    private void handleCommandInputChanged() {
+        logger.info("enter registered");
+        logger.info("name input =" + usernameTextField.getText());
+        logger.info("password input =" + passwordTextField.getText());
+        boolean result = logic.execute(usernameTextField.getText().toString(), passwordTextField.getText().toString());
+        session = result;
+        // process result of the command
+        logger.info("Result: " + result);
+        if (session) {
+           // UiManager.startMainApp(primaryStage);
+            primaryStage.close();
         }
 
     }
 
-    public boolean getSession(){
+    public boolean getSession() {
         return session;
 
     }
@@ -118,6 +113,7 @@ public class LoginPage extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
