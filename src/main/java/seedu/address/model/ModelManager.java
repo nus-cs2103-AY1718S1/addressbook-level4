@@ -156,7 +156,6 @@ public class ModelManager extends ComponentManager implements Model {
         }  catch (IllegalValueException ive) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
-
     }
     //=========== Filtered Person List Accessors =============================================================
 
