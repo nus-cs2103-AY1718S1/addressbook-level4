@@ -1,158 +1,180 @@
 package seedu.address.ui;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
+import org.fxmisc.easybind.EasyBind;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.Logic;
 
 /**
  * The UI component that is responsible for listing out possible commands based on user input in CLI
  */
 public class CommandBoxHelper extends UiPart<Region> {
 
-    public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBoxHelper.fxml";
-
-    private StringProperty helperText = new SimpleStringProperty("");
+    private final Logger logger = LogsCenter.getLogger(CommandBoxHelper.class);
+    private final Logic logic;
 
     private Character firstChar;
     private String commandString;
+    private ArrayList<String> helpList;
 
     @FXML
-    private TextArea commandBoxHelper;
+    private ListView<HelperCard> commandBoxHelperList;
 
 
-    public CommandBoxHelper() {
+    public CommandBoxHelper(Logic logic) {
         super(FXML);
-        commandBoxHelper.textProperty().bind(helperText);
-        commandBoxHelper.setStyle("-fx-text-fill: lime");
+        this.logic = logic;
+        this.helpList = new ArrayList<String>();
     }
 
     /**
      * Command to display text within the CommandBoxHelper given user input in the CLI.
      */
-    public void listHelp(TextField commandText) {
-        helperText.setValue("");
+    public boolean listHelp(TextField commandText) {
+        clearListView();
         try {
             commandString = commandText.getText();
             firstChar = commandText.getText().charAt(0);
         } catch (Exception e) {
-            helperText.setValue("");
+            logger.info("Invalid String or String is empty: " + e.toString());
+            logger.info("Hiding command helper");
+            return false;
         }
 
-        switch (firstChar) {
-        case 'a':
-            if (checkSubset(AddCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(AddCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
+        for (int i = 0; i < logic.getCommandList().size(); i++) {
+            if (checkSubset(logic.getCommandList().get(i), commandString, firstChar)) {
+                helpList.add(logic.getCommandList().get(i));
             }
-            break;
-        case 'c':
-            if (checkSubset(ClearCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(ClearCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        case 'd':
-            if (checkSubset(DeleteCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(DeleteCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        case 'e':
-            if (checkSubset(EditCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(helperText.getValue() + EditCommand.COMMAND_WORD + "\n");
-            }
-            if (checkSubset(ExitCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(helperText.getValue() + ExitCommand.COMMAND_WORD + "\n");
-            }
-            if (!checkSubset(ExitCommand.COMMAND_WORD, commandString)
-                    && !checkSubset(EditCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue("");
-            }
-            break;
-        case 'f':
-            if (checkSubset(FindCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(FindCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        case 'h':
-            if (checkSubset(HelpCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(helperText.getValue() + HelpCommand.COMMAND_WORD + "\n");
-            }
-            if (checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(helperText.getValue() + HistoryCommand.COMMAND_WORD + "\n");
-            }
-            if (!checkSubset(HelpCommand.COMMAND_WORD, commandString)
-                    && !checkSubset(HistoryCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue("");
-            }
-            break;
-        case 'l':
-            if (checkSubset(ListCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(ListCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        case 'r':
-            if (checkSubset(RedoCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(RedoCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        case 's':
-            if (checkSubset(SelectCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(SelectCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        case 'u':
-            if (checkSubset(UndoCommand.COMMAND_WORD, commandString)) {
-                helperText.setValue(UndoCommand.COMMAND_WORD + "\n");
-            } else {
-                helperText.setValue("");
-            }
-            break;
-        default:
-            helperText.setValue("No commands matching your words");
-            break;
         }
+        if (helpList.isEmpty()) {
+            return false;
+        } else {
+            setConnections(FXCollections.observableList(helpList));
+            return true;
+        }
+    }
+
+    /**
+     * Checks if commandBoxHelper is empty
+     * @return true if empty, false otherwise
+     */
+    public boolean checkEmpty() {
+        return helpList.isEmpty();
+    }
+
+    /**
+     * Called when user presses down key on command helper
+     */
+    public void selectDownHelperBox() {
+        if (!commandBoxHelperList.getSelectionModel().isSelected(0)) {
+            commandBoxHelperList.getSelectionModel().selectFirst();
+        } else {
+            commandBoxHelperList.getSelectionModel().select(
+                    commandBoxHelperList.getSelectionModel().getSelectedIndex() + 1);
+        }
+    }
+
+    /**
+     * Called when user presses up key on command helper
+     */
+    public void selectUpHelperBox() {
+        if (!commandBoxHelperList.getSelectionModel().isSelected(0)) {
+            commandBoxHelperList.getSelectionModel().selectFirst();
+        } else {
+            commandBoxHelperList.getSelectionModel().select(
+                    commandBoxHelperList.getSelectionModel().getSelectedIndex() - 1);
+        }
+    }
+
+    /**
+     * Checks whether the command helper has been selected
+     * @return true if selected, false otherwise
+     */
+    public boolean isMainSelected() {
+        for (int i = 0; i <= helpList.size(); i++) {
+            if (commandBoxHelperList.getSelectionModel().isSelected(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Getter method for each HelperCard in the commandBoxHelperList
+     * @return String of each HelperCard
+     */
+    public String getHelperText() {
+        for (int i = 0; i <= logic.getCommandTemplateList().size(); i++) {
+            if (logic.getCommandTemplateList().get(i).contains(
+                    commandBoxHelperList.getSelectionModel().getSelectedItem().getText())) {
+                return logic.getCommandTemplateList().get(i);
+            }
+        }
+        return null;
     }
 
     /**
      * Checks if commandFieldString is a subset of commandWord and if their first letter matches
      */
-    private boolean checkSubset(String commandWord , String commandFieldString) {
+    private boolean checkSubset(String commandWord , String commandFieldString, Character firstChar) {
         try {
-            if (commandWord.contains(commandFieldString)) {
+            if (commandWord.contains(commandFieldString) && firstChar.equals(commandWord.charAt(0))) {
                 return true;
             } else {
                 return false;
             }
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    /**
+     * Empties the list view
+     */
+    private void clearListView() {
+        try {
+            helpList.clear();
+            ArrayList<HelperCard> selectedItemsCopy = new ArrayList<>(
+                    commandBoxHelperList.getSelectionModel().getSelectedItems());
+            commandBoxHelperList.getItems().removeAll(selectedItemsCopy);
+        } catch (Exception e) {
+            logger.info(e.getMessage() + " no items in the list!");
+        }
+    }
+
+    private void setConnections(ObservableList<String> commandList) {
+        ObservableList<HelperCard> mappedList = EasyBind.map(
+                commandList, (commandString) -> new HelperCard(commandString));
+        commandBoxHelperList.setItems(mappedList);
+        commandBoxHelperList.setCellFactory(listView -> new CommandListViewCell());
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class CommandListViewCell extends ListCell<HelperCard> {
+
+        @Override
+        protected void updateItem(HelperCard command, boolean empty) {
+            super.updateItem(command, empty);
+
+            if (empty || command == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(command.getRoot());
+            }
         }
     }
 }
