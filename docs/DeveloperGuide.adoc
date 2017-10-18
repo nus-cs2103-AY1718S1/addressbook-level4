@@ -917,6 +917,53 @@ Use case ends.
 Use case resumes at step 4.
 
 [discrete]
+=== Use case: Add tag to contact
+
+*MSS*
+
+1.  User requests to add tag to contact
+2.  AddressBook shows a list of persons
+3.  User requests to add tag to the person at a specific index in the list
+4.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide a new tag.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user provides an invalid tag.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3d. The user provides a tag that already exists on the specified contact.
++
+[none]
+** 3d1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
 === Use case: Backup data
 
 *MSS*

@@ -100,6 +100,25 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `e 3 n/Carl Cooper` +
 Edits the name of the 3rd person to be `Carl Cooper`.
 
+=== Adding a tag to a person : `addtag`
+
+Shorthand Alias: `at`
+Adds a tag to an existing person in the address book. +
+Format: `addtag INDEX TAG`
+
+****
+* Adds a tag to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Only one alphanumeric tag can be added at a time. Special characters will not be accepted. e.g !, @, #, ...
+* The tag added must not already exist on the desired contact.
+****
+
+Examples:
+
+* `addtag 1 friends` +
+Adds the `friends` tag to the 1st person.
+* `at 2 9pmclass` +
+Adds the `9pmclass` tag to the 2nd person.
+
 === Making a note: `note`
 
 Shorthand Alias: 'n'
