@@ -4,7 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -14,8 +18,18 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.ui.util.KeyListenerUtil;
 
 public class KeyListenerTest extends RolodexGuiTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void assertExceptionForMissingKeyMapping() throws Exception {
+        HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
+        thrown.expect(NullPointerException.class);
+        keys.get("MISSING_MAP").getName();
+    }
 
     @Test
     public void executeKeyEventForFocusOnCommandBox() {
