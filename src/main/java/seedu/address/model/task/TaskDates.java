@@ -30,7 +30,7 @@ public class TaskDates {
     /**
      * Formats the date of a given string into LocalDate.
      */
-    public static LocalDate formatDate(String date) throws IllegalValueException { 
+    public static LocalDate formatDate(String date) throws IllegalValueException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(date, formatter);
     }
