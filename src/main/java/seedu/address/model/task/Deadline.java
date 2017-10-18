@@ -2,9 +2,6 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**

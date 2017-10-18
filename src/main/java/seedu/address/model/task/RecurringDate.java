@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a recurring date in the application.
+ */
 public class RecurringDate extends TaskDates {
 
     public final String date;

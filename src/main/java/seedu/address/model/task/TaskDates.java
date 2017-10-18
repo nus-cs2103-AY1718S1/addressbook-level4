@@ -1,7 +1,7 @@
 package seedu.address.model.task;
 
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -30,8 +30,8 @@ public class TaskDates {
     /**
      * Formats the date of a given string into LocalDate.
      */
-    public static LocalDate formatDate(String date) throws IllegalValueException {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            return LocalDate.parse(date, formatter);
+    public static LocalDate formatDate(String date) throws IllegalValueException { 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(date, formatter);
     }
 }
