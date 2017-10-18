@@ -39,6 +39,9 @@ public class TutorialPanel extends UiPart<Region> {
     private Button leftButton;
 
     @FXML
+    private Button skipButton;
+
+    @FXML
     private ImageView tutorialImage;
 
     @FXML
@@ -63,20 +66,15 @@ public class TutorialPanel extends UiPart<Region> {
      * Handles the left button pressed event.
      */
     @FXML
-    private void handleLeftButtonPressed() {
-        isSkip = false;
-        leftButton.setText("Next");
-        rightButton.setText("Back");
-        try {
+    private void handleLeftButtonPressed() throws CommandException, ParseException {
+        if (isSkip) {
+            isSkip = false;
+            leftButton.setText("Back");
+            rightButton.setText("Next");
+            skipButton.setVisible(true);
             newTutorial.executeNextStep();
-        } catch (CommandException e1) {
-            logger.warning("Can't execute command in tutorial.");
-        } catch (ParseException e1) {
-            logger.warning("Wrong command input in tutorial.");
-        }
-        if (newTutorial.isLastStep()) {
-            setTutorialVisible(false);
-            browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+        } else {
+            newTutorial.executePreviousStep();
         }
     }
 
@@ -84,20 +82,41 @@ public class TutorialPanel extends UiPart<Region> {
      * Handles the right button pressed event.
      */
     @FXML
-    private void handleRightButtonPressed() throws CommandException, ParseException {
+    private void handleRightButtonPressed() {
         if (isSkip) {
-            newTutorial.endTutorial();
-            setTutorialVisible(false);
+            newTutorial.revertToDefault();
+            removeTutorialUi();
             browserPlaceHolder.getChildren().add(browserPanel.getRoot());
         } else {
-            newTutorial.executePreviousStep();
+            try {
+                newTutorial.executeNextStep();
+            } catch (CommandException e1) {
+                logger.warning("Can't execute command in tutorial.");
+            } catch (ParseException e1) {
+                logger.warning("Wrong command input in tutorial.");
+            }
+            if (newTutorial.isLastStep()) {
+                removeTutorialUi();
+                browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+            }
         }
     }
 
-    private void setTutorialVisible(boolean isVisible) {
-        leftButton.setVisible(isVisible);
-        rightButton.setVisible(isVisible);
-        tutorialText.setVisible(isVisible);
-        tutorialImage.setVisible(isVisible);
+    /**
+     * Handles the skip button pressed event.
+     */
+    @FXML
+    private void handleSkipButtonPressed() {
+            newTutorial.revertToDefault();
+            removeTutorialUi();
+            browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+    }
+
+    private void removeTutorialUi() {
+        leftButton = null;
+        rightButton = null;
+        tutorialText = null;
+        tutorialImage = null;
+        skipButton = null;
     }
 }

@@ -75,7 +75,7 @@ public class Tutorial {
             mainWindow.unhighlightAll();
         }
         if (stepToExecute.isLastStep()) {
-            endTutorial();
+            revertToDefault();
         } else if (stepToExecute.isPrompt()) {
             mainWindow.setCommandPrompt(stepToExecute.getCommandPrompt());
             tutorialText.setText(stepToExecute.getTextDisplay());
@@ -99,11 +99,11 @@ public class Tutorial {
     }
 
     /**
-     * Ends the tutorial.
+     * Reverts the UI to default style.
      */
-    public void endTutorial() {
+    public void revertToDefault() {
         mainWindow.unhighlightAll();
-        tutorialText.setVisible(false);
+        tutorialText = null;
         mainWindow.setCommandPrompt(TutorialMessages.PROMPT_DEFAULT);
     }
 }

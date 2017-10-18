@@ -24,14 +24,19 @@ public class TutorialMessages {
     public static final String INTRO_FIVE = "This is the search box, where "
             + "you are able to search for the person you want.";
     public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
-    public static final String INTRO_END = "Functions of Bluebird:\n"
-            + "1. Add\n"
-            + "2. Delete\n"
-            + "3. Edit\n"
-            + "4. List\n"
-            + "5. Sort\n"
-            + "6. COMMAND\n"
-            + "7. COMMAND\n";
+    public static final String INTRO_END = "Features of Bluebird:\n"
+            + "1. Add a contact\n"
+            + "2. Delete a contact\n"
+            + "3. Edit a contact\n"
+            + "4. Find a contact\n"
+            + "5. Select a contact\n"
+            + "6. Clear all contacts\n"
+            + "7. List all contacts\n"
+            + "8. Sort list of contacts\n"
+            + "9. Help window\n"
+            + "10. History of command inputs\n"
+            + "11. Undo a command\n"
+            + "12. Redo a command\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Follow the format in "
