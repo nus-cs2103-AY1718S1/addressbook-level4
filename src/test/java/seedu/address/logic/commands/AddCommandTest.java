@@ -20,20 +20,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-<<<<<<< HEAD
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
-=======
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.testutil.ParcelBuilder;
->>>>>>> master
 
 public class AddCommandTest {
 
@@ -140,11 +131,6 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addBirthday(ReadOnlyPerson personToUpdate, Birthday inputBirthday) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
     }

@@ -12,7 +12,6 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -74,29 +73,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-<<<<<<< HEAD
-    public void addBirthday(ReadOnlyPerson person, Birthday birthday) throws PersonNotFoundException,
-                                                                             DuplicatePersonException {
-        Person newPerson = new Person(person);
-        try {
-            newPerson.setBirthday(birthday);
-            addressBook.updatePerson(person, newPerson);
-        } catch (PersonNotFoundException | DuplicatePersonException e) {
-            throw e;
-        }
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
-=======
     public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
             throws DuplicateParcelException, ParcelNotFoundException {
         requireAllNonNull(target, editedParcel);
->>>>>>> master
 
         addressBook.updateParcel(target, editedParcel);
         indicateAddressBookChanged();

@@ -2,7 +2,7 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.person.Birthday.DEFAULT_BIRTHDAY_VALUE;
+import static seedu.address.model.person.DeliveryDate.DEFAULT_DELIVERYDATE_VALUE;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -25,42 +25,23 @@ public class Parcel implements ReadOnlyParcel {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<DeliveryDate> deliveryDate;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-<<<<<<< HEAD:src/main/java/seedu/address/model/person/Person.java
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Birthday birthday) {
-        requireAllNonNull(name, phone, email, address, tags, birthday);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.birthday = new SimpleObjectProperty<>(birthday);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-    }
-
-    /**
-     * Every field must be present and not null.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
-=======
     public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(trackingNumber, name, phone, email, address, tags);
         this.trackingNumber = new SimpleObjectProperty<>(trackingNumber);
->>>>>>> master:src/main/java/seedu/address/model/parcel/Parcel.java
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         try {
-            String default_birthday = DEFAULT_BIRTHDAY_VALUE;
-            this.birthday = new SimpleObjectProperty<>(new Birthday(default_birthday));
+            String default_deliverydate = DEFAULT_DELIVERYDATE_VALUE;
+            this.deliveryDate = new SimpleObjectProperty<>(new DeliveryDate(default_deliverydate));
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
@@ -71,15 +52,9 @@ public class Parcel implements ReadOnlyParcel {
     /**
      * Creates a copy of the given ReadOnlyParcel.
      */
-<<<<<<< HEAD:src/main/java/seedu/address/model/person/Person.java
-    public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getBirthday());
-=======
     public Parcel(ReadOnlyParcel source) {
         this(source.getTrackingNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getTags());
->>>>>>> master:src/main/java/seedu/address/model/parcel/Parcel.java
     }
 
     public void setTrackingNumber(TrackingNumber trackingNumber) {
@@ -172,16 +147,16 @@ public class Parcel implements ReadOnlyParcel {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public void setBirthday(Birthday birthday) {
-        this.birthday.set(requireNonNull(birthday));
+    public void setDeliveryDate(DeliveryDate deliveryDate) {
+        this.deliveryDate.set(requireNonNull(deliveryDate));
     }
 
-    public ObjectProperty<Birthday> birthdayProperty() {
-        return birthday;
+    public ObjectProperty<DeliveryDate> deliveryDateProperty() {
+        return deliveryDate;
     }
 
-    public Birthday getBirthday() {
-        return birthday.get();
+    public DeliveryDate getDeliveryDate() {
+        return deliveryDate.get();
     }
 
     @Override
@@ -203,3 +178,4 @@ public class Parcel implements ReadOnlyParcel {
     }
 
 }
+
