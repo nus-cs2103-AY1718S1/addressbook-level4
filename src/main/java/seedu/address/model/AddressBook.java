@@ -160,6 +160,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+
             return true;
         } else {
             throw new PersonNotFoundException();
@@ -170,6 +171,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    public void removeUnusedTags(Set<Tag> tagsToRemove) {
+        Set<Tag> updatedTags = tags.toSet();
+        for (Tag tagToRemove : tagsToRemove) {
+            updatedTags.remove(tagToRemove);
+        }
+        syncMasterTagListWith(persons);
     }
 
     //// util methods
