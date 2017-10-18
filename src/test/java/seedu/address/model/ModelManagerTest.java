@@ -3,6 +3,8 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -20,6 +22,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagColorManager;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.TypicalPersons;
@@ -27,6 +30,20 @@ import seedu.address.testutil.TypicalPersons;
 public class ModelManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void hasTag_emptyModel_returnFalse() throws Exception {
+        ModelManager modelManager = new ModelManager();
+        assertFalse(modelManager.hasTag(new Tag(VALID_TAG_FRIEND)));
+    }
+
+    @Test
+    public void setTagColor_validFields_success() throws Exception {
+        ModelManager modelManager = new ModelManager();
+        Tag myTag = new Tag(VALID_TAG_FRIEND);
+        modelManager.setTagColor(myTag, VALID_TAG_COLOR);
+        assertEquals(VALID_TAG_COLOR, TagColorManager.getColor(myTag));
+    }
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
