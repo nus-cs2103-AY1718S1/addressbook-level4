@@ -69,8 +69,11 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all persons or all persons with a specified `tag` in the address book. +
+Format:
+
+* `list all` lists all persons in the address book
+* `list friends` lists all persons with the `[t/TAG] friends`
 
 === Sorting the list of persons : `sort`
 
