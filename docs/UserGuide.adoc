@@ -1,4 +1,4 @@
-= AddressBook - User Guide
+= AcquaNote - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
