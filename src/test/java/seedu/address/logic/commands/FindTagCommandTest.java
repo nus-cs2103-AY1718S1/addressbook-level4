@@ -78,11 +78,17 @@ public class FindTagCommandTest {
         return command;
     }
 
-    private void assertCommandSuccess(FindTagCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    /**
+     *
+     * @param command
+     * @param expectMessage
+     * @param expectedList
+     */
+    private void assertCommandSuccess(FindTagCommand command, String expectMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
