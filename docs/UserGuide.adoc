@@ -141,8 +141,8 @@ Examples:
 
 * `borrow 1 500` +
 Increases the debt of the 1st person by $500.
-* `borrow 2 1000` +
-Increases the debt of the 2nd person by $1000.
+* `borrow 2 1000.10` +
+Increases the debt of the 2nd person by $1000.10.
 
 === Deleting a person : `delete`
 
