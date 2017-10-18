@@ -127,6 +127,23 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Increasing the debt of a person: `borrow`
+
+Increase the debt of a person by the amount entered. +
+Format: `borrow INDEX AMOUNT`
+
+****
+* Increases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
+****
+
+Examples:
+
+* `borrow 1 500` +
+Increases the debt of the 1st person by $500.
+* `borrow 2 1000` +
+Increases the debt of the 2nd person by $1000.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -283,6 +300,8 @@ e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 t/friend t/colleague`
 * *Clear* : `clear`
+* *Borrow* : `borrow INDEX AMOUNT` +
+e.g. `borrow 1 500.50`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...` +
