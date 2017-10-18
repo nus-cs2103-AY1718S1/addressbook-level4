@@ -1,12 +1,18 @@
 package seedu.address.security;
 
+import java.io.IOException;
+
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
-import java.io.IOException;
-
+/**
+ * Provides Security Stubs for testing.
+ */
 public class SecurityStubUtil {
 
+    /**
+     * Represents a SecurityManager which does not work.
+     */
     private class UnSecuredSecurityStub implements Security {
 
         @Override
