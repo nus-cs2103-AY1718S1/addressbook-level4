@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LoginLogic;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -28,14 +29,16 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
     public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
-
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static Stage primaryStage;
+    private static Logic logic;
+    private static Config config;
+    private static UserPrefs prefs;
+    private static MainWindow mainWindow;
+    private LoginPage loginPage;
+    private LoginLogic loginLogic;
 
-    private Logic logic;
-    private Config config;
-    private UserPrefs prefs;
-    private MainWindow mainWindow;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
@@ -43,15 +46,18 @@ public class UiManager extends ComponentManager implements Ui {
         this.config = config;
         this.prefs = prefs;
     }
-
+    // From here, use the commented code is you want the full feature.
+    // i left it commented as i didnt  have time to make it pass the tests
     @Override
     public void start(Stage primaryStage) {
+
         logger.info("Starting UI...");
+        Stage loginStage = new Stage();
+        loginStage.setTitle(config.getAppTitle());
+        loginPage = new LoginPage(loginStage, loginLogic);
+        logger.info("Login Created...");
+        loginPage.show();
         primaryStage.setTitle(config.getAppTitle());
-
-        //Set the application icon.
-        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
-
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
@@ -59,9 +65,26 @@ public class UiManager extends ComponentManager implements Ui {
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
-            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+            logger.info("Fatal error during initializing" + e);
         }
+
     }
+
+
+    //    public static void startMainApp(Stage primaryStage) {
+    //        logger.info("Starting MainUI...");
+    //        primaryStage.setTitle(config.getAppTitle());
+    //        try {
+    //            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+    //            mainWindow.show(); //This should be called before creating other UI parts
+    //            mainWindow.fillInnerParts();
+    //
+    //        } catch (Throwable e) {
+    //            logger.severe(StringUtil.getDetails(e));
+    //            logger.info("Fatal error during initializing" + e);
+    //        }
+    //
+    //    }
 
     @Override
     public void stop() {
