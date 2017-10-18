@@ -36,7 +36,8 @@ public class UniqueSocialInfoListTest {
     }
 
     @Test
-    public void uniqueSocialInfoList_addDuplicateSocialType_throwsDuplicateSocialTypeException() throws UniqueSocialInfoList.DuplicateSocialTypeException {
+    public void uniqueSocialInfoList_addDuplicateSocialType_throwsDuplicateSocialTypeException()
+            throws UniqueSocialInfoList.DuplicateSocialTypeException {
         UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(aliceFacebook);
         thrown.expect(UniqueSocialInfoList.DuplicateSocialTypeException.class);
         uniqueSocialInfoList.add(bobFacebook);
@@ -73,7 +74,8 @@ public class UniqueSocialInfoListTest {
     }
 
     @Test
-    public void uniqueSocialInfoList_equalsOrderInsensitive_success() throws UniqueSocialInfoList.DuplicateSocialTypeException {
+    public void uniqueSocialInfoList_equalsOrderInsensitive_success()
+            throws UniqueSocialInfoList.DuplicateSocialTypeException {
         UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(aliceFacebook, aliceTwitter);
         UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(bobFacebook, bobTwitter);
         assertFalse(aliceList.equalsOrderInsensitive(bobList));

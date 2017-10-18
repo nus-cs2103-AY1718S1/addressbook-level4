@@ -108,7 +108,8 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Favorite updatedFavorite = editPersonDescriptor.getFavorite().orElse(personToEdit.getFavorite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Set<SocialInfo> updatedSocialInfos = editPersonDescriptor.getSocialInfos().orElse(personToEdit.getSocialInfos());
+        Set<SocialInfo> updatedSocialInfos =
+                editPersonDescriptor.getSocialInfos().orElse(personToEdit.getSocialInfos());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavorite,
                 updatedTags, updatedSocialInfos);
