@@ -95,6 +95,19 @@ Examples: +
 `list colleagues friends` +
 This will list all contacts with the tag `colleagues`, `friends` or both.
 
+=== Listing persons by blood type : `bloodtype` [Since v1.2]
+
+You can show a list of people in the address book with a specific the blood type. +
+Format: `bloodtype BLOODTYPE` +
+Shorthand Format: `bt BLOODTYPE`
++
+Examples: +
+`bloodtype A` +
+List people with blood type A. +
+`bt ab+` +
+List people with  blood type AB+. +
+Take note that BLOODTYPE is case insensitive.
+
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
