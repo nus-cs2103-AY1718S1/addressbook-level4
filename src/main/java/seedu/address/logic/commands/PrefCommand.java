@@ -38,7 +38,7 @@ public class PrefCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        String currentPrefValue = "";
+        String currentPrefValue;
         currentPrefValue = readPrefValue(prefKey);
         if (!newPrefValue.isEmpty()) {
             // Editing preference
@@ -58,11 +58,10 @@ public class PrefCommand extends Command {
         String prefValue;
         try {
             UserPrefs prefs = model.getUserPrefs();
-
             String getMethodName = "get" + prefKey;
-            Class userPrefsClass = prefs.getClass();
-            Method getMethod = userPrefsClass.getMethod(getMethodName, null);
-            prefValue = getMethod.invoke(prefs, null).toString();
+            Class<?> userPrefsClass = prefs.getClass();
+            Method getMethod = userPrefsClass.getMethod(getMethodName);
+            prefValue = getMethod.invoke(prefs).toString();
         } catch (NoSuchMethodException e) {
             throw new CommandException(String.format(MESSAGE_PREF_KEY_NOT_FOUND, prefKey));
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -72,16 +71,16 @@ public class PrefCommand extends Command {
     }
 
     /**
-     * Reads current value for the preference key
+     * Modifies the value of preference given by the key
      * @param prefKey Key name of the preference
-     * @return Value of the preference
+     * @param newPrefValue New value of the preference
      * @throws CommandException if the preference key is not defined in UserPrefs or not accessible
      */
     private void writePrefValue(String prefKey, String newPrefValue) throws CommandException {
         try {
             UserPrefs prefs = model.getUserPrefs();
             String setMethodName = "set" + prefKey;
-            Class userPrefsClass = prefs.getClass();
+            Class<?> userPrefsClass = prefs.getClass();
             Method setMethod = userPrefsClass.getMethod(setMethodName, String.class);
             setMethod.invoke(prefs, newPrefValue);
         } catch (NoSuchMethodException e) {
@@ -103,7 +102,7 @@ public class PrefCommand extends Command {
             return false;
         }
 
-        return Objects.equals(this.toString(), ((PrefCommand) other).toString());
+        return Objects.equals(this.toString(), other.toString());
     }
 
     @Override
