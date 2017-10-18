@@ -33,7 +33,7 @@ public class BirthdayCommand extends UndoableCommand {
             + PREFIX_BIRTHDAY + "01/JAN/1995";
 
     public static final String MESSAGE_ADD_BIRTHDAY_SUCCESS = "Added birthday to Person: %1$s";
-    public static final String MESSAGE_DELETE_BIRTHDAY_SUCCESS = "Remove birthday from Person: %1$s";
+    public static final String MESSAGE_DELETE_BIRTHDAY_SUCCESS = "Removed birthday from Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
