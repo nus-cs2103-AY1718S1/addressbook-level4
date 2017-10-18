@@ -51,12 +51,6 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    /** Sets the currently selected person. */
-    void setSelectedPerson(ReadOnlyPerson person);
-
-    /** Returns the currently selected person. */
-    ReadOnlyPerson getSelectedPerson();
-
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 

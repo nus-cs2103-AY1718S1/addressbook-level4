@@ -22,7 +22,7 @@ public class NearbyCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected Nearby Person: %1$s";
+    public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected nearby Person: %1$s";
 
     private final Index targetIndex;
 
