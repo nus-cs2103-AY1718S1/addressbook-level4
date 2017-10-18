@@ -20,7 +20,6 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -74,20 +73,20 @@ public class XmlAddressBookStorageTest {
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         AddressBook readBackAB = new AddressBook(readBack);
-        assertEquals(original, readBackAB);
+        assertEquals(original.toString(), readBackAB.toString());
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original.toString(), new AddressBook(readBack).toString());
 
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original.toString(), new AddressBook(readBack).toString());
     }
 
     @Test
@@ -100,7 +99,7 @@ public class XmlAddressBookStorageTest {
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         xmlAddressBookStorage.backupAddressBook();
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readBackupAddressBook().get();
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original.toString(), new AddressBook(readBack).toString());
 
         //Modify data, overwrite exiting backup file, and read back
         original.addPerson(new Person(HOON));
@@ -108,7 +107,7 @@ public class XmlAddressBookStorageTest {
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         xmlAddressBookStorage.backupAddressBook();
         readBack = xmlAddressBookStorage.readBackupAddressBook().get();
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original.toString(), new AddressBook(readBack).toString());
     }
 
     @Test
