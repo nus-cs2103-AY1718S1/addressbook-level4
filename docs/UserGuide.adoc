@@ -295,9 +295,19 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
-== Features Since v1.2
+== Patch Notes
 
-* Please add in features here
+=== Features added in v1.0
+
+{{More to be added}}
+
+=== Features added v1.1
+
+{{More to be added}}
+
+=== Features added in v1.2
+
+{{More to be added}}
 
 == Features Coming in v2.0
 
