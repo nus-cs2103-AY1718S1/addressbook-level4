@@ -332,6 +332,7 @@
 
 .webView {
     -fx-background-color: white;
+}
 
 .tabPane {
     -fx-border-radius: 10 10 0 0;

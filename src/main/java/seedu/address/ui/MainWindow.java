@@ -87,10 +87,10 @@ public class MainWindow extends UiPart<Region> {
     private Tab contactTab;
 
     @FXML
-    private StackPane notificationButton;
+    private AnchorPane notificationButton;
 
     @FXML
-    private StackPane calendarButton;
+    private AnchorPane calendarButton;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -162,8 +162,8 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
       
-        eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        //eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -177,6 +177,7 @@ public class MainWindow extends UiPart<Region> {
 
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
+        calendarView = new CalendarView();
         calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
                 EventHandler<MouseEvent>() {
                     @Override

@@ -44,14 +44,17 @@
 
     <SplitPane dividerPositions="0.15, 0.85" prefHeight="50.0" prefWidth="200.0">
         <items>
-            <StackPane alignment="TOP_LEFT" fx:id="calendarButton">
+            <StackPane alignment="CENTER" >
                 <padding>
-                    <Insets bottom="10" left="20" right="10" top="10" />
+                    <Insets bottom="20" left="20" right="10" top="10" />
                 </padding>
-                <ImageView fitHeight="30.0"
-                           fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
-                    <Image url="/images/calendar.png"/>
-                </ImageView>
+                <AnchorPane  prefHeight="30" fx:id="calendarButton"
+                            maxWidth="35">
+                    <ImageView fitHeight="30.0"
+                               fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
+                        <Image url="/images/calendar.png"/>
+                    </ImageView>
+                </AnchorPane>
             </StackPane>
             <StackPane fx:id="commandBoxPlaceholder" minHeight="60.0"
                        styleClass="commandBox" VBox.vgrow="NEVER">
@@ -59,25 +62,29 @@
                     <Insets bottom="5" left="10" right="10" top="5" />
                 </padding>
             </StackPane>
-            <StackPane alignment="TOP_RIGHT" fx:id="notificationButton">
+            <StackPane alignment="CENTER" >
                 <padding>
                     <Insets bottom="10" left="10" right="20" top="10" />
                 </padding>
-                <ImageView fitHeight="30.0"
-                           fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
-                    <Image url="/images/notification.png"/>
-                </ImageView>
+                <AnchorPane  prefHeight="30" fx:id="notificationButton"
+                             maxWidth="35">
+                    <ImageView fitHeight="30.0"
+                               fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
+                        <Image url="/images/notification.png"/>
+                    </ImageView>
+                </AnchorPane>
             </StackPane>
         </items>
     </SplitPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="340" prefWidth="500" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" minWidth="200" prefWidth="200"
+              SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="5" left="5" right="5" top="5" />
             </padding>
             <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
-                     tabMinWidth="120.0" minHeight="50" styleClass="tabPane"
+                     tabMinWidth="120.0" minHeight="80" styleClass="tabPane"
                      VBox.vgrow="ALWAYS" prefHeight="500.0" prefWidth="200.0">
                 <tabs>
                     <Tab fx:id="contactTab" styleClass="contactsTab"
