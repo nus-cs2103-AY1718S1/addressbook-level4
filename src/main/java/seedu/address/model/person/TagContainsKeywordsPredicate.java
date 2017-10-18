@@ -29,7 +29,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         while (it.hasNext()) {
             tagName.add(it.next().tagName);
         }
-        String mergedNames = tagName .stream().collect(Collectors.joining(" "));
+        String mergedNames = tagName.stream().collect(Collectors.joining(" "));
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(mergedNames, keyword));
     }
