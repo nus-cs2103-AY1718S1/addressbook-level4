@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= OurAB - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B4`      Since: `Aug 2017`      Licence: `MIT`    Adapted codebase from: `Team SE-EDU`
 
 == Quick Start
 
@@ -22,8 +22,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `OurAB.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for OurAB.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -82,6 +82,15 @@ Examples:
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Listing all persons, sorted by search frequency : `listByMostSearched`
+
+Shows a list of all persons in the address book, sorted by descending order of search frequency +
+Format: `listByMostSearched`
+
+****
+* Each time a person is searched for using `find`, the search frequency of the person is updated.
+****
 
 === Editing a person : `edit`
 
@@ -258,6 +267,8 @@ Can also use shortcut 'e'
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 Can also use shortcut 'f'
+* *List By Most Searched* : `ListByMostSearched`
+Can also use shortcut 'lms'
 * *List* : `list`
 Can also use shortcut 'l'
 * *Help* : `help`
@@ -276,8 +287,8 @@ Can also use shortcut 'r'
 * *Enhanced tag* - see more in-depth details of a tag
 * *Address book letters* - user is able to view contacts by starting letter, similar to current address books
 * *Sort by tag*
-* *Finding linkedin contacts*
-* *Remarks feature*
+* *Finding Linkedin contacts*
+* *Sort contacts lexicographically*
 * *Find nearest meeting location* - finds a common meeting point based on users' addresses
 * *Add meeting time* - Adds a meeting time to the contacts that is removed automatically when the time is reached
 * *Retrieve meeting of the day* - Shows all current meetings for today that have been scheduled
