@@ -20,11 +20,13 @@ public class CommandOptionUtil {
 
     private static final Pattern OPTION_PATTERN = Pattern.compile("^(-\\w+)");
 
+    private static final int DEFAULT_PATTERN_GROUP = 0;
+
     public static String getOptionPrefix(String args) {
         try {
             Matcher matcher = OPTION_PATTERN.matcher(args);
             if (matcher.find()) {
-                return matcher.group(0);
+                return matcher.group(DEFAULT_PATTERN_GROUP);
             }
         } catch (Exception e) {
             logger.info("use default command");
