@@ -28,6 +28,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.testutil.LessonBuilder;
 
 public class AddCommandTest {
@@ -114,6 +115,13 @@ public class AddCommandTest {
         }
 
         @Override
+        public FavouriteListPredicate getFavouriteListPredicate(){
+            fail("This method should not be called.");
+            return null;
+        }
+
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -136,6 +144,11 @@ public class AddCommandTest {
 
         @Override
         public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException{
             fail("This method should not be called.");
         }
 
