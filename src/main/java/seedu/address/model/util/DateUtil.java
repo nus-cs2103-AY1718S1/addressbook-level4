@@ -53,38 +53,38 @@ public class DateUtil {
             int year = Integer.parseInt(dateToValidate.substring(6, 10));
             boolean valid;
             switch (month) {
-                case 4:
-                case 6:
-                case 9:
-                case 11:
-                    if (day > 30) {
-                        valid = false;
-                    } else {
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if (day > 30) {
+                    valid = false;
+                } else {
+                    valid = true;
+                }
+                break;
+            case 2:
+                if (checkLeapYear(year)) {
+                    if (day <= 29) {
                         valid = true;
-                    }
-                    break;
-                case 2:
-                    if (checkLeapYear(year)) {
-                        if (day <= 29) {
-                            valid = true;
-                        } else {
-                            valid = false;
-                        }
                     } else {
-                            if (day <= 28) {
-                                valid = true;
-                            } else {
-                                valid = false;
-                            }
-                        }
-                        break;
-                default:
-                    if (day > 31) {
                         valid = false;
-                    } else {
-                        valid = true;
                     }
-                    break;
+                } else {
+                    if (day <= 28) {
+                        valid = true;
+                    } else {
+                        valid = false;
+                    }
+                }
+                break;
+            default:
+                if (day > 31) {
+                    valid = false;
+                } else {
+                    valid = true;
+                }
+                break;
             }
             return valid;
         }

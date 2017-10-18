@@ -35,7 +35,7 @@ public class Deadline {
             if (!isValidDeadline(trimmedDeadline)) {
                 throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
             }
-             this.value = trimmedDeadline;
+            this.value = trimmedDeadline;
             this.valueToDisplay = formatDate(trimmedDeadline);
         }
     }
