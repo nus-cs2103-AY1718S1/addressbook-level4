@@ -21,7 +21,7 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
  */
 public class PropertyManager {
     // Default constraint setting for all properties.
-    public static final String DEFAULT_MESSAGE = "$1%s can take any values, but it should not be blank";
+    public static final String DEFAULT_MESSAGE = "%1$s can take any values, but it should not be blank";
     public static final String DEFAULT_REGEX = "[^\\s].*";
 
     // A collection of the short names of all available properties.

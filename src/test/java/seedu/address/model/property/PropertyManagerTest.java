@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.regex.PatternSyntaxException;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
