@@ -106,7 +106,6 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         if (index == -1) {
             throw new MeetingNotFoundException();
         }
-        
         if (!target.equals(editedMeeting) && internalList.contains(editedMeeting)) {
             throw new DuplicateMeetingException();
         }
