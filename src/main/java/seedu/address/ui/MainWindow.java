@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.Stack;
 import java.util.logging.Logger;
+
+import javax.swing.text.html.ImageView;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -9,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -47,10 +52,6 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
-    private ContactTab contactTab;
-    private EventTab eventTab;
-    private NotificationButton notificationButton;
-    private CalendarButton calendarButton;
     private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
@@ -77,16 +78,19 @@ public class MainWindow extends UiPart<Region> {
     private StackPane statusbarPlaceholder;
 
     @FXML
-    private AnchorPane eventTabPlaceholder;
+    private TabPane tabPane;
 
     @FXML
-    private AnchorPane contactTabPlaceholder;
+    private Tab eventTab;
 
     @FXML
-    private AnchorPane notificationButtonPlaceholder;
+    private Tab contactTab;
 
     @FXML
-    private AnchorPane calendarButtonPlaceholder;
+    private StackPane notificationButton;
+
+    @FXML
+    private StackPane calendarButton;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -157,22 +161,9 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-
-        //When calendar button is clicked, the browserPlaceHolder will switch
-        // to the calendar view
-       personListPanelPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if(browserPlaceholder.getChildren().contains(calendarView.getRoot())){
-                            browserPlaceholder.getChildren().remove(calendarView
-                                    .getRoot());
-                        }
-                    }
-                });
-
-        //eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+      
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -184,63 +175,9 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        //@@author yangshuang
-        contactTab = new ContactTab();
-        contactTabPlaceholder.getChildren().add(contactTab.getRoot());
-
-        //When contact tab is selected, the List Panel below will switch to
-        // PersonListPanel
-        contactTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (personListPanelPlaceholder.getChildren().isEmpty()) {
-                    contactTabPlaceholder.setStyle("-fx-background-color:"
-                            + " #00bfff");
-                    eventTabPlaceholder.setStyle("-fx-background-color:"
-                                   + " #6495ed");
-
-                    personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-                }
-            }
-        });
-
-        eventTab = new EventTab();
-        eventTabPlaceholder.getChildren().add(eventTab.getRoot());
-
-        //When event tab is selected, the List Panel below will switch to
-        // EventListPanel
-        eventTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (!personListPanelPlaceholder.getChildren().isEmpty()) {
-                    eventTabPlaceholder.setStyle("-fx-background-color:"
-                            + " #00bfff");
-                    contactTabPlaceholder.setStyle("-fx-background-color:"
-                            + " #6495ed");
-                    personListPanelPlaceholder.getChildren().remove(0);
-                }
-//                if (!browserPlaceholder.getChildren().equals(calendarView
-//                        .getRoot())) {
-//                    browserPlaceholder.getChildren().remove
-//                            (calendarView.getRoot());
-//                }
-            }
-        });
-
-        notificationButton = new NotificationButton();
-        notificationButtonPlaceholder.getChildren().add(notificationButton
-                .getRoot());
-
-        calendarButton = new CalendarButton();
-        calendarButtonPlaceholder.getChildren().add(calendarButton
-                .getRoot());
-        calendarView = new CalendarView();
-
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
-        calendarButtonPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
+        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
                 EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -320,6 +257,10 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
+    }
+
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
     }
 
     void releaseResources() {

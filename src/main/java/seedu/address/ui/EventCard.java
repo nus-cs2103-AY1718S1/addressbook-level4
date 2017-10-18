@@ -3,7 +3,6 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -17,15 +16,11 @@ public class EventCard extends UiPart<Region> {
     private static final String FXML = "EventListCard.fxml";
 
     /**
-     * Note: Certain keywords such as "location" and "resources" are reserved
-     * keywords in JavaFX.
-     * As a consequence, UI elements' variable titles cannot be set to such
-     * keywords
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable titles cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see
-     * <a href="https://github.com/se-edu/addressbook-level4/issues/336">The
-     * issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
     public final ReadOnlyEvent event;
@@ -40,39 +35,22 @@ public class EventCard extends UiPart<Region> {
     private Label timing;
     @FXML
     private Label description;
-    @FXML
-    private FlowPane tags;
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
-        initTags(event);
         bindListeners(event);
     }
 
     /**
-     * Binds the individual UI elements to observe their respective {@code
-     * Event}
-     * properties
+     * Binds the individual UI elements to observe their respective {@code Event} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyEvent event) {
         title.textProperty().bind(Bindings.convert(event.titleProperty()));
         timing.textProperty().bind(Bindings.convert(event.timingProperty()));
-        description.textProperty().bind(Bindings.convert(event
-                .descriptionProperty
-                ()));
-        event.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag
-                    .tagName)));
-        });
-    }
-
-    private void initTags(ReadOnlyEvent event) {
-        event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag
-                .tagName)));
+        description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
     }
 
     @Override
