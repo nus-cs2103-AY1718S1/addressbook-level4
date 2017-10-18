@@ -11,6 +11,8 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -69,8 +71,7 @@
     </SplitPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="List" minWidth="150" prefWidth="200"
-              prefHeight="400" SplitPane.resizableWithParent="false">
+        <VBox fx:id="personList" minWidth="340" prefWidth="500" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="5" left="5" right="5" top="5" />
             </padding>

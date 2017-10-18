@@ -1,10 +1,6 @@
 package seedu.address.model.event;
 
-import java.util.Set;
-
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * A read-only immutable interface for an Event in the addressbook.
@@ -22,10 +18,6 @@ public interface ReadOnlyEvent {
     ObjectProperty<Description> descriptionProperty();
 
     Description getDescription();
-
-    ObjectProperty<UniqueTagList> tagProperty();
-
-    Set<Tag> getTags();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -47,9 +39,7 @@ public interface ReadOnlyEvent {
                 .append(" Timing: ")
                 .append(getTiming())
                 .append(" Description: ")
-                .append(getDescription())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append(getDescription());
         return builder.toString();
     }
 }
