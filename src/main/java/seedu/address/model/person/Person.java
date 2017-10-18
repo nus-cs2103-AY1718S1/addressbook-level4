@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.insurance.LifeInsurance;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -23,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DateOfBirth> dob;
+    private LifeInsurance lifeInsur;
 
     private String reason;
 
@@ -48,6 +51,12 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
+    }
+
+    public Person(ReadOnlyPerson source, LifeInsurance lifeInsur) {
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getDateOfBirth(), source.getTags());
+        this.lifeInsur = lifeInsur;
     }
 
     public void setName(Name name) {
@@ -119,6 +128,8 @@ public class Person implements ReadOnlyPerson {
     public DateOfBirth getDateOfBirth() {
         return dob.get();
     }
+
+    @Override
     public String getReason() {
         Address a = this.getAddress();
         Name n = this.getName();
@@ -135,6 +146,7 @@ public class Person implements ReadOnlyPerson {
         return tags.get().toSet();
     }
 
+    @Override
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -144,6 +156,15 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public void setLifeInsurance(LifeInsurance lifeInsur){
+        this.lifeInsur = lifeInsur;
+    }
+
+    @Override
+    public ReadOnlyInsurance getLifeInsurance() {
+        return lifeInsur;
     }
 
     @Override
