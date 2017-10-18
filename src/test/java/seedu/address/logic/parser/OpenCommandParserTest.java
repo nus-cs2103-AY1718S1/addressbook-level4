@@ -46,7 +46,7 @@ public class OpenCommandParserTest {
         // backslashes are swapped out for forward slashes in directory
         String filePathWithBackSlashes = "C:\\Users\\Rolodex\\Downloads\\default.rldx";
         String filePathWithForwardSlashes = "C:/Users/Rolodex/Downloads/default.rldx";
-        
+
         OpenCommand expectedOpenCommand = new OpenCommand(filePathWithForwardSlashes);
         assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenCommand);
     }
