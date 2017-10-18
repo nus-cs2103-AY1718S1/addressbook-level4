@@ -101,7 +101,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only full words will be matched e.g `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -111,6 +111,26 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by tag: `findtag`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends will match `Friends`
+* Only the tag is searched.
+* Only full words will be matched e.g `Friend` will not match `Friends`
+* Multiple tags could be searched together e.g `findtag friends family`
+* Persons matching at least one keyword will be returned
+****
+
+Examples:
+
+* `findtag friends` +
+Returns `Alex` and `Bernice Yu`
+* `findtag friends family colleagues` +
+Returns any person containing tags `friends`, `family` or `colleagues`
 
 === Deleting a person : `delete`
 
@@ -243,6 +263,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Findtag* : `findtag KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtag friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
