@@ -401,7 +401,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertFalse(mySandBox.getText().length() == 0);
         assertTrue(mySandBox.getText().length() == 2);
 
-        //Test 5: Test for word + blank space input
+        //Test 5a: Test for word + blank space input, Caret at far right
         mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
         guiRobot.write("Test");
@@ -410,6 +410,24 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
         assertFalse(mySandBox.getCaretPosition() == 0);
         guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 5b: Test for word + blank space input, Caret after word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        mySandBox.positionCaret(mySandBox.getText().length());
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
 
     }
@@ -493,7 +511,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertFalse(mySandBox.getText().length() == 0);
         assertTrue(mySandBox.getText().length() == 2);
 
-        //Test 5: Test for word + blank space input
+        //Test 5a: Test for word + blank space input, Caret at the end
         mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
         guiRobot.write("Test");
@@ -502,6 +520,24 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
         assertFalse(mySandBox.getCaretPosition() == 0);
         guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 5b: Test for word + blank space input, Caret after word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        mySandBox.positionCaret(mySandBox.getText().length());
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        mySandBox.clear();
         assertTrue(mySandBox.getCaretPosition() == 0);
 
     }
