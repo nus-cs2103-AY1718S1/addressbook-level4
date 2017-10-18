@@ -3,6 +3,10 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,6 +17,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -24,6 +30,8 @@ import seedu.address.model.tag.Tag;
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+
+    public static final String MESSAGE_DUPLICATE_PERSON =  "Duplicate persons in AddressBook.";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
@@ -79,13 +87,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException  {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
 
@@ -133,4 +140,27 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    @Override
+    public Boolean checkIfListEmpty(ArrayList<ReadOnlyPerson> contactList) {
+        if (filteredPersons.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    public void sortListByName(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+        contactList.addAll(filteredPersons);
+        Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
+
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
 }
