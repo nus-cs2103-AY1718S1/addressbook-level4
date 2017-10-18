@@ -34,19 +34,8 @@ public class TaskListPanel extends UiPart<Region> {
             taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1));
         taskCardListView.setItems(mappedList);
         taskCardListView.setCellFactory(listView -> new TaskListViewCell());
-        //setEventHandlerForSelectionChangeEvent();
     }
-/*
-    private void setEventHandlerForSelectionChangeEvent() {
-        taskCardListView.getSelectionModel().selectedItemProperty()
-            .addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                    raise(new TaskPanelSelectionChangedEvent(newValue));
-                }
-            });
-    }
-*/
+
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
      */

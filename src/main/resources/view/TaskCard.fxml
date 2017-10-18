@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane>
         <columnConstraints>
@@ -22,39 +22,39 @@
          <children>
             <VBox GridPane.columnSpan="2" GridPane.rowSpan="3">
                <children>
-                  <HBox prefHeight="150.0" prefWidth="200.0">
+                  <HBox prefHeight="120.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="id" prefHeight="150.0" prefWidth="40.0" text=" ">
+                        <Label fx:id="id" prefHeight="120.0" prefWidth="40.0" text=" ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="150.0" prefWidth="60.0" styleClass="cell_big_label" text="Task:">
+                        <Label prefHeight="120.0" prefWidth="60.0" styleClass="cell_big_label" text="Task:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="description" prefHeight="150.0" prefWidth="200.0" text="\\$description" wrapText="true" />
+                        <Label fx:id="description" prefHeight="120.0" prefWidth="200.0" styleClass="cell_small_label" text="\\$description" wrapText="true" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="45.0" prefWidth="200.0">
+                  <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="50.0" prefWidth="100.0" styleClass="cell_big_label" text="  Start Date:">
+                        <Label prefHeight="30.0" prefWidth="100.0" styleClass="cell_big_label" text="  Start Date:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="startDate" prefHeight="50.0" prefWidth="200.0" text="\\$startDate" />
+                        <Label fx:id="startDate" prefHeight="30.0" prefWidth="200.0" styleClass="cell_small_label" text="\\$startDate" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="45.0" prefWidth="200.0">
+                  <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="50.0" prefWidth="100.0" styleClass="cell_big_label" text="  Deadline:">
+                        <Label prefHeight="30.0" prefWidth="100.0" styleClass="cell_big_label" text="  Deadline:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="deadline" prefHeight="50.0" prefWidth="200.0" text="\\$deadline" />
+                        <Label fx:id="deadline" prefHeight="30.0" prefWidth="200.0" styleClass="cell_small_label" text="\\$deadline" />
                      </children>
                   </HBox>
                </children>
