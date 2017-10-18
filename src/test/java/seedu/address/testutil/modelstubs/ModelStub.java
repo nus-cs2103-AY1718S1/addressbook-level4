@@ -50,6 +50,12 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void toggleFavoritePerson(ReadOnlyPerson target, String type)
+            throws DuplicatePersonException, PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         fail("This method should not be called.");
         return null;

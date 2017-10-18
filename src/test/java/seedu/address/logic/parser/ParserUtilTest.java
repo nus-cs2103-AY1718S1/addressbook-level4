@@ -55,6 +55,12 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseMultiIndex_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseMultipleIndexes("  1 2 3"); // Two trailing spaces in front
+    }
+
+    @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
