@@ -114,7 +114,7 @@ public class CommandBoxHelper extends UiPart<Region> {
                 helperText.setValue("");
             }
             break;
-         case 'r':
+        case 'r':
             if (checkSubset(RedoCommand.COMMAND_WORD, commandString)) {
                 helperText.setValue(RedoCommand.COMMAND_WORD + "\n");
             } else {
