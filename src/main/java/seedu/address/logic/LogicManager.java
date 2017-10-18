@@ -45,6 +45,15 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    /**
+     * Updates the selected person.
+     * @param person the person that has been selected.
+     */
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        model.updateSelectedPerson(person);
+    }
+
     @Override
     public ObservableList<ReadOnlyPerson> getAllPersons() {
         return model.getAllPersons();

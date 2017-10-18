@@ -20,6 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.NearbyCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -128,6 +129,9 @@ public class PreLoginCommandBoxTest extends GuiUnitTest {
 
         commandBoxHandle.run(UndoCommand.COMMAND_WORD);
         assertBehaviorForFailedCommand(UndoCommand.COMMAND_WORD);
+
+        commandBoxHandle.run(NearbyCommand.COMMAND_WORD);
+        assertBehaviorForFailedCommand(NearbyCommand.COMMAND_WORD);
 
         // unrecognised commands
         commandBoxHandle.run(COMMAND_THAT_IS_NOT_RECOGNIZED);

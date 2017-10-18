@@ -179,6 +179,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateSelectedPerson(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getNearbyPersons() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void changeListTo(String string) {
             fail("This method should not be called.");
         }
