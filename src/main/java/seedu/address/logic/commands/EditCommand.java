@@ -118,11 +118,12 @@ public class EditCommand extends UndoableCommand {
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        Person editedPerson = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
+        Person personCreated = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
                 updatedDebt, updatedInterest, updatedDeadline, updatedTags);
-        editedPerson.setIsBlacklisted(personToEdit.getIsBlacklisted());
 
-        return editedPerson;
+        personCreated.setDateBorrow(personToEdit.getDateBorrow());
+        personCreated.setIsBlacklisted(personToEdit.getIsBlacklisted());
+        return personCreated;
     }
 
     @Override
