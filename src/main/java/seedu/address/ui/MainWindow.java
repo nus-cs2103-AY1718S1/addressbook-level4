@@ -154,7 +154,7 @@ public class MainWindow extends UiPart<Region> {
 
         browserPanel = new BrowserPanel();
         if (MainApp.isFirstTimeOpen()) {
-            TutorialPanel tutorialPanel = new TutorialPanel(this, logic, browserPanel, browserPlaceholder);
+            TutorialPanel tutorialPanel = new TutorialPanel(this, browserPanel, browserPlaceholder);
             browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
         } else {
             browserPlaceholder.getChildren().add(browserPanel.getRoot());

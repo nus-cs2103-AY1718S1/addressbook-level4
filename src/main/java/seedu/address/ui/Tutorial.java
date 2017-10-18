@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.scene.control.TextArea;
 import seedu.address.commons.core.TutorialMessages;
-import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -17,12 +16,10 @@ public class Tutorial {
     private TextArea tutorialText;
     private ArrayList<TutSteps> tutorialSteps = new ArrayList<>();
     private int currentStepNum = 0;
-    private Logic logic;
 
-    public Tutorial(MainWindow mainWindow, TextArea tutorialText, Logic logic) {
+    public Tutorial(MainWindow mainWindow, TextArea tutorialText) {
         this.mainWindow = mainWindow;
         this.tutorialText = tutorialText;
-        this.logic = logic;
 
         setUpTutorial();
     }
@@ -42,13 +39,12 @@ public class Tutorial {
 
         /* Steps for conclusion */
         tutorialSteps.add(new TutSteps(TutorialMessages.CONCLUSION, TutorialMessages.PROMPT_DEFAULT));
-        tutorialSteps.add(new TutSteps("Last step"));
     }
 
     /**
      * Executes the next tutorial step.
      */
-    public void executeNextStep() throws CommandException, ParseException {
+    public void executeNextStep() {
         TutSteps stepToExecute = tutorialSteps.get(currentStepNum);
         switch (currentStepNum++) {
         case 0:
@@ -74,9 +70,7 @@ public class Tutorial {
         default:
             mainWindow.unhighlightAll();
         }
-        if (stepToExecute.isLastStep()) {
-            revertToDefault();
-        } else if (stepToExecute.isPrompt()) {
+        if (stepToExecute.isPrompt()) {
             mainWindow.setCommandPrompt(stepToExecute.getCommandPrompt());
             tutorialText.setText(stepToExecute.getTextDisplay());
         } else {
@@ -95,16 +89,7 @@ public class Tutorial {
     }
 
     public boolean isLastStep() {
-        return currentStepNum == TutorialMessages.TOTAL_NUM_STEPS + 1;
-    }
-
-    /**
-     * Reverts the UI to default style.
-     */
-    public void revertToDefault() {
-        mainWindow.unhighlightAll();
-        tutorialText = null;
-        mainWindow.setCommandPrompt(TutorialMessages.PROMPT_DEFAULT);
+        return currentStepNum == TutorialMessages.TOTAL_NUM_STEPS;
     }
 }
 
@@ -113,28 +98,17 @@ public class Tutorial {
  */
 class TutSteps {
 
-    private static int totalNumSteps = 0;
     private String textDisplay;
-    private boolean isLastStep = false;
-    private int stepNumber;
     private String commandPrompt = "";
     private boolean hasPrompt = false;
 
     public TutSteps(String textDisplay) {
         this.textDisplay = textDisplay;
-        stepNumber = totalNumSteps;
-        if (totalNumSteps++ == TutorialMessages.TOTAL_NUM_STEPS) {
-            this.isLastStep = true;
-        }
     }
 
     public TutSteps(String textDisplay, String commandPrompt) {
         this.textDisplay = textDisplay;
         this.commandPrompt = commandPrompt;
-        stepNumber = totalNumSteps;
-        if (totalNumSteps++ == TutorialMessages.TOTAL_NUM_STEPS) {
-            this.isLastStep = true;
-        }
         this.hasPrompt = true;
     }
 
@@ -142,16 +116,8 @@ class TutSteps {
         return textDisplay;
     }
 
-    public boolean isLastStep() {
-        return isLastStep;
-    }
-
     public String getCommandPrompt() {
         return commandPrompt;
-    }
-
-    public int getStepNumber() {
-        return stepNumber;
     }
 
     public boolean isPrompt() {

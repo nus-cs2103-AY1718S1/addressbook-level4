@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.TutorialMessages;
-import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -24,9 +22,7 @@ public class TutorialPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(TutorialPanel.class);
 
-    private ArrayList<TutSteps> tutStepsList = new ArrayList<>();
     private Tutorial newTutorial;
-    private Logic logic;
     private MainWindow mainWindow;
     private BrowserPanel browserPanel;
     private StackPane browserPlaceHolder;
@@ -47,11 +43,10 @@ public class TutorialPanel extends UiPart<Region> {
     @FXML
     private TextArea tutorialText;
 
-    public TutorialPanel(MainWindow mainWindow, Logic logic,
+    public TutorialPanel(MainWindow mainWindow,
                          BrowserPanel browserPanel, StackPane browserPlaceHolder) {
         super(FXML);
         this.mainWindow = mainWindow;
-        this.logic = logic;
         this.browserPanel = browserPanel;
         this.browserPlaceHolder = browserPlaceHolder;
         tutorialText.setText(TutorialMessages.INTRO_BEGIN);
@@ -59,7 +54,7 @@ public class TutorialPanel extends UiPart<Region> {
     }
 
     private void initTutorial() {
-        newTutorial = new Tutorial(mainWindow, tutorialText, logic);
+        newTutorial = new Tutorial(mainWindow, tutorialText);
     }
 
     /**
@@ -84,21 +79,11 @@ public class TutorialPanel extends UiPart<Region> {
     @FXML
     private void handleRightButtonPressed() {
         if (isSkip) {
-            newTutorial.revertToDefault();
-            removeTutorialUi();
-            browserPlaceHolder.getChildren().add(browserPanel.getRoot());
-        } else {
-            try {
-                newTutorial.executeNextStep();
-            } catch (CommandException e1) {
-                logger.warning("Can't execute command in tutorial.");
-            } catch (ParseException e1) {
-                logger.warning("Wrong command input in tutorial.");
-            }
-            if (newTutorial.isLastStep()) {
-                removeTutorialUi();
-                browserPlaceHolder.getChildren().add(browserPanel.getRoot());
-            }
+            endTutorial();
+        } else if (!newTutorial.isLastStep()) {
+            newTutorial.executeNextStep();
+        } else if (newTutorial.isLastStep()) {
+            endTutorial();
         }
     }
 
@@ -107,16 +92,16 @@ public class TutorialPanel extends UiPart<Region> {
      */
     @FXML
     private void handleSkipButtonPressed() {
-            newTutorial.revertToDefault();
-            removeTutorialUi();
-            browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+        endTutorial();
     }
 
-    private void removeTutorialUi() {
-        leftButton = null;
-        rightButton = null;
-        tutorialText = null;
-        tutorialImage = null;
-        skipButton = null;
+    /**
+     * Removes tutorial panel and replace with browser panel
+     */
+    private void endTutorial() {
+        mainWindow.unhighlightAll();
+        mainWindow.setCommandPrompt(TutorialMessages.PROMPT_DEFAULT);
+        browserPlaceHolder.getChildren().remove(this.getRoot());
+        browserPlaceHolder.getChildren().add(browserPanel.getRoot());
     }
 }
