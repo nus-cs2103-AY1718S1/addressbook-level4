@@ -144,7 +144,8 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public void setTagHashMap(HashMap<Tag, String> allTagColours) {
-        tagColours = allTagColours;
+        tagColours = new HashMap<>();
+        allTagColours.forEach((tag, colour) -> tagColours.put(tag, colour));
     }
 
     @Override
