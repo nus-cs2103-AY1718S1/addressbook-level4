@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
@@ -139,7 +141,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_expire() throws Exception {
-        ExpireCommand command = (ExpireCommand) parser.parseCommand(ExpireCommand.COMMAND_WORD);
-        assertTrue(command instanceof ExpireCommand);
+        final String dateString = "2011-01-01";
+        ExpireCommand command = (ExpireCommand) parser.parseCommand(ExpireCommand.COMMAND_WORD + " " +
+                INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_EXPIRE + " " + dateString);
+        assertEquals(new ExpireCommand(INDEX_FIRST_PERSON, dateString), command);
     }
 }
