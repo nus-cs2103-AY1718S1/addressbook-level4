@@ -444,7 +444,6 @@ If the filtered person list is empty, that means the tag user want to look for d
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists to storage file. +
-=======
 
 === Logging
 
