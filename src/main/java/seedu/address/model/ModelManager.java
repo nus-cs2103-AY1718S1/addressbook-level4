@@ -86,23 +86,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void deleteTagFromEveryone(Tag tagToBeDeleted) throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(tagToBeDeleted);
-
-        ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
-        for (ReadOnlyPerson oldPerson : persons) {
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newPersonTags = new HashSet<>(newPerson.getTags());
-            boolean personIsModified = newPersonTags.remove(tagToBeDeleted);
-
-            if (personIsModified) {
-                newPerson.setTags(newPersonTags);
-                addressBook.updatePerson(oldPerson, newPerson);
-            }
-        }
-    }
-
     /**
      * On/Off tag colors for AddressBook
      * Updates UI by refreshing personListPanel
