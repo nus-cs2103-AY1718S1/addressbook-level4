@@ -345,6 +345,54 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Filter mechanism
+
+==== Fundamental mechanism
+The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
+when the method `updateFilteredPersonList(predicate)` from the `Model` interface is invoked.
+
+The relevant methods in the Model interface:
+[source,java]
+----
+public interface Model {
+
+    ...
+
+    /** Returns the predicate of the current filtered person list */
+    Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+
+    /** Updates the filter of the filtered person list to filter by the given {@code predicate}.*/
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+}
+----
+
+
+When `updateFilteredPersonList(predicate)` is invoked, every `person` in the **AddressBook** is evaluated against the `predicate`. +
+A `person` will be added the the list for display if `predicate.test(person)` is evaluated to be TRUE. +
+All `person` that fulfill the conditions specified in `predicate` are filtered to be displayed.
+
+==== Filtering on the existing list
+Note that all `person` in the existing list satisfy a Predicate `currentPredicate`. +
+Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` that satisfy both `currentPredicate` and `newPredicate`. +
+From Figure 3.2.1, it can also be viewed as the interception of two lists of `person`, each satisfying one of the two predicates respectively.
+
+image::venn_diagram.png[height = 200, width = 250]
+_Figure 3.2.1 : Venn Diagram for Filtering_
+
+===== Implementation
+The actual implementation of filtering on the existing list involves three steps. +
+
+.  invokes `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
+.  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
+.  Update the list using the predicate generated in step 2.
+
+===== Design consideration
+The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]]. +
+By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
+Making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
