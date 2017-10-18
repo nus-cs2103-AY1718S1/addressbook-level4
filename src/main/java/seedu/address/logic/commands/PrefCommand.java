@@ -20,6 +20,7 @@ public class PrefCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits user preferences "
             + "Parameters: KEY [NEW_VALUE]\n"
             + "Example: " + COMMAND_WORD + " AddressBookName" + " MyNewAddressBook\n";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + "KEY [NEW_VALUE]";
 
     public static final String MESSAGE_EDIT_PREF_SUCCESS = "Edited preference: %1$s \nfrom %2$s \nto %3$s";
     public static final String MESSAGE_PREF_KEY_NOT_FOUND = "Invalid preference key: %1$s";
