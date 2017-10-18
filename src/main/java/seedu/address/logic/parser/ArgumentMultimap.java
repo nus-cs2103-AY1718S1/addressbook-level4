@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,18 @@ public class ArgumentMultimap {
             return new ArrayList<>();
         }
         return new ArrayList<>(argMultimap.get(prefix));
+    }
+
+    /**
+     * Returns multiple values of {@code prefix}.
+     */
+    public Optional<String> getMultipleValues(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        String str = "";
+        for (String v : values) {
+            str += v;
+        }
+        return str.isEmpty() ? Optional.empty() : Optional.of(str);
     }
 
     /**
