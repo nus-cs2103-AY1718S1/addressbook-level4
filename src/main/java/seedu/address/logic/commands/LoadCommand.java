@@ -28,7 +28,7 @@ public class LoadCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         // TODO create new instance of AddressBook and add contacts from there to the current address book
-         return new CommandResult(MESSAGE_LOAD_ADDRESSBOOK_NOT_SUPPORTED);
+        return new CommandResult(MESSAGE_LOAD_ADDRESSBOOK_NOT_SUPPORTED);
     }
 
     @Override
@@ -36,6 +36,6 @@ public class LoadCommand extends UndoableCommand {
         return other == this // short circuit if same object
             || (other instanceof LoadCommand // instanceof handles nulls
             && this.addressbook.equals(((LoadCommand) other).addressbook)); // state check
- }
+    }
 
 }
