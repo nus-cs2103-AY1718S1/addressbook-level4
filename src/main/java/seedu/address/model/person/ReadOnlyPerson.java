@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import java.util.Set;
+import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
@@ -27,6 +28,7 @@ public interface ReadOnlyPerson {
     Comment getComment();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    boolean containTags(List<String> tags);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
