@@ -239,6 +239,21 @@ Examples:
 * `t-find friend classmate`
 Shows all the people with tag `friend` or tag `classmate`.
 
+=== Find the location of a person using Google Map: `m-show` _[Coming in v2.0]_
+Format: `s-show INDEX`
+
+****
+* Find the person(s) with the index number.
+* Only one index number is allowed as the input.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The address of the person selected will be shown visually on the browser screen.
+****
+
+Examples:
+
+* `s-show 1`
+Shows the address of person with index 1 on the google map.
+
 === Making a backup address book: `export` _[Coming in v2.0]_
 Format: `export PATH`
 
