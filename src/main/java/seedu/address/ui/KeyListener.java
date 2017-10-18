@@ -19,6 +19,8 @@ import seedu.address.ui.util.KeyListenerUtil;
  * Listens to key events in the main window.
  */
 public class KeyListener {
+    public static final String MESSAGE_MISSING_MAPPING = "Missing mapping for key event."
+                                                         + " Some key listeners may be disabled.";
     private static HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -63,13 +65,13 @@ public class KeyListener {
                 // TODO: add support for deletion at selected list
                 // Dummy action
                 personListPanel.setFocus();
-
+           
             } else {
                 // Execute key events for command words
                 executeCommandKeyEvents(keyEvent);
             }
         } catch (NullPointerException e) {
-            logger.warning(KeyListenerUtil.getMissingKeyMappingMessage(e));
+            logger.warning(MESSAGE_MISSING_MAPPING);
         }
     }
 

@@ -32,14 +32,4 @@ public class KeyListenerUtil {
         }
         return keys;
     }
-
-    /**
-     * Returns the exception message for missing key mapping.
-     * @param e The exception thrown
-     */
-    public static String getMissingKeyMappingMessage(Exception e) {
-        return "Missing mapping for the key event in " + e.getStackTrace()[0].getClassName()
-                + " at line: " + e.getStackTrace()[0].getLineNumber() + "\n"
-                + "Some key listeners may be disabled.";
-    }
 }
