@@ -54,9 +54,11 @@ public class AppointCommandTest {
     /**
      * Returns an {@code AppointCommand} with parameters {@code index} and {@code appoint}.
      */
+    /*
     private AppointCommand prepareCommand(Index index, String appoint) {
         AppointCommand appointCommand = new AppointCommand(index, new Appoint(appoint));
         appointCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return appointCommand;
     }
+    */
 }

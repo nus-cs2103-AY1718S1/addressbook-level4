@@ -17,6 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Comment;
+import seedu.address.model.person.Appoint;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +32,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_AVATAR, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_AVATAR, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -42,8 +44,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-
-
             Comment comment = new Comment(""); // add command does not allow adding comments straight away
             Appoint appoint = new Appoint("");
             Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
