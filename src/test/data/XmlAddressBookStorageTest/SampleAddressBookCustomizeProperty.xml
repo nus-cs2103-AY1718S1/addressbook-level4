@@ -78,8 +78,8 @@
         <properties shortName="a">4th street</properties>
         <tagged>friends</tagged>
     </persons>
-    <tags>friends</tags>
-    <tags>owesMoney</tags>
+    <tags color="9fc7b6">friends</tags>
+    <tags color="408ac4">owesMoney</tags>
     <properties>
         <property>
             <shortName>p</shortName>
