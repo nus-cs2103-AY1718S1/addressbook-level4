@@ -24,14 +24,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
-    private ObjectProperty<Favourite> favourite;
+    private boolean favourite;
 
     /**
      * Every field must be present and not null.
      */
 
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Favourite favourite) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, boolean favourite) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -39,7 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.favourite = new SimpleObjectProperty<>(favourite);
+        this.favourite = favourite;
     }
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -125,15 +125,11 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public Favourite getFavourite() {
-        return favourite.get();
-    }
-
-    @Override
-    public ObjectProperty<Favourite> favouriteProperty() {
+    public boolean getFavourite() {
         return favourite;
     }
-    public void setFavourite(Favourite favourite) { this.favourite.set(favourite); }
+
+    public void setFavourite(boolean favourite) { this.favourite = favourite; }
 
     @Override
     public boolean equals(Object other) {
@@ -145,7 +141,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, favourite);
     }
 
     @Override

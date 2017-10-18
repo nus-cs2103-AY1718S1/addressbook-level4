@@ -11,7 +11,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -58,11 +57,13 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToFavourite = lastShownList.get(index.getZeroBased());
-        if (personToFavourite.getFavourite().checkFavourite()) {
 
+        if (personToFavourite.getFavourite()) {
             return new CommandResult(String.format(MESSAGE_ALREADY_FAVOURITE));
         }
+
         Person favouritedPerson = createFavouritedPerson(personToFavourite);
+
         try {
             model.updatePerson(personToFavourite, favouritedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -89,7 +90,7 @@ public class FavouriteCommand extends UndoableCommand {
         Set<Tag> originalTags = personToFavourite.getTags();
 
         return new Person(originalName, originalPhone, originalEmail, originalAddress,
-                originalTags, new Favourite(true));
+                originalTags, true);
     }
 
     @Override
