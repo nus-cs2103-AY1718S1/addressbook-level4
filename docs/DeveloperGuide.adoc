@@ -350,7 +350,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 The remark checklist serves as command to allow users to keep notes on individual persons. +
 We want our remark command to function like a todo list, which enables users to add remarks to a person based on a specific task they want to do with the person. +
-Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval.+
+Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval. +
 Since it is saved under the Person class, we are able to utilise the ReadOnlyPerson to compare persons, or extract specific information without risking a corruption in the storage file. +
 
 image::arraylistremove.png[width="800"]
