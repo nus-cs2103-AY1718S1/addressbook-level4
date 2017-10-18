@@ -54,4 +54,7 @@ public class Phone {
         return value.hashCode();
     }
 
+    public int compareTo(Phone compareTarget) {
+        return this.toString().compareTo(compareTarget.toString());
+    }
 }
