@@ -45,7 +45,7 @@ public class Autocompleter {
     }
 
     /**
-     *
+     * Handle autocomplete when there is only word in the command box
      * @param commandBoxText
      * @return
      */
@@ -59,7 +59,7 @@ public class Autocompleter {
                 clearResultsWindow();
                 return possibleResults.get(0);
             default:
-                raise(new NewResultAvailableEvent(MULTIPLE_RESULT_MESSAGE, false));
+                displayMultipleResults(possibleResults);
                 return commandBoxText;
         }
     }
@@ -87,9 +87,16 @@ public class Autocompleter {
                 && commandBoxText.equals(commandWord.substring(0, commandBoxText.length())));
     }
 
-    private void displayMultipleResilts(ArrayList<String> results) {
+    /**
+     * Creates message to tell user that there are multiple results
+     * @param results
+     */
+    private void displayMultipleResults(ArrayList<String> results) {
         String resultToDisplay = MULTIPLE_RESULT_MESSAGE + "\n";
-
+        for(String result : results) {
+            resultToDisplay += result + " ";
+        }
+        raise(new NewResultAvailableEvent(resultToDisplay.trim(), false));
     }
 
     private void clearResultsWindow(){
