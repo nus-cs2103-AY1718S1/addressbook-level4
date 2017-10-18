@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_IS_ENCRYPTD;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.regex.Matcher;
@@ -18,12 +19,15 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
-
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.security.Security;
+import seedu.address.security.SecurityManager;
 
 /**
  * Parses user input.
@@ -36,7 +40,7 @@ public class AddressBookParser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     /**
-     * Parses user input into command for execution.
+     * Parses user input into command for execution if the command has permission.
      *
      * @param userInput full user input string
      * @return the command based on the user input
@@ -50,6 +54,12 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+
+        Security security = SecurityManager.getInstance();
+        if (security.isSecured() && !security.isPermittedCommand(commandWord)) {
+            throw new ParseException(MESSAGE_IS_ENCRYPTD);
+        }
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -70,6 +80,12 @@ public class AddressBookParser {
 
         case DeleteAltCommand.COMMAND_WORD:
             return new DeleteAltCommandParser().parse(arguments);
+
+        case LockCommand.COMMAND_WORD:
+            return new LockCommandParser().parse(arguments);
+
+        case UnlockCommand.COMMAND_WORD:
+            return new UnlockCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
