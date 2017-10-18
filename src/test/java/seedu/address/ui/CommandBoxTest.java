@@ -8,6 +8,7 @@ import org.junit.Before;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import org.junit.Test;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
@@ -40,15 +41,12 @@ public class CommandBoxTest extends GuiUnitTest {
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
     }
 
-    /*
     @Test
     public void commandBox_startingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
     }
-    */
 
-    /*
     @Test
     public void commandBox_startingWithFailedCommand() {
         assertBehaviorForFailedCommand();
@@ -59,9 +57,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertBehaviorForFailedCommand();
         assertBehaviorForFailedCommand();
     }
-    */
 
-    /*
     @Test
     public void commandBox_handleKeyPress() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
@@ -72,12 +68,6 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.A);
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
-    */
-
-    /*
-    Test cases failed because of password.
-    Expected command triggers "Invalid Credentials! Please try again."
-    ToDo : Modify test cases to include the case of password
 
     @Test
     public void handleKeyPress_startingWithUp() {
@@ -134,7 +124,6 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
-     */
 
     /**
      * Runs a command that fails, then verifies that <br>

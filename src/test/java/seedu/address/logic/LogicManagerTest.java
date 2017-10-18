@@ -1,7 +1,9 @@
 package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_NOT_LOGGED_IN;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,85 +29,26 @@ public class LogicManagerTest {
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model);
 
-    /*
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
         String invalidCommand = "uicfhmowqewca";
         assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND);
         assertHistoryCorrect(invalidCommand);
     }
-    */
 
-    /*
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
-    */
 
-    /*
+
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listCommand);
-    }
-    */
-
-    @Test
-    public void execute_validCommand_notLoggedIn() {
-        String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void execute_listAlias_notLoggedIn() {
-        String listCommand = ListCommand.COMMAND_ALIAS;
-        assertCommandSuccess(listCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void execute_clearCommand_notLoggedIn() {
-        String clearCommand = ClearCommand.COMMAND_WORD;
-        assertCommandSuccess(clearCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void execute_clearAlias_notLoggedIn() {
-        String clearCommand = ClearCommand.COMMAND_ALIAS;
-        assertCommandSuccess(clearCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void execute_undoCommand_notLoggedIn() {
-        String undoCommand = UndoCommand.COMMAND_WORD;
-        assertCommandSuccess(undoCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void execute_undoAlias_notLoggedIn() {
-        String undoCommand = UndoCommand.COMMAND_WORD;
-        assertCommandSuccess(undoCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void executeRedoCommand_notLoggedIn() {
-        String redoCommand = RedoCommand.COMMAND_WORD;
-        assertCommandSuccess(redoCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void executeRedoAlias_notLoggedIn() {
-        String redoCommand = RedoCommand.COMMAND_WORD;
-        assertCommandSuccess(redoCommand, MESSAGE_NOT_LOGGED_IN, model);
-    }
-
-    @Test
-    public void execute_invalidCommandFormat_notLoggedIn() {
-        String invalidCommand = "uicfhmowqewca";
-        assertCommandSuccess(invalidCommand, MESSAGE_NOT_LOGGED_IN, model);
     }
 
     @Test

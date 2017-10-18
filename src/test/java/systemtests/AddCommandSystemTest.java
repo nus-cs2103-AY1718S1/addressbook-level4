@@ -59,7 +59,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void add() throws Exception {
         Model model = getModel();
-        executeCommand("password");
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */

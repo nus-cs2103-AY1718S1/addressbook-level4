@@ -30,6 +30,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        isCorrectPassword("");
     }
 
     @Override

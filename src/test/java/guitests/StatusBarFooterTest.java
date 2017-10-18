@@ -50,7 +50,6 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
     public void syncStatus_mutatingCommandSucceeds_syncStatusUpdated() {
         String timestamp = new Date(injectedClock.millis()).toString();
         String expected = String.format(SYNC_STATUS_UPDATED, timestamp);
-        runCommand("password");
         assertTrue(runCommand(PersonUtil.getAddCommand(HOON))); // mutating command succeeds
         assertEquals(expected, getStatusBarFooter().getSyncStatus());
     }
@@ -63,7 +62,6 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
 
     @Test
     public void syncStatus_commandFails_syncStatusRemainsUnchanged() {
-        runCommand("password");
         assertFalse(runCommand("invalid command")); // invalid command fails
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
