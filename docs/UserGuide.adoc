@@ -173,17 +173,21 @@ Deletes the 1st person in the results of the `find` command.
 === Deleting a tag : `removetag`
 
 Removes a tag from every person in the list in the address book. +
+If an an index is given the tag is removed from the person +
+in the specified index shown on the list. +
 Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
 
 ****
-removetag command available since v1.1 +
+Remove Tag command available since v1.1 +
 Option to remove a tag for selected people since V1.2
 
 ****
 
 ****
 * Deletes every tag that matches the TAGNAME.
+* Deletes tag from specified index if INDEX is given.
 * The tag must exist in any person.
+* Index must be a positive integer
 ****
 
 Examples:

@@ -364,6 +364,53 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== RemoveTag Function
+
+The remove tag function is done by calling a `removetag` function which resides in the `ModelManager` class. Currently it supports removing the tag from every individual of the addressbook as well as removing a specific tag from a specified person shown on the list.
+
+If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
+----
+@Override
+    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
+
+        for (int i = 0; i < list.size(); i++) {
+            ReadOnlyPerson person = list.get(i);
+            Person newPerson = new Person(person);
+            Set<Tag> tagList = newPerson.getTags();
+            tagList = new HashSet<Tag>(tagList);
+            tagList.remove(tag);
+
+            newPerson.setTags(tagList);
+            addressBook.updatePerson(person, newPerson);
+        }
+        indicateAddressBookChanged();
+    }
+----
+
+If a `INDEX` is given, the remove tag command removes the given tag from the specified INDEX by calling the function during execution.
+
+----
+    @Override
+    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        List<ReadOnlyPerson> list = getFilteredPersonList();
+        ReadOnlyPerson person = list.get(index.getZeroBased());
+        Person newPerson = new Person(person);
+        Set<Tag> tagList = newPerson.getTags();
+        tagList = new HashSet<>(tagList);
+        tagList.remove(tag);
+
+        newPerson.setTags(tagList);
+        addressBook.updatePerson(person, newPerson);
+    }
+----
+
+[NOTE]
+If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
+
+
+=== Sorting Function
+
 == Documentation
 
 We use asciidoc for writing documentation.
