@@ -29,6 +29,7 @@ public class Tag {
         }
         this.tagName = trimmedName;
 
+        // Adds an entry in TagColorManager if there is no entry yet.
         if (!TagColorManager.contains(this)) {
             TagColorManager.setColor(this);
         }

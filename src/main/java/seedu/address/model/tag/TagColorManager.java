@@ -19,9 +19,11 @@ public class TagColorManager {
     private static final Random randomGenerator = new Random();
 
     /**
-     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.
+     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}. The lower (inclusive) bound should be
+     * equal to {@code Math.pow(16, 5)}. Thus, the interval is {@code Math.pow(16, 6) - Math.pow(16, 5)}.
      */
-    private static final int RGB_BOUND = 16777216;
+    private static final int RGB_INTERVAL = 15728640;
+    private static final int RGB_LOWER_BOUND = 1048576;
 
     public static String getColor(Tag tag) throws TagNotFoundException {
         if (!internalMap.containsKey(tag)) {
@@ -50,6 +52,7 @@ public class TagColorManager {
      * secured.
      */
     public static void setColor(Tag tag) {
-        setColor(tag, Integer.toHexString(randomGenerator.nextInt(RGB_BOUND)));
+        int randomColorCode = randomGenerator.nextInt(RGB_INTERVAL) + RGB_LOWER_BOUND;
+        setColor(tag, Integer.toHexString(randomColorCode));
     }
 }
