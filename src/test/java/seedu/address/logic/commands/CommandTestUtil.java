@@ -68,7 +68,8 @@ public class CommandTestUtil {
     public static final String VALID_CONFIG_TAG_COLOR = " --set-tag-color ";
     public static final String VALID_TAG_COLOR = " #7db9a1";
     public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
-    public static final String VALID_CONFIG_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
+    public static final String VALID_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
+    public static final String VALID_NEW_PROPERTY_NO_REGEX = " s/m f/major";
     public static final String VALID_CONFIG_IMPORT_CALENDER = " --import-calendar ";
     public static final String VALID_CONFIG_URL = " https://www.url.com/";
 
