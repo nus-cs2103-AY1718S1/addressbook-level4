@@ -107,4 +107,12 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
     }
+
+    /**
+     * Parses a String argument for tag. Leading and trailing whitespaces will be removed
+     */
+    public static String parseTag(String tag) {
+        String trimmedTag = tag.trim();
+        return trimmedTag;
+    }
 }
