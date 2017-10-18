@@ -59,7 +59,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadDefaultScreen() {}
+    private void loadDefaultScreen() {this.person = null;}
 
     private void loadPersonInformation(ReadOnlyPerson person) {
         this.person = person;
@@ -69,15 +69,15 @@ public class PersonInformationPanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            initTags(person);
+            initTags();
         });
     }
 
     /**
      * Sets a background color for each tag.
-     * @param person
+     * @param
      */
-    private void initTags(ReadOnlyPerson person) {
+    private void initTags() {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
