@@ -349,7 +349,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Backup storage mechanism
 The backup storage mechanism is facilitated by the `StorageManager`. It backs up the address book data automatically each time the application starts up, if there is existing data available. The backup file is saved in the same location as the main file as `addressbook.xml-backup.xml`.
 
-image::BackupAddressBookSequenceDiagram.png[width="200"]
+image::BackupAddressBookSequenceDiagram.png[width="800"]
 _Figure 3.3.1: Sequence Diagram of backing up the address book data_
 
 The `backupAddressBook` method is called in `MainApp#init()` which is called each time the application starts. The sequence diagram for this method is shown above in Figure 3.3.1. No backup is made if there is no existing data.
