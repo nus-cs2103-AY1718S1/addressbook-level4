@@ -345,6 +345,51 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Add multiple contacts
+
+Adding multiple contacts is used so as to allow the user to add multiple contacts with the user of a single command, saving time and without the need to manually enter each entry.
+`AddMultipleByTsvCommand` extends `UndoableCommand` so it can be undone using `undo` function. By keying the path to the file containing the contacts, the command can parse values of each contact at every line and add them to the address book.
+
+A valid file must satisfy the following conditions:
+
+* Must be a tsv, or in tab separated value form, that is each attribute of a contact (`name`, `phone`,...) is separated by a tab
+* The first line must contains the following values, *in this specific order*, corresponding to contact attributes, separated by tab: `name`   `phone` `email` `address`   `tag`
+
+A valid format can be as follow. It is highly advisable that user enter the data in Excel and export as `Text (Tab delimited)`:
+
+
+|===
+|name |phone |email |address |tag
+
+|John Doe
+|98765432
+|johnd@example.com
+|John street, block 123, #01-01
+|friend, neighbor
+
+|Betsy Crowe
+|1234567
+|betsycrowe@example.com
+|Newgate Prison
+|friend, criminal
+|===
+
+`AddMultipleByTsvCommand` can throw the following exception:
+
+ * `NoSuchElementException`: Just as `AddCommand`, this happens when `name` or `phone` or `email` is missing, and that specific entry will not be added.
+ * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
+ * `DuplicatePersonException`: This happens when any entry has already been added, and that specific entry will not be added.
+
+The following sequence diagram shows how the `AddMultipleByTsvCommand` works
+
+image::AddMultipleByTsvSequenceDiagram.PNG[width="800"]
+
+Users specify the path to their list of contact as the only argument of the command. `AddressBookParser` parses this argument and create a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
+[NOTE]
+`readContactFromFile` throws `NoSuchElementException` and `IOException`. Refer to the above for details.
+
+After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of integer of entries that were failed to add due to errors). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
+
 === Delete multiple contacts
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
