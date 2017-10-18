@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_MEETING_CLASH;
+import static seedu.address.logic.commands.AddMeetingCommand.MESSAGE_OVERDUE_MEETING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -21,6 +23,8 @@ import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 
 /**
@@ -79,6 +83,10 @@ public class EditMeetingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
         } catch (MeetingNotFoundException pnfe) {
             throw new AssertionError("The target meeting cannot be missing");
+        } catch (MeetingBeforeCurrDateException mde) {
+            throw new CommandException(MESSAGE_OVERDUE_MEETING);
+        } catch (MeetingClashException mce){
+            throw new CommandException(MESSAGE_MEETING_CLASH);
         }
         model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         return new CommandResult(String.format(MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting));
