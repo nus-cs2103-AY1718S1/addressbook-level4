@@ -51,8 +51,6 @@ public class GuiTestAssert {
         assertEquals(expectedEvent.getTiming().timing, actualCard.getTiming());
         assertEquals(expectedEvent.getDescription().description, actualCard
                 .getDescription());
-        assertEquals(expectedEvent.getTags().stream().map(tag -> tag.tagName)
-                        .collect(Collectors.toList()), actualCard.getTags());
     }
 
     /**
