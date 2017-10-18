@@ -76,6 +76,18 @@ public class UniqueEventList implements Iterable<Event> {
         internalList.set(index, new Event(editedEvent));
     }
 
+    public void setEvent(UniqueEventList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setEvent(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        final UniqueEventList replacement = new UniqueEventList();
+        for (final ReadOnlyEvent event : events) {
+            replacement.add(new Event(event));
+        }
+        setEvent(replacement);
+    }
+
     /**
      * Removes the equivalent event from the list.
      *
@@ -88,18 +100,6 @@ public class UniqueEventList implements Iterable<Event> {
             throw new EventNotFoundException();
         }
         return eventFoundAndDeleted;
-    }
-
-    public void setEvent(UniqueEventList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setEvent(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
-        final UniqueEventList replacement = new UniqueEventList();
-        for (final ReadOnlyEvent event : events) {
-            replacement.add(new Event(event));
-        }
-        setEvent(replacement);
     }
 
     /**
