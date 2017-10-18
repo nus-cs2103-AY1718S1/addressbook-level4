@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,25 +20,39 @@ public class ListCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private ListCommand listCommand;
+    private ListCommand listModuleCommand;
+    private ListCommand listLocationCommand;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listModuleCommand = new ListCommand("modules");
+        listLocationCommand = new ListCommand("locations");
+
+        listModuleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listLocationCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listModuleCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.MODULE_KEYWORD), expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
-        showFirstPersonOnly(model);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listIsFiltered_showsAllModules() {
+        showFirstLessonOnly(model);
+        assertCommandSuccess(listModuleCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.MODULE_KEYWORD), expectedModel);
     }
+
+    @Test
+    public void execute_listIsFiltered_showsAllLocations() {
+        assertCommandSuccess(listLocationCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.LOCATION_KEYWORD), expectedModel);
+    }
+
+
 }

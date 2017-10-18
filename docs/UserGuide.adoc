@@ -32,7 +32,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
+* *`list`* : lists all module
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
@@ -56,61 +56,113 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a lesson to the ModU +
+Format: `add m/MODULE_CODE ct/CLASS_TYPE v/VENUE gp/GROUP ts/TIME_SLOT l/Lecturer...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A lesson must have at least one lecturer
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun`
+* `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong WEng Fa l/Suppiah `
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all modules in the ModU. +
+Format: `list module`
+
+Shows a list of all location in the ModU. +
+Format: `List location`
+
+=== View all persons with the specified attribute: `view`
+
+View the detail information about a lesson. +
+Format: `view INDEX`
+****
+* You can either view from a module or a location.
+****
+
+Examples:
+
+* `list module` +
+`view 2` +
+View the detail information with the second index shown in the module list.
+
+* `list location` +
+`view 2` +
+View the detail information with the second index shown in the location list.
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing lesson in the ModU. +
+Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIME_SLOT] [l/Lecturer...]`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the lesson at the specified `INDEX`. The index refers to the index number shown in the last lesson listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing lecturers, the existing lecturers of the lesson will be removed i.e adding of lecturers is not cumulative.
+****
+
+Edits an existing attribute(module/location) in the ModU. +
+Format: `edit INDEX [CODE/LOCATION]...`
+
+****
+* Edits the attribute at the specified `INDEX`. The index refers to the index number shown in the last attribute listing. The index *must be a positive integer* 1, 2, 3, ...
+* Requires to list by that specified attribute(module/location) first.
+* All persons with the specifed attribute value will be updated to with the attribute of input values.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 m/CS2101 v/LT19` +
+Edits the module code and location of the 1st lesson to be `CS2101` and `LT19` respectively.
+* `edit 3 LT27` +
+Edits all the lessons with the third location shown in the location list to be `LT27` (Assume user types `list locaiton` first).
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds lessons whose code contain the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `MA1101R` will match `Ma1101r`
+* The order of the keywords does not matter. e.g. `MA1101R CS2101` will match `CS2101` and 'MA1101R'
+* Only the code is searched.
+* Only full module code will be matched e.g. `MA1101` will not match `MA1101R`
+* Lessons matching at least one keyword will be returned (i.e. `OR` search). e.g. `MA1101R CS2101` will return `MA1101R`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find MA1101R` +
+Returns `MA1101R`
+* `find MA1101R CS2101` +
+Returns module having code `Betsy`, `Tim`, or `John`
+
+=== Locating persons by name: `sort`
+
+ Sort the existing list. +
+ Format: `sort KEYWORD`
+
+ ****
+ * The sort command will sort the list according to its current listed attribute
+ * If the list was not listed in any attribute, it will be sorted by name of the person by default
+ ****
+
+ Examples:
+
+ * `list address` +
+ Returns a list of addresses +
+ `sort` +
+ Return a list of addresses sorted lexicographically
+
+ * `list` +
+ Returns whole list +
+ `sort` +
+ Return a list sorted by name lexicographically
+
 
 === Deleting a person : `delete`
 
@@ -123,6 +175,17 @@ Format: `delete INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+Deletes all the persons with specified attribute value in the attribute list from the address book. +
+Format: `delete INDEX`
+
+****
+* Deletes all the persons with specified attribute value at the specified `INDEX`.
+* The index refers to the index number shown in the most recent attribute listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+
+
 Examples:
 
 * `list` +
@@ -131,6 +194,10 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list address` +
+`delete 2` +
+Deletes all the persons who with the second address value shown in the address list.
+
 
 === Selecting a person : `select`
 
@@ -214,13 +281,37 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the ModU. +
 Format: `clear`
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
+
+=== Customising the font size : `customise fs/FONT-SIZE`
+
+Customise the font size of ModU +
+Format: `customise fs\FONT-SIZE`
+
+[TIP]
+A lesson can have any number of tags (including 0)
+
+Examples:
+
+* `customise fs\xsmall`
+* `customise fs\small`
+* `customise fs\xlarge`
+
+=== Highlighting keywords : `color`
+
+Highlight the command keywords. +
+Format: `color enable/disable`
+
+Examples:
+
+* `color enable`
+* `color disable`
 
 === Saving the data
 
@@ -236,17 +327,73 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
++
+image::commandSummary/01add.png[width="790"]
++
 * *Clear* : `clear`
++
+image::commandSummary/10clear.png[width="790"]
++
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
++
+image::commandSummary/02delete.png[width="790"]
++
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
++
+image::commandSummary/03editD.png[width="790"]
++
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
++
+image::commandSummary/05find.png[width="790"]
++
+* *Sort* : `sort`
++
+image::commandSummary/09sort.png[width="790"]
++
 * *List* : `list`
++
+image::commandSummary/07listC.png[width="790"]
++
+* *View* : `view INDEX`
+e.g. `view 1`
++
+image::commandSummary/15view.png[width="790"]
++
 * *Help* : `help`
++
+image::commandSummary/06help.png[width="790"]
++
+* *Exit* : `exit`
++
+image::commandSummary/04exit.png[width="790"]
++
 * *Select* : `select INDEX` +
 e.g.`select 2`
++
+image::commandSummary/08select.png[width="790"]
++
 * *History* : `history`
++
+image::commandSummary/14history.png[width="790"]
++
 * *Undo* : `undo`
++
+image::commandSummary/11undo.png[width="790"]
++
 * *Redo* : `redo`
++
+image::commandSummary/12redo.png[width="790"]
++
+* *Customise* `customise fs/FONT-SIZE` +
+e.g. `customise fs/xsmall`
++
+image::commandSummary/13customiseF.png[width="790"]
++
+* *Color* `color` +
+e.g. `customise enable`
++
+image::commandSummary/16colorC.png[width="790"]
++
