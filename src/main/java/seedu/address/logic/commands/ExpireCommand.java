@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.commons.core.index.Index;
+import seedu.address.model.person.ExpiryDate;
 
 /**
  * Sets expiry date of a person in the address book.
@@ -25,19 +26,19 @@ public class ExpireCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Date string: %2$s";
 
     private final Index index;
-    private final String dateString;
+    private final ExpiryDate date;
 
-    public ExpireCommand(Index index, String dateString) {
+    public ExpireCommand(Index index, ExpiryDate date) {
         requireNonNull(index);
-        requireNonNull(dateString);
+        requireNonNull(date);
 
         this.index = index;
-        this.dateString = dateString;
+        this.date = date;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), dateString));
+        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), date.toString()));
     }
 
     @Override
@@ -51,6 +52,6 @@ public class ExpireCommand extends UndoableCommand {
         }
 
         ExpireCommand temp = (ExpireCommand) other;
-        return (index.equals(temp.index) && dateString.equals(temp.dateString));
+        return (index.equals(temp.index) && date.equals(temp.date));
     }
 }
