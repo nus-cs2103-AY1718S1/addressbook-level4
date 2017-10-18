@@ -474,6 +474,8 @@ and has to be updated whenever we edit other parcel details as well.
 The back up mechanism is facilitated by a `backupAddressBook` method within the `StorageManager`. It supports the
 backing up of AddressBook data in Ark. +
 
+image::BackupSequenceDiagram.png[width="600"]
+
 The `backupAddressBook` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
 a method that is called when `Ark` is launched. The method utilises the `StorageManager#saveAddressBook()` method and
 stores the backup in the same directory as the main `AddressBook` storage file. The backup file is saved and named with
@@ -501,7 +503,7 @@ be implemented in both `saveAddressBook()` and `backupAddressBook()` +
 **Aspect:** Trigger to execute `StorageManager#backupAddressBook` +
 **Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
 **Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
-able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. + 
+able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
 **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session.
  +
 **Alternative 2:** Backup data on Ark every few minutes +
