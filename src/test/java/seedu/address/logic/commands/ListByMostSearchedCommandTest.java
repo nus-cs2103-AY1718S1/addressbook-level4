@@ -36,6 +36,7 @@ public class ListByMostSearchedCommandTest {
         //person higher up on the list with a supposed search Count greater or equals to the search count of person
         //B who is lower in the list, with a lower search count
         int searchCountA, searchCountB;
+
         for(int i = 0; i < model.getFilteredPersonList().size(); i++) {
             for(int j = i+1; j < model.getFilteredPersonList().size(); j++) {
                 searchCountA = Integer.parseInt(model.getFilteredPersonList().get(j).getSearchData().getSearchCount());
@@ -43,5 +44,7 @@ public class ListByMostSearchedCommandTest {
                 assertTrue(searchCountA <= searchCountB);
             }
         }
+
     }
+
 }
