@@ -349,7 +349,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 == Login Function
 
 The Login function work by using many different components. To facilitated its implementation there is a `Loginpage` inside the `UI` and a `loginLogic` inside the `logic` component. It supports the process of moving the addressbook database to a server as will be later described.
- 
+
 The process of how the feature functions and what would happen is as follows:
 
 image::LoginSequenceDiagram.jpg[width="800"]
@@ -357,9 +357,9 @@ image::LoginSequenceDiagram.jpg[width="800"]
 
 
 
-As it can be seen, when the login adds an extra layer of authentication between the `Mainapp` and then `MainWindow`, such that the application can only be opened when valid credentials are received. When the `Addressbook` is opened, the `Mainapp` will call the `UImanager` which will in turn call the `Loginpage`. Once a login command has been give, the `loginpage` will pass on the logincredentials database. If authentication is valid, the LoginLogic will create a database if the user does not already have one and return the path to the database. The `loginpage` will then call on the `UImanager` to start the `MainWindow` with said database path. 
+As it can be seen, when the login adds an extra layer of authentication between the `Mainapp` and then `MainWindow`, such that the application can only be opened when valid credentials are received. When the `Addressbook` is opened, the `Mainapp` will call the `UImanager` which will in turn call the `Loginpage`. Once a login command has been give, the `loginpage` will pass on the logincredentials database. If authentication is valid, the LoginLogic will create a database if the user does not already have one and return the path to the database. The `loginpage` will then call on the `UImanager` to start the `MainWindow` with said database path.
 
-The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database. 
+The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
 
 === Design Considerations
 
