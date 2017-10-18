@@ -65,7 +65,7 @@ public class KeyListener {
                 // TODO: add support for deletion at selected list
                 // Dummy action
                 personListPanel.setFocus();
-           
+
             } else {
                 // Execute key events for command words
                 executeCommandKeyEvents(keyEvent);

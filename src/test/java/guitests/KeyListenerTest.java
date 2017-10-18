@@ -23,12 +23,19 @@ import seedu.address.ui.util.KeyListenerUtil;
 public class KeyListenerTest extends RolodexGuiTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    private HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
 
     @Test
-    public void assertExceptionForMissingKeyMapping() throws Exception {
-        HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
+    public void assertExceptionForMissingKeyMapping() {
+        keys = KeyListenerUtil.getKeys();
         thrown.expect(NullPointerException.class);
         keys.get("MISSING_MAP").getName();
+    }
+
+    @Test
+    public void assertExceptionForInvalidKeyCombination() {
+        thrown.expect(IllegalArgumentException.class);
+        keys.put("INVALID_KEY_COMBI", KeyCombination.valueOf("Ctrl+Shift"));
     }
 
     @Test
