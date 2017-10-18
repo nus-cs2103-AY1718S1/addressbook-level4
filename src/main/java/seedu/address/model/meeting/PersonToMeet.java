@@ -16,6 +16,13 @@ public class PersonToMeet {
     }
 
     @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PersonToMeet // instanceof handles nulls
+                && this.fullName.equals(((PersonToMeet) other).fullName)); // state check
+    }
+
+    @Override
     public int hashCode() {
         return fullName.hashCode();
     }
