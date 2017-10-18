@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's home number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidHomeNumber(String)}
  */
-public class HomeNumber{
+public class HomeNumber {
 
 
     public static final String MESSAGE_HOME_NUMBER_CONSTRAINTS =
@@ -17,9 +17,9 @@ public class HomeNumber{
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates given home number.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given home string is invalid.
      */
     public HomeNumber(String homeNumber) throws IllegalValueException {
         requireNonNull(homeNumber);
