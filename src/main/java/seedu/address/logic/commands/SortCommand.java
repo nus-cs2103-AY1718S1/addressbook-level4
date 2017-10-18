@@ -19,11 +19,11 @@ public class SortCommand extends Command {
             + ": Sort all contacts by alphabetical order according to their name. "
             + "Command is case-insensitive.";
 
-    public static final String MESSAGE_SUCCESS = "All contacts are sorted by name.";
+    public static final String MESSAGE_SUCCESS = "All contacts in AddressBook are sorted by name.";
+    public static final String MESSAGE_ALREADY_SORTED = "The AddressBook is already sorted.";
     public static final String MESSAGE_EMPTY_LIST = "There is no contact to be sorted in AddressBook.";
 
     private ArrayList<ReadOnlyPerson> contactList;
-
 
     public SortCommand() {
         contactList = new ArrayList<>();
@@ -31,10 +31,13 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() {
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isNotEmpty = model.sortPersonByName(contactList);
-        if (isNotEmpty == false) {
+        if (isNotEmpty == null) {
             return new CommandResult(MESSAGE_EMPTY_LIST);
+        } else if (!isNotEmpty) {
+            return new CommandResult(MESSAGE_ALREADY_SORTED);
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }

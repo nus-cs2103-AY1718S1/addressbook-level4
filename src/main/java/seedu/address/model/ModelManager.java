@@ -133,11 +133,15 @@ public class ModelManager extends ComponentManager implements Model {
     public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
 
         if (filteredPersons.size() == 0) {
-            return false;
+            return null;
         }
         contactList.addAll(filteredPersons);
 
         Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
+
+        if (contactList.equals(filteredPersons)) {
+            return false;
+        }
 
         try {
             addressBook.setPersons(contactList);
