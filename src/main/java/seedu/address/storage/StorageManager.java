@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.BackupDataEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.storage.RestoreBackupDataEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -116,6 +117,16 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise (new DataSavingExceptionEvent(e));
         }
+    }
+
+    @Override
+    @Subscribe
+    public void handleRestoreBackupDataEvent(RestoreBackupDataEvent event) throws DataConversionException, IOException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyAddressBook backupAddressBookData;
+        String backupFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
+        backupAddressBookData = readAddressBook(backupFilePath).get();
+        event.updateAddressBookData(backupAddressBookData);
     }
 
 }

@@ -275,6 +275,12 @@ Shorthand Alias: `b` +
 Creates a backup file to store the data in address book. +
 Format: `backup`
 
+=== Restoring a backup : `restore`
+
+Shorthand Alias: `rb`
+Retrieves data from a backup file and store it in address book. +
+Format: `restore`
+
 === Listing entered commands : `history`
 
 Shorthand Alias: `hx` +
