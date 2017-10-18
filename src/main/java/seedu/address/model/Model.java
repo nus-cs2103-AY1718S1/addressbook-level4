@@ -58,9 +58,14 @@ public interface Model {
      * @throws DuplicateMeetingException if updating the meeting's details causes the meeting to be equivalent to
      *      another existing meeting in the list.
      * @throws MeetingNotFoundException if {@code target} could not be found in the list.
+     * @throws MeetingBeforeCurrDateException if udating the meeting's details cause the meeting to be before the
+     *      current system date.
+     * @throws MeetingClashException if updating the meeting's datetime causes the meeting to clash with another
+     *      meeting's datetime.
      */
     void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedMeeting)
-            throws DuplicateMeetingException, MeetingNotFoundException;
+            throws DuplicateMeetingException, MeetingNotFoundException, MeetingBeforeCurrDateException,
+            MeetingClashException;
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 

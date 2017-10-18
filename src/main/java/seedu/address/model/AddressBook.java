@@ -168,10 +168,20 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      */
     public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedReadOnlyMeeting)
-            throws DuplicateMeetingException, MeetingNotFoundException {
+            throws DuplicateMeetingException, MeetingNotFoundException, MeetingBeforeCurrDateException,
+            MeetingClashException{
         requireNonNull(editedReadOnlyMeeting);
 
         Meeting editedMeeting = new Meeting(editedReadOnlyMeeting);
+
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(editedMeeting.getDate().toString(), formatter);
+
+        if (!meetDate.isAfter((currDate))) {
+            throw new MeetingBeforeCurrDateException();
+        }
+
         // syncMasterTagListWith(editedMeeting);
         // TODO: the tags master list will be updated even though the below line fails.
         meetings.setMeeting(target, editedMeeting);

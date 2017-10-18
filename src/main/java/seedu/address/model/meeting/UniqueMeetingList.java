@@ -97,7 +97,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * @throws MeetingNotFoundException if {@code target} could not be found in the list.
      */
     public void setMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedMeeting)
-            throws DuplicateMeetingException, MeetingNotFoundException {
+            throws DuplicateMeetingException, MeetingNotFoundException, MeetingClashException {
         requireNonNull(editedMeeting);
 
         int index = internalList.indexOf(target);
@@ -105,8 +105,13 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throw new MeetingNotFoundException();
         }
 
+
         if (!target.equals(editedMeeting) && internalList.contains(editedMeeting)) {
-            throw new DuplicateMeetingException();
+            throw new DuplicateMeetingException();}
+        else if (diffNameOfMeeting(editedMeeting)) {
+            throw new MeetingClashException(); }
+        else if (diffLocationOfMeeting(editedMeeting)) {
+            throw new MeetingClashException();
         }
 
         internalList.set(index, new Meeting(editedMeeting));
