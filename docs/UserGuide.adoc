@@ -67,6 +67,18 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a new task : `addTask`
+
+Adds a new task to the task book +
+Format: `addTask n/TaskName d/Description s/startDateTime f/finishDateTime [t/TAG]...` +
+
+[TIP]
+A task can have any number of tags (including 0), the tag mechanism is the same as that for person
+
+Examples:
+
+* `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm f/1/1/2099 15:00pm t/friends`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
