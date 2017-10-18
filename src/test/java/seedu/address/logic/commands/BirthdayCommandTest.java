@@ -20,10 +20,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Person;
+import seedu.address.model.UserPrefs;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -106,10 +105,12 @@ public class BirthdayCommandTest {
 
     @Test
     public void equals() {
-        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_AMY));
+        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON,
+                new Birthday(VALID_BIRTHDAY_AMY));
 
         //same value -> returns true
-        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(VALID_BIRTHDAY_AMY));
+        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON,
+                new Birthday(VALID_BIRTHDAY_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         //same object -> returns true
