@@ -5,12 +5,14 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.storage.Storage;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
     protected Model model;
+    protected Storage storage;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
@@ -39,8 +41,9 @@ public abstract class Command {
      * Commands making use of any of these should override this method to gain
      * access to the dependencies.
      */
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, Storage storage, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
+        this.storage = storage;
     }
 
     //=========== Support for getter/setter of commandBox text ========================================================
