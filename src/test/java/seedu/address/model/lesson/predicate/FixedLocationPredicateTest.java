@@ -52,7 +52,7 @@ public class FixedLocationPredicateTest {
         Location location = null;
 
         try {
-            location = new Location("LT30");
+            location = new Location("LT27");
         } catch (IllegalValueException e) {
             assert false : "The location shouldn't invalid";
         }

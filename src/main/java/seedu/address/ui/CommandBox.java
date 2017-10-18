@@ -288,7 +288,6 @@ public class CommandBox extends UiPart<Region> {
         }
     }
     
-
     /**
      * Configure command keyword when appeared on Command Box
      * @param commandKeyword
