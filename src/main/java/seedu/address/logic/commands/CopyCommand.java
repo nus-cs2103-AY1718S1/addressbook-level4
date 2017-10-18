@@ -19,7 +19,7 @@ public class CopyCommand extends Command {
 
     public static final String COMMAND_WORD = "copy";
 
-    public static final String COMMAND_ALIAS = "c";
+    public static final String COMMAND_ALIAS = "y";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Outputs a selectable string of text "
             + "that contains email addresses of the selected person(s) in email-friendly format.\n"
