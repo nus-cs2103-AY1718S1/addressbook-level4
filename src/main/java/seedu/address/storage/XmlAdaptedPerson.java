@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import org.w3c.dom.html.HTMLObjectElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;

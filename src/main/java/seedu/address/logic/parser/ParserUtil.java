@@ -66,7 +66,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> home number} into an {@code Optional<HomeNumber>} if {@code homeNumber} is present.
+     * Parses a {@code Optional<String> home number} into an {@code Optional<HomeNumber>} if {@code homeNumber}
+     * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<HomeNumber> parseHomeNumber(Optional<String> homeNumber) throws IllegalValueException {

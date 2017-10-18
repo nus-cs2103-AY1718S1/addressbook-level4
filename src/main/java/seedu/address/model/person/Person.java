@@ -7,11 +7,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import org.omg.CORBA.OBJECT_NOT_EXIST;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * Represents a Person in the address book.

@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import java.util.Set;
 
-import com.sun.corba.se.spi.ior.ObjectKey;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
