@@ -119,8 +119,8 @@ public class PersonBuilder {
         this.person.setRemark(new Remark(remark));
         return this;
     }
-  
-    /**  
+
+    /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {
