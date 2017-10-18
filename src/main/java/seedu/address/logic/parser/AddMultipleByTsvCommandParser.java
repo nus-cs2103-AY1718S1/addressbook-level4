@@ -3,6 +3,10 @@ package seedu.address.logic.parser;
 import seedu.address.logic.ContactTsvReader;
 import seedu.address.logic.commands.AddMultipleByTsvCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ReadOnlyPerson;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -18,7 +22,16 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         String[] nameKeywords = trimmedArgs.split("\\s+");
         String contactCsvFilePath = nameKeywords[0];
         ContactTsvReader contactTsvReader = new ContactTsvReader(contactCsvFilePath);
+        boolean isFileFound;
+        ArrayList<ReadOnlyPerson> toAddPeople = new ArrayList<ReadOnlyPerson>();
 
-        return new AddMultipleByTsvCommand(contactTsvReader.readContactsFromFile());
+        try {
+            toAddPeople = contactTsvReader.readContactsFromFile();
+            isFileFound = true;
+        } catch (IOException e){
+            isFileFound = false;
+        }
+
+        return new AddMultipleByTsvCommand(toAddPeople, isFileFound);
     }
 }

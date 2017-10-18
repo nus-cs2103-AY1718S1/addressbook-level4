@@ -19,48 +19,39 @@ public class ContactTsvReader {
         this.contactTsvFilePath = contactTsvFilePath;
     }
 
-    public ArrayList<ReadOnlyPerson> readContactsFromFile() throws ParseException {
+    public ArrayList<ReadOnlyPerson> readContactsFromFile() throws ParseException, IOException {
 
         BufferedReader bufferedReader = null;
         ArrayList<ReadOnlyPerson> toAddPeople = new ArrayList<ReadOnlyPerson>();
 
-        try {
-            String line;
-            bufferedReader = new BufferedReader(new FileReader(contactTsvFilePath));
-            int i=0;
+        String line;
+        bufferedReader = new BufferedReader(new FileReader(contactTsvFilePath));
+        int i=0;
 
-            // How to read file in java line by line?
-            while ((line = bufferedReader.readLine()) != null) {
-                if (i!=0) {
-                    try {
-                        ArrayList<String> columns = csvLinetoArrayList(line);
-                        Name name = ParserUtil.parseName(checkEmptyAndReturn(columns.get(0))).get();
-                        Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(columns.get(1))).get();
-                        Email email = ParserUtil.parseEmail(checkEmptyAndReturn(columns.get(2))).get();
-                        Address address = ParserUtil.parseAddress(checkEmptyAndReturn(columns.get(3))).get();
-                        Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
-                                Arrays.asList(columns.get(4)
-                                        .replaceAll("^[,\"\\s]+", "")
-                                        .replace("\"", "")
-                                        .split("[,\\s]+"))));
-                        ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, tagList);
-                        toAddPeople.add(toAddPerson);
-                    } catch (IllegalValueException ive) {
-                        throw new ParseException(ive.getMessage(), ive);
-                    }
+        // How to read file in java line by line?
+        while ((line = bufferedReader.readLine()) != null) {
+            if (i!=0) {
+                try {
+                    ArrayList<String> columns = csvLinetoArrayList(line);
+                    Name name = ParserUtil.parseName(checkEmptyAndReturn(columns.get(0))).get();
+                    Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(columns.get(1))).get();
+                    Email email = ParserUtil.parseEmail(checkEmptyAndReturn(columns.get(2))).get();
+                    Address address = ParserUtil.parseAddress(checkEmptyAndReturn(columns.get(3))).get();
+                    Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
+                            Arrays.asList(columns.get(4)
+                                    .replaceAll("^[,\"\\s]+", "")
+                                    .replace("\"", "")
+                                    .split("[,\\s]+"))));
+                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, tagList);
+                    toAddPeople.add(toAddPerson);
+                } catch (IllegalValueException ive) {
+                    throw new ParseException(ive.getMessage(), ive);
                 }
-                i++;
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedReader != null) bufferedReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            i++;
         }
+
+        bufferedReader.close();
 
         return toAddPeople;
     }

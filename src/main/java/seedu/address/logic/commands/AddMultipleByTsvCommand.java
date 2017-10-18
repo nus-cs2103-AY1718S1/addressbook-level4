@@ -20,11 +20,14 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "%d new person (people) added";
     public static final String MESSAGE_DUPLICATE_PERSON = "%d new person (people) duplicated";
+    public static final String MESSAGE_FILE_NOT_FOUND = "The system cannot find the file specified";
 
     private final ArrayList<Person> toAdd;
+    private final boolean isFileFound;
 
-    public AddMultipleByTsvCommand(ArrayList<ReadOnlyPerson> toAddPeople) {
+    public AddMultipleByTsvCommand(ArrayList<ReadOnlyPerson> toAddPeople, boolean isFileFound) {
         this.toAdd = new ArrayList<Person>();
+        this.isFileFound = isFileFound;
         for (ReadOnlyPerson person: toAddPeople) {
             toAdd.add(new Person(person));
         }
@@ -33,6 +36,9 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        if (!isFileFound) {
+            return new CommandResult(MESSAGE_FILE_NOT_FOUND);
+        }
         int numAdded = 0;
         int numDuplicated = 0;
 
