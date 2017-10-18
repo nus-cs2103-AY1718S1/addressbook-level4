@@ -97,4 +97,36 @@ public class ParserUtil {
         }
         return tagSet;
     }
+    /**
+     * Parses a {@code Optional<String> owner} into an {@code Optional<String>} if {@code owner} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseNameForInsurance(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(name.get()) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> premium} into an {@code Optional<Double>} if {@code premium} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parsePremium(Optional<String> premium) throws IllegalValueException {
+        requireNonNull(premium);
+        return premium.isPresent() ? Optional.of(Double.parseDouble(premium.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> contract} into an {@code Optional<String>} if {@code contract} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseContract(Optional<String> contract) throws IllegalValueException {
+        requireNonNull(contract);
+        return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(date.get()) : Optional.empty();
+    }
 }
