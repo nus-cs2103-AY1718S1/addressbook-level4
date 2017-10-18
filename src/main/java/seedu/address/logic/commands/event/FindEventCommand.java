@@ -2,7 +2,7 @@ package seedu.address.logic.commands.event;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
 /**
  * @@reginleiff
@@ -17,9 +17,9 @@ public class FindEventCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice birthday";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final TitleContainsKeywordsPredicate predicate;
 
-    public FindEventCommand(NameContainsKeywordsPredicate predicate) {
+    public FindEventCommand(TitleContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 

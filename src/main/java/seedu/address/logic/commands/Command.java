@@ -32,7 +32,7 @@ public abstract class Command {
      * @return summary message for persons displayed
      */
     public static String getMessageForEventListShownSummary(int displaySize) {
-        return String.format(Messages.MESSAGE_EVENT_LISTED_OVERVIEW, displaySize);
+        return String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, displaySize);
     }
 
     /**
