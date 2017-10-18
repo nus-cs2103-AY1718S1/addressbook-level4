@@ -139,6 +139,26 @@ public class AddCommandTest {
         public void deleteTag(Tag tag) {
             fail("This metthod should not be called.");
         }
+
+        public Boolean checkIfListEmpty(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void sortListByName(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByAge(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

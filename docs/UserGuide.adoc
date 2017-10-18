@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103T-T09-B1/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -132,6 +132,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -217,6 +218,11 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Clearing all entries : `sort`
+
+Sorts all entries in the address book by alphabetical order. +
+Format: `sort`
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -226,6 +232,38 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Adding / Editing / Removing birthday to person: `birthday` (Since v1.2)
+
+Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : input nothing after " `b/` "
+****
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
+=== Sort all entries by age : `sortAge`    (Since v1.2)
+
+Sorts all entries in the address book by their age, from the oldest to youngest. +
+Format: `sortAge`
+
+=== Sort all entries by birthday: `sortBirthday`    (Since v1.2)
+
+Sorts all entries in the address book by their birthday, from 1st Jan to 31st Dec. +
+Format: `sortBirthday`
+
+=== List the birthday of contacts in calendar mode (Coming in v2.0)
+Able to view contacts in calendar mode so that users can look at who's birthday is coming up soon.
+Contacts with birthday within a week will have a special colour or icon to notify user of upcoming birthdays.
 
 == FAQ
 
@@ -250,3 +288,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Sort* : `sort`

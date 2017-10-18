@@ -346,7 +346,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 
-// tag::login[]
 == Login Function
 
 The Login function work by using many different components. To facilitated its implementation there is a `Loginpage` inside the `UI` and a `loginLogic` inside the `logic` component. It supports the process of moving the addressbook database to a server as will be later described.
@@ -354,6 +353,9 @@ The Login function work by using many different components. To facilitated its i
 The process of how the feature functions and what would happen is as follows:
 
 image::LoginSequenceDiagram.jpg[width="800"]
+
+
+
 
 As it can be seen, when the login adds an extra layer of authentication between the `Mainapp` and then `MainWindow`, such that the application can only be opened when valid credentials are received. When the `Addressbook` is opened, the `Mainapp` will call the `UImanager` which will in turn call the `Loginpage`. Once a login command has been give, the `loginpage` will pass on the logincredentials database. If authentication is valid, the LoginLogic will create a database if the user does not already have one and return the path to the database. The `loginpage` will then call on the `UImanager` to start the `MainWindow` with said database path. 
 
@@ -369,6 +371,46 @@ The User can choose to Create an account if he does not already have one, but he
 **Pros:** Easy to implement. Achieves the basic functions of security +
 **Cons:** Only a single user database is allowed. not a flexible system.
 
+
+=== BirthdayCommand, sortAgeCommand, sortBirthdayCommand
+
+The `BirthdayCommand`, together with `sortAgeCommand` and `sortBirthdayCommand` lies in the `commands` of `Logic`. +
+
+`BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
+
+`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest.
+
+`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age.
+
+`BirthdayCommand`, `sortAgeCommand` and `sortBirthdayCommand` does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+
+image::logic_birthday.png[width="620"]
+
+
+
+
+
+The user will not be able to enter the birthday parameter when adding contacts. +
+Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
+The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
+
+After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
+The following sequence diagram shows how the birthday operation works:
+
+image::birthday_sd.png[width="560"]
+
+
+
+
+==== Design Considerations
+
+**Aspect:** Adding Birthday parameter +
+**Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
+**Pros:** Lesser parameters to add while creating person class and easier to implement. +
+**Cons:** Slower for users to add in all the parameters +
+**Alternative 2:**  Add birthday parameter during the creation of person object. +
+**Pros:** Faster for users to add in all the parameters. +
+**Cons:** More parameters to add while creating person class and harder to implement. +
 
 
 === Logging
