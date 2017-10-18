@@ -140,6 +140,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
+
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }
