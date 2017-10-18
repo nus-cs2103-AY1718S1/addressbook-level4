@@ -42,4 +42,11 @@ public class Timestamp {
         }
     }
 
+    /**
+     * Returns true if a given long is a valid timestamp.
+     */
+    public static boolean isValidTimestamp(long test) {
+        return (test >= 0);
+    }
+
 }
