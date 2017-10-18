@@ -14,7 +14,7 @@ public class ButtonSelectionPressedEvent extends BaseEvent {
     public ButtonSelectionPressedEvent(String buttonPressed) {
         this.buttonPressed = buttonPressed;
     }
-    
+
     public String getButtonPressed() {
         return this.buttonPressed;
     }

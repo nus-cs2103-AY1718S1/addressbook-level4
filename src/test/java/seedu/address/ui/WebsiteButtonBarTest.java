@@ -24,6 +24,6 @@ public class WebsiteButtonBarTest extends GuiUnitTest {
         WebsiteButtonBar websiteButtonBar = new WebsiteButtonBar();
         uiPartRule.setUiPart(websiteButtonBar);
     }
-    
+
     // To implement dynamically added Button Tests
 }
