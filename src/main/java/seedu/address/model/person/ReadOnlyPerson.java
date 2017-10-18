@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -21,8 +22,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    ObjectProperty<Remark> remarkProperty();
-    Remark getRemark();
+    ObjectProperty<ArrayList<Remark>> remarkProperty();
+    ArrayList<Remark> getRemark();
     ObjectProperty<FavouriteStatus> favouriteStatusProperty();
     FavouriteStatus getFavouriteStatus();
     SimpleBooleanProperty statusProperty();
@@ -40,7 +41,6 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
-                && other.getRemark().equals(this.getRemark())
                 && other.getFavouriteStatus().equals(this.getFavouriteStatus()));
     }
 
@@ -58,9 +58,9 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Remark: ")
-                .append(getRemark())
-                .append(" Tags: ");
+                .append(" Remark: ");
+        getRemark().forEach(builder::append);
+        builder.append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<Remark> remark;
+    private ObjectProperty<ArrayList<Remark>> remark;
     private ObjectProperty<FavouriteStatus> favouriteStatus;
     private SimpleBooleanProperty status;
 
@@ -33,7 +34,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Remark remark, FavouriteStatus favouriteStatus, Set<Tag> tags) {
+                  ArrayList<Remark> remark, FavouriteStatus favouriteStatus, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -110,17 +111,17 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setRemark(Remark remark) {
+    public void setRemark(ArrayList<Remark> remark) {
         this.remark.set(requireNonNull(remark));
     }
 
     @Override
-    public ObjectProperty<Remark> remarkProperty() {
+    public ObjectProperty<ArrayList<Remark>> remarkProperty() {
         return remark;
     }
 
     @Override
-    public Remark getRemark() {
+    public ArrayList<Remark> getRemark() {
         return remark.get();
     }
     public void setFavouriteStatus(FavouriteStatus favouriteStatus) {
