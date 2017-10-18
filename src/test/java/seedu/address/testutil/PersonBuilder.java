@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HomeNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    public static final String DEFAULT_HOME_NUMBER = "65822291";
     public static final String DEFAULT_SCH_EMAIL = "alicepauline@u.nus.edu";
     public static final String DEFAULT_WEBSITE = "https://www.facebook.com/AlicePaul";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
@@ -35,6 +37,7 @@ public class PersonBuilder {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
+            HomeNumber defaultHomeNumber = new HomeNumber(DEFAULT_HOME_NUMBER);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             SchEmail defaultSchEmail = new SchEmail(DEFAULT_SCH_EMAIL);
             Website defaultWebsite = new Website(DEFAULT_WEBSITE);
@@ -42,10 +45,9 @@ public class PersonBuilder {
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
 
-            this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                                     defaultSchEmail, defaultWebsite,
-                                     defaultAddress,
-                                     defaultBirthday, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultHomeNumber,
+                    defaultEmail, defaultSchEmail, defaultWebsite, defaultAddress,
+                    defaultBirthday, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -102,6 +104,18 @@ public class PersonBuilder {
             this.person.setPhone(new Phone(phone));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code HomeNumber} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withHomeNumber(String homeNumber) {
+        try {
+            this.person.setHomeNumber(new HomeNumber(homeNumber));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("home number is expected to be unique.");
         }
         return this;
     }
