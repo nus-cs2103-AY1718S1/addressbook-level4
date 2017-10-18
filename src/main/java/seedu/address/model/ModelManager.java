@@ -202,8 +202,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        //syncBlacklist();
-        //raise (new ChangeInternalListEvent("blacklist"));
+        syncBlacklist();
+        raise (new ChangeInternalListEvent("blacklist"));
         filteredBlacklistedPersons.setPredicate(predicate);
     }
 
