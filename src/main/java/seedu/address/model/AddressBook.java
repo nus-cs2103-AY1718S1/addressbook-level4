@@ -10,11 +10,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.UniqueParcelList;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,7 +24,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
+    private final UniqueParcelList parcels;
     private final UniqueTagList tags;
 
     /*
@@ -35,14 +35,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        parcels = new UniqueParcelList();
         tags = new UniqueTagList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Parcels and Tags in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -51,8 +51,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// list overwrite operations
 
-    public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
-        this.persons.setPersons(persons);
+    public void setParcels(List<? extends ReadOnlyParcel> parcels) throws DuplicateParcelException {
+        this.parcels.setParcels(parcels);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -65,94 +65,94 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         try {
-            setPersons(newData.getPersonList());
-        } catch (DuplicatePersonException e) {
-            assert false : "AddressBooks should not have duplicate persons";
+            setParcels(newData.getParcelList());
+        } catch (DuplicateParcelException e) {
+            assert false : "AddressBooks should not have duplicate parcels";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
-        syncMasterTagListWith(persons);
+        syncMasterTagListWith(parcels);
     }
 
-    //// person-level operations
+    //// parcel-level operations
 
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a parcel to the address book.
+     * Also checks the new parcel's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the parcel to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if an equivalent person already exists.
+     * @throws DuplicateParcelException if an equivalent parcel already exists.
      */
-    public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
-        Person newPerson = new Person(p);
-        syncMasterTagListWith(newPerson);
+    public void addParcel(ReadOnlyParcel p) throws DuplicateParcelException {
+        Parcel newParcel = new Parcel(p);
+        syncMasterTagListWith(newParcel);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(newPerson);
+        // This can cause the tags master list to have additional tags that are not tagged to any parcel
+        // in the parcel list.
+        parcels.add(newParcel);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * Replaces the given parcel {@code target} in the list with {@code editedReadOnlyParcel}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyParcel}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateParcelException if updating the parcel's details causes the parcel to be equivalent to
+     *      another existing parcel in the list.
+     * @throws ParcelNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterTagListWith(Parcel)
      */
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedReadOnlyPerson);
+    public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedReadOnlyParcel)
+            throws DuplicateParcelException, ParcelNotFoundException {
+        requireNonNull(editedReadOnlyParcel);
 
-        Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
+        Parcel editedParcel = new Parcel(editedReadOnlyParcel);
+        syncMasterTagListWith(editedParcel);
         // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, editedPerson);
+        // This can cause the tags master list to have additional tags that are not tagged to any parcel
+        // in the parcel list.
+        parcels.setParcel(target, editedParcel);
     }
 
     /**
-     * Ensures that every tag in this person:
+     * Ensures that every tag in this parcel:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
      */
-    private void syncMasterTagListWith(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
+    private void syncMasterTagListWith(Parcel parcel) {
+        final UniqueTagList parcelTags = new UniqueTagList(parcel.getTags());
+        tags.mergeFrom(parcelTags);
 
         // Create map with values = tag object references in the master list
-        // used for checking person tag references
+        // used for checking parcel tag references
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
         tags.forEach(tag -> masterTagObjects.put(tag, tag));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        // Rebuild the list of parcel tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        person.setTags(correctTagReferences);
+        parcelTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        parcel.setTags(correctTagReferences);
     }
 
     /**
-     * Ensures that every tag in these persons:
+     * Ensures that every tag in these parcels:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     *  @see #syncMasterTagListWith(Parcel)
      */
-    private void syncMasterTagListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterTagListWith);
+    private void syncMasterTagListWith(UniqueParcelList parcels) {
+        parcels.forEach(this::syncMasterTagListWith);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws ParcelNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeParcel(ReadOnlyParcel key) throws ParcelNotFoundException {
+        if (parcels.remove(key)) {
             return true;
         } else {
-            throw new PersonNotFoundException();
+            throw new ParcelNotFoundException();
         }
     }
 
@@ -166,13 +166,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return parcels.asObservableList().size() + " parcels, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        return persons.asObservableList();
+    public ObservableList<ReadOnlyParcel> getParcelList() {
+        return parcels.asObservableList();
     }
 
     @Override
@@ -184,13 +184,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
+                && this.parcels.equals(((AddressBook) other).parcels)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(parcels, tags);
     }
 }
