@@ -7,9 +7,11 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +22,14 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Appoint;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import javax.mail.internet.AddressException;
 
 public class AddressBookParserTest {
     @Rule
@@ -79,10 +82,12 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        HashMap<String, List<String>> keywords = new HashMap<>();
+        keywords.put(PREFIX_NAME.toString(), Arrays.asList("foo", "bar", "baz"));
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " " + PREFIX_NAME.toString() + " "
+                        + keywords.get(PREFIX_NAME.toString()).stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new PersonContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -155,4 +160,15 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
+    @Test
+    public void parseCommand_emaillogin() throws ParseException {
+        assertTrue(parser.parseCommand("email_login \"example@ab.c\" \"password\"") instanceof EmailLoginCommand);
+    }
+
+    @Test
+    public void parseCommand_emailsend() throws ParseException {
+        assertTrue(parser.parseCommand("email_send \"example@ab.c\" \"title\" \"body\"") instanceof EmailSendCommand);
+    }
+
 }

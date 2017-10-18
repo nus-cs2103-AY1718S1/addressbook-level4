@@ -5,26 +5,20 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.commands.AppointCommand.MESSAGE_ARGUMENTS;
 import static seedu.address.testutil.TypicalPersons.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Appoint;
-import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AppointCommand.
@@ -34,78 +28,7 @@ public class AppointCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_addAppoint_success() throws Exception {
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withAppoint("Some appoint").build();
-
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAppoint().value);
-
-        String expectedMessage = String.format(AppointCommand.MESSAGE_ADD_APPOINT_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(appointCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_deleteAppoint_success() throws Exception {
-        Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        editedPerson.setAppoint(new Appoint(""));
-
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAppoint().toString());
-
-        String expectedMessage = String.format(AppointCommand.MESSAGE_DELETE_APPOINT_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(appointCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-
-        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withAppoint("Some appoint").build();
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAppoint().value);
-
-        String expectedMessage = String.format(AppointCommand.MESSAGE_ADD_APPOINT_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(appointCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        AppointCommand appointCommand = prepareCommand(outOfBoundIndex, VALID_APPOINT_BOB);
-
-        assertCommandFailure(appointCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
-        showFirstPersonOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        AppointCommand appointCommand = prepareCommand(outOfBoundIndex, VALID_APPOINT_BOB);
-
-        assertCommandFailure(appointCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() {
+    public void execute() throws Exception {
         final AppointCommand standardCommand = new AppointCommand(INDEX_FIRST_PERSON, new Appoint(VALID_APPOINT_AMY));
 
         // same values -> returns true
@@ -124,12 +47,12 @@ public class AppointCommandTest {
         // different index -> returns false
         assertFalse(standardCommand.equals(new AppointCommand(INDEX_SECOND_PERSON, new Appoint(VALID_APPOINT_AMY))));
 
-        // different descriptor -> returns false
+        // different appoints -> returns false
         assertFalse(standardCommand.equals(new AppointCommand(INDEX_FIRST_PERSON, new Appoint(VALID_APPOINT_BOB))));
     }
 
     /**
-     * Returns an {@code AppointCommand} with parameters {@code index} and {@code appoint}
+     * Returns an {@code AppointCommand} with parameters {@code index} and {@code appoint}.
      */
     private AppointCommand prepareCommand(Index index, String appoint) {
         AppointCommand appointCommand = new AppointCommand(index, new Appoint(appoint));

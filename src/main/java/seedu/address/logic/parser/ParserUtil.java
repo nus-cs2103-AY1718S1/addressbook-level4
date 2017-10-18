@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.sun.org.apache.xpath.internal.compiler.Keywords;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -94,5 +96,13 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> keywords} into an {@code Optional<String>} if {@code keywords} is present.
+     */
+    public static Optional<String> parseKeywords(Optional<String> keywords) throws IllegalValueException {
+        requireNonNull(keywords);
+        return keywords.isPresent() ? Optional.of(keywords.get()) : Optional.empty();
     }
 }

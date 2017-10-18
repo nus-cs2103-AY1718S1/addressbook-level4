@@ -68,7 +68,6 @@ public class PersonCard extends UiPart<Region> {
             avatar.imageProperty().bind(person.getAvatar().avatarImageProperty());
         }
         comment.textProperty().bind(Bindings.convert(person.commentProperty()));
-        appoint.textProperty().bind(Bindings.convert(person.appointProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

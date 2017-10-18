@@ -114,6 +114,7 @@ The rest of the App consists of four components.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#email_component[*`Email`*]: Manages emails credentials and sending and checking emails.
 
 Each of the four components
 
@@ -210,6 +211,19 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
+=== Email component
+
+image::EmailClassDiagram.png[width="800"]
+_Figure 2.6.1: Structure of the Email Component_
+
+API: `Email.java`
+
+The `Email` component:
+
+* stores a private `Authentication` object that holds user's email credentials.
+* stores the currently logged in email as a `String`.
+* can send and check emails with the current credentials.
+
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
@@ -303,6 +317,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -345,6 +360,22 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Email Component
+The email component ultilised the external library `javax.mail` for sending and receiving emails.
+
+The `EmailManager.java` class implementing `Email` manages the login status by keeping an `Autheticator` object along with its email `String`. 
+
+As the library `javax.mail` uses `IMAP` protocol for receving emails and `SMTP` for sending emails, the `EmailManager` also holds a `Hashtable` of `IMAP` hosts and `SMTP` hosts / ports for different email providers. This allows future support for more providers.
+
+==== Design Considerations
+**Aspect:** Implementation of `Email` +
+**Alternative 1 (current choice):** Create a new `Email` Component +
+**Pros:** Can be further improved to work with other commands to quickly send emails to a group of people +
+**Cons:** Command line interface is not user friendly +
+**Alternative 2:** Use the built in browser to send emails +
+**Pros:** Already has the GUI which is user friendly, support for all email providers +
+**Cons:** However, it will be more difficult to work with other commands to send to a specific groups of contacts.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +394,62 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::multiple[]
+=== Add multiple persons feature
+
+The feature to add multiple persons is facilitated by `AddMultipleCommand` which is a command that extends `UndoableCommand` i.e. `AddMultipleCommand` execution method is `executeUndoableCommand`.
+
+`AddMultipleCommand` adds new persons in a similar fashion with the existing `AddCommand`. Both uses the method, `addPerson`, of the model to add a given person. Furthermore, both commands parses the persons particulars similarly.
+
+Nevertheless, there are subtle differences between `AddMultipleCommand` and `AddCommand`. Below are characteristics that pertains to `AddMultipleCommand`:
+
+****
+1.  The `AddMultipleCommand` parses persons' particulars from data of a `.txt` file instead of user argument inputs.
+2.  The `AddMultipleCommand` user argument inputs is a file name of the file that contains persons' particulars.
+3.  The `AddMultipleCommand` is an independent command by itself i.e. calling undo/redo will undo/redo the entire data that was changed in the storage e.g. `Bob`, `Tom` and `Kat` was added, undoing will remove `Bob`, `Tom` and `Kat`.
+****
+
+The following sequence diagram shows how the add multiple persons operation works:
+
+image::AddMultipleCommandSequenceDiagram.png[width="800"]
+
+
+*Parsing of persons' particulars*
+
+The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file name and the data that contains in the `.txt` file.
+
+As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line. 
+The result of the parsed data is stored in an `ArrayList`, then it is returned with the construction of `AddMultipleCommand`.
+
+*Implementation as an independent Undoable/Redoable command*
+
+The `AddMultipleCommand` contains two `ArrayList`; One `Person` array list to facilitate adding new persons and one `ReadOnlyPerson` array list to facilitate deletion of persons in the event of unexpected result that requires the command to roll back.
+
+The user executes a new `AddMultipleCommand`, `multiple personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
+
+After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser` while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
+The below is a graphical representation of two examples `ArrayList`.
+
+image::AddMultipleCommandInitializationDiagram.png[width="800"]
+
+A variable `numberOfPersonsAdded` is used to keep track of `Person` added sequentially to the storage from `toAdd`.
+In the event when an error occur, a loop is initiated to delete the `ReadOnlyPerson` that contain in `readOnlyPeople` sequentially; the number of times the loop runs is based on `numberOfPersonsAdded`.
+As such, no persons will be stored in the storage if the execution fails.
+
+image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `AddMultipleCommand` +
+**Alternative 1 (current choice):** Add a new command `AddMultipleCommand` +
+**Pros:** Flexibility in using other data structures to store person data that will be added. +
+**Cons:** Additional data structures that might cost more space. +
+**Alternative 2:** Enhance the current `AddCommand` +
+**Pros:** Uses almost entirely existing methods to implement. +
+**Cons:** Restrictive data structure that do not support adding multiple persons.
+
+// end::multiple[]
 
 == Documentation
 
@@ -927,7 +1014,7 @@ Use case ends.
 ** 3a2. AddressBook shows an error message.
 +
 Use case ends.
-
+a
 === Use case:  History
 
 *MSS*
@@ -978,6 +1065,84 @@ Use case ends.
 ** 2a1. AddressBook shows an error message
 +
 Use case ends.
+
+=== Use case:  Find
+
+*MSS*
+
+1.  User requests to find persons with keywords
+2.  AddressBook shows a list of person(s) found with the keywords
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The input format is invalid
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+* 2a. The addressbook is empty
+** 2a1. AddressBook returns list of 0 person found.
++
+Use case ends.
+
+=== Use case: Email Login
+*MSS*
+
+1. User attempts to log in with an email and password
+2. AddressBook saves the credentials
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The email and password combination is incorrect.
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+* 2b. The Internet connection is not working
+** 2b1. Addressbook shows an error message
++
+Use case ends.
+* 2c. The email does not have "Allow less secure apps" enabled.
+** 2c1. AddressBook shows an error message
++
+Use case ends
+* 2d. The email format is not valid.
+** 2d1. AddressBook shows an error message
++
+Use case ends
+
+=== Use case: Email Send
+*MSS*
+
+1. Users attenpts to send an email with a title and a body to a list of recipients.
+2. AddressBook uses the logged in email and sends the email message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is not email currently logged in.
+** 2a1. AddressBook does not send the email.
+** 2a2. AddressBook shows an error message.
++
+Use case ends
+* 2b. The recipients emails have one or more invalid emails.
+** 2b1. AddressBook does not send the email.
+** 2b2. AddressBook shows an error message.
++
+Use case ends
+* 2c. The Internet connection is not working
+** 2c1. AddressBook does not send the email.
+** 2c2. AddressBook shows an error message.
++
+Use case ends
+
 
 [appendix]
 == Non Functional Requirements

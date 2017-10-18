@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -184,7 +185,23 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
-
+    
+    @Override
+    public boolean containTags(List<String> tagsList) {
+        int matchTagsCount = 0;
+        int numberOfKeywords = tagsList.size();
+        for (Tag t : this.tags.get().toSet()) {
+            boolean exist = tagsList.stream().anyMatch(tag -> t.tagName.equals(tag));
+            if (exist) { matchTagsCount++; }
+        }
+        
+        if (matchTagsCount == numberOfKeywords) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
