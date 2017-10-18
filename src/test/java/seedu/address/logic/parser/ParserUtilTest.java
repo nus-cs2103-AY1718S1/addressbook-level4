@@ -5,7 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_OPTION;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_STRING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalNames.NAME_FIRST_PERSON;
+import static seedu.address.testutil.TypicalOptions.OPTION_NAME;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,6 +65,38 @@ public class ParserUtilTest {
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+    }
+
+    @Test
+    public void parseString_invalidInput_throwsIllegalValueExceptionException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_STRING);
+        ParserUtil.parseString("10 a");
+    }
+
+    @Test
+    public void parseString_validInput_success() throws Exception {
+        // No numbers
+        assertEquals(NAME_FIRST_PERSON, ParserUtil.parseString("Alice Pauline"));
+
+        // Leading and trailing whitespaces
+        assertEquals(NAME_FIRST_PERSON, ParserUtil.parseString("  Alice Pauline  "));
+    }
+
+    @Test
+    public void parseOption_invalidInput_throwsIllegalValueExceptionException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_OPTION);
+        ParserUtil.parseOption("-T");
+    }
+
+    @Test
+    public void parseOption_validInput_success() throws Exception {
+        // No capital letter
+        assertEquals(OPTION_NAME, ParserUtil.parseOption("-n"));
+
+        // Leading and trailing whitespaces
+        assertEquals(OPTION_NAME, ParserUtil.parseOption("  -n  "));
     }
 
     @Test
