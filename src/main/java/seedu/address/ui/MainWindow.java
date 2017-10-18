@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -86,6 +87,9 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+
+        String cssPath = Objects.equals(prefs.getStyle(), "light") ? "view/LightTheme.css" : "view/DarkTheme.css";
+        scene.getStylesheets().add(cssPath);
 
         setAccelerators();
         registerAsAnEventHandler(this);
