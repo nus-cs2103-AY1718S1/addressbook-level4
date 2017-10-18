@@ -8,6 +8,10 @@ import seedu.address.logic.commands.FindNumberCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NumberContainsKeywordsPredicate;
 
+/**
+ * Parses input arguments and creates a new FindNumberCommand object
+ */
+
 public class FindNumberCommandParser implements Parser<FindNumberCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindNumberCommand
