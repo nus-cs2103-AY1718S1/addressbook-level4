@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
+ */
+
 public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>{
     private final List<String> keywords;
 
@@ -17,13 +21,13 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>{
 
     private String stringifySetTags(Set<Tag> setTags) {
         StringBuilder setTagsString = new StringBuilder();
-        final String DELIMITER = " ";
+        final String delimiter = " ";
 
         Iterator<Tag> tagIterator = setTags.iterator();
         while (tagIterator.hasNext()) {
             Tag checkingTag = tagIterator.next();
             setTagsString.append(checkingTag.tagName);
-            setTagsString.append(DELIMITER);
+            setTagsString.append(delimiter);
         }
 
         return setTagsString.toString();

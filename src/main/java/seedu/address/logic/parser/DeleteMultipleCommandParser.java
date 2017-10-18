@@ -10,6 +10,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteMultipleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new DeleteMultipleCommand object
+ */
+
 public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
