@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -25,15 +26,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * The calendar view to show all the scheduled events.
+ */
+
 public class CalendarView extends UiPart<Region> {
 
-    private final LocalTime firstSlotStart = LocalTime.of(7, 0);
-    private final Duration slotLength = Duration.ofMinutes(30);
-    private final LocalTime lastSlotStart = LocalTime.of(20, 59);
-
-    private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
-
-    private final List<TimeSlot> timeSlots = new ArrayList<>();
+    private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass
+            .getPseudoClass("selected");
 
     private static Supplier<LocalDate> today = LocalDate::now;
     private static Supplier<LocalDate> startOfWeek = () -> today.get()
@@ -42,6 +42,12 @@ public class CalendarView extends UiPart<Region> {
             .plusDays(6);
 
     private static final String FXML = "CalendarView.fxml";
+
+    private final LocalTime firstSlotStart = LocalTime.of(7, 0);
+    private final Duration slotLength = Duration.ofMinutes(30);
+    private final LocalTime lastSlotStart = LocalTime.of(20, 59);
+
+    private final List<TimeSlot> timeSlots = new ArrayList<>();
 
     @FXML
     private StackPane calendarViewPlaceHolder;
@@ -196,6 +202,20 @@ public class CalendarView extends UiPart<Region> {
 
         private final BooleanProperty selected = new SimpleBooleanProperty();
 
+        public TimeSlot(LocalDateTime start, Duration duration) {
+            this.start = start;
+            this.duration = duration;
+
+            view = new Region();
+            view.setMinSize(80, 20);
+            view.setPrefSize(120, 20);
+            view.getStyleClass().add("time-slot");
+
+            selectedProperty().addListener((obs, wasSelected, isSelected) ->
+                    view.pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, isSelected));
+
+        }
+
         public final BooleanProperty selectedProperty() {
             return selected;
         }
@@ -206,20 +226,6 @@ public class CalendarView extends UiPart<Region> {
 
         public final void setSelected(boolean selected) {
             selectedProperty().set(selected);
-        }
-
-        public TimeSlot(LocalDateTime start, Duration duration) {
-            this.start = start;
-            this.duration = duration;
-
-            view = new Region();
-            view.setMinSize(80, 20);
-            view.setPrefSize(120,20);
-            view.getStyleClass().add("time-slot");
-
-            selectedProperty().addListener((obs, wasSelected, isSelected) ->
-                    view.pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, isSelected));
-
         }
 
         public LocalDateTime getStart() {
