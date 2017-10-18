@@ -14,8 +14,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private String password = "admin";
-    private String username = "admin";
+    private String password = "";
+    private String username = "";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -85,7 +85,11 @@ public class UserPrefs {
      * @return true if password is valid
      */
     public boolean checkPassword(String input) {
-        return password.equals(hashBySha256(input));
+        if (password == null) {
+            return true;
+        } else {
+            return password.equals(hashBySha256(input));
+        }
     }
 
     /**
