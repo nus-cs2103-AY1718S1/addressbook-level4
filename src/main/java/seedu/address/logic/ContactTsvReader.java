@@ -1,29 +1,22 @@
 package seedu.address.logic;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+public class ContactTsvReader {
+    private String contactTsvFilePath;
 
-public class ContactCsvReader {
-    private String contactCsvFilePath;
-
-    public ContactCsvReader(String contactCsvFilePath) {
-        this.contactCsvFilePath = contactCsvFilePath;
+    public ContactTsvReader(String contactTsvFilePath) {
+        this.contactTsvFilePath = contactTsvFilePath;
     }
 
     public ArrayList<ReadOnlyPerson> readContactsFromFile() throws ParseException {
@@ -33,7 +26,7 @@ public class ContactCsvReader {
 
         try {
             String line;
-            bufferedReader = new BufferedReader(new FileReader(contactCsvFilePath));
+            bufferedReader = new BufferedReader(new FileReader(contactTsvFilePath));
             int i=0;
 
             // How to read file in java line by line?
@@ -47,7 +40,8 @@ public class ContactCsvReader {
                         Address address = ParserUtil.parseAddress(checkEmptyAndReturn(columns.get(3))).get();
                         Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
                                 Arrays.asList(columns.get(4)
-                                        .replaceAll("^[,\\s]+", "")
+                                        .replaceAll("^[,\"\\s]+", "")
+                                        .replace("\"", "")
                                         .split("[,\\s]+"))));
                         ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, tagList);
                         toAddPeople.add(toAddPerson);
@@ -80,7 +74,7 @@ public class ContactCsvReader {
         ArrayList<String> result = new ArrayList<String>();
 
         if (line != null) {
-            String[] splitData = line.split("\\s*,\\s*");
+            String[] splitData = line.split("\\s*\t\\s*");
             for (int i = 0; i < splitData.length; i++) {
                 if (!(splitData[i] == null) || !(splitData[i].length() == 0)) {
                     result.add(splitData[i].trim());

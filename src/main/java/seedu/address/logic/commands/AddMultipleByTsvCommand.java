@@ -8,24 +8,22 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import java.util.ArrayList;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-public class AddMultipleByCsvCommand extends UndoableCommand {
+public class AddMultipleByTsvCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addMulCsv";
-    public static final String COMMAND_ALIAS = "addMC";
+    public static final String COMMAND_WORD = "addMulTsv";
+    public static final String COMMAND_ALIAS = "addMT";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple people to the address book "
-            + "given a csv file containing their contact information. "
-            + "Parameters: CSV_PATH\n"
-            + "Example: " + COMMAND_WORD + " D:/Contacts.csv";
+            + "given a tsv (tab separated value) txt file containing their contact information. "
+            + "Parameters: TSV_PATH\n"
+            + "Example: " + COMMAND_WORD + " D:/Contacts.txt";
 
     public static final String MESSAGE_SUCCESS = "%d new person (people) added";
     public static final String MESSAGE_DUPLICATE_PERSON = "%d new person (people) duplicated";
 
     private final ArrayList<Person> toAdd;
 
-    public AddMultipleByCsvCommand(ArrayList<ReadOnlyPerson> toAddPeople) {
+    public AddMultipleByTsvCommand(ArrayList<ReadOnlyPerson> toAddPeople) {
         this.toAdd = new ArrayList<Person>();
         for (ReadOnlyPerson person: toAddPeople) {
             toAdd.add(new Person(person));
@@ -54,8 +52,8 @@ public class AddMultipleByCsvCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddMultipleByCsvCommand // instanceof handles nulls
-                && toAdd.equals(((AddMultipleByCsvCommand) other).toAdd));
+                || (other instanceof AddMultipleByTsvCommand // instanceof handles nulls
+                && toAdd.equals(((AddMultipleByTsvCommand) other).toAdd));
     }
 
 }
