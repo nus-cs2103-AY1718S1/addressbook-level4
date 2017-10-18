@@ -6,10 +6,11 @@
 <?import javafx.scene.layout.StackPane?>
 
 <StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display">
+  <TextArea fx:id="resultDisplay" editable="false" style="-fx-font-size: 18;" styleClass="result-display">
       <StackPane.margin>
-         <Insets />
-      </StackPane.margin></TextArea>
+         <Insets right="80.0" />
+      </StackPane.margin>
+   </TextArea>
    <ImageView fx:id="imageDisplay" fitHeight="53.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
       <StackPane.margin>
          <Insets right="20.0" />
