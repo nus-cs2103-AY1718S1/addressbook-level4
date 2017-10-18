@@ -33,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setFormClass(person.getFormClass());
+        descriptor.setGrades(person.getGrades());
         descriptor.setPostalCode(person.getPostalCode());
         descriptor.setTags(person.getTags());
     }
@@ -93,6 +94,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseFormClass(Optional.of(formClass)).ifPresent(descriptor::setFormClass);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("formClass is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Grades} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withGrades(String grades) {
+        try {
+            ParserUtil.parseGrades(Optional.of(grades)).ifPresent(descriptor::setGrades);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("grades is expected to be unique.");
         }
         return this;
     }

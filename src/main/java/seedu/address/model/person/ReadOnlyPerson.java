@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<FormClass> formClassProperty();
     FormClass getFormClass();
+    ObjectProperty<Grades> gradesProperty();
+    Grades getGrades();
     ObjectProperty<PostalCode> postalCodeProperty();
     PostalCode getPostalCode();
     ObjectProperty<UniqueTagList> tagProperty();
@@ -38,6 +40,7 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getFormClass().equals(this.getFormClass())
+                && other.getGrades().equals(this.getGrades())
                 && other.getPostalCode().equals(this.getPostalCode()));
     }
 
@@ -55,6 +58,8 @@ public interface ReadOnlyPerson {
                .append(getAddress())
                .append(" FormClass: ")
                .append(getFormClass())
+               .append(" Grades: ")
+               .append(getGrades())
                .append(" PostalCode: ")
                .append(getPostalCode())
                .append(" Tags: ");
