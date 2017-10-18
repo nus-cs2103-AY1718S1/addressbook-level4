@@ -18,3 +18,4 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+config.json
