@@ -40,7 +40,7 @@ public class TypicalParcels {
             .withAddress("59 Namly Garden S267387").build();
     public static final ReadOnlyParcel ELLE = new ParcelBuilder().withTrackingNumber("RR111321124SG")
             .withName("Elle Meyer").withPhone("9482224").withEmail("werner@example.com")
-            .withAddress("2 Finlayson Green, S049247").build();
+            .withAddress("2 Finlayson Green, S049247").withTags("bbc").build();
     public static final ReadOnlyParcel FIONA = new ParcelBuilder().withTrackingNumber("RR999123555SG")
             .withName("Fiona Kunz").withPhone("9482427").withEmail("lydia@example.com")
             .withAddress("48 Upper Dickson Rd S207502").build();
