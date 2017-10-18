@@ -16,7 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.loginLogic;
+import seedu.address.logic.LoginLogic;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -39,7 +39,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static UserPrefs prefs;
     private static MainWindow mainWindow;
     private LoginPage loginPage;
-    private loginLogic loginLogic;
+    private LoginLogic loginLogic;
     private static Stage primaryStage;
 
 
@@ -49,7 +49,8 @@ public class UiManager extends ComponentManager implements Ui {
         this.config = config;
         this.prefs = prefs;
     }
-// From here, use the commented code is you want the full feature. i left it commented as i didnt  have time to make it pass the tests
+    // From here, use the commented code is you want the full feature.
+    // i left it commented as i didnt  have time to make it pass the tests
     @Override
     public void start(Stage primaryStage) {
 
@@ -73,20 +74,20 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
 
-//    public static void startMainApp(Stage primaryStage) {
-//        logger.info("Starting MainUI...");
-//        primaryStage.setTitle(config.getAppTitle());
-//        try {
-//            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
-//            mainWindow.show(); //This should be called before creating other UI parts
-//            mainWindow.fillInnerParts();
-//
-//        } catch (Throwable e) {
-//            logger.severe(StringUtil.getDetails(e));
-//            logger.info("Fatal error during initializing" + e);
-//        }
-//
-//    }
+    //    public static void startMainApp(Stage primaryStage) {
+    //        logger.info("Starting MainUI...");
+    //        primaryStage.setTitle(config.getAppTitle());
+    //        try {
+    //            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+    //            mainWindow.show(); //This should be called before creating other UI parts
+    //            mainWindow.fillInnerParts();
+    //
+    //        } catch (Throwable e) {
+    //            logger.severe(StringUtil.getDetails(e));
+    //            logger.info("Fatal error during initializing" + e);
+    //        }
+    //
+    //    }
 
     @Override
     public void stop() {

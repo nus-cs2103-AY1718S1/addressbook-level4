@@ -24,7 +24,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
-import seedu.address.logic.loginLogic;
+import seedu.address.logic.LoginLogic;
 import seedu.address.model.UserPrefs;
 
 import javax.swing.*;
@@ -35,16 +35,13 @@ import javax.swing.*;
  */
 public class LoginPage extends UiPart<Region> {
 
-
+    private static boolean session;
     private static final String FXML = "Login.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     private Stage primaryStage;
-    private final loginLogic logic = new loginLogic();
-    private static boolean session;
+    private final LoginLogic logic = new LoginLogic();
 
     // Independent Ui parts residing in this Ui container
     @FXML
@@ -60,7 +57,7 @@ public class LoginPage extends UiPart<Region> {
     private TextField passwordTextField;
 
 
-    public LoginPage(Stage primaryStage, loginLogic logic) {
+    public LoginPage(Stage primaryStage, LoginLogic logic) {
 
 
         super(FXML);
@@ -78,17 +75,18 @@ public class LoginPage extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //if press enter or on click
     @FXML
     private void handleCommandInputChanged() {
         logger.info("enter registered");
         logger.info("name input =" + usernameTextField.getText());
         logger.info("password input =" + passwordTextField.getText());
-        boolean result = logic.execute(usernameTextField.getText().toString(), passwordTextField.getText().toString());
+        boolean result = logic.execute(usernameTextField.getText(), passwordTextField.getText());
         session = result;
         // process result of the command
         logger.info("Result: " + result);
         if (session) {
-           // UiManager.startMainApp(primaryStage);
+            // UiManager.startMainApp(primaryStage);
             primaryStage.close();
         }
 
