@@ -9,6 +9,7 @@ import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author khooroko
 /**
  * Selects a person identified using last displayed index from currently selected person's nearby list.
  */

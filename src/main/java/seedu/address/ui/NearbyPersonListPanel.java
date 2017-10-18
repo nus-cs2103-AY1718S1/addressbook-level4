@@ -73,7 +73,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpNearbyToListRequestEvent(JumpToNearbyListRequestEvent event) {
+    private void handleJumpToNearbyListRequestEvent(JumpToNearbyListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
