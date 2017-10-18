@@ -533,7 +533,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |copy email address to clipboard |paste it into my email application’s recipients field
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the address book |sort persons by tag |locate persons categorised under this tag easily
 // will change edit command details in UG if implemented |`* * *` |user |add optional details to a contact other than those compulsory fields |have more information such as birthday available afterwards
 // will be added into use cases if implemented |`* * *` |user |be notified when entering user with same name |avoid confusion in the future
 |=======================================================================
@@ -736,6 +736,26 @@ Use case ends.
 ** 3a1. AddressBook displays message “Wrong password”.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort all contacts
+
+*MSS*
+
+1.  User requests to sort persons
+2.  AddressBook displays a sorted list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook displays message “Empty list.”.
++
+Use case ends.
 
 {More to be added}
 
