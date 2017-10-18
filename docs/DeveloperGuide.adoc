@@ -385,7 +385,7 @@ any of the keywords. +
 **Cons:** By finding using partial keywords, users may also end up with a list of people they did not want. +
 **Alternative 2:** The person will be found only if the user type out the details of the person they want in full (e.g
 find Josephine, or find Blk 231, Sembawang Close 221 #02-232, S750231). +
-**Pros:** It is the most accurate way to find the exact person the user wants.
+**Pros:** It is the most accurate way to find the exact person the user wants. +
 **Cons:** The user may forget certain details of the person and be unable to find him.
 //  end::find[]
 
