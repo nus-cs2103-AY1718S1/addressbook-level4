@@ -82,7 +82,7 @@ public class TutorialMessages {
         }
     };
 
-    /* List of all command prompt */
+    /* List of all command usage messages */
     public static final ArrayList<String> COMMAND_USAGE_LIST = new ArrayList<String>() {
         {
             add(USAGE_TWO);
