@@ -57,15 +57,4 @@ public class NearbyPersonListPanelTest extends GuiUnitTest {
         assertCardDisplaysPerson(expectedPerson, actualCard);
         assertEquals(Integer.toString(1) + ". ", actualCard.getId());
     }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_SECOND_EVENT);
-        guiRobot.pauseForHuman();
-
-        PersonCardHandle expectedCard = nearbyPersonListPanelHandle
-                .getPersonCardHandle(INDEX_SECOND_PERSON.getZeroBased());
-        PersonCardHandle selectedCard = nearbyPersonListPanelHandle.getHandleToSelectedCard();
-        assertCardEquals(expectedCard, selectedCard);
-    }
 }
