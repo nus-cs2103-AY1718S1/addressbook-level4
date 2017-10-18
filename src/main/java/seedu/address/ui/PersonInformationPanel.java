@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -27,6 +28,10 @@ public class PersonInformationPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    public ReadOnlyPerson person;
+
+    @FXML
+    private VBox informationPane;
     @FXML
     private Label name;
     @FXML
@@ -57,6 +62,7 @@ public class PersonInformationPanel extends UiPart<Region> {
     private void loadDefaultScreen() {}
 
     private void loadPersonInformation(ReadOnlyPerson person) {
+        this.person = person;
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
@@ -67,6 +73,10 @@ public class PersonInformationPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Sets a background color for each tag.
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
@@ -79,5 +89,23 @@ public class PersonInformationPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInformation(event.getNewSelection().person);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonInformationPanel)) {
+            return false;
+        }
+
+        // state check
+        PersonInformationPanel card = (PersonInformationPanel) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
     }
 }
