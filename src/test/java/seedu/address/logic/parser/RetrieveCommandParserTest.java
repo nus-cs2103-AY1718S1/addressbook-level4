@@ -2,10 +2,13 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.tag.Tag.MESSAGE_TAG_CONSTRAINTS;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.RetrieveCommand;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagContainsKeywordPredicate;
 
 public class RetrieveCommandParserTest {
 
@@ -18,10 +21,17 @@ public class RetrieveCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsRetrieveCommand() {
+    public void parse_invalidArg_throwsParseException() {
+        assertParseFailure(parser, "*&%nonAlphanumericCharacters!!!%&*", MESSAGE_TAG_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_validArgs_returnsRetrieveCommand() throws Exception {
+        TagContainsKeywordPredicate predicate = new TagContainsKeywordPredicate(new Tag("friends"));
+
         // no leading and trailing whitespaces
         RetrieveCommand expectedCommand =
-                new RetrieveCommand("friends");
+                new RetrieveCommand(predicate);
         assertParseSuccess(parser, "friends", expectedCommand);
 
         // multiple whitespaces between keywords
