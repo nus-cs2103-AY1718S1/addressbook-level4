@@ -153,7 +153,7 @@ public class AddCommandTest {
         public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
             fail("This method should not be called");
         }
-        
+
         @Override
         public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
                 throws DuplicateTaskException, TaskNotFoundException {
@@ -165,7 +165,7 @@ public class AddCommandTest {
             fail("This method should not be called");
             return null;
         }
-        
+
         @Override
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called");
