@@ -23,10 +23,15 @@ public class Tag {
     public Tag(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
+
         if (!isValidTagName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+
+        if (!TagColorManager.contains(this)) {
+            TagColorManager.setColor(this);
+        }
     }
 
     /**

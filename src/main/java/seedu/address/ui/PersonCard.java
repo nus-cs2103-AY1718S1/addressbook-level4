@@ -10,26 +10,14 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.TagColorManager;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
     private static final String FXML = "PersonListCard.fxml";
-
-    /**
-     * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.
-     */
-    private static final int RGB_BOUND = 16777216;
-
-    // Random number generator (non-secure purpose)
-    private static final Random randomGenerator = new Random();
-
-    /**
-     * Stores the colors for all existing tags here so that the same tag always has the same color. Notice this
-     * {@code HashMap} has to be declared as a class variable.
-     */
-    private static HashMap<String, String> tagColors = new HashMap<>();
 
     // Keep a list of all persons.
     public final ReadOnlyPerson person;
@@ -86,23 +74,13 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> {
             String tagName = tag.tagName;
             Label newTagLabel = new Label(tagName);
-            newTagLabel.setStyle(String.format("-fx-background-color: #%s", getRandomColorValue(tagName)));
+            try {
+                newTagLabel.setStyle(String.format("-fx-background-color: #%s", TagColorManager.getColor(tag)));
+            } catch (TagNotFoundException e) {
+                System.err.println("An existing must have a color.");
+            }
             tags.getChildren().add(newTagLabel);
         });
-    }
-
-    /**
-     * Gets the RGB value of a randomly-selected color. Notice the selection is not cryptographically random. It will
-     * use the same color if a tag with the same name already exists.
-     *
-     * @return a 6-character string representation of the hexadecimal RGB value.
-     */
-    private String getRandomColorValue(String tagName) {
-        if (!tagColors.containsKey(tagName)) {
-            tagColors.put(tagName, Integer.toHexString(randomGenerator.nextInt(RGB_BOUND)));
-        }
-
-        return tagColors.get(tagName);
     }
 
     @Override
