@@ -1,17 +1,26 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import seedu.address.logic.ContactTsvReader;
 import seedu.address.logic.commands.AddMultipleByTsvCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
+/**
+ * Parser for AddMultipleByTsvCommand
+ */
 public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCommand> {
 
+    /**
+     * Parse arguments given by AddressBookParser
+     * @param args
+     * @return
+     * @throws ParseException
+     */
     public AddMultipleByTsvCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
@@ -20,18 +29,18 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-        String contactCsvFilePath = nameKeywords[0];
-        ContactTsvReader contactTsvReader = new ContactTsvReader(contactCsvFilePath);
+        String contactTsvFilePath = nameKeywords[0];
+        ContactTsvReader contactTsvReader = new ContactTsvReader(contactTsvFilePath);
         boolean isFileFound;
         ArrayList<ReadOnlyPerson> toAddPeople = new ArrayList<ReadOnlyPerson>();
         ArrayList<Integer> failedEntries = contactTsvReader.getFailedEntries();
 
         try {
-            contactTsvReader.readContactsFromFile();
+            contactTsvReader.readContactFromFile();
             toAddPeople = contactTsvReader.getToAddPeople();
             failedEntries = contactTsvReader.getFailedEntries();
             isFileFound = true;
-        } catch (IOException e){
+        } catch (IOException e) {
             isFileFound = false;
         }
 

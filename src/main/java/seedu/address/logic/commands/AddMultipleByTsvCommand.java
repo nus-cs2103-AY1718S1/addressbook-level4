@@ -1,15 +1,18 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+import java.util.StringJoiner;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
-import java.util.ArrayList;
-import java.util.StringJoiner;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Command to add multiple contacts at once
+ */
 public class AddMultipleByTsvCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addMulTsv";
@@ -47,7 +50,7 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
         int numAdded = 0;
         int numDuplicated = 0;
 
-        for(Person person: toAdd) {
+        for (Person person: toAdd) {
             try {
                 model.addPerson(person);
                 numAdded++;
@@ -62,6 +65,11 @@ public class AddMultipleByTsvCommand extends UndoableCommand {
                 + joinFailedEntries(failedEntries));
     }
 
+    /**
+     * Join the list of integers of failed entries into string
+     * @param failedEntries
+     * @return
+     */
     private static String joinFailedEntries(ArrayList<Integer> failedEntries) {
         StringJoiner joiner = new StringJoiner(", ");
         for (Integer entry: failedEntries) {
