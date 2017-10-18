@@ -100,7 +100,6 @@ public class ModelManager extends ComponentManager implements Model {
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      * @param tag all persons containing this tag will be deleted
      */
-    @Override
     public void deletePersonsWithTag(Tag tag) {
         addressBook.deletePersonsWithTag(tag);
     }
