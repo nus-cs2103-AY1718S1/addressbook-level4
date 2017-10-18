@@ -27,7 +27,7 @@ public class DeleteCommand extends UndoableCommand {
     private boolean exist = false;
     private int numofinvalid = 0;
 
-    private ArrayList<Index> targetIndex= new ArrayList<>();
+    private ArrayList<Index> targetIndex = new ArrayList<>();
     private String target = "";
 
     public DeleteCommand(ArrayList<Index> targetIndex) {
