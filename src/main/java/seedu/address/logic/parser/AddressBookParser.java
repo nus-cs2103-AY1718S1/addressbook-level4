@@ -44,8 +44,9 @@ public class AddressBookParser {
         case AddMultipleByCsvCommand.COMMAND_ALIAS:
             return new AddMultipleByCsvCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
+        case AddMultipleByTsvCommand.COMMAND_WORD: 
+        case AddMultipleByTsvCommand.COMMAND_ALIAS:
+            return new AddMultipleByTsvCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
