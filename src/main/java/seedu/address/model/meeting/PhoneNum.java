@@ -16,6 +16,13 @@ public class PhoneNum {
     }
 
     @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PhoneNum // instanceof handles nulls
+                && this.phone.equals(((PhoneNum) other).phone)); // state check
+    }
+
+    @Override
     public int hashCode() {
         return phone.hashCode();
     }
