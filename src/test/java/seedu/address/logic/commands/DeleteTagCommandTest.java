@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import java.util.Iterator;
 
@@ -17,7 +17,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -37,15 +37,15 @@ public class DeleteTagCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        ObservableList<ReadOnlyPerson> peopleToManipulate = model.getFilteredPersonList();
+        ObservableList<ReadOnlyParcel> parcelsToManipulate = model.getFilteredParcelList();
 
-        Iterator it = peopleToManipulate.iterator();
+        Iterator it = parcelsToManipulate.iterator();
         Boolean noCandidate = true;
 
         while (it.hasNext() && noCandidate) {
-            ReadOnlyPerson personToManipulate = (ReadOnlyPerson) it.next();
-            if (!personToManipulate.getTags().isEmpty()) {
-                tagToDelete = (Tag) personToManipulate.getTags().toArray()[0];
+            ReadOnlyParcel parcelToManipulate = (ReadOnlyParcel) it.next();
+            if (!parcelToManipulate.getTags().isEmpty()) {
+                tagToDelete = (Tag) parcelToManipulate.getTags().toArray()[0];
                 noCandidate = false;
             }
         }

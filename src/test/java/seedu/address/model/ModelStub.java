@@ -5,9 +5,9 @@ import static org.junit.Assert.fail;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
+import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -16,7 +16,7 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  */
 public class ModelStub implements Model {
     @Override
-    public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+    public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
         fail("This method should not be called.");
     }
 
@@ -32,7 +32,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    public void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException {
         fail("This method should not be called.");
     }
 
@@ -42,19 +42,19 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException {
+    public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
+            throws DuplicateParcelException {
         fail("This method should not be called.");
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+    public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
         fail("This method should not be called.");
         return null;
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
         fail("This method should not be called.");
     }
 }
