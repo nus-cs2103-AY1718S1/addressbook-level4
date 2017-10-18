@@ -9,17 +9,17 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_OWESMONEY;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FRIENDS;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FAMILY;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_COLLEAGUES;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_OWESMONEY;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.FindTagCommand;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
