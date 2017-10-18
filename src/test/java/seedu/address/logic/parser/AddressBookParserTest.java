@@ -127,7 +127,7 @@ public class AddressBookParserTest {
         assertEquals(new PrefCommand(prefKey, ""), commandRead);
         PrefCommand commandEdit = (PrefCommand) parser.parseCommand(PrefCommand.COMMAND_WORD + " "
                 + prefKey + " " + prefValue);
-        assertEquals(new PrefCommand(prefKey,prefValue), commandEdit);
+        assertEquals(new PrefCommand(prefKey, prefValue), commandEdit);
     }
 
     @Test
