@@ -67,4 +67,6 @@ public class ExpiryDate {
                 && this.value.equals(((ExpiryDate) other).value));
     }
 
+    //TODO: override hashCode()
+
 }
