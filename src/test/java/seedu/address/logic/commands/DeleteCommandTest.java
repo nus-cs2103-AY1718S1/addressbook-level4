@@ -34,7 +34,7 @@ public class DeleteCommandTest {
         String people = personToDelete + "\n";
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-//        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        // String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, people);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -59,7 +59,7 @@ public class DeleteCommandTest {
         String people = personToDelete + "\n";
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-//        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        // String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, people);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
