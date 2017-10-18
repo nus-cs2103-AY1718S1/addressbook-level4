@@ -93,6 +93,16 @@ Format: `List phone`
 
 image::list phone.png[width="900"]
 
+Shows a list all persons in the favourite list. +
+
+Format: `List collection`
+
+=== Collect a person into favourite list : `collect`
+
+Adds an existing person into the favourite list. +
+Format: `collect 1`
+
+
 === View all persons with the specified attribute: `view`
 
 Finds all persons with the specified attribute value. +
