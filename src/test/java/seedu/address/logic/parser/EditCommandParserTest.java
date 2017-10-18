@@ -193,7 +193,7 @@ public class EditCommandParserTest {
 
         // home number
         userInput = targetIndex.getOneBased() + HOME_NUM_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_HOME_NUM_AMY).build();
+        descriptor = new EditPersonDescriptorBuilder().withHomeNumber(VALID_HOME_NUM_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
