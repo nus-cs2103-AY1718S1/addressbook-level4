@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -25,6 +26,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagColorManager;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -122,8 +124,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedEvent);
 
         addressBook.updateEvent(target, editedEvent);
+        sortEventList();
         indicateAddressBookChanged();
     }
+
+    //=========== Model support for tag component =============================================================
+
     /**
      * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
      * TODO: Further investigate potential problems with this method.
@@ -145,6 +151,19 @@ public class ModelManager extends ComponentManager implements Model {
         Set<Tag> newTags = new HashSet<>(addressBook.getTagList());
         newTags.remove(tag);
         addressBook.setTags(newTags);
+    }
+
+    public boolean hasTag(Tag tag) {
+        return addressBook.getTagList().contains(tag);
+    }
+
+    /**
+     * Changes the displayed color of an existing tag (through {@link TagColorManager}).
+     */
+    public void setTagColor(Tag tag, String color) {
+        TagColorManager.setColor(tag, color);
+        indicateAddressBookChanged();
+        raise(new TagColorChangedEvent(tag, color));
     }
 
     //=========== Model support for activity component =============================================================
