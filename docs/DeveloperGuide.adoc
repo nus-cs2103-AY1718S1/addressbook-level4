@@ -408,6 +408,16 @@ As such, no persons will be stored in the storage if the execution fails.
 
 image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
 
+==== Design Considerations
+
+**Aspect:** Implementation of `AddMultipleCommand` +
+**Alternative 1 (current choice):** Add a new command `AddMultipleCommand` +
+**Pros:** Flexibility in using other data structures to store person data that will be added. +
+**Cons:** Additional data structures that might cost more space. +
+**Alternative 2:** Enhance the current `AddCommand` +
+**Pros:** Uses almost entirely existing methods to implement. +
+**Cons:** Restrictive data structure that do not support adding multiple persons.
+
 // end::multiple[]
 
 == Documentation
