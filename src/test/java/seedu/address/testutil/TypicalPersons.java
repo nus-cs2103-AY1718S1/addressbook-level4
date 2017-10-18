@@ -58,6 +58,9 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
+    // A keyword that matches RETRIEVETESTER
+    public static final String KEYWORD_MATCHING_RETRIEVETESTER = "retrieveTester";
+
     private TypicalPersons() {} // prevents instantiation
 
     /**
