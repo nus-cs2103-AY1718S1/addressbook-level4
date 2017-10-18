@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -32,7 +33,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         String listOfDeletedContacts = "";
-        
+
         for(int n = 0; n < arrayOfIndex.size(); n++ ) {
 
             Index targetIndex = arrayOfIndex.get(n);
@@ -44,6 +45,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
 
             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
             listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
+            queue.offer(personToDelete);
 
             try {
                 model.deletePerson(personToDelete);
