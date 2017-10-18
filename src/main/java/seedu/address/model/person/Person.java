@@ -131,11 +131,6 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
-    @Override
-    public Set<SocialInfo> getSocialInfos() {
-        return Collections.unmodifiableSet(socialInfos.get().toSet());
-    }
-
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -145,6 +140,20 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<UniqueSocialInfoList> socialInfoProperty() {
+        return socialInfos;
+    }
+
+    @Override
+    public Set<SocialInfo> getSocialInfos() {
+        return Collections.unmodifiableSet(socialInfos.get().toSet());
+    }
+
+    public void setSocialInfos(Set<SocialInfo> replacement) {
+        socialInfos.set(new UniqueSocialInfoList(replacement));
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -25,6 +26,7 @@ public interface ReadOnlyPerson {
     Favorite getFavorite();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<UniqueSocialInfoList> socialInfoProperty();
     Set<SocialInfo> getSocialInfos();
 
     /**
