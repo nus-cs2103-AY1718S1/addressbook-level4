@@ -383,13 +383,13 @@ The regex ensures that the string for `displayed person card phone information` 
 correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)`, and that the
 phone numbers must be exactly 8 digits long.
 
-image::PhoneDisplay.png[width="500"]
+image::PhoneDisplay.png[width="800"]
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
 below the student's name in the person card as seen in the picture above.
 
-image::message_constraint.png[width="500"]
+image::message_constraint.png[width="1100"]
 
 If the string format for `displayed person card phone information` is invalid: an IllegalValueException
 is thrown. Prompting the user to enter the correct format as seen in the picture above.
