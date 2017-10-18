@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
@@ -22,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -99,6 +101,7 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -121,6 +124,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public String getCurrentList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setCurrentList(String currentList) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -134,6 +148,12 @@ public class AddCommandTest {
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getAllPersons() {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -160,6 +180,12 @@ public class AddCommandTest {
 
         @Override
         public void changeListTo(String string) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+                IllegalValueException {
             fail("This method should not be called.");
         }
 
@@ -203,11 +229,6 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             personsAdded.add(new Person(person));
         }
 

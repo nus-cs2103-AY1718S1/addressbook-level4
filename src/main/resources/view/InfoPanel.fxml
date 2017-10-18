@@ -7,6 +7,8 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 <StackPane fx:id="infoPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
       <children>
@@ -15,6 +17,12 @@
             <children>
                <Text fx:id="debtField" fill="gray" styleClass="window_small_label" text="Debt: " />
                <Label fx:id="debt" styleClass="window_small_label" text="\$debt" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="interestField" fill="GREY" styleClass="window_small_label" text="Interest: " />
+               <Label fx:id="interest" styleClass="window_small_label" text="\$interest" />
             </children>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
@@ -31,6 +39,12 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
+               <Text fx:id="deadlineField" fill="GREY" styleClass="window_small_label" text="Deadline: " />
+               <Label fx:id="deadline" styleClass="window_small_label" text="\$deadline" />
+            </children>
+          </TextFlow>
+          <TextFlow prefHeight="50.0" prefWidth="400.0">
+              <children>
                <Text fx:id="dateRepaidField" fill="gray" styleClass="window_small_label" text="Date Repaid: " />
                <Label fx:id="dateRepaid" styleClass="window_small_label" text="\$dateRepaid" />
             </children>
@@ -49,11 +63,24 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
+               <Text fx:id="clusterField" fill="gray" styleClass="window_small_label" text="General Location: " />
+               <Label fx:id="cluster" styleClass="window_small_label" text="\$cluster" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
                <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
                <Label fx:id="email" styleClass="window_small_label" text="\$email" />
             </children>
          </TextFlow>
          <FlowPane fx:id="tags" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="774.0" />
+         <Text fx:id="nearbyPersonField" fill="gray" styleClass="window_small_label" text="Other contacts nearby: " />
+         <HBox fx:id="nearbyPersonList" minHeight="200" prefHeight="200" prefWidth="340">
+            <padding>
+               <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <StackPane fx:id="nearbyPersonListPanelPlaceholder" HBox.hgrow="ALWAYS"/>
+         </HBox>
       </children>
    </VBox>
 </StackPane>

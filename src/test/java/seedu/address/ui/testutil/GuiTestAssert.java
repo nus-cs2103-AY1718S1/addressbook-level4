@@ -26,6 +26,8 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getPostalCode(), actualCard.getPostalCode());
         assertEquals(expectedCard.getDebt(), actualCard.getDebt());
+        assertEquals(expectedCard.getInterest(), actualCard.getInterest());
+        assertEquals(expectedCard.getDeadline(), actualCard.getDeadline());
         assertEquals(expectedCard.getDateBorrow(), actualCard.getDateBorrow());
         assertEquals(expectedCard.getDateRepaid(), actualCard.getDateRepaid());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
@@ -40,8 +42,10 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
-        assertEquals(expectedPerson.getDebt().value, actualCard.getDebt());
+        assertEquals(expectedPerson.getInterest().value, actualCard.getInterest());
+        assertEquals(expectedPerson.getDebt().toString(), actualCard.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualCard.getDateBorrow());
+        assertEquals(expectedPerson.getDeadline().valueToDisplay, actualCard.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualCard.getDateRepaid());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
@@ -56,8 +60,11 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
         assertEquals(expectedPerson.getPostalCode().value, actualInfo.getPostalCode());
-        assertEquals(expectedPerson.getDebt().value, actualInfo.getDebt());
+        assertEquals(expectedPerson.getCluster().value, actualInfo.getCluster());
+        assertEquals(expectedPerson.getInterest().value, actualInfo.getInterest());
+        assertEquals(expectedPerson.getDebt().toString(), actualInfo.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
+        assertEquals(expectedPerson.getDeadline().valueToDisplay, actualInfo.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualInfo.getDateRepaid());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualInfo.getTags());

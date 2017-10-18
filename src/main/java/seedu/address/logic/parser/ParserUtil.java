@@ -13,8 +13,10 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
@@ -66,7 +68,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Debt>} if {@code debt} is present.
+     * Parses a {@code Optional<String> debt} into an {@code Optional<Debt>} if {@code debt} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Debt> parseDebt(Optional<String> debt) throws IllegalValueException {
@@ -104,6 +106,55 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author lawwman
+    /**
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code Deadline}
+     * is present.
+     * Meant for parsing for Add command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get()))
+                : Optional.of(new Deadline(Deadline.NO_DEADLINE_SET));
+    }
+
+    /**
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code Deadline}
+     * is present.
+     * Meant for parsing for Edit command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Deadline> parseDeadlineForEdit(Optional<String> deadline)
+            throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(new Deadline(deadline.get())) : Optional.empty();
+    }
+    //@@author lawwman
+    /**
+     * Parses a {@code Optional<String> interest} into an {@code Optional<Interest>} if {@code Interest}
+     * is present.
+     * Meant for parsing for Add command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Interest> parseInterest(Optional<String> interest) throws IllegalValueException {
+        requireNonNull(interest);
+        return interest.isPresent() ? Optional.of(new Interest(interest.get()))
+                : Optional.of(new Interest(Interest.NO_INTEREST_SET));
+    }
+    /**
+     * Parses a {@code Optional<String> Interest} into an {@code Optional<Interest} if {@code Interest}
+     * is present.
+     * Meant for parsing for Edit command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Interest> parseInterestForEdit(Optional<String> interest)
+            throws IllegalValueException {
+        requireNonNull(interest);
+        return interest.isPresent() ? Optional.of(new Interest(interest.get())) : Optional.empty();
+    }
+
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

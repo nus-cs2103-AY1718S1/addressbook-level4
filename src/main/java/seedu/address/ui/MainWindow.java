@@ -135,7 +135,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        infoPanel = new InfoPanel();
+        infoPanel = new InfoPanel(logic);
         infoPanelPlaceholder.getChildren().clear();
         infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
@@ -244,10 +244,6 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
     }
 
     @Subscribe

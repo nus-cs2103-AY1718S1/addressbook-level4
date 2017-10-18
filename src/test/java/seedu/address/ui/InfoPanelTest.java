@@ -16,6 +16,9 @@ import org.junit.Test;
 
 import guitests.guihandles.InfoPanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -27,11 +30,14 @@ public class InfoPanelTest extends GuiUnitTest {
     private InfoPanel infoPanel;
     private InfoPanelHandle infoPanelHandle;
 
+    private Logic logicStub;
+
     @Before
     public void setUp() {
+        logicStub = new LogicManager(new ModelManager());
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
-        guiRobot.interact(() -> infoPanel = new InfoPanel());
+        guiRobot.interact(() -> infoPanel = new InfoPanel(logicStub));
         uiPartRule.setUiPart(infoPanel);
 
         infoPanelHandle = new InfoPanelHandle(infoPanel.getRoot());
@@ -44,8 +50,12 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddressField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebt());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebtField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterest());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterestField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCode());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCodeField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getCluster());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getClusterField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getName());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmail());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getEmailField());
@@ -53,6 +63,8 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPhoneField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrow());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateBorrowField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadline());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDeadlineField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateRepaid());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDateRepaidField());
         assertEquals(new ArrayList<>(), infoPanelHandle.getTags());
@@ -78,7 +90,7 @@ public class InfoPanelTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        infoPanel = new InfoPanel();
+        infoPanel = new InfoPanel(logicStub);
 
         // test .equals() method for two same objects
         assertTrue(infoPanel.equals(infoPanel));
@@ -86,7 +98,7 @@ public class InfoPanelTest extends GuiUnitTest {
         // test .equals() method for an object of different type
         assertFalse(infoPanel.equals(infoPanelHandle));
 
-        InfoPanel expectedInfoPanel = new InfoPanel();
+        InfoPanel expectedInfoPanel = new InfoPanel(logicStub);
 
         assertTrue(infoPanel.equals(expectedInfoPanel));
 

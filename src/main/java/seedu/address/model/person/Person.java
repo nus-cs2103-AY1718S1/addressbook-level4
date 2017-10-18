@@ -23,25 +23,33 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Cluster> cluster;
     private ObjectProperty<Debt> debt;
+    private ObjectProperty<Interest> interest;
     private ObjectProperty<DateBorrow> dateBorrow;
+    private ObjectProperty<Deadline> deadline;
     private ObjectProperty<DateRepaid> dateRepaid;
 
     private ObjectProperty<UniqueTagList> tags;
+
+    private boolean isBlacklisted = false;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
-                  Debt debt, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, debt, tags);
+                  Debt debt, Interest interest, Deadline deadline, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, postalCode, debt, interest, deadline, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
+        this.interest = new SimpleObjectProperty<>(interest);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
+        this.deadline = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -52,9 +60,11 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getDebt(), source.getTags());
+                source.getDebt(), source.getInterest(), source.getDeadline(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
+        this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
+        this.isBlacklisted = source.getIsBlacklisted();
     }
 
     /**
@@ -129,6 +139,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author khooroko
     /**
      * Sets postal code of a person to the given PostalCode.
      * @param postalCode must not be null.
@@ -148,6 +159,44 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Sets cluster of a person to the given Cluster.
+     * @param cluster must not be null.
+     */
+    public void setCluster(Cluster cluster) {
+        this.cluster.set(requireNonNull(cluster));
+    }
+
+    @Override
+    public ObjectProperty<Cluster> clusterProperty() {
+        return cluster;
+    }
+
+    @Override
+    public Cluster getCluster() {
+        return cluster.get();
+    }
+
+    //@@author lawwman
+    /**
+     * Sets current interest of a person to the given Interest.
+     * @param interest must not be null.
+     */
+    public void setInterest(Interest interest) {
+        this.interest.set(requireNonNull(interest));
+    }
+
+    @Override
+    public ObjectProperty<Interest> interestProperty() {
+        return interest;
+    }
+
+    @Override
+    public Interest getInterest() {
+        return interest.get();
+    }
+
+    //@@author lawwman
+    /**
      * Sets current debt of a person to the given Debt.
      * @param debt must not be null.
      */
@@ -165,10 +214,8 @@ public class Person implements ReadOnlyPerson {
         return debt.get();
     }
 
-    //@@author lawwman
-
     /**
-     * Sets date borrowed of a person the the given DateBorrow.
+     * Sets date borrowed of a person in the given {@code dateBorrow}.
      * @param dateBorrow must not be null.
      */
     public void setDateBorrow(DateBorrow dateBorrow) {
@@ -185,10 +232,45 @@ public class Person implements ReadOnlyPerson {
         return dateBorrow.get();
     }
 
-    //@@author
+    //@@author lawwman
 
     /**
-     * Sets date borrowed of a person the the given DateBorrow.
+     * Sets associated deadline of a person to the given Deadline.
+     * @param deadline must not be null.
+     */
+    public void setDeadline(Deadline deadline) {
+        this.deadline.set(requireNonNull(deadline));
+    }
+
+    @Override
+    public ObjectProperty<Deadline> deadlineProperty() {
+        return deadline;
+    }
+
+    @Override
+    public Deadline getDeadline() {
+        return deadline.get();
+    }
+
+    /**
+     * Returns boolean status of a person's blacklist-status.
+     */
+    @Override
+    public boolean getIsBlacklisted() {
+        return isBlacklisted;
+    }
+
+    /**
+     * Sets boolean status of a person's blacklist-status using the value of {@param isBlacklisted}.
+     */
+    @Override
+    public void setIsBlacklisted(boolean isBlacklisted) {
+        this.isBlacklisted = isBlacklisted;
+    }
+
+    //@@author
+    /**
+     * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.
      */
     public void setDateRepaid(DateRepaid dateRepaid) {
@@ -225,6 +307,14 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    /**
+     * Returns true if both are in same cluster.
+     */
+    @Override
+    public boolean isSameCluster(ReadOnlyPerson other) {
+        return other.getCluster().equals(this.getCluster());
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -235,7 +325,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, debt, tags);
+        return Objects.hash(name, phone, email, address, postalCode, debt, interest, deadline, tags);
     }
 
     @Override

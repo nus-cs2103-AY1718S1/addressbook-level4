@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.SIRISHA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -19,6 +18,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -52,21 +53,8 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
-        List<Person> newBlacklistedPersons = Arrays.asList(new Person(SIRISHA));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newBlacklistedPersons, newTags);
-
-        thrown.expect(AssertionError.class);
-        addressBook.resetData(newData);
-    }
-
-    @Test
-    public void resetData_withDuplicateBlacklistedPersons_throwsAssertionError() {
-        // Repeat ALICE twice
-        List<Person> newPersons = Arrays.asList(new Person(SIRISHA));
-        List<Person> newBlacklistedPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
-        List<Tag> newTags = new ArrayList<>(SIRISHA.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newBlacklistedPersons, newTags);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -95,13 +83,10 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
-        private final ObservableList<ReadOnlyPerson> blackListedPersons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<?
-                extends ReadOnlyPerson> blacklistedPersons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
-            this.blackListedPersons.setAll(blacklistedPersons);
             this.tags.setAll(tags);
         }
 
@@ -112,13 +97,29 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
-            return blackListedPersons;
+            return getBlacklistedPersons(persons).asObservableList();
         }
 
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
+        public UniquePersonList getBlacklistedPersons(ObservableList<ReadOnlyPerson> persons) {
+            UniquePersonList blacklistedPersons = new UniquePersonList();
+            for (ReadOnlyPerson readOnlyPerson : persons) {
+                Person person = new Person(readOnlyPerson);
+                if (person.getIsBlacklisted()) {
+                    try {
+                        blacklistedPersons.add(person);
+                    } catch (DuplicatePersonException e) {
+                        assert false : "This is not possible as prior checks have been done";
+                    }
+                }
+            }
+            return blacklistedPersons;
+        }
+
     }
 
 }

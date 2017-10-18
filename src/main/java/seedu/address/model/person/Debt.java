@@ -11,16 +11,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Debt {
 
-    public static final String MESSAGE_DEBT_CONSTRAINTS =
-            "Debt can only contain numbers, and should have 1 or more digits";
-    public static final String DEBT_ZERO_VALUE = "0";
-    public static final String DEBT_VALIDATION_REGEX = "\\d+";
-    public final String value;
+    public static final String MESSAGE_DEBT_CONSTRAINTS = "Debt must have at least 1 digit and be either "
+            + "a positive integer or a positive number with two decimal places";
+    // validation regex validates empty string. Check for presence of at least 1 digit is needed.
+    public static final String DEBT_VALIDATION_REGEX = "^(?=.*\\d)\\d*(?:\\.\\d\\d)?$";
+    private String value;
 
     /**
      * Validates given debt.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given debt string is invalid.
      */
     public Debt(String debt) throws IllegalValueException {
         requireNonNull(debt);
@@ -28,14 +28,41 @@ public class Debt {
         if (!isValidDebt(trimmedDebt)) {
             throw new IllegalValueException(MESSAGE_DEBT_CONSTRAINTS);
         }
-        this.value = trimmedDebt;
+        this.value = String.format("%.2f", Double.valueOf(trimmedDebt));
+
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person debt.
      */
     public static boolean isValidDebt(String test) {
-        return test.matches(DEBT_VALIDATION_REGEX);
+        return test.matches(DEBT_VALIDATION_REGEX) && test.length() >= 1;
+    }
+
+    /**
+     * Returns the double value represented by the string {@code value}
+     */
+    public double toNumber(String value) {
+        return Double.valueOf(value);
+    }
+
+    /**
+     * Adds the indicated amount to debt
+     */
+    public void addToDebt(Debt amount) {
+        Double newValue = toNumber(value) + toNumber(amount.value);
+        value = String.format("%.2f", newValue);
+    }
+
+    /**
+     * Deducts an indicated amount from debt
+     */
+    public void deductFromDebt(Debt amount) throws IllegalValueException {
+        if (toNumber(amount.toString()) > toNumber(value)) {
+            throw new IllegalValueException("Amount to deduct from debt cannot be more than debt itself");
+        }
+        Double newValue = toNumber(value) - toNumber(amount.value);
+        value = String.format("%.2f", newValue);
     }
 
     @Override

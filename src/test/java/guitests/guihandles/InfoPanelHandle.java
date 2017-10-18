@@ -20,16 +20,22 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
+    private static final String CLUSTER_FIELD_ID = "#cluster";
     private static final String DEBT_FIELD_ID = "#debt";
+    private static final String INTEREST_FIELD_ID = "#interest";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
+    private static final String DEADLINE_FIELD_ID = "#deadline";
     private static final String DATE_REPAID_FIELD_ID = "#dateRepaid";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
     private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
     private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
+    private static final String CLUSTER_FIELD_FIELD_ID = "#clusterField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
+    private static final String INTEREST_FIELD_FIELD_ID = "#interestField";
     private static final String DATE_BORROW_FIELD_FIELD_ID = "#dateBorrowField";
+    private static final String DEADLINE_FIELD_FIELD_ID = "#deadlineField";
     private static final String DATE_REPAID_FIELD_FIELD_ID = "#dateRepaidField";
 
     private final Label nameLabel;
@@ -37,16 +43,22 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private final Label phoneLabel;
     private final Label emailLabel;
     private final Label postalCodeLabel;
+    private final Label clusterLabel;
     private final Label debtLabel;
+    private final Label interestLabel;
     private final Label dateBorrowLabel;
+    private final Label deadlineLabel;
     private final Label dateRepaidLabel;
     private final List<Label> tagLabels;
     private final Text addressText;
     private final Text phoneText;
     private final Text emailText;
     private final Text postalCodeText;
+    private final Text clusterText;
     private final Text debtText;
+    private final Text interestText;
     private final Text dateBorrowText;
+    private final Text deadlineText;
     private final Text dateRepaidText;
 
     private String lastRememberedName;
@@ -54,8 +66,11 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedPhone;
     private String lastRememberedEmail;
     private String lastRememberedPostalCode;
+    private String lastRememberedCluster;
     private String lastRememberedDebt;
+    private String lastRememberedInterest;
     private String lastRememberedDateBorrow;
+    private String lastRememberedDeadline;
     private String lastRememberedDateRepaid;
     private List<String> lastRememberedTags;
 
@@ -67,8 +82,11 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
+        this.clusterLabel = getChildNode(CLUSTER_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
+        this.interestLabel = getChildNode(INTEREST_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
+        this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
         this.dateRepaidLabel = getChildNode(DATE_REPAID_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -82,8 +100,11 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.phoneText = getChildNode(PHONE_FIELD_FIELD_ID);
         this.emailText = getChildNode(EMAIL_FIELD_FIELD_ID);
         this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
+        this.clusterText = getChildNode(CLUSTER_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
+        this.interestText = getChildNode(INTEREST_FIELD_FIELD_ID);
         this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
+        this.deadlineText = getChildNode(DEADLINE_FIELD_FIELD_ID);
         this.dateRepaidText = getChildNode(DATE_REPAID_FIELD_FIELD_ID);
     }
 
@@ -107,6 +128,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return debtLabel.getText();
     }
 
+    public String getInterest() {
+        return interestLabel.getText();
+    }
+
     public String getDateBorrow() {
         return dateBorrowLabel.getText();
     }
@@ -117,6 +142,14 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     public String getPostalCode() {
         return  postalCodeLabel.getText();
+    }
+
+    public String getCluster() {
+        return clusterLabel.getText();
+    }
+
+    public String getDeadline() {
+        return deadlineLabel.getText();
     }
 
     public String getAddressField() {
@@ -135,12 +168,24 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return postalCodeText.getText();
     }
 
+    public String getClusterField() {
+        return clusterText.getText();
+    }
+
     public String getDebtField() {
         return debtText.getText();
     }
 
+    public String getInterestField() {
+        return interestText.getText();
+    }
+
     public String getDateBorrowField () {
         return dateBorrowText.getText();
+    }
+
+    public String getDeadlineField() {
+        return deadlineText.getText();
     }
 
     public String getDateRepaidField () {
@@ -160,12 +205,15 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     public void rememberSelectedPersonDetails() {
         lastRememberedAddress = getAddress();
         lastRememberedDebt = getDebt();
+        lastRememberedInterest = getInterest();
         lastRememberedEmail = getEmail();
         lastRememberedName = getName();
         lastRememberedPhone = getPhone();
         lastRememberedPostalCode = getPostalCode();
+        lastRememberedCluster = getCluster();
         lastRememberedTags = getTags();
         lastRememberedDateBorrow = getDateBorrow();
+        lastRememberedDeadline = getDeadline();
         lastRememberedDateRepaid = getDateRepaid();
     }
 
@@ -178,9 +226,12 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 || !getAddress().equals(lastRememberedAddress)
                 || !getPhone().equals(lastRememberedPhone)
                 || !getDebt().equals(lastRememberedDebt)
+                || !getInterest().equals(lastRememberedInterest)
                 || !getEmail().equals(lastRememberedEmail)
                 || !getPostalCode().equals(lastRememberedPostalCode)
+                || !getCluster().equals(lastRememberedCluster)
                 || !getDateBorrow().equals(lastRememberedDateBorrow)
+                || !getDeadline().equals(lastRememberedDeadline)
                 || !getDateRepaid().equals(lastRememberedDateRepaid)
                 || !getTags().equals(lastRememberedTags);
     }
