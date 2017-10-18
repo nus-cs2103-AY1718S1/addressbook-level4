@@ -37,7 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
+    private FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
 
     /**
@@ -51,7 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
+        filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
 
         this.userPrefs = userPrefs;
     }
@@ -85,6 +85,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removeBlacklistedPerson(target);
+        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -98,7 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addBlacklistedPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -130,6 +131,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
         // remove from master tag list in AddressBook
         addressBook.removeTag(tag);
+    }
+
+    /**
+     * Reads the main list and updates the blacklist accordingly.
+     */
+    public void syncBlacklist() {
+        filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
     }
 
     //@@author jelneo
@@ -177,11 +185,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * Returns an unmodifiable view of the blacklist of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+        syncBlacklist();
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
@@ -194,6 +203,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
+        raise (new ChangeInternalListEvent("blacklist"));
         filteredBlacklistedPersons.setPredicate(predicate);
     }
 

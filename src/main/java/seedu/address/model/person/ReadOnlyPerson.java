@@ -35,6 +35,9 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
+    boolean getIsBlacklisted();
+    void setIsBlacklisted(boolean isBlacklisted);
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -47,6 +50,7 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getCluster().equals(this.getCluster())
+                && (other.getIsBlacklisted() == (this.getIsBlacklisted()))
                 && other.getDebt().equals(this.getDebt())
                 && other.getDateBorrow().equals(this.getDateBorrow())
                 && other.getDeadline().equals(this.getDeadline())
