@@ -157,7 +157,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     public void highlight() {
-        this.commandTextField.setStyle("-fx-border-color: green; -fx-border-width: 2");
+        this.commandTextField.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }
 
     public void unhighlight() {
