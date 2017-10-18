@@ -193,7 +193,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Also checks the new event's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the events to point to those in {@link #tags}.
      */
-    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException{
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
         Event newEvent = new Event(e);
         // TODO: create a master list for tags and update it
         // syncMasterTagListWith(newEvent);

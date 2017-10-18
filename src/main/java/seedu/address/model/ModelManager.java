@@ -134,7 +134,8 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Event Operations  ===========================================================================
 
     @Override
-    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException{
+    public synchronized void addEvent(ReadOnlyEvent event) throws
+            DuplicateEventException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
