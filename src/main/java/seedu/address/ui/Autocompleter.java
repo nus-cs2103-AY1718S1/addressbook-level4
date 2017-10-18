@@ -12,26 +12,30 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
  */
 public class Autocompleter {
 
-    private static String PROMPT_USER_TO_USE_HELP = "To see what commands are available, type 'help' "
+    private static String PROMPT_USER_TO_USE_HELP_MESSAGE = "To see what commands are available, type 'help' "
             + "into the command box";
+    private static String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
+
+    private static  String EMPTY_STRING = "";
 
     private final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
         "redo", "select", "undo"};
 
+
     public Autocompleter() {
         registerAsAnEventHandler(this);
-    };
+    }
 
     /**
-     *
+     * Returns the autocompleted command to be filled into the command box
      * @param commandBoxText from the command box
-     * @return autocompleted text
+     * @return autocomplete text
      */
     public String autocomplete(String commandBoxText) {
         String[] commandBoxTextArray = commandBoxText.trim().split("\\s+");
         String autocompleteText = commandBoxText;
-        if (commandBoxText.equals("")) {
-            raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP, false));
+        if (commandBoxText.equals(EMPTY_STRING)) {
+            raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
         } else if (commandBoxTextArray.length == 1) {
             autocompleteText = processOneWordAutocomplete(commandBoxTextArray[0]);
         } else {
@@ -40,9 +44,24 @@ public class Autocompleter {
         return autocompleteText;
     }
 
+    /**
+     *
+     * @param commandBoxText
+     * @return
+     */
     private String processOneWordAutocomplete(String commandBoxText) {
         ArrayList<String> possibleResults = getClosestCommands(commandBoxText);
-        return possibleResults.get(0);
+        switch (possibleResults.size()) {
+            case 0:
+                clearResultsWindow();
+                return commandBoxText;
+            case 1:
+                clearResultsWindow();
+                return possibleResults.get(0);
+            default:
+                raise(new NewResultAvailableEvent(MULTIPLE_RESULT_MESSAGE, false));
+                return commandBoxText;
+        }
     }
 
     /**
@@ -58,9 +77,23 @@ public class Autocompleter {
         return possibleResults;
     }
 
+    /**
+     * Checks if the text in the command box is a substring of a particular command word
+     * @param commandBoxText
+     * @param commandWord
+     */
     private boolean isPossibleMatch(String commandBoxText, String commandWord) {
          return (commandBoxText.length() < commandWord.length()
                 && commandBoxText.equals(commandWord.substring(0, commandBoxText.length())));
+    }
+
+    private void displayMultipleResilts(ArrayList<String> results) {
+        String resultToDisplay = MULTIPLE_RESULT_MESSAGE + "\n";
+
+    }
+
+    private void clearResultsWindow(){
+        raise(new NewResultAvailableEvent(EMPTY_STRING, false));
     }
 
     /**
