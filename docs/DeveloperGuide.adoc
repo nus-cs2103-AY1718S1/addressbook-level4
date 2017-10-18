@@ -877,6 +877,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |call/message directly from my address book |reach them easily [Coming in v2.0]
 
 |`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities [Coming in v2.0]
+
+|`*` |thoughtful teacher |remind students about homework assignments| [Coming in v2.0]
 |=======================================================================
 
 {More to be added}
