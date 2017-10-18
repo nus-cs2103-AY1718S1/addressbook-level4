@@ -14,8 +14,9 @@ import seedu.address.model.tag.Tag;
  * Changes the color of an existing tag.
  */
 public class ChangeTagColorCommand extends ConfigCommand {
+    public static final String MESSAGE_SUCCESS = "The color of tag %1$s has been changed to %2$s.";
+
     private static final String MESSAGE_NO_SUCH_TAG = "There is no such tag.";
-    private static final String MESSAGE_SUCCESS = "The color of tag %1$s has been changed to %2$s.";
 
     private Tag tag;
     private String newColor;

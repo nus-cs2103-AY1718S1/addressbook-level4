@@ -1,11 +1,14 @@
 package seedu.address.ui;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.TagColorManager;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -47,6 +50,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags();
         bindListeners(person);
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -78,6 +82,12 @@ public class PersonCard extends UiPart<Region> {
             }
             tags.getChildren().add(newTagLabel);
         });
+    }
+
+    @Subscribe
+    public void handleTagColorChange(TagColorChangedEvent event) {
+        tags.getChildren().clear();
+        initTags();
     }
 
     @Override
