@@ -78,12 +78,11 @@ public class ParcelCard extends UiPart<Region> {
     private void initTags(ReadOnlyParcel parcel) {
         parcel.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tagLabel.setStyle("-fx-background-color: " + setColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
     }
 
-    private static String getColorForTag(String tagValue) {
     /**
      * tags with value {@param tagValue} will be assigned a random color from a list colors field
      */
