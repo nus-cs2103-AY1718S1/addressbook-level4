@@ -24,14 +24,17 @@ public class AddMultipleByTsvCommandParser implements Parser<AddMultipleByTsvCom
         ContactTsvReader contactTsvReader = new ContactTsvReader(contactCsvFilePath);
         boolean isFileFound;
         ArrayList<ReadOnlyPerson> toAddPeople = new ArrayList<ReadOnlyPerson>();
+        ArrayList<Integer> failedEntries = contactTsvReader.getFailedEntries();
 
         try {
-            toAddPeople = contactTsvReader.readContactsFromFile();
+            contactTsvReader.readContactsFromFile();
+            toAddPeople = contactTsvReader.getToAddPeople();
+            failedEntries = contactTsvReader.getFailedEntries();
             isFileFound = true;
         } catch (IOException e){
             isFileFound = false;
         }
 
-        return new AddMultipleByTsvCommand(toAddPeople, isFileFound);
+        return new AddMultipleByTsvCommand(toAddPeople, failedEntries, isFileFound);
     }
 }
