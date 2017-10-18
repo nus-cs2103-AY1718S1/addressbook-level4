@@ -6,11 +6,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
 
 public class StringUtilTest {
 
@@ -61,15 +68,21 @@ public class StringUtilTest {
      */
 
     @Test
-    public void containsNameIgnoreCase_nullWord_throwsNullPointerException() {
+    public void containsIgnoreCase_nullWord_throwsNullPointerException() {
         assertExceptionThrown(NullPointerException.class, "typical sentence", null, Optional.empty());
     }
+
 
     @Test
-    public void containsEmailIgnoreCase_nullWord_throwsNullPointerException() {
-        assertExceptionThrown(NullPointerException.class, "typical sentence", null, Optional.empty());
+    public void containsTagIgnoreCase_nullWord_throwsNullPointerException() {
+        Set<Tag> tagSet = new HashSet<Tag>();
+        try {
+            tagSet.add(new Tag("typicaltags"));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tagSet should contain tags.");
+        }
+        assertExceptionThrownTag(NullPointerException.class, tagSet, null, Optional.empty());
     }
-
 
     /**
      * assertExceptionThrown
@@ -80,36 +93,35 @@ public class StringUtilTest {
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
         StringUtil.containsNameIgnoreCase(sentence, word);
         StringUtil.containsEmailIgnoreCase(sentence, word);
+        StringUtil.containsPhoneIgnoreCase(sentence, word);
+        StringUtil.containsAddressIgnoreCase(sentence, word);
+    }
+
+    private void assertExceptionThrownTag(Class<? extends Throwable> exceptionClass, Set<Tag> tagSet, String word,
+                                          Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsTagIgnoreCase(tagSet, word);
     }
 
     @Test
-    public void containsNameIgnoreCase_emptyWord_throwsIllegalArgumentException() {
+    public void containsIgnoreCase_emptyWord_throwsIllegalArgumentException() {
         assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",
                 Optional.of("Word parameter cannot be empty"));
     }
 
     @Test
-    public void containsEmailIgnoreCase_emptyWord_throwsIllegalArgumentException() {
-        assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",
-                Optional.of("Word parameter cannot be empty"));
-    }
-
-    @Test
-    public void containsNameIgnoreCase_multipleWords_throwsIllegalArgumentException() {
+    public void containsIgnoreCase_multipleWords_throwsIllegalArgumentException() {
         assertExceptionThrown(IllegalArgumentException.class, "typical sentence", "aaa BBB",
                 Optional.of("Word parameter should be a single word"));
     }
 
-
     @Test
-    public void containsNameIgnoreCase_nullSentence_throwsNullPointerException() {
+    public void containsIgnoreCase_nullSentence_throwsNullPointerException() {
         assertExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
     }
 
-    @Test
-    public void containsEmailIgnoreCase_nullSentence_throwsNullPointerException() {
-        assertExceptionThrown(NullPointerException.class, null, "gmail.com", Optional.empty());
-    }
+
     /*
      * Valid equivalence partitions for word:
      *   - any word
@@ -161,23 +173,82 @@ public class StringUtilTest {
     @Test
     public void containsEmailIgnoreCase_validInputs_correctResult() {
 
-        // Empty sentence
-        assertFalse(StringUtil.containsEmailIgnoreCase("", "google.com")); // Boundary case
-        assertFalse(StringUtil.containsEmailIgnoreCase("    ", "yahoo.com"));
-
 
         //Matches word in the sentence, different upper/lower case letters
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com", "Example.com")); // Case insensitive
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com", "ExaMPLE.com")); // Case insensitive
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com", "EXAMPLE.COM")); // Case insensitive
-
-
-        //Matches email with multiple domain
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com.sg", "example.com.sg"));
-        assertFalse(StringUtil.containsEmailIgnoreCase("abc@example.com", "example.com.sg"));
+        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com", "ExaMPLE")); // Case insensitive
 
         //Matches email of numeric domain
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@123.com", "123.com")); // number email domain
+        assertTrue(StringUtil.containsEmailIgnoreCase("abc@123.com", "123")); // number email domain
+
+        //Match email with multiple domain
+        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com.sg", "example")); // number email domain
+
+        //Match for non exact word
+        assertFalse(StringUtil.containsEmailIgnoreCase("abc@example.com", "example.com")); //email end with .com domain
+        assertFalse(StringUtil.containsEmailIgnoreCase("abc@example.com", "exam")); // Match partial word
+
+        //Match for email with no '@"
+        assertFalse(StringUtil.containsEmailIgnoreCase("abcgmail.com", "gmail")); //email without @
+    }
+
+
+    @Test
+    public void containsAddressIgnoreCase_validInputs_correctResult() {
+
+        // Empty sentence
+        assertFalse(StringUtil.containsAddressIgnoreCase("", "abc")); // Boundary case
+
+        //Matches any address field
+        assertTrue(StringUtil.containsAddressIgnoreCase("123, Lorong Ave 6, #08-111", "123"));
+        assertTrue(StringUtil.containsAddressIgnoreCase("123, Lorong Ave 6, #08-111", "Lorong"));
+        assertTrue(StringUtil.containsAddressIgnoreCase("123, Lorong Ave 6, #08-111", "#08-111"));
+        assertTrue(StringUtil.containsAddressIgnoreCase("123, Lorong Ave 6, #08-111", "6"));
+
+        //Case insensitive
+        assertTrue(StringUtil.containsAddressIgnoreCase("123, Bishan Ave 6, #08-111", "biSHan")); //case insensitive
+
+        //Non exact word match
+        assertFalse(StringUtil.containsAddressIgnoreCase("123, Jurong Ave 6, #08-111", "Juron")); //case insensitive
+        assertFalse(StringUtil.containsAddressIgnoreCase("123, Jurong West Ave 6, #08-111", "100")); //case insensitive
+    }
+
+
+    @Test
+    public void containsPhoneIgnoreCase_validInputs_correctResult() {
+
+        // Empty sentence
+        assertFalse(StringUtil.containsPhoneIgnoreCase("", "98989898")); // Boundary case
+
+        //Matches phone number that has strictly 4 or 8 digits
+        assertTrue(StringUtil.containsPhoneIgnoreCase("98984554", "4554"));
+        assertTrue(StringUtil.containsPhoneIgnoreCase("98984554", "9898"));
+        assertFalse(StringUtil.containsPhoneIgnoreCase("98984554", "455"));
+        assertFalse(StringUtil.containsPhoneIgnoreCase("98989898", "98989898")); //search word must be 4 digits
+
+    }
+
+    @Test
+    public void containsTagsIgnoreCase_validInputs_correctResult() {
+
+        Set<Tag> tagSet = new HashSet<Tag>();
+        try {
+            tagSet.add(new Tag("friends"));
+            tagSet.add(new Tag("neighbours"));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tagSet should contain tags.");
+        }
+
+        //Exact word match
+        assertTrue(StringUtil.containsTagIgnoreCase(tagSet, "friends"));
+        assertTrue(StringUtil.containsTagIgnoreCase(tagSet, "neighbours"));
+
+        //case insensitive
+        assertTrue(StringUtil.containsTagIgnoreCase(tagSet, "frIENds"));
+        assertTrue(StringUtil.containsTagIgnoreCase(tagSet, "neIGHBOurs"));
+
+        //Non exact word match
+        assertFalse(StringUtil.containsTagIgnoreCase(tagSet, "frIENd"));
+        assertFalse(StringUtil.containsTagIgnoreCase(tagSet, "BOurs"));
 
     }
 
