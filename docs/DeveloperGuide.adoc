@@ -423,7 +423,16 @@ public void sort() {
 }
 
 ----
+The following sequence diagram shows how the sort operation works:
 
+When sort is typed into command line input, new SortCommand is created.
+
+image::SortCommandLogicSequenceDiagram.PNG[width="800"]
+
+When executeUndoableCommand is called in SortCommand class, it will call the sort function in ModelManager.
+It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of contacts based on their names will begin.
+
+image::SortCommandModelSequenceDiagram.PNG[width="800"]
 
 ==== Design Considerations
 **Aspect:** Implementation of `SortCommand` +
