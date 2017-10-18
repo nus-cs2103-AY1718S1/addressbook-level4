@@ -59,7 +59,7 @@ public class ArgumentMultimap {
         List<String> values = getAllValues(prefix);
         String str = "";
         for (String v : values) {
-            str += v;
+            str += v + "\n";
         }
         return str.isEmpty() ? Optional.empty() : Optional.of(str);
     }

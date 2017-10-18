@@ -57,10 +57,10 @@ public class ParserUtil {
      * Parses a {@code List<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(List<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return !phone.isEmpty() ? Optional.of(new Phone(phone)) : Optional.empty();
-    }
+    //public static Optional<Phone> parsePhone(List<String> phone) throws IllegalValueException {
+    //    requireNonNull(phone);
+    //    return !phone.isEmpty() ? Optional.of(new Phone(phone)) : Optional.empty();
+    //}
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
