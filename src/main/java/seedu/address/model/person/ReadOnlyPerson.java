@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -23,6 +24,8 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     boolean isPinned();
+    HashMap<Tag, String> getTagColours();
+    void setTagHashMap(HashMap<Tag, String> tagColours);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

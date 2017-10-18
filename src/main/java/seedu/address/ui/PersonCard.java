@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -70,8 +71,24 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialises all tags in FlowPane to show the person's tags and their colour.
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            setTagColour(tagLabel, tag, person);
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private void setTagColour(Label tagLabel, Tag tag, ReadOnlyPerson person) {
+        if (person.getTagColours().containsKey(tag)) {
+            tagLabel.setStyle("-fx-background-color: " + person.getTagColours().get(tag));
+        }
+
+        tagLabel.setStyle("-fx-background-color: blue");
     }
 
     @Override

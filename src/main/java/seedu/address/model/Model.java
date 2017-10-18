@@ -1,14 +1,17 @@
 package seedu.address.model;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -61,6 +64,15 @@ public interface Model {
      * Unpins the given person
      */
     void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+
+    /**
+     * Set the colour for the specific tag
+     * @param tag
+     * @param colour
+     */
+    void setTagColour(String tag, String colour) throws IllegalValueException;
+
+    HashMap<Tag, String> getTagColours();
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

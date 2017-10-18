@@ -5,6 +5,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,6 +17,7 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.NewTagColourChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -35,6 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private HashMap<Tag, String> tagColours = new HashMap<>();
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -112,6 +116,31 @@ public class ModelManager extends ComponentManager implements Model {
             sort(SortCommand.ARGUMENT_NAME);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    @Override
+    public void setTagColour(String tagName, String colour) throws IllegalValueException {
+        List<Tag> tagList = addressBook.getTagList();
+        for (Tag tag: tagList) {
+            if (tagName.equals(tag.tagName)) {
+                tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
+                raise(new NewTagColourChangedEvent(addressBook.getPersonList()));
+                return;
+            }
+        }
+        throw new IllegalValueException("No such tag!");
+    }
+
+    @Override
+    public HashMap<Tag, String> getTagColours() {
+        return tagColours;
+    }
+
+    private void updateAllPersons(HashMap<Tag, String> allTagColours) {
+        for (ReadOnlyPerson person: addressBook.getPersonList()) {
+            person.setTagHashMap(allTagColours);
         }
     }
 

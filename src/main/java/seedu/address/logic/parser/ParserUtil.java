@@ -30,6 +30,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
     public static final String MESSAGE_INVALID_SORT = "Invalid Sorting type.";
+    public static final String MESSAGE_INVALID_ARGUMENTS = "Incorrect number of arguments.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -106,5 +107,16 @@ public class ParserUtil {
         default:
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
+    }
+
+    /**
+     * Parses a String and checks whether it has two different .
+     */
+    public static String[] parseColourCommand(String args) throws IllegalValueException {
+        String[] splitArgs = args.trim().split("\\s+");
+        if (splitArgs.length == 2) {
+            return splitArgs;
+        }
+        throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
     }
 }
