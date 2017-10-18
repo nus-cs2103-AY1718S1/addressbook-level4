@@ -428,7 +428,6 @@ the added tags will be deleted afterwards.
 in any part of the command and the program will be able to execute the user's intention.
 ****
 
-==== Various Considered Use Cases
 
 == Documentation
 
