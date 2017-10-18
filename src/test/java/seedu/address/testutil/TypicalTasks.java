@@ -38,11 +38,11 @@ public class TypicalTasks {
      */
     public static TaskBook getTypicalTaskbook() {
         TaskBook tb = new TaskBook();
-        for (ReadOnlyTask rot: getTypicalTasks()){
+        for (ReadOnlyTask rot : getTypicalTasks()) {
             try {
                 tb.addTask(rot);
             } catch (DuplicateTaskException e) {
-                assert false: "There are duplicate tasks in this Taskbook";
+                assert false : "There are duplicate tasks in this Taskbook";
             }
         }
         return tb;
