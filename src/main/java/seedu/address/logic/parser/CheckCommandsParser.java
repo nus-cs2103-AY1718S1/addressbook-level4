@@ -45,9 +45,11 @@ public class CheckCommandsParser {
         final String[] subRedoCommands = new String[] {"redo", "r"};
         final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
         final String[] subUndoCommands = new String[] {"undo", "u"};
-        final String[] subEventAddCommands = new String[] { "eventadd", "addevent" };
-        final String[] subEventDeleteCommands = new String[] { "eventdel", "delevent", "deleteevent", "eventdelete" };
-        final String[] subEventEditCommands = new String[] { "eventedit", "editevent" };
+        final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
+        final String[] subDeleteEventsCommands = new String[] { "eventdel", "delevent", "deleteevent",
+                "eventdelete", "de", "ed" };
+        final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
+        final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
 
 
         /**
@@ -65,9 +67,10 @@ public class CheckCommandsParser {
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
-        final Set<String> commandsForEventAddCommands = new HashSet<>(Arrays.asList(subEventAddCommands));
-        final Set<String> commandsForEventDeleteCommands = new HashSet<>(Arrays.asList(subEventDeleteCommands));
-        final Set<String> commandsForEventEditCommands = new HashSet<>(Arrays.asList(subEventEditCommands));
+        final Set<String> commandsForAddEvent = new HashSet<>(Arrays.asList(subAddEventsCommands));
+        final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
+        final Set<String> commandsForEditEvent = new HashSet<>(Arrays.asList(subEditEventsCommands));
+        final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -96,12 +99,14 @@ public class CheckCommandsParser {
             finalUserCommand = "select";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
-        } else if (!Collections.disjoint(userInputCommand, commandsForEventAddCommands)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForAddEvent)) {
             finalUserCommand = "eventadd";
-        } else if (!Collections.disjoint(userInputCommand, commandsForEventDeleteCommands)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForDeleteEvent)) {
             finalUserCommand = "eventdel";
-        } else if (!Collections.disjoint(userInputCommand, commandsForEventEditCommands)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForEditEvent)) {
             finalUserCommand = "eventedit";
+        } else if (!Collections.disjoint(userInputCommand, commandsForFindEvent)) {
+            finalUserCommand = "eventfind";
         }
         return finalUserCommand;
     }
