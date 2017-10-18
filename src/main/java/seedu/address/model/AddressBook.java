@@ -119,6 +119,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        persons.favouritePerson(target);
+    }
+
+    public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        persons.unfavouritePerson(target);
+    }
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
