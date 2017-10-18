@@ -7,6 +7,7 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -50,6 +51,11 @@ public interface Model {
      * Sets and updates the tag colors of a person
      */
     void setTagColor(boolean toSet, String tag, String color);
+
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     */
+    void deleteEveryoneWithTag(Tag tag);
 
     /**
      * Adds appoints to a person
