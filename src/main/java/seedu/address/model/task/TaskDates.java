@@ -12,13 +12,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class TaskDates {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates can only contain a String in the format dd/mm/yyyy";
+            "Dates can only contain a String in the format dd-MM-yyyy";
 
     /**
      * Returns true if the given String is a valid date. If the input date format is invalid, an exception is thrown.
      */
     public static boolean isDateValid(String date) throws IllegalValueException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
             LocalDate.parse(date, formatter);
             return true;

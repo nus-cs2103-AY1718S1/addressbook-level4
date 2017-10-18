@@ -23,6 +23,7 @@ public class TaskBuilder {
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
             StartDate defaultStartDate = new StartDate(DEFAULT_STARTDATE);
             Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
+            this.task = new Task(defaultDescription, defaultStartDate, defaultDeadline);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default task's values are invalid.");
         }
@@ -40,7 +41,7 @@ public class TaskBuilder {
      */
     public TaskBuilder withDescription(String description) {
         try {
-            this.task.setDescription(new Description(description));
+            task.setDescription(new Description(description));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("description is expected to be unique.");
         }

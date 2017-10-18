@@ -28,14 +28,11 @@ public class AddressBookBuilder {
     /**
      * Adds a new {@code Person} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(ReadOnlyPerson person, ReadOnlyTask task) {
+    public AddressBookBuilder withPerson(ReadOnlyPerson person) {
         try {
             addressBook.addPerson(person);
-            addressBook.addTask(task);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
-        } catch (DuplicateTaskException dte) {
-            throw new IllegalArgumentException("task is expected to be unique");
         }
         return this;
     }
@@ -48,6 +45,18 @@ public class AddressBookBuilder {
             addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
+        }
+        return this;
+    }
+
+    /**
+     * Adds a new {@code Task} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withTask(ReadOnlyTask task) {
+        try {
+            addressBook.addTask(task);
+        } catch (DuplicateTaskException dte) {
+            throw new IllegalArgumentException("task is expected to be unique");
         }
         return this;
     }
