@@ -4,7 +4,6 @@ import static seedu.address.logic.commands.configs.ConfigCommand.ConfigType.TAG_
 import static seedu.address.model.tag.Tag.MESSAGE_TAG_CONSTRAINTS;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
