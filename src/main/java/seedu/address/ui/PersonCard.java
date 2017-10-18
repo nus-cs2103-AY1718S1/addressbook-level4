@@ -41,6 +41,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label comment;
     @FXML
+    private Label appoint;
+    @FXML
     private FlowPane tags;
     @FXML
     private ImageView avatar;

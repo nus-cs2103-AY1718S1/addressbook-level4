@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Avatar> avatar;
     private ObjectProperty<Comment> comment;
+    private ObjectProperty<Appoint> appoint;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -59,11 +60,13 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
+
+
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(),source.getAvatar(),
                 source.getTags());
     }
 
@@ -145,6 +148,21 @@ public class Person implements ReadOnlyPerson {
         return comment.get();
     }
 
+    /*
+    public void setAppoint(Appoint appoint) {
+        this.appoint.set(requireNonNull(appoint));
+    }
+
+    @Override
+    public ObjectProperty<Appoint> appointProperty() {
+        return appoint;
+    }
+
+    @Override
+    public Appoint getAppoint() {
+        return appoint.get();
+    }
+*/
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

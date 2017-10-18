@@ -14,5 +14,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_AVATAR = new Prefix("i/");
     public static final Prefix PREFIX_TAG = new Prefix("r/");
     public static final Prefix PREFIX_COMMENT = new Prefix("c/");
+    public static final Prefix PREFIX_APPOINT = new Prefix("ap/");
 
 }
