@@ -449,21 +449,19 @@ Certain properties of the application can be controlled (e.g App name, logging l
 === Google Maps Search Browser
 
 The google maps search browser enhancement resides within the `BrowserPanel`.
-It takes in a parcel's postal code number by `parcel.getAddress().postalCode.value.substring(1)` and concatenates it
-to the back of `GOOGLE_MAP_URL_PREFIX` to get a URL for the browser to load.
+It takes in a `ReadOnlyParcel` 's postal code number substring of the parcel's address and concatenates it
+to the back of Google Map's search URL prefix to get a URL for the browser to load.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of Google Maps Search Browser +
 **Alternative 1 (current choice):** Change browser loadPage URL to Google Map search URL +
-**Pros:** Its easy to implement a new method to load a new URL since it is a simple browser enhancement
-to display a different URL +
-**Cons:** It becomes +
-**Alternative 2 (future choice):** Implementing through Google Maps API +
-**Pros:** Makes it easier for implementing additional features that utilizes the Maps API such
- as drawing a route between two locations +
-**Cons:** More difficult to implement and integrate into a command line interface, and its features are currently
- unnecessary for the current functionality of Ark.
+**Pros:** Its easy to implement new methods to load a new URLs if required to display a different URL. +
+**Cons:** The map has no other functionality besides searching for the postal code. +
+**Alternative 2 (future implementation choice):** Implementing through Google Maps API +
+**Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
+ in future versions of the Ark application. +
+**Cons:** More difficult to implement and integrate into a command line interface.
 
 === Delete Tag mechanism
 
