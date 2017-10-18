@@ -12,10 +12,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class UniqueSocialInfoListTest {
-    private static MockSocialInfo aliceFacebook = new MockSocialInfo("alice", "FACEBOOK");
-    private static MockSocialInfo aliceTwitter = new MockSocialInfo("alice", "TWITTER");
-    private static MockSocialInfo bobFacebook = new MockSocialInfo("bob", "FACEBOOK");
-    private static MockSocialInfo bobTwitter = new MockSocialInfo("bob", "TWITTER");
+    private static SocialInfo aliceFacebook = new SocialInfo("FACEBOOK", "alice", "facebook.com/alice");
+    private static SocialInfo aliceTwitter = new SocialInfo("TWITTER", "alice", "instagram.com/alice");
+    private static SocialInfo bobFacebook = new SocialInfo("FACEBOOK", "bob", "facebook.com/bob");
+    private static SocialInfo bobTwitter = new SocialInfo("TWITTER", "bob", "instagram.com/bob");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -89,28 +89,9 @@ public class UniqueSocialInfoListTest {
         assertTrue(aliceListOrdered.equalsOrderInsensitive(aliceListReversed));
     }
 
-    private UniqueSocialInfoList prepareUniqueSocialInfoList(SocialInfo... socialInfos) {
+    private static UniqueSocialInfoList prepareUniqueSocialInfoList(SocialInfo... socialInfos) {
         return new UniqueSocialInfoList(
                 new HashSet<>(Arrays.asList(socialInfos))
         );
-    }
-
-    private static class MockSocialInfo extends SocialInfo {
-        private String socialType;
-
-        public MockSocialInfo(String username, String socialType) {
-            super(username);
-            this.socialType = socialType;
-        }
-
-        @Override
-        public String getSocialType() {
-            return socialType;
-        }
-
-        @Override
-        public String getSocialUrl() {
-            return null;
-        }
     }
 }

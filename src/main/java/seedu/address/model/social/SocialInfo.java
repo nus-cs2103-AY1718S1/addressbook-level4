@@ -1,20 +1,29 @@
 package seedu.address.model.social;
 
-import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents information about a social media account in the address book.
  */
-public abstract class SocialInfo {
+public class SocialInfo {
 
     private final String username;
+    private final String socialType;
+    private final String socialUrl;
 
-    public SocialInfo(String username) {
-        requireNonNull(username);
+    public SocialInfo(String socialType, String username, String socialUrl) {
+        requireAllNonNull(username, socialType, socialUrl);
         String trimmedUsername = username.trim();
+        String trimmedSocialType = socialType.trim();
+        String trimmedSocialUrl = socialType.trim();
         this.username = trimmedUsername;
+        this.socialType = trimmedSocialType;
+        this.socialUrl = trimmedSocialUrl;
     }
 
+    /**
+     * Returns the username for the represented account
+     */
     public String getUsername() {
         return this.username;
     }
@@ -22,12 +31,16 @@ public abstract class SocialInfo {
     /**
      * Returns the type (usually platform) of this social media information
      */
-    public abstract String getSocialType();
+    public String getSocialType() {
+        return this.socialType;
+    }
 
     /**
      * Returns the link to the social media feed for the represented account
      */
-    public abstract String getSocialUrl();
+    public String getSocialUrl() {
+        return this.socialUrl;
+    }
 
     /**
      * Format state as text for viewing.
