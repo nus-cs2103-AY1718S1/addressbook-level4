@@ -92,6 +92,26 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    public void favouritePerson(ReadOnlyPerson toFavourite) throws PersonNotFoundException {
+        requireNonNull(toFavourite);
+        int index = internalList.indexOf(toFavourite);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        internalList.get(index).setFavourite(true);
+    }
+
+    public void unfavouritePerson(ReadOnlyPerson toUnfavourite) throws PersonNotFoundException {
+        requireNonNull(toUnfavourite);
+        int index = internalList.indexOf(toUnfavourite);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        internalList.get(index).setFavourite(false);
+    }
+
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
