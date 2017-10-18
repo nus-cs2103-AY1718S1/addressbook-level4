@@ -355,6 +355,23 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Coming in v2.0
+
+* Add tags cumulatively
+* Add a person without all his/her parameters
+* Restore to a AddressBook backup
+* Hide private contact details
+* Synchronise with Google Contacts
+* Access a contact's Facebook profile
+* Get direction to a contact's address
+* Upload pictures
+* Clear command to reset application to starting state
+* Theme and plugin manager
+* Encrypt private information
+* Add and view Favourites
+* Email contacts directly in AddressBook
+* Use regex in `find` command
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
