@@ -51,21 +51,25 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        // Execute key events for non-command events
-        if (keys.get("FOCUS_PERSON_LIST").match(keyEvent)) {
-            personListPanel.setFocus();
+        try {
+            // Execute key events for non-command events
+            if (keys.get("FOCUS_PERSON_LIST").match(keyEvent)) {
+                personListPanel.setFocus();
 
-        } else if (keys.get("FOCUS_COMMAND_BOX").match(keyEvent)) {
-            commandBox.setFocus();
+            } else if (keys.get("FOCUS_COMMAND_BOX").match(keyEvent)) {
+                commandBox.setFocus();
 
-        } else if (keys.get("DELETE_SELECTION").match(keyEvent)) {
-            // TODO: add support for deletion at selected list
-            // Dummy action
-            personListPanel.setFocus();
+            } else if (keys.get("DELETE_SELECTION").match(keyEvent)) {
+                // TODO: add support for deletion at selected list
+                // Dummy action
+                personListPanel.setFocus();
 
-        } else {
-            // Execute key events for command words
-            executeCommandKeyEvents(keyEvent);
+            } else {
+                // Execute key events for command words
+                executeCommandKeyEvents(keyEvent);
+            }
+        } catch (NullPointerException e) {
+            logger.warning(KeyListenerUtil.getMissingKeyMappingMessage(e));
         }
     }
 
