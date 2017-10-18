@@ -962,6 +962,18 @@ Use case ends.
 +
 Use case ends.
 
+=== Use case: Add event
+
+*MSS*
+
+1. User requests to add event
+2. User types in details of event to add
+3. AddressBook shows details of event to add
+4. AddressBook request confirmation to add event
+5. User confirms adding of event
+6. AddressBok adds event to list of events
+
+Use case ends
 {More to be added}
 
 link:#the-myths-book---developer-guide[Back To Top]
