@@ -65,7 +65,7 @@ public class MainWindow extends UiPart<Region> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane statusBarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -144,7 +144,7 @@ public class MainWindow extends UiPart<Region> {
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                                                               logic.getFilteredPersonList().size());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
