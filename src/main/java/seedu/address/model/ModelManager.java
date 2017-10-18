@@ -113,10 +113,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Deletes a specified tag from every person in the AddressBook
-     * @param tag
-     * @throws PersonNotFoundException
-     * @throws DuplicatePersonException
+     * Deletes a specified tag from every person in the AddressBook.
+     * @param tag the tag to be deleted.
+     * @throws PersonNotFoundException if no person is found.
+     * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
      */
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {

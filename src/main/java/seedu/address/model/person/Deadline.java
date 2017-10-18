@@ -27,14 +27,14 @@ public class Deadline {
      * Validates given Deadline. If no deadline was entered by user, value will read "empty" by
      * default. Else, it will store the date of the deadline.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given deadline is invalid.
      */
     public Deadline(String deadline) throws IllegalValueException {
-        if (deadline.equals(NO_DEADLINE_SET)) {
-            this.value = deadline;
+        requireNonNull(deadline);
+        String trimmedDeadline = deadline.trim();
+        if (trimmedDeadline.equals(NO_DEADLINE_SET)) {
+            this.value = trimmedDeadline;
         } else {
-            requireNonNull(deadline);
-            String trimmedDeadline = deadline.trim();
             if (!isValidDeadline(trimmedDeadline)) {
                 throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
             }
@@ -67,14 +67,13 @@ public class Deadline {
     }
 
     /**
-     *
-     * @return formated date value
+     * @return formatted date value
      */
-    private String formatDate() {
+    private String formatDate(String dateToFormat) {
         SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
-        int year = Integer.parseInt(value.substring(6, 10));
-        int day = Integer.parseInt(value.substring(0, 2));
-        int month = Integer.parseInt(value.substring(3, 5)) - 1;
+        int year = Integer.parseInt(dateToFormat.substring(6, 10));
+        int day = Integer.parseInt(dateToFormat.substring(0, 2));
+        int month = Integer.parseInt(dateToFormat.substring(3, 5)) - 1;
         Date date = new GregorianCalendar(year, month, day).getTime();
         return ft.format(date);
     }

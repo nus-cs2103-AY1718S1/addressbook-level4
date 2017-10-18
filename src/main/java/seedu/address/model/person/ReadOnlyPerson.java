@@ -26,6 +26,8 @@ public interface ReadOnlyPerson {
     Cluster getCluster();
     ObjectProperty<Debt> debtProperty();
     Debt getDebt();
+    ObjectProperty<Interest> interestProperty();
+    Interest getInterest();
     ObjectProperty<DateBorrow> dateBorrowProperty();
     DateBorrow getDateBorrow();
     ObjectProperty<Deadline> deadlineProperty();
@@ -48,6 +50,7 @@ public interface ReadOnlyPerson {
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getCluster().equals(this.getCluster())
                 && other.getDebt().equals(this.getDebt())
+                && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())
                 && other.getDeadline().equals(this.getDeadline())
                 && other.getDateRepaid().equals(this.getDateRepaid());
@@ -71,10 +74,14 @@ public interface ReadOnlyPerson {
                 .append(getCluster())
                 .append(" Debt: ")
                 .append(getDebt())
+                .append(" Interest: ")
+                .append(getInterest())
                 .append("Date borrowed: ")
+                .append(" Date borrowed: ")
                 .append(getDateBorrow())
                 .append(" Deadline: ")
                 .append(getDeadline())
+                .append(" Date Repaid: ")
                 .append(getDateRepaid())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
