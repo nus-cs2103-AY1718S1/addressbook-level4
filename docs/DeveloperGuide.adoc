@@ -346,7 +346,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 
-== Login Function
+=== Login Function
 
 The Login function work by using many different components. To facilitated its implementation there is a `Loginpage` inside the `UI` and a `loginLogic` inside the `logic` component. It supports the process of moving the addressbook database to a server as will be later described.
 
