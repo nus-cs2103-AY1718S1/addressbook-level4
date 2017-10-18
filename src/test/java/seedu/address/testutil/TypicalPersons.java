@@ -40,14 +40,11 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withBirthday("030507").withTags("colleague").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave")
-            .withBirthday("010395").build();
+            .withEmail("werner@example.com").withAddress("michegan ave").withTags("brother").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withBirthday("010396").build();
+            .withEmail("lydia@example.com").withAddress("little tokyo").withTags("smart").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street")
-            .withBirthday("010399").build();
+            .withEmail("anna@example.com").withAddress("4th street").withTags("buff").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84824242")
