@@ -147,6 +147,10 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.setTags(newTags);
     }
 
+    public boolean hasTag(Tag tag) {
+        return addressBook.getTagList().contains(tag);
+    }
+
     //=========== Model support for activity component =============================================================
 
     @Override

@@ -48,6 +48,9 @@ public interface Model {
     /** Removes the specific tag (from all persons with that tag) */
     void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Checks whether there exists a tag (with the same tagName) */
+    boolean hasTag(Tag tag);
+
     //=========== Model support for activity component =============================================================
 
     /** Sorts the events list according to date/time */
