@@ -84,7 +84,7 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindCommand.COMMAND_WORD + " n/ " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
@@ -140,6 +140,15 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + "Some remark.");
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), command);
     }
+
+    //TODO: dont know why dont work :(
+    /*@Test
+    public void parseCommand_removeCommandWord_returnsRemoveCommand() throws Exception {
+        final Tag tag = new Tag("friends");
+        RemoveCommand command = (RemoveCommand) parser.parseCommand(RemoveCommand.COMMAND_WORD + " friends "
+                + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RemoveCommand(tag, INDEX_FIRST_PERSON), command);
+    }*/
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

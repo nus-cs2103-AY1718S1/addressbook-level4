@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a Person's favourite status in the address book.
  * Guarantees: immutable; is always valid
@@ -11,12 +9,16 @@ public class FavouriteStatus {
     public final boolean isFavourite;
 
     public FavouriteStatus(boolean isFavourite) {
-        requireNonNull(isFavourite);
         this.isFavourite = isFavourite;
     }
 
     public boolean getStatus() {
         return isFavourite;
+    }
+
+    @Override
+    public String toString() {
+        return (isFavourite ? "Favourite" : "");
     }
 
     @Override
