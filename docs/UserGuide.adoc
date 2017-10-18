@@ -132,7 +132,6 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -218,7 +217,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Clearing all entries : `sort`
+=== Sorting all entries : `sort`
 
 Sorts all entries in the address book by alphabetical order. +
 Format: `sort`
@@ -265,6 +264,39 @@ Format: `sortBirthday`
 Able to view contacts in calendar mode so that users can look at who's birthday is coming up soon.
 Contacts with birthday within a week will have a special colour or icon to notify user of upcoming birthdays.
 
+=== Retrieving all persons having an existing tag : `retrieve`    (Since v1.2)
+
+Lists all contacts having a certain existing tag in the address book. +
+Format: `retrieve TAGNAME`
+
+****
+* Retrieves all person having the specified `TAGNAME` tag.
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `retrieve friends` +
+Retrieves all persons with friends tag in the address book.
+
+=== Tagging multiple persons : `tag`    (Since v1.2)
+
+Tags the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
+
+****
+* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
+* The indexes refers to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `list` +
+`tag 1,2,3 friends` +
+Tags the 1st and 2nd person with the friends tag in the address book.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -285,6 +317,10 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Retrieve* : `retrieve TAGNAME` +
+e.g.`retrieve family`
+* *Tag* : `tag INDEX,[MORE_INDEXES]... TAGNAME` +
+e.g.`tag 1,2,3 friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
