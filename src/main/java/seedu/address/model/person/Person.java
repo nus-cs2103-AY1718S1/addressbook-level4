@@ -33,7 +33,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      * A default avatar image is stored
      */
-    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Appoint appoint, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -42,11 +42,12 @@ public class Person implements ReadOnlyPerson {
         // Use default avatar image
         this.avatar = new SimpleObjectProperty<>(new Avatar());
         this.comment = new SimpleObjectProperty<>(comment);
+        this.appoint = new SimpleObjectProperty<>(appoint);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Avatar avatar, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Appoint appoint, Avatar avatar, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -56,6 +57,7 @@ public class Person implements ReadOnlyPerson {
         System.out.println("Storing custom image at path: " + avatar.getAvatarFilePath());
         this.avatar = new SimpleObjectProperty<>(avatar);
         this.comment = new SimpleObjectProperty<>(comment);
+        this.appoint = new SimpleObjectProperty<>(appoint);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -66,7 +68,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(),source.getAvatar(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(), source.getAppoint(), source.getAvatar(),
                 source.getTags());
     }
 
@@ -148,7 +150,7 @@ public class Person implements ReadOnlyPerson {
         return comment.get();
     }
 
-    /*
+
     public void setAppoint(Appoint appoint) {
         this.appoint.set(requireNonNull(appoint));
     }
@@ -162,7 +164,7 @@ public class Person implements ReadOnlyPerson {
     public Appoint getAppoint() {
         return appoint.get();
     }
-*/
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

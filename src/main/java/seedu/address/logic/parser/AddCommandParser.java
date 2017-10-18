@@ -42,12 +42,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+
 
             Comment comment = new Comment(""); // add command does not allow adding comments straight away
+            Appoint appoint = new Appoint("");
+            Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, comment, avatar, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, avatar, tagList);
 
 
             return new AddCommand(person);

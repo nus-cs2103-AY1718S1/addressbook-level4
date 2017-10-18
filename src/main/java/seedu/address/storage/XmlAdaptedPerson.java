@@ -35,13 +35,15 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String comment;
     @XmlElement(required = true)
+    private String appoint;
+    @XmlElement(required = true)
     private String address;
-
     @XmlElement
     private String avatar;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -62,6 +64,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         avatar = source.getAvatar().getAvatarFilePath();
         comment = source.getComment().value;
+        appoint = source.getAppoint().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -90,8 +93,8 @@ public class XmlAdaptedPerson {
             avatar = new Avatar();
         }
         final Comment comment = new Comment(this.comment);
-        /*final Appoint appoint = new Appoint(this.appoint);*/
+        final Appoint appoint = new Appoint(this.appoint);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, comment, /*appoint,*/ tags);
+        return new Person(name, phone, email, address, comment, appoint, tags);
     }
 }

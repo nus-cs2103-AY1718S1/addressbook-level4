@@ -73,7 +73,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
                     Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
                     Comment comment = new Comment(""); // add command does not allow adding comments straight away
                     Appoint appoint = new Appoint("");
-                    ReadOnlyPerson person = new Person(name, phone, email, address, comment, /*appoint,*/ tagList);
+                    ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, tagList);
                     
                     personsList.add(person);
                 } catch (IllegalValueException ive) {

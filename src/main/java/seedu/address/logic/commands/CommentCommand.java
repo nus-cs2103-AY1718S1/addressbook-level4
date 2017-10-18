@@ -58,7 +58,7 @@ public class CommentCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), comment, /*personToEdit.getAppoint(),*/ personToEdit.getTags());
+                personToEdit.getAddress(), comment, personToEdit.getAppoint(), personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);

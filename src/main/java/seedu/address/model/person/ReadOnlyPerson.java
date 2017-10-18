@@ -25,11 +25,8 @@ public interface ReadOnlyPerson {
     Comment getComment();
     ObjectProperty<Avatar> avatarProperty();
     Avatar getAvatar();
-
-    /*
     ObjectProperty<Appoint> appointProperty();
     Appoint getAppoint();
-    */
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -44,6 +41,7 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getComment().equals(this.getComment())
+                && other.getAppoint().equals(this.getAppoint())
                 );
     }
 
@@ -61,8 +59,8 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Comments: ")
                 .append(getAddress())
-                /*.append(" Appointments: ")
-                .append(getAppoint())*/
+                .append(" Appointments: ")
+                .append(getAppoint())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
