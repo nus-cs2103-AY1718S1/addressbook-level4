@@ -460,10 +460,76 @@ image::SortCommandModelSequenceDiagram.PNG[width="800"]
 // tag::accessWebsite[]
 === Access Website mechanism
 
-The access website mechanism is
+The access website mechanism has an `AccessCommand` that allows user to access the website by stating the
+index of the desired contact in the contact list viewed. The `AccessCommand` class inherits from the `Command` class.
+
+Suppose a user would like access one of his contacts website that is listed in the address book
+and executes the `AccessCommand` to access the website.
+
+The execution of AccessCommand is processed in this way:
+
+. User will input `access index` where index refers to the index of the person listed in the person card list in GUI.
+. Input of user will be parse as an argument through the AddressBookParser and AccessCommandParser to extract the index.
+. A new `AccessCommand` with the index inputted will be executed.
+. In the execute() of AccessCommand, the person of the website that the user wants to access will be obtained through the
+ index of the `lastShownList` and stored into `ReadOnlyPerson` class variable.
+. The `EventsCenter` will then post a new `AccessWebsiteRequestEvent` which contains the website of the person.
+. The `AccessWebsiteRequestEvent` event would then be handled by an event handler `handleAccessWebsiteEvent`.
+. The event handler will help to load the website of the person through the browser panel based on the website inputted.
+
+Code of AccessCommand :
+[source,java]
+----
+public class AccessCommand extends Command {
+    private final Index targetIndex;
+
+    public AccessCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
+        return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased()));
+    }
+}
+----
+[source,java]
+----
+public class MainWindow extends UiPart<Region> {
+    public void handleWebsiteAccess(String website) {
+        browserPanel.loadPage(website);
+    }
+
+    @Subscribe
+    private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleWebsiteAccess(event.website);
+    }
+}
+----
+
 
 ==== Design Considerations
+**Aspect:** How accessing a website of a person executes +
+**Alternative 1 (current choice):** Create a new event request and event handler for AccessCommand. +
+**Pros:** Able to have more features as AccessWebsite and Select feature is able to exist concurrently in the application. +
+**Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
+**Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access website of their contacts instead
+of creating a search on contacts name through he browser panel. +
+**Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
+**Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a Person Card Viewer
+which is important for GUI enhancement. +
 
+---
 
 //end::accessWebsite[]
 
