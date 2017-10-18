@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import java.util.function.Predicate;
 
 import seedu.address.model.person.ContainsTagsPredicate;
-import seedu.address.model.person.InterceptionPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -31,7 +30,7 @@ public class FilterCommand extends Command {
         if (currentPredicate == null) {
             model.updateFilteredPersonList(predicate);
         } else {
-            model.updateFilteredPersonList(new InterceptionPredicate(currentPredicate, predicate));
+            model.updateFilteredPersonList(predicate.and(currentPredicate));
         }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
 

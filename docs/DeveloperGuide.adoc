@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= AddressBookX - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W13-B3/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -396,6 +396,53 @@ public class AddTagCommand extends UndoableCommand {
 **Pros:** No need to instantiate new `Person` instance. Easy to implement. +
 **Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage.
 // end::addremovetag[]
+
+=== Filter mechanism
+
+==== Fundamental mechanism
+The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
+when the method `updateFilteredPersonList(predicate)` from the `Model` interface is invoked.
+
+The relevant methods in the Model interface:
+[source,java]
+----
+public interface Model {
+
+    ...
+
+    /** Returns the predicate of the current filtered person list */
+    Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+
+    /** Updates the filter of the filtered person list to filter by the given {@code predicate}.*/
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+}
+----
+
+
+When `updateFilteredPersonList(predicate)` is invoked, every `person` in the **AddressBook** is evaluated against the `predicate`. +
+A `person` will be added the the list for display if `predicate.test(person)` is evaluated to be TRUE. +
+All `person` that fulfill the conditions specified in `predicate` are filtered to be displayed.
+
+==== Filtering on the existing list
+Note that all `person` in the existing list satisfy a Predicate `currentPredicate`. +
+Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` that satisfy both `currentPredicate` and `newPredicate`. +
+From Figure 3.2.1, it can also be viewed as the interception of two lists of `person`, each satisfying one of the two predicates respectively.
+
+image::venn_diagram.png[height = 200, width = 250]
+_Figure 3.2.1 : Venn Diagram for Filtering_
+
+===== Implementation
+The actual implementation of filtering on the existing list involves three steps. +
+
+.  invokes `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
+.  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
+.  Update the list using the predicate generated in step 2.
+
+===== Design consideration
+The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]]. +
+By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
+Making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
 
 === Logging
 
@@ -783,7 +830,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |use shorter aliases for commands|enter commands quickly and not have to type in the full command
 
-|`* * *` |user |find people by their tags|view people under certain tags
+|`* * *` |user |find people by their tags|locate a specific group of persons
 
 |`* * *` |user |have a responsive inbuilt browser with similar response times to external browsers|use the inbuilt browser smoothly
 
@@ -811,9 +858,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |find a subset of contacts using specified parameters|filter through my contacts
 
-|`* *` |user |click on the address to be shown its Google Maps result|easily navigate to my contact's location
+|`* *` |user |locate a person's address on Google Maps|easily navigate to my contact's location
 
-|`* *` |user |resize the dimensions of the command and output bar|customise the application to my desired layout
+|`* *` |user |resize the dimensions of the command and output bar|customise the application to the desired layout
 
 |`* *` |user |upload pictures of my contacts|identify my contacts with similar names
 
@@ -835,7 +882,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |send an email via the inbuilt browser by clicking on a contact's email|easily and quickly send an email to an existing contact
 
-|`* *` |user |have a Notes section to add notes that can be tagged and shared with people|jot down certain events and details
+|`* *` |user |have a Notes section to add notes that attaches to a person|jot down certain events and details
 
 |`* *` |user who is privacy focused |encrypt my contacts|hide and secure my contacts from others
 
@@ -969,6 +1016,53 @@ Use case ends.
 Use case resumes at step 4.
 
 [discrete]
+=== Use case: Add tag to contact
+
+*MSS*
+
+1.  User requests to add tag to contact
+2.  AddressBook shows a list of persons
+3.  User requests to add tag to the person at a specific index in the list
+4.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide a new tag.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user provides an invalid tag.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3d. The user provides a tag that already exists on the specified contact.
++
+[none]
+** 3d1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
 === Use case: Backup data
 
 *MSS*
@@ -1094,12 +1188,13 @@ Use case resumes at step 2.
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be able to respond to a command within 500ms.
-.  Should adhere to the Java coding standard.
 .  Data should only be accessible to the user himself.
+.  Should be compatible with earlier versions.
 .  Should be able to handle all possible exceptions.
+.  Should adhere to the Java coding standard.
 
 {More to be added}
 
