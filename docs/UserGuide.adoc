@@ -143,6 +143,18 @@ Another way to delete a contact in the list:
 3. Selected person will be deleted from the list
 ****
 
+=== Email a person
+
+Opens an email client with the recipient's email address.
+
+****
+1. Select a person in the list
+2. Click the "Email" Button
+3. Proceed to compose email on email client
+****
+
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
