@@ -42,7 +42,6 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
 
-        // HashMap<String, Property> properties = new HashMap<>();
         Set<Property> properties = new HashSet<>();
         properties.add(name);
         properties.add(phone);
@@ -144,6 +143,14 @@ public class Person implements ReadOnlyPerson {
      */
     public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
         properties.set(new UniquePropertyMap(replacement));
+    }
+
+    /**
+     * Updates the value of the property if there already exists a property with the same shortName, otherwise
+     * adds a new property.
+     */
+    public void setProperty(Property toSet) {
+        properties.get().addOrUpdate(toSet);
     }
 
     /**

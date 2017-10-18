@@ -44,6 +44,13 @@ public class ParserUtil {
     }
 
     /**
+     * Returns true if none of the prefixes is present in the given @code ArgumentMultimap}.
+     */
+    public static boolean arePrefixesAbsent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).noneMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).

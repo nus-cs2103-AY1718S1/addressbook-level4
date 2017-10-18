@@ -8,13 +8,16 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_URL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_ADD_PROPERTY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_IMPORT_CALENDER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_NEW_PROPERTY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_URL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY_NO_REGEX;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
+import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
 import org.junit.Test;
 
@@ -33,9 +36,14 @@ public class ConfigCommandParserTest {
         assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_TAG_COLOR, expected);
 
         // Test for AddPropertyCommand.
-        expected = new AddPropertyCommand("s/b f/birthday m/something r/[^\\s].*", "b",
+        expected = new AddPropertyCommand(VALID_NEW_PROPERTY.trim(), "b",
                 "birthday", "something", "[^\\s].*");
-        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_CONFIG_NEW_PROPERTY, expected);
+        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY, expected);
+
+        // Test for AddPropertyCommand (without using customize constraintMessage and regex).
+        expected = new AddPropertyCommand(VALID_NEW_PROPERTY_NO_REGEX.trim(), "m",
+                "major", String.format(DEFAULT_MESSAGE, "major"), DEFAULT_REGEX);
+        assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY_NO_REGEX, expected);
 
         // Test for ImportCalenderCommand
         expected = new ImportCalenderCommand("https://www.url.com/");

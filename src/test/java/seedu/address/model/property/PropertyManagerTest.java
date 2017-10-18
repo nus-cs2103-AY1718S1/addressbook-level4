@@ -1,6 +1,9 @@
 package seedu.address.model.property;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
+import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -24,11 +27,22 @@ public class PropertyManagerTest {
 
     @Test
     public void preLoadedProperty_checkInitializationSuccessful() {
+        assertEquals(5, PropertyManager.getAllShortNames().size());
+
         assertEquals("name", PropertyManager.getPropertyFullName("n"));
         assertEquals("email", PropertyManager.getPropertyFullName("e"));
         assertEquals("phone", PropertyManager.getPropertyFullName("p"));
         assertEquals("address", PropertyManager.getPropertyFullName("a"));
         assertEquals("dateTime", PropertyManager.getPropertyFullName("dt"));
+
+        assertEquals(String.format(DEFAULT_MESSAGE, "Address"), PropertyManager.getPropertyConstraintMessage("a"));
+        assertEquals(DEFAULT_REGEX, PropertyManager.getPropertyValidationRegex("a"));
+
+        assertTrue(PropertyManager.containsShortName("n"));
+        assertTrue(PropertyManager.containsShortName("e"));
+        assertTrue(PropertyManager.containsShortName("p"));
+        assertTrue(PropertyManager.containsShortName("a"));
+        assertTrue(PropertyManager.containsShortName("dt"));
     }
 
     @Test

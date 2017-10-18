@@ -10,6 +10,7 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * A HashMap of properties that enforces no nulls and uniqueness between its elements.
@@ -22,6 +23,7 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
  * @see Property#equals(Object)
  */
 public class UniquePropertyMap implements Iterable<Property> {
+    private static final String PROPERTY_NOT_FOUND = "This person does not have such property.";
     private final ObservableMap<String, Property> internalMap = FXCollections.observableHashMap();
 
     /**
@@ -91,20 +93,46 @@ public class UniquePropertyMap implements Iterable<Property> {
     }
 
     /**
-     * Adds a property to the list.
+     * Adds a property to the map.
      *
      * @throws DuplicatePropertyException if the given property already exists in this list (or there exists a
      * property that is equal to the one in the argument). Since we are using {@link java.util.HashMap}, another
      * method must be used when we want to update the value of an existing property.
      */
     public void add(Property toAdd) throws DuplicatePropertyException {
+        requireNonNull(toAdd);
         String shortName = toAdd.getShortName();
 
-        requireNonNull(toAdd);
         if (containsProperty(shortName)) {
             throw new DuplicatePropertyException();
         }
         internalMap.put(shortName, toAdd);
+    }
+
+    /**
+     * Updates the value of an existing property in the map.
+     *
+     * @throws PropertyNotFoundException if there is no property with the same shortName in this map previously.
+     */
+    public void update(Property toUpdate) throws PropertyNotFoundException {
+        requireNonNull(toUpdate);
+        String shortName = toUpdate.getShortName();
+
+        if (!containsProperty(shortName)) {
+            throw new PropertyNotFoundException();
+        }
+        internalMap.put(shortName, toUpdate);
+    }
+
+    /**
+     * Updates the value of the property if there already exists a property with the same shortName, otherwise
+     * adds a new property.
+     */
+    public void addOrUpdate(Property toSet) {
+        requireNonNull(toSet);
+        String shortName = toSet.getShortName();
+
+        internalMap.put(shortName, toSet);
     }
 
     @Override
@@ -132,6 +160,13 @@ public class UniquePropertyMap implements Iterable<Property> {
      */
     public boolean equalsOrderInsensitive(UniquePropertyMap other) {
         return equals(other);
+    }
+
+    /**
+     * Returns the size of this map.
+     */
+    public int size() {
+        return internalMap.size();
     }
 
     @Override

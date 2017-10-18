@@ -1,7 +1,7 @@
 package seedu.address.logic.commands.configs;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_NEW_PROPERTY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY;
 import static seedu.address.logic.commands.configs.AddPropertyCommand.MESSAGE_DUPLICATE_PROPERTY;
 import static seedu.address.logic.commands.configs.AddPropertyCommand.MESSAGE_INVALID_REGEX;
 
@@ -29,15 +29,18 @@ public class AddPropertyCommandTest {
 
     @Before
     public void setUp() {
-        successCommand = new AddPropertyCommand(VALID_CONFIG_NEW_PROPERTY,
+        successCommand = new AddPropertyCommand(VALID_NEW_PROPERTY,
                 shortName, fullName, message, validRegex);
         successCommand.setData(new AddPropertyModelStub(), new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_addNewProperty_success() throws Exception {
-        // It should not throw any exception here. The command should succeed.
+        int propertyCountBefore = PropertyManager.getAllShortNames().size();
         successCommand.execute();
+        int propertyCountAfter = PropertyManager.getAllShortNames().size();
+
+        assertEquals(1, propertyCountAfter - propertyCountBefore);
     }
 
     @Test
@@ -52,7 +55,7 @@ public class AddPropertyCommandTest {
 
     @Test
     public void execute_invalidRegex_expectRegexException() {
-        ConfigCommand invalidRegexCommand = new AddPropertyCommand(VALID_CONFIG_NEW_PROPERTY,
+        ConfigCommand invalidRegexCommand = new AddPropertyCommand(VALID_NEW_PROPERTY,
                 shortNameAlter, fullName, message, invalidRegex);
         invalidRegexCommand.setData(new AddPropertyModelStub(), new CommandHistory(), new UndoRedoStack());
 
@@ -66,9 +69,9 @@ public class AddPropertyCommandTest {
 
     @Test
     public void equal_twoSameCommands_returnTrue() {
-        ConfigCommand command1 = new AddPropertyCommand(VALID_CONFIG_NEW_PROPERTY,
+        ConfigCommand command1 = new AddPropertyCommand(VALID_NEW_PROPERTY,
                 shortName, fullName, message, validRegex);
-        ConfigCommand command2 = new AddPropertyCommand(VALID_CONFIG_NEW_PROPERTY,
+        ConfigCommand command2 = new AddPropertyCommand(VALID_NEW_PROPERTY,
                 shortName, fullName, message, validRegex);
 
         assertEquals(command1, command2);

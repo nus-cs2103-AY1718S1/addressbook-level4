@@ -12,8 +12,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
+
 public class UniquePropertyMapTest {
     private static Set<Property> mySet;
+    private static Property newProperty;
+    private static Property existingProperty;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -24,6 +29,9 @@ public class UniquePropertyMapTest {
         mySet = new HashSet<>();
         mySet.add(new Property("a", "some address"));
         mySet.add(new Property("p", "12345678"));
+
+        newProperty = new Property("e", "google@microsoft.com");
+        existingProperty = new Property("a", "another address");
     }
 
     @Test
@@ -48,21 +56,61 @@ public class UniquePropertyMapTest {
     public void createPropertyMap_validNonEmptyInput_successfullyCreated() throws Exception {
         UniquePropertyMap propertyMap = createSampleMap();
 
-        assertEquals(2, propertyMap.toSet().size());
+        assertEquals(mySet.size(), propertyMap.size());
     }
 
     @Test
     public void addProperty_checkCorrectness() throws Exception {
-        Property newProperty = new Property("e", "google@microsoft.com");
         UniquePropertyMap propertyMap = createSampleMap();
+        int countBefore = propertyMap.size();
         propertyMap.add(newProperty);
+        int countAfter = propertyMap.size();
 
-        assertEquals(3, propertyMap.toSet().size());
+        assertEquals(1, countAfter - countBefore);
+    }
+
+    @Test
+    public void addProperty_existingProperty_throwException() throws Exception {
+        thrown.expect(DuplicatePropertyException.class);
+
+        UniquePropertyMap propertyMap = createSampleMap();
+        propertyMap.add(existingProperty);
+        assertEquals(mySet.size(), propertyMap.size());
+    }
+
+    @Test
+    public void updateProperty_checkCorrectness() throws Exception {
+        UniquePropertyMap propertyMap = createSampleMap();
+        int countBefore = propertyMap.size();
+        propertyMap.update(existingProperty);
+        int countAfter = propertyMap.size();
+
+        assertEquals(countBefore, countAfter);
+    }
+
+    @Test
+    public void updateProperty_notFoundProperty_throwException() throws Exception {
+        thrown.expect(PropertyNotFoundException.class);
+
+        UniquePropertyMap propertyMap = createSampleMap();
+        propertyMap.update(newProperty);
+    }
+
+    @Test
+    public void addOrUpdateProperty_checkCorrectness() throws Exception {
+        UniquePropertyMap propertyMap = createSampleMap();
+        int count1 = propertyMap.size();
+        propertyMap.addOrUpdate(existingProperty);
+        int count2 = propertyMap.size();
+        propertyMap.addOrUpdate(newProperty);
+        int count3 = propertyMap.size();
+
+        assertEquals(0, count2 - count1);
+        assertEquals(1, count3 - count2);
     }
 
     @Test
     public void containsProperty_checkCorrectness() throws Exception {
-        Property newProperty = new Property("e", "google@microsoft.com");
         UniquePropertyMap propertyMap = createSampleMap();
         propertyMap.add(newProperty);
 
@@ -87,12 +135,11 @@ public class UniquePropertyMapTest {
 
     @Test
     public void mergeFrom_samePropertyMap_notChanged() throws Exception {
-        Set<Property> myNewSet = new HashSet<>();
         UniquePropertyMap propertyMap1 = createSampleMap();
         UniquePropertyMap propertyMap2 = createSampleMap();
         propertyMap1.mergeFrom(propertyMap2);
 
-        assertEquals(2, propertyMap1.toSet().size());
+        assertEquals(mySet.size(), propertyMap1.toSet().size());
     }
 
     @Test
