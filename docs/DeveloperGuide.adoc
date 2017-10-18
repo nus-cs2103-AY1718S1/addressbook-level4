@@ -280,7 +280,7 @@ index under the "selectedIndex" attribute.
 
 The `DeleteButton` has an instance of  `Logic` and `CommandResult` which performs a similar function
 to `CommandBox`.
- 
+
 When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPressed() function:
 
 [source,java]
