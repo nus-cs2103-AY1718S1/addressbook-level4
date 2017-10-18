@@ -20,6 +20,10 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
  * TODO: Should we extend {@link seedu.address.commons.core.ComponentManager} as superclass?
  */
 public class PropertyManager {
+    // Default constraint setting for all properties.
+    public static final String DEFAULT_MESSAGE = "$1%s can take any values, but it should not be blank";
+    public static final String DEFAULT_REGEX = "[^\\s].*";
+
     // A collection of the short names of all available properties.
     private static final HashSet<String> propertyShortNames = new HashSet<>();
 
@@ -58,8 +62,8 @@ public class PropertyManager {
 
                 // Adds address as a pre-loaded property.
                 addNewProperty("a", "address",
-                        "Person addresses can take any values, and it should not be blank",
-                        "[^\\s].*");
+                        String.format(DEFAULT_MESSAGE, "Address"), DEFAULT_REGEX);
+
                 // Adds time/date as a pre-loaded property.
                 addNewProperty("dt", "dateTime", "Event date & time must be numbers "
                         + "followed by ddmmyyyy hh:mm",

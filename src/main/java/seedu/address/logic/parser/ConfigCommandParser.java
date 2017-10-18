@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_FULL_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MESSAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REGEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SHORT_NAME;
+import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
+import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -99,18 +101,23 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         * Hack here: ArgumentTokenizer requires a whitespace before each prefix to count for an occurrence. Thus, we
         * have to explicitly add a whitespace before the string so as to successfully extract the first prefix.
         */
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(" " + value,
-                        PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX);
-        if (!ParserUtil.arePrefixesPresent(argMultimap,
-                PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX)) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(" " + value,
+                PREFIX_SHORT_NAME, PREFIX_FULL_NAME, PREFIX_MESSAGE, PREFIX_REGEX);
+
+        // shortName and fullName must be supplied by the user.
+        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_SHORT_NAME, PREFIX_FULL_NAME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
         }
-
         String shortName = argMultimap.getValue(PREFIX_SHORT_NAME).get();
         String fullName = argMultimap.getValue(PREFIX_FULL_NAME).get();
-        String constraintMessage = argMultimap.getValue(PREFIX_MESSAGE).get();
-        String regex = argMultimap.getValue(PREFIX_REGEX).get();
+
+        // message and regex must be supplied together or both be absent.
+        if (!(ParserUtil.arePrefixesPresent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX)
+                || ParserUtil.arePrefixesAbsent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX))) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+        }
+        String constraintMessage = argMultimap.getValue(PREFIX_MESSAGE).orElse(DEFAULT_MESSAGE);
+        String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
 
         return new AddPropertyCommand(value, shortName, fullName, constraintMessage, regex);
     }
