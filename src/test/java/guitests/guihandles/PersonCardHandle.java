@@ -18,6 +18,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String DEBT_FIELD_ID = "#debt";
+    private static final String INTEREST_FIELD_ID = "#interest";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
     private static final String DEADLINE_FIELD_ID = "#deadline";
     private static final String DATE_REPAID_FIELD_ID = "#dateRepaid";
@@ -30,6 +31,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label emailLabel;
     private final Label postalCodeLabel;
     private final Label debtLabel;
+    private final Label interestLabel;
     private final Label dateBorrowLabel;
     private final Label deadlineLabel;
     private final Label dateRepaidLabel;
@@ -45,6 +47,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
+        this.interestLabel = getChildNode(INTEREST_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
         this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
         this.dateRepaidLabel = getChildNode(DATE_REPAID_FIELD_ID);
@@ -83,6 +86,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     public String getDebt() {
         return debtLabel.getText();
+    }
+
+    public String getInterest() {
+        return interestLabel.getText();
     }
 
     public String getDateBorrow() {

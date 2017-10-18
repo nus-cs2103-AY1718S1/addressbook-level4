@@ -16,6 +16,9 @@ import org.junit.Test;
 
 import guitests.guihandles.InfoPanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -27,11 +30,14 @@ public class InfoPanelTest extends GuiUnitTest {
     private InfoPanel infoPanel;
     private InfoPanelHandle infoPanelHandle;
 
+    private Logic logicStub;
+
     @Before
     public void setUp() {
+        logicStub = new LogicManager(new ModelManager());
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
-        guiRobot.interact(() -> infoPanel = new InfoPanel());
+        guiRobot.interact(() -> infoPanel = new InfoPanel(logicStub));
         uiPartRule.setUiPart(infoPanel);
 
         infoPanelHandle = new InfoPanelHandle(infoPanel.getRoot());
@@ -44,6 +50,8 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddressField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebt());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebtField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterest());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterestField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCode());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCodeField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getCluster());
@@ -82,7 +90,7 @@ public class InfoPanelTest extends GuiUnitTest {
 
     @Test
     public void equals() {
-        infoPanel = new InfoPanel();
+        infoPanel = new InfoPanel(logicStub);
 
         // test .equals() method for two same objects
         assertTrue(infoPanel.equals(infoPanel));
@@ -90,7 +98,7 @@ public class InfoPanelTest extends GuiUnitTest {
         // test .equals() method for an object of different type
         assertFalse(infoPanel.equals(infoPanelHandle));
 
-        InfoPanel expectedInfoPanel = new InfoPanel();
+        InfoPanel expectedInfoPanel = new InfoPanel(logicStub);
 
         assertTrue(infoPanel.equals(expectedInfoPanel));
 

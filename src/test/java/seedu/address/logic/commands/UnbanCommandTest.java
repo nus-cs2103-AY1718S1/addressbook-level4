@@ -92,12 +92,4 @@ public class UnbanCommandTest {
         return unbanCommand;
     }
 
-    /**
-     * Updates {@code model}'s filtered blacklist to show no one.
-     */
-    private void showNoBlacklistedPerson(Model model) {
-        model.updateFilteredBlacklistedPersonList(p -> false);
-
-        assert model.getFilteredBlacklistedPersonList().isEmpty();
-    }
 }

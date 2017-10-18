@@ -12,10 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -31,11 +34,16 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
     private static final String MESSAGE_INFO_DEBT_FIELD = "Debt: $";
+    private static final String MESSAGE_INFO_INTEREST_FIELD = "Interest: ";
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
+    private static final String MESSAGE_INFO_NEARBY_PERSON_FIELD = "All contacts in this area: ";
 
+    private Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private NearbyPersonListPanel nearbyPersonListPanel;
 
     @FXML
     private Pane pane;
@@ -66,6 +74,10 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label debt;
     @FXML
+    private Text interestField;
+    @FXML
+    private Label interest;
+    @FXML
     private Text dateBorrowField;
     @FXML
     private Label dateBorrow;
@@ -78,11 +90,16 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label dateRepaid;
     @FXML
+    private Text nearbyPersonField;
+    @FXML
     private FlowPane tags;
+    @FXML
+    private StackPane nearbyPersonListPanelPlaceholder;
 
-    public InfoPanel() {
+    public InfoPanel(Logic logic) {
         super(FXML);
 
+        this.logic = logic;
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
@@ -98,10 +115,21 @@ public class InfoPanel extends UiPart<Region> {
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
         clusterField.setText(MESSAGE_INFO_CLUSTER_FIELD);
         debtField.setText(MESSAGE_INFO_DEBT_FIELD);
+        interestField.setText(MESSAGE_INFO_INTEREST_FIELD);
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
         deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID_FIELD);
+        nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         bindListeners(person);
+    }
+
+    /**
+     * Resets the Nearby Person List Panel
+     * @param person the selected person to display the nearby contacts of
+     */
+    public void resetNearbyPersonListPanel(ReadOnlyPerson person) {
+        nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
+        nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
 
     /**
@@ -116,6 +144,7 @@ public class InfoPanel extends UiPart<Region> {
         cluster.textProperty().bind(Bindings.convert(person.clusterProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
+        interest.textProperty().bind(Bindings.convert(person.interestProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
         deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));
         dateRepaid.textProperty().bind(Bindings.convert(person.dateRepaidProperty()));
@@ -147,6 +176,9 @@ public class InfoPanel extends UiPart<Region> {
             if (node instanceof Label) {
                 label = (Label) node;
                 label.setText("");
+            } else if (node instanceof Text) {
+                text = (Text) node;
+                text.setText("");
             } else if (node instanceof TextFlow) {
                 for (Node subNode: ((TextFlow) node).getChildren()) {
                     if (subNode instanceof Text) {
@@ -181,6 +213,7 @@ public class InfoPanel extends UiPart<Region> {
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && cluster.getText().equals(infoPanel.cluster.getText())
                 && debt.getText().equals(infoPanel.debt.getText())
+                && interest.getText().equals(infoPanel.interest.getText())
                 && email.getText().equals(infoPanel.email.getText())
                 && deadline.getText().equals(infoPanel.deadline.getText())
                 && dateBorrow.getText().equals(infoPanel.dateBorrow.getText())
@@ -199,6 +232,13 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+        resetNearbyPersonListPanel(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection().person);
     }

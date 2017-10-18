@@ -50,6 +50,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label debt;
     @FXML
+    private Label interest;
+    @FXML
     private Label dateBorrow;
     @FXML
     private Label deadline;
@@ -79,6 +81,7 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         debt.textProperty().bind(Bindings.convert(person.debtProperty()));
+        interest.textProperty().bind(Bindings.convert(person.interestProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         dateBorrow.textProperty().bind(Bindings.convert(person.dateBorrowProperty()));
         deadline.textProperty().bind(Bindings.convert(person.deadlineProperty()));

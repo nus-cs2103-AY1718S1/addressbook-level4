@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -12,9 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -66,7 +63,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         ObservableList<ReadOnlyPerson> persons = getPersonList();
-        ObservableList<ReadOnlyPerson> blacklistedPersons = persons.stream().filter(person -> person.getIsBlacklisted()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<ReadOnlyPerson> blacklistedPersons = persons.stream()
+                .filter(person -> person.getIsBlacklisted())
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(blacklistedPersons);
     }
 

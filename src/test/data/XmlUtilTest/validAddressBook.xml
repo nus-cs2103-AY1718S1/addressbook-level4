@@ -7,6 +7,7 @@
         <address isPrivate="false">4th street</address>
         <postalCode isPrivate="false">004004</postalCode>
         <debt isPrivate="false">123</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">13-11-2017</deadline>>
     </persons>
     <persons>
@@ -16,6 +17,7 @@
         <address isPrivate="false">81th street</address>
         <postalCode isPrivate="false">081081</postalCode>
         <debt isPrivate="false">1234</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">12-11-2017</deadline>>
     </persons>
     <persons>
@@ -25,6 +27,7 @@
         <address isPrivate="false">wall street</address>
         <postalCode isPrivate="false">055055</postalCode>
         <debt isPrivate="false">12345</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">17-12-2017</deadline>>
     </persons>
     <persons>
@@ -34,6 +37,7 @@
         <address isPrivate="false">10th street</address>
         <postalCode isPrivate="false">010010</postalCode>
         <debt isPrivate="false">123456</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">16-12-2017</deadline>>
     </persons>
     <persons>
@@ -43,6 +47,7 @@
         <address isPrivate="false">michegan ave</address>
         <postalCode isPrivate="false">673673</postalCode>
         <debt isPrivate="false">1234567</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">15-12-2017</deadline>>
     </persons>
     <persons>
@@ -52,6 +57,7 @@
         <address isPrivate="false">little tokyo</address>
         <postalCode isPrivate="false">777777</postalCode>
         <debt isPrivate="false">12345678</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">14-12-2017</deadline>>
     </persons>
     <persons>
@@ -61,6 +67,7 @@
         <address isPrivate="false">4th street</address>
         <postalCode isPrivate="false">004004</postalCode>
         <debt isPrivate="false">123456789</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">13-12-2017</deadline>>
     </persons>
     <persons>
@@ -70,6 +77,7 @@
         <address isPrivate="false">little india</address>
         <postalCode isPrivate="false">730073</postalCode>
         <debt isPrivate="false">321</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">12-12-2017</deadline>>
     </persons>
     <persons>
@@ -79,6 +87,7 @@
         <address isPrivate="false">chicago ave</address>
         <postalCode isPrivate="false">789008</postalCode>
         <debt isPrivate="false">4321</debt>
+        <interest isPrivate="false">1</interest>
         <deadline isPrivate="false">11-12-2017</deadline>>
     </persons>
 </addressbook>

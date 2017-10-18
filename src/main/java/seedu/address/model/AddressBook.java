@@ -10,7 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Debt;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Interest;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -233,6 +241,37 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeTag(Tag t) throws TagNotFoundException {
         tags.remove(t);
     }
+
+
+    //@@author jelneo
+
+    /**
+     * Increase debts of a person by the indicated amount
+     * @param target person that borrowed more money
+     * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
+     *               two decimal places
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
+        Name name = target.getName();
+        Phone phone = target.getPhone();
+        Email email = target.getEmail();
+        Address address = target.getAddress();
+        PostalCode postalCode = target.getPostalCode();
+        Debt newDebt = target.getDebt();
+        newDebt.addToDebt(amount);
+        Interest interest = target.getInterest();
+        Deadline deadline = target.getDeadline();
+        Set<Tag> tags = target.getTags();
+        Person editedPerson = new Person(name, phone, email, address, postalCode, newDebt, interest, deadline, tags);
+        editedPerson.setDateBorrow(target.getDateBorrow());
+        try {
+            persons.setPerson(target, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There should be no duplicate when updating the debt of a person";
+        }
+    }
+    //@@author
 
     //// util methods
 
