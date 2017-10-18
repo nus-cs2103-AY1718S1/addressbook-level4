@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidExtensionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyRolodex;
 import seedu.address.model.Rolodex;
@@ -122,6 +123,14 @@ public class XmlRolodexStorageTest {
     public void saveRolodexNullFilePathThrowsNullPointerException() throws IOException {
         thrown.expect(NullPointerException.class);
         saveRolodex(new Rolodex(), null);
+    }
+
+    @Test
+    public void saveRolodexInvalidStorageExtensionThrowsInvalidExtensionException() throws IOException {
+        String invalidExtensionedFilePath = "invalid/extension.megaPoop";
+        XmlRolodexStorage rolodexStorage = new XmlRolodexStorage(invalidExtensionedFilePath);
+        thrown.expect(InvalidExtensionException.class);
+        rolodexStorage.saveRolodex(new Rolodex());
     }
 
 
