@@ -10,11 +10,19 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+<<<<<<< HEAD
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+=======
+import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.Email;
+import seedu.address.model.parcel.Name;
+import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.TrackingNumber;
+>>>>>>> master
 import seedu.address.model.tag.Tag;
 
 /**
@@ -42,6 +50,17 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if
+     * {@code trackingNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TrackingNumber> parseTrackingNumber(Optional<String> trackingNumber)
+            throws IllegalValueException {
+        requireNonNull(trackingNumber);
+        return trackingNumber.isPresent() ? Optional.of(new TrackingNumber(trackingNumber.get())) : Optional.empty();
     }
 
     /**

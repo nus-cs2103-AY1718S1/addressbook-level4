@@ -8,7 +8,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
  */
-public class Birthday {
+public class DeliveryDate {
 
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
@@ -26,7 +26,7 @@ public class Birthday {
      *
      * @throws IllegalValueException if given birthday is invalid.
      */
-    public Birthday(String birthday) throws IllegalValueException {
+    public DeliveryDate(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
         if (!isValidBirthday(trimmedBirthday)) {
@@ -47,11 +47,12 @@ public class Birthday {
         return value;
     }
 
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Birthday // instanceof handles nulls
-                && this.value.equals(((Birthday) other).value)); // state check
+                || (other instanceof DeliveryDate // instanceof handles nulls
+                && this.value.equals(((DeliveryDate) other).value)); // state check
     }
 
     @Override
