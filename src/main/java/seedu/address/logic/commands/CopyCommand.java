@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +27,7 @@ public class CopyCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 " + "\n"
             + "Output: johndoe@example.com";
 
+    public static final String MESSAGE_COPY_PERSON_SUCCESS = "Copied to clipboard: %1$s";
     private ArrayList<String> outputList = new ArrayList<>();
 
     private final ArrayList<Index> targetIndices;
@@ -52,7 +56,13 @@ public class CopyCommand extends Command {
         // outputList use semi-colon separator
         messageOutput = messageOutput.replace(",", ";");
 
-        return new CommandResult(messageOutput);
+        // copy string to clipboard
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Clipboard clipboard = toolkit.getSystemClipboard();
+        StringSelection messageOutputSelection = new StringSelection(messageOutput);
+        clipboard.setContents(messageOutputSelection, null);
+
+        return new CommandResult(String.format(MESSAGE_COPY_PERSON_SUCCESS, outputList));
     }
 
     @Override
