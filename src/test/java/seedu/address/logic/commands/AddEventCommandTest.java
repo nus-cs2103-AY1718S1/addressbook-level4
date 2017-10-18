@@ -98,7 +98,6 @@ public class AddEventCommandTest {
     private class AddEventModelStub extends ModelStub {
         @Override
         public void sortEventList()  {
-
         }
     }
 

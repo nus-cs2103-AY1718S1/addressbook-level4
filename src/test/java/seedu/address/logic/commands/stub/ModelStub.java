@@ -67,6 +67,11 @@ public class ModelStub implements Model {
             throws DuplicatePersonException {
         fail("This method should not be called.");
     }
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+        throws DuplicateEventException {
+        fail("This method should not be called.");
+    }
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
