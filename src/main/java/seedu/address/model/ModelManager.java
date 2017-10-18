@@ -40,6 +40,8 @@ public class ModelManager extends ComponentManager implements Model {
     private FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
 
+    private String currentList;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -54,6 +56,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
 
         this.userPrefs = userPrefs;
+
+        this.currentList = "list";
     }
 
     public ModelManager() {
@@ -69,6 +73,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public String getCurrentList() {
+        return currentList;
+    }
+
+    public void setCurrentList(String currentList) {
+        this.currentList = currentList;
     }
 
     /** Raises an event to indicate the model has changed */
@@ -181,6 +194,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        setCurrentList("list");
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
@@ -190,6 +204,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+        setCurrentList("blacklist");
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 

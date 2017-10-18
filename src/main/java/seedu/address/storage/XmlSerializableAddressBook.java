@@ -61,7 +61,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns a list of blacklisted people
+     * Returns a list of blacklisted people from AddressBook.
      */
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {

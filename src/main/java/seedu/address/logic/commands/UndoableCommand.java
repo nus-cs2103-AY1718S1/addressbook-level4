@@ -33,7 +33,7 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateCurrentDisplayedList(model.getCurrentList());
     }
 
     /**
@@ -48,7 +48,23 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateCurrentDisplayedList(model.getCurrentList());
+    }
+
+    /**
+     * Updates the current list in Person List Panel to reflect latest changes done.
+     *
+     * @param currentList cannot be null.
+     */
+    private void updateCurrentDisplayedList(String currentList) {
+        switch (currentList) {
+
+            case "blacklist":
+                model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+                break;
+            default:
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
     }
 
     @Override
