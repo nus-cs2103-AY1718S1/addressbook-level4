@@ -20,9 +20,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Panel containing the todolist of a person.
  */
 public class RemarkPanel extends UiPart<Region> {
-
-    private final Logger logger = LogsCenter.getLogger(RemarkPanel.class);
     private static final String FXML = "RemarkPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(RemarkPanel.class);
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
@@ -43,9 +42,9 @@ public class RemarkPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         tempPerson = event.getNewSelection().person;
         String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
-                + "---------------------------------------------------\n" ;
-        for(int i=0; i < event.getNewSelection().person.getRemark().size(); i++) {
-            if(!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
+                + "---------------------------------------------------\n";
+        for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
+            if (!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
                 printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
                         + event.getNewSelection().person.getRemark().get(i).value + "\n");
             }
@@ -60,12 +59,12 @@ public class RemarkPanel extends UiPart<Region> {
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ObservableList<ReadOnlyPerson> personList = event.data.getPersonList();
-        for(int i=0; i<personList.size(); i++) {
-            if (personList.get(i).getName().fullName.equals(tempPerson.getName().fullName)){
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getName().fullName.equals(tempPerson.getName().fullName)) {
                 String printedString = "Remarks regarding " + String.valueOf(personList.get(i).getName()) + ":\n"
-                        + "---------------------------------------------------\n" ;
-                for(int j=0; j < personList.get(i).getRemark().size(); j++) {
-                    if(!personList.get(i).getRemark().get(j).value.equals("")) {
+                        + "---------------------------------------------------\n";
+                for (int j = 0; j < personList.get(i).getRemark().size(); j++) {
+                    if (!personList.get(i).getRemark().get(j).value.equals("")) {
                         printedString = printedString.concat(j + 1 + "). "
                                 + personList.get(i).getRemark().get(j).value + "\n");
                     }

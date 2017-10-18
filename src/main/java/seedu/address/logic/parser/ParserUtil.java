@@ -103,7 +103,7 @@ public class ParserUtil {
         for (String remarkString : remarks) {
             remarkArrayList.add(new Remark(remarkString));
         }
-        if (remarkArrayList.size() < ONE_REMARK){
+        if (remarkArrayList.size() < ONE_REMARK) {
             remarkArrayList.add(new Remark(""));
         }
         return remarkArrayList;
