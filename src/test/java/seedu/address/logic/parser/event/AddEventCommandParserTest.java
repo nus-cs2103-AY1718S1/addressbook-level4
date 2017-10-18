@@ -19,7 +19,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.event.AddEventCommand;
-import seedu.address.logic.parser.AddEventCommandParser;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
