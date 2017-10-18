@@ -345,6 +345,46 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== BirthdayCommand, sortAgeCommand, sortBirthdayCommand
+
+The `BirthdayCommand`, together with `sortAgeCommand` and `sortBirthdayCommand` lies in the `commands` of `Logic`. +
+
+`BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
+
+`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest.
+
+`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age.
+
+`BirthdayCommand`, `sortAgeCommand` and `sortBirthdayCommand` does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+
+image::logic_birthday.png[width="620"]
+
+
+
+
+
+The user will not be able to enter the birthday parameter when adding contacts. +
+Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
+The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
+
+After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
+The following sequence diagram shows how the birthday operation works:
+
+image::birthday_sd.png[width="560"]
+
+
+
+
+==== Design Considerations
+
+**Aspect:** Adding Birthday parameter +
+**Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
+**Pros:** Lesser parameters to add while creating person class and easier to implement. +
+**Cons:** Slower for users to add in all the parameters +
+**Alternative 2:**  Add birthday parameter during the creation of person object. +
+**Pros:** Faster for users to add in all the parameters. +
+**Cons:** More parameters to add while creating person class and harder to implement. +
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
