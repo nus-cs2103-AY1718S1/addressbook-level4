@@ -345,6 +345,30 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::backup[]
+=== Backup storage mechanism
+The backup storage mechanism is facilitated by the `StorageManager`. It backs up the address book data automatically each time the application starts up, if there is existing data available. The backup file is saved in the same location as the main file as `addressbook.xml-backup.xml`.
+
+image::BackupAddressBookSequenceDiagram.png[width="200"]
+_Figure 3.3.1: Sequence Diagram of backing up the address book data_
+
+The `backupAddressBook` method is called in `MainApp#init()` which is called each time the application starts. The sequence diagram for this method is shown above in Figure 3.3.1. No backup is made if there is no existing data.
+
+==== Design Considerations
+
+**Aspect:** When to create the backup +
+**Alternative 1 (current choice):** on startup of the application +
+**Pros:** Guarantees that a backup is made only of a working version of the address book that the user can easily revert to, should he/she mess up the main copy while using the application. +
+**Cons:** If the user tends to make many changes within one session, none of the changes are saved in the backup.
+**Alternative 2:** Implement a command to create backup. +
+**Pros:** The backup is only created when the user desires to. +
+**Cons:** This makes the implementation pointless altogether as it is meant as a safety net for clumsy users. This alternative would only benefit the careful users, who do not require it as much in the first place. +
+**Alternative 3:** Create a backup after a fixed number of commands that change the address book. +
+**Pros:** This will create backups that are guaranteed to be recent. +
+**Cons:** It is difficult to determine the ideal number of commands to ensure that the backup is both recent enough, yet outdated enough for the user to want to restore state to should he/she mess up a command at some point. +
+// end::backup[]
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
