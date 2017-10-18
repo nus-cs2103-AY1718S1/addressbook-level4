@@ -8,7 +8,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Opens the the star wars window and streams using telnet from towel.blinkenlights.nl.
  */
-@SuppressWarnings("unchecked")
 public class StarWarsCommand extends Command {
     public static final String COMMAND_WORD = "starwars";
     public static final String COMMAND_WORD_ABBREV = "sw";

@@ -9,7 +9,6 @@ import org.apache.commons.net.telnet.TelnetClient;
  * A star wars object that includes the streamer and telnet client source of the stream.
  * @author towel.blinkenlights.nl
  */
-@SuppressWarnings("unchecked")
 public class StarWars {
 
     private static final String server = "towel.blinkenlights.nl";

@@ -207,7 +207,6 @@ public class MainWindow extends UiPart<Region> {
      * Opens the star wars window
      */
     @FXML
-    @SuppressWarnings("unchecked")
     public void handleStarWars(StarWars starWars) {
         StarWarsWindow swWindow = new StarWarsWindow(starWars);
         swWindow.show();
@@ -236,7 +235,6 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    @SuppressWarnings("unchecked")
     private void handleStarWarsEvent(StarWarsEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleStarWars(event.getStarWars());

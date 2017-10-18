@@ -20,7 +20,6 @@ import seedu.address.commons.util.FxViewUtil;
 /**
  * Controller for a star wars page
  */
-@SuppressWarnings("unchecked")
 public class StarWarsWindow extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(StarWarsWindow.class);

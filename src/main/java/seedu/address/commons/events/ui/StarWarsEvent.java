@@ -6,7 +6,6 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * An event requesting to view the star wars window.
  */
-@SuppressWarnings("unchecked")
 public class StarWarsEvent extends BaseEvent {
 
     private StarWars starWars;
