@@ -77,22 +77,23 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         selectedPerson = event.getNewSelection().person;
-        loadPersonAddress(selectedPerson);
+        loadPersonPage(selectedPerson);
     }
 
     /**
-     * Called when the user clicks on the delete button.
+     * Called when the user clicks on the button bar buttons.
      */
     @Subscribe
     private void handleButtonPressedEvent(ButtonSelectionPressedEvent event) {
         switch (event.getButtonPressed()) {
-            case "mapsButton":
-                loadPersonAddress(selectedPerson);
-                break;
-            case "searchButton":
-                loadPersonPage(selectedPerson);
-                break;
-            default: break;
+        case "mapsButton":
+            loadPersonAddress(selectedPerson);
+            break;
+        case "searchButton":
+            loadPersonPage(selectedPerson);
+            break;
+        default:
+            break;
         }
     }
 }
