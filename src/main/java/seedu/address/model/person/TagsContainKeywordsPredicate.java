@@ -20,9 +20,6 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
     private String stringifySetTags(Set<Tag> setTags) {
-        /**
-         * javadoc comment
-         */
         StringBuilder setTagsString = new StringBuilder();
         final String delimiter = " ";
 
