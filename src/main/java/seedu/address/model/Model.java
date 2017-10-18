@@ -69,6 +69,10 @@ public interface Model {
      */
     void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    ObservableList<ReadOnlyPerson> getNearbyPersons();
+
+    void updateSelectedPerson(ReadOnlyPerson person);
+
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 
     /**

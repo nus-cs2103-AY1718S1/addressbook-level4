@@ -4,10 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -42,36 +40,29 @@ public class NearbyCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
-
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
         assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
-        assertExecutionSuccess(lastPersonIndex);
+        assertExecutionSuccess(INDEX_SECOND_PERSON);
+    }
+
+    @Test
+    public void execute_noPersonSelected_failure() {
+        assertExecutionFailure(INDEX_FIRST_PERSON, Messages.MESSAGE_NO_PERSON_SELECTED);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased()));
+        Index outOfBoundsIndex = Index.fromOneBased(model.getNearbyPersons().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showFirstPersonOnly(model);
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
 
         assertExecutionSuccess(INDEX_FIRST_PERSON);
-    }
-
-    @Test
-    public void execute_invalidIndexFilteredList_failure() {
-        showFirstPersonOnly(model);
-
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test

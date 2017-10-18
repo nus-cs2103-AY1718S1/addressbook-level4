@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Set;
@@ -41,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
+    private ObservableList<ReadOnlyPerson> nearbyPersons;
     private ReadOnlyPerson selectedPerson;
 
     /**
@@ -213,6 +215,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredBlacklistedPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson selectedPerson) {
+        this.selectedPerson = selectedPerson;
+        nearbyPersons = allPersons.stream().filter(person -> person.isSameCluster(selectedPerson))
+                .collect(toCollection(FXCollections::observableArrayList));
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getNearbyPersons() {
+        return nearbyPersons;
     }
 
     @Override

@@ -258,7 +258,6 @@ public class AddressBook implements ReadOnlyAddressBook {
                 + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
-
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();

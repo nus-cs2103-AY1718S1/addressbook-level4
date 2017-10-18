@@ -17,12 +17,12 @@ public class NearbyCommand extends Command {
     public static final String COMMAND_WORD = "nearby";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the currently selected person's"
+            + ": Selects the person identified by the index number used in the currently selected person's "
             + "nearby listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected nearby Person: %1$s";
+    public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected person in same area: %1$s";
 
     private final Index targetIndex;
 
@@ -33,12 +33,17 @@ public class NearbyCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> nearbyList = model.getNearbyPersons();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (nearbyList == null || nearbyList.size() == 0) {
+            throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
+        }
+
+        if (targetIndex.getZeroBased() >= nearbyList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
         EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
 
