@@ -45,6 +45,10 @@ public class CheckCommandsParser {
         final String[] subRedoCommands = new String[] {"redo", "r"};
         final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
         final String[] subUndoCommands = new String[] {"undo", "u"};
+        final String[] subEventAddCommands = new String[] { "eventadd", "addevent" };
+        final String[] subEventDeleteCommands = new String[] { "eventdel", "delevent", "deleteevent", "eventdelete" };
+        final String[] subEventEditCommands = new String[] { "eventedit", "editevent" };
+
 
         /**
          * Sets all the strings in each command into a HashSet
@@ -61,6 +65,9 @@ public class CheckCommandsParser {
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
+        final Set<String> commandsForEventAddCommands = new HashSet<>(Arrays.asList(subEventAddCommands));
+        final Set<String> commandsForEventDeleteCommands = new HashSet<>(Arrays.asList(subEventDeleteCommands));
+        final Set<String> commandsForEventEditCommands = new HashSet<>(Arrays.asList(subEventEditCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -89,6 +96,12 @@ public class CheckCommandsParser {
             finalUserCommand = "select";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
+        } else if(!Collections.disjoint(userInputCommand, commandsForEventAddCommands)) {
+            finalUserCommand = "eventadd";
+        } else if(!Collections.disjoint(userInputCommand, commandsForEventDeleteCommands)) {
+            finalUserCommand = "eventdel";
+        } else if(!Collections.disjoint(userInputCommand, commandsForEventEditCommands)) {
+            finalUserCommand = "eventedit";
         }
         return finalUserCommand;
     }
