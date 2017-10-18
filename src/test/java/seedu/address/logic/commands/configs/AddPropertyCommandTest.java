@@ -36,8 +36,11 @@ public class AddPropertyCommandTest {
 
     @Test
     public void execute_addNewProperty_success() throws Exception {
-        // It should not throw any exception here. The command should succeed.
+        int propertyCountBefore = PropertyManager.getAllShortNames().size();
         successCommand.execute();
+        int propertyCountAfter = PropertyManager.getAllShortNames().size();
+
+        assertEquals(1, propertyCountAfter - propertyCountBefore);
     }
 
     @Test
