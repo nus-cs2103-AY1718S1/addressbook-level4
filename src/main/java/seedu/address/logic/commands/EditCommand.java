@@ -120,7 +120,9 @@ public class EditCommand extends UndoableCommand {
 
         Person personCreated = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
                 updatedDebt, updatedInterest, updatedDeadline, updatedTags);
+
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
+        personCreated.setIsBlacklisted(personToEdit.getIsBlacklisted());
         return personCreated;
     }
 

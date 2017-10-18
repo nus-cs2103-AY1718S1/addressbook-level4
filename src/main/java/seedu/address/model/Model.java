@@ -29,10 +29,16 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    /** Returns the name of current displayed list */
+    String getCurrentList();
+
+    /** Sets the name of current displayed list */
+    void setCurrentList(String currentList);
+
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
-    /** Deletes the given person. */
+    /** Deletes the given person from blacklist. */
     void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */

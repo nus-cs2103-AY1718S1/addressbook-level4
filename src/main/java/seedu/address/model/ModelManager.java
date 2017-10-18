@@ -40,10 +40,12 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final ObservableList<ReadOnlyPerson> allPersons;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
+    private FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
     private ObservableList<ReadOnlyPerson> nearbyPersons;
     private ReadOnlyPerson selectedPerson;
+
+    private String currentList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -57,9 +59,11 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         allPersons = this.addressBook.getPersonList();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
+        filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
 
         this.userPrefs = userPrefs;
+
+        this.currentList = "list";
     }
 
     public ModelManager() {
@@ -77,6 +81,23 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    /**
+     * Returns {@code String} value of the current displayed list.
+     */
+    @Override
+    public String getCurrentList() {
+        return currentList;
+    }
+
+    /**
+     * Sets {@code String} value of the current displayed list.
+     * from the value of {@param currentList}
+     */
+    @Override
+    public void setCurrentList(String currentList) {
+        this.currentList = currentList;
+    }
+
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -88,9 +109,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Deletes a specific person from blacklist in the AddressBook.
+     * @param target to be removed from blacklist.
+     * @throws PersonNotFoundException if no person is found.
+     */
     @Override
     public synchronized void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removeBlacklistedPerson(target);
+        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -101,10 +128,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Adds a specific tag person to blacklist in the AddressBook.
+     * @param person to be updated.
+     * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
+     */
     @Override
     public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addBlacklistedPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -136,6 +168,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
         // remove from master tag list in AddressBook
         addressBook.removeTag(tag);
+    }
+
+    /**
+     * Reads the main list and updates the blacklist accordingly.
+     */
+    public void syncBlacklist() {
+        filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
     }
 
     //@@author jelneo
@@ -193,15 +232,17 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        setCurrentList("list");
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * Returns an unmodifiable view of the blacklist of {@code ReadOnlyPerson} backed by the internal list of
      * {@code addressBook}
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
+        setCurrentList("blacklist");
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
@@ -211,9 +252,16 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    /**
+     * Obtains the latest list of blacklisted persons from main list and adds to {@code filteredBlacklistedPersons}
+     * Raises an {@code event} to signal the requirement for change in displayed list in {@code PersonListPanel}
+     * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
+     */
     @Override
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
+        syncBlacklist();
+        raise (new ChangeInternalListEvent("blacklist"));
         filteredBlacklistedPersons.setPredicate(predicate);
     }
 
