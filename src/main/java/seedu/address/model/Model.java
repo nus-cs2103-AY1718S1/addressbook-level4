@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -53,4 +54,14 @@ public interface Model {
      * Sets and updates the tag colors of a person
      */
     void setTagColor(boolean toSet, String tag, String color);
+
+    /**
+     * Adds appoints to a person
+     */
+    void addAppointment(Appointment appointment) throws PersonNotFoundException;
+
+    /**
+     * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time
+     */
+    ObservableList<ReadOnlyPerson> listAppointment();
 }

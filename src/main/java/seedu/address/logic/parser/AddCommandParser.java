@@ -15,6 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -53,9 +54,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Bloodtype bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Remark remark = new Remark("");
-
-            ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark);
-
+            Appointment appointment = new Appointment(name.toString());
+            ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

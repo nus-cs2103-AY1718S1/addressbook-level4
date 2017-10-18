@@ -20,6 +20,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -143,6 +144,17 @@ public class AddCommandTest {
         @Override
         public void setTagColor(boolean isOn, String tag, String color) {
             fail("This method should not be called");
+        }
+
+        @Override
+        public void addAppointment(Appointment appointment) throws PersonNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listAppointment() {
+            fail("This method should not be called");
+            return null;
         }
     }
 
