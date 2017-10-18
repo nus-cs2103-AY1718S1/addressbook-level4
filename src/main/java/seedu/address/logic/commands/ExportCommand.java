@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import seedu.address.commons.exceptions.InvalidFileExtensionException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.storage.Storage;
 
 /**
  * Exports the address book to a user defined location {@code filePath}
@@ -26,10 +27,18 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_PROBLEM_WRITING_FILE = "There is a problem exporting to the specified file path."
             + "\nMake sure the file path does not contain any punctuations or special characters.";
 
+    private Storage storage;
     private final String filePath;
 
     public ExportCommand(String filePath) {
         this.filePath = filePath;
+    }
+
+    /**
+     * Provides the dependency of a {@code Storage} to {@code ExportCommand}
+     */
+    public void setStorage(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
