@@ -78,11 +78,19 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    /**
+     * Returns {@code String} value of the current displayed list.
+     */
     @Override
     public String getCurrentList() {
         return currentList;
     }
 
+    /**
+     * Sets {@code String} value of the current displayed list.
+     * from the value of {@param currentList}
+     */
+    @Override
     public void setCurrentList(String currentList) {
         this.currentList = currentList;
     }
@@ -98,6 +106,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Deletes a specific person from blacklist in the AddressBook.
+     * @param target to be removed from blacklist.
+     * @throws PersonNotFoundException if no person is found.
+     */
     @Override
     public synchronized void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removeBlacklistedPerson(target);
@@ -112,6 +125,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Adds a specific tag person to blacklist in the AddressBook.
+     * @param person to be updated.
+     * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
+     */
     @Override
     public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addBlacklistedPerson(person);
@@ -231,6 +249,11 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    /**
+     * Obtains the latest list of blacklisted persons from main list and adds to {@code filteredBlacklistedPersons}
+     * Raises an {@code event} to signal the requirement for change in displayed list in {@code PersonListPanel}
+     * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
+     */
     @Override
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);

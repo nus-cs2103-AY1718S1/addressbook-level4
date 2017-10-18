@@ -37,7 +37,16 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
+    /**
+     * Returns true if person is blacklisted.
+     */
     boolean getIsBlacklisted();
+
+    /**
+     * Accepts {@code boolean} as parameter.
+     *
+     * Sets {@code boolean} variable as the value of {@param isBlacklisted}
+     */
     void setIsBlacklisted(boolean isBlacklisted);
 
     /**

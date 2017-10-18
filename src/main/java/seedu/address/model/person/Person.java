@@ -252,11 +252,17 @@ public class Person implements ReadOnlyPerson {
         return deadline.get();
     }
 
+    /**
+     * Returns boolean status of a person's blacklist-status.
+     */
     @Override
     public boolean getIsBlacklisted() {
         return isBlacklisted;
     }
 
+    /**
+     * Sets boolean status of a person's blacklist-status using the value of {@param isBlacklisted}.
+     */
     @Override
     public void setIsBlacklisted(boolean isBlacklisted) {
         this.isBlacklisted = isBlacklisted;

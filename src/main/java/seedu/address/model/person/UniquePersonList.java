@@ -35,11 +35,16 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    /**
+     * Returns {@code ObservableList} of all objects in list.
+     */
     public ObservableList<Person> getInternalList() {
         return internalList;
     }
 
-
+    /**
+     * Returns index of {@code ReadOnlyPerson} in list.
+     */
     public int getIndexOf(ReadOnlyPerson key) {
         return internalList.indexOf(key);
     }
