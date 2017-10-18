@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BookmarkCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ColorKeywordCommand;
 import seedu.address.logic.commands.Command;
@@ -54,6 +55,9 @@ public class AddressBookParser {
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
+
+        case BookmarkCommand.COMMAND_WORD:
+            return new BookmarkCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);

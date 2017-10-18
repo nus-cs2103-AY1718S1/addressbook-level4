@@ -10,6 +10,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FavouriteListPredicate;
 
 
 /**
@@ -25,6 +26,9 @@ public interface Model {
     /** Get a hash set of all the distinct module codes */
     HashSet<Code> getUniqueCodeSet();
 
+    /** Get a predicate for filtering favourList */
+    FavouriteListPredicate getFavouriteListPredicate();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -39,6 +43,9 @@ public interface Model {
 
     /** Adds the given lesson */
     void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
+
+    /** Bookmarks the given lesson into favourite list */
+    void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
 
     /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.

@@ -42,7 +42,6 @@ public class ViewCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
-        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
@@ -50,31 +49,38 @@ public class ViewCommand extends Command {
 
         ReadOnlyLesson toView = lastShownList.get(targetIndex.getZeroBased());
 
-        Predicate predicate;
-        String resultMessage;
+        String resultMessage = updateFilterList(toView);
 
-        switch (currentUnit) {
-
-        case LOCATION:
-            predicate = new FixedLocationPredicate(toView.getLocation());
-            resultMessage = String.format(MESSAGE_VIEW_LOCATION_SUCCESS, toView.getLocation());
-            break;
-
-        case MODULE:
-            predicate = new FixedCodePredicate(toView.getCode());
-            resultMessage = String.format(MESSAGE_VIEW_MODULE_SUCCESS, toView.getCode());
-            break;
-
-        default:
-            predicate = new ShowSpecifiedLessonPredicate(toView);
-            resultMessage = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
-        }
-
-        model.updateFilteredLessonList(predicate);
         ListingUnit.setCurrentListingUnit(LESSON);
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
         return new CommandResult(resultMessage);
     }
+
+    private String updateFilterList(ReadOnlyLesson toView) {
+
+        Predicate predicate;
+        String result;
+
+        switch (ListingUnit.getCurrentListingUnit()) {
+
+        case LOCATION:
+            predicate = new FixedLocationPredicate(toView.getLocation());
+            result = String.format(MESSAGE_VIEW_LOCATION_SUCCESS, toView.getLocation());
+            break;
+
+        case MODULE:
+            predicate = new FixedCodePredicate(toView.getCode());
+            result = String.format(MESSAGE_VIEW_MODULE_SUCCESS, toView.getCode());
+            break;
+
+        default:
+            predicate = new ShowSpecifiedLessonPredicate(toView);
+            result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
+        }
+        model.updateFilteredLessonList(predicate);
+        return result;
+    }
+
 
     @Override
     public boolean equals(Object other) {
