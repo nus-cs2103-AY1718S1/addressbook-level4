@@ -43,4 +43,11 @@ public class ListCommandTest {
         showFirstPersonOnly(model);
         assertCommandSuccess(listCommand, model, String.format(ListCommand.MESSAGE_SUCCESS, "."), expectedModel);
     }
+
+    @Test
+    public void execute_listFriends_success() {
+        listCommand = new ListCommand("friends");
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        assertCommandSuccess(listCommand, model, String.format(ListCommand.MESSAGE_SUCCESS, " with friends tag."), expectedModel);
+    }
 }

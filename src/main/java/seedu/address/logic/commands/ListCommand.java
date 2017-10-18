@@ -39,7 +39,7 @@ public class ListCommand extends Command {
         try {
             Predicate <ReadOnlyPerson> predicateShowAllTagged = model.getPredicateForTags(tagToList);
             model.updateFilteredPersonList(predicateShowAllTagged);
-            String concat = " with " + tagToList + " tag";
+            String concat = " with " + tagToList + " tag.";
             return new CommandResult(String.format(MESSAGE_SUCCESS, concat));
         } catch (IllegalValueException ive) {
             throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
