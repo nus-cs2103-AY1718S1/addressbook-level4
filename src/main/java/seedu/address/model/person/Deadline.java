@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.util.DateUtil.formatDate;
+import static seedu.address.model.util.DateUtil.isValidDateFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,10 +19,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Deadline {
 
     public static final String NO_DEADLINE_SET = "No deadline set.";
-    public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
             "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
-    public static final String DEADLINE_VALIDATION_REGEX = "([0-1][0-9](-)){2}(\\d{4})";
     public final String value;
 
     /**
@@ -32,13 +32,10 @@ public class Deadline {
     public Deadline(String deadline) throws IllegalValueException {
         requireNonNull(deadline);
         String trimmedDeadline = deadline.trim();
-        if (trimmedDeadline.equals(NO_DEADLINE_SET)) {
-            this.value = trimmedDeadline;
+        if (!isValidDeadline(trimmedDeadline)) {
+            throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
         } else {
-            if (!isValidDeadline(trimmedDeadline)) {
-                throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
-            }
-            this.value = trimmedDeadline;
+            this.value = formatDate(trimmedDeadline);
         }
     }
 
@@ -46,7 +43,7 @@ public class Deadline {
      * Returns true if a given string is a valid person deadline.
      */
     public static boolean isValidDeadline(String test) {
-        return test.matches(DEADLINE_VALIDATION_REGEX);
+        return isValidDateFormat(test);
     }
 
     @Override
@@ -66,15 +63,4 @@ public class Deadline {
         return value.hashCode();
     }
 
-    /**
-     * @return formatted date value
-     */
-    private String formatDate(String dateToFormat) {
-        SimpleDateFormat ft = new SimpleDateFormat(DATE_FORMAT);
-        int year = Integer.parseInt(dateToFormat.substring(6, 10));
-        int day = Integer.parseInt(dateToFormat.substring(0, 2));
-        int month = Integer.parseInt(dateToFormat.substring(3, 5)) - 1;
-        Date date = new GregorianCalendar(year, month, day).getTime();
-        return ft.format(date);
-    }
 }
