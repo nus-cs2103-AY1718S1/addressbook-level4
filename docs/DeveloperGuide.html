@@ -1,0 +1,2648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>AddressBook Level 4 - Developer Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:initial}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px 0}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:.4em .75em 0 .75em;line-height:1;vertical-align:top}
+.colist>table tr>td:first-of-type img{max-width:initial}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>AddressBook Level 4 - Developer Guide</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+</div>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="#_setting_up">1. Setting up</a>
+<ul class="sectlevel2">
+<li><a href="#_prerequisites">1.1. Prerequisites</a></li>
+<li><a href="#_setting_up_the_project_in_your_computer">1.2. Setting up the project in your computer</a></li>
+<li><a href="#_verifying_the_setup">1.3. Verifying the setup</a></li>
+<li><a href="#_configurations_to_do_before_writing_code">1.4. Configurations to do before writing code</a></li>
+</ul>
+</li>
+<li><a href="#_design">2. Design</a>
+<ul class="sectlevel2">
+<li><a href="#_architecture">2.1. Architecture</a></li>
+<li><a href="#_ui_component">2.2. UI component</a></li>
+<li><a href="#_logic_component">2.3. Logic component</a></li>
+<li><a href="#_model_component">2.4. Model component</a></li>
+<li><a href="#_storage_component">2.5. Storage component</a></li>
+<li><a href="#_common_classes">2.6. Common classes</a></li>
+</ul>
+</li>
+<li><a href="#_implementation">3. Implementation</a>
+<ul class="sectlevel2">
+<li><a href="#_undo_redo_mechanism">3.1. Undo/Redo mechanism</a></li>
+<li><a href="#_add_multiple_contacts">3.2. Add multiple contacts</a></li>
+<li><a href="#_delete_multiple_contacts">3.3. Delete multiple contacts</a></li>
+<li><a href="#_logging">3.4. Logging</a></li>
+<li><a href="#_configuration">3.5. Configuration</a></li>
+</ul>
+</li>
+<li><a href="#_documentation">4. Documentation</a>
+<ul class="sectlevel2">
+<li><a href="#_editing_documentation">4.1. Editing Documentation</a></li>
+<li><a href="#_publishing_documentation">4.2. Publishing Documentation</a></li>
+<li><a href="#_converting_documentation_to_pdf_format">4.3. Converting Documentation to PDF format</a></li>
+</ul>
+</li>
+<li><a href="#_testing">5. Testing</a>
+<ul class="sectlevel2">
+<li><a href="#_running_tests">5.1. Running Tests</a></li>
+<li><a href="#_types_of_tests">5.2. Types of tests</a></li>
+<li><a href="#_troubleshooting_testing">5.3. Troubleshooting Testing</a></li>
+</ul>
+</li>
+<li><a href="#_dev_ops">6. Dev Ops</a>
+<ul class="sectlevel2">
+<li><a href="#_build_automation">6.1. Build Automation</a></li>
+<li><a href="#_continuous_integration">6.2. Continuous Integration</a></li>
+<li><a href="#_making_a_release">6.3. Making a Release</a></li>
+<li><a href="#_managing_dependencies">6.4. Managing Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#_suggested_programming_tasks_to_get_started">Appendix A: Suggested Programming Tasks to Get Started</a>
+<ul class="sectlevel2">
+<li><a href="#_improving_each_component">A.1. Improving each component</a></li>
+<li><a href="#_creating_a_new_command_code_remark_code">A.2. Creating a new command: <code>remark</code></a></li>
+</ul>
+</li>
+<li><a href="#_user_stories">Appendix B: User Stories</a></li>
+<li><a href="#_use_cases">Appendix C: Use Cases</a></li>
+<li><a href="#_non_functional_requirements">Appendix D: Non Functional Requirements</a></li>
+<li><a href="#_glossary">Appendix E: Glossary</a></li>
+<li><a href="#_product_survey">Appendix F: Product Survey</a></li>
+</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_setting_up">1. Setting up</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_prerequisites">1.1. Prerequisites</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>JDK <code>1.8.0_60</code></strong> or later</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Having any Java 8 version is not enough.<br>
+This app will not work with earlier versions of Java 8.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>IntelliJ</strong> IDE</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+IntelliJ by default has Gradle and JavaFx plugins installed.<br>
+Do not disable them. If you have disabled them, go to <code>File</code> &gt; <code>Settings</code> &gt; <code>Plugins</code> to re-enable them.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_up_the_project_in_your_computer">1.2. Setting up the project in your computer</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fork this repo, and clone the fork to your computer</p>
+</li>
+<li>
+<p>Open IntelliJ (if you are not in the welcome screen, click <code>File</code> &gt; <code>Close Project</code> to close the existing project dialog first)</p>
+</li>
+<li>
+<p>Set up the correct JDK version for Gradle</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Click <code>Configure</code> &gt; <code>Project Defaults</code> &gt; <code>Project Structure</code></p>
+</li>
+<li>
+<p>Click <code>New&#8230;&#8203;</code> and find the directory of the JDK</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <code>Import Project</code></p>
+</li>
+<li>
+<p>Locate the <code>build.gradle</code> file and select it. Click <code>OK</code></p>
+</li>
+<li>
+<p>Click <code>Open as Project</code></p>
+</li>
+<li>
+<p>Click <code>OK</code> to accept the default settings</p>
+</li>
+<li>
+<p>Open a console and run the command <code>gradlew processResources</code> (Mac/Linux: <code>./gradlew processResources</code>). It should finish with the <code>BUILD SUCCESSFUL</code> message.<br>
+This will generate all resources required by the application and tests.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verifying_the_setup">1.3. Verifying the setup</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the <code>seedu.address.MainApp</code> and try a few commands</p>
+</li>
+<li>
+<p><a href="#testing">Run the tests</a> to ensure they all pass.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configurations_to_do_before_writing_code">1.4. Configurations to do before writing code</h3>
+<div class="sect3">
+<h4 id="_configuring_the_coding_style">1.4.1. Configuring the coding style</h4>
+<div class="paragraph">
+<p>This project follows <a href="https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md">oss-generic coding standards</a>. IntelliJ&#8217;s default style is mostly compliant with ours but it uses a different import order from ours. To rectify,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to <code>File</code> &gt; <code>Settings&#8230;&#8203;</code> (Windows/Linux), or <code>IntelliJ IDEA</code> &gt; <code>Preferences&#8230;&#8203;</code> (macOS)</p>
+</li>
+<li>
+<p>Select <code>Editor</code> &gt; <code>Code Style</code> &gt; <code>Java</code></p>
+</li>
+<li>
+<p>Click on the <code>Imports</code> tab to set the order</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For <code>Class count to use import with '*'</code> and <code>Names count to use static import with '*'</code>: Set to <code>999</code> to prevent IntelliJ from contracting the import statements</p>
+</li>
+<li>
+<p>For <code>Import Layout</code>: The order is <code>import static all other imports</code>, <code>import java.*</code>, <code>import javax.*</code>, <code>import org.*</code>, <code>import com.*</code>, <code>import all other imports</code>. Add a <code>&lt;blank line&gt;</code> between each <code>import</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Optionally, you can follow the <a href="UsingCheckstyle.html">UsingCheckstyle.adoc</a> document to configure Intellij to check style-compliance as you write code.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updating_documentation_to_match_your_fork">1.4.2. Updating documentation to match your fork</h4>
+<div class="paragraph">
+<p>After forking the repo, links in the documentation will still point to the <code>se-edu/addressbook-level4</code> repo. If you plan to develop this as a separate product (i.e. instead of contributing to the <code>se-edu/addressbook-level4</code>) , you should replace the URL in the variable <code>repoURL</code> in <code>DeveloperGuide.adoc</code> and <code>UserGuide.adoc</code> with the URL of your fork.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_ci">1.4.3. Setting up CI</h4>
+<div class="paragraph">
+<p>Set up Travis to perform Continuous Integration (CI) for your fork. See <a href="UsingTravis.html">UsingTravis.adoc</a> to learn how to set it up.</p>
+</div>
+<div class="paragraph">
+<p>Optionally, you can set up AppVeyor as a second CI (see <a href="UsingAppVeyor.html">UsingAppVeyor.adoc</a>).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_getting_started_with_coding">1.4.4. Getting started with coding</h4>
+<div class="paragraph">
+<p>When you are ready to start coding,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Get some sense of the overall design by reading the <a href="#architecture">Architecture</a> section.</p>
+</li>
+<li>
+<p>Take a look at the section <a href="#suggested-programming-tasks-to-get-started">Suggested Programming Tasks to Get Started</a>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_design">2. Design</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_architecture">2.1. Architecture</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/Architecture.png" alt="Architecture" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.1.1 : Architecture Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>The <strong><em>Architecture Diagram</em></strong> given above explains the high-level design of the App. Given below is a quick overview of each component.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The <code>.pptx</code> files used to create diagrams in this document can be found in the <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/docs/diagrams/">diagrams</a> folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose <code>Save as picture</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code>Main</code> has only one class called <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>At app launch: Initializes the components in the correct sequence, and connects them up with each other.</p>
+</li>
+<li>
+<p>At shut down: Shuts down the components and invokes cleanup method where necessary.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="#common-classes"><strong><code>Commons</code></strong></a> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>EventsCenter</code> : This class (written using <a href="https://github.com/google/guava/wiki/EventBusExplained">Google&#8217;s Event Bus library</a>) is used by components to communicate with other components using events (i.e. a form of <em>Event Driven</em> design)</p>
+</li>
+<li>
+<p><code>LogsCenter</code> : Used by many classes to write log messages to the App&#8217;s log file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The rest of the App consists of four components.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#ui-component"><strong><code>UI</code></strong></a> : The UI of the App.</p>
+</li>
+<li>
+<p><a href="#logic-component"><strong><code>Logic</code></strong></a> : The command executor.</p>
+</li>
+<li>
+<p><a href="#model-component"><strong><code>Model</code></strong></a> : Holds the data of the App in-memory.</p>
+</li>
+<li>
+<p><a href="#storage-component"><strong><code>Storage</code></strong></a> : Reads data from, and writes data to, the hard disk.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of the four components</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Defines its <em>API</em> in an <code>interface</code> with the same name as the Component.</p>
+</li>
+<li>
+<p>Exposes its functionality using a <code>{Component Name}Manager</code> class.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, the <code>Logic</code> component (see the class diagram given below) defines it&#8217;s API in the <code>Logic.java</code> interface and exposes its functionality using the <code>LogicManager.java</code> class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicClassDiagram.png" alt="LogicClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.1.2 : Class Diagram of the Logic Component</em></p>
+</div>
+<h4 id="_events_driven_nature_of_the_design" class="discrete">Events-Driven nature of the design</h4>
+<div class="paragraph">
+<p>The <em>Sequence Diagram</em> below shows how the components interact for the scenario where the user issues the command <code>delete 1</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SDforDeletePerson.png" alt="SDforDeletePerson" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.1.3a : Component interactions for <code>delete 1</code> command (part 1)</em></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</code> when the Address Book data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The diagram below shows how the <code>EventsCenter</code> reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SDforDeletePersonEventHandling.png" alt="SDforDeletePersonEventHandling" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.1.3b : Component interactions for <code>delete 1</code> command (part 2)</em></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Note how the event is propagated through the <code>EventsCenter</code> to the <code>Storage</code> and <code>UI</code> without <code>Model</code> having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The sections below give more details of each component.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ui_component">2.2. UI component</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/UiClassDiagram.png" alt="UiClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.2.1 : Structure of the UI Component</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+</div>
+<div class="paragraph">
+<p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>UI</code> component,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Executes user commands using the <code>Logic</code> component.</p>
+</li>
+<li>
+<p>Binds itself to some data in the <code>Model</code> so that the UI can auto-update when data in the <code>Model</code> change.</p>
+</li>
+<li>
+<p>Responds to events raised from various parts of the App and updates the UI accordingly.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_logic_component">2.3. Logic component</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicClassDiagram.png" alt="LogicClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.3.1 : Structure of the Logic Component</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning <code>XYZCommand</code> and <code>Command</code> in Figure 2.3.1</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> :
+<a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/Logic.java"><code>Logic.java</code></a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>Logic</code> uses the <code>AddressBookParser</code> class to parse the user command.</p>
+</li>
+<li>
+<p>This results in a <code>Command</code> object which is executed by the <code>LogicManager</code>.</p>
+</li>
+<li>
+<p>The command execution can affect the <code>Model</code> (e.g. adding a person) and/or raise events.</p>
+</li>
+<li>
+<p>The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Given below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DeletePersonSdForLogic.png" alt="DeletePersonSdForLogic" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.3.1 : Interactions Inside the Logic Component for the <code>delete 1</code> Command</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_model_component">2.4. Model component</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/ModelClassDiagram.png" alt="ModelClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.4.1 : Structure of the Model Component</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>Model</code>,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
+</li>
+<li>
+<p>stores the Address Book data.</p>
+</li>
+<li>
+<p>exposes an unmodifiable <code>ObservableList&lt;ReadOnlyPerson&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+</li>
+<li>
+<p>does not depend on any of the other three components.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_storage_component">2.5. Storage component</h3>
+<div class="imageblock">
+<div class="content">
+<img src="images/StorageClassDiagram.png" alt="StorageClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 2.5.1 : Structure of the Storage Component</em></p>
+</div>
+<div class="paragraph">
+<p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The <code>Storage</code> component,</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>can save <code>UserPref</code> objects in json format and read it back.</p>
+</li>
+<li>
+<p>can save the Address Book data in xml format and read it back.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_common_classes">2.6. Common classes</h3>
+<div class="paragraph">
+<p>Classes used by multiple components are in the <code>seedu.addressbook.commons</code> package.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation">3. Implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section describes some noteworthy details on how certain features are implemented.</p>
+</div>
+<div class="sect2">
+<h3 id="_undo_redo_mechanism">3.1. Undo/Redo mechanism</h3>
+<div class="paragraph">
+<p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>UndoRedoStack</code> only deals with <code>UndoableCommands</code>. Commands that cannot be undone will inherit from <code>Command</code> instead. The following diagram shows the inheritance diagram for commands:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the diagram, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
+</div>
+<div class="paragraph">
+<p>Commands that are not undoable are implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With the extra layer, the commands that are undoable are implemented this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application. The <code>UndoRedoStack</code> will be empty at the beginning.</p>
+</div>
+<div class="paragraph">
+<p>The user executes a new <code>UndoableCommand</code>, <code>delete 5</code>, to delete the 5th person in the address book. The current state of the address book is saved before the <code>delete 5</code> command executes. The <code>delete 5</code> command will then be pushed onto the <code>undoStack</code> (the current state is saved together with the command).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoStartingStackDiagram.png" alt="UndoRedoStartingStackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new person.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If a command fails its execution, it will not be pushed to the <code>UndoRedoStack</code> at all.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The user now decides that adding the person was a mistake, and decides to undo that action using <code>undo</code>.</p>
+</div>
+<div class="paragraph">
+<p>We will pop the most recent command out of the <code>undoStack</code> and push it back to the <code>redoStack</code>. We will restore the address book to the state before the <code>add</code> command executed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If the <code>undoStack</code> is empty, then there are no other commands left to be undone, and an <code>Exception</code> will be thrown when popping the <code>undoStack</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the undo operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The redo does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+If the <code>redoStack</code> is empty, then there are no other commands left to be redone, and an <code>Exception</code> will be thrown when popping the <code>redoStack</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The user now decides to execute a new command, <code>clear</code>. As before, <code>clear</code> will be pushed into the <code>undoStack</code>. This time the <code>redoStack</code> is no longer empty. It will be purged as it no longer make sense to redo the <code>add n/David</code> command (this is the behavior that most modern desktop applications follow).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoNewCommand2StackDiagram.png" alt="UndoRedoNewCommand2StackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="200">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_design_considerations">3.1.1. Design Considerations</h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>UndoableCommand</code><br>
+<strong>Alternative 1 (current choice):</strong> Add a new abstract method <code>executeUndoableCommand()</code><br>
+<strong>Pros:</strong> We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with <code>Command</code> do not have to know that <code>executeUndoableCommand()</code> exist.<br>
+<strong>Cons:</strong> Hard for new developers to understand the template pattern.<br>
+<strong>Alternative 2:</strong> Just override <code>execute()</code><br>
+<strong>Pros:</strong> Does not involve the template pattern, easier for new developers to understand.<br>
+<strong>Cons:</strong> Classes that inherit from <code>UndoableCommand</code> must remember to call <code>super.execute()</code>, or lose the ability to undo/redo.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How undo &amp; redo executes<br>
+<strong>Alternative 1 (current choice):</strong> Saves the entire address book.<br>
+<strong>Pros:</strong> Easy to implement.<br>
+<strong>Cons:</strong> May have performance issues in terms of memory usage.<br>
+<strong>Alternative 2:</strong> Individual command knows how to undo/redo by itself.<br>
+<strong>Pros:</strong> Will use less memory (e.g. for <code>delete</code>, just save the person being deleted).<br>
+<strong>Cons:</strong> We must ensure that the implementation of each individual command are correct.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Type of commands that can be undone/redone<br>
+<strong>Alternative 1 (current choice):</strong> Only include commands that modifies the address book (<code>add</code>, <code>clear</code>, <code>edit</code>).<br>
+<strong>Pros:</strong> We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).<br>
+<strong>Cons:</strong> User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing <code>undo</code>.<br>
+<strong>Alternative 2:</strong> Include all commands.<br>
+<strong>Pros:</strong> Might be more intuitive for the user.<br>
+<strong>Cons:</strong> User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view.<br>
+<strong>Additional Info:</strong> See our discussion  <a href="https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672">here</a>.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Data structure to support the undo/redo commands<br>
+<strong>Alternative 1 (current choice):</strong> Use separate stack for undo and redo<br>
+<strong>Pros:</strong> Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.<br>
+<strong>Cons:</strong> Logic is duplicated twice. For example, when a new command is executed, we must remember to update both <code>HistoryManager</code> and <code>UndoRedoStack</code>.<br>
+<strong>Alternative 2:</strong> Use <code>HistoryManager</code> for undo/redo<br>
+<strong>Pros:</strong> We do not need to maintain a separate stack, and just reuse what is already in the codebase.<br>
+<strong>Cons:</strong> Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as <code>HistoryManager</code> now needs to do two different things.<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_multiple_contacts">3.2. Add multiple contacts</h3>
+<div class="paragraph">
+<p>Adding multiple contacts is used so as to allow the user to add multiple contacts with the user of a single command, saving time and without the need to manually enter each entry.
+<code>AddMultipleByTsvCommand</code> extends <code>UndoableCommand</code> so it can be undone using <code>undo</code> function. By keying the path to the file containing the contacts, the command can parse values of each contact at every line and add them to the address book.</p>
+</div>
+<div class="paragraph">
+<p>A valid file must satisfy the following conditions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Must be a tsv, or in tab separated value form, that is each attribute of a contact (<code>name</code>, <code>phone</code>,&#8230;&#8203;) is separated by a tab</p>
+</li>
+<li>
+<p>The first line must contains the following values, <strong>in this specific order</strong>, corresponding to contact attributes, separated by tab: <code>name</code>   <code>phone</code> <code>email</code> <code>address</code>   <code>tag</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A valid format can be as follow. It is highly advisable that user enter the data in Excel and export as <code>Text (Tab delimited)</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">name</th>
+<th class="tableblock halign-left valign-top">phone</th>
+<th class="tableblock halign-left valign-top">email</th>
+<th class="tableblock halign-left valign-top">address</th>
+<th class="tableblock halign-left valign-top">tag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">John Doe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">98765432</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:johnd@example.com">johnd@example.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">John street, block 123, #01-01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">friend, neighbor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Betsy Crowe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1234567</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="mailto:betsycrowe@example.com">betsycrowe@example.com</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Newgate Prison</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">friend, criminal</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code>AddMultipleByTsvCommand</code> can throw the following exception:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NoSuchElementException</code>: Just as <code>AddCommand</code>, this happens when <code>name</code> or <code>phone</code> or <code>email</code> is missing, and that specific entry will not be added.</p>
+</li>
+<li>
+<p><code>IOException</code>: This happens when the system cannot find the file specified by users, and no entry will be added.</p>
+</li>
+<li>
+<p><code>DuplicatePersonException</code>: This happens when any entry has already been added, and that specific entry will not be added.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the <code>AddMultipleByTsvCommand</code> works</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddMultipleByTsvSequenceDiagram.PNG" alt="AddMultipleByTsvSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Users specify the path to their list of contact as the only argument of the command. <code>AddressBookParser</code> parses this argument and create a new instance of <code>AddMultipleByTsvCommandParser</code> with the given argument as <code>contactTsvFilePath</code>. <code>AddMultipleByTsvCommandParser</code> then creates a new instance of <code>ContactTsvReader</code> with the given <code>contactTsvFilePath</code> and calls <code>readContactFromFile()</code> to start parsing.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>readContactFromFile</code> throws <code>NoSuchElementException</code> and <code>IOException</code>. Refer to the above for details.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After <code>readContactFromFile</code> is finished, <code>AddMultipleByTsvCommandParser</code> calls <code>getToAddPeople()</code> for <code>toAddPeople</code> (a list of people to add) and <code>getFailedEntries</code> for failedEntries (a list of integer of entries that were failed to add due to errors). <code>AddMultipleByTsvCommandParser</code> creates a new instance of <code>addMultipleByTsvCommand</code> given <code>toAddPeople</code> and <code>failedEntries</code>. Within this instance, <code>addPerson</code> will be called for each person in <code>toAddPeople</code>. After this, <code>addMultipleByTsvCommand</code> creates a new instance of <code>CommandResult</code> and sends the <code>result</code> back to <code>LogicManager</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_delete_multiple_contacts">3.3. Delete multiple contacts</h3>
+<div class="paragraph">
+<p>Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.</p>
+</div>
+<div class="paragraph">
+<p>Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word <code>deleteMul</code> along with <code>indexes</code>, the command word will be detected in the <code>AddressBookParser</code> class where the arguments (indexes in this case) will be passed over to the <code>DeleteMultipleCommandParser</code> class.</p>
+</div>
+<div class="paragraph">
+<p>As our indexes are intended to take in multiple index values, we will use a <code>String[] listOfIndex = trimmedArgs.split("\\s+");</code> to split the arguments into individual indexes and store them into the String array for use. We will use a <code>Collections.reverse(list);</code> to ensure that the user will be able to delete the correct indexes. The <code>ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;(Arrays.asList(listOfIndex));</code> is used to convert the list of index into an arrayList for use by the collections utility.</p>
+</div>
+<div class="paragraph">
+<p>We will now create a <code>ArrayList&lt;Index&gt; arrayOfIndex = new ArrayList&lt;Index&gt;();</code> to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the <code>listOfIndex</code> arraylist is in a string format, we will need to convert them into an integer format before storing it into the <code>ArrayList&lt;Index&gt; arrayOfIndex</code>. This arrayList will be returned to the <code>DeleteMultipleCommand</code> class for use.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>DeleteMultipleCommand</code> class, the commandResult method is used which compares the index with the <code>lastShownList</code> in the model, similar to the method used in the <code>deleteCommand</code>. However, as <code>DeleteMultipleCommand</code> is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a <code>String listOfDeletedContacts</code> which will be used to display the results on the UI.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_logging">3.4. Logging</h3>
+<div class="paragraph">
+<p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#configuration">Configuration</a>)</p>
+</li>
+<li>
+<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
+</li>
+<li>
+<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Logging Levels</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
+</li>
+<li>
+<p><code>WARNING</code> : Can continue, but with caution</p>
+</li>
+<li>
+<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
+</li>
+<li>
+<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">3.5. Configuration</h3>
+<div class="paragraph">
+<p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_documentation">4. Documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We use asciidoc for writing documentation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_editing_documentation">4.1. Editing Documentation</h3>
+<div class="paragraph">
+<p>See <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to learn how to render <code>.adoc</code> files locally to preview the end result of your edits.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your <code>.adoc</code> files in real-time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_publishing_documentation">4.2. Publishing Documentation</h3>
+<div class="paragraph">
+<p>See <a href="UsingTravis.html#deploying-github-pages">UsingTravis.adoc</a> to learn how to deploy GitHub Pages using Travis.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_converting_documentation_to_pdf_format">4.3. Converting Documentation to PDF format</h3>
+<div class="paragraph">
+<p>We use <a href="https://www.google.com/chrome/browser/desktop/">Google Chrome</a> for converting documentation to PDF format, as Chrome&#8217;s PDF engine preserves hyperlinks used in webpages.</p>
+</div>
+<div class="paragraph">
+<p>Here are the steps to convert the project documentation files to PDF format.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Follow the instructions in <a href="UsingGradle.html#rendering-asciidoc-files">UsingGradle.adoc</a> to convert the AsciiDoc files in the <code>docs/</code> directory to HTML format.</p>
+</li>
+<li>
+<p>Go to your generated HTML files in the <code>build/docs</code> folder, right click on them and select <code>Open with</code> &#8594; <code>Google Chrome</code>.</p>
+</li>
+<li>
+<p>Within Chrome, click on the <code>Print</code> option in Chrome&#8217;s menu.</p>
+</li>
+<li>
+<p>Set the destination to <code>Save as PDF</code>, then click <code>Save</code> to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/chrome_save_as_pdf.png" alt="chrome save as pdf" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.6.1 : Saving documentation as PDF files in Chrome</em></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing">5. Testing</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_running_tests">5.1. Running Tests</h3>
+<div class="paragraph">
+<p>There are three ways to run tests.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Method 1: Using IntelliJ JUnit test runner</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>To run all tests, right-click on the <code>src/test/java</code> folder and choose <code>Run 'All Tests'</code></p>
+</li>
+<li>
+<p>To run a subset of tests, you can right-click on a test package, test class, or a test and choose <code>Run 'ABC'</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Method 2: Using Gradle</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a console and run the command <code>gradlew clean allTests</code> (Mac/Linux: <code>./gradlew clean allTests</code>)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+See <a href="UsingGradle.html">UsingGradle.adoc</a> for more info on how to run tests using Gradle.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Method 3: Using Gradle (headless)</strong></p>
+</div>
+<div class="paragraph">
+<p>Thanks to the <a href="https://github.com/TestFX/TestFX">TestFX</a> library we use, our GUI tests can be run in the <em>headless</em> mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.</p>
+</div>
+<div class="paragraph">
+<p>To run tests in headless mode, open a console and run the command <code>gradlew clean headless allTests</code> (Mac/Linux: <code>./gradlew clean headless allTests</code>)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_types_of_tests">5.2. Types of tests</h3>
+<div class="paragraph">
+<p>We have two types of tests:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>GUI Tests</strong> - These are tests involving the GUI. They include,</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><em>System Tests</em> that test the entire App by simulating user actions on the GUI. These are in the <code>systemtests</code> package.</p>
+</li>
+<li>
+<p><em>Unit tests</em> that test the individual components. These are in <code>seedu.address.ui</code> package.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>Non-GUI Tests</strong> - These are tests not involving the GUI. They include,</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><em>Unit tests</em> targeting the lowest level methods/classes.<br>
+e.g. <code>seedu.address.commons.StringUtilTest</code></p>
+</li>
+<li>
+<p><em>Integration tests</em> that are checking the integration of multiple code units (those code units are assumed to be working).<br>
+e.g. <code>seedu.address.storage.StorageManagerTest</code></p>
+</li>
+<li>
+<p>Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together.<br>
+e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_troubleshooting_testing">5.3. Troubleshooting Testing</h3>
+<div class="paragraph">
+<p><strong>Problem: <code>HelpWindowTest</code> fails with a <code>NullPointerException</code>.</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reason: One of its dependencies, <code>UserGuide.html</code> in <code>src/main/resources/docs</code> is missing.</p>
+</li>
+<li>
+<p>Solution: Execute Gradle task <code>processResources</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dev_ops">6. Dev Ops</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_build_automation">6.1. Build Automation</h3>
+<div class="paragraph">
+<p>See <a href="UsingGradle.html">UsingGradle.adoc</a> to learn how to use Gradle for build automation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_integration">6.2. Continuous Integration</h3>
+<div class="paragraph">
+<p>We use <a href="https://travis-ci.org/">Travis CI</a> and <a href="https://www.appveyor.com/">AppVeyor</a> to perform <em>Continuous Integration</em> on our projects. See <a href="UsingTravis.html">UsingTravis.adoc</a> and <a href="UsingAppVeyor.html">UsingAppVeyor.adoc</a> for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_making_a_release">6.3. Making a Release</h3>
+<div class="paragraph">
+<p>Here are the steps to create a new release.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update the version number in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp.java</code></a>.</p>
+</li>
+<li>
+<p>Generate a JAR file <a href="UsingGradle.html#creating-the-jar-file">using Gradle</a>.</p>
+</li>
+<li>
+<p>Tag the repo with the version number. e.g. <code>v0.1</code></p>
+</li>
+<li>
+<p><a href="https://help.github.com/articles/creating-releases/">Create a new release using GitHub</a> and upload the JAR file you created.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_dependencies">6.4. Managing Dependencies</h3>
+<div class="paragraph">
+<p>A project often depends on third-party libraries. For example, Address Book depends on the <a href="http://wiki.fasterxml.com/JacksonHome">Jackson library</a> for XML parsing. Managing these <em>dependencies</em> can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives.<br>
+a. Include those libraries in the repo (this bloats the repo size)<br>
+b. Require developers to download those libraries manually (this creates extra work for developers)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_suggested_programming_tasks_to_get_started">Appendix A: Suggested Programming Tasks to Get Started</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Suggested path for new programmers:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section <a href="#improving-each-component">Improving a Component</a>.</p>
+</li>
+<li>
+<p>Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section <a href="#creating-a-new-command-code-remark-code">Creating a new command: <code>remark</code></a> explains how to go about adding such a feature.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_improving_each_component">A.1. Improving each component</h3>
+<div class="paragraph">
+<p>Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).</p>
+</div>
+<h4 id="_code_logic_code_component" class="discrete"><code>Logic</code> component</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Do take a look at the <a href="#logic-component">Design: Logic Component</a> section before attempting to modify the <code>Logic</code> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a shorthand equivalent alias for each of the individual commands. For example, besides typing <code>clear</code>, the user can also type <code>c</code> to remove all persons in the list.</p>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hints</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Just like we store each individual command word constant <code>COMMAND_WORD</code> inside <code>*Command.java</code> (e.g.  <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/commands/FindCommand.java"><code>FindCommand#COMMAND_WORD</code></a>, <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java"><code>DeleteCommand#COMMAND_WORD</code></a>), you need a new constant for aliases as well (e.g. <code>FindCommand#COMMAND_ALIAS</code>).</p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> is responsible for analyzing command words.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Modify the switch statement in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser#parseCommand(String)</code></a> such that both the proper command word and alias can be used to execute the same intended command.</p>
+</li>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/590/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<h4 id="_code_model_code_component" class="discrete"><code>Model</code> component</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Do take a look at the <a href="#model-component">Design: Model Component</a> section before attempting to modify the <code>Model</code> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a <code>removeTag(Tag)</code> method. The specified tag will be removed from everyone in the address book.</p>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hints</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model</code></a> API needs to be updated.</p>
+</li>
+<li>
+<p>Find out which of the existing API methods in  <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the implementation of <code>deleteTag(Tag)</code> method in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Loop through each person, and remove the <code>tag</code> from each person.</p>
+</li>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/591/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<h4 id="_code_ui_code_component" class="discrete"><code>Ui</code> component</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Do take a look at the <a href="#ui-component">Design: UI Component</a> section before attempting to modify the <code>UI</code> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Use different colors for different tags inside person cards. For example, <code>friends</code> tags can be all in grey, and <code>colleagues</code> tags can be all in red.</p>
+<div class="paragraph">
+<p><strong>Before</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/getting-started-ui-tag-before.png" alt="getting started ui tag before" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>After</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/getting-started-ui-tag-after.png" alt="getting started ui tag after" width="300">
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hints</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The tag labels are created inside <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard#initTags(ReadOnlyPerson)</code></a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
+</li>
+<li>
+<p>Use the .css attribute <code>-fx-background-color</code> to add a color.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/592/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> such that <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay</code></a> can show a different style on error (currently it shows the same regardless of errors).</p>
+<div class="paragraph">
+<p><strong>Before</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/getting-started-ui-result-before.png" alt="getting started ui result before" width="200">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>After</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/getting-started-ui-result-after.png" alt="getting started ui result after" width="200">
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hints</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> is raised by <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/CommandBox.java"><code>CommandBox</code></a> which also knows whether the result is a success or failure, and is caught by <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay</code></a> which is where we want to change the style to.</p>
+</li>
+<li>
+<p>Refer to <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/CommandBox.java"><code>CommandBox</code></a> for an example on how to display an error.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> 's constructor so that users of the event can indicate whether an error has occurred.</p>
+</li>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay#handleNewResultAvailableEvent(event)</code></a> to react to this event appropriately.</p>
+</li>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/593/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Modify the <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to show the total number of people in the address book.</p>
+<div class="paragraph">
+<p><strong>Before</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/getting-started-ui-status-before.png" alt="getting started ui status before" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>After</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/getting-started-ui-status-after.png" alt="getting started ui status after" width="500">
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hints</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/resources/view/StatusBarFooter.fxml"><code>StatusBarFooter.fxml</code></a> will need a new <code>StatusBar</code>. Be sure to set the <code>GridPane.columnIndex</code> properly for each <code>StatusBar</code> to avoid misalignment!</p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Modify the constructor of <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to take in the number of persons when the application just started.</p>
+</li>
+<li>
+<p>Use <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)</code></a> to update the number of persons whenever there are new changes to the addressbook.</p>
+</li>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/596/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<h4 id="_code_storage_code_component" class="discrete"><code>Storage</code> component</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Do take a look at the <a href="#storage-component">Design: Storage Component</a> section before attempting to modify the <code>Storage</code> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a new method <code>backupAddressBook(ReadOnlyAddressBook)</code>, so that the address book can be saved in a fixed temporary location.</p>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hint</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the API method in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/storage/AddressBookStorage.java"><code>AddressBookStorage</code></a> interface.</p>
+</li>
+<li>
+<p>Implement the logic in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> class.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/594/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_new_command_code_remark_code">A.2. Creating a new command: <code>remark</code></h3>
+<div class="paragraph">
+<p>By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.</p>
+</div>
+<div class="sect3">
+<h4 id="_description">A.2.1. Description</h4>
+<div class="paragraph">
+<p>Edits the remark for a person specified in the <code>INDEX</code>.<br>
+Format: <code>remark INDEX r/[REMARK]</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>remark 1 r/Likes to drink coffee.</code><br>
+Edits the remark for the first person to <code>Likes to drink coffee.</code></p>
+</li>
+<li>
+<p><code>remark 1 r/</code><br>
+Removes the remark for the first person.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_step_by_step_instructions">A.2.2. Step-by-step Instructions</h4>
+<div class="sect4">
+<h5 id="_step_1_logic_teach_the_app_to_accept_remark_which_does_nothing">[Step 1] Logic: Teach the app to accept 'remark' which does nothing</h5>
+<div class="paragraph">
+<p>Let&#8217;s start by teaching the application how to parse a <code>remark</code> command. We will add the logic of <code>remark</code> later.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a <code>RemarkCommand</code> that extends <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/commands/UndoableCommand.java"><code>UndoableCommand</code></a>. Upon execution, it should just throw an <code>Exception</code>.</p>
+</li>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to accept a <code>RemarkCommand</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add <code>RemarkCommandTest</code> that tests that <code>executeUndoableCommand()</code> throws an Exception.</p>
+</li>
+<li>
+<p>Add new test method to <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_2_logic_teach_the_app_to_accept_remark_arguments">[Step 2] Logic: Teach the app to accept 'remark' arguments</h5>
+<div class="paragraph">
+<p>Let&#8217;s teach the application to parse arguments that our <code>remark</code> command will accept. E.g. <code>1 r/Likes to drink coffee.</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modify <code>RemarkCommand</code> to take in an <code>Index</code> and <code>String</code> and print those two parameters as the error message.</p>
+</li>
+<li>
+<p>Add <code>RemarkCommandParser</code> that knows how to parse two arguments, one index and one with prefix 'r/'.</p>
+</li>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to use the newly implemented <code>RemarkCommandParser</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modify <code>RemarkCommandTest</code> to test the <code>RemarkCommand#equals()</code> method.</p>
+</li>
+<li>
+<p>Add <code>RemarkCommandParserTest</code> that tests different boundary values
+for <code>RemarkCommandParser</code>.</p>
+</li>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a> to test that the correct command is generated according to the user input.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_3_ui_add_a_placeholder_for_remark_in_code_personcard_code">[Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code></h5>
+<div class="paragraph">
+<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/resources/view/PersonListCard.fxml"><code>PersonListCard.fxml</code></a>.</p>
+</li>
+<li>
+<p>Add FXML annotation in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> to tie the variable to the actual label.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/test/java/guitests/guihandles/PersonCardHandle.java"><code>PersonCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_4_model_add_code_remark_code_class">[Step 4] Model: Add <code>Remark</code> class</h5>
+<div class="paragraph">
+<p>We have to properly encapsulate the remark in our <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/ReadOnlyPerson.java"><code>ReadOnlyPerson</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
+</li>
+<li>
+<p>Modify <code>RemarkCommand</code> to now take in a <code>Remark</code> instead of a <code>String</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add test for <code>Remark</code>, to test the <code>Remark#equals()</code> method.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_5_model_modify_code_readonlyperson_code_to_support_a_code_remark_code_field">[Step 5] Model: Modify <code>ReadOnlyPerson</code> to support a <code>Remark</code> field</h5>
+<div class="paragraph">
+<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/ReadOnlyPerson.java"><code>ReadOnlyPerson</code></a>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add three methods <code>setRemark(Remark)</code>, <code>getRemark()</code> and <code>remarkProperty()</code>. Be sure to implement these newly created methods in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/ReadOnlyPerson.java"><code>Person</code></a>, which implements the <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/ReadOnlyPerson.java"><code>ReadOnlyPerson</code></a> interface.</p>
+</li>
+<li>
+<p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the person will be created without a remark).</p>
+</li>
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>addressBook.xml</code> so that the application will load the sample data when you launch it.)</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_6_storage_add_code_remark_code_field_to_code_xmladaptedperson_code_class">[Step 6] Storage: Add <code>Remark</code> field to <code>XmlAdaptedPerson</code> class</h5>
+<div class="paragraph">
+<p>We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/storage/XmlAdaptedPerson.java"><code>XmlAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a new Xml field for <code>Remark</code>.</p>
+</li>
+<li>
+<p>Be sure to modify the logic of the constructor and <code>toModelType()</code>, which handles the conversion to/from  <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/ReadOnlyPerson.java"><code>ReadOnlyPerson</code></a>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Fix <code>validAddressBook.xml</code> such that the XML tests will not fail due to a missing <code>&lt;remark&gt;</code> element.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_7_ui_connect_code_remark_code_field_to_code_personcard_code">[Step 7] Ui: Connect <code>Remark</code> field to <code>PersonCard</code></h5>
+<div class="paragraph">
+<p>Our remark label in <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard#bindListeners()</code></a> to add the binding for <code>remark</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Modify <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java"><code>GuiTestAssert#assertCardDisplaysPerson(&#8230;&#8203;)</code></a> so that it will compare the remark label.</p>
+</li>
+<li>
+<p>In <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/test/java/seedu/address/ui/PersonCardTest.java"><code>PersonCardTest</code></a>, call <code>personWithTags.setRemark(ALICE.getRemark())</code> to test that changes in the <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/model/person/ReadOnlyPerson.java"><code>Person</code></a> 's remark correctly updates the corresponding <a href="https://github.com/CS2103AUG2017-T10-B4/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_step_8_logic_implement_code_remarkcommand_execute_code_logic">[Step 8] Logic: Implement <code>RemarkCommand#execute()</code> logic</h5>
+<div class="paragraph">
+<p>We now have everything set up&#8230;&#8203; but we still can&#8217;t modify the remarks. Let&#8217;s finish it up by adding in actual logic for our <code>remark</code> command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Main:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Replace the logic in <code>RemarkCommand#execute()</code> (that currently just throws an <code>Exception</code>), with the actual logic to modify the remarks of a person.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Tests:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update <code>RemarkCommandTest</code> to test that the <code>execute()</code> logic works.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_full_solution">A.2.3. Full Solution</h4>
+<div class="paragraph">
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/599">PR</a> for the step-by-step solution.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_user_stories">Appendix B: User Stories</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Priorities: High (must have) - <code>* * *</code>, Medium (nice to have) - <code>* *</code>, Low (unlikely to have) - <code>*</code></p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 59%;">
+<colgroup>
+<col style="width: 22%;">
+<col style="width: 23%;">
+<col style="width: 25%;">
+<col style="width: 30%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">As a &#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">I want to &#8230;&#8203;</th>
+<th class="tableblock halign-left valign-top">So that I can&#8230;&#8203;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">new user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see usage instructions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refer to instructions when I forget how to use the App</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a new person</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remove entries that I no longer need</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a person by name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of persons without having to go through the entire list</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">access the help function</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">use the address book more efficiently.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add multiple contacts at once</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">save time in adding contacts to address book.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete multiple contacts at once</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">without having to clear the entire list.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a person’s contact details by specifying parameters other than name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">person can still be found in event of naming mistake.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a person’s special dates by specifying his name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">can prepare something special for him.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hide <a href="#private-contact-detail">private contact details</a> by default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minimize chance of someone else seeing them by accident</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">undo a command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">get back the contact I just deleted</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redo a command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">do not have to retype the same command</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit my contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">update the information of my contacts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set certain contact details to be private</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ensure their confidentiality.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sort persons by name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate a person easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">advanced user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">migrate contacts from address book to my email account</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">store their email address and send them email when necessary.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">upload the faces of contacts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">can identify them easily.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add contacts with the same name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add all my friends.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add more than 1 phone number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add multiple phone numbers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add more than 1 email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">save time adding emails for contacts with multiple emails.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">create groups in the address book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">categorise contacts into groups.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">export all the contacts’ special dates to Google Calendar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keep track of all the special dates and my events on one platform.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">new user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">insert a few letters for the command and it will autofill</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">help me to better remember and use the commands.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">insert a postal code for a contact’s address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">address portion will be filled automatically, so that I can save time in keying in the entire address.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keep a recently deleted list of contacts deleted in the past 30 days</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if I delete a contact by mistake, it can be retrieved.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">move a contact from one group to another</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">save time copying and pasting contacts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">share a contact and all the parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">other people can get the contact.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_use_cases">Appendix C: Use Cases</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>(For all use cases below, the <strong>System</strong> is the <code>AddressBook</code> and the <strong>Actor</strong> is the <code>user</code>, unless specified otherwise)</p>
+</div>
+<h3 id="_use_case_delete_person" class="discrete">Use case: Delete person</h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to delete a specific person in the list</p>
+</li>
+<li>
+<p>AddressBook deletes the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<h3 id="_use_case_add_person" class="discrete">Use case: Add person</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add a person by entering information.</p>
+</li>
+<li>
+<p>AddressBook adds the person.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="_use_case_clear" class="discrete">Use Case: Clear</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to clear the AddressBook.</p>
+</li>
+<li>
+<p>AddressBook clears all the contacts.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="_use_case_edit_person" class="discrete">Use Case: Edit person</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to edit a contact in the AddressBook by listing the required parameters.</p>
+</li>
+<li>
+<p>AddressBook edits the contact.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="_use_case_find_name" class="discrete">Use Case: Find name</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to find a contact by entering their name or part of their name.</p>
+</li>
+<li>
+<p>AddressBook returns the contact&#8217;s details and the location on the list.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="_use_case_help" class="discrete">Use Case: Help</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to display description of every available command.</p>
+</li>
+<li>
+<p>AddressBook opens the help page.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<h3 id="_use_case_history" class="discrete">Use Case: History</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User request to display previous commands.</p>
+</li>
+<li>
+<p>AddressBook displays a list of previously entered commands.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_non_functional_requirements">Appendix D: Non Functional Requirements</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Should work on any <a href="#mainstream-os">mainstream OS</a> as long as it has Java <code>1.8.0_60</code> or higher installed.</p>
+</li>
+<li>
+<p>Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.</p>
+</li>
+<li>
+<p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
+</li>
+<li>
+<p>System should respond within 2 seconds</p>
+</li>
+<li>
+<p>Should have an easy to follow user guide</p>
+</li>
+<li>
+<p>System should be able to keep all private tagged information confidential.</p>
+</li>
+<li>
+<p>System should open the help page when user enters an invalid entry.</p>
+</li>
+<li>
+<p>System should be easy to maintain in event of malfunction.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_glossary">Appendix E: Glossary</h2>
+<div class="sectionbody">
+<div id="mainstream-os" class="paragraph">
+<p>Mainstream OS</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Windows, Linux, Unix, OS-X</pre>
+</div>
+</div>
+<div id="private-contact-detail" class="paragraph">
+<p>Private contact detail</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>A contact detail that is not meant to be shared with others</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_product_survey">Appendix F: Product Survey</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Product Name</strong></p>
+</div>
+<div class="paragraph">
+<p>Author: &#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>Pros:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Cons:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-10-19 00:52:41 Malay Peninsula Standard Time
+</div>
+</div>
+</body>
+</html>
