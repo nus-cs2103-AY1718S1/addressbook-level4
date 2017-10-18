@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -17,9 +18,12 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.property.EventNameContainsKeywordsPredicate;
 import seedu.address.model.property.NameContainsKeywordsPredicate;
 import seedu.address.model.property.PropertyManager;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -55,15 +59,25 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String NAME_DESC_EVENT1 = " " + PREFIX_NAME + VALID_NAME_EVENT1;
+    public static final String DATE_DESC_EVENT1 = " " + PREFIX_DATE_TIME + VALID_DATE_EVENT1;
+    public static final String VENUE_DESC_EVENT1 = " " + PREFIX_ADDRESS + VALID_VENUE_EVENT1;
+    public static final String NAME_DESC_EVENT2 = " " + PREFIX_NAME + VALID_NAME_EVENT2;
+    public static final String DATE_DESC_EVENT2 = " " + PREFIX_DATE_TIME + VALID_DATE_EVENT2;
+    public static final String VENUE_DESC_EVENT2 = " " + PREFIX_ADDRESS + VALID_VENUE_EVENT2;
+
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE_TIME + "20102004 03:30pm"; // "pm/am not allowed"
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT1;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT2;
 
     public static final String VALID_CONFIG_TAG_COLOR = " --set-tag-color ";
     public static final String VALID_TAG_COLOR = " #7db9a1";
@@ -87,6 +101,10 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_EVENT1 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1).withTime(VALID_DATE_EVENT1)
+               .withVenue(VALID_VENUE_EVENT1).build();
+        DESC_EVENT2 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT2).withTime(VALID_DATE_EVENT2)
+                .withVenue(VALID_VENUE_EVENT2).build();
     }
 
     /**
@@ -139,6 +157,16 @@ public class CommandTestUtil {
 
         assert model.getFilteredPersonList().size() == 1;
     }
+    /**
+     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstEventOnly(Model model) {
+        ReadOnlyEvent event = model.getAddressBook().getEventList().get(0);
+        final String[] splitName = event.getName().getValue().split("\\s+");
+        model.updateFilteredEventsList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredEventList().size() == 1;
+    }
 
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
@@ -149,6 +177,17 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+    /**
+     * Deletes the first event in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstEvent(Model model) {
+        ReadOnlyEvent firstEvent = model.getFilteredEventList().get(0);
+        try {
+            model.deleteEvent(firstEvent);
+        } catch (EventNotFoundException enfe) {
+            throw new AssertionError("Event in filtered list must exist in model.", enfe);
         }
     }
 }
