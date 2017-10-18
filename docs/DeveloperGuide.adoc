@@ -345,6 +345,32 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::studentparentcontact[]
+=== Add student/parent phone contact mechanism
+
+The student/parent phone contact mechanism is facilitated by making changes
+to the Phone class in the model component. It enables the input
+of the phone contact information of the student and his/her parent.
+
+Validity of the input string for phone is checked in the following method in the Phone class:
+[source,java]
+----
+public static boolean isValidPhone(String test) {
+        return test.matches(PHONE_VALIDATION_REGEX);
+    }
+----
+where the `PHONE_VALIDATION_REGEX` refers to:
+[source,java]
+----
+public static final String PHONE_VALIDATION_REGEX =
+"(Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+----
+The regex ensures that the user must adheres to the
+correct format of `p/student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)`, and that the
+phone numbers must be exactly 8 digits long.
+
+The phone contact information of the student and his/her parent will be displayed below the student's name in the person card.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
