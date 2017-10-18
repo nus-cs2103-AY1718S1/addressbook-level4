@@ -371,7 +371,7 @@ The implementation of meeting card starts of from creating 'Meeting' class which
 Firstly, the Meeting class is created with object properties like 'Name of meeting', 'DateTime'(which uses java.time), 'person to meet', 'phone number' and 'location of meeting'. We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager. Then, these properties of are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
 The list of meeting cards are assigned to the panel at the right of the program. This list of meetings are always sorted according to date and time.
 
-image::MeetingCard.png[width="800"]
+image::MeetingCard.png[width="400"]
 
 To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
