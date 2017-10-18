@@ -18,12 +18,12 @@ import java.util.Set;
  */
 public class LessonBuilder { //TODO: change the name to LessonBuilder
 
-    public static final String DEFAULT_CODE = "CS2103T";
+    public static final String DEFAULT_CODE = "MA1101R";
     public static final String DEFAULT_CLASS_TYPE = "LEC";
     public static final String DEFAULT_LOCATION = "LT27";
     public static final String DEFAULT_GROUP = "1";
     public static final String DEFAULT_TIME_SLOT = "FRI[1400-1600]";
-    public static final String DEFAULT_LECTURER = "Prof Wang Jun Ming";
+    public static final String DEFAULT_LECTURER = "Ma Siu Lun";
 
     private Lesson lesson;
 

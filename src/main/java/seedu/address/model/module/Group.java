@@ -1,8 +1,8 @@
 package seedu.address.model.module;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Lesson's group number in the application.
@@ -12,7 +12,7 @@ public class Group {
 
     public static final String MESSAGE_GROUP_CONSTRAINTS =
             "Group numbers can only contain numbers, and should be at least 1 digits long";
-    public static final String GROUP_VALIDATION_REGEX = "[\\d]*";
+    public static final String GROUP_VALIDATION_REGEX = "[\\d]+";
     public final String value;
 
     /**
