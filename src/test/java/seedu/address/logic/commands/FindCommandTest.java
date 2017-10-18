@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_LESSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalLessons.*;
 
 import java.util.Arrays;
@@ -55,15 +55,15 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+    public void execute_zeroKeywords_noLessonFound() {
+        String expectedMessage = String.format(MESSAGE_LESSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+    public void execute_multipleKeywords_multipleLessonsFound() {
+        String expectedMessage = String.format(MESSAGE_LESSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("1101R");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(MA1101R_L1, MA1101R_L2, MA1101R_T1, MA1101R_T2));
     }
@@ -81,7 +81,7 @@ public class FindCommandTest {
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
+     *     - the {@code FilteredList<ReadOnlyLesson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyLesson> expectedList) {

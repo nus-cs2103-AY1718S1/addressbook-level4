@@ -31,9 +31,9 @@ public class ModelHelper {
     }
 
     /**
-     * Returns a predicate that evaluates to true if this {@code ReadOnlyPerson} equals to {@code other}.
+     * Returns a predicate that evaluates to true if this {@code ReadOnlyLesson} equals to {@code other}.
      */
     private static Predicate<ReadOnlyLesson> getPredicateMatching(ReadOnlyLesson other) {
-        return person -> person.equals(other);
+        return lesson -> lesson.equals(other);
     }
 }

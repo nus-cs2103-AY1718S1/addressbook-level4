@@ -67,19 +67,19 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 .withLecturers(VALID_LECTURER_MA1101R).build();
         assertCommandSuccess(command, index, editedLesson);
 
-        /* Case: undo editing the last person in the list -> last person restored */
+        /* Case: undo editing the last lesson in the list -> last lesson restored */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo editing the last person in the list -> last person edited again */
+        /* Case: redo editing the last lesson in the list -> last lesson edited again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updateLesson(
                 getModel().getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()), editedLesson);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: edit a person with new values same as existing values -> edited */
+        /* Case: edit a lesson with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101;
         assertCommandSuccess(command, index, TYPICAL_MA1101R);
@@ -99,8 +99,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered person list, edit index within bounds of address book and person list -> edited */
-        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        /* Case: filtered lesson list, edit index within bounds of address book and lesson list -> edited */
+        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         index = INDEX_FIRST_LESSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + CODE_DESC_MA1101R;
@@ -108,26 +108,26 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedLesson = new LessonBuilder(lessonToEdit).withCode(VALID_CODE_MA1101R).build();
         assertCommandSuccess(command, index, editedLesson);
 
-        /* Case: filtered person list, edit index within bounds of address book but out of bounds of person list
+        /* Case: filtered lesson list, edit index within bounds of address book but out of bounds of lesson list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         int invalidIndex = getModel().getAddressBook().getLessonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
                 Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
 
-        /* --------------------- Performing edit operation while a person card is selected -------------------------- */
+        /* --------------------- Performing edit operation while a lesson card is selected -------------------------- */
 
-        /* Case: selects first card in the person list, edit a person -> edited, card selection remains unchanged but
+        /* Case: selects first card in the lesson list, edit a lesson -> edited, card selection remains unchanged but
          * browser url changes
          */
-        showAllPersons();
+        showAllLessons();
         index = INDEX_FIRST_LESSON;
-        selectPerson(index);
+        selectLesson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
         // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new person's name
+        // browser's url is updated to reflect the new lesson's name
         assertCommandSuccess(command, index, TYPICAL_MA1101R, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -177,7 +177,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_LECTURER_DESC,
                 Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
 
-        /* Case: edit a person with new values same as another person's values -> rejected */
+        /* Case: edit a lesson with new values same as another lesson's values -> rejected */
         executeCommand(LessonUtil.getAddCommand(TYPICAL_MA1101R));
         assertTrue(getModel().getAddressBook().getLessonList().contains(TYPICAL_MA1101R));
         index = INDEX_FIRST_LESSON;
@@ -186,27 +186,27 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_LESSON);
 
-        /* Case: edit a person with new values same as another person's values but with different tags -> rejected */
+        /* Case: edit a lesson with new values same as another lesson's values but with different tags -> rejected */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased()  + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_LESSON);
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyPerson, Index)} except that
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyLesson, Index)} except that
      * the browser url and selected card remain unchanged.
      * @param toEdit the index of the current model's filtered list
      * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyLesson, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedPerson) {
-        assertCommandSuccess(command, toEdit, editedPerson, null);
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson) {
+        assertCommandSuccess(command, toEdit, editedLesson, null);
     }
 
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
      * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the person at index {@code toEdit} being
-     * updated to values specified {@code editedPerson}.<br>
+     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
+     * updated to values specified {@code editedLesson}.<br>
      * @param toEdit the index of the current model's filtered list.
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
@@ -219,7 +219,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
         } catch (DuplicateLessonException | LessonNotFoundException e) {
             throw new IllegalArgumentException(
-                    "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
+                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
         }
 
         assertCommandSuccess(command, expectedModel,

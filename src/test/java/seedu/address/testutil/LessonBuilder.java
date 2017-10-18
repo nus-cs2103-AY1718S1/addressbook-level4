@@ -66,7 +66,7 @@ public class LessonBuilder { //TODO: change the name to LessonBuilder
      */
     public LessonBuilder withLecturers(String... lecturers) {
         try {
-            this.lesson.setTags(SampleDataUtil.getLecturerSet(lecturers));//TODO: need to change the setTag method name to setLecturer in Lesson class
+            this.lesson.setLecturers(SampleDataUtil.getLecturerSet(lecturers));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("lecturers' names are expected to be unique.");
         }

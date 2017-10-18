@@ -131,9 +131,9 @@ public class Lesson implements ReadOnlyLesson {
     }
 
     /**
-     * Replaces this person's tags with the tags in the argument tag set.
+     * Replaces this lesson's lecturers with the lecturers in the argument lecturer set.
      */
-    public void setTags(Set<Lecturer> replacement) {
+    public void setLecturers(Set<Lecturer> replacement) {
         lecturers.set(new UniqueLecturerList(replacement));
     }
 

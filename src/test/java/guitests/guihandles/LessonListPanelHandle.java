@@ -8,30 +8,30 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
+ * Provides a handle for {@code LessonListPanel} containing the list of {@code LessonCard}.
  */
-public class PersonListPanelHandle extends NodeHandle<ListView<LessonListCard>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+public class LessonListPanelHandle extends NodeHandle<ListView<LessonListCard>> {
+    public static final String LESSON_LIST_VIEW_ID = "#lessonListView";
 
     private Optional<LessonListCard> lastRememberedSelectedLessonListCard;
 
-    public PersonListPanelHandle(ListView<LessonListCard> lessonListPanelNode) {
+    public LessonListPanelHandle(ListView<LessonListCard> lessonListPanelNode) {
         super(lessonListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code PersonCardHandle}.
+     * Returns a handle to the selected {@code LessonCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      */
-    public PersonCardHandle getHandleToSelectedCard() {
+    public LessonCardHandle getHandleToSelectedCard() {
         List<LessonListCard> lessonList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (lessonList.size() != 1) {
-            throw new AssertionError("Person list size expected 1.");
+            throw new AssertionError("Lesson list size expected 1.");
         }
 
-        return new PersonCardHandle(lessonList.get(0).getRoot());
+        return new LessonCardHandle(lessonList.get(0).getRoot());
     }
 
     /**
@@ -55,7 +55,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<LessonListCard>> 
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the listview to display and select the lesson.
      */
     public void navigateToCard(ReadOnlyLesson lesson) {
         List<LessonListCard> cards = getRootNode().getItems();
@@ -73,34 +73,34 @@ public class PersonListPanelHandle extends NodeHandle<ListView<LessonListCard>> 
     }
 
     /**
-     * Returns the person card handle of a person associated with the {@code index} in the list.
+     * Returns the lesson card handle of a lesson associated with the {@code index} in the list.
      */
-    public PersonCardHandle getLessonListCardHandle(int index) {
+    public LessonCardHandle getLessonListCardHandle(int index) {
         return getLessonListCardHandle(getRootNode().getItems().get(index).lesson);
     }
 
     /**
-     * Returns the {@code PersonCardHandle} of the specified {@code person} in the list.
+     * Returns the {@code LessonCardHandle} of the specified {@code lesson} in the list.
      */
-    public PersonCardHandle getLessonListCardHandle(ReadOnlyLesson lesson) {
-        Optional<PersonCardHandle> handle = getRootNode().getItems().stream()
+    public LessonCardHandle getLessonListCardHandle(ReadOnlyLesson lesson) {
+        Optional<LessonCardHandle> handle = getRootNode().getItems().stream()
                 .filter(card -> card.lesson.equals(lesson))
-                .map(card -> new PersonCardHandle(card.getRoot()))
+                .map(card -> new LessonCardHandle(card.getRoot()))
                 .findFirst();
-        return handle.orElseThrow(() -> new IllegalArgumentException("Person does not exist."));
+        return handle.orElseThrow(() -> new IllegalArgumentException("Lesson does not exist."));
     }
 
     /**
-     * Selects the {@code PersonCard} at {@code index} in the list.
+     * Selects the {@code LessonCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 
     /**
-     * Remembers the selected {@code PersonCard} in the list.
+     * Remembers the selected {@code LessonCard} in the list.
      */
-    public void rememberSelectedPersonCard() {
+    public void rememberSelectedLessonCard() {
         List<LessonListCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
@@ -111,10 +111,10 @@ public class PersonListPanelHandle extends NodeHandle<ListView<LessonListCard>> 
     }
 
     /**
-     * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedPersonCard()} call.
+     * Returns true if the selected {@code LessonCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedLessonCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
+    public boolean isSelectedLessonCardChanged() {
         List<LessonListCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
