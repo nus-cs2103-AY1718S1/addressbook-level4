@@ -42,7 +42,7 @@ public class ConfigCommandParserTest {
 
         // Test for AddPropertyCommand (without using customize constraintMessage and regex).
         expected = new AddPropertyCommand(VALID_NEW_PROPERTY_NO_REGEX.trim(), "m",
-                "major", DEFAULT_MESSAGE, DEFAULT_REGEX);
+                "major", String.format(DEFAULT_MESSAGE, "major"), DEFAULT_REGEX);
         assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY_NO_REGEX, expected);
 
         // Test for ImportCalenderCommand

@@ -116,10 +116,10 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
                 || ParserUtil.arePrefixesAbsent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
         }
-        String constraintMessage = argMultimap.getValue(PREFIX_MESSAGE).orElse(DEFAULT_MESSAGE);
+        String message = argMultimap.getValue(PREFIX_MESSAGE).orElse(String.format(DEFAULT_MESSAGE, fullName));
         String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
 
-        return new AddPropertyCommand(value, shortName, fullName, constraintMessage, regex);
+        return new AddPropertyCommand(value, shortName, fullName, message, regex);
     }
 
     /**

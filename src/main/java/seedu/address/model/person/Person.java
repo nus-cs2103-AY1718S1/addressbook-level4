@@ -17,7 +17,6 @@ import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
-import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
