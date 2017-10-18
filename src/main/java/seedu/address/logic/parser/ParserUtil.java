@@ -15,6 +15,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.StartDate;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -89,5 +92,32 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> DESCRIPTION} into an {@code Optional<Description>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Description parseDescription(String description) throws IllegalValueException {
+        requireNonNull(description);
+        return new Description(description);
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static StartDate parseStartDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? new StartDate(date.get()) : new StartDate("");
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Deadline parseDeadline(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? new Deadline(date.get()) : new Deadline("");
     }
 }

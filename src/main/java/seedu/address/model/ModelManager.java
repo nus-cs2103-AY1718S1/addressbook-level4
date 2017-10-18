@@ -18,6 +18,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyTask> filteredTasks;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -40,6 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
     }
 
     public ModelManager() {
@@ -57,7 +62,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -99,6 +106,28 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+        addressBook.removeTask(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+        addressBook.addTask(task);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
+
+        addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -116,6 +145,23 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Task List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyTask} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+        return FXCollections.unmodifiableObservableList(filteredTasks);
+    }
+
+    @Override
+    public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+        requireNonNull(predicate);
+        filteredTasks.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -131,7 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredTasks.equals(other.filteredTasks);
     }
-
 }

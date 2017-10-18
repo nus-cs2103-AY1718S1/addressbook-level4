@@ -3,9 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -52,6 +54,18 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+
+    public static final String VALID_DESCRIPTION_INTERNSHIP = "Apply for Google internship";
+    public static final String VALID_DESCRIPTION_GRAD_SCHOOL = "Graduate school applications";
+    public static final String VALID_STARTDATE_INTERNSHIP = "20-10-2017";
+    public static final String VALID_STARTDATE_GRAD_SCHOOL = "12-09-2017";
+    public static final String VALID_DEADLINE_INTERNSHIP = "03-12-2017";
+    public static final String VALID_DEADLINE_GRAD_SCHOOL = "01-01-2018";
+
+    public static final String STARTDATE_DESC_INTERNSHIP = PREFIX_START_DATE + VALID_STARTDATE_INTERNSHIP;
+    public static final String STARTDATE_DESC_GRAD_SCHOOL = PREFIX_START_DATE + VALID_STARTDATE_GRAD_SCHOOL;
+    public static final String DEADLINE_DESC_INTERNSHIP = PREFIX_DEADLINE + VALID_STARTDATE_INTERNSHIP;
+    public static final String DEADLINE_DESC_GRAD_SCHOOL = PREFIX_DEADLINE + VALID_STARTDATE_GRAD_SCHOOL;
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
