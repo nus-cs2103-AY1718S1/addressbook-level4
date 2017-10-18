@@ -376,7 +376,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 === Generic Property
 
-We are using a genetic `Property` class to support **arbitrary field** feature.
+We are using a generic `Property` class to support **arbitrary field** feature.
 
 ==== Inspiration
 
@@ -389,8 +389,29 @@ type all other information in the _so-called_ `Description` or `Details` field. 
 so will make the information stored messy. The application is used to organize personal information conveniently. It is
 a major drawback if the data are not stored (and thus presented) to users in a well-organized way.
 
+Learning from many modern database implementations, we should think of the data as two tables: one for *contacts* and the
+other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
+all their different properties/fields are the columns.
+
 ==== Design Considerations
 
+1. Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
+the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
+(like `Name`, `Email`, `Phone`, etc.) can inherit from it. It is shown that such design decreases code duplicate a lot.
+
+2. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
+usually have a separate database reserved for the database server system itself. We must store similar information somewhere
+as well. Thus, we create a `PropertyManager` to store these "metadata", including short names, full names, constraint
+messages and regular expressions used for input validation. They are all `static` variables because there should only be
+one copy of these "metadata". We will waste a lot of resources if we store these "metadata" with each instance of the
+`Property` class.
+
+3. _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application
+and users do not need any additional setup steps to use them.
+
+4. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
+own customize fields. They should have the freedom to arbitrarily choose things like short name, full name, etc. They can
+easily add/edit these properties of each contact stored in the application, just like the _pre-loaded_ ones.
 
 
 === Configuration
