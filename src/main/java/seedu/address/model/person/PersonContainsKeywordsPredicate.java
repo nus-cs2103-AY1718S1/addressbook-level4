@@ -23,7 +23,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     private boolean checkName(Name personName, String keyword) {
-        return personName.toString().toLowerCase().contains(keyword.toLowerCase());
+        return personName.toString().toLowerCase().contains(keyword.trim().toLowerCase());
     }
 
     @Override
