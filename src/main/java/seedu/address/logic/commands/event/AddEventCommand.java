@@ -34,8 +34,8 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_TAG + "important";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This event already" +
-            " exists";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already"
+            + " exists";
 
     private final Event toAdd;
 
