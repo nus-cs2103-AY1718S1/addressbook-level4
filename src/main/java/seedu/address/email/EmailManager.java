@@ -8,6 +8,7 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Hashtable;
 import java.util.Properties;
 
 public class EmailManager implements Email {
@@ -16,22 +17,29 @@ public class EmailManager implements Email {
             + "2. Your email and password combination is not correct\n"
             + "3. Allow less secure apps is not enable in your Gmail account";
     private String currentEmail;
+    private String currentEmailProvider;
     private Authenticator currentAuthenticator;
     private Properties properties_SMTP;
     private Properties properties_IMAP;
+    private Hashtable<String, String> hostHashTable;
 
     public EmailManager() {
         currentEmail = null;
+        currentEmailProvider = null;
         currentAuthenticator = null;
         properties_SMTP = new Properties();
         properties_IMAP = System.getProperties();
-        init();
+
+        initHostHashTable();
     }
 
 
     @Override
     public void login(String email, String password) throws LoginFailedException {
-        Authenticator newAuthenticator = new javax.mail.Authenticator() {
+        init(email);
+
+        Authenticator newAuthenticator =
+                new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(email, password);
             }
@@ -41,7 +49,7 @@ public class EmailManager implements Email {
 
         try {
             Store store = session.getStore("imaps");
-            store.connect("imap.googlemail.com", email, password);
+            store.connect(hostHashTable.get(currentEmailProvider), email, password);
             this.currentEmail = email;
             this.currentAuthenticator = newAuthenticator;
         } catch (NoSuchProviderException e) {
@@ -98,12 +106,33 @@ public class EmailManager implements Email {
         return (currentAuthenticator != null);
     }
 
-    private void init() {
-        this.properties_IMAP.setProperty("mail.store.protocol", "imaps");
+    private void init(String email) {
+        String domain = (((email.split("@"))[1]).split("\\."))[0];
 
-        this.properties_SMTP.put("mail.smtp.auth", "true");
-        this.properties_SMTP.put("mail.smtp.starttls.enable", "true");
-        this.properties_SMTP.put("mail.smtp.host", "smtp.gmail.com");
-        this.properties_SMTP.put("mail.smtp.port", "587");
+        switch (domain) {
+            case "gmail":
+                this.currentEmailProvider = "gmail";
+                this.properties_IMAP.setProperty("mail.store.protocol", "imaps");
+                this.properties_SMTP.put("mail.smtp.auth", "true");
+                this.properties_SMTP.put("mail.smtp.starttls.enable", "true");
+                this.properties_SMTP.put("mail.smtp.host", "smtp.gmail.com");
+                this.properties_SMTP.put("mail.smtp.port", "587");
+                break;
+            case "yahoo":
+                this.currentEmailProvider = "yahoo";
+                this.properties_IMAP.setProperty("mail.store.protocol", "imaps");
+                this.properties_SMTP.put("mail.smtp.auth", "true");
+                this.properties_SMTP.put("mail.smtp.starttls.enable", "true");
+                this.properties_SMTP.put("mail.smtp.host", "smtp.yahoo.com");
+                this.properties_SMTP.put("mail.smtp.port", "465");
+                break;
+            default:
+        }
+    }
+
+    private void initHostHashTable() {
+        this.hostHashTable = new Hashtable<String, String>();
+        hostHashTable.put("gmail", "imap.gmail.com");
+        hostHashTable.put("yahoo", "imap.mail.yahoo.com");
     }
 }

@@ -13,7 +13,8 @@ public class EmailManagerTest {
     private Email emailManager = new EmailManager();
     private String correctEmail = "cs2103testacc@gmail.com";
     private String correctPass = "testpass";
-    private String wrongEmail = "phungtuanhoang1996@gmail.com";
+    private String wrongEmail = "phungtuanhoang1996@gmail." +
+            "com";
     private String wrongPass = "thisisnotmypassword";
 
     @Test
