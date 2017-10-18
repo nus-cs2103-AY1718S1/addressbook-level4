@@ -295,6 +295,10 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
+== Features Since v1.2
+
+* Please add in features here
+
 == Features Coming in v2.0
 
 In `Ark v2.0`, the delivery vendor will be able to do the following: +
