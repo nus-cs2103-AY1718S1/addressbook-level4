@@ -5,6 +5,10 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Number} matches any of the keywords given.
+ */
+
 public class NumberContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
