@@ -3,6 +3,9 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -47,6 +50,19 @@ public class ParserUtilTest {
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void arePrefixesPresentAbsent_allPresent_success() {
+        ArgumentMultimap map = new ArgumentMultimap();
+
+        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        assertTrue(ParserUtil.arePrefixesPresent(map, PREFIX_NAME));
+        assertTrue(ParserUtil.arePrefixesAbsent(map, PREFIX_PHONE));
+
+        map.put(PREFIX_PHONE, VALID_PHONE);
+        assertTrue(ParserUtil.arePrefixesPresent(map, PREFIX_NAME, PREFIX_PHONE));
+        assertFalse(ParserUtil.arePrefixesAbsent(map, PREFIX_PHONE));
+    }
 
     @Test
     public void parseIndex_invalidInput_throwsIllegalValueException() throws Exception {
