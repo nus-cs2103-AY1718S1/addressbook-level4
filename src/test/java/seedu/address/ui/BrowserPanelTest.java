@@ -6,6 +6,7 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.POSTAL_CODE_LENGTH;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
@@ -46,7 +47,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         waitUntilBrowserLoaded(browserPanelHandle);
 
-        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + 6;
+        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + POSTAL_CODE_LENGTH;
         String actualParcelUrl = browserPanelHandle.getLoadedUrl().toString().substring(0, correctUrlLength);
         assertEquals(expectedParcelUrl.toString(), actualParcelUrl);
     }
