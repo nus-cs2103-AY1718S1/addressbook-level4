@@ -26,6 +26,8 @@ public interface ReadOnlyMeeting {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDate().equals(this.getDate())
+                && other.getPersonName().equals(this.getPersonName())
+                && other.getPersonPhone().equals(this.getPersonPhone())
                 && other.getPlace().equals(this.getPlace()));
     }
 
