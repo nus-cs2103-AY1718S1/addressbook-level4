@@ -42,7 +42,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated web page of a parcel
         postNow(selectionChangedEventStub);
         URL expectedParcelUrl = new URL(GOOGLE_MAP_URL_PREFIX
-                + ALICE.getAddress().postalCode.value.substring(1) + "?dg=dbrw&newdg=1");
+                + ALICE.getAddress().postalCode.value.substring(1));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedParcelUrl, browserPanelHandle.getLoadedUrl());
