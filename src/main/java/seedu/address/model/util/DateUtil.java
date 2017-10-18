@@ -1,5 +1,7 @@
 package seedu.address.model.util;
 
+import static java.util.Objects.requireNonNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -42,6 +44,7 @@ public class DateUtil {
      * @return boolean to determine if date is valid
      */
     public static boolean isValidDateFormat(String dateToValidate) {
+        requireNonNull(dateToValidate);
         if (!dateToValidate.matches(DATE_VALIDATION_REGEX)) {
             return false;
         } else {
@@ -87,12 +90,13 @@ public class DateUtil {
         }
     }
 
+
     /**
      * checks if date is a leap year
      * @param year the year to check if it is a leap year
      * @return boolean to determine if date is a leap year
      */
-    private static boolean checkLeapYear(int year) {
+    public static boolean checkLeapYear(int year) {
         if (year % 4 != 0) {
             return false;
         } else {

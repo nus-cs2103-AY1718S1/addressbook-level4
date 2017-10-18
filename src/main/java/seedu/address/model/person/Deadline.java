@@ -4,10 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.util.DateUtil.formatDate;
 import static seedu.address.model.util.DateUtil.isValidDateFormat;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author lawwman
@@ -22,6 +18,7 @@ public class Deadline {
     public static final String MESSAGE_DEADLINE_CONSTRAINTS =
             "Deadline can only contain input of the format XX-XX-XXXX, taking X as an integer.";
     public final String value;
+    public final String valueToDisplay;
 
     /**
      * Validates given Deadline. If no deadline was entered by user, value will read "empty" by
@@ -32,10 +29,14 @@ public class Deadline {
     public Deadline(String deadline) throws IllegalValueException {
         requireNonNull(deadline);
         String trimmedDeadline = deadline.trim();
-        if (!isValidDeadline(trimmedDeadline)) {
-            throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
+        if (trimmedDeadline.equals(NO_DEADLINE_SET)) {
+            this.value = this.valueToDisplay = trimmedDeadline;
         } else {
-            this.value = formatDate(trimmedDeadline);
+            if (!isValidDeadline(trimmedDeadline)) {
+                throw new IllegalValueException(MESSAGE_DEADLINE_CONSTRAINTS);
+            }
+             this.value = trimmedDeadline;
+            this.valueToDisplay = formatDate(trimmedDeadline);
         }
     }
 
@@ -48,7 +49,7 @@ public class Deadline {
 
     @Override
     public String toString() {
-        return value;
+        return valueToDisplay;
     }
 
     @Override
