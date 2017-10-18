@@ -19,6 +19,11 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    /**
+     * @param setTags
+     * @return
+     */
+
     private String stringifySetTags(Set<Tag> setTags) {
         StringBuilder setTagsString = new StringBuilder();
         final String delimiter = " ";
