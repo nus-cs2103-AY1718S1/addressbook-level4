@@ -120,6 +120,7 @@ public class Person implements ReadOnlyPerson {
     public Remark getRemark() {
         return remark.get();
     }
+
     public void setFavouriteStatus(FavouriteStatus favouriteStatus) {
         this.favouriteStatus.set(requireNonNull(favouriteStatus));
     }
