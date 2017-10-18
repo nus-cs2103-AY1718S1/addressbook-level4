@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -53,6 +54,10 @@ public class LogicManager extends ComponentManager implements Logic {
             undoRedoStack.push(command);
             return result;
         } catch (EmptyFieldException efe) {
+            // index check was bypassed, this checks the index before filling empty prefix
+            if (efe.getIndex().getOneBased() >= model.getFilteredPersonList().size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
             commandText = getAutoFilledCommand(commandText, efe.getIndex(), efe.getEmptyFieldPrefix());
             throw efe;
         } finally {
