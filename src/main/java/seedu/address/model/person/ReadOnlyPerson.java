@@ -38,6 +38,18 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
 
     /**
+     * Returns true if person is blacklisted.
+     */
+    boolean getIsBlacklisted();
+
+    /**
+     * Accepts {@code boolean} as parameter.
+     *
+     * Sets {@code boolean} variable as the value of {@param isBlacklisted}
+     */
+    void setIsBlacklisted(boolean isBlacklisted);
+
+    /**
      * Returns true if both are in same cluster.
      */
     boolean isSameCluster(ReadOnlyPerson other);
@@ -54,6 +66,7 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getCluster().equals(this.getCluster())
+                && (other.getIsBlacklisted() == (this.getIsBlacklisted()))
                 && other.getDebt().equals(this.getDebt())
                 && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())

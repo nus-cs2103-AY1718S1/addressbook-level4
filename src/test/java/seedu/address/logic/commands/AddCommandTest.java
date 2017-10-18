@@ -101,6 +101,7 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -120,6 +121,17 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public String getCurrentList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setCurrentList(String currentList) {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -217,11 +229,6 @@ public class AddCommandTest {
 
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
-        }
-
-        @Override
-        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             personsAdded.add(new Person(person));
         }
 
