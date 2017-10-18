@@ -120,6 +120,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code FavouriteStatus} of the {@code Person} that we are building.
+     */
     public PersonBuilder withFavouriteStatus(boolean favouriteStatus) {
         this.person.setFavouriteStatus(new FavouriteStatus(favouriteStatus));
         return this;
