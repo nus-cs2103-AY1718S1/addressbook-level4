@@ -1,21 +1,19 @@
 package seedu.address.commons.util;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import javax.xml.bind.JAXBException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import seedu.address.model.AddressBook;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.TestUtil;
+
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import static org.junit.Assert.assertEquals;
 
 public class XmlUtilTest {
 
@@ -88,8 +86,7 @@ public class XmlUtilTest {
 
         AddressBookBuilder builder = new AddressBookBuilder(new AddressBook());
         dataToWrite = new XmlSerializableAddressBook(
-                builder.withLesson(new LessonBuilder().build()).withLecturer("Friends").build());
-
+        builder.withLesson(new LessonBuilder().build()).withLecturer("Prof CaoLiang").build());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
         assertEquals((new AddressBook(dataToWrite)).toString(), (new AddressBook(dataFromFile)).toString());
