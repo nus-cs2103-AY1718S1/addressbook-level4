@@ -111,11 +111,11 @@ public class HelpCommand extends Command {
             commandResult = ScheduleCommand.MESSAGE_USAGE;
             break;
 
-        case SelectCommand.COMMAND_ALIAS:
+        case LocateCommand.COMMAND_ALIAS:
             //Fallthrough
 
-        case SelectCommand.COMMAND_WORD:
-            commandResult = SelectCommand.MESSAGE_USAGE;
+        case LocateCommand.COMMAND_WORD:
+            commandResult = LocateCommand.MESSAGE_USAGE;
             break;
 
         case UndoCommand.COMMAND_ALIAS:
