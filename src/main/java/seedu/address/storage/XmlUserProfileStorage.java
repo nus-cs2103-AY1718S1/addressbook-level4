@@ -75,13 +75,14 @@ public class XmlUserProfileStorage implements UserProfileStorage {
      * Similar to {@link #saveUserPerson(UserPerson userPerson)}
      * @param filePath location of the data. Cannot be null
      */
+    @Override
     public void saveUserPerson(UserPerson userPerson, String filePath) throws IOException {
         requireNonNull(userPerson);
         requireNonNull(filePath);
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        saveDataToFile(file, new XmlUserPerson());
+        saveDataToFile(file, new XmlUserPerson(userPerson));
     }
 
 

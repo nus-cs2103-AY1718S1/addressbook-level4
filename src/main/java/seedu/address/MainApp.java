@@ -93,12 +93,16 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<UserPerson> userPersonOptional;
         ReadOnlyAddressBook initialData;
+        UserPerson initialUser;
         try {
             addressBookOptional = storage.readAddressBook();
+
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
+
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
@@ -108,7 +112,21 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            userPersonOptional = storage.readUserProfile();
+            if (!userPersonOptional.isPresent()) {
+                logger.info(" No userProfile found, will be starting with a new user");
+            }
+            initialUser = userPersonOptional.orElse(new UserPerson());
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with a new User");
+            initialUser = new UserPerson();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with a new User");
+            initialUser = new UserPerson();
+        }
+
+        return new ModelManager(initialData, userPrefs, initialUser);
     }
 
     private void initLogging(Config config) {
@@ -198,7 +216,7 @@ public class MainApp extends Application {
             initializedPerson = userPersonOptional.orElse(new UserPerson());
         } catch (DataConversionException e) {
             logger.warning("UserProfile file at " + userProfileFilePath + " is not in the correct format. "
-                    + "Using default user prefs");
+                    + "Using default user profile" + e.toString());
             initializedPerson = new UserPerson();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with a new user Profile");

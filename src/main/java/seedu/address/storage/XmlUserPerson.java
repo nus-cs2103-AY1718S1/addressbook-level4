@@ -8,7 +8,7 @@ import seedu.address.model.person.UserPerson;
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
-@XmlRootElement(name = "userprofile")
+@XmlRootElement(name = "userperson")
 public class XmlUserPerson {
 
     @XmlElement

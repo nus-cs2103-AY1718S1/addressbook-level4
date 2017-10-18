@@ -66,7 +66,13 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void saveUserPerson(UserPerson newUserPerson) throws IOException {
-        userProfileStorage.saveUserPerson(newUserPerson);
+        userProfileStorage.saveUserPerson(newUserPerson, userProfileStorage.getUserProfileFilePath());
+    }
+
+    @Override
+    public void saveUserPerson(UserPerson newUserPerson, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        userProfileStorage.saveUserPerson(newUserPerson, filePath);
     }
 
     @Override

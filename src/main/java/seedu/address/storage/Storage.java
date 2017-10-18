@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.UserProfileManager;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UserPerson;
 
 /**
@@ -42,7 +43,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserProfi
     Optional<UserPerson> readUserProfile() throws DataConversionException, IOException;
 
     @Override
-    void saveUserPerson(UserPerson userPerson) throws IOException;
+    void saveUserPerson(UserPerson userPerson, String filePath) throws IOException;
 
     void handleUserPersonChangedEvent(UserPersonChangedEvent upce);
 

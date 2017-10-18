@@ -10,6 +10,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.SampleUserPersonUtil;
 
 /**
  * Represents the user's Profile in the address book.
@@ -30,6 +31,7 @@ public class UserPerson implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>();
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+        update(SampleUserPersonUtil.getSamplePerson());
     }
 
 
@@ -154,7 +156,7 @@ public class UserPerson implements ReadOnlyPerson {
         return getAsText();
     }
 
-    public void update(UserPerson target) {
+    public void update(ReadOnlyPerson target) {
         this.name = new SimpleObjectProperty<>(target.getName());
         this.email = new SimpleObjectProperty<>(target.getEmail());
         this.phone = new SimpleObjectProperty<>(target.getPhone());

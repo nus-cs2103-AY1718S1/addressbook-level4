@@ -30,6 +30,8 @@ public interface UserProfileStorage {
      * @param userPerson cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
+    void saveUserPerson(UserPerson userPerson, String filePath) throws IOException;
+
     void saveUserPerson(UserPerson userPerson) throws IOException;
 
 }
