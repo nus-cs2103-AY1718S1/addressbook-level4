@@ -116,7 +116,14 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
 
+        addressBook.updateEvent(target, editedEvent);
+        indicateAddressBookChanged();
+    }
     /**
      * Removes the specific tag. As a result, all persons who obtain that tag before will lose that tag.
      * TODO: Further investigate potential problems with this method.

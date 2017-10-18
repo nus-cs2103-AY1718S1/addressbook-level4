@@ -59,6 +59,10 @@ public interface Model {
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
+    /** Updates the given event */
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException;
+
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
@@ -72,5 +76,4 @@ public interface Model {
 
     /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
     void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
-
 }

@@ -13,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicateEventException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -59,7 +58,7 @@ public class UniqueEventList implements Iterable<Event> {
      *
      */
     public void sortEvents() {
-        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("ddMMyyy HH:mm");
+        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("ddMMyyyy HH:mm");
         internalList.sort((e1, e2) -> (LocalDateTime.parse(e1.getTime().toString(), sdf)
                 .compareTo(LocalDateTime.parse(e2.getTime().toString(), sdf))));
     }
@@ -67,25 +66,26 @@ public class UniqueEventList implements Iterable<Event> {
     /**
      * Replaces the person {@code target} in the list with {@code editedEvent}.
      *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
+     * @throws DuplicateEventException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
-    public void setPerson(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicatePersonException,
-            PersonNotFoundException {
+    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
+            EventNotFoundException {
 
         requireNonNull(editedEvent);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new EventNotFoundException();
         }
 
         if (!target.equals(editedEvent) && internalList.contains(editedEvent)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateEventException();
         }
 
         internalList.set(index, new Event(editedEvent));
     }
+
 
     /**
      * Removes the equivalent person from the list.
