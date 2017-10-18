@@ -352,7 +352,7 @@ The search mechanism is done with user's usability in mind and is fully implemen
 
 ==== Autocomplete function
 The autocomplete function mimics the behaviour of familiar Unix-based command lines. The autocomplete function is managed by a class `AutocompleteManager`,
-whose function `attemptAutocomplete` searches for the string starting with the specified characters in the string array provided and will return the 
+whose function `attemptAutocomplete` searches for the string starting with the specified characters in the string array provided and will return the
 string if a unique match is present. +
 
 ==== Finding mechanism
