@@ -169,6 +169,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     * @param tag all persons containing this tag will be deleted
+     */
+    public void deletePersonsWithTag(Tag tag) {
+        for (Person person : persons) {
+            if (person.hasTag(tag)) {
+                try {
+                    removePerson(person);
+                } catch (PersonNotFoundException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
