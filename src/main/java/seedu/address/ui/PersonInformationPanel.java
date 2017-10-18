@@ -28,7 +28,7 @@ public class PersonInformationPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    public ReadOnlyPerson person;
+    private ReadOnlyPerson person;
 
     @FXML
     private VBox informationPane;
@@ -45,6 +45,12 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    public PersonInformationPanel() {
+        super(FXML);
+        loadDefaultScreen();
+        registerAsAnEventHandler(this);
+    }
+
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
@@ -53,14 +59,12 @@ public class PersonInformationPanel extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
-    public PersonInformationPanel() {
-        super(FXML);
-        loadDefaultScreen();
-        registerAsAnEventHandler(this);
-    }
-
     private void loadDefaultScreen() {this.person = null;}
 
+    /**
+     * loads the selected person's information to be displayed.
+     * @param person
+     */
     private void loadPersonInformation(ReadOnlyPerson person) {
         this.person = person;
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
