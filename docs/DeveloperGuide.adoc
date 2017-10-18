@@ -427,24 +427,25 @@ public void sort() {
 
 ==== Design Considerations
 **Aspect:** Implementation of `SortCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
-**Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
-**Pros:** Does not involve the template pattern, easier for new developers to understand. +
-**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+**Alternative 1 (current choice):** extending to `UndoableCommand` class +
+**Pros:** Sort function call is able to be undone if needed as it now inherits from the Super Class. +
+**Cons:** Developers might need to understand how `UndoableCommand` works before implementation. +
+**Alternative 2:** Just extend to `Command` class +
+**Pros:** Does not need understanding of `UndoableCommand` class. +
+**Cons:** Unable to undo sort function and work from previous state of address book if user has called `SortCommand` to sort address book.
 
 ---
-**Aspect:** Execution of sort +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
-**Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
-**Pros:** Does not involve the template pattern, easier for new developers to understand. +
-**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+**Aspect:** Implementation of how sort executes +
+**Alternative 1 (current choice):** Compare and sort the names of every individual alphabetically. +
+**Pros:** Easy to implement and uses less complexity. +
+**Cons:** Unable to sort based on user preferences like email, phone number. +
+**Alternative 2:** Include all types of sorting like sorting phone numbers and emails. +
+**Pros:** Might be more favourable for user who have specific needs to collate certain information such as
+ email or phone number about his contacts in an alphanumeric order. +
+**Cons:** Difficult to implement and wastes memory space as sorting might be unnecessary and complex for general users
+          since main goal is to keep address book organized. +
 
 ---
-
 //end::sort[]
 
 // tag::accessWebsite[]
