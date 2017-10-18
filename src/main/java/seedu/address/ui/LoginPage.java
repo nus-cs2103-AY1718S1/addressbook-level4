@@ -4,30 +4,21 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.LoginLogic;
 import seedu.address.model.UserPrefs;
 
-import javax.swing.*;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -75,7 +66,9 @@ public class LoginPage extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    //if press enter or on click
+    /*
+    * if press enter or on click
+    */
     @FXML
     private void handleCommandInputChanged() {
         logger.info("enter registered");
