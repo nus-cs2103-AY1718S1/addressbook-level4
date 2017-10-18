@@ -133,7 +133,7 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_BOB).withPriority(VALID_PRIORITY_BOB)
-                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_FRIEND).build();
+                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_FRIEND)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM)
