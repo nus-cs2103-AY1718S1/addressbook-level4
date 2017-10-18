@@ -894,6 +894,42 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Remove tags
+
+*MSS*
+
+1.  User requests a list of name
+2.  AddressBook shows list of persons.
+3.  User requests to delete a tag from a person
+4.  AddressBook confirms the action
+5.  User confirms
+6.  AddressBook deletes tag from specified person.
++
+Use case ends.
+
+*Extention*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. TAG given is not found in the TagList.
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User cancels his action.
++
+Use case resumes at step 2.
+
+
+
+
+
+
+[discrete]
 === Use case: Sort list
 
 *MSS*
