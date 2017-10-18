@@ -10,6 +10,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -24,6 +25,10 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final boolean DEFAULT_FAVORITE = true;
     public static final String DEFAULT_TAGS = "friends";
+    public static final SocialInfo DEFAULT_SOCIAL = new SocialInfo(
+            "FACEBOOK",
+            "alicepauline",
+            "https://facebook.com/alicepauline");
 
     private Person person;
 
@@ -35,8 +40,9 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Favorite defaultFavoriteStatus = new Favorite(DEFAULT_FAVORITE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Set<SocialInfo> defaultSocialInfos = SampleDataUtil.getSocialInfoSet(DEFAULT_SOCIAL);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultFavoriteStatus, defaultTags);
+                    defaultFavoriteStatus, defaultTags, defaultSocialInfos);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }

@@ -15,7 +15,7 @@ public class SocialInfo {
         requireAllNonNull(username, socialType, socialUrl);
         String trimmedUsername = username.trim();
         String trimmedSocialType = socialType.trim();
-        String trimmedSocialUrl = socialType.trim();
+        String trimmedSocialUrl = socialUrl.trim();
         this.username = trimmedUsername;
         this.socialType = trimmedSocialType;
         this.socialUrl = trimmedSocialUrl;
