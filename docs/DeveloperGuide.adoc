@@ -345,6 +345,30 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sortcommand[]
+=== Sort mechanism
+
+The sort mechanism is facilitated by an `Event`. When a sort command is executed, the sort command will conduct a sort on the current `list` in the address book based on the full name in alphabetical order.
+
+The following sequence diagram shows how the sort operation works:
+
+image:: SortCommandSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `Sort Command` when a user executes the command:
+
+image:: SortCommandActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** Sort list by triggering an event to sort the current ObservableList<ReadOnlyPerson> person list. +
+**Pros:** We will not make any changes to the current `internalList` thus will not affect any other commands that we have implemented. +
+**Cons:** Hard for new developers to understand the way we sort the read only person list. +
+**Alternative 2:** Just sort the `internalList` +
+**Pros:** Does not involve the `ObservableList`, easier for new developers to understand. +
+**Cons:** Changes made to the `internalList` might affect other existing commands.
+// end::sortcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
