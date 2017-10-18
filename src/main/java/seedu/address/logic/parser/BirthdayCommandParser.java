@@ -11,7 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Birthday;
 
 /**
- * 
+ * Birthday Command Parser
  */
 public class BirthdayCommandParser implements Parser<BirthdayCommand> {
     /**
