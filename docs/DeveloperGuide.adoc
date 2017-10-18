@@ -361,6 +361,11 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Add Event
+// tag::addevent[]
+Add event mechanism adds an event which stores in the AddressBook, which willthen be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
+// end::addevent[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
