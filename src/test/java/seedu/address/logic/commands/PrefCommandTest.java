@@ -50,7 +50,7 @@ public class PrefCommandTest {
     }
 
     @Test
-    public void execute_invalidKey_Error() {
+    public void execute_invalidKey_failure() {
         String invalidKey = "This is not preference key.";
         String expectedMessage = String.format(PrefCommand.MESSAGE_PREF_KEY_NOT_FOUND, invalidKey);
         PrefCommand command = prepareCommand(invalidKey, "");
@@ -58,7 +58,7 @@ public class PrefCommandTest {
     }
 
     @Test
-    public void execute_validKey_DisplayValue() {
+    public void execute_validKey_displayValue() {
         String key = "AddressBookName";
         String expectedOutput = model.getUserPrefs().getAddressBookName();
         PrefCommand command = prepareCommand(key, "");
@@ -67,12 +67,12 @@ public class PrefCommandTest {
     }
 
     @Test
-    public void execute_validKey_UpdateValue() {
+    public void execute_validKey_updateValue() {
         String key = "AddressBookName";
         String newValue = "NewName";
         PrefCommand command = prepareCommand(key, newValue);
-        String expectedOutput = String.format(PrefCommand.MESSAGE_EDIT_PREF_SUCCESS, key, model.getUserPrefs().getAddressBookName(),
-                newValue);
+        String expectedOutput = String.format(PrefCommand.MESSAGE_EDIT_PREF_SUCCESS, key,
+                model.getUserPrefs().getAddressBookName(), newValue);
 
         UserPrefs prefs = new UserPrefs();
         prefs.setAddressBookName(newValue);
