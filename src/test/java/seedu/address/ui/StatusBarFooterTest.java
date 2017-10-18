@@ -27,10 +27,10 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String STUB_SAVE_LOCATION_NEW = "NewStub" + ROLODEX_FILE_EXTENSION;
     private static final String RELATIVE_PATH = "./";
 
-    private static final RolodexChangedEvent EVENT_STUB_CHANGE_DATA
-            = new RolodexChangedEvent(new Rolodex());
-    private static final RolodexChangedDirectoryEvent EVENT_STUB_CHANGE_DIRECTORY
-            = new RolodexChangedDirectoryEvent(RELATIVE_PATH + STUB_SAVE_LOCATION_NEW);
+    private static final RolodexChangedEvent EVENT_STUB_CHANGE_DATA =
+            new RolodexChangedEvent(new Rolodex());
+    private static final RolodexChangedDirectoryEvent EVENT_STUB_CHANGE_DIRECTORY =
+            new RolodexChangedDirectoryEvent(RELATIVE_PATH + STUB_SAVE_LOCATION_NEW);
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
