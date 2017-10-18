@@ -202,25 +202,25 @@ Selects all persons currently displayed.
 
 === Grouping persons : `group`
 
-[NOTE]
-Coming in v2.0: group
+Since v1.2
 
-Used to manage groups of persons identified by the indices used in the last person listing. +
-Format: `group n/NAME INDEX...` +
+Used to add to a group with GROUP_NAME a person identified by the index used in the last person listing. +
+If such a group does not exit, it is created. +
+Format: `group INDEX gn/GROUP_NAME` +
 
 ****
-* If a group with such a name exists, adds the persons at `INDEX...`.
+* If a group with such a name exists, adds the persons at `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1`
 ****
 
 Examples:
 
 * `list` +
-`group n/CS2103 2 3` +
-Adds the 2nd and 3rd person to the group CS2103 in the address book.
+`group 2 gn/CS2103` +
+Adds the 2nd person to the group CS2103 in the address book.
 * `find Betsy` +
-`group n/Family 1` +
+`group 1 gn/Family` +
 Adds the 1st person from the results of the `find` command to the group Family.
 
 === Removing from groups : `ungroup`
@@ -413,8 +413,8 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` (also `select me`) +
 e.g.: `select 2`, `select all` +
 `select me`
-* *Group* : `group n/NAME INDEX...` +
-e.g.: `group n/Family 2 3`
+* *Group* : `group INDEX gn/GROUP_NAME` +
+e.g.: `group 2 gn/Family`
 * *Ungroup* : `ungroup n/NAME INDEX...` +
 e.g.: `ungroup n/Family 2 3`
 * *History* : `history` (`h`)

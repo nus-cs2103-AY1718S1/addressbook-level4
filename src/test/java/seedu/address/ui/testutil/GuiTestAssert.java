@@ -24,6 +24,7 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
+        assertEquals(expectedCard.getGroups(), actualCard.getGroups());
     }
 
     /**
@@ -36,6 +37,8 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+        assertEquals(expectedPerson.getGroups().stream().map(group -> group.groupName).collect(Collectors.toList()),
+                actualCard.getGroups());
     }
 
     /**
