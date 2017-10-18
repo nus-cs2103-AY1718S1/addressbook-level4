@@ -7,8 +7,11 @@ import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.HOME_NUM_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.HOME_NUM_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_HOME_NUM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_SCH_EMAIL_DESC;
@@ -27,6 +30,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_HOME_NUM_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_HOME_NUM_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
@@ -58,6 +63,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HomeNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -78,7 +84,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         ReadOnlyPerson toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + SCH_EMAIL_DESC_AMY + "   "
+                + HOME_NUM_DESC_AMY  + "  " + EMAIL_DESC_AMY + "   " + SCH_EMAIL_DESC_AMY + "   "
                 + WEBSITE_DESC_AMY + "   "
                 + ADDRESS_DESC_AMY + "   " + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND + " ";
 
@@ -97,10 +103,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate person -> rejected */
 
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + SCH_EMAIL_DESC_AMY
-                + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY + WEBSITE_DESC_AMY
+                + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
 
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
@@ -108,21 +113,22 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
         // AddressBook#addPerson(ReadOnlyPerson)
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
-                + WEBSITE_DESC_AMY
-                + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
+                + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY + WEBSITE_DESC_AMY
+                + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + " " + PREFIX_TAG.getPrefix() + "friends";
 
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY)
+                .withHomeNumber(VALID_HOME_NUM_AMY).withEmail(VALID_EMAIL_AMY)
                 .withSchEmail(VALID_SCH_EMAIL_AMY)
                 .withWebsite(VALID_WEBSITE_AMY)
                 .withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
 
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY
+                + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY
                 + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
@@ -130,35 +136,50 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB)
+                .withHomeNumber(VALID_HOME_NUM_AMY).withEmail(VALID_EMAIL_AMY)
                 .withSchEmail(VALID_SCH_EMAIL_AMY)
                 .withWebsite(VALID_WEBSITE_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
+                + SCH_EMAIL_DESC_AMY
+                + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
+                + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a person with all fields same as another person in the address book except home number -> added */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_AMY)
+                .withSchEmail(VALID_SCH_EMAIL_AMY)
+                .withWebsite(VALID_WEBSITE_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_BOB + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withHomeNumber(VALID_HOME_NUM_AMY).withEmail(VALID_EMAIL_BOB)
                 .withSchEmail(VALID_SCH_EMAIL_AMY)
                 .withWebsite(VALID_WEBSITE_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_BOB
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except schEmail -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withHomeNumber(VALID_HOME_NUM_AMY).withEmail(VALID_EMAIL_AMY)
                 .withSchEmail(VALID_SCH_EMAIL_BOB)
                 .withWebsite(VALID_WEBSITE_AMY)
                 .withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
 
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_BOB
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
@@ -166,11 +187,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withHomeNumber(VALID_HOME_NUM_AMY).withEmail(VALID_EMAIL_AMY)
                 .withSchEmail(VALID_SCH_EMAIL_AMY)
                 .withWebsite(VALID_WEBSITE_AMY).withAddress(VALID_ADDRESS_BOB)
                 .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_BOB
                 + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
@@ -190,7 +212,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with tags, command with parameters in random order -> added */
         toAdd = BOB;
         command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB
-                + ADDRESS_DESC_BOB + NAME_DESC_BOB + WEBSITE_DESC_BOB
+                + ADDRESS_DESC_BOB + NAME_DESC_BOB + WEBSITE_DESC_BOB + HOME_NUM_DESC_BOB
                 + TAG_DESC_HUSBAND + EMAIL_DESC_BOB + SCH_EMAIL_DESC_BOB + BIRTHDAY_DESC_BOB;
 
         assertCommandSuccess(command, toAdd);
@@ -204,32 +226,34 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(HOON);
 
         /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing schEmail -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing website -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
+                +EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
+                + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
@@ -238,44 +262,52 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
+        /* Case: invalid home number -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_HOME_NUM_DESC + EMAIL_DESC_AMY
+                + SCH_EMAIL_DESC_AMY + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
+                + BIRTHDAY_DESC_AMY;
+        assertCommandFailure(command, HomeNumber.MESSAGE_HOME_NUMBER_CONSTRAINTS);
+
         /* Case: invalid email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + INVALID_EMAIL_DESC
                 + SCH_EMAIL_DESC_AMY + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid school email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_SCH_EMAIL_DESC
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
+                + EMAIL_DESC_AMY + INVALID_SCH_EMAIL_DESC
                 + WEBSITE_DESC_AMY
                 + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, SchEmail.MESSAGE_SCH_EMAIL_CONSTRAINTS);
 
         /* Case: invalid school email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY
+                + EMAIL_DESC_AMY + SCH_EMAIL_DESC_AMY
                 + INVALID_WEBSITE_DESC
                 + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, Website.MESSAGE_WEBSITE_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + INVALID_ADDRESS_DESC
                 + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + HOME_NUM_DESC_AMY + EMAIL_DESC_AMY
                 + SCH_EMAIL_DESC_AMY
                 + WEBSITE_DESC_AMY + ADDRESS_DESC_AMY
                 + BIRTHDAY_DESC_AMY + INVALID_TAG_DESC;
