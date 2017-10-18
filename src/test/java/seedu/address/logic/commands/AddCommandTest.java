@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
@@ -22,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -160,6 +162,12 @@ public class AddCommandTest {
 
         @Override
         public void changeListTo(String string) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+                IllegalValueException {
             fail("This method should not be called.");
         }
 

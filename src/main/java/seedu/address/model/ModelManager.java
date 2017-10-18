@@ -20,6 +20,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -158,6 +159,20 @@ public class ModelManager extends ComponentManager implements Model {
         return userPrefs.getAdminPassword();
     }
 
+    /**
+     * Increase the debt of a person by the amount indicated
+     * @param target person in the address book who borrowed more money
+     * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
+     *               two decimal places
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws IllegalValueException if {@code amount} is invalid.
+     */
+    @Override
+    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+            IllegalValueException {
+        addressBook.addDebtToPerson(target, amount);
+        indicateAddressBookChanged();
+    }
     //@@author
 
     @Override
