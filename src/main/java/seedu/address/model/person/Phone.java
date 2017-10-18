@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class Phone {
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
-    //    public final String value;
     public final String value;
     public final ArrayList<String> phonelist;
 
@@ -48,12 +46,10 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
 
-        // new
         String[] numbers = phone.split("\n");
 
         ArrayList<String> phones = new ArrayList<String>();
 
-        // new
         for (int i = 0; i < numbers.length; i++) {
             String trimmedPhone = numbers[i].trim();
             if (!isValidPhone(trimmedPhone)) {
@@ -61,12 +57,6 @@ public class Phone {
             }
             phones.add(numbers[i]);
         }
-
-//        String trimmedPhone = phone.trim();
-//        if (!isValidPhone(trimmedPhone)) {
-//            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-//        }
-//        phones.add(phone);
         this.phonelist = phones;
         this.value = phone;
     }
