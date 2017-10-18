@@ -12,6 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String backgroundColour = "#383838";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -45,6 +46,14 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    public String getBackgroundColour() {
+        return backgroundColour;
+    }
+
+    public void setBackgroundColour(String bgColour) {
+        this.backgroundColour = bgColour;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -58,12 +67,13 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(backgroundColour, o.backgroundColour);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, backgroundColour);
     }
 
     @Override
@@ -72,6 +82,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nBackground Colour : " + backgroundColour);
         return sb.toString();
     }
 
