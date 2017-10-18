@@ -26,9 +26,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
-    private List<XmlAdaptedTag> tags;
-    @XmlElement
     private List<XmlAdaptedEvent> events;
+    @XmlElement
+    private List<XmlAdaptedTag> tags;
     @XmlElement
     private XmlAdaptedPropertyManager properties;
 

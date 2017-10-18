@@ -30,7 +30,7 @@ public class ConfigCommandParserTest {
     private ConfigCommandParser parser = new ConfigCommandParser();
 
     @Test
-    public void parse_allFieldsPresent_success() {
+    public void parse_allFieldsPresent_success() throws Exception {
         // Test for ChangeTagColorCommand.
         ConfigCommand expected = new ChangeTagColorCommand("husband #7db9a1", "husband", "#7db9a1");
         assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_TAG_COLOR, expected);
