@@ -66,9 +66,10 @@ public class LoginPage extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    /*
-    * if press enter or on click
-    */
+
+    /**
+     *
+     */
     @FXML
     private void handleCommandInputChanged() {
         logger.info("enter registered");

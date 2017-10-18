@@ -16,9 +16,12 @@ public class LoginLogic {
     public LoginLogic() {
     }
 
-    /*this is to check if its correct
-    * i really hate travis
-    */
+    /**
+     *
+     * @param user
+     * @param password
+     * @return
+     */
     public boolean execute(String user, String password) {
 
         if (user.equals(this.username) && password.equals(this.password)) {
