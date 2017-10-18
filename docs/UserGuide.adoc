@@ -83,7 +83,9 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+
 === Listing all persons, sorted by search frequency : `listByMostSearched`
+(Since V1.2)
 
 Shows a list of all persons in the address book, sorted by descending order of search frequency +
 Format: `listByMostSearched`
