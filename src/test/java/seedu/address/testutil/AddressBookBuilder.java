@@ -47,6 +47,11 @@ public class AddressBookBuilder {
         return this;
     }
 
+    /**
+     *
+     * @param person
+     * @return
+     */
     public AddressBookBuilder removeTag(ReadOnlyPerson person) {
         if (addressBook.getPersonList().equals(person)) {
             addressBook.clearTags();
