@@ -15,6 +15,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,6 +36,8 @@ public class XmlAdaptedPerson {
     private boolean favorite;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedSocialInfo> addedSocialInfos = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -58,6 +61,10 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        addedSocialInfos = new ArrayList<>();
+        for (SocialInfo socialInfo : source.getSocialInfos()) {
+            addedSocialInfos.add(new XmlAdaptedSocialInfo(socialInfo));
+        }
     }
 
     /**
@@ -70,12 +77,17 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<SocialInfo> personSocialInfos = new ArrayList<>();
+        for (XmlAdaptedSocialInfo socialInfo : addedSocialInfos) {
+            personSocialInfos.add(socialInfo.toModelType());
+        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Favorite favorite = new Favorite(this.favorite);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, favorite, tags);
+        final Set<SocialInfo> socialInfos = new HashSet<>(personSocialInfos);
+        return new Person(name, phone, email, address, favorite, tags, socialInfos);
     }
 }
