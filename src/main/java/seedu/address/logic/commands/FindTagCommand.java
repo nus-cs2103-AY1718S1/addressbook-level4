@@ -1,10 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
-import seedu.address.model.tag.Tag;
-
-import java.util.*;
 
 public class FindTagCommand extends Command {
 
