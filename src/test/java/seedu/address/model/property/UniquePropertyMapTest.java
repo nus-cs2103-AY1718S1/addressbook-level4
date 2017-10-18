@@ -12,6 +12,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
+
 public class UniquePropertyMapTest {
     private static Set<Property> mySet;
 
@@ -55,9 +57,46 @@ public class UniquePropertyMapTest {
     public void addProperty_checkCorrectness() throws Exception {
         Property newProperty = new Property("e", "google@microsoft.com");
         UniquePropertyMap propertyMap = createSampleMap();
+        int countBefore = propertyMap.size();
         propertyMap.add(newProperty);
+        int countAfter = propertyMap.size();
 
-        assertEquals(3, propertyMap.toSet().size());
+        assertEquals(1, countAfter - countBefore);
+    }
+
+    @Test
+    public void addProperty_existingProperty_throwException() throws Exception {
+        thrown.expect(DuplicatePropertyException.class);
+
+        UniquePropertyMap propertyMap = createSampleMap();
+        Property existingProperty = new Property("a", "another address");
+        propertyMap.add(existingProperty);
+    }
+
+    @Test
+    public void updateProperty_checkCorrectness() throws Exception {
+        UniquePropertyMap propertyMap = createSampleMap();
+        Property existingProperty = new Property("a", "another address");
+        int countBefore = propertyMap.size();
+        propertyMap.update(existingProperty);
+        int countAfter = propertyMap.size();
+
+        assertEquals(countBefore, countAfter);
+    }
+
+    @Test
+    public void addOrUpdateProperty_checkCorrectness() throws Exception {
+        UniquePropertyMap propertyMap = createSampleMap();
+        Property newProperty = new Property("e", "google@test.com");
+        Property existingProperty = new Property("a", "one more address");
+        int count1 = propertyMap.size();
+        propertyMap.addOrUpdate(existingProperty);
+        int count2 = propertyMap.size();
+        propertyMap.addOrUpdate(newProperty);
+        int count3 = propertyMap.size();
+
+        assertEquals(0, count2 - count1);
+        assertEquals(1, count3 - count2);
     }
 
     @Test
