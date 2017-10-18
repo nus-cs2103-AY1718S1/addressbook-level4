@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PREMIUM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SIGNING_DATE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -21,7 +20,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-public class AddLifeInsuranceCommand extends UndoableCommand{
+/**
+ * Creates an insurance relationship in the address book.
+ */
+public class AddLifeInsuranceCommand extends UndoableCommand {
     public static final String[] COMMAND_WORDS = {"addli", "ali", "+"};
     public static final String COMMAND_WORD = "addli";
 
@@ -109,26 +111,29 @@ public class AddLifeInsuranceCommand extends UndoableCommand{
         //TODO: need to compare every nonstatic class member.
     }
 
+    /**
+     * Check if all the Person parameters required to create an insurance are inside the list
+     */
     public boolean arePersonsAllInList(List<ReadOnlyPerson> list, String owner, String insured, String beneficiary){
-        boolean o_flag = false;
-        boolean i_flag = false;
-        boolean b_flag = false;
+        boolean ownerFlag = false;
+        boolean insuredFlag = false;
+        boolean beneficiaryFlag = false;
 
-        for(ReadOnlyPerson person: list){
+        for (ReadOnlyPerson person: list) {
             String personFullNameLowerCase = person.getName().toString().toLowerCase();
-            if(personFullNameLowerCase.equals(owner.toLowerCase())){
-                o_flag = true;
+            if (personFullNameLowerCase.equals(owner.toLowerCase())) {
+                ownerFlag = true;
                 this.personForOwner = person;
             }
-            if(personFullNameLowerCase.equals(insured.toLowerCase())){
-                i_flag = true;
+            if (personFullNameLowerCase.equals(insured.toLowerCase())) {
+                insuredFlag = true;
                 this.personForInsured = person;
             }
-            if(personFullNameLowerCase.equals(beneficiary.toLowerCase())){
-                b_flag = true;
+            if (personFullNameLowerCase.equals(beneficiary.toLowerCase())) {
+                beneficiaryFlag = true;
                 this.personForBeneficiary = person;
             }
-            if(o_flag && b_flag && i_flag){
+            if (ownerFlag && beneficiaryFlag && insuredFlag) {
                 return true;
             }
         }

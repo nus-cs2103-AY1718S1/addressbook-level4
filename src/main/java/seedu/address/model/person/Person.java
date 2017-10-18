@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DateOfBirth> dob;
-    private LifeInsurance lifeInsur;
+    private LifeInsurance lifeInsurance;
 
     private String reason;
 
@@ -56,7 +56,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsur) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        this.lifeInsur = lifeInsur;
+        this.lifeInsurance = lifeInsur;
     }
 
     public void setName(Name name) {
@@ -158,13 +158,13 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public void setLifeInsurance(LifeInsurance lifeInsur){
-        this.lifeInsur = lifeInsur;
+    public void setLifeInsurance(LifeInsurance lifeInsurance) {
+        this.lifeInsurance = lifeInsurance;
     }
 
     @Override
     public ReadOnlyInsurance getLifeInsurance() {
-        return lifeInsur;
+        return lifeInsurance;
     }
 
     @Override
