@@ -37,8 +37,6 @@ public class FindCommand extends Command {
     private final Predicate<ReadOnlyPerson> predicate;
 
     public FindCommand(Predicate<ReadOnlyPerson> predicate) {
-        this.predicate = predicate;
-    }
 
     @Override
     public CommandResult execute() {
