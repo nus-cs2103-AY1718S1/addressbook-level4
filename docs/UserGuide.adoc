@@ -255,6 +255,16 @@ Examples:
 `switch 2` +
 Switches to the 2nd theme in the themes list.
 
+=== Adding an event : 'addevent'
+
+Adds an event to the address book +
+Format: `add n/NAME d/DATE a/ADDRESS`
+
+Examples:
+
+* `add n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach`
+* `add n/Orbital d/1/5/2018 a/NUS School Of Computing`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -293,6 +303,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *AddEvent* `addevent n/NAME d/DATE a/ADDRESS` +
+e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
 
 == Coming in v2.0
 
