@@ -1,18 +1,18 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.model.tag.Tag;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.StringUtil;
+import seedu.address.model.tag.Tag;
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the keywords given.
  */
 
-public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>{
+public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
     public TagsContainKeywordsPredicate(List<String> keywords) {
@@ -20,6 +20,9 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>{
     }
 
     private String stringifySetTags(Set<Tag> setTags) {
+        /**
+         * javadoc comment
+         */
         StringBuilder setTagsString = new StringBuilder();
         final String delimiter = " ";
 

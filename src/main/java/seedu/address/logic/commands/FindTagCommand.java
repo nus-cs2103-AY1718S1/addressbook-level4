@@ -18,7 +18,9 @@ public class FindTagCommand extends Command {
 
     private final TagsContainKeywordsPredicate predicate;
 
-    public FindTagCommand(TagsContainKeywordsPredicate predicate) { this.predicate = predicate; }
+    public FindTagCommand(TagsContainKeywordsPredicate predicate) { 
+        this.predicate = predicate; 
+    }
 
     @Override
     public CommandResult execute() {
