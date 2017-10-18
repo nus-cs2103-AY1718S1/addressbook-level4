@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRE;
+import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.commons.core.index.Index;
 
 /**
  * Sets expiry date of a person in the address book.
@@ -20,10 +22,35 @@ public class ExpireCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_EXPIRE + "2017-09-09";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "expire commnad to be implemented";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Date string: %2$s";
+
+    private final Index index;
+    private final String dateString;
+
+    public ExpireCommand(Index index, String dateString) {
+        requireNonNull(index);
+        requireNonNull(dateString);
+
+        this.index = index;
+        this.dateString = dateString;
+    }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), dateString));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other == this) {
+            return true;
+        }
+
+        if(!(other instanceof ExpireCommand)) {
+            return false;
+        }
+
+        ExpireCommand temp = (ExpireCommand) other;
+        return (index.equals(temp.index) && dateString.equals(temp.dateString));
     }
 }
