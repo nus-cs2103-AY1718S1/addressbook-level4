@@ -179,15 +179,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
      */
     public void removeUnusedTags(Set<Tag> tagsToRemove) {
-        Set<Tag> newTagList = getTagListWithout(tagsToRemove);
-        tags.setTags(newTagList);
+        Set<Tag> cleanedTagList = getTagsExcluding(tagsToRemove);
+        tags.setTags(cleanedTagList);
         syncMasterTagListWith(persons);
     }
 
     /**
      * Returns tag list from this {@code AddressBook} excluding {@code excludedTags}.
      */
-    public Set<Tag> getTagListWithout(Set<Tag> excludedTags) {
+    public Set<Tag> getTagsExcluding(Set<Tag> excludedTags) {
         Set<Tag> results = tags.toSet();
         for (Tag excludedTag : excludedTags) {
             results.remove(excludedTag);
