@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -18,27 +17,26 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -88,19 +86,21 @@ public class FindCommandTest {
     @Test
     public  void execute_recordStorage() {
 
-        int CARL_INDEX = model.getFilteredPersonList().indexOf(CARL);
+        int carlIndex = model.getFilteredPersonList().indexOf(CARL);
 
-        int beforeFind = Integer.parseInt(model.getFilteredPersonList().get(CARL_INDEX).getSearchData().getSearchCount());
+        int countBeforeFind = Integer.parseInt(
+                model.getFilteredPersonList().get(carlIndex).getSearchData().getSearchCount());
 
         FindCommand findCommand = prepareCommand("Carl");
 
         try {
-           findCommand.execute();
+            findCommand.execute();
         } catch (CommandException e) {
             e.printStackTrace();
         }
-        int AfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
-        assertEquals(beforeFind+1, AfterFind);
+
+        int countAfterFind = Integer.parseInt(model.getFilteredPersonList().get(0).getSearchData().getSearchCount());
+        assertEquals(countBeforeFind + 1, countAfterFind);
     }
 
     /**

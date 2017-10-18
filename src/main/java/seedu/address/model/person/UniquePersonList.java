@@ -138,14 +138,23 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public class ReadOnlyPersonComparator implements Comparator<ReadOnlyPerson> {
 
-        public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
+        /**
+         * @author Sri-vatsa
+         * Basis of comparison between ReadOnlyPerson
+         * Compares two persons by Search Count
+         *
+         * @param o1 is an instance of ReadOnlyPerson
+         * @param o2 is another instance of ReadOnlyPerson
+         * @return Result of Comparison
+         */
+        public int compare (ReadOnlyPerson o1, ReadOnlyPerson o2) {
 
             int personASearchCount = Integer.parseInt(o1.getSearchData().getSearchCount());
             int personBSearchCount = Integer.parseInt(o2.getSearchData().getSearchCount());
 
             if (personASearchCount > personBSearchCount) {
                 return -1;
-            } else if (personASearchCount < personBSearchCount){
+            } else if (personASearchCount < personBSearchCount) {
                 return 1;
             } else {
                 return 0;

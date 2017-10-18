@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import static java.util.Objects.requireNonNull;
-
 /***
  * @author Sri-vatsa
  */
@@ -32,7 +30,7 @@ public class SearchData {
     /**
      * Increases search count by 1 each time it is called
      */
-    public void IncrementSearchCount() {
+    public void incrementSearchCount() {
         int searchCountInt = Integer.parseInt(this.searchCount);
         searchCountInt++;
         this.searchCount = Integer.toString(searchCountInt);

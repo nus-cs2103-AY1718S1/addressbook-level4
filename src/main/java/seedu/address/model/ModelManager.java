@@ -4,7 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
-import java.util.*;
+import java.util.Set;
+
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -124,10 +125,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         int searchResultsCount = filteredPersons.size();
 
-        for(int i = 0; i < searchResultsCount; i++) {
+        for (int i = 0; i < searchResultsCount; i++) {
             ReadOnlyPerson searchedPerson = filteredPersons.get(i);
             SearchData updatedSearchData = searchedPerson.getSearchData();
-            updatedSearchData.IncrementSearchCount();
+            updatedSearchData.incrementSearchCount();
             Person modifiedPerson = new Person(searchedPerson.getName(), searchedPerson.getPhone(),
                     searchedPerson.getEmail(), searchedPerson.getAddress(), searchedPerson.getTags(),
                     updatedSearchData);

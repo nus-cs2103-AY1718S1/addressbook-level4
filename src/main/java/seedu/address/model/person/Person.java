@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -114,10 +113,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<SearchData> searchDataProperty() {return searchCount;}
+    public ObjectProperty<SearchData> searchDataProperty() {
+        return searchCount;
+    }
 
     @Override
-    public SearchData getSearchData() { return searchCount.get();}
+    public SearchData getSearchData() {
+        return searchCount.get();
+    }
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;

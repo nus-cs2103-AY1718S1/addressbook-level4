@@ -8,16 +8,16 @@ package seedu.address.logic.commands;
 
 public class ListByMostSearchedCommand extends Command {
 
-        public static final String COMMAND_WORD = "listMostSearched";
-        public static final String COMMAND_ALIAS = "lms";
-        public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
+    public static final String COMMAND_WORD = "listMostSearched";
+    public static final String COMMAND_ALIAS = "lms";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
 
-        public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
+    public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
 
-        @Override
-        public CommandResult execute() {
-            model.sortPersonListBySearchCount();
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
+    @Override
+    public CommandResult execute() {
+        model.sortPersonListBySearchCount();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
 
 }
