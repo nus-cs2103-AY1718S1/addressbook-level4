@@ -1,0 +1,54 @@
+= Martyn Wong - Project Portfolio
+ -ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ -:imagesDir: ../images
+ -:stylesDir: ../stylesheets
+ -
+ -== Project: AddressBook - Level 4
+ -AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+ -
+ -*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+ -
+ -=== Enhancement Added: Shortcut Command
+ -
+ -==== External behavior
+ -
+ ----
+ -#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+ -
+ -Users can type a shortcut command for 9 commands, where entering the first letter of the command also returns the same functionality:
+ 1) Add
+ 2) Delete
+ 3) Edit
+ 4) Find
+ 5) History
+ 6) List
+ 7) Redo
+ 8) Select
+ 9) Undo
+
+ e.g. entering "l" will also return a list of persons in the address book
+ -
+ -#End of Extract#
+ -
+ ----
+ -
+ -==== Justification
+ -
+ -To make it more convenient for experienced users
+ -
+ -==== Implementation
+ -
+ ----
+ -#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+ -
+ -image::shortcut-example.png[width="800"]
+ -
+ -#End of Extract#
+ -
+ ----
+ -
+ -=== Enhancement Proposed: Find Nearest Meeting Location
+
+ -=== Other contributions
+
+

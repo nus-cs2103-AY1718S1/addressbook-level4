@@ -16,6 +16,7 @@ OurAb is a desktop address book application used for teaching Software Engineeri
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
+* You can use the arrow keys to select commands that are displayed and press enter or tab to make it autofill for you in the command line.
 +
 image::commandboxhelper.PNG[width="790"]
 
