@@ -20,6 +20,7 @@
     <stylesheets>
         <URL value="@BrightTheme.css" />
         <URL value="@Extensions.css" />
+        <URL value="@CalendarView.css"/>
     </stylesheets>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
@@ -106,7 +107,8 @@
 
         </VBox>
 
-        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500" styleClass="background">
+        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500"
+                   styleClass="webView">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>

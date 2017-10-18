@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -50,6 +51,7 @@ public class MainWindow extends UiPart<Region> {
     private EventTab eventTab;
     private NotificationButton notificationButton;
     private CalendarButton calendarButton;
+    private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
 
@@ -156,6 +158,19 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        //When calendar button is clicked, the browserPlaceHolder will switch
+        // to the calendar view
+       personListPanelPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
+                EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if(browserPlaceholder.getChildren().contains(calendarView.getRoot())){
+                            browserPlaceholder.getChildren().remove(calendarView
+                                    .getRoot());
+                        }
+                    }
+                });
+
         //eventListPanel = new EventListPanel(logic.getFilteredEventList());
         //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
@@ -172,6 +187,9 @@ public class MainWindow extends UiPart<Region> {
         //@@author yangshuang
         contactTab = new ContactTab();
         contactTabPlaceholder.getChildren().add(contactTab.getRoot());
+
+        //When contact tab is selected, the List Panel below will switch to
+        // PersonListPanel
         contactTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
                 EventHandler<MouseEvent>() {
             @Override
@@ -189,6 +207,9 @@ public class MainWindow extends UiPart<Region> {
 
         eventTab = new EventTab();
         eventTabPlaceholder.getChildren().add(eventTab.getRoot());
+
+        //When event tab is selected, the List Panel below will switch to
+        // EventListPanel
         eventTabPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
                 EventHandler<MouseEvent>() {
             @Override
@@ -200,6 +221,11 @@ public class MainWindow extends UiPart<Region> {
                             + " #6495ed");
                     personListPanelPlaceholder.getChildren().remove(0);
                 }
+//                if (!browserPlaceholder.getChildren().equals(calendarView
+//                        .getRoot())) {
+//                    browserPlaceholder.getChildren().remove
+//                            (calendarView.getRoot());
+//                }
             }
         });
 
@@ -210,6 +236,23 @@ public class MainWindow extends UiPart<Region> {
         calendarButton = new CalendarButton();
         calendarButtonPlaceholder.getChildren().add(calendarButton
                 .getRoot());
+        calendarView = new CalendarView();
+
+        //When calendar button is clicked, the browserPlaceHolder will switch
+        // to the calendar view
+        calendarButtonPlaceholder.addEventHandler(MouseEvent.MOUSE_CLICKED, new
+                EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if(!browserPlaceholder.getChildren().contains(calendarView.getRoot())){
+                            browserPlaceholder.getChildren().add(calendarView
+                                    .getRoot());
+                        } else {
+                            browserPlaceholder.getChildren().remove
+                                    (calendarView.getRoot());
+                        }
+                    }
+                });
     }
 
     void hide() {
