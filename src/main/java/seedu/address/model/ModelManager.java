@@ -46,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
+        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
     }
 
     public ModelManager() {
