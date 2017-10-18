@@ -51,7 +51,6 @@ public class RemarkPanel extends UiPart<Region> {
         }
         final String finalString = printedString;
         Platform.runLater(() -> displayed.setValue(finalString));
-
     }
 
 
@@ -74,6 +73,5 @@ public class RemarkPanel extends UiPart<Region> {
                 break;
             }
         }
-
     }
 }
