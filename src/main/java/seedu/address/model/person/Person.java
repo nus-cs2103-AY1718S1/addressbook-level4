@@ -185,44 +185,74 @@ public class Person implements ReadOnlyPerson {
         this.address.set(requireNonNull(address));
     }
 
-    public void setCompany(Company company) { this.company.set(requireNonNull(company)); }
+    public void setCompany(Company company) {
+        this.company.set(requireNonNull(company));
+    }
 
     @Override
-    public Company getCompany() { return company.get(); }
+    public Company getCompany() {
+        return company.get();
+    }
 
     @Override
-    public ObjectProperty<Company> companyProperty() { return company; }
+    public ObjectProperty<Company> companyProperty() {
+        return company;
+    }
 
-    public void setPosition(Position position) { this.position.set(position); }
-
-    @Override
-    public Position getPosition() { return position.get(); }
-
-    public ObjectProperty<Position> positionProperty() { return position; }
-
-    @Override
-    public Status getStatus() { return status.get(); }
+    public void setPosition(Position position) {
+        this.position.set(position);
+    }
 
     @Override
-    public ObjectProperty<Status> statusProperty() { return status; }
+    public Position getPosition() {
+        return position.get();
+    }
 
-    public void setStatus(Status status) { this.status.set(status); }
-
-    @Override
-    public Priority getPriority() { return priority.get(); }
-
-    @Override
-    public ObjectProperty<Priority> priorityProperty() { return priority; }
-
-    public void setPriority(Priority priority) { this.priority.set(priority); }
+    public ObjectProperty<Position> positionProperty() {
+        return position;
+    }
 
     @Override
-    public Note getNote() { return note.get(); }
+    public Status getStatus() {
+        return status.get();
+    }
 
     @Override
-    public ObjectProperty<Note> noteProperty() { return note; }
+    public ObjectProperty<Status> statusProperty() {
+        return status;
+    }
 
-    public void setNote(Note note) { this.note.set(note); }
+    public void setStatus(Status status) {
+        this.status.set(status);
+    }
+
+    @Override
+    public Priority getPriority() {
+        return priority.get();
+    }
+
+    @Override
+    public ObjectProperty<Priority> priorityProperty() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority.set(priority);
+    }
+
+    @Override
+    public Note getNote() {
+        return note.get();
+    }
+
+    @Override
+    public ObjectProperty<Note> noteProperty() {
+        return note;
+    }
+
+    public void setNote(Note note) {
+        this.note.set(note);
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

@@ -44,6 +44,7 @@ public class CheckCommandsParser {
         final String[] subListCommands = new String[] {"list", "l", "show", "display"};
         final String[] subRedoCommands = new String[] {"redo", "r"};
         final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
+        final String[] subSortCommands = new String[] {"sort", "arrange", "organise"};
         final String[] subUndoCommands = new String[] {"undo", "u"};
 
         /**
@@ -60,6 +61,7 @@ public class CheckCommandsParser {
         final Set<String> commandsForList = new HashSet<>(Arrays.asList(subListCommands));
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
+        final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
 
         /**
@@ -87,6 +89,8 @@ public class CheckCommandsParser {
             finalUserCommand = "redo";
         } else if (!Collections.disjoint(userInputCommand, commandsForSelect)) {
             finalUserCommand = "select";
+        } else if (!Collections.disjoint(userInputCommand, commandsForSort)) {
+            finalUserCommand = "sort";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
         }

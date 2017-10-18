@@ -17,6 +17,7 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -100,7 +101,12 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTagFromAll(tag);
         indicateAddressBookChanged();
     }
-
+    @Override
+    public void sortPerson(int type) throws InvalidSortTypeException {
+        addressBook.sortPerson(type);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
