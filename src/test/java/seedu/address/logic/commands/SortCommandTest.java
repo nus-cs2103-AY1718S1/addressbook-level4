@@ -10,20 +10,31 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.testutil.PersonBuilder;
 
 public class SortCommandTest {
 
+    private Model model;
+
     @Test
     public void execute_sortEmptyAddressBook_success() {
-        Model model = new ModelManager();
+        model = new ModelManager();
         model.getFilteredPersonList();
         assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_EMPTY_LIST, model);
     }
 
     @Test
-    public void execute_sortAddressBookByName_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    public void execute_sortAddressBookByName_success() throws DuplicatePersonException {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model.addPerson(new PersonBuilder().withName("Alex").build());;
         assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_SUCCESS, model);
+    }
+
+    @Test
+    public void execute_alreadySortedAddressBookByName_success() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(prepareCommand(model), model, SortCommand.MESSAGE_ALREADY_SORTED, model);
     }
 
     /**
