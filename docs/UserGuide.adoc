@@ -270,6 +270,29 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Locking the address book : `lock`
+
+Locks the address book by a password. +
+Format: `lock PASSWORD`
+
+****
+* Password should be longer than 4 characters.
+* After locking, user cannot input any commands except `unlock`.
+* Data file will be encrypted after locking.
+* Person contact list will be cleared.
+****
+
+=== Unlocking the address book: `unlock`
+
+Unlocks the address book after entering correct password. +
+Format: `unlock PASSWORD`
+
+****
+* Password should be longer than 4 characters.
+* Encrypted data file will be decrypted after locking.
+* Person contact list will reload.
+****
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
