@@ -159,7 +159,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sorts the persons object alphanumerically by name.
+     * Sorts the data of the persons object alphanumerically by name.
      */
     public void sortData() {
         persons.sort();
