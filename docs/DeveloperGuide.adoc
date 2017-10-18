@@ -114,6 +114,7 @@ The rest of the App consists of four components.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#email_component[*`Email`*]: Manages emails credentials and sending and checking emails.
 
 Each of the four components
 
@@ -210,6 +211,19 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
+=== Email component
+
+image::EmailClassDiagram.png[width="800"]
+_Figure 2.6.1: Structure of the Email Component_
+
+API: `Email.java`
+
+The `Email` component:
+
+* stores a private `Authentication` object that holds user's email credentials.
+* stores the currently logged in email as a `String`.
+* can send and check emails with the current credentials.
+
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
@@ -303,6 +317,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -344,6 +359,22 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Email Component
+The email component ultilised the external library `javax.mail` for sending and receiving emails.
+
+The `EmailManager.java` class implementing `Email` manages the login status by keeping an `Autheticator` object along with its email `String`. 
+
+As the library `javax.mail` uses `IMAP` protocol for receving emails and `SMTP` for sending emails, the `EmailManager` also holds a `Hashtable` of `IMAP` hosts and `SMTP` hosts / ports for different email providers. This allows future support for more providers.
+
+==== Design Considerations
+**Aspect:** Implementation of `Email` +
+**Alternative 1 (current choice):** Create a new `Email` Component +
+**Pros:** Can be further improved to work with other commands to quickly send emails to a group of people +
+**Cons:** Command line interface is not user friendly +
+**Alternative 2:** Use the built in browser to send emails +
+**Pros:** Already has the GUI which is user friendly, support for all email providers +
+**Cons:** However, it will be more difficult to work with other commands to send to a specific groups of contacts.
 
 === Logging
 
@@ -927,7 +958,7 @@ Use case ends.
 ** 3a2. AddressBook shows an error message.
 +
 Use case ends.
-
+a
 === Use case:  History
 
 *MSS*
@@ -984,7 +1015,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to find persons with keywords
-2.  AddressBook show a list of person(s) found with the keywords
+2.  AddressBook shows a list of person(s) found with the keywords
 +
 Use case ends.
 
@@ -1000,6 +1031,62 @@ Use case ends.
 ** 2a1. AddressBook returns list of 0 person found.
 +
 Use case ends.
+
+=== Use case: Email Login
+*MSS*
+
+1. User attempts to log in with an email and password
+2. AddressBook saves the credentials
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The email and password combination is incorrect.
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+* 2b. The Internet connection is not working
+** 2b1. Addressbook shows an error message
++
+Use case ends.
+* 2c. The email does not have "Allow less secure apps" enabled.
+** 2c1. AddressBook shows an error message
++
+Use case ends
+* 2d. The email format is not valid.
+** 2d1. AddressBook shows an error message
++
+Use case ends
+
+=== Use case: Email Send
+*MSS*
+
+1. Users attenpts to send an email with a title and a body to a list of recipients.
+2. AddressBook uses the logged in email and sends the email message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is not email currently logged in.
+** 2a1. AddressBook does not send the email.
+** 2a2. AddressBook shows an error message.
++
+Use case ends
+* 2b. The recipients emails have one or more invalid emails.
+** 2b1. AddressBook does not send the email.
+** 2b2. AddressBook shows an error message.
++
+Use case ends
+* 2c. The Internet connection is not working
+** 2c1. AddressBook does not send the email.
+** 2c2. AddressBook shows an error message.
++
+Use case ends
+
 
 [appendix]
 == Non Functional Requirements
