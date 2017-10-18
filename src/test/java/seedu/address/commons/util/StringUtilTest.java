@@ -6,7 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -17,7 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+
 
 public class StringUtilTest {
 

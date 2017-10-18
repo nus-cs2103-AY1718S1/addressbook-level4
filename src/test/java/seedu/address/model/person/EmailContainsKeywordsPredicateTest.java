@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -19,14 +20,14 @@ public class EmailContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("gmail");
         List<String> secondPredicateKeywordList = Arrays.asList("gmail", "yahoo");
 
-        EmailContainsKeywordsPredicate firstPredicate = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
-        EmailContainsKeywordsPredicate secondPredicate = new EmailContainsKeywordsPredicate(secondPredicateKeywordList);
+        Predicate<ReadOnlyPerson> firstPredicate = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        Predicate<ReadOnlyPerson>  secondPredicate = new EmailContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        EmailContainsKeywordsPredicate firstPredicateCopy = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        Predicate<ReadOnlyPerson>  firstPredicateCopy = new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -42,7 +43,7 @@ public class EmailContainsKeywordsPredicateTest {
     @Test
     public void test_emailContainsKeywords_returnsTrue() {
         // One email domain
-        EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.singletonList("gmail"));
+        Predicate<ReadOnlyPerson> predicate = new EmailContainsKeywordsPredicate(Collections.singletonList("gmail"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
 
         // Multiple email domains
@@ -58,7 +59,7 @@ public class EmailContainsKeywordsPredicateTest {
     @Test
     public void test_emailDoesNotContainKeywords_returnsFalse() {
         // Zero email domain
-        EmailContainsKeywordsPredicate predicate = new EmailContainsKeywordsPredicate(Collections.emptyList());
+        Predicate<ReadOnlyPerson>  predicate = new EmailContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withEmail("alice@gmail.com").build()));
 
         // Non-matching keyword
