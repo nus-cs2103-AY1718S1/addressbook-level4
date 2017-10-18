@@ -386,13 +386,13 @@ For example, command `custom 1 Nickname Jon` will change the nickname custom fie
 Else if the input custom field value is empty, the custom field of the person will be cleared.
 For example, command `custom 1 Nickname` will clear the nickname custom field of the first person in the AddressBook.
 
-=== Storage
+==== Storage
 Xml file for Custom Field is created and the Xml for Person is updated for storing the information of the customs fields of every person.
 
-=== Ui
+==== Ui
 A new label will be displaced for each person for each custom field.
 
-=== Sequence Diagram
+==== Sequence Diagram
 image::CustomCommandSequenceProgram.png[width="800"]
 
 == Documentation
