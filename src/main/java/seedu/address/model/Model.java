@@ -64,4 +64,16 @@ public interface Model {
      */
     void sortListByName(ArrayList<ReadOnlyPerson> contactList)  throws CommandException;
 
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    void sortListByBirthday(ArrayList<ReadOnlyPerson> contactList)  throws CommandException;
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    void sortListByAge(ArrayList<ReadOnlyPerson> contactList)  throws CommandException;
+
 }

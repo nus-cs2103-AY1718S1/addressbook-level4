@@ -19,6 +19,8 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortAgeCommand;
+import seedu.address.logic.commands.SortBirthdayCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -95,6 +97,11 @@ public class AddressBookParser {
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 
+        case SortAgeCommand.COMMAND_WORD:
+            return new SortAgeCommand();
+
+        case SortBirthdayCommand.COMMAND_WORD:
+            return new SortBirthdayCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
