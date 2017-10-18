@@ -32,7 +32,7 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given event */
-    void  addEvent(ReadOnlyEvent event) throws DuplicateEventException;
+    void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
