@@ -285,17 +285,31 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Since v1.2
+
+=== Sorting all persons : `sort`
+
+Shows a sorted list of all persons in the address book. +
+Format: `sort OPTION`
+
+****
+* Sorts all persons by specified `OPTION`.
+* The OPTION refers to a contact's field, e.g. 'name', 'phone', 'email', ...
+* The OPTION *must be a hyphen followed by a single lower case alphabet* -n, -p, -e, ...
+* Available options:
+'-n': sort by name
+'-p': sort by phone number
+'-e': sort by email address
+'-a': sort by address
+'-t': sort by tag
+****
+
+Examples:
+
+* `sort -n` +
+Sorts the address book alphabetically by name.
+
 == Coming in v2.0
-
-=== Sorting all contacts : `sort`
-
-Sorts all persons alphabetically. +
-Format: `sort`
-
-=== Right click menu
-
-A right click drop down list consisting some commonly used commands in UI. +
-There is no need to type in commands.
 
 === Popup dialog window during editing
 
@@ -333,6 +347,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : 'sort OPTION' +
+e.g. 'sort -n'
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
