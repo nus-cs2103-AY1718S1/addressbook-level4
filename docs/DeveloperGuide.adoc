@@ -413,7 +413,6 @@ and users do not need any additional setup steps to use them.
 own customize fields. They should have the freedom to arbitrarily choose things like short name, full name, etc. They can
 easily add/edit these properties of each contact stored in the application, just like the _pre-loaded_ ones.
 
-
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
