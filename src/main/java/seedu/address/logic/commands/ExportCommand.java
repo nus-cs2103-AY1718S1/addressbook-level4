@@ -15,8 +15,9 @@ public class ExportCommand extends Command {
     public static final String COMMAND_ALIAS = "p";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Exports the address book data to the location defined by the file path. Existing file data will be "
-            + "overwritten by the current data in the address book.\n"
+            + ": Exports the address book data to the location defined by the file path.\n"
+            + "Existing file data will be overwritten by the current data in the address book. "
+            + "Parent directories will be created if they do not exist.\n"
             + "Parameters: FILEPATH (must end with an extension of .xml)\n"
             + "Example:\n"
             + COMMAND_WORD + " C:\\Users\\John Doe\\Documents\\addressbook.xml (Windows)\n"
