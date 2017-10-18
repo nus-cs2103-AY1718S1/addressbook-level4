@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -69,7 +70,7 @@ public interface Model {
      * @@reginleiff
      * Adds the given event
      */
-    void addEvent(ReadOnlyEvent event);
+    void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
     /**
      * @@reginleiff
