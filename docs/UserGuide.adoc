@@ -129,10 +129,10 @@ Returns person with email of `yahoo.com` and `hotmail.com` domain
 
 
 * `find p/98989898` +
-Returns person with phone of `98989898` 
+Returns person with phone of `98989898`
 
 * `find p/9898` +
-Returns person with phone of `98989898` 
+Returns person with phone of `98989898`
 
 * `find p/9898 7888` +
 Returns person with phone of `98989898` and `99997888`
