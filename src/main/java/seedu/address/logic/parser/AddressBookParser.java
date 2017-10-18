@@ -20,6 +20,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.event.AddEventCommand;
+import seedu.address.logic.commands.event.CheckScheduleCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -95,6 +96,9 @@ public class AddressBookParser {
 
         case EditEventCommand.COMMAND_WORD:
             return new EditEventCommandParser().parse(arguments);
+
+            case CheckScheduleCommand.COMMAND_WORD:
+                return new CheckScheduleCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

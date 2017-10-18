@@ -45,6 +45,8 @@ public class CheckCommandsParser {
         final String[] subRedoCommands = new String[] {"redo", "r"};
         final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
         final String[] subUndoCommands = new String[] {"undo", "u"};
+        final String[] subCheckScheduleCommands = new String[] {"thisweek",
+                "schedule", "checkschedule", "tw"};
 
         /**
          * Sets all the strings in each command into a HashSet
@@ -61,6 +63,8 @@ public class CheckCommandsParser {
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
+        final Set<String> commandsForCheckCalendar = new HashSet<>(Arrays.asList
+                (subCheckScheduleCommands));
 
         /**
          * Compares the userInputCommand with the different commands set
@@ -89,6 +93,8 @@ public class CheckCommandsParser {
             finalUserCommand = "select";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
+        } else if (!Collections.disjoint(userInputCommand, commandsForCheckCalendar)) {
+            finalUserCommand = "thisweek";
         }
         return finalUserCommand;
     }
