@@ -3,16 +3,22 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.xml.crypto.Data;
+
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.UserProfile;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage {
+public interface Storage extends AddressBookStorage, UserPrefsStorage, UserProfileStorage {
+
+    @Override
+    String getUserPrefsFilePath();
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -28,6 +34,16 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
 
     @Override
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+    @Override
+    String getUserProfileFilePath();
+
+    @Override
+    Optional<UserProfile> readUserProfile() throws DataConversionException, IOException;
+
+    @Override
+    void saveUserProfile(UserProfile userProfile) throws IOException;
+
 
     /**
      * Saves the current version of the Address Book to the hard disk.
