@@ -309,6 +309,19 @@ Examples:
 * `customise fs\small`
 * `customise fs\xlarge`
 
+=== Coloring keyword : `color`
+
+Customise the font size of Address Book +
+Format: `customise fs\FONT-SIZE`
+
+[TIP]
+This feature is disabled by default
+
+Examples:
+
+* `color enable`
+* `color disable`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -323,19 +336,73 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
++
+image::commandSummary/01add.png[width="790"]
++
 * *Clear* : `clear`
++
+image::commandSummary/10clear.png[width="790"]
++
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
++
+image::commandSummary/02delete.png[width="790"]
++
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
++
+image::commandSummary/03editD.png[width="790"]
++
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
++
+image::commandSummary/05find.png[width="790"]
++
+* *Sort* : `sort`
++
+image::commandSummary/09sort.png[width="790"]
++
 * *List* : `list`
++
+image::commandSummary/07listC.png[width="790"]
++
+* *View* : `view INDEX`
+e.g. `view 1`
++
+image::commandSummary/15view.png[width="790"]
++
 * *Help* : `help`
++
+image::commandSummary/06help.png[width="790"]
++
+* *Exit* : `exit`
++
+image::commandSummary/04exit.png[width="790"]
++
 * *Select* : `select INDEX` +
 e.g.`select 2`
++
+image::commandSummary/08select.png[width="790"]
++
 * *History* : `history`
++
+image::commandSummary/14history.png[width="790"]
++
 * *Undo* : `undo`
++
+image::commandSummary/11undo.png[width="790"]
++
 * *Redo* : `redo`
++
+image::commandSummary/12redo.png[width="790"]
++
 * *Customise* `customise fs/FONT-SIZE` +
 e.g. `customise fs/xsmall`
++
+image::commandSummary/13customiseF.png[width="790"]
++
+* *Color* `color` +
+e.g. `customise enable`
++
+image::commandSummary/16colorC.png[width="790"]
++
