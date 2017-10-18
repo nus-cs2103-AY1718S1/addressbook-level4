@@ -57,19 +57,21 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
-Shorthand: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...`
+Format: `add n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
+Shorthand: `a n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+A person can choose whether to have labels assigned to their contact numbers
+Available labels for the contacts numbers are: +
+H: (Home number) HP: (HandPhone number) O: (Office number)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/203904`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `a n/Jane Doe p/98761243 e/janed@example.com a/Jane street, block 456, #01-01`
-* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/ student/97272032 parent/97979797 e/johnd@example.com a/John street, block 123, #01-01 c/203904`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/ student/97272030 parent/97979797 t/criminal`
+* `a n/Jane Doe p/ student/97272031 parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01`
+* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/ student/97272231 parent/97979997 t/criminal`
 
 === Listing all persons : `list`
 
@@ -200,6 +202,27 @@ Selects the 1st person in the results of the `find` command.
 `s 3` (`select 3` command) +
 Selects the 3rd person in the address book.
 
+=== Sorting all persons : `sort`
+
+Shows a list of all persons in the address book sorted in alphabetical order. +
+Format: `sort` +
+Shorthand: `st`
+
+****
+* Sorts the addressbook in alphabetical order.
+* The sort is case insensitive. e.g `hans` will match `Hans`
+* If addressbook is empty, sort does nothing.
+****
+
+Examples:
+
+* `list` +
+`sort` +
+Sorts the list in alphabetical order.
+* `find Betsy` +
+`st` +
+Sorts the list in alphabetical order.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -308,6 +331,7 @@ e.g. `findtags computing NUS engineering`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

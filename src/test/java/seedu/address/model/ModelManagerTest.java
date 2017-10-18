@@ -42,7 +42,6 @@ public class ModelManagerTest {
         AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         assertFalse(addressBook.getPersonList().equals(oldAddressBook));
     }
-
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

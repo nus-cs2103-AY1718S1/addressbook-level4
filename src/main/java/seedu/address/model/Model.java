@@ -55,4 +55,10 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Sorts the list in alphabetical order.
+     * @throws NullPointerException if {@code contactList} is null.
+     */
+    ObservableList<ReadOnlyPerson> sortByPersonName();
+
 }
