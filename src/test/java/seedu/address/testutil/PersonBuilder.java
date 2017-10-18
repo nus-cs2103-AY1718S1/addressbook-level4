@@ -120,6 +120,11 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withFavouriteStatus(boolean favouriteStatus) {
+        this.person.setFavouriteStatus(new FavouriteStatus(favouriteStatus));
+        return this;
+    }
+
 
     public Person build() {
         return this.person;
