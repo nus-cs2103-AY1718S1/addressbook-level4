@@ -85,7 +85,7 @@ public class EditMeetingCommand extends UndoableCommand {
             throw new AssertionError("The target meeting cannot be missing");
         } catch (MeetingBeforeCurrDateException mde) {
             throw new CommandException(MESSAGE_OVERDUE_MEETING);
-        } catch (MeetingClashException mce){
+        } catch (MeetingClashException mce) {
             throw new CommandException(MESSAGE_MEETING_CLASH);
         }
         model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
