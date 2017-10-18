@@ -145,6 +145,8 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    public boolean hasTag(Tag tag) { return tags.get().contains(tag); }
+
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
