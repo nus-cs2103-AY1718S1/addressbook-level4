@@ -2,6 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.NumberContainsKeywordsPredicate;
 
+/**
+ * Finds and lists all persons in address book whose number contains any of the argument keywords.
+ */
+
 public class FindNumberCommand extends Command {
 
     public static final String COMMAND_WORD = "findnum";

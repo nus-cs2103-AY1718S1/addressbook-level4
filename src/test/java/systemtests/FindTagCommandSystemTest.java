@@ -1,21 +1,28 @@
 package systemtests;
 
-import org.junit.Test;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.FindTagCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.model.Model;
-import seedu.address.model.tag.Tag;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_COLLEAGUES;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FAMILY;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FRIENDS;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_OWESMONEY;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
 
 public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
@@ -31,7 +38,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple persons in address book with a single tag, command with leading spaces and trailing spaces
+        /* Case: find multiple persons in address book with single tag, command with leading spaces and trailing spaces
          * -> 5 persons found
          */
         command = "   " + FindTagCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_FRIENDS + "   ";
@@ -40,7 +47,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in address book, 2 keywords -> 2 persons found */
-        command = FindTagCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_OWESMONEY+ " " + KEYWORD_MATCHING_FAMILY;
+        command = FindTagCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_OWESMONEY + " " + KEYWORD_MATCHING_FAMILY;
         ModelHelper.setFilteredList(expectedModel, BENSON, ELLE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -83,7 +90,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-                /* Case: find person in address book, keyword is same as name but of different case -> 4 person found */
+        /* Case: find person in address book, keyword is same as name but of different case -> 4 person found */
         command = FindTagCommand.COMMAND_WORD + " FriEnds";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
