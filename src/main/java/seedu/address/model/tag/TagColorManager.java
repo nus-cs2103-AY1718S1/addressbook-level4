@@ -7,6 +7,8 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Manages the displayed color of all tags.
+ *
+ * TODO: Should we extract color out to be a {@code Color} class?
  */
 public class TagColorManager {
     /**

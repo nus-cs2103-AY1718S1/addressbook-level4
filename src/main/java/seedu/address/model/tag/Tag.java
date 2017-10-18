@@ -35,6 +35,18 @@ public class Tag {
         }
     }
 
+    public Tag(String name, String color) throws IllegalValueException {
+        requireNonNull(name, color);
+        String trimmedName = name.trim();
+
+        if (!isValidTagName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+        }
+        this.tagName = trimmedName;
+
+        TagColorManager.setColor(this, color);
+    }
+
     /**
      * Returns true if a given string is a valid tag name.
      */
