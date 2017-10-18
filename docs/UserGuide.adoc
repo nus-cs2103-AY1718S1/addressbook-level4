@@ -112,6 +112,24 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by phone number: `findphone` (Since v1.2)
+
+Finds persons whose names contain any of the given keywords. +
+Format: `findphone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the phone number is searched.
+* Only full phone number will be matched.
+* Persons matching at least one keyword will be returned.
+****
+
+Examples:
+
+* `findphone 98765432` +
+Returns contact with phone number `9876432`.
+* `findphone 98765432 91234567` +
+Returns contacts with phone number `98765432` and `91234567`.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -131,6 +149,15 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Adding photo : `addPhoto`
+
+Adds a photo for the specifed person in the address book. +
+Format: `addPhoto INDEX f/filepath`
+
+Examples:
+
+* `addPhoto 1 f/C:/users/pictures/thickThings/thic.png`
 
 === Selecting a person : `select`
 
@@ -212,10 +239,37 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Adding a remark : `remark` (Since v1.1)
+
+Edits the remark for a person specified in the `INDEX`. +
+Format: `remark INDEX r/[REMARK]` +
+
+Examples:
+
+* `remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first person to `Likes to drink coffee.` +
+* `remark 1 r/` +
+Removes the remark for the first person.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== List recently added contacts : `listrecent` (Coming in v2.0)
+
+Lists contacts added in the past 24 hours. +
+Format: `listrecent`
+
+=== Import data from Address Books : `import` (Coming in v2.0)
+
+Imports data from external Address Books and merges into the current Address Book. +
+Format: `import [FILEPATH]`
+
+=== Mass email : `emailall` (Coming in v2.0)
+
+Sending mass emails to contacts with the same tag. +
+Format: `emailall t/[TAG]`
 
 === Exiting the program : `exit`
 

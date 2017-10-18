@@ -1,10 +1,12 @@
 package seedu.address.model;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EmptyBookException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -27,6 +29,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    /** Sorts address book based on given parameter */
+    void sortPerson(Comparator<ReadOnlyPerson> sortComparator) throws EmptyBookException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -37,7 +42,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    default void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException{}
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

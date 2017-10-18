@@ -218,6 +218,32 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// 3.3tag::addPhoto[]
+=== addPhoto mechanism
+
+The addPhoto feature is facilitated mainly by the Logic component where most of the process is executed.
+It adds an image to the contact indicated by the user using the addPhotoCommand. addPhotoCommand inherits from UndoableCommand and therefore can be undone using the UndoCommand.
+
+Suppose that the user wishes to append an image to a desired contact. The user will execute addPhotoCommand 1 f/C:/Users/PhotoBook/myFace.png to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in addPhotoCommandparser.
+addPhotoCommandparser will then return a addPhotoCommand to be executed in the LogicManager. A new Person object, editedPerson is created with all the same field as the personToEdit with the addition of the new Photo field. The editedPerson will replace personToEdit within the UniquePersonList.
+
+=== Design considerations
+
+**Aspect:** Implementation of addPhotoCommand +
+**Alternative 1(current choice):** Have addPhotoCommand implement UndoableCommand +
+**Pros:** We will retain the logic flow of how commands are executed. This option increases code reusability and retains the cohesion of each class. +
+**Cons:** Logic flow is embedded in multiple layers. New developers might find it hard to understand the complicated logic flow.
+
+---
+
+**Aspect:** Choice of how Image data type is obtained from filepath +
+**Alternative 1(current choice):** Using Image object to represent an photo of a contact. +
+**Pros:** Works well with JavaFx scenebuilder as Image class can be passed into ImageView class to load the image. +
+**Cons:** Might present a problem if our team chooses to use alternative GUI generators, Image class might not be applicable to generate an Image. +
+**Alternative 2:** Using a String to represent the filepath of the photo. +
+**Pros:** Do not have to go through multiple stages of conversion to represent the photo as an Image object. +
+**Cons:** Unable to pass String into ImageView class in Javafx to load an image. Therefore still have to convert into an Image object to pass through to ImageView class. Thus, using Image Object to represent a photo makes more sense.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -344,6 +370,33 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== FindPhoneNumberCommand mechanism
+
+The `FindPhoneNumberCommand` class is added along with the `FindPhoneNumberCommandParser` class and `NumberContainsKeywordsPredicate` class.
+The `FindPhoneNumberCommand` class extends from the `Command` class and hence cannot be undone or redone using the `Undo` or `Redo` commands. +
+
+In the `NumberContainsKeywordsPredicate` class, it implements the `Predicate` class. The purpose of this class is to match
+the keyword input from the user with the `Phone` value (phone number of contacts) and the `FindPhoneNumberCommandParser` would return the matched contact
+details to the user in the GUI. +
+
+The `AddressBookParser` has to be updated to be able to recognise the new `COMMAND_WORD` for `FindPhoneNumberCommand`. In addition,
+we need to create a new `FindPhoneNumberCommandParser` class as well. This parser class implements the `Parser` class and its main function
+is to take the input commands and would return a `FindPhoneNumberCommand` object for execution. It would return
+an invalid error message if the input is correct and return a successful message  if the inputs  are correct.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FindPhoneNumberCommand`. +
+**Alternative 1 (current choice):** Using a separate command using the command word `findphone` +
+**Pros:** Easy to debug and implement. +
+**Cons:** Inconvenient for users as they have to use another command. +
+**Alternative 2:** Enhancing the current `FindCommand` to allow it to accept phone numbers. +
+**Pros:** More convenient for users as they can just a single command word, `find`, to search through the Address Book
+with different parameters. +
+**Cons:** More difficult to implement and maintain. Testing can be more tedious as well.
+
+---
 
 === Logging
 
@@ -725,7 +778,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
-|`* * *` |user |add description to my contacts |I can make my contacts feel unique
+|`* * *` |user |add description to my contacts |make my contacts feel unique
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -741,7 +794,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list my contacts by their tags |locate my contact more easily
 
-|`* * *` |user |find a person by date added |locate details of a persons without having to go through the entire list
+|`* * *` |user |list recently added contacts |locate details of a persons without having to go through the entire list
 
 |`* *` |user |rename tag function |rename a specified tag from all contacts with that tag
 
@@ -753,15 +806,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |to create favourite lists of contacts |find my most important contacts easily
+|`* *` |user |create favourite lists of contacts |find my most important contacts easily
 
-|`* *` |user |adjust the font size of the display contacts |I dont have to squint when I look for contacts 
+|`* *` |user |adjust the font size of the display contacts |not squint my eyes when looking at the contacts
 
-|`* *` |user with many contacts |group my contacts |I can find a contact easier by searching for the group name
+|`* *` |user with many contacts |group my contacts |find a contact easier by searching for the group name
 
-|`* *` |user |see my log history |retrieve information if I need to 
+|`* *` |user |see my log history |retrieve information if I need to
 
-|`* *` |user |add a event note to any contact |I remind myself about events I have with this contact 
+|`* *` |user |add a event note to any contact |remind myself about events I have with this contact
 
 |`*` |user |store my contact's birthdays |keep track of my contact's birthdays
 
@@ -773,23 +826,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user with many persons in the address book |add profile pictures to contacts |identify my contacts easily
 
-|`*` |user who loves social media |like a integration of social media platforms with address book | I can browse social media while using address book 
+|`*` |user who loves social media |like a integration of social media platforms with address book |browse social media while using address book
 
-|`*` |user who loves forums |Like a forum feature |I can post any questions so that my contacts can answer 
+|`*` |user who loves forums |Like a forum feature |post any questions so that my contacts can answer
 
-|`*` |user | add pictures to my contacts |I can better identify them with a picture 
+|`*` |user who loves going out |have a 'HangOut' feature |tell my contacts that I am available to hang out
 
-|`*` |user who loves going out |'HangOut' feature shows that I want to hang out |My contacts who sees that I am avaliable will contact me to hang out 
+|`* ` |user |send out mass email to people with the same tags |disseminate information effectively
 
-|`* ` |user | send out mass email to people with the same tags | disseminate information effectively
+|`* ` |user |link me and my friends to our social media accounts |update and view others social media accounts easily
 
-|`* ` |user | link me and my friends to our social media accounts | update and view others social media accounts easily
+|`* ` |user who is an employer |add notes to certain contacts with timers |keep track of tasks that I assign people to do
 
-|`* ` |user who is an employer | add notes to certain contacts with timers | keep track of tasks that I assign people to do
+|`* ` |user |have a synced task list with people with the same tags |keep track of each persons work progress
 
-|`* ` |user | have a synced task list with people with the same tags | keep track of each persons work progress
-
-|`* ` |user | integrate my address book with my phone contacts | easily add contacts to either address book or my phone contacts and have them be synced
+|`* ` |user |integrate my address book with my phone contacts |easily add contacts to either address book or my phone contacts and have them be synced
 
 |`*` |user with many persons in the address book |view list of persons by first or last name |locate a person easily
 
@@ -828,6 +879,43 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1. User requests to add person
+2. AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The input parameters are invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List persons
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
++
 {More to be added}
 
 [appendix]
@@ -838,7 +926,7 @@ Use case resumes at step 2.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be able to run in 32bit or 64bit Windows/Linux/Mac Systems.
 .  Default program should not take up more than 1GB of space.
-.  Program should be easy for a non-tech savvy person to install without having to declare classpaths and change environmental variables 
+.  Program should be easy for a non-tech savvy person to install without having to declare classpaths and change environmental variables
 
 {More to be added}
 
