@@ -25,6 +25,9 @@ public interface Model {
     /** Get a hash set of all the distinct module codes */
     HashSet<Code> getUniqueCodeSet();
 
+    /** Get a predicate for filtering favourList */
+    FavourListPredicate getFavourListPredicate();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 

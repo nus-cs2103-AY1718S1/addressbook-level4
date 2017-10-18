@@ -85,6 +85,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public FavouriteListPredicate getFavouriteListPredicate() {
+        return new FavourListPredicate(favourList);
+    }
+
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();

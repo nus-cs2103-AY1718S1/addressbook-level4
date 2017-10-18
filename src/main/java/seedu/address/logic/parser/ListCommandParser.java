@@ -29,7 +29,8 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
     private boolean isValidAttribute(String args) {
-        return args.equals(ListCommand.LOCATION_KEYWORD) || args.equals(ListCommand.MODULE_KEYWORD);
+        return args.equals(ListCommand.LOCATION_KEYWORD) || args.equals(ListCommand.MODULE_KEYWORD)
+                || args.equals(ListCommand.FAVOURITE_LIST_KEYWORD);
     }
 
 }

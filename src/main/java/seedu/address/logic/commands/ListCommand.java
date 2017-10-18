@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.LESSON;
 import static seedu.address.model.ListingUnit.LOCATION;
 import static seedu.address.model.ListingUnit.MODULE;
 
@@ -24,13 +25,14 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all locations or all module codes and "
             + "displays them as a list with index numbers.\n"
-            + "Parameters: module/location\n"
+            + "Parameters: module/location/favouriteList\n"
             + "Example: " + COMMAND_WORD + " module";
 
     public static final String MESSAGE_SUCCESS = "Listed all %1$s";
 
     public static final String MODULE_KEYWORD = "module";
     public static final String LOCATION_KEYWORD = "location";
+    public static final String FAVOURITE_LIST_KEYWORD = "favouriteList";
 
     private final String parameter;
 
@@ -49,6 +51,10 @@ public class ListCommand extends Command {
             ListingUnit.setCurrentListingUnit(LOCATION);
             UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
             return executeListByAttribute(locationPredicate);
+        } else if (parameter.equals(FAVOURITE_LIST_KEYWORD)) {
+            ListingUnit.setCurrentListingUnit(LESSON);
+            FavouriteListPredicate favouriteListPredicate = model.getFavouriteListPredicate();
+            return executeListByAttribute(favouriteListPredicate);
         } else {
             assert false : "There cannot be other parameters passed in";
             return null;
