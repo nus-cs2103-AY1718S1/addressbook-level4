@@ -19,6 +19,7 @@ import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.person.ReadOnlyPerson;
 //import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 //import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -34,9 +35,9 @@ public class AddMeetingCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. \n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
-            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_LOCATION + "LOCATION \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "
@@ -45,6 +46,7 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New meeting added: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
     public static final String MESSAGE_OVERDUE_MEETING = "Meeting's date and time is before log in date and time";
+    public static final String MESSAGE_MEETING_CLASH = "Meeting Clashes! Please choose another date and time.";
 
     private final Index index;
     private Meeting toAdd;
@@ -83,6 +85,8 @@ public class AddMeetingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_MEETING);
         } catch (MeetingBeforeCurrDateException mde) {
             throw new CommandException(MESSAGE_OVERDUE_MEETING);
+        } catch (MeetingClashException mce) {
+            throw new CommandException(MESSAGE_MEETING_CLASH);
         }
     }
 

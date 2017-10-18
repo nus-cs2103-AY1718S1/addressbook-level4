@@ -29,7 +29,15 @@ image::melvinleo.jpg[width="150", align="left"]
 {empty}[https://github.com/Melvin-leo[github]] [<<Melvin-leo#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: UI & Storage
+
+'''
+=== Muhammad Syabil Bin Mohamed Sazali
+image::syabildoo.png[width="150", align="left"]
+{empty}[https://github.com/syabildoo[github]] [<<syabildoo#, portfolio>>]
+
+Role: Member +
+Responsibilities: Model & UI
 
 '''
 

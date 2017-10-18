@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -35,7 +36,8 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given meeting */
-    void addMeeting(ReadOnlyMeeting meeting)  throws DuplicateMeetingException, MeetingBeforeCurrDateException;
+    void addMeeting(ReadOnlyMeeting meeting)  throws DuplicateMeetingException, MeetingBeforeCurrDateException,
+            MeetingClashException;
 
     /** Deletes the given meeting */
     void deleteMeeting(ReadOnlyMeeting target) throws MeetingNotFoundException;
