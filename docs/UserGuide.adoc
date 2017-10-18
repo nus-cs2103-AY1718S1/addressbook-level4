@@ -228,6 +228,23 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Editing user preference : `pref`
+
+Edits the user preference. +
+Format: `pref KEY [NEW_VALUE]` +
+If  `NEW_VALUE` is blank, the current preference will be displayed. +
+[NOTE]
+====
+See <<#pref-list, Appendix>> for the list of editable preferences.
+====
+
+Examples:
+
+* `pref AddressBookName` +
+Displays the current value for `AddressBookName`
+* `pref AddressBookName MyBook` +
+Changes `AddressBookName` to `MyBook`
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -261,6 +278,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Preference* : `pref KEY [NEW_VALUE]`
 
 == Features coming in v2.0
 
@@ -272,3 +290,9 @@ e.g.`select 2`
 * *Find nearest meeting location* - finds a common meeting point based on users' addresses
 * *Add meeting time* - Adds a meeting time to the contacts that is removed automatically when the time is reached
 * *Retrieve meeting of the day* - Shows all current meetings for today that have been scheduled
+
+[appendix]
+== List Of User Preferences
+[#pref-list]
+* `AddressBookName`
+* `AddressBookFilePath` : indicates where the address book is stored in local storage
