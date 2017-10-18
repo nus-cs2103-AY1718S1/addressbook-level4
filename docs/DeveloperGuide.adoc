@@ -352,7 +352,7 @@ The `BorrowCommand` class extends `UndoableCommand` so that this action can be u
 
 The borrow command requires the index (as listed in the person list panel on the left side of the application window) of the person who borrowed money and the amount that the person borrowed. To tokenize the input, `String::split` method is used in `BorrowCommandParser` class since no prefixes are used and the arguments (index and amount borrowed) are separated by a single whitespace. The index and amount borrowed are parsed and supplied to `BorrowCommand` as arguments as seen in Figure 3.2.1.
 
-The `Debt` attribute in the target `Person` object is updated in the `AddressBook` class in the model component. A new `Person` object is created with the debt amount updated to reflect the new total debt. The target `Person` object is then replaced with this new `Person` object.
+The `Debt` attribute in the target `Person` object is updated in the `AddressBook` class in the `Model` component. A new `Person` object is created with the debt amount updated to reflect the new total debt. The target `Person` object is then replaced with this new `Person` object.
 
 [NOTE]
 `DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date when the `Person` object was created is set as the date for the `DateBorrow` field.
