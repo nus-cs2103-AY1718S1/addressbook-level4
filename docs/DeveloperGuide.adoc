@@ -352,7 +352,7 @@ The Login function work by using many different components. To facilitated its i
 
 The process of how the feature functions and what would happen is as follows:
 
-image::LoginSequenceDiagram.jpg[width="800"]
+image::LoginSequenceDiagram.JPG[width="800"]
 
 
 
