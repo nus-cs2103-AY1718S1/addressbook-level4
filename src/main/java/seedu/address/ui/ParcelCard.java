@@ -84,7 +84,7 @@ public class ParcelCard extends UiPart<Region> {
     }
 
     /**
-     * tags with value {@param tagValue} will be assigned a random color from a list colors field
+     * tags with value tagValue will be assigned a random color from a list colors field
      */
     private static String setColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
