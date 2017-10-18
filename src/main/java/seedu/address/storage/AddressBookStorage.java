@@ -40,7 +40,8 @@ public interface AddressBookStorage {
     /**
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException, InvalidFileExtensionException;
+    void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException,
+            InvalidFileExtensionException;
 
     /**
      * Makes a local backup of the address book storage file.
