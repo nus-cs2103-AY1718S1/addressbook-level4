@@ -62,7 +62,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void add() throws Exception {
         Model model = getModel();
-        /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a lesson without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
         ReadOnlyLesson toAdd = TYPICAL_MA1101R;
@@ -81,21 +81,21 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a duplicate person -> rejected */
+        /* Case: add a duplicate lesson -> rejected */
         command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_LESSON);
 
-        /* Case: add a duplicate person except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        /* Case: add a duplicate lesson except with different tags -> rejected */
+        // "friends" is an existing tag used in the default model, see TypicalLessons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
-        // AddressBook#addPerson(ReadOnlyPerson)
+        // AddressBook#addLesson(ReadOnlyLesson)
         command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R
                 + " " + PREFIX_LECTURER.getPrefix() + "Dr Wong";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_LESSON);
 
-        /* Case: add a person with all fields same as another person in the address book except Code -> added */
+        /* Case: add a lesson with all fields same as another lesson in the address book except Code -> added */
         toAdd = new LessonBuilder().withCode(VALID_CODE_CS2101).withClassType(VALID_CLASSTYPE_MA1101R)
                 .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
@@ -103,7 +103,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except ClassType -> added */
+        /* Case: add a lesson with all fields same as another lesson in the address book except ClassType -> added */
         toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_CS2101)
                 .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
@@ -111,7 +111,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except Locaiton -> added */
+        /* Case: add a lesson with all fields same as another lesson in the address book except Locaiton -> added */
         toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
                 .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
@@ -119,7 +119,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except Group -> added */
+        /* Case: add a lesson with all fields same as another lesson in the address book except Group -> added */
         toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
                 .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_CS2101).withTimeSlot(VALID_TIMESLOT_MA1101R)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
@@ -127,7 +127,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_CS2101 + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-                /* Case: add a person with all fields same as another person in the address book except Time slot -> added */
+                /* Case: add a lesson with all fields same as another lesson in the address book except Time slot -> added */
         toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
                 .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_CS2101)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
@@ -135,7 +135,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_CS2101 + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: filters the person list before adding -> added */
+        /* Case: filters the lesson list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MA1101R);
         assert getModel().getFilteredLessonList().size()
                 < getModel().getAddressBook().getLessonList().size();
@@ -146,18 +146,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assert getModel().getAddressBook().getLessonList().size() == 0;
         assertCommandSuccess(MA1101R_L1);
 
-        /* Case: add a person with tags, command with parameters in random order -> added */
+        /* Case: add a lesson with tags, command with parameters in random order -> added */
         toAdd = TYPICAL_MA1101R;
         command = AddCommand.COMMAND_WORD + LECTURER_DESC_MA1101R + GROUP_DESC_MA1101R
                 + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R  ;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
+        /* Case: selects first card in the lesson list, add a lesson -> added, card selection remains unchanged */
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
-        assert getPersonListPanel().isAnyCardSelected();
+        assert getLessonListPanel().isAnyCardSelected();
         assertCommandSuccess(GEQ_T66);
 
-        /* Case: add a person, missing tags -> added */
+        /* Case: add a lesson, missing tags -> added */
         assertCommandSuccess(CS2103T_L1);
 
         /* Case: missing code -> rejected */
@@ -225,7 +225,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyLesson)}. Executes {@code command}
      * instead.
      * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyLesson)
      */
@@ -242,7 +242,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyLesson)} except that the result
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
      * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyLesson)

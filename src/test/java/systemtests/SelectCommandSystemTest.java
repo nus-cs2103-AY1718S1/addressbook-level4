@@ -6,7 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_LESSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
-import static seedu.address.testutil.TypicalLessons.getTypicalPersons;
+import static seedu.address.testutil.TypicalLessons.getTypicalLessons;
 
 import org.junit.Test;
 
@@ -20,16 +20,16 @@ import seedu.address.model.Model;
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {
-        /* Case: select the first card in the person list, command with leading spaces and trailing spaces
+        /* Case: select the first card in the lesson list, command with leading spaces and trailing spaces
          * -> selected
          */
         String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_LESSON);
 
-        /* Case: select the last card in the person list -> selected */
-        Index personCount = Index.fromOneBased(getTypicalPersons().size());
-        command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
-        assertCommandSuccess(command, personCount);
+        /* Case: select the last card in the lesson list -> selected */
+        Index lessonCount = Index.fromOneBased(getTypicalLessons().size());
+        command = SelectCommand.COMMAND_WORD + " " + lessonCount.getOneBased();
+        assertCommandSuccess(command, lessonCount);
 
         /* Case: undo previous selection -> rejected */
         command = UndoCommand.COMMAND_WORD;
@@ -41,8 +41,8 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
-        /* Case: select the middle card in the person list -> selected */
-        Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
+        /* Case: select the middle card in the lesson list -> selected */
+        Index middleIndex = Index.fromOneBased(lessonCount.getOneBased() / 2);
         command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
@@ -53,14 +53,14 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select the current selected card -> selected */
         assertCommandSuccess(command, middleIndex);
 
-        /* Case: filtered person list, select index within bounds of address book but out of bounds of person list
+        /* Case: filtered lesson list, select index within bounds of address book but out of bounds of lesson list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         invalidIndex = getModel().getAddressBook().getLessonList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_DISPLAYED_INDEX);
 
-        /* Case: filtered person list, select index within bounds of address book and person list -> selected */
+        /* Case: filtered lesson list, select index within bounds of address book and lesson list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assert validIndex.getZeroBased() < getModel().getFilteredLessonList().size();
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
@@ -95,7 +95,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays the success message of executing select command with the {@code expectedSelectedCardIndex}
-     * of the selected person, and the model related components equal to the current model.
+     * of the selected lesson, and the model related components equal to the current model.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
@@ -108,7 +108,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_LESSON_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getLessonListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

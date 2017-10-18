@@ -82,7 +82,7 @@ public class TypicalLessons {
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
-        for (ReadOnlyLesson lesson : getTypicalPersons()) {
+        for (ReadOnlyLesson lesson : getTypicalLessons()) {
             try {
                 ab.addLesson(lesson);
             } catch (DuplicateLessonException e) {
@@ -92,7 +92,7 @@ public class TypicalLessons {
         return ab;
     }
 
-    public static List<ReadOnlyLesson> getTypicalPersons() {
+    public static List<ReadOnlyLesson> getTypicalLessons() {
         return new ArrayList<>(Arrays.asList(MA1101R_L1, MA1101R_L2, GEQ_T66, CS2101_L1, CS2101_L2, MA1101R_T1, MA1101R_T2));
     }
 }
