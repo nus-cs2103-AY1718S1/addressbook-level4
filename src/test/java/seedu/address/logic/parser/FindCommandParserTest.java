@@ -6,13 +6,22 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.model.person.predicates.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.AnyContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.predicates.NameContainsKeywordsPredicate;
+import seedu.address.model.person.predicates.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.predicates.TagContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
 
 public class FindCommandParserTest {
 
@@ -35,16 +44,41 @@ public class FindCommandParserTest {
     }
 
     @Test
-    public void parse_validArgsWithPrefix_returnsFindCommand() {
+    public void parse_validArgsWithPrefix_returnsFindCommand()
+            throws IllegalValueException {
         FindCommand expectedFindCommand1 =
                 new FindCommand(new NameContainsKeywordsPredicate(Collections.singletonList("Alice")));
         FindCommand expectedFindCommand2 =
                 new FindCommand(new EmailContainsKeywordsPredicate(Collections.singletonList("Alice@gmail.com")));
+        FindCommand expectedFindCommand3 =
+                new FindCommand(new PhoneContainsKeywordsPredicate(Collections.singletonList("85355255")));
+        FindCommand expectedFindCommand4 =
+                new FindCommand(new AddressContainsKeywordsPredicate(
+                        Collections.singletonList("123, Jurong West Ave 6, #08-111")));
+
+        ObservableList<Tag> tagList = FXCollections.observableArrayList();
+        tagList.add(new Tag("friends"));
+        Set<Tag> tags = new HashSet<>(tagList);
+        FindCommand expectedFindCommand5 =
+                new FindCommand(new TagContainsKeywordsPredicate(tags));
+
         // with name prefix
         assertParseSuccess(parser, FindCommand.COMMAND_WORD + " n/Alice", expectedFindCommand1);
 
         //with an email prefix
         assertParseSuccess(parser, FindCommand.COMMAND_WORD + " e/Alice@gmail.com", expectedFindCommand2);
+
+        //with an phone prefix
+        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " p/85355255", expectedFindCommand3);
+
+        //with an address prefix
+        assertParseSuccess(parser, FindCommand.COMMAND_WORD
+                + " a/123, Jurong West Ave 6, #08-111", expectedFindCommand4);
+
+        //with an tag prefix
+        assertParseSuccess(parser, FindCommand.COMMAND_WORD + " t/friends", expectedFindCommand5);
+
+
     }
 
     @Test

@@ -366,6 +366,108 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Favorite
+
+The Favorite function is created for frequent users who have have certain "close contacts" and
+want the contacts on top of their list for the ease of access.
+In order to implement such feature, two things need to be implemented:
+
+* Favorite class +
+* Sorting
+
+==== Favorite class
+A favorite class is implemented and used by Person class. A person object does not construct with a favorite object but it is
+able to setFavorite a new favorite object (Since when a new person is created, there's no reason to instantly 'favorite' the person).
+A favorite object is different from other attribute object is that it just contains a simple boolean property. Hence, there's no need to
+construct new object each time the value changes. Hence, the boolean is stored as a normal boolean and a simple toggleFavorite
+method is constructed:
+[source,java]
+----
+private boolean favorite; //Not final
+
+public void toggleFavorite() {
+        this.favorite = !this.favorite;
+}
+----
+
+
+To favorite a person in the list, a favorite command is implemented. The favorite command follows the same parser logic
+as `delete` command, which is to parse the index of the person to favorite. Hence, the favoriteCommand also extends UndoableCommand and overrides the methods in UndoableCommand.
+
+Model and UI components also have to be updated. For model, a method toggle favorite is implemented to favorite or "defavorite"
+a person at specified index:
+
+[source,java]
+----
+public void favorite(ReadOnlyPerson toFavorite)
+    throws PersonNotFoundException {
+        requireNonNull(toFavorite);
+        int index = internalList.indexOf(toFavorite);
+
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        Person newPerson = new Person(toFavorite);
+        newPerson.getFavorite().toggleFavorite();
+
+        internalList.set(index, newPerson);
+        sort();
+}
+----
+
+And for UI, a simple label is created and `setVisible` to `true` for any index that is
+favorited. The labels are `setGraphic` to followed image:
+
+image::heart.png[width="40"]
+
+==== Sorting
+
+A sorting algorithm needs to be implemented for the `UniquePersonList` of the `Model` Component.
+Fortunately, it can be easily done with `List.sort()` and  `Java predicate`. The priority of sorting is such that
+the persons favorited always appear on the top of the list, then all persons w/out favorited are
+sorted by alphabetical order:
+
+[source,java]
+----
+private void sort() {
+        internalList.sort((ReadOnlyPerson p1, ReadOnlyPerson p2) -> {
+            if (!p1.getFavorite().equals(p2.getFavorite())) {
+                return p2.getFavorite().getValue() - p1.getFavorite().getValue();
+            } else {
+                return p1.getName().fullName.compareTo(p2.getName().fullName);
+            }
+        });
+}
+----
+
+Finally, this method needs to be called whenever an event that causes changes to the model is called, eg
+Edit a person, Add a person or Favorite a person.
+
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of `Favorite` +
+**Alternative 1 (current choice):** Use a non-final boolean value and implement `toggleFavorite()` +
+**Pros:** Easy to implement and there's no need to construct new Object each time the value changes +
+**Cons:** Different structures from other details components ie `Name`, `Phone`, etc +
+**Alternative 2:** Create a final boolean value and just create new object when the value changes +
+**Pros:** Conform with other classes +
+**Cons:** Could hurt memory if the action is spammed too many times.
+
+---
+
+**Aspect:** Where sorting should occurs +
+**Alternative 1 (current choice):** On the lowest layer of `Model`, which is `UniquePersonList` +
+**Pros:** No need to have sorting in upper layer. +
+**Cons:** Permanently mutate the data list. +
+**Alternative 2:** Only sorting on the surface of  `UI` component +
+**Pros:** No mutation of data list. +
+**Cons:** Difficult to implement system tests.
+// end::favorite[]
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
