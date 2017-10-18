@@ -16,7 +16,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
+import static seedu.address.testutil.TestUtil.getLesson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 
@@ -29,60 +29,60 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: delete the first lesson in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
-        ReadOnlyLesson deletedPerson = removePerson(expectedModel, INDEX_FIRST_LESSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedPerson);
+        ReadOnlyLesson deletedLesson = removeLesson(expectedModel, INDEX_FIRST_LESSON);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last person in the list -> deleted */
+        /* Case: delete the last lesson in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
-        assertCommandSuccess(lastPersonIndex);
+        Index lastLessonIndex = getLastIndex(modelBeforeDeletingLast);
+        assertCommandSuccess(lastLessonIndex);
 
-        /* Case: undo deleting the last person in the list -> last person restored */
+        /* Case: undo deleting the last lesson in the list -> last lesson restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: redo deleting the last person in the list -> last person deleted again */
+        /* Case: redo deleting the last lesson in the list -> last lesson deleted again */
         command = RedoCommand.COMMAND_WORD;
-        removePerson(modelBeforeDeletingLast, lastPersonIndex);
+        removeLesson(modelBeforeDeletingLast, lastLessonIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: delete the middle person in the list -> deleted */
-        Index middlePersonIndex = getMidIndex(getModel());
-        assertCommandSuccess(middlePersonIndex);
+        /* Case: delete the middle lesson in the list -> deleted */
+        Index middleLessonIndex = getMidIndex(getModel());
+        assertCommandSuccess(middleLessonIndex);
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered person list, delete index within bounds of address book and person list -> deleted */
-        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        /* Case: filtered lesson list, delete index within bounds of address book and lesson list -> deleted */
+        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         Index index = INDEX_FIRST_LESSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
+        /* Case: filtered lesson list, delete index within bounds of address book but out of bounds of lesson list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MA1101R);
+        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         int invalidIndex = getModel().getAddressBook().getLessonList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+        /* --------------------- Performing delete operation while a lesson card is selected ------------------------ */
 
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
-        showAllPersons();
+        /* Case: delete the selected lesson -> lesson list panel selects the lesson before the deleted lesson */
+        showAllLessons();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
+        selectLesson(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedPerson);
+        deletedLesson = removeLesson(expectedModel, selectedIndex);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
@@ -112,28 +112,28 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
-     * @return the removed person
+     * Removes the {@code ReadOnlyLesson} at the specified {@code index} in {@code model}'s address book.
+     * @return the removed lesson
      */
-    private ReadOnlyLesson removePerson(Model model, Index index) {
-        ReadOnlyLesson targetPerson = getPerson(model, index);
+    private ReadOnlyLesson removeLesson(Model model, Index index) {
+        ReadOnlyLesson targetLesson = getLesson(model, index);
         try {
-            model.deleteLesson(targetPerson);
+            model.deleteLesson(targetLesson);
         } catch (LessonNotFoundException pnfe) {
-            throw new AssertionError("targetPerson is retrieved from model.");
+            throw new AssertionError("targetLesson is retrieved from model.");
         }
-        return targetPerson;
+        return targetLesson;
     }
 
     /**
-     * Deletes the person at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+     * Deletes the lesson at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        ReadOnlyLesson deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedPerson);
+        ReadOnlyLesson deletedLesson = removeLesson(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);

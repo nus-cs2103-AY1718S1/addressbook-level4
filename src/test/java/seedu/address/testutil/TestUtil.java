@@ -33,23 +33,23 @@ public class TestUtil {
     }
 
     /**
-     * Returns the middle index of the person in the {@code model}'s person list.
+     * Returns the middle index of the lesson in the {@code model}'s lesson list.
      */
     public static Index getMidIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getLessonList().size() / 2);
     }
 
     /**
-     * Returns the last index of the person in the {@code model}'s person list.
+     * Returns the last index of the lesson in the {@code model}'s lesson list.
      */
     public static Index getLastIndex(Model model) {
         return Index.fromOneBased(model.getAddressBook().getLessonList().size());
     }
 
     /**
-     * Returns the person in the {@code model}'s person list at {@code index}.
+     * Returns the lesson in the {@code model}'s lesson list at {@code index}.
      */
-    public static ReadOnlyLesson getPerson(Model model, Index index) {
+    public static ReadOnlyLesson getLesson(Model model, Index index) {
         return model.getAddressBook().getLessonList().get(index.getZeroBased());
     }
 }

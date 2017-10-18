@@ -64,8 +64,8 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getCommandBox();
     }
 
-    protected PersonListPanelHandle getPersonListPanel() {
-        return mainWindowHandle.getPersonListPanel();
+    protected LessonListPanelHandle getLessonListPanel() {
+        return mainWindowHandle.getLessonListPanel();
     }
 
     protected MainMenuHandle getMainMenu() {
