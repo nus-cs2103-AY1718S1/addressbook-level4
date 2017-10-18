@@ -1,7 +1,7 @@
 
 = MedNus - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -13,23 +13,38 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T17-B2/main.git
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
-==Introduction
+By: `MedNus`      Since: `OCT 2017`      Licence: `MIT`
 
-MedNus is a custom address book made for doctors. You can find many different features available in MedNus that are +
-useful for doctors. You can record appointments you have with patients, take note of the blood type of your patients +
-by using MedNus as a reference and more. MedNus also comes with unique UI theme and tag colors. You can make use +
-of keyboard shortcuts to make use of MedNus more efficiently as well.
+== *INTRODUCTION*
 
+MedNus is a custom address book made for medical professionals. +
+ +
+You can find many different features available in MedNus that are useful for medical professionals such as +
+recording appointments, listing your patients based on blood type and even saving a canvas drawing of your +
+patient's injury. +
+ +
+With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
+and productively. +
+ +
 This user guide comes with instructions and examples to help you get used to using MedNus.
 
-== Quick Start
+== *ABOUT*
+This user guide shows you how to get started using MedNus +
+ +
+This user guide introduces you to the features MedNus have and leads you through with examples. +
+ +
+You are required to know how to use Java to run a Graphical User Interface (GUI) application. +
+
+
+== *GETTING STARTED*
 
 .  Make sure you have Java version `1.8.0_60` or later installed in your Computer.
 +
-[NOTE]
+[WARNING]
+====
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
+====
 +
 .  You can download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -48,33 +63,45 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  You can refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== *FEATURES*
 
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Command Format |Meaning |Example |Remark
+
+|Upper Case |Parameters supplied by User |`add n/NAME` |`NAME` is a parameter which can be used as `add n/John Doe`
+
+|Square Brackets |Optional inputs |`n/NAME [t/TAG]` |`[t/TAG]` is an optional field
+
+|`…`​ |Can be used multiple times |`[t/TAG]...` |Can have multiple tags: `[t/TAG1] [t/TAG2] [t/TAG3]`
+
+|=======================================================================
+
+[NOTE]
 ====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
 You can use the `help` command to access the User Guide from MedNus. +
-You can also click the `Help` at the top left corner of MedNus. +
-The User Guide will show you how to use MedNus. +
-Format: `help`
+You can also click the `Help` at the top left corner of MedNus.
+
+image::helpUi.png[width="790"]
+
 
 === Adding a person: `add`
 
 You can add a person to the address book by following the format below. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-Shorthand Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
+ +
+*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
+*Shorthand Format:* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
 
 [TIP]
+====
 You can add any number of tags for a person or none at all.
+====
 
-Examples:
+*Examples:*
 
 * `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB t/criminal`
@@ -84,70 +111,100 @@ Examples:
 
 * *Listing all persons* +
 You can use `list` to show a list of all persons in the address book. +
-Format: `list` +
-Shorthand Format: `l`
+ +
+*Format:* `list` +
+*Shorthand Format:* `l`
 
 * *Listing persons by tag* +
-You can show a list of people with specific tag(s) by following the format below. +
-Format: `list TAG1 TAG2...` +
+MedNus can list selected contacts with specific tag(s). +
  +
-Examples: +
-`list colleagues friends` +
-This will list all contacts with the tag `colleagues`, `friends` or both.
+*Format:* `list TAG1 TAG2...` +
+ +
+*Example:* `list colleagues friends` +
+This shows you all contacts with the tag `colleagues`, `friends` or both.
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
-You can show a list of people in the address book with a specific the blood type. +
-Format: `bloodtype BLOODTYPE` +
-Shorthand Format: `bt BLOODTYPE`
-+
-Examples: +
+You can use `bloodtype` to show a list of people with that specific blood type. +
+ +
+*Format:* `bloodtype BLOODTYPE` +
+*Shorthand Format:* `bt BLOODTYPE`
+
+*Examples:* +
 `bloodtype A` +
 List people with blood type A. +
 `bt ab+` +
 List people with  blood type AB+. +
-Take note that BLOODTYPE is case insensitive.
+
+[NOTE]
+====
+BLOODTYPE is case insensitive.
+====
 
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-Shorthand Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
+ +
+*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
+*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
 
-****
-* The `edit` command edits the person at the specified `INDEX`.
-* The index refers to the index number shown in the last person listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-* You can check the index using the `list` command.
-* At least one of the optional fields must be provided.
-* The current information will be replaced with the new information added during editing.
-* When editing tags, the existing tags of the person will be removed i.e you have to add all tags again when editing.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+[width="59%",cols="22%,<30%",options="header",]
+|=======================================================================
+|Word |Remarks
 
-Examples:
+|`edit` |Keyword to call the edit command
+
+|`INDEX` |Index number shown in the last person listing
+
+|`INDEX` |Must be a positive integer
+
+|=======================================================================
+
+*Examples:*
 
 * `e 1 p/91234567 e/johndoe@example.com` +
 The phone number and email address of the 1st person are changed to `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 The name of the 2nd person is changed to `Betsy Crower` and all existing tags are removed.
 
+[WARNING]
+====
+At least one of the optional fields must be provided. +
+Current Information will be replaced with new information +
+Existing tags will be removed and have to be respecified when editing.
+====
+
+[TIP]
+====
+You can check the index using the `list` command. +
+You can remove all the person's tags by typing `t/` without specifying any tags after it.
+====
+
 === Locating persons by name: `find`
 
 You can find people whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
-Shorthand Format: `f KEYWORD [MORE_KEYWORDS]`
+ +
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
+*Shorthand Format:* `f KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* You can only search for names.
-* Only full words will be matched. e.g. You cannot type `Han` to search for names with keyword `Hans`.
-* People matching at least one keyword will be returned (i.e. `OR` search). +
-e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+[width="59%",cols="22%,<30%",options="header",]
+|=======================================================================
+|Remarks |Example
 
-Examples:
+|The search is case insensitive |`hans` will match `Hans`
+
+|The order of the keywords does not matter |`Hans Bo` will match `Bo Hans`
+
+|You can only search for names |`Hans Bo` (Name) is valid `Colleague` (Tag)  is not
+
+|Only full words will be matched | You cannot type `Han` to search for names with keyword `Hans`
+
+|People matching at least one keyword will be returned |`Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+|=======================================================================
+
+
+*Examples:*
 
 * `f John` +
 Returns any `john` and `John Doe`
@@ -156,18 +213,12 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-You can delete a specific person from the address book. +
-Format: `delete INDEX` +
-Shorthand Format: `d INDEX`
+You can delete a specific person from the address book at a specified `INDEX`. +
+ +
+*Format:* `delete INDEX` +
+*Shorthand Format:* `d INDEX`
 
-****
-* The person at the specified `INDEX` is deleted.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-* You can check the index using the `list` command.
-****
-
-Examples:
+*Examples:*
 
 * `list` +
 `d 2` +
@@ -176,9 +227,21 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+[WARNING]
+====
+The index *must be a positive integer* `1, 2, 3, ...`
+====
+
+[TIP]
+====
+You can check the index using the `list` command
+====
+
+
 === Selecting a person : `select`
 
 You can select a person based on their index number. +
+ +
 Format: `select INDEX` +
 Shorthand Format: `s INDEX`
 
@@ -425,12 +488,12 @@ Format: `exit`
 MedNus data are saved in the hard disk automatically after any command that changes the data. +
 You do not need to save manually.
 
-== FAQ
+== *FAQ*
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== *COMMAND SUMMARY*
 
 === MedNus Features
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
