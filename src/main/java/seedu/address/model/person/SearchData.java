@@ -14,10 +14,9 @@ public class SearchData {
 
     /**
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if searchCount string is invalid.
      */
     public SearchData(String searchCount) throws IllegalValueException {
-        requireNonNull(searchCount);
         this.searchCount = searchCount;
     }
 

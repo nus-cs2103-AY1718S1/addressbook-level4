@@ -10,6 +10,7 @@ public class ListByMostSearchedCommand extends Command {
 
         public static final String COMMAND_WORD = "listMostSearched";
         public static final String COMMAND_ALIAS = "lms";
+        public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
 
         public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
 

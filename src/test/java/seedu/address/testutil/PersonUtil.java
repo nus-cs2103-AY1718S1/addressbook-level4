@@ -33,7 +33,6 @@ public class PersonUtil {
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " "));
-        sb.append(PREFIX_SEARCHCOUNT + person.getSearchData().getSearchCount() + " ");
         return sb.toString();
     }
 }
