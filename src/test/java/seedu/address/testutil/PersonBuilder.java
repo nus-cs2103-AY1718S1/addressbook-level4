@@ -117,7 +117,6 @@ public class PersonBuilder {
         return this;
     }
 
-
     public Person build() {
         return this.person;
     }

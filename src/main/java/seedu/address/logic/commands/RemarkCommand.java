@@ -45,7 +45,6 @@ public class RemarkCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit the remark
      * @param remark of the person
      */
-
     public RemarkCommand (Index index, Remark remark) {
         requireNonNull(index);
         requireNonNull(remark);
@@ -79,7 +78,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-    * This method is used to generate success message
+    * Returns command success message
     */
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
@@ -97,12 +96,12 @@ public class RemarkCommand extends UndoableCommand {
             return true;
         }
 
-        //instanceOf handles nulls
+        // instanceOf handles nulls
         if (!(other instanceof RemarkCommand)) {
             return false;
         }
 
-        //state check
+        // state check
         RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index) && remark.equals(e.remark);
     }

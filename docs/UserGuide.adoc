@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-F11-B2/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main
 
 By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
@@ -103,6 +103,24 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Delete tag form all persons: 'tagDelete'
+
+Deletes a tag inputted by the user from all existing person in the address book. +
+Format: `tagDelete [tag name]`
+
+****
+* the matching of tag is case sensitive.
+* Tags that matches the tag inputted by the user wll be deleted.
+* only the tag set attached to each person will be searched.
+****
+
+Examples:
+
+* `tagDelete friends` +
+the tag friends will be deleted from any person in the addressbook that has this tag.
+* `tagDelete noSuchTag` +
+Nothing will happen if no such tag is present in any person in the address book
 
 === Locating persons by name: `find`
 

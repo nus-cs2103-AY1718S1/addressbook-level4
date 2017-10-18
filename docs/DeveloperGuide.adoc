@@ -860,9 +860,9 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  A user should open the application with the previous entries in a addressbook pre-loaded.
-.  Should not experience visible lag or delays above 0.5s when running any command within the addressbook.
+.  Should not experience visible lag or delays when running any command within the addressbook.
 .  Should display a pleasing image when working in offline mode.
-.  Core functionality should not be affected by the connectivity of the computer.
+.  Regardless of the availability of internet access, the core functionality should not be affected.
 
 {More to be added}
 
@@ -888,6 +888,13 @@ Contact List
 
 ....
 A list that displays contacts that were added to it, a contact can exist on multiple lists
+....
+
+[[default-contact]]
+Default Contact
+
+....
+A contact that is persistent to you. A self-contact such that you can see how you look like in the addressbook of others
 ....
 
 [[contact-history]]
