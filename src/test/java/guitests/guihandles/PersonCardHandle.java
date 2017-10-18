@@ -71,7 +71,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getRemark() {
         return remarkLabel.getText();
     }
-  
+    
     public String getBirthday() {return birthdayLabel.getText(); }
 
 

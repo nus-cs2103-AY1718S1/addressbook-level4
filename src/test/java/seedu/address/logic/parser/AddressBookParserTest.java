@@ -83,7 +83,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
-      
+
     @Test
     public void parseCommand_birthday() throws Exception {
         final Birthday birthday = new Birthday("05/JAN/1995");
