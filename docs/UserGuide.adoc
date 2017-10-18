@@ -298,14 +298,24 @@ e.g.`select 2`
 == Patch Notes
 
 === Features added in v1.0
+In version v1.0, users will be able to: +
+
+* have their data backed up automatically when Ark is launched.
 
 {{More to be added}}
 
 === Features added v1.1
+In version v1.1, users will be able to: +
+
+*
 
 {{More to be added}}
 
 === Features added in v1.2
+In version v1.2, users will be able to: +
+
+* work with a parcels instead of persons.
+* add and edit the tracking numbers of parcels.
 
 {{More to be added}}
 
