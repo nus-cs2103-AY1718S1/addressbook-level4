@@ -1,28 +1,27 @@
-/*import java.util.logging.Logger;
+package seedu.address.ui;
 
-import org.fxmisc.easybind.EasyBind;
-
+import com.google.common.eventbus.Subscribe;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.ui.PersonCard;
-import seedu.address.ui.PersonListPanel;
-import seedu.address.ui.TaskCard;
-import seedu.address.ui.UiPart;
 
-/**
- * Panel containing the list of tasks.
- */
-/*public class TaskListPanel extends UiPart<Region> {
+
+import java.util.logging.Logger;
+
+public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(seedu.address.ui.TaskListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
-    @javafx.fxml.FXML
-    private ListView<TaskCard> taskListView;
+    @FXML
+    private ListView<TaskCard> taskCardListView;
 
     public TaskListPanel(ObservableList<ReadOnlyTask> taskList) {
         super(FXML);
@@ -30,12 +29,55 @@ import seedu.address.ui.UiPart;
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
-        personListView.setItems(mappedList);
-        personListView.setCellFactory(listView -> new PersonListPanel.PersonListViewCell());
-        setEventHandlerForSelectionChangeEvent();
+    private void setConnections(ObservableList<ReadOnlyTask> taskList) {
+        ObservableList<TaskCard> mappedList = EasyBind.map(
+            taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1));
+        taskCardListView.setItems(mappedList);
+        taskCardListView.setCellFactory(listView -> new TaskListViewCell());
+        //setEventHandlerForSelectionChangeEvent();
     }
-}*/
+/*
+    private void setEventHandlerForSelectionChangeEvent() {
+        taskCardListView.getSelectionModel().selectedItemProperty()
+            .addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    raise(new TaskPanelSelectionChangedEvent(newValue));
+                }
+            });
+    }
+*/
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            taskCardListView.scrollTo(index);
+            taskCardListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
 
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class TaskListViewCell extends ListCell<TaskCard> {
+
+        @Override
+        protected void updateItem(TaskCard task, boolean empty) {
+            super.updateItem(task, empty);
+
+            if (empty || task == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(task.getRoot());
+            }
+        }
+    }
+}

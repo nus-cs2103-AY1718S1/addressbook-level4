@@ -3,27 +3,24 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.task.ReadOnlyTask;
 
-/**
- * An UI component that displays information of a {@code Task}.
- */
 public class TaskCard extends UiPart<Region> {
 
-    private static final String FXML = "TaskListCard.fxml";
+    private static final String FXML = "TaskCard.fxml";
 
     public final ReadOnlyTask task;
 
     @FXML
-    private ListView taskPane;
-
-    @FXML
-    private Label description;
+    private HBox cardPanel;
 
     @FXML
     private Label id;
+
+    @FXML
+    private Label description;
 
     @FXML
     private Label startDate;
@@ -34,14 +31,10 @@ public class TaskCard extends UiPart<Region> {
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
-        id.setText(displayedIndex + ". ");
+        id.setText("  " + displayedIndex + ". ");
         bindListeners(task);
     }
 
-    /**
-     * Binds the individual UI elements to observe their respective {@code Task} properties
-     * so that they will be notified of any changes.
-     */
     private void bindListeners(ReadOnlyTask task) {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         startDate.textProperty().bind(Bindings.convert(task.startDateProperty()));
@@ -56,13 +49,13 @@ public class TaskCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TaskCard)) {
+        if (!(other instanceof PersonCard)) {
             return false;
         }
 
         // state check
         TaskCard card = (TaskCard) other;
         return id.getText().equals(card.id.getText())
-                && task.equals(card.task);
+            && task.equals(card.task);
     }
 }
