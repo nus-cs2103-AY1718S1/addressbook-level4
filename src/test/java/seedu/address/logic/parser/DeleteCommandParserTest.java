@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,33 @@ public class DeleteCommandParserTest {
     }
 
     @Test
+    public void parse_validArgs_returnsDeleteCommand_1() {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        todelete.add(INDEX_SECOND_PERSON);
+        assertParseSuccess(parser, "I/1 2", new DeleteCommand(todelete));
+    }
+
+    @Test
+    public void parse_validArgs_returnsDeleteCommand_2() {
+        ArrayList<Index> todelete = new ArrayList<>();
+        todelete.add(INDEX_FIRST_PERSON);
+        assertParseSuccess(parser, "n/Alice Pauline", new DeleteCommand("Alice Pauline"));
+    }
+
+    @Test
     public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "I/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException_1() {
+        assertParseFailure(parser, "n/", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+
+    @Test
+    public void parse_invalidArgs_throwsParseException_2() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
     }
 }

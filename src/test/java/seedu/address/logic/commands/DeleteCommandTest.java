@@ -49,6 +49,46 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_validIndexUnfilteredList_success_2() throws Exception {
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson personToDelete_2 = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        personsToDelete1.clear();
+        personsToDelete1.add(INDEX_FIRST_PERSON);
+        personsToDelete1.add(INDEX_SECOND_PERSON);
+
+        DeleteCommand deleteCommand1 = prepareCommand(personsToDelete1);
+
+        String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
+
+        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        expectedModel1.deletePerson(personToDelete);
+        expectedModel1.deletePerson(personToDelete_2);
+
+        assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
+    }
+
+    @Test
+    public void execute_validNameUnfilteredList_success() throws Exception {
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        personsToDelete1.clear();
+        String deleteName = personToDelete.getName().fullName;
+
+        DeleteCommand deleteCommand1 = prepareCommand(deleteName);
+
+        String expectedMessage1 = DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
+
+        ModelManager expectedModel1 = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        expectedModel1.deletePerson(personToDelete);
+
+        assertCommandSuccess(deleteCommand1, model, expectedMessage1, expectedModel1);
+    }
+
+
+    @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         personsToDelete1.clear();
@@ -77,6 +117,25 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_validNameFilteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        personsToDelete1.clear();
+        String deleteName = personToDelete.getName().fullName;
+        DeleteCommand deleteCommand = prepareCommand(deleteName);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deletePerson(personToDelete);
+        showNoPerson(expectedModel);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstPersonOnly(model);
 
@@ -90,6 +149,26 @@ public class DeleteCommandTest {
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+
+    @Test
+    public void execute_invalidNameFilteredList_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(),new UserPrefs());
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        personsToDelete1.clear();
+        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        String name = personToDelete.getName().fullName;
+
+        showFirstPersonOnly(model);
+
+
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+
+        DeleteCommand deleteCommand = prepareCommand(name);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
 
     @Test
     public void equals() {
@@ -123,6 +202,12 @@ public class DeleteCommandTest {
     private DeleteCommand prepareCommand(ArrayList<Index> indexes) {
 
         DeleteCommand deleteCommand = new DeleteCommand(indexes);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteCommand;
+    }
+
+    private DeleteCommand prepareCommand(String name) {
+        DeleteCommand deleteCommand = new DeleteCommand(name);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }

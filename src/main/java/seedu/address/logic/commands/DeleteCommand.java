@@ -27,8 +27,8 @@ public class DeleteCommand extends UndoableCommand {
     private boolean exist = false;
     private int numofinvalid = 0;
 
-    private ArrayList<Index> targetIndex;
-    private String target;
+    private ArrayList<Index> targetIndex= new ArrayList<>();
+    private String target = "";
 
     public DeleteCommand(ArrayList<Index> targetIndex) {
         this.targetIndex = targetIndex;
@@ -80,6 +80,8 @@ public class DeleteCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
+                && this.target.equals(((DeleteCommand) other).target))
+                || (other instanceof DeleteCommand
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
 }
