@@ -161,7 +161,7 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-      
+
         //eventListPanel = new EventListPanel(logic.getFilteredEventList());
         //eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
