@@ -8,7 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Exports the address book to a user defined location {@code filePath}
  */
-public class ExportCommand extends UndoableCommand {
+public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
     public static final String COMMAND_ALIAS = "p";
@@ -33,7 +33,7 @@ public class ExportCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         try {
             storage.saveAddressBook(model.getAddressBook(), filePath);

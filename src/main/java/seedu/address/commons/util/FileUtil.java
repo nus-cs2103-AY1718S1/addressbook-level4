@@ -12,7 +12,7 @@ import java.nio.file.Files;
 public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
-    private static final String REGEX_XML_FILE = ".*\\\\.xml$";
+    private static final String REGEX_XML_FILE = ".*\\.xml$";
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
