@@ -1,12 +1,17 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+
+import org.junit.Test;
 import static seedu.address.testutil.TypicalPersons.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -14,14 +19,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class FindTagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -67,6 +66,11 @@ public class FindTagCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, FIONA, GEORGE));
     }
 
+    /**
+     * 
+     * @param userInput
+     * @return
+     */
     private FindTagCommand prepareCommand(String userInput) {
         FindTagCommand command =
                 new FindTagCommand(new TagsContainKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
