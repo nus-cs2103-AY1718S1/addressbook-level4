@@ -7,8 +7,10 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * This is a task class with only a name
@@ -184,6 +186,21 @@ public class Task implements ReadOnlyTask {
 
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    /**
+     * Set a new tag set along with the new task construction
+     * This method should not be usd if the
+     * @param tags , to be set
+     * @return the newly constructed task
+     */
+    public Task withTags(String ... tags) {
+        try {
+            this.setTags(SampleDataUtil.getTagSet(tags));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
     }
 
 }

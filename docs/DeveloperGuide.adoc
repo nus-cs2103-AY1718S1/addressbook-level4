@@ -194,8 +194,8 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Address Book data and the Task Book data.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and another unmodifiable `ObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -359,6 +359,78 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== TaskBook
+We develop this application as a parallel of two similar application, namely addressBook and taskBook. They are similar in many ways, including comman commands like `add` for adding a person and `addTask` for adding a task. +
+
+Adding a taskBook to our application originated from our design requirements. In product v1.0, we have updated developer guide and user guide for a set of new functionalities specially designed for tasks. Thus, we need to add a taskBook to this application.
+
+* The taskBook is a set of parallel functionalities apart from the addressBook.
+* The taskBook is related to addressbook in the sense that we can link the person and task together.
+* taskBook and addressBook has the following independent components: `model`, `logic`, and `storage`.
+* taskBook and addressBook share the same user interface by taking up taskPanel and personPanel respectively.
+
+With the extra taskBook working in parallel, the model interface should be modified in this way:
+[source,java]
+----
+
+ReadOnlyTaskBook getTaskBook();
+
+void addTask(ReadOnlyTask task) throws DuplicateTaskException;
+
+void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
+----
+
+With the updated model interface, the ModelManager and ModelStub should be modified accordingly. +
+
+For storage, we save the tasks into another storage file (xml file), the storage interface should be equipped with the following read and write methods:
+[source,java]
+----
+Optional<ReadOnlyTaskBook> readTaskBook() throws DataConversionException, IOException;
+
+@Override
+void saveTaskBook(ReadOnlyTaskBook addressBook) throws IOException;
+
+@Override
+Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+
+@Override
+void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+void handleTaskBookChangedEvent(TaskBookChangedEvent tbce);
+----
+As given in storage and model, the main logic should be implemented this way to take both addressbook and the taskbook's storage during initialization. +
+[source,java]
+----
+UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+userPrefs = initPrefs(userPrefsStorage);
+AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+TaskBookStorage taskBookStorage = new XmlTaskBookStorage(userPrefs.getTaskBookFilePath());
+storage = new StorageManager(addressBookStorage, userPrefsStorage, taskBookStorage);
+----
+The unit tests stub classes and setUp methods should be updated accordingly. +
+
+==== Design Considerations
+
+**Aspect:** Implementation of `taskBookStorage` +
+**Alternative 1 (current choice):** Create a new xml file and several xml adapted classes for task Book storage +
+**Pros:** We will not create any dependencies between taskBook and addressBook. +
+**Cons:** A lot of code seems very similar and more storage file become hrad to manage. +
+**Alternative 2:** Save the new task to the same storage xml file as addressBook +
+**Pros:** This method of implementation saves the space and it can reuse some of the codes in addressBook. +
+**Cons:** It creates dependency between the storage for both books and it is inefficient to retrieve only one of them from storage xml file.+
+
+---
+**Aspect** Implementation of modelling and logic of `taskBook` +
+**Alternative 1 (current choice):** Rewrite codes for taskBook, keep the original addressbook codes untouched. +
+**Pros:** The original addressBook logic and modelling will not be affected. We keep an independent book from the original. +
+**Cons:** The code reusage is very low and adding a taskBook become very tedious. +
+**Alternative 2:** Modify the original code base to reutiliza some of the common functionalities. +
+**Pros:** The code reusage is good and adding a taskBook becomes more efficient. +
+**Cons:** The dependency is very high between addressBook and taskBook, there is a high tendency to break original logic and modelling. +
+
 
 === Configuration
 

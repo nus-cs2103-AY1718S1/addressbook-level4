@@ -25,6 +25,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 public class AddTaskCommandTest {
 
@@ -108,6 +109,11 @@ public class AddTaskCommandTest {
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
             fail("This method should not be called.");
         }
 
