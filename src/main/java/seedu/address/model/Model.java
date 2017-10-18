@@ -55,7 +55,7 @@ public interface Model {
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      */
-    void deleteEveryPersonWithTag(Tag tag);
+    void deletePersonsWithTag(Tag tag);
 
     /**
      * Adds appoints to a person
