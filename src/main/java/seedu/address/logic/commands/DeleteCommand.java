@@ -68,7 +68,7 @@ public class DeleteCommand extends UndoableCommand {
             try {
                 model.deleteLesson(lessonToDelete);
             } catch (LessonNotFoundException pnfe) {
-                assert false : "The target person cannot be missing";
+                assert false : "The target lesson cannot be missing";
             }
             return new CommandResult(String.format(MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete));
         }
@@ -79,17 +79,19 @@ public class DeleteCommand extends UndoableCommand {
      */
     private CommandResult deleteLessonWithLocation(Location location) {
 
-        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-
-        for (ReadOnlyLesson l : lessonList) {
-            if (l.getLocation().equals(location)) {
-                lessonList.remove(l);
+        try {
+            model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+            for (ReadOnlyLesson l : lessonList) {
+                if (l.getCode().equals(location)) {
+                    model.deleteLesson(l);
+                }
             }
+        } catch (LessonNotFoundException e) {
+            assert false : "The target lesson cannot be missing";
         }
+
         model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
-
-
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, location));
     }
 
@@ -98,15 +100,19 @@ public class DeleteCommand extends UndoableCommand {
      */
     private CommandResult deleteLessonWithModuleCode(Code code) {
 
-        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
-        ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-        for (ReadOnlyLesson l : lessonList) {
-            if (l.getCode().equals(code)) {
-                lessonList.remove(l);
+        try {
+            model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
+            for (ReadOnlyLesson l : lessonList) {
+                if (l.getCode().equals(code)) {
+                    model.deleteLesson(l);
+                }
             }
+        } catch (LessonNotFoundException e) {
+            assert false: "The target lesson cannot be missing";
         }
-        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
 
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, code));
     }
 

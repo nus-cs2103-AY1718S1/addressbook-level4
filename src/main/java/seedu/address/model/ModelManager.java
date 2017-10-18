@@ -23,9 +23,7 @@ import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+import seedu.address.model.module.predicates.*;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -184,16 +182,29 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void handleListingUnit() {
-        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
-        if (currentUnit.equals(LOCATION) || currentUnit.equals(LESSON)) {
-            Predicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+        ListingUnit unit = ListingUnit.getCurrentListingUnit();
+        ReadOnlyLesson typicalLesson = getFilteredLessonList().get(0);
+
+        if (unit.equals(LOCATION)) {
+            UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
             updateFilteredLessonList(predicate);
-        } else if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
-            Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+        } else if (unit.equals(MODULE)) {
+            UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
             updateFilteredLessonList(predicate);
         } else {
-           assert false : "We will only handle unit LOCATION MODULE and LESSON";
+            ListingUnit previousUnit = ListingUnit.getPreviousListingUnit();
+            if (previousUnit == MODULE) {
+                Code code = typicalLesson.getCode();
+                FixedCodePredicate predicate = new FixedCodePredicate(code);
+                updateFilteredLessonList(predicate);
+            } else {
+                Location location = typicalLesson.getLocation();
+                FixedLocationPredicate predicate = new FixedLocationPredicate(location);
+                updateFilteredLessonList(predicate);
+            }
+
         }
     }
+
 
 }

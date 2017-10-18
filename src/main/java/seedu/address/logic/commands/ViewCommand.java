@@ -66,10 +66,12 @@ public class ViewCommand extends Command {
         case LOCATION:
             predicate = new FixedLocationPredicate(toView.getLocation());
             result = String.format(MESSAGE_VIEW_LOCATION_SUCCESS, toView.getLocation());
+            break;
 
         case MODULE:
             predicate = new FixedCodePredicate(toView.getCode());
             result = String.format(MESSAGE_VIEW_MODULE_SUCCESS, toView.getCode());
+            break;
 
         default:
             predicate = new ShowSpecifiedLessonPredicate(toView);

@@ -39,17 +39,17 @@ public class EditCommandParser implements Parser<EditCommand> {
     @Override
     public EditCommand parse(String args) throws ParseException {
 
-        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE)) {
-            return parseEditModule(args);
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON)) {
+            return parseEditLesson(args);
         } else {
             return parseEditAttribute(args);
         }
     }
 
     /**
-     * Parse the input arguments given the current listing unit is MODULE.
+     * Parse the input arguments given the current listing unit is Lesson.
      */
-    public EditCommand parseEditModule(String args) throws ParseException {
+    public EditCommand parseEditLesson(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_CLASS_TYPE, PREFIX_VENUE, PREFIX_GROUP, PREFIX_TIME_SLOT,
