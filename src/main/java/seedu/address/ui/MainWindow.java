@@ -38,31 +38,26 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
-
-    // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    // Independent Ui parts residing in this Ui container
+    private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
-
-    @FXML
-    private StackPane browserPlaceholder;
-
-    @FXML
-    private StackPane commandBoxPlaceholder;
+    private BrowserPanel browserPanel;
 
     @FXML
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
-
-    @FXML
-    private StackPane eventListPanelPlaceholder;
-
+    private StackPane commandBoxPlaceholder;
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane dataListPanelPlaceholder;
+    @FXML
+    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane statusBarPlaceholder;
@@ -114,7 +109,7 @@ public class MainWindow extends UiPart<Region> {
          * not work when the focus is in them because the key event is consumed by
          * the TextInputControl(s).
          *
-         * For now, we add following event filter to capture such key events and open
+         * For now, we add the following event filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */
@@ -130,24 +125,24 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
-
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                                                               logic.getFilteredPersonList().size());
         statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     void hide() {
