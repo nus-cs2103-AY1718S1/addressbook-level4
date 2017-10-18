@@ -38,9 +38,6 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    /** Removes the specified tag from everyone in the address book. */
-    void deleteTagFromEveryone(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
-
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
