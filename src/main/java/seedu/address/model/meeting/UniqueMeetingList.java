@@ -110,6 +110,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
 
         internalList.set(index, new Meeting(editedMeeting));
+        internalList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
+                .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
     /**
