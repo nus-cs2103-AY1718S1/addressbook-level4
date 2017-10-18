@@ -12,7 +12,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.getTypicalTaskbook;
 
-
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -44,7 +43,8 @@ public class RemarkCommandTest {
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), getTypicalTaskbook(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), getTypicalTaskbook(),
+                new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
@@ -59,7 +59,8 @@ public class RemarkCommandTest {
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_DELETE_REMARK_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), getTypicalTaskbook(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), getTypicalTaskbook(),
+                new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
@@ -76,7 +77,8 @@ public class RemarkCommandTest {
 
         String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_REMARK_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), getTypicalTaskbook(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), getTypicalTaskbook(),
+                new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);

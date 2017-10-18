@@ -3,7 +3,13 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -29,7 +35,8 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultRemark, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultRemark,
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
