@@ -66,37 +66,4 @@ public class ModelManagerTest {
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
-
-    @Test
-    public void deleteTag() throws IllegalValueException, PersonNotFoundException {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        UserPrefs userPrefs = new UserPrefs();
-        Tag tag = new Tag("friends", "");
-
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-
-        //person not found, empty AddressBook
-        AddressBook emptyAddressBook = new AddressBookBuilder().build();
-        ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
-        AddressBook expectedAddressBook = new AddressBookBuilder().build();
-        emptyModelManager.deleteTagFromEveryone(tag);
-        assertTrue(emptyAddressBook.equals(expectedAddressBook));
-
-        //person not found, no such tag
-        Tag noSuchTag = new Tag("nosuchtag", "");
-        modelManager.deleteTagFromEveryone(noSuchTag);
-        expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        assertTrue(addressBook.equals(expectedAddressBook));
-
-        //deletes a tag
-        modelManager.deleteTagFromEveryone(tag);
-        AddressBook originalAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        for (ReadOnlyPerson person : originalAddressBook.getPersonList()) {
-            for (ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
-                if (person.getName().equals(personCopy.getName())) {
-                    assertFalse(person.getTags().equals(personCopy.getTags()));
-                }
-            }
-        }
-    }
 }
