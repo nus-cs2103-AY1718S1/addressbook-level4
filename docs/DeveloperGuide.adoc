@@ -364,6 +364,62 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::optionalfields[]
+=== Adding optional fields: Company, Position, Status, Priority, and Note
+
+When adding a new person, the basic fields `Name`, `Phone`, `Email`, and `Address` (not including `Tags`) are compulsory fields as they apply to everyone. However, for extended sales functionality, we have included additional optional fields, namely `Company`, `Position`, `Status`, `Priority`, and `Note`.
+
+These fields are not necessarily applicable to everyone, as persons in a non-business context do not need to have these information included. Hence when adding a person, any number of these fields can be excluded and the person will still be able to be added.
+
+The primary logic that deals with these optional fields appears in the `parse` function of the `AddCommandParser` class:
+[source,java]
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+}
+
+try {
+    Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+    Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+    Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+    Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+    //Initialize company, position, status, and note to NIL, priority to L
+    Company company = new Company("NIL");
+    Position position = new Position("NIL");
+    Status status = new Status("NIL");
+    Priority priority = new Priority("L");
+    Note note = new Note("NIL");
+
+    Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+    //Since Company, Position, Status and Priority are optional parameters, set them if they are present
+    if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
+        company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_POSITION)) {
+        position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_STATUS)) {
+        status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_PRIORITY)) {
+        priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_NOTE)) {
+        note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).get();
+    }
+
+    ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
+            note, tagList);
+----
+The 4 required fields are checked to see if they are present. If any of them are missing, a `ParseException` is thrown and the add command is invalid.
+
+The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
+
 == Documentation
 
 We use asciidoc for writing documentation.
