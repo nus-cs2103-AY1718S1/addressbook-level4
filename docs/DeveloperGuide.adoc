@@ -451,6 +451,26 @@ image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
 
 // end::multiple[]
 
+=== Commenting
+The commenting feature was implemented as an end-to-end feature that touched upon all components. 
+
+The implementation process consisted of +
+1) Introducing an empty 'comment' command which does nothing, +
+2) making the command accept arguments, +
+3) modify the UI by adding room for 'comment' in the 'PersonCard', +
+4)adding a 'Comment' class, +
+5) making changes to Storage by adding 'comment' field to 'XmlAdaptedPerson' class, and finally, + 
+6) implementing 'CommentCommand#execute()' in logic. 
+
+==== Design Considerations
+**Aspect:** Implementation of `Comment` +
+**Alternative 1 (current choice):** Simply create a new `Comment` Component +
+**Pros:** Works well with the already existing commands and can be modified easily +
+**Cons:** Command line interface is not user friendly +
+**Alternative 2:** Create the 'comment' feature with a more user-friendly (post-it like) interface +
+**Pros:** This GUI will be user-friendly, being close to our familiar habit of post and scrapping post-it notes +
+**Cons:** The present project lacks the GUI to implement this. It may also be more difficult to work with other commands.
+
 == Documentation
 
 We use asciidoc for writing documentation.
