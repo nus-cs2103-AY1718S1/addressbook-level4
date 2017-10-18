@@ -227,7 +227,7 @@ It adds an image to the contact indicated by the user using the addPhotoCommand.
 Suppose that the user wishes to append an image to a desired contact. The user will execute addPhotoCommand 1 f/C:/Users/PhotoBook/myFace.png to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in addPhotoCommandparser.
 addPhotoCommandparser will then return a addPhotoCommand to be executed in the LogicManager. A new Person object, editedPerson is created with all the same field as the personToEdit with the addition of the new Photo field. The editedPerson will replace personToEdit within the UniquePersonList.
 
-=== Design considerations
+==== Design considerations
 
 **Aspect:** Implementation of addPhotoCommand +
 **Alternative 1(current choice):** Have addPhotoCommand implement UndoableCommand +
@@ -395,6 +395,33 @@ an invalid error message if the input is correct and return a successful message
 **Pros:** More convenient for users as they can just a single command word, `find`, to search through the Address Book
 with different parameters. +
 **Cons:** More difficult to implement and maintain. Testing can be more tedious as well.
+//end::findphonenumber[]
+
+---
+=== BirthdayCommand mechanism
+
+image::BirthdayUMLClass.png[width="800]
+
+The `BirthdayCommand` inherits from `Undoable Command` and supports undoing and redoing. When the user inputs the birthday
+, the `UI` calls the `execute()` method in the `LogicManager` Class. The `Logic` will then call for the `parseCommand()`
+in `AddressBookParser` Class and an instance of `BirthdayCommand` will be created. It is then returned and the command
+will be executed. An instance of `Person` will be created to be updated with the birthday and returned to the `BirthdayCommand`.
+The command will then call the `updatedFilteredPersonList()` method in the `Model` Class. In the end, the command will
+generate a success message. The following sequence diagram summarises what happens when the `BirthdayCommand` is implemented:
+
+image::BirthdayUMLseq.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `BirthdayCommand`. +
+**Alternative 1 (current choice):** Editing(adding and removing) of Birthdays using a separate command from the edit
+command. Further enhancements are needed to catch more invalid cases. +
+**Pros:** Easy for debugging and implementation. +
+**Cons:** Inconvenient for users as they have many commands to use. +
+**Alternative 2 (current choice):** Incorporate the birthday into the add, edit, and delete commands. +
+**Pros:** Convenient for users as they have to only remember a few key commands. +
+**Cons:** Difficult to implement and maintain. Testing can be more tedious as well.
+//end::birthday[]
 
 ---
 

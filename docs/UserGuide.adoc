@@ -251,6 +251,18 @@ Edits the remark for the first person to `Likes to drink coffee.` +
 * `remark 1 r/` +
 Removes the remark for the first person.
 
+=== Adding birthday : `birthday` (Since v1.2)
+
+Edits the birthday for a person specified in the `INDEX`. +
+Format: `birthday INDEX b/[BIRTHDAY]` +
+
+Examples:
+
+* `birthday 1 b/20/DEC/2012` +
+Edits the birthday for the first person to `20/DEC/2012` +
+* `birthday 1 b/` +
+Removes the birthday for the first person.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -270,6 +282,11 @@ Format: `import [FILEPATH]`
 
 Sending mass emails to contacts with the same tag. +
 Format: `emailall t/[TAG]`
+
+=== View birthdays in a calendar widget : `calendar` (Coming in v2.0)
+
+Display birthdays of contacts according to months in a calendar view. +
+Format: `calendar`
 
 === Exiting the program : `exit`
 
@@ -297,6 +314,10 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Remark* : `remark INDEX [r/REMARK]` +
+e.g. `remark 1 r/is a student in NUS`
+* *Birthday* : `birthday INDEX [b/DATE]` +
+e.g. `birthday 1 b/01/APR/1995`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
