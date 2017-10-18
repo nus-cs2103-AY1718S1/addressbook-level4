@@ -49,13 +49,10 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
-            case AddCommand.COMMAND_WORD:
-            case AddCommand.COMMAND_ALIAS:
-                return new AddCommandParser().parse(arguments);
-
-            case EditCommand.COMMAND_WORD:
-            case EditCommand.COMMAND_ALIAS:
+        switch (commandWord) { case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+            return new AddCommandParser().parse(arguments);
+            
+            case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS: 
                 return new EditCommandParser().parse(arguments);
 
             case SelectCommand.COMMAND_WORD:
