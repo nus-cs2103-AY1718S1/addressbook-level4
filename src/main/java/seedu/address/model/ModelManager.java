@@ -107,7 +107,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedMeeting)
             throws DuplicateMeetingException, MeetingNotFoundException, MeetingBeforeCurrDateException,
-            MeetingClashException{
+            MeetingClashException {
         requireAllNonNull(target, editedMeeting);
 
         addressBook.updateMeeting(target, editedMeeting);

@@ -79,9 +79,11 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     public void add(ReadOnlyMeeting toAdd) throws DuplicateMeetingException, MeetingClashException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new DuplicateMeetingException(); }
+            throw new DuplicateMeetingException();
+        }
         else if (diffNameOfMeeting(toAdd)) {
-            throw new MeetingClashException(); }
+            throw new MeetingClashException();
+        }
         else if (diffLocationOfMeeting(toAdd)) {
             throw new MeetingClashException();
         }
@@ -104,12 +106,13 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         if (index == -1) {
             throw new MeetingNotFoundException();
         }
-
-
+        
         if (!target.equals(editedMeeting) && internalList.contains(editedMeeting)) {
-            throw new DuplicateMeetingException();}
+            throw new DuplicateMeetingException();
+        }
         else if (diffNameOfMeeting(editedMeeting)) {
-            throw new MeetingClashException(); }
+            throw new MeetingClashException();
+        }
         else if (diffLocationOfMeeting(editedMeeting)) {
             throw new MeetingClashException();
         }

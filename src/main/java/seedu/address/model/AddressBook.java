@@ -169,7 +169,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedReadOnlyMeeting)
             throws DuplicateMeetingException, MeetingNotFoundException, MeetingBeforeCurrDateException,
-            MeetingClashException{
+            MeetingClashException {
         requireNonNull(editedReadOnlyMeeting);
 
         Meeting editedMeeting = new Meeting(editedReadOnlyMeeting);
