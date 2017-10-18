@@ -42,7 +42,7 @@ public class LockCommand extends Command {
             return new CommandResult(MESSAGE_EMPTY_ADDRESSBOOK);
         }
 
-        Security security = SecurityManager.getInstance(null);
+        Security security = SecurityManager.getInstance();
         try {
             if (security.isEncrypted()) {
                 return new CommandResult(MESSAGE_DUPLICATED_LOCK);

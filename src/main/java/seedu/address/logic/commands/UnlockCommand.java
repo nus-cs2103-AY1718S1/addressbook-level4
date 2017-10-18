@@ -38,7 +38,7 @@ public class UnlockCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
-        Security security = SecurityManager.getInstance(null);
+        Security security = SecurityManager.getInstance();
         try {
             if (!security.isEncrypted()) {
                 return new CommandResult(MESSAGE_DUPLICATED_UNLOCK);

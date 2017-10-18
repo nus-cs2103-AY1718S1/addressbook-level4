@@ -53,7 +53,7 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        Security security = SecurityManager.getInstance(null);
+        Security security = SecurityManager.getInstance();
         if (security.isSecured() && !security.isPermittedCommand(commandWord)) {
             throw new ParseException(MESSAGE_IS_ENCRYPTD);
         }

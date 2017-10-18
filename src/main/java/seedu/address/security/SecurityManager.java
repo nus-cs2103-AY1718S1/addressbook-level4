@@ -15,7 +15,7 @@ import seedu.address.storage.Storage;
  */
 public class SecurityManager extends ComponentManager implements Security {
 
-    private static SecurityManager instance;
+    private static Security instance;
 
     private Storage storage;
     private List<String> permittedCommandList;
@@ -25,9 +25,20 @@ public class SecurityManager extends ComponentManager implements Security {
         permittedCommandList = new ArrayList<>();
     }
 
-    public static SecurityManager getInstance(Storage storage) {
-        if (instance == null && storage != null) {
+    public static Security getInstance() {
+        return instance;
+    }
+
+    public static Security getInstance(Storage storage) {
+        if (instance == null) {
             instance = new SecurityManager(storage);
+        }
+        return instance;
+    }
+
+    public static Security getInstance(Security security) {
+        if (instance == null) {
+            instance = security;
         }
         return instance;
     }
