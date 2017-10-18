@@ -31,6 +31,8 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<UniqueTagList> tags;
 
+    private boolean isBlacklisted = false;
+
     /**
      * Every field must be present and not null.
      */
@@ -57,6 +59,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
                 source.getDebt(), source.getDeadline(), source.getTags());
+        this.isBlacklisted = source.getIsBlacklisted();
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
@@ -226,6 +229,16 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Deadline getDeadline() {
         return deadline.get();
+    }
+
+    @Override
+    public boolean getIsBlacklisted() {
+        return isBlacklisted;
+    }
+
+    @Override
+    public void setIsBlacklisted(boolean isBlacklisted) {
+        this.isBlacklisted = isBlacklisted;
     }
 
     //@@author
