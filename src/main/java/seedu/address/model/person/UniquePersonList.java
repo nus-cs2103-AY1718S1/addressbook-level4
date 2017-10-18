@@ -92,6 +92,11 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * Favourites the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
     public void favouritePerson(ReadOnlyPerson toFavourite) throws PersonNotFoundException {
         requireNonNull(toFavourite);
         int index = internalList.indexOf(toFavourite);
@@ -102,6 +107,11 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.get(index).setFavourite(true);
     }
 
+    /**
+     * Unfavourites the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
     public void unfavouritePerson(ReadOnlyPerson toUnfavourite) throws PersonNotFoundException {
         requireNonNull(toUnfavourite);
         int index = internalList.indexOf(toUnfavourite);
