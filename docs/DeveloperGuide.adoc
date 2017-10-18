@@ -378,14 +378,16 @@ image::addMeetingSequenceDiagram.png[width="800"]
 
 The implementation of meeting card starts of from creating 'Meeting' class which resides in the Model component of this application. This meeting card also requires the UI component for this cards to be properly shown to the users.
 
-*Firstly, the Meeting class is created with object properties like 'Name of meeting', 'DateTime'(which uses java.time), 'person to meet', 'phone number' and 'location of meeting'. We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
-*These properties of are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
-*The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
+* Firstly, the Meeting class is created with object properties like 'Name of meeting', 'DateTime'(which uses java.time), 'person to meet', 'phone number' and 'location of meeting'. We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
+* These properties of are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
+* The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
 
-image::MeetingCard.png[width="400"]
+image::MeetingCard.png[width="300"]
 
 To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
-
+* 'darkRed' : Meeting is in next 24 hours.
+* 'red' : Meeting is in next 48 hours.
+* 'orangeRed' : Meeting is in next 72 hours.
 
 ==== Design Considerations
 
