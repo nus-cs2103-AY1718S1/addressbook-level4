@@ -37,6 +37,7 @@ public class ChangeTagColorCommand extends ConfigCommand {
             throw new CommandException(MESSAGE_NO_SUCH_TAG);
         }
 
+        model.setTagColor(tag, newColor);
         return new CommandResult(String.format(MESSAGE_SUCCESS, tag, newColor));
     }
 }

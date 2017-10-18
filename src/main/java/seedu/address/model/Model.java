@@ -45,11 +45,16 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    //=========== Model support for tag component =============================================================
+
     /** Removes the specific tag (from all persons with that tag) */
     void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException;
 
     /** Checks whether there exists a tag (with the same tagName) */
     boolean hasTag(Tag tag);
+
+    /** Changes the color of an existing tag (through TagColorManager) */
+    void setTagColor(Tag tag, String color);
 
     //=========== Model support for activity component =============================================================
 
