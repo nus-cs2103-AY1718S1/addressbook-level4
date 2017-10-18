@@ -123,6 +123,7 @@ public class EditCommand extends UndoableCommand {
 
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setIsBlacklisted(personToEdit.getIsBlacklisted());
+        personCreated.setIsWhitelisted(personToEdit.getIsWhitelisted());
         return personCreated;
     }
 
