@@ -18,6 +18,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.module.Code;
+import seedu.address.model.module.Lesson;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
@@ -34,6 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
+    private final HashSet<ReadOnlyLesson> favouriteList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -47,6 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+        favouriteList = new HashSet<ReadOnlyLesson>();
     }
 
     public ModelManager() {
@@ -117,6 +120,15 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addLesson(lesson);
         handleListingUnit();
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void bookmarkLesson(ReadOnlyLesson target) throws DuplicateLessonException {
+        if (!favouriteList.contains(target)) {
+            favouriteList.add(target);
+        } else {
+            throw new DuplicateLessonException();
+        }
     }
 
     @Override

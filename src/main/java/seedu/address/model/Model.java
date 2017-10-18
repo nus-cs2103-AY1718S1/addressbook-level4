@@ -40,6 +40,9 @@ public interface Model {
     /** Adds the given lesson */
     void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
 
+    /** Bookmarks the given lesson into favourite list */
+    void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
+
     /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.
      *
