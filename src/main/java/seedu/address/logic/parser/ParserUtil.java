@@ -2,6 +2,11 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,6 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -196,5 +202,176 @@ public class ParserUtil {
         }
 
         return new String[] {commandWord, arguments};
+    }
+
+    /**
+     * Parses {@code String commandWord, String arguments} and returns an appropriate hint
+     */
+    public static String generateHint(String userInput) {
+
+
+        String[] command;
+        try {
+            command = parseCommandAndArguments(userInput);
+        } catch (ParseException e) {
+            return "";
+        }
+
+        String commandWord = command[0];
+        String arguments = command[1];
+
+
+        switch (commandWord) {
+        case AddCommand.COMMAND_WORD:
+            return generateAddHint(arguments, userInput);
+        case AliasCommand.COMMAND_WORD:
+            return " creates an alias";
+        case EditCommand.COMMAND_WORD:
+            return generateEditHint(arguments, userInput);
+        case FindCommand.COMMAND_WORD:
+            return generatePrefixHint(arguments, userInput);
+        case SelectCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD:
+            return generateIndexHint(arguments, userInput);
+        case ClearCommand.COMMAND_WORD:
+            return " clears address book";
+        case ListCommand.COMMAND_WORD:
+            return " lists all people";
+        case HistoryCommand.COMMAND_WORD:
+            return " show command history";
+        case ExitCommand.COMMAND_WORD:
+            return " exits the app";
+        case HelpCommand.COMMAND_WORD:
+            return " shows user guide";
+        case UndoCommand.COMMAND_WORD:
+            return " undo command";
+        case RedoCommand.COMMAND_WORD:
+            return " redo command";
+        default:
+            return " type help for guide";
+        }
+    }
+
+    /**
+     * Parses {@code String arguments} and returns a formatted hint based on {@code hint}
+     * hint is the actual meaning of the keyword after the prefix (ie PHONE in p/PHONE)
+     */
+    private static String endsWithPrefix(Prefix p, String arguments, String hint) {
+        String prefixLetter = " " + (p.getPrefix().toCharArray()[0]); // " n"
+        String identifier = "" + (p.getPrefix().toCharArray()[1]); // "/"
+
+        if (arguments.endsWith(p.getPrefix())) {
+            return hint;
+        } else if (arguments.endsWith(prefixLetter) && !arguments.contains(p.getPrefix())) {
+            return identifier + hint;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Parses {@code String commandWord, String arguments} and returns an appropriate hint
+     */
+    private static String generatePrefixHint(String arguments, String userInput) {
+        String endHint;
+
+        if ((endHint = endsWithPrefix(PREFIX_NAME, arguments, "NAME")) != null) {
+            return endHint;
+        }
+
+        if ((endHint = endsWithPrefix(PREFIX_PHONE, arguments, "PHONE")) != null) {
+            return endHint;
+        }
+
+        if ((endHint = endsWithPrefix(PREFIX_EMAIL, arguments, "EMAIL")) != null) {
+            return endHint;
+        }
+
+        if ((endHint = endsWithPrefix(PREFIX_ADDRESS, arguments, "ADDRESS")) != null) {
+            return endHint;
+        }
+
+        if ((endHint = endsWithPrefix(PREFIX_TAG, arguments, "TAG")) != null) {
+            return endHint;
+        }
+
+        return (userInput.endsWith(" ")) ? "prefix/KEYWORD" : " prefix/KEYWORD";
+    }
+
+    /**
+     * Parses {@code String commandWord, String arguments} and returns an appropriate hint
+     */
+    private static String generateAddHint(String arguments, String userInput) {
+
+        String hint = generatePrefixHint(arguments, userInput);
+        String whiteSpace = (userInput).endsWith(" ") ? "" : " ";
+
+        if (!(hint.equals(" prefix/KEYWORD")) && !(hint.equals("prefix/KEYWORD"))) {
+            return hint;
+        }
+        ArgumentMultimap argumentMultimap =
+            ArgumentTokenizer
+                .tokenize(arguments,
+                    PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+
+        // returns true if prefix is not present or its value is empty
+        Function<Prefix, Boolean> isPrefixNotPresent =
+            prefix -> !argumentMultimap.getValue(prefix).isPresent()
+                    || argumentMultimap.getValue(prefix).get().equals("");
+
+        if (isPrefixNotPresent.apply(PREFIX_NAME)) {
+            return whiteSpace + "n/NAME";
+        }
+
+        if (isPrefixNotPresent.apply(PREFIX_PHONE)) {
+            return whiteSpace +  "p/PHONE";
+        }
+
+        if (isPrefixNotPresent.apply(PREFIX_EMAIL)) {
+            return whiteSpace + "e/EMAIL";
+        }
+
+        if (isPrefixNotPresent.apply(PREFIX_ADDRESS)) {
+            return whiteSpace +  "a/ADDRESS";
+        }
+
+        if (isPrefixNotPresent.apply(PREFIX_TAG)) {
+            return whiteSpace +  "t/TAG";
+        }
+
+        return "";
+
+    }
+
+    /**
+     * Parses {@code String arguments, String userInput} and returns an index hint
+     * if there is an index provided, return "" else return index
+     */
+    private static String generateIndexHint(String arguments, String userInput) {
+        try {
+            ParserUtil.parseIndex(arguments);
+            return "";
+        } catch (IllegalValueException ive) {
+            if (arguments.matches(".*\\s\\d+\\s.*")) {
+                return "";
+            }
+            String whiteSpace = (userInput).endsWith(" ") ? "" : " ";
+            return whiteSpace + "index";
+        }
+    }
+
+    /**
+     * Parses {@code String arguments, String userInput} and returns an index hint
+     * if there is an index provided, return "" else return index
+     */
+    private static String generateEditHint(String arguments, String userInput) {
+        String indexHint = generateIndexHint(arguments, userInput);
+
+        if (indexHint.equals("index") || indexHint.equals(" index")) {
+            return indexHint;
+        }
+
+        return generatePrefixHint(arguments, userInput);
+
     }
 }
