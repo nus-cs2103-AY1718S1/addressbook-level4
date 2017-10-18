@@ -122,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedEvent);
 
         addressBook.updateEvent(target, editedEvent);
+        sortEventList();
         indicateAddressBookChanged();
     }
     /**
