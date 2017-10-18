@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -27,6 +28,15 @@ public interface Model {
     void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException;
 
     /**
+     * Adds all Parcel objects in parcels to the AddressBook
+     * @param parcels list of parcels to add
+     * @param parcelsAdded parcels that are added without causing duplicates
+     * @param duplicateParcels parcels that are not added because doing so will cause duplicates
+     */
+    void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel>
+            duplicateParcels);
+
+    /**
      * Replaces the given parcel {@code target} with {@code editedParcel}.
      *
      * @throws DuplicateParcelException if updating the parcel's details causes the parcel to be equivalent to
@@ -44,5 +54,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
-
 }
