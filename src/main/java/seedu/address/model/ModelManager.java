@@ -158,12 +158,14 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public synchronized void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        ReadOnlyPerson whitelistedPerson = person;
         try {
-            addressBook.resetPersonDebt(person);
+            whitelistedPerson = addressBook.resetPersonDebt(person);
         } catch (PersonNotFoundException e) {
             assert false : "This person cannot be missing";
         }
-        addressBook.addWhitelistedPerson(person);
+
+        addressBook.addWhitelistedPerson(whitelistedPerson);
         updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
         indicateAddressBookChanged();
     }

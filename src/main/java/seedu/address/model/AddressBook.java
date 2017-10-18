@@ -327,7 +327,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      *  @throws PersonNotFoundException if person does not exist in list.
      */
-    public void resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
+    public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
         int index;
         index = persons.getIndexOf(p);
 
@@ -345,6 +345,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when resetting the debt of a person";
         }
+        return persons.getReadOnlyPerson(index);
     }
 
     //// util methods
