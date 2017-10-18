@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import java.util.StringJoiner;
+
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordPredicate;
 
 /**
@@ -16,6 +19,8 @@ public class RetrieveCommand extends Command {
 
     public static final String MESSAGE_EMPTY_ARGS = "Please provide a tag name! \n%1$s";
 
+    public static final String MESSAGE_NOT_FOUND = "Tag not found.";
+
     private final TagContainsKeywordPredicate predicate;
 
     public RetrieveCommand(TagContainsKeywordPredicate predicate) {
@@ -25,7 +30,17 @@ public class RetrieveCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        final int personListSize = model.getFilteredPersonList().size();
+        StringJoiner joiner = new StringJoiner(", ");
+        if (personListSize == 0) {
+            for (Tag tag: model.getAddressBook().getTagList()) {
+                joiner.add(tag.toString());
+            }
+            return new CommandResult(MESSAGE_NOT_FOUND + "\n"
+                    + "You may want to refer to the following existing tags: "
+                    + joiner.toString());
+        }
+        return new CommandResult(getMessageForPersonListShownSummary(personListSize));
     }
 
     @Override
