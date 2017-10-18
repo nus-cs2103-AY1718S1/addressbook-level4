@@ -49,7 +49,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success_two() throws Exception {
+    public void execute_validIndexUnfilteredList_success2() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         ReadOnlyPerson secondToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
 
