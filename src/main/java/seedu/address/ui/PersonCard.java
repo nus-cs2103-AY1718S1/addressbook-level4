@@ -1,8 +1,5 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -48,7 +45,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initTags(person);
+        initTags();
         bindListeners(person);
     }
 
@@ -63,14 +60,14 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            initTags(person);
+            initTags();
         });
     }
 
     /**
      * Initializes all the tags of a person displayed in different random colors.
      */
-    private void initTags(ReadOnlyPerson person) {
+    private void initTags() {
         person.getTags().forEach(tag -> {
             String tagName = tag.tagName;
             Label newTagLabel = new Label(tagName);
