@@ -282,9 +282,9 @@ image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and
 concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing
-a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the
-high-level algorithm for those extra tasks while the child classes implements the details of how to execute the
-specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level
+a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand`
+contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute
+the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level
 steps of the algorithm in child classes is also known as the
 https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -468,6 +468,54 @@ Tag to delete them. +
 **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
 **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
+
+=== Backup Mechanism
+
+The back up mechanism is facilitated by a `backupAddressBook` method within the `StorageManager`. It supports the
+backing up of AddressBook data in Ark. +
+
+image::BackupSequenceDiagram.png[width="600"]
+
+The `backupAddressBook` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
+a method that is called when `Ark` is launched. The method utilises the `StorageManager#saveAddressBook()` method and
+stores the backup in the same directory as the main `AddressBook` storage file. The backup file is saved and named with
+the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
+ is named as `addressbook.xml`, the backup storage file will be saved as `addressbook.xml-backup.xml`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `StorageManager#backupAddressBook` +
+**Alternative 1 (current choice):** use the `StorageManger#saveAddressBook()` method to implement logic. +
+**Pros:** It becomes easier to implement method rather than writing out a separate logic for saveAddressBook. It
+makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
+**Cons:** This implementation increases the coupling of `StorageManager#backupAddressBook()` and
+`StorageManager#saveAddressBook()` where changes in `saveAddressBook()` will cause changes in `backupAddressBook()`. +
+**Alternative 2:** Separate the implemnetation of `Storage#backupAddressBook()` from `StorageManager#saveAddressBook()`
+ +
+**Pros:** Reduced coupling of saveAddressBook() and backupAddressBook() and allows the backup file to be saved at a
+different location from the main save file. This prevents the backup file from being corrupted if the folder of the
+main save file becomes corrupted. +
+**Cons:** More tedious to implement and maintain `backupAddressBook()` since enhancements to the saving feature has to
+be implemented in both `saveAddressBook()` and `backupAddressBook()` +
+
+---
+
+**Aspect:** Trigger to execute `StorageManager#backupAddressBook` +
+**Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
+**Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
+able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
+**Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session.
+ +
+**Alternative 2:** Backup data on Ark every few minutes +
+**Pros:** Provides a very recent copy of the data on Ark. +
+**Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. It
+could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls are queued one after the
+other. +
+**Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
+**Pros:** Provides a very recent copy of the data on Ark. +
+**Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
+the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
+provides a workable copy of the data of Ark.
 
 == Documentation
 
