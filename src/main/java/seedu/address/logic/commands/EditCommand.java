@@ -69,7 +69,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -159,7 +159,8 @@ public class EditCommand extends UndoableCommand {
         private Note note;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
@@ -182,28 +183,30 @@ public class EditCommand extends UndoableCommand {
                     this.position, this.status, this.priority, this.note, this.tags);
         }
 
-        public void setName(Name name) { this.name = name; }
-
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setName(Name name) {
+            this.name = name;
         }
 
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setPhone(Phone phone) {
+            this.phone = phone;
         }
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
 
+        public void setEmail(Email email) {
+            this.email = email;
+        }
+      
         public void setAddress(Address address) {
             this.address = address;
         }
@@ -234,10 +237,13 @@ public class EditCommand extends UndoableCommand {
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
-        }
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setTags(Set<Tag> tags) {
+            this.tags = tags;
         }
 
         @Override

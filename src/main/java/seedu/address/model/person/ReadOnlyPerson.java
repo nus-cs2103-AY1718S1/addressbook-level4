@@ -13,24 +13,43 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
+
     Name getName();
+
     ObjectProperty<Phone> phoneProperty();
+
     Phone getPhone();
+
     ObjectProperty<Email> emailProperty();
+
     Email getEmail();
+
     ObjectProperty<Address> addressProperty();
+
     Address getAddress();
+
     ObjectProperty<Company> companyProperty();
+  
     Company getCompany();
+  
     ObjectProperty<Position> positionProperty();
+  
     Position getPosition();
+  
     ObjectProperty<Status> statusProperty();
+  
     Status getStatus();
+  
     ObjectProperty<Priority> priorityProperty();
+  
     Priority getPriority();
+  
     ObjectProperty<Note> noteProperty();
+  
     Note getNote();
+
     ObjectProperty<UniqueTagList> tagProperty();
+
     Set<Tag> getTags();
 
     /**
