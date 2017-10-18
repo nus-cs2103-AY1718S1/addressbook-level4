@@ -690,14 +690,100 @@ This command may not work for some contacts as the specified contact may either 
 **Pros:** With the contact's full name, there is a chance of finding the contact on Facebook. Accounts for contacts who do not have an account with the same email address. +
 **Cons:** Facebook search by name may return a broader result as there are more Facebook users who share similar names. This contributes to an inaccurate result.
 
+// tag::addremovetag[]
+=== Add/Remove Tag mechanism
+
+The add/remove tag mechanism is facilitated by the `FilteredList`, which resides in the `ModelManager`. It inherits
+from the `UndoableCommand` and is similar to the add/delete person function but deals with tags instead.
+
+The mechanism performs an addition or removal of a tag using a list of target indexes that is within the range of the
+default list and a tag to add/remove. By using the `FilteredList`, addition and removal of tags when the list is
+unfiltered or filtered by other commands such as the find command is possible. Furthermore tags can be added to/removed
+from multiple people at once.
+
+Suppose the user wants to add the tag "friends" to the first two persons in the list. The user will execute the
+`AddTagCommand`, addtag 1 2 t/friends, to add the tag "friends" to the 1st and 2nd person in the last person indexing
+of UniCity. The same can be done to remove the tags as illustrated by the diagram below:
+
+image::AddRemoveTag.png[width="800"]
+
+[NOTE]
+If the given indexes are out of bounds, the `AddTagCommand` and `RemoveTagCommand` will throw an exception
+
+The following sequence diagram shows how the add tag operation works:
+
+image::AddTagSdLogic.png[width="800"]
+
+The remove tag command works in the same way but with a different command name instead.
+
+[NOTE]
+If the tag to remove doesn't exist, `RemoveTagCommand` will throw an exception while `AddTagCommand` will throw an
+exception if the tag exists in every person in the given list of indexes.
+
+The `addTag` method of the `ModelManager` goes through each person in the list and adds the tag to each of them and
+updates them. This works the same for the `removeTag` method. After which it raises the `indicateAddressBookChanged`
+event which triggers the storage component to save this change. Note that by indicating an event instead of directly
+calling the storage component, coupling is reduced. The implementation of `addTag` is shown below:
+
+[source,java]
+----
+        /**
+         * Adds given tag to the given indexes of the target persons shown in the last person listing.
+         */
+        @Override
+        public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
+                DuplicatePersonException {
+            for (int i = 0; i < targetIndexes.size(); i++) {
+                int targetIndex = targetIndexes.get(i).getZeroBased();
+                ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+
+                Person newPerson = new Person(oldPerson);
+                Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+                newTags.add(toAdd);
+                newPerson.setTags(newTags);
+
+                addressBook.updatePerson(oldPerson, newPerson);
+                indicateAddressBookChanged();
+            }
+        }
+
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of the `addTag` and `removeTag` method +
+**Alternative 1 (current choice):** Implement the methods in `ModelManager`. +
+**Pros:**  Easier to implement since `ModelManager` has access to all the required methods and variables. +
+**Cons:** Hard for new developers to understand how it works as a large amount of code in the many layers of the Model
+component must be read to understand the mechanism. +
+**Alternative 2:** Implement the `addTag` and `removeTag` method inside `AddTagCommand` and `RemoveTagCommand`
+respectively. +
+**Pros:** Easier for new developers to understand. +
+**Cons:** Involves replication of code, violating the DRY principle. Furthermore, it violates the Single Responsibility
+Principle and the Separation of Concerns as `AddTagCommand` and `RemoveTagCommand` must now update the person and
+raise the address book changed event.
+
 ---
+
+**Aspect:** Type of command +
+**Alternative 1 (current choice):** Implement the command as an `UndoableCommand`. +
+**Pros:** More intuitive for the user to type undo when he makes the mistake. +
+**Cons:** New developers must understand the template pattern before they can understand these commands. +
+**Alternative 2:** Implement the command as a normal `Command`. +
+**Pros:** Allows the user to undo a previous add/remove by clicking the up button to bring up the previous command and
+then changing the first letter since the shortcut command for `AddTagCommand` and `RemoveTagCommand` is "at" and "rt"
+respectively. +
+**Cons:** Less intuitive for the user and is not consistent with the design that commands that modify data should be
+undoable.
+// end::addremovetag[]
 
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides
+more flexibility in formatting.
 
 === Editing Documentation
 
