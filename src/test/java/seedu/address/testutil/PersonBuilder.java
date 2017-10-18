@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -35,7 +37,8 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            ArrayList<Remark> defaultRemark = new ArrayList<>();
+            defaultRemark.add(new Remark(DEFAULT_REMARK));
             FavouriteStatus defaultFavouriteStatus = new FavouriteStatus(DEFAULT_FAVOURITE_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
@@ -115,8 +118,12 @@ public class PersonBuilder {
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
-    public PersonBuilder withRemark(String remark) {
-        this.person.setRemark(new Remark(remark));
+    public PersonBuilder withRemark(String ... remark) {
+        try {
+            this.person.setRemark(SampleDataUtil.getRemarkArrayList(remark));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("remarks should not be null.");
+        }
         return this;
     }
 
