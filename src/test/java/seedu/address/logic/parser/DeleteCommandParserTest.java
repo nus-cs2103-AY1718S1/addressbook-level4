@@ -29,7 +29,7 @@ public class DeleteCommandParserTest {
     public void parse_validArgs_returnsDeleteCommand() {
         ArrayList<Index> todelete = new ArrayList<>();
         todelete.add(INDEX_FIRST_PERSON);
-        assertParseSuccess(parser, "1", new DeleteCommand(todelete));
+        assertParseSuccess(parser, "I/1", new DeleteCommand(todelete));
     }
 
     @Test

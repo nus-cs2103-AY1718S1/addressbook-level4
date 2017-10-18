@@ -79,7 +79,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: find same persons by name in address book after deleting 1 of them -> 1 person found */
-        executeCommand(DeleteCommand.COMMAND_WORD + " 1");
+        executeCommand(DeleteCommand.COMMAND_WORD + " I/1");
         assert !getModel().getAddressBook().getPersonList().contains(BENSON);
         command = FindCommand.COMMAND_WORD + " n/ " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();

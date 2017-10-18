@@ -22,17 +22,19 @@ public class DeleteCommand extends UndoableCommand {
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final StringBuilder MESSAGE_DELETE_PERSON_FAIL = new StringBuilder(
-            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
     private boolean allvalid = true;
+    private boolean exist = false;
     private int numofinvalid = 0;
 
-    private final ArrayList<Index> targetIndex;
+    private ArrayList<Index> targetIndex;
+    private String target;
 
     public DeleteCommand(ArrayList<Index> targetIndex) {
         this.targetIndex = targetIndex;
+    }
+    public DeleteCommand(String target) {
+        this.target = target;
     }
 
 
@@ -41,17 +43,26 @@ public class DeleteCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownList =  model.getFilteredPersonList();
         ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
-        ArrayList<Index> invalid = new ArrayList<>();
-        for (Index s: targetIndex) {
-            if (s.getZeroBased() >= lastShownList.size()) {
-                allvalid = false;
-                numofinvalid++;
-                invalid.add(s);
-            } else {
-                personstodelete.add(lastShownList.get(s.getZeroBased()));
+        if (target != null) {
+            for (ReadOnlyPerson p: lastShownList) {
+                if (p.getName().fullName.equals(target)) {
+                    personstodelete.add(p);
+                    exist = true;
+                    break;
+                }
+            }
+        } else {
+            for (Index s: targetIndex) {
+                if (s.getZeroBased() >= lastShownList.size()) {
+                    allvalid = false;
+                    numofinvalid++;
+                } else {
+                    personstodelete.add(lastShownList.get(s.getZeroBased()));
+                    exist = true;
+                }
             }
         }
-        if (allvalid) {
+        if (allvalid && exist) {
             try {
                 model.deletePerson(personstodelete);
             } catch (PersonNotFoundException pnfe) {
@@ -59,10 +70,6 @@ public class DeleteCommand extends UndoableCommand {
             }
             return new CommandResult(MESSAGE_DELETE_PERSON_SUCCESS);
         } else {
-            MESSAGE_DELETE_PERSON_FAIL.append(numofinvalid);
-            for (Index s: invalid) {
-                MESSAGE_DELETE_PERSON_FAIL.append(s.getOneBased());
-            }
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 

@@ -50,7 +50,7 @@ public class ParserUtil {
      * @throws IllegalValueException if the specified index is invalid.
      */
     public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException {
-        String[] ns = oneBasedIndexes.split(",");
+        String[] ns = oneBasedIndexes.trim().split(" ");
         ArrayList<Index> numbers = new ArrayList<Index>();
         boolean allvalid = true;
         for (String a: ns) {
