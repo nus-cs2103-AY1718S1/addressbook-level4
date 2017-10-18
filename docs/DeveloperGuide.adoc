@@ -387,6 +387,7 @@ If no `INDEX` is given to the Remove Tag command, the remove tag command will ru
         indicateAddressBookChanged();
     }
 ----
+Here we obtained the list of `Person` from the AddressBook directly
 
 If a `INDEX` is given, the remove tag command removes the given tag from the specified INDEX by calling the function during execution.
 
@@ -404,6 +405,7 @@ If a `INDEX` is given, the remove tag command removes the given tag from the spe
         addressBook.updatePerson(person, newPerson);
     }
 ----
+For removing tags from a specified Index we use the `getFilteredPersonList` so that the `INDEX` can correspond to the `INDEX` in the list hat is shown to the user. 
 
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
