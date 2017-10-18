@@ -45,7 +45,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getInterest().value, actualCard.getInterest());
         assertEquals(expectedPerson.getDebt().toString(), actualCard.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualCard.getDateBorrow());
-        assertEquals(expectedPerson.getDeadline().value, actualCard.getDeadline());
+        assertEquals(expectedPerson.getDeadline().valueToDisplay, actualCard.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualCard.getDateRepaid());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
@@ -64,7 +64,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getInterest().value, actualInfo.getInterest());
         assertEquals(expectedPerson.getDebt().toString(), actualInfo.getDebt());
         assertEquals(expectedPerson.getDateBorrow().value, actualInfo.getDateBorrow());
-        assertEquals(expectedPerson.getDeadline().value, actualInfo.getDeadline());
+        assertEquals(expectedPerson.getDeadline().valueToDisplay, actualInfo.getDeadline());
         assertEquals(expectedPerson.getDateRepaid().value, actualInfo.getDateRepaid());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualInfo.getTags());
