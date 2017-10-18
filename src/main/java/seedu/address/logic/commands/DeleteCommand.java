@@ -25,7 +25,6 @@ public class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
     private boolean allvalid = true;
     private boolean exist = false;
-    private int numofinvalid = 0;
 
     private ArrayList<Index> targetIndexs = new ArrayList<>();
     private String target = "";
@@ -55,7 +54,6 @@ public class DeleteCommand extends UndoableCommand {
             for (Index s: targetIndexs) {
                 if (s.getZeroBased() >= lastShownList.size()) {
                     allvalid = false;
-                    numofinvalid++;
                 } else {
                     personstodelete.add(lastShownList.get(s.getZeroBased()));
                     exist = true;
