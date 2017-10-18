@@ -147,6 +147,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given event {@code target} in the list with {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     *
+     * @throws DuplicateEventException if updating the event's details causes the event to be equivalent to
+     *      another existing event in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireNonNull(editedReadOnlyEvent);
+
+        Event editedEvent = new Event(editedReadOnlyEvent);
+
+        events.setEvent(target, editedEvent);
+    }
+    /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
