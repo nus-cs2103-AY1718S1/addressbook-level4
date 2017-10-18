@@ -123,7 +123,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
         addressBook.addLesson(lesson);
-        handleListingUnit();
         indicateAddressBookChanged();
     }
 
@@ -183,7 +182,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void handleListingUnit() {
         ListingUnit unit = ListingUnit.getCurrentListingUnit();
-        ReadOnlyLesson typicalLesson = getFilteredLessonList().get(0);
 
         if (unit.equals(LOCATION)) {
             UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
@@ -193,14 +191,17 @@ public class ModelManager extends ComponentManager implements Model {
             updateFilteredLessonList(predicate);
         } else {
             ListingUnit previousUnit = ListingUnit.getPreviousListingUnit();
-            if (previousUnit == MODULE) {
-                Code code = typicalLesson.getCode();
-                FixedCodePredicate predicate = new FixedCodePredicate(code);
-                updateFilteredLessonList(predicate);
-            } else {
-                Location location = typicalLesson.getLocation();
-                FixedLocationPredicate predicate = new FixedLocationPredicate(location);
-                updateFilteredLessonList(predicate);
+            if (!getFilteredLessonList().isEmpty()) {
+                ReadOnlyLesson typicalLesson = getFilteredLessonList().get(0);
+                if (previousUnit == MODULE) {
+                    Code code = typicalLesson.getCode();
+                    FixedCodePredicate predicate = new FixedCodePredicate(code);
+                    updateFilteredLessonList(predicate);
+                } else {
+                    Location location = typicalLesson.getLocation();
+                    FixedLocationPredicate predicate = new FixedLocationPredicate(location);
+                    updateFilteredLessonList(predicate);
+                }
             }
 
         }
