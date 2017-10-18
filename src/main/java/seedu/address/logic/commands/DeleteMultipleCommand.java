@@ -9,6 +9,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Deletes a person identified using it's last displayed index from the address book.
+ */
+
 public class DeleteMultipleCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "deleteMul";
     public static final String COMMAND_ALIAS = "delM";
