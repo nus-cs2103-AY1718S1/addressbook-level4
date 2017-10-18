@@ -92,13 +92,11 @@ public class CommandTestUtil {
         try {
 
             CommandResult result = command.execute();
-//            System.out.println("after");
-//            for (int i = 0; i < actualModel.getFilteredLessonList().size(); i++) {
-//                System.out.println(actualModel.getFilteredLessonList().get(i));
-//            }
+            System.out.println();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
+            System.out.println(ce.getMessage());
             throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
