@@ -425,9 +425,25 @@ public void sort() {
 ----
 
 
-
 ==== Design Considerations
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Cons:** Hard for new developers to understand the template pattern. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve the template pattern, easier for new developers to understand. +
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
+---
+**Aspect:** Execution of sort +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Cons:** Hard for new developers to understand the template pattern. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve the template pattern, easier for new developers to understand. +
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
 
 //end::sort[]
 
