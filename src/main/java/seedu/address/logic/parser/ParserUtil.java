@@ -29,6 +29,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_STRING = "String does not contain alphabets only.";
+    public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -47,7 +48,7 @@ public class ParserUtil {
     /**
      * Parses a String of alphabets into a {@code trimmedString} and returns it. Leading and trailing whitespaces
      * will be trimmed.
-     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     * @throws IllegalValueException if the specified string is invalid (not alphabets only).
      */
     public static String parseString(String str) throws IllegalValueException {
         String trimmedString = str.trim();
@@ -57,6 +58,18 @@ public class ParserUtil {
         return trimmedString;
     }
 
+    /**
+     * Parses a String of option into a {@code trimmedString} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     * @throws IllegalValueException if the specified option is invalid (not in "-[lower case]" format).
+     */
+    public static String parseOption(String str) throws IllegalValueException {
+        String trimmedString = str.trim();
+        if (!StringUtil.isStringOption(trimmedString)) {
+            throw new IllegalValueException(MESSAGE_INVALID_OPTION);
+        }
+        return trimmedString;
+    }
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

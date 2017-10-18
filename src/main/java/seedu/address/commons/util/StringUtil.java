@@ -88,4 +88,22 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Returns true if {@code s} represents lower case [OPTION] String
+     * e.g. -n, -p, -t, ..., <br>
+     * Will return false for any other non-OPTION string input
+     * e.g. empty string, " -n " (untrimmed), "- n"(contains whitespace), "- p2" (contains number),
+     * "-E" (contains capital letter)
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static boolean isStringOption(String s) {
+        requireNonNull(s);
+
+        try {
+            return s.matches("-\\p{Lower}");
+        } catch (IllegalArgumentException iae) {
+            return false;
+        }
+    }
 }

@@ -14,6 +14,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPersonFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -154,6 +155,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    /**
+     * Sorts the list by the specified @param parameter.
+     * @throws NoPersonFoundException if no persons found in this {@code AddressBook}.
+     */
+    public void sortPerson(String parameter) throws NoPersonFoundException {
+        persons.sort(parameter);
     }
 
     //// tag-level operations
