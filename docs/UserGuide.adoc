@@ -144,6 +144,24 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting a task : `deleteTask`
+
+Deletes the specific task from the task book. +
+Format: `deleteTask IDNEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` + 
+* `deleteTask` 1 +
+Deletes the 1st task in the task book.
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -240,8 +258,6 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 == Coming in v2.0
-=== Adding a new task
-=== Deleting a task
 === Marking a task as complete/incomplete
 === Finding a person by name
 === Auto-focusing on input bar at the start of the application
