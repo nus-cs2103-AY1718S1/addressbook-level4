@@ -76,13 +76,19 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setCountry(Country country) { this.country.set(requireNonNull(country)); }
+    public void setCountry(Country country) {
+        this.country.set(requireNonNull(country));
+    }
 
     @Override
-    public ObjectProperty<Country> countryProperty() { return country; }
+    public ObjectProperty<Country> countryProperty() {
+        return country;
+    }
 
     @Override
-    public Country getCountry() { return country.get(); }
+    public Country getCountry() {
+        return country.get();
+    }
 
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));
