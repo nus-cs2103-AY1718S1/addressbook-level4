@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.io.IOException;
 
+import seedu.address.commons.exceptions.InvalidFileExtensionException;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -22,8 +23,8 @@ public class ExportCommand extends UndoableCommand {
 
     public static final String MESSAGE_EXPORT_SUCCESS = "Exported address book data to: %1$s";
     public static final String MESSAGE_NOT_XML_FILE = "The file path does not point to an XML file.";
-    public static final String MESSAGE_PROBLEM_WRITING_FILE = "There is a problem exporting to the specified file path.\n"
-            + "Make sure the XML file name does not contain any punctuations or special characters.";
+    public static final String MESSAGE_PROBLEM_WRITING_FILE = "There is a problem exporting to the specified file path."
+            + "\nMake sure the XML file name does not contain any punctuations or special characters.";
 
     private final String filePath;
 
@@ -39,6 +40,8 @@ public class ExportCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_EXPORT_SUCCESS, filePath));
         } catch (IOException e) {
             throw new CommandException(MESSAGE_PROBLEM_WRITING_FILE);
+        } catch (InvalidFileExtensionException e) {
+            throw new CommandException(MESSAGE_NOT_XML_FILE);
         }
     }
 
