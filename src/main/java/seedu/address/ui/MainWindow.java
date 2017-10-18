@@ -113,6 +113,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -175,6 +176,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -227,66 +229,30 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    /**
+     * Changes to default dark theme.
+     */
     @FXML
     private void handleBlackTheme() {
-      //  Scene scene = new Scene(getRoot());
-        Scene newScene = primaryStage.getScene();
-     //   System.out.println(wholeBox.getStyle());
-        vBox = new VBox();
-    //    System.out.println(vBox.getStylesheets());
-
-       // wholeBox.setStyle("view/DarkTheme.css");
-//        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css");
-//        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css",
-//                "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
-       // wholeBox.getStylesheets().addAll("view/DarkTheme.css", "view/Extensions.css");
-        //wholeBox.getStylesheets().clear();
-       // wholeBox.getStylesheets().add(getClass().getResource("@DarkTheme.css").toExternalForm());
-        //        if(scene.getStylesheets().contains("view/DarkTheme.css") ) {
-//            scene.getStylesheets().remove("view/DarkTheme.css");
-//        }
-//        scene.getStylesheets().remove("view/WhiteTheme.css");
-//        scene.getStylesheets().add("view/DarkTheme.css");
-//        primaryStage.setScene(scene);
-//        System.out.println(scene.getStylesheets());
-      //  Scene newScene = primaryStage.getScene();
-     //   System.out.println(wholeBox.getStylesheets());
-      //  primaryStage.setScene(new Scene(wholeBox));
-      //  primaryStage.show();
-       // show();
-//        String darkThemeCss = getClass().getResource("/view/DarkTheme.css").getPath();
-     //   vBox.getStylesheets().add(getClass().getResource("view/DarkTheme.css").toExternalForm());
-        newScene.getStylesheets().add("/view/DarkTheme.css");
-        Stage newStage = createDialogStage("lala",primaryStage, newScene);
-        String darkThemeCss = "/view/DarkTheme.css";
-//        primaryStage.getScene().getStylesheets().add(darkThemeCss);
-       // System.out.println(primaryStage.getScene().getStylesheets());
-        System.out.println(vBox.getStylesheets());
-
+        if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
+            vBox.getStylesheets().remove("view/DarkTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().add("view/DarkTheme.css");
     }
 
-
+    /**
+     * Changes to white theme.
+     */
     @FXML
     private void handleWhiteTheme() {
-    //    Scene scene = new Scene(getRoot());
-//        if(scene.getStylesheets().contains("view/WhiteTheme.css") ) {
-//            scene.getStylesheets().remove("view/WhiteTheme.css");
-//        }
-//        scene.getStylesheets().remove("view/DarkTheme.css");
-//        scene.getStylesheets().add("view/WhiteTheme.css");
-//        Scene newScene = primaryStage.getScene();
-//        System.out.println(newScene.getStylesheets());
-     //   show();
-        vBox = new VBox();
-        System.out.println(vBox.getStylesheets());
-//        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css");
-//        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css",
-//                "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
-        System.out.println(vBox.getStylesheets());
-       // primaryStage.setScene(new Scene(wholeBox));
-        //show();
-
+        if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
+            vBox.getStylesheets().remove("view/WhiteTheme.css");
+        }
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().add("view/WhiteTheme.css");
     }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
