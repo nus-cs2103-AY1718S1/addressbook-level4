@@ -1,69 +1,51 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
- * Adds a person to the address book.
+ * Adds a event to the address book.
  */
 public class AddEventCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "add";
-    public static final String COMMAND_ALIAS = "a";
+    public static final String COMMAND_WORD = "addevent";
+    public static final String COMMAND_ALIAS = "ae";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_SCH_EMAIL + "SCHOOL EMAIL "
-            + PREFIX_WEBSITE + "WEBSITE "
+            + PREFIX_DATE + "DATE "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_BIRTHDAY + "BIRTHDAY]"
-            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_SCH_EMAIL + "e0001111@u.nus.edu "
-            + PREFIX_WEBSITE + "https://www.facebook.com/johnDoe "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_BIRTHDAY + "12/02/1998 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_NAME + "ZoukOut "
+            + PREFIX_DATE + "22/10/2017"
+            + PREFIX_ADDRESS + "Sentosa Beach, Siloso ";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New event added: %1$s";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists.";
 
-    private final Person toAdd;
+    private final Event toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
-    public AddCommand(ReadOnlyPerson person) {
-        toAdd = new Person(person);
+    public AddEventCommand(ReadOnlyEvent event) {
+        toAdd = new Event(event);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            model.addPerson(toAdd);
+            model.addEvent(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (DuplicateEventException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
 
     }
@@ -72,6 +54,6 @@ public class AddEventCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
-                && toAdd.equals(((AddCommand) other).toAdd));
+                && toAdd.equals(((AddEventCommand) other).toAdd));
     }
 }
