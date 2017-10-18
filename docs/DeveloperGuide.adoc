@@ -345,6 +345,75 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::restoreandbackup[]
+=== Backup / Restoring Backup
+
+The backing up of address book is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`. These commands do not support the undoing and redoing of user actions and thus, inherits from `Command`.
+These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
+The following shows a sequence diagram of how the `BackupCommand` is carried out.
+
+image::BackupCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+`RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
+
+The `BackupCommand` is executed when user input "backup" or "b". The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
+The following is the implementation of `BackupCommand`:
+[source, java]
+----
+public class BackupCommand extends Command {
+    //... variables, constructor, other methods...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // reading data from model
+        ReadOnlyAddressBook backupAddressBookData = model.getAddressBook();
+
+        // posting event to backup data
+        EventsCenter.getInstance().post(new BackupDataEvent(backupAddressBookData));
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+}
+----
+
+The `RestoreBackupCommand` is executed when user input "restore" or "rb". `RestoreBackupDataEvent` is posted and `StorageManager` handles it. The data from default file path "data/addressbook-backup.xml" will be retrieved and it will replace the active address book.
+The following is the implementation of `RestoreBackupCommand`:
+[source, java]
+----
+public class RestoreBackupCommand extends Command {
+    //... variables, constructor, other methods...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        RestoreBackupDataEvent event = new RestoreBackupDataEvent();
+
+        // posting event to help with restoring backup data
+        EventsCenter.getInstance().post(event);
+
+        // overwriting the data in active address book
+        ReadOnlyAddressBook backupAddressBookData = event.getAddressBookData();
+        model.resetData(backupAddressBookData);
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+}
+----
+
+[NOTE]
+Once the data has been restored, the original data will be lost and is no longer retrievable.
+[NOTE]
+A backup of address book is always created when the Address Book starts. This means that `RestoreBackupCommand` will not encounter an `IOException` where the file does not exist.
+
+==== Design Considerations
+
+**Aspect:** Accessing `Storage` from `Logic` +
+**Alternative 1 (current choice):** Make use of `EventBus` to post events and have `StorageManager` handle the backing up or retrieval of data +
+**Pros:** Follows the architecture closely without introducing dependencies between components. +
+**Cons:** New `Event` classes have to be created every time a command requires access to data in the storage.  +
+**Alternative 2:** Allow `Logic` to access `Storage` and its functions +
+**Pros:** Easier implementation for current and future functions or commands related to `Storage`. +
+**Cons:** Increases coupling between the components. +
+// end::restoreandbackup[]
+
 // tag::addremovetag[]
 === Adding/Removing a tag
 
