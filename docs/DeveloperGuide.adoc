@@ -370,14 +370,28 @@ The original tag system management with the edit function have several difficult
  inconvenience and inefficiency in managing their tags. This is mainly due to how the editing of a tag works. When using the
  edit function, just like how entering a new name will replace the existing name,
  using the tag prefix to add tags on to a user will end up overwriting all the existing tags and replace it
- with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following:
+ with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
+Command entered:
 
-What would be in line with a main use case of `edit 1 t/Awesome` is to add the `Awesome` tag onto
+image::addtagui.jpg[]
+
+Original result:
+
+image::addtagoverwritten.png[]
+
+Main use case:
+
+image::addtagadded.png[]
+
+
+What would be in line with a main use case of `edit 1 t/trainer` is to add the `trainer` tag onto
  existing tags instead. This entire process is controlled by the edit function whereby an
  `editPersonDescriptor`, which is a class within the `EditCommand` class
  is created using all the parsed arguments and represents all the changes
  that are to be made. Then the `createEditedPerson` method is called to compare between
  the `personToEdit` and the `editPersonDescriptor` and merge all the changes to create a new `Person`.
+
+
 
 Thus, the changes to enable such a feature is mainly implemented in the `createEditedPerson` method
  the `Set` method `addAll()` is called to facilitate the merging of the tags.
@@ -413,6 +427,8 @@ the added tags will be deleted afterwards.
 * With respect to the previous reason, users are also given the freedom to type the prefix
 in any part of the command and the program will be able to execute the user's intention.
 ****
+
+==== Various Considered Use Cases
 
 == Documentation
 
