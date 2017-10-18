@@ -18,6 +18,9 @@ public interface Model {
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
+    /** Replaces the data in the ModelManager with the given addressBook */
+    void setAddressBook(ReadOnlyAddressBook newData);
+
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
