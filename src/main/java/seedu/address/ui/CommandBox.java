@@ -68,7 +68,7 @@ public class CommandBox extends UiPart<Region> {
      * Updates the text field with the command that is the closest to the current text field string
      */
     private void processAutocomplete() {
-        String currentText = commandTextField.getText().toLowerCase();
+        String currentText = commandTextField.getText();
         String autocompleteText = autocompleter.autocomplete(currentText);
         replaceText(autocompleteText);
     }

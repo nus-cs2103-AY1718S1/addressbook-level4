@@ -32,14 +32,12 @@ public class Autocompleter {
      * @return autocomplete text
      */
     public String autocomplete(String commandBoxText) {
-        String[] commandBoxTextArray = commandBoxText.trim().split("\\s+");
+        String[] commandBoxTextArray = commandBoxText.toLowerCase().trim().split("\\s+");
         String autocompleteText = commandBoxText;
         if (commandBoxText.equals(EMPTY_STRING)) {
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
         } else if (commandBoxTextArray.length == 1) {
             autocompleteText = processOneWordAutocomplete(commandBoxTextArray[0]);
-        } else {
-
         }
         return autocompleteText;
     }
@@ -92,9 +90,9 @@ public class Autocompleter {
      * @param results
      */
     private void displayMultipleResults(ArrayList<String> results) {
-        String resultToDisplay = MULTIPLE_RESULT_MESSAGE + "\n";
+        String resultToDisplay = MULTIPLE_RESULT_MESSAGE + ":\n";
         for(String result : results) {
-            resultToDisplay += result + " ";
+            resultToDisplay += result + "\t";
         }
         raise(new NewResultAvailableEvent(resultToDisplay.trim(), false));
     }
