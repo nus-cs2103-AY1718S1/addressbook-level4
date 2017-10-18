@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
@@ -55,7 +54,7 @@ public class ParserUtilTest {
     public void arePrefixesPresentAbsent_allPresent_success() {
         ArgumentMultimap map = new ArgumentMultimap();
 
-        map.put(PREFIX_NAME, VALID_NAME_AMY);
+        map.put(PREFIX_NAME, VALID_NAME);
         assertTrue(ParserUtil.arePrefixesPresent(map, PREFIX_NAME));
         assertTrue(ParserUtil.arePrefixesAbsent(map, PREFIX_PHONE));
 
