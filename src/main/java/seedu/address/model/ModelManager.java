@@ -19,6 +19,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.AgeComparator;
+import seedu.address.model.person.BirthdayComparator;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -163,4 +165,37 @@ public class ModelManager extends ComponentManager implements Model {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
     }
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    public void sortListByAge(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+        contactList.addAll(filteredPersons);
+        Collections.sort(contactList, new AgeComparator());
+
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    public void sortListByBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+        contactList.addAll(filteredPersons);
+        Collections.sort(contactList, new BirthdayComparator());
+
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
 }
