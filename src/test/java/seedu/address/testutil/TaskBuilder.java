@@ -15,7 +15,7 @@ public class TaskBuilder {
     public static final String DEFAULT_DESCRIPTION = "CS2103T assignment due";
     public static final String DEFAULT_STARTDATE = "17-10-2017";
     public static final String DEFAULT_DEADLINE = "20-10-2017";
-    
+
     private Task task;
 
     public TaskBuilder() {

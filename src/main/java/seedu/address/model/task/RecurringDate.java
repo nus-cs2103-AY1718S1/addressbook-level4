@@ -1,13 +1,15 @@
 package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
-import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 public class RecurringDate extends TaskDates {
 
     public final String date;
+    //public final Integer numberOfRecurrence;
+    //public final boolean isRecurringEveryWeek;
+    //public final boolean isRecurringEveryMonth;
 
     /**
      * Validates given starting date.
