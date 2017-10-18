@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
@@ -17,9 +19,11 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
+import seedu.address.testutil.ParcelBuilder;
 
 
 /**
@@ -103,5 +107,36 @@ public class DeleteTagCommandTest {
         DeleteTagCommand deleteTagCommand = new DeleteTagCommand(target);
         deleteTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteTagCommand;
+    }
+
+    @Test
+    public void equals() {
+        Tag urgent = null;
+        Tag fragile = null;
+        try {
+            urgent = new Tag("urgent");
+            fragile = new Tag("fragile");
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
+        DeleteTagCommand deleteUrgentTagCommand = new DeleteTagCommand(urgent);
+        DeleteTagCommand deleteFragileTagCommand = new DeleteTagCommand(fragile);
+
+        // same object -> returns true
+        assertTrue(deleteUrgentTagCommand.equals(deleteUrgentTagCommand));
+
+        // same values -> returns true
+        DeleteTagCommand deleteUrgentTagCommandCopy = new DeleteTagCommand(urgent);
+        assertTrue(deleteUrgentTagCommand.equals(deleteUrgentTagCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteUrgentTagCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteUrgentTagCommand.equals(null));
+
+        // different parcel -> returns false
+        assertFalse(deleteUrgentTagCommand.equals(deleteFragileTagCommand));
     }
 }
