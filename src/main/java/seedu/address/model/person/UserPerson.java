@@ -15,7 +15,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents the user's Profile in the address book.
  *
  */
-public class UserProfile implements ReadOnlyPerson {
+public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
@@ -23,10 +23,20 @@ public class UserProfile implements ReadOnlyPerson {
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
 
+    public UserPerson() {
+        this.name = new SimpleObjectProperty<>();
+        this.email = new SimpleObjectProperty<>();
+        this.phone = new SimpleObjectProperty<>();
+        this.address = new SimpleObjectProperty<>();
+        this.remark = new SimpleObjectProperty<>(new Remark(""));
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+    }
+
+
     /**
      * Every field must be present and not null.
      */
-    public UserProfile(Name name, Phone phone, Email email, Address address) {
+    public UserPerson(Name name, Phone phone, Email email, Address address) {
         requireAllNonNull(name, phone, email, address);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -142,5 +152,12 @@ public class UserProfile implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    public void update(UserPerson target) {
+        this.name = new SimpleObjectProperty<>(target.getName());
+        this.email = new SimpleObjectProperty<>(target.getEmail());
+        this.phone = new SimpleObjectProperty<>(target.getPhone());
+        this.address = new SimpleObjectProperty<>(target.getAddress());
     }
 }

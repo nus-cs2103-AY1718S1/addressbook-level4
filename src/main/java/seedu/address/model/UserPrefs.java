@@ -11,7 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String UserProfileFilePath = "data/userprofile.json";
+    private String userProfileFilePath = "data/userprofile.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
@@ -39,7 +39,7 @@ public class UserPrefs {
     }
 
     public String getUserProfileFilePath() {
-        return UserProfileFilePath;
+        return userProfileFilePath;
     }
 
     public void setUserProfileFilePath(String newProfileFilePath) {
@@ -80,6 +80,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
+        sb.append("\nLocal user Profile location: " + userProfileFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
         return sb.toString();
     }

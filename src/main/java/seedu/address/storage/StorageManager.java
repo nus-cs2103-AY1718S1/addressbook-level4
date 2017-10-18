@@ -9,11 +9,13 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.UserProfile;
+import seedu.address.model.UserProfileManager;
+import seedu.address.model.person.UserPerson;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -50,21 +52,33 @@ public class StorageManager extends ComponentManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
-    // ================ UserPrefs methods ==============================
+    // ================ UserProfile methods ==============================
 
     @Override
-    public String getUserProfileFilePath() { return userProfileStorage.getUserProfileFilePath(); }
+    public String getUserProfileFilePath() {
+        return userProfileStorage.getUserProfileFilePath();
+    }
 
     @Override
-    public Optional<UserProfile> readUserProfile() throws DataConversionException, IOException {
+    public Optional<UserPerson> readUserProfile() throws DataConversionException, IOException {
         return userProfileStorage.readUserProfile();
     }
 
     @Override
-    public void saveUserProfile(UserProfile newUserProfile) throws IOException {
-        userProfileStorage.saveUserProfile(newUserProfile);
+    public void saveUserPerson(UserPerson newUserPerson) throws IOException {
+        userProfileStorage.saveUserPerson(newUserPerson);
     }
 
+    @Override
+    @Subscribe
+    public void handleUserPersonChangedEvent(UserPersonChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local User Profile data changed, saving to file"));
+        try {
+            saveUserPerson(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
 
     // ================ AddressBook methods ==============================
 

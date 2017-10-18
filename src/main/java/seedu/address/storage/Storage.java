@@ -3,14 +3,14 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.xml.crypto.Data;
-
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.UserProfile;
+import seedu.address.model.UserProfileManager;
+import seedu.address.model.person.UserPerson;
 
 /**
  * API of the Storage component
@@ -39,10 +39,12 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserProfi
     String getUserProfileFilePath();
 
     @Override
-    Optional<UserProfile> readUserProfile() throws DataConversionException, IOException;
+    Optional<UserPerson> readUserProfile() throws DataConversionException, IOException;
 
     @Override
-    void saveUserProfile(UserProfile userProfile) throws IOException;
+    void saveUserPerson(UserPerson userPerson) throws IOException;
+
+    void handleUserPersonChangedEvent(UserPersonChangedEvent upce);
 
 
     /**
