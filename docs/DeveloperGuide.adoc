@@ -446,6 +446,29 @@ just its size
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
 (default: `config.json`).
 
+=== Delete Tag mechanism
+
+The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
+of tags from every single parcel in Ark.
+
+We first retrieve the list of parcels in Ark and iterate through each parcel and recreate the parcel object using the
+original parcel. We then check if tag we want to remove is present in the new parcel's list of tags. If the tag is
+present, we remove it, otherwise, we do nothing. We then update the old parcel in Ark with the new parcel with the
+updated list of tags.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `UndoableCommand` +
+**Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
+**Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
+correctly iterate through all the lists of tags. +
+**Cons:** Might be computationally expensive for large number of parcels as Ark will need to iterate through every
+Tag to delete them. +
+**Alternative 2:** Maintain a list of tags and where the tags are located+
+**Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
+**Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
+and has to be updated whenever we edit other parcel details as well.
+
 == Documentation
 
 We use asciidoc for writing documentation.
