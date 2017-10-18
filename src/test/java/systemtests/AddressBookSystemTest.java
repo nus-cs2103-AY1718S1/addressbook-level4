@@ -189,8 +189,10 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
+        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + 6;
+        String actualParcelUrl = getBrowserPanel().getLoadedUrl().toString().substring(0, correctUrlLength);
+        assertEquals(expectedUrl.toString(), actualParcelUrl);
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getParcelListPanel().getSelectedCardIndex());
     }
 
