@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+
     private boolean favourite;
 
     /**

@@ -33,8 +33,8 @@ public class FavouriteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added person to favourites: %1$s";
-    public static final String MESSAGE_ALREADY_FAVOURITE = "Already favourite";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Person removed from favourites: ";
 
     private final Index index;
 
@@ -58,10 +58,6 @@ public class FavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToFavourite = lastShownList.get(index.getZeroBased());
 
-        if (personToFavourite.getFavourite()) {
-            return new CommandResult(String.format(MESSAGE_ALREADY_FAVOURITE));
-        }
-
         Person favouritedPerson = createFavouritedPerson(personToFavourite);
 
         try {
@@ -72,8 +68,12 @@ public class FavouriteCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        if (personToFavourite.getFavourite()) {
+            return new CommandResult(String.format(MESSAGE_UNFAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        }
+        else {
+            return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        }
 
     }
 
@@ -88,9 +88,10 @@ public class FavouriteCommand extends UndoableCommand {
         Email originalEmail = personToFavourite.getEmail();
         Address originalAddress = personToFavourite.getAddress();
         Set<Tag> originalTags = personToFavourite.getTags();
+        boolean newFavourite = !personToFavourite.getFavourite();
 
         return new Person(originalName, originalPhone, originalEmail, originalAddress,
-                originalTags, true);
+                originalTags, newFavourite);
     }
 
     @Override
