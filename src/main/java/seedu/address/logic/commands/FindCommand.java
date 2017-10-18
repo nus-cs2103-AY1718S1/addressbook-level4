@@ -22,7 +22,6 @@ public class FindCommand extends Command {
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
-    private static final String MESSAGE_DUPLICATE_PERSON = "Duplicate person tried to be added";
 
     private final NameContainsKeywordsPredicate predicate;
 
@@ -35,30 +34,13 @@ public class FindCommand extends Command {
      */
     @Override
     public CommandResult execute() throws CommandException {
-        model.updateFilteredPersonList(predicate);
 
+        model.updateFilteredPersonList(predicate);
         int searchResultsCount = model.getFilteredPersonList().size();
 
         if (searchResultsCount != NO_RESULTS) {
-            for(int i = 0; i < searchResultsCount; i++) {
-                ReadOnlyPerson searchedPerson = model.getFilteredPersonList().get(i);
-                SearchData updatedSearchData = searchedPerson.getSearchData();
-                updatedSearchData.IncrementSearchCount();
-                Person modifiedPerson = new Person(searchedPerson.getName(),searchedPerson.getPhone(),
-                       searchedPerson.getEmail(), searchedPerson.getAddress(),searchedPerson.getTags(),
-                        updatedSearchData);
-
-                try {
-                    model.updatePerson(searchedPerson, modifiedPerson);
-                } catch (DuplicatePersonException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("The target person cannot be missing");
-                }
-
-            }
+            model.recordSearchHistory();
         }
-
         return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
     }
 
