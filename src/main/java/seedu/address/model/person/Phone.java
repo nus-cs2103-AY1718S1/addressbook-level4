@@ -42,9 +42,17 @@ public class Phone {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof Phone // instanceof handles nulls
-            && (this.value == ((Phone) other).value || this.value.equals(((Phone) other).value))); // state check
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
     }
 
     @Override
