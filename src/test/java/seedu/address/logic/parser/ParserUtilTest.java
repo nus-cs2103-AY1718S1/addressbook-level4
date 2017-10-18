@@ -37,6 +37,9 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_SORT_NAME = "name";
+    private static final String VALID_SORT_PHONE = "phone";
+    private static final String VALID_SORT_EMAIL = "email";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -187,4 +190,30 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    @Test
+    public void parseSortType_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(VALID_SORT_NAME, ParserUtil.parseSortType("name"));
+        assertEquals(VALID_SORT_PHONE, ParserUtil.parseSortType("phone"));
+        assertEquals(VALID_SORT_EMAIL, ParserUtil.parseSortType("email"));
+
+        // Leading and trailing whitespaces
+        assertEquals(VALID_SORT_NAME, ParserUtil.parseSortType("  name  "));
+        assertEquals(VALID_SORT_PHONE, ParserUtil.parseSortType("  phone  "));
+        assertEquals(VALID_SORT_EMAIL, ParserUtil.parseSortType("  email  "));
+    }
+
+    @Test
+    public void parseSortType_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSortType("whatever");
+    }
+
+    @Test
+    public void parseSortType_noInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSortType("");
+    }
+
 }
