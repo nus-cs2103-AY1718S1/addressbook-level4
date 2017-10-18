@@ -809,59 +809,73 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by tags |locate people easily
 
-|`* * *` |user |sort people by name |locate people easily
-
-|`* * *` |user |set a list of favourite people|search for my favourites easily
-
-|`* * *` |user |get confirmation before I edit or delete contacts|
+|`* * *` |user |get confirmation before I edit or delete contacts| [Coming in v2.0]
 
 |`* * *` |user |undo my actions |fix my mistakes
 
 |`* * *` |user |add multiple numbers to a contact |separate their mobile and home numbers
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |teacher |sort students by name and classes |find students easily [Coming in v2.0]
 
-|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes
+|`* * *` |busy teacher |be able to see who are the underperforming students|find out who I should spend more time on [Coming in v2.0]
 
-|`* *` |user |customise screensavers|personalise the addressBook
+|`* * *` |teacher |have contact information of students and parents|contact either of them [Coming in v2.0]
 
-|`* *` |user |customise the colour and wallpaper of the address book |personalise my addressBook
+|`* * *` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
 
-|`* *` |first time user |prompt user to input name |personalise the addressBook
+|`* * *` |concerned teacher |display statistics for the current group of students in the list|analyse the individual groups' academic progress [Coming in v2.0]
 
-|`* *` |user |back up my address book data online |I can access my address book data from other places
+|`* * *` |precise teacher |find out the 25th, 50th and 75th percentile scores for each class|get a better idea of students' academic progress [Coming in v2.0]
 
-|`* *` |user with many friends |autoComplete my searches |
+|`* * *` |precise teacher |compare the grades statistics between any two groups of students|make a quick comparison [Coming in v2.0]
 
-|`* *` |user |share my friend's contact with others |
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident [Coming in v2.0]
 
-|`* *` |user |delete all people with a tag |clean up addressBook faster
+|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes [Coming in v2.0]
 
-|`* *` |lazy user |addressBook to auto delete contacts after a certain date |
+|`* *` |first time user |prompt user to input name |personalise the addressBook [Coming in v2.0]
+
+|`* *` |user |back up my address book data online |I can access my address book data from other places [Coming in v2.0]
+
+|`* *` |user with many friends |autoComplete my searches | [Coming in v2.0]
+
+|`* *` |user |share my friend's contact with others | [Coming in v2.0]
+
+|`* *` |user |delete all people with a tag |clean up addressBook faster [Coming in v2.0]
+
+|`* *` |lazy user |addressBook to auto delete contacts after a certain date | [Coming in v2.0]
 
 |`* *` |user |redo an action |redo an undone action
 
-|`* *` |expert user |have separate address books |can separate my work and personal contacts
+|`* *` |expert user |have separate address books |can separate my work and personal contacts [Coming in v2.0]
 
 |`* *` |expert user |customise shorthand commands |so that I can search for contacts faster
 
-|`* *` |user |a calendar to sync my events |can plan them more efficiently
+|`* *` |user |a calendar to sync my events |can plan them more efficiently [Coming in v2.0]
 
-|`* *` |user |see most recently accessed contacts |so that I can access them faster
+|`* *` |user |see most recently accessed contacts |so that I can access them faster [Coming in v2.0]
 
-|`* *` |busy user |see a list of frequently accessed contacts|so that I locate them faster
+|`* *` |busy user |see a list of frequently accessed contacts|so that I locate them faster [Coming in v2.0]
 
-|`* *` |user |password protect my addressBook |protect my contacts' information
+|`* *` |user |password protect my addressBook |protect my contacts' information [Coming in v2.0]
 
-|`* *` |forgetful user |see a history of my last used commands |
+|`* *` |forgetful user |see a history of my last used commands|
 
-|`*` |user |add profile pictures to contacts |find my friends easily
+|`* *` |caring teacher| help students find suitable study buddies|motivate and aid them in their academic progress [Coming in v2.0]
 
-|`*` |user |set the colour of the tags |can view the tags easily
+|`* *` |caring teacher |be able to see my students' home location in extended screen using google maps|conduct house visits easily if they fall sick [Coming in v2.0]
 
-|`*` |user |use facial recognition |enhance security
+|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it [Coming in v2.0]
 
-|`*` |user |call/message directly from my address book |reach them easily
+|`*` |user |add profile pictures to contacts |find my friends easily [Coming in v2.0]
+
+|`*` |user |set the colour of the tags |can view the tags easily [Coming in v2.0]
+
+|`*` |user |use facial recognition |enhance security [Coming in v2.0]
+
+|`*` |user |call/message directly from my address book |reach them easily [Coming in v2.0]
+
+|`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities [Coming in v2.0]
 |=======================================================================
 
 {More to be added}
@@ -1035,6 +1049,25 @@ Use case ends.
 ** 2a1. AddressBook displays an empty list
 
 Use case ends.
+
+[discrete]
+=== Use case: Sort
+
+*MSS*
+
+1.  User requests to sort persons in alphabetical order
+2.  AddressBook sorts the list of persons
+3.  AddressBook displays the sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
 
 [discrete]
 === Use case: Undo
