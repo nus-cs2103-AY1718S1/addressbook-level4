@@ -20,7 +20,7 @@ public class XmlFileStorage {
         try {
             XmlUtil.saveDataToFile(file, addressBook);
         } catch (JAXBException e) {
-            assert false : "Unexpected exception " + e.getMessage();
+            assert false : "Unexpected exceptions " + e.getMessage();
         }
     }
 
