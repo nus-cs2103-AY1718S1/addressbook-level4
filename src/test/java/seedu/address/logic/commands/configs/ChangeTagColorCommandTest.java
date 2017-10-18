@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class ChangeTagColorCommandTest {
     @Test
-    public void equal_twoSameCommands_returnTrue() {
+    public void equal_twoSameCommands_returnTrue() throws Exception {
         ConfigCommand command1 = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,
                 VALID_TAG_FRIEND, VALID_TAG_COLOR);
         ConfigCommand command2 = new ChangeTagColorCommand(VALID_TAG_FRIEND + VALID_TAG_COLOR,

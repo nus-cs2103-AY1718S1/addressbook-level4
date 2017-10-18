@@ -99,4 +99,15 @@ public class ModelStub implements Model {
     public void removeTag(Tag tags) throws DuplicatePersonException, PersonNotFoundException {
         fail("This method should not be called.");
     }
+
+    @Override
+    public boolean hasTag(Tag tag) {
+        fail("This method should not be called.");
+        return false;
+    }
+
+    @Override
+    public void setTagColor(Tag tag, String color) {
+        fail("This method should not be called.");
+    }
 }

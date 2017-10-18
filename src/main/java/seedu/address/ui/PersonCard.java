@@ -86,6 +86,7 @@ public class PersonCard extends UiPart<Region> {
 
     @Subscribe
     public void handleTagColorChange(TagColorChangedEvent event) {
+        // TODO: improve efficiency here. Update rather than re-create all labels.
         tags.getChildren().clear();
         initTags();
     }
