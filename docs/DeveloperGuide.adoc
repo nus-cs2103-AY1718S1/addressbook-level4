@@ -364,6 +364,55 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Locating a person's address [Since v1.2]
+
+This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
+
+When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`:
+[source,java]
+----
+public class LocateCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        //... check targetIndex ...
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        
+        //... return CommandResult ...
+    }
+}
+----
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+    
+    // Handling method for JumpToListRequestEvent
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+}
+----
+The UI outcome of scrolling and selecting a PersonCard in the `PersonListPanel` is shown below:
+
+image::PersonListPanelSelect.png[width="200"]
+
+How the feature is implemented.
+Why it is implemented that way.
+Alternatives considered.
+
 == Documentation
 
 We use asciidoc for writing documentation.
