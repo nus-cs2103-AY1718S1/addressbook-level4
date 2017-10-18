@@ -517,6 +517,20 @@ public class MainWindow extends UiPart<Region> {
 }
 ----
 
+Through the sequence diagram, you can see how the code executes when a user
+inputs `access 1` into the command line.
+
+Sequence diagram for Logic Component of AccessCommand:
+
+image::AccessCommandLogicSequenceDiagram.PNG[width="800"]
+
+After creating a new `AccessCommand`, `LogicManager` will call execute on `AccessCommand`
+and this will result in the website of the person at the index inputted to be called through an event request and event handler.
+The website will then be loaded onto the browser of the `BrowserPanel` of the `MainWindow`.
+
+Sequence diagram for execute() of AccessCommand:
+
+image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
 
 ==== Design Considerations
 **Aspect:** How accessing a website of a person executes +
