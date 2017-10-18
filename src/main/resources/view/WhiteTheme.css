@@ -212,18 +212,18 @@
  */
 .button {
     -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
+    -fx-border-color: #999999;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: #e6e6e6;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: #1a1a1a;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #e6e6e6;
+    -fx-background-color: #cccccc;
 }
 
 .button:pressed, .button:default:hover:pressed {
@@ -232,7 +232,7 @@
 }
 
 .button:focused {
-    -fx-border-color: black, black;
+    -fx-border-color: #595959, #595959;
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
@@ -246,12 +246,12 @@
 }
 
 .button:default {
-    -fx-background-color: -fx-focus-color;
+    -fx-background-color: #f2f2f2;
     -fx-text-fill: black;
 }
 
 .button:default:hover {
-    -fx-background-color: derive(-fx-focus-color, 30%);
+    -fx-background-color: #bfbfbf;
 }
 
 .dialog-pane {

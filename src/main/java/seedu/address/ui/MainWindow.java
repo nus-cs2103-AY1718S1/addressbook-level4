@@ -49,7 +49,7 @@ public class MainWindow extends UiPart<Region> {
     private DeleteButton deleteButton;
 
     @FXML
-    private VBox wholeBox;
+    private VBox vBox;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -232,12 +232,13 @@ public class MainWindow extends UiPart<Region> {
       //  Scene scene = new Scene(getRoot());
         Scene newScene = primaryStage.getScene();
      //   System.out.println(wholeBox.getStyle());
-        wholeBox = new VBox();
-        System.out.println(wholeBox.getStylesheets());
+        vBox = new VBox();
+    //    System.out.println(vBox.getStylesheets());
 
        // wholeBox.setStyle("view/DarkTheme.css");
-        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css");
-        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css", "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
+//        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css");
+//        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css",
+//                "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
        // wholeBox.getStylesheets().addAll("view/DarkTheme.css", "view/Extensions.css");
         //wholeBox.getStylesheets().clear();
        // wholeBox.getStylesheets().add(getClass().getResource("@DarkTheme.css").toExternalForm());
@@ -249,10 +250,18 @@ public class MainWindow extends UiPart<Region> {
 //        primaryStage.setScene(scene);
 //        System.out.println(scene.getStylesheets());
       //  Scene newScene = primaryStage.getScene();
-        System.out.println(wholeBox.getStylesheets());
-        primaryStage.setScene(new Scene(wholeBox));
-        primaryStage.show();
+     //   System.out.println(wholeBox.getStylesheets());
+      //  primaryStage.setScene(new Scene(wholeBox));
+      //  primaryStage.show();
        // show();
+//        String darkThemeCss = getClass().getResource("/view/DarkTheme.css").getPath();
+     //   vBox.getStylesheets().add(getClass().getResource("view/DarkTheme.css").toExternalForm());
+        newScene.getStylesheets().add("/view/DarkTheme.css");
+        Stage newStage = createDialogStage("lala",primaryStage, newScene);
+        String darkThemeCss = "/view/DarkTheme.css";
+//        primaryStage.getScene().getStylesheets().add(darkThemeCss);
+       // System.out.println(primaryStage.getScene().getStylesheets());
+        System.out.println(vBox.getStylesheets());
 
     }
 
@@ -268,12 +277,13 @@ public class MainWindow extends UiPart<Region> {
 //        Scene newScene = primaryStage.getScene();
 //        System.out.println(newScene.getStylesheets());
      //   show();
-        wholeBox = new VBox();
-        System.out.println(wholeBox.getStylesheets());
-        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css");
-        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css", "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
-        System.out.println(wholeBox.getStylesheets());
-        primaryStage.setScene(new Scene(wholeBox));
+        vBox = new VBox();
+        System.out.println(vBox.getStylesheets());
+//        wholeBox.getStylesheets().remove("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/DarkTheme.css");
+//        wholeBox.getStylesheets().addAll("file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/WhiteTheme.css",
+//                "file:/C:/Users/Jasmine/Documents/1%20NUS/CS2103T%20SOFTWARE%20ENGINEERING/main/out/production/resources/view/Extensions.css");
+        System.out.println(vBox.getStylesheets());
+       // primaryStage.setScene(new Scene(wholeBox));
         //show();
 
     }
