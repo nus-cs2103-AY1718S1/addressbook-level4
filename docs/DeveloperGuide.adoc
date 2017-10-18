@@ -361,7 +361,7 @@ As it can be seen, when the login adds an extra layer of authentication between 
 
 The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
 
-=== Design Considerations
+==== Design Considerations
 
 **Aspect:** Implementation of `LoginFunction` +
 **Alternative 1 (current choice):** Create a whole new `LoginFunction` interface, with its own GUI etc +
