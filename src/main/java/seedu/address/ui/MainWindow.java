@@ -219,6 +219,18 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+    @FXML
+    private void handleSwitchToContacts() {
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    @FXML
+    private void handleSwitchToEvents() {
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+    }
+
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
