@@ -6,6 +6,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 
+/**
+ * A utility class containing a list of {@code Person} and {@code Task} objects in an {@code Addressbook} object
+ * to be used in tests.
+ */
 public class TypicalAddressBook {
 
     /**

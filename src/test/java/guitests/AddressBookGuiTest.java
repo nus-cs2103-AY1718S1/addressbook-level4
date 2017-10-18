@@ -21,8 +21,6 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalAddressBook;
-import seedu.address.testutil.TypicalPersons;
-import seedu.address.testutil.TypicalTasks;
 
 /**
  * A GUI Test class for AddressBook.

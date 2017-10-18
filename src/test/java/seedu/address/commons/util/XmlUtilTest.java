@@ -15,7 +15,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TestUtil;
 
 public class XmlUtilTest {
