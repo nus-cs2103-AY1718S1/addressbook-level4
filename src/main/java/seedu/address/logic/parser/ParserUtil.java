@@ -10,19 +10,14 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-<<<<<<< HEAD
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-=======
+
 import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.TrackingNumber;
->>>>>>> master
+
 import seedu.address.model.tag.Tag;
 
 /**
@@ -112,13 +107,13 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code birthday} into an {@code Birthday} and returns it. Leading and trailing whitespaces will be
+     * Parses {@code deliveryDate} into an {@code deliveryDate} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static Birthday parseBirthday(String birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        return new Birthday(birthday);
+    public static Optional<DeliveryDate> parseDeliveryDate(Optional<String> deliveryDate) throws IllegalValueException {
+        requireNonNull(deliveryDate);
+        return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
     }
 
 }

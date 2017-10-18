@@ -18,6 +18,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
@@ -104,9 +105,10 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editParcelDescriptor.getPhone().orElse(parcelToEdit.getPhone());
         Email updatedEmail = editParcelDescriptor.getEmail().orElse(parcelToEdit.getEmail());
         Address updatedAddress = editParcelDescriptor.getAddress().orElse(parcelToEdit.getAddress());
+        DeliveryDate updatedDeliveryDate = editParcelDescriptor.getDeliveryDate().orElse(parcelToEdit.getDeliveryDate());
         Set<Tag> updatedTags = editParcelDescriptor.getTags().orElse(parcelToEdit.getTags());
 
-        return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDeliveryDate, updatedTags);
     }
 
     @Override
@@ -137,6 +139,7 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private DeliveryDate deliveryDate;
         private Set<Tag> tags;
 
         public EditParcelDescriptor() {}
@@ -147,6 +150,7 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.deliveryDate = toCopy.deliveryDate;
             this.tags = toCopy.tags;
         }
 
@@ -198,6 +202,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setDeliveryDate (DeliveryDate deliveryDate) {
+            this.deliveryDate = deliveryDate;
+        }
+
+        public Optional<DeliveryDate> getDeliveryDate() {
+            return Optional.ofNullable(deliveryDate);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -226,6 +238,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getDeliveryDate().equals(e.getDeliveryDate())
                     && getTags().equals(e.getTags());
         }
     }

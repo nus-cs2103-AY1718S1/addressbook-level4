@@ -2,7 +2,7 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.person.DeliveryDate.DEFAULT_DELIVERYDATE_VALUE;
+import static seedu.address.model.parcel.DeliveryDate.DEFAULT_DELIVERYDATE_VALUE;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -32,19 +32,21 @@ public class Parcel implements ReadOnlyParcel {
     /**
      * Every field must be present and not null.
      */
-    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(trackingNumber, name, phone, email, address, tags);
+    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address, DeliveryDate deliveryDate, Set<Tag> tags) {
+        requireAllNonNull(trackingNumber, name, phone, email, address, deliveryDate, tags);
         this.trackingNumber = new SimpleObjectProperty<>(trackingNumber);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        try {
-            String default_deliverydate = DEFAULT_DELIVERYDATE_VALUE;
-            this.deliveryDate = new SimpleObjectProperty<>(new DeliveryDate(default_deliverydate));
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+        this.deliveryDate = new SimpleObjectProperty<>(deliveryDate);
+
+//        try {
+//            String default_deliverydate = DEFAULT_DELIVERYDATE_VALUE;
+//            this.deliveryDate = new SimpleObjectProperty<>(new DeliveryDate(default_deliverydate));
+//        } catch (IllegalValueException e) {
+//            e.printStackTrace();
+//        }
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -54,7 +56,7 @@ public class Parcel implements ReadOnlyParcel {
      */
     public Parcel(ReadOnlyParcel source) {
         this(source.getTrackingNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getDeliveryDate(), source.getTags());
     }
 
     public void setTrackingNumber(TrackingNumber trackingNumber) {

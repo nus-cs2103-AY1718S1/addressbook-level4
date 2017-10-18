@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Parcel's receiver phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
 public class Phone {
 
@@ -24,7 +24,7 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
+        if (!isValidDate(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;
@@ -33,7 +33,7 @@ public class Phone {
     /**
      * Returns true if a given string is a valid parcel phone number.
      */
-    public static boolean isValidPhone(String test) {
+    public static boolean isValidDate(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 
