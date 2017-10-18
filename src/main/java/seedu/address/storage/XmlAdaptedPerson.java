@@ -34,7 +34,7 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
-    private List<XmlAdaptedGroup> groupXml = new ArrayList<>();
+    private List<XmlAdaptedGroup> groups = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -58,9 +58,9 @@ public class XmlAdaptedPerson {
             tagged.add(new XmlAdaptedTag(tag));
         }
 
-        groupXml = new ArrayList<>();
+        groups = new ArrayList<>();
         for (Group group: source.getGroups()) {
-            groupXml.add(new XmlAdaptedGroup(group));
+            groups.add(new XmlAdaptedGroup(group));
         }
     }
 
@@ -76,7 +76,7 @@ public class XmlAdaptedPerson {
         }
 
         final List<Group> personGroups = new ArrayList<>();
-        for (XmlAdaptedGroup group: groupXml) {
+        for (XmlAdaptedGroup group: groups) {
             personGroups.add(group.toModelType());
         }
 
@@ -85,7 +85,7 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final Set<Group> groups = new HashSet<>();
+        final Set<Group> groups = new HashSet<>(personGroups);
         return new Person(name, phone, email, address, tags, groups);
     }
 }

@@ -13,8 +13,9 @@ import seedu.address.model.person.Person;
  */
 public class Group {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Group names should be alphanumeric";
-    public static final String GROUP_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Group names should contain only " +
+            "alphanumeric characters, spaces, underscores and dashes";
+    public static final String GROUP_VALIDATION_REGEX = "^[a-zA-Z0-9]([\\w -]*[a-zA-Z0-9])?$";
 
     public final String groupName;
     public Set<Person> members;

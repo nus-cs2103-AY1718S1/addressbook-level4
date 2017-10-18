@@ -65,7 +65,7 @@ public class UniqueGroupList implements Iterable<Group>{
     /**
      * Ensures every group in the argument list exists in this object.
      */
-    public void mergeFrom(seedu.address.model.group.UniqueGroupList from) {
+    public void mergeFrom(UniqueGroupList from) {
         final Set<Group> alreadyInside = this.toSet();
         from.internalList.stream()
                 .filter(group -> !alreadyInside.contains(group))
@@ -87,7 +87,7 @@ public class UniqueGroupList implements Iterable<Group>{
      *
      * @throws seedu.address.model.group.UniqueGroupList.DuplicateGroupException if the Tag to add is a duplicate of an existing Tag in the list.
      */
-    public void add(Group toAdd) throws seedu.address.model.group.UniqueGroupList.DuplicateGroupException, DuplicateGroupException {
+    public void add(Group toAdd) throws DuplicateGroupException {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new seedu.address.model.group.UniqueGroupList.DuplicateGroupException();
