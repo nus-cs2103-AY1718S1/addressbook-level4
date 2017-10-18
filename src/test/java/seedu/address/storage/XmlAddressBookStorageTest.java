@@ -20,6 +20,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -72,7 +73,8 @@ public class XmlAddressBookStorageTest {
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new AddressBook(readBack));
+        AddressBook readBackAB = new AddressBook(readBack);
+        assertEquals(original, readBackAB);
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));

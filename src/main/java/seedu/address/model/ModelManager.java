@@ -190,7 +190,6 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
-        syncBlacklist();
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
@@ -203,7 +202,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        raise (new ChangeInternalListEvent("blacklist"));
+        //syncBlacklist();
+        //raise (new ChangeInternalListEvent("blacklist"));
         filteredBlacklistedPersons.setPredicate(predicate);
     }
 

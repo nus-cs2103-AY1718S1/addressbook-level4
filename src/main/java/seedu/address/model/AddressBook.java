@@ -75,7 +75,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns {@UniquePersonList} of all blacklisted persons in the existing data of this {@code AddressBook}.
+     * Returns {@UniquePersonList} of all blacklisted persons in the existing data of this {@code AddressBook} with {@code newData}.
      */
     public UniquePersonList getBlacklistedPersons() {
         UniquePersonList blacklistedPersons = new UniquePersonList();

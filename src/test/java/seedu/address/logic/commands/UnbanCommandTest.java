@@ -49,22 +49,6 @@ public class UnbanCommandTest {
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstBlacklistedPersonOnly(model);
-
-        ReadOnlyPerson personToUnban = model.getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        UnbanCommand unbanCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(unbanCommand.MESSAGE_UNBAN_PERSON_SUCCESS, personToUnban);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeBlacklistedPerson(personToUnban);
-        showNoBlacklistedPerson(expectedModel);
-
-        assertCommandSuccess(unbanCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstBlacklistedPersonOnly(model);
 
