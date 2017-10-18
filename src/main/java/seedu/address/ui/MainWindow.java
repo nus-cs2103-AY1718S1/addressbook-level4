@@ -271,4 +271,8 @@ public class MainWindow extends UiPart<Region> {
     public void setCommandPrompt(String toPrompt) {
         commandBox.setPromptText(toPrompt);
     }
+
+    public void setCommandText(String toInput) {
+        commandBox.setCommandText(toInput);
+    }
 }

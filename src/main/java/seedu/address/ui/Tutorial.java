@@ -70,12 +70,9 @@ public class Tutorial {
         default:
             mainWindow.unhighlightAll();
         }
-        if (stepToExecute.isPrompt()) {
-            mainWindow.setCommandPrompt(stepToExecute.getCommandPrompt());
-            tutorialText.setText(stepToExecute.getTextDisplay());
-        } else {
-            tutorialText.setText(stepToExecute.getTextDisplay());
-        }
+        mainWindow.setCommandPrompt(stepToExecute.getCommandPrompt());
+        mainWindow.setCommandText("");
+        tutorialText.setText(stepToExecute.getTextDisplay());
     }
 
     /**
@@ -100,16 +97,10 @@ class TutSteps {
 
     private String textDisplay;
     private String commandPrompt = "";
-    private boolean hasPrompt = false;
-
-    public TutSteps(String textDisplay) {
-        this.textDisplay = textDisplay;
-    }
 
     public TutSteps(String textDisplay, String commandPrompt) {
         this.textDisplay = textDisplay;
         this.commandPrompt = commandPrompt;
-        this.hasPrompt = true;
     }
 
     public String getTextDisplay() {
@@ -118,9 +109,5 @@ class TutSteps {
 
     public String getCommandPrompt() {
         return commandPrompt;
-    }
-
-    public boolean isPrompt() {
-        return hasPrompt;
     }
 }

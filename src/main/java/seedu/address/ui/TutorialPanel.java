@@ -26,7 +26,7 @@ public class TutorialPanel extends UiPart<Region> {
     private MainWindow mainWindow;
     private BrowserPanel browserPanel;
     private StackPane browserPlaceHolder;
-    private boolean isSkip = true;
+    private boolean tutorialIntro = true;
 
     @FXML
     private Button rightButton;
@@ -62,8 +62,8 @@ public class TutorialPanel extends UiPart<Region> {
      */
     @FXML
     private void handleLeftButtonPressed() throws CommandException, ParseException {
-        if (isSkip) {
-            isSkip = false;
+        if (tutorialIntro) {
+            tutorialIntro = false;
             leftButton.setText("Back");
             rightButton.setText("Next");
             skipButton.setVisible(true);
@@ -78,7 +78,7 @@ public class TutorialPanel extends UiPart<Region> {
      */
     @FXML
     private void handleRightButtonPressed() {
-        if (isSkip) {
+        if (tutorialIntro) {
             endTutorial();
         } else if (!newTutorial.isLastStep()) {
             newTutorial.executeNextStep();
