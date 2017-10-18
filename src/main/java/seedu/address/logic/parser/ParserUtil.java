@@ -108,17 +108,17 @@ public class ParserUtil {
      * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static StartDate parseStartDate(String date) throws IllegalValueException {
+    public static StartDate parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return new StartDate(date) ;
+        return date.isPresent() ? new StartDate(date.get()) : new StartDate("");
     }
 
     /**
      * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Deadline parseDeadline(String date) throws IllegalValueException {
+    public static Deadline parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return new Deadline(date);
+        return date.isPresent() ? new Deadline(date.get()) : new Deadline("");
     }
 }

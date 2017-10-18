@@ -1,6 +1,5 @@
 package seedu.address.model.task;
 
-import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -16,14 +15,23 @@ public class TaskDates {
             "Dates can only contain a String in the format dd/mm/yyyy";
 
     /**
-     * Formats the date of a given string. If the input date format is invalid, an exception is thrown.
+     * Returns true if the given String is a valid date. If the input date format is invalid, an exception is thrown.
+     */
+    public static boolean isDateValid(String date) throws IllegalValueException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(date, formatter);
+            return true;
+        } catch (DateTimeParseException pe) {
+            return false;
+        }
+    }
+
+    /**
+     * Formats the date of a given string into LocalDate.
      */
     public static LocalDate formatDate(String date) throws IllegalValueException {
-        try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(date, formatter);
-        } catch (DateTimeParseException pe) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
     }
 }

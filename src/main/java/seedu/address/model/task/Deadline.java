@@ -13,7 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Deadline extends TaskDates {
 
-    public final LocalDate date;
+    public final String date;
 
     /**
      * Validates given deadline date.
@@ -23,13 +23,15 @@ public class Deadline extends TaskDates {
     public Deadline(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        //this.date = date.isEmpty() ? Optional.empty() : Optional.of(formatDate(trimmedDate));
-        this.date = TaskDates.formatDate(date);
+        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(trimmedDate)) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
+        this.date = trimmedDate;
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return date;
     }
 
     @Override

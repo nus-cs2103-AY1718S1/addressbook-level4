@@ -7,26 +7,25 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class RecurringDate extends TaskDates {
 
-    public final Date date;
+    public final String date;
 
     /**
-     * Validates given recurring date.
+     * Validates given starting date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
     public RecurringDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        this.date = formatDate(trimmedDate);
-    }
-
-    public RecurringDate(Date date) {
-        this.date = date;
+        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(date)) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
+        this.date = trimmedDate;
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return date;
     }
 
     @Override

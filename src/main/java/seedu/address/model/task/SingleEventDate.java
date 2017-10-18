@@ -11,26 +11,25 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class SingleEventDate extends TaskDates {
 
-    public final Date date;
+    public final String date;
 
     /**
-     * Validates given event date.
+     * Validates given starting date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
     public SingleEventDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        this.date = formatDate(trimmedDate);
-    }
-
-    public SingleEventDate(Date date) {
-        this.date = date;
+        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(date)) {
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+        }
+        this.date = trimmedDate;
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return date;
     }
 
     @Override
@@ -44,4 +43,5 @@ public class SingleEventDate extends TaskDates {
     public int hashCode() {
         return date.hashCode();
     }
+
 }

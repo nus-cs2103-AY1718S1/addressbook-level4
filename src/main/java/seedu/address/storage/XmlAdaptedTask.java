@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -18,9 +16,9 @@ public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String description;
     @XmlElement(required = true)
-    private Date startDate;
+    private String startDate;
     @XmlElement(required = true)
-    private Date deadline;
+    private String deadline;
 
     /**
      * Constructs an XmlAdaptedTask.
