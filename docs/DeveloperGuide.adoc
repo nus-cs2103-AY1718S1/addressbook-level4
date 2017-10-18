@@ -364,6 +364,58 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::ImportCommand[]
+=== Import Command
+
+The import command is a new feature implemented that allows the user to import contact details directly from some external source.
+
+The logic is implemented by reading the external source file and then retrieving the relevant contact details by reading the file line by line.
+
+Once the required information (name, email, address, phone number) is retrieved from the data, a Person object will be created and the Model will then add the person into the address book.
+
+* The user will first enter the command `import FILENAME.vcf` where the `FILENAME` is the name of the file.
+
+* Next, the `AddressBookParser` class will retrieve the command as well as the argument and then call the `ImportCommandParser` class with the `FILENAME` as the argument.
+
+* Then, in the `ImportCommandParser` class the file will be retrieved by the java `FILE` class which will access and convert the file into a byte stream using `bufferedReader` and `fileReader` class.
+
+* Once the file is loaded into the `bufferedReader`, the `ImportCommandParser` class will read the file line by line to identify the required contact information that is inside the file.
+
+* The class uses simple String comparison to identify key words such as "FN" for name and "EMAIL" for email address etc.
+
+* Once the line reads the keyword "END", it means that the end of the first contact has been accessed and all its required values were all retrieved by the class.
+
+* Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
+
+* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` will will parse the array to the `ImportCommand` class for execution.
+
+* The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
+
+* Lastly, the `ImportCommand` class will return a success message to inform the user that all the contacts has been imported.
+
+==== Design Considerations
+
+**Aspect:** The types of file that can be imported using the Import command. +
+**Alternative 1 (current choice):** Currently, the import command can only read files that has the extension `.vcf`. +
+**Pros:** Multi platform compatibility and the format in `.vcf` file enables the program to retrieve the information easily. +
+**Cons:** Since the logic is written specifically for `.vcf` files, we will have to rewrite the logic if we want to support other file types in the future. +
+**Alternative 2:** use `.csv` file as the import source +
+**Pros:** Format is simple, each value is separated by a comma. +
+**Cons:** Values in the file will have a hard time to be mapped into each variable as each value is only separated by a comma, mistakes can be made when trying to map each values into each category. +
+
+---
+
+**Aspect:** Which directory to access the source file. +
+**Alternative 1 (current choice):** Currently, the file has to be stored in /data directory. +
+**Pros:** Easy to develop the logic as there is only one filepath . +
+**Cons:** User will have to specifically place the file in the /data directory which does not really make sense. +
+**Alternative 2:** Create a `File upload` function. +
+**Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
+**Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
+---
+
+// end::ImportCommand[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
