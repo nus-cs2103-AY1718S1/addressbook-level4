@@ -1,9 +1,10 @@
 package seedu.address.model.insurance;
 
-import java.io.File;
 import java.time.LocalDate;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -17,10 +18,10 @@ public interface ReadOnlyInsurance {
     ReadOnlyPerson getInsured();
     ObjectProperty<ReadOnlyPerson> beneficiaryProperty();
     ReadOnlyPerson getBeneficiary();
-    ObjectProperty<Double> premiumProperty();
+    DoubleProperty premiumProperty();
     Double getPremium();
-    ObjectProperty<File> contractProperty();
-    File getContract();
+    StringProperty contractPathProperty();
+    String getContractPath();
     ObjectProperty<LocalDate> signingDateProperty();
     LocalDate getSigningDate();
     ObjectProperty<LocalDate> expiryDateProperty();
