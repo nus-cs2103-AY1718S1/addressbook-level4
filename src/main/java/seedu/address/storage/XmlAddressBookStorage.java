@@ -12,8 +12,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.security.SecurityUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.security.SecurityUtil;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -88,6 +88,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         return isEncrypted(filePath);
     }
 
+    /**
+     * Similar to {@link #isEncrypted()}
+     *
+     * @param filePath location of the data. Cannot be null
+     */
     public boolean isEncrypted(String filePath) throws IOException {
         requireNonNull(filePath);
 

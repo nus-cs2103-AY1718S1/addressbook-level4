@@ -9,7 +9,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 /**
  * Represents a storage for {@link seedu.address.model.AddressBook}.
  */
-public interface AddressBookStorage extends SecureStore{
+public interface AddressBookStorage extends SecureStorage {
 
     /**
      * Returns the file path of the data file.

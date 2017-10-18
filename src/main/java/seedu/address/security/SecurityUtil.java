@@ -1,15 +1,11 @@
 package seedu.address.security;
 
-import seedu.address.commons.exceptions.EncryptOrDecryptException;
-
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +15,8 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
 /**
  * Helper functions for AES encryption and decryption.

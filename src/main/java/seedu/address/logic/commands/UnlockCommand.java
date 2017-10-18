@@ -1,15 +1,15 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.events.model.ReloadAddressBookEvent;
-import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.commons.exceptions.EncryptOrDecryptException;
-import seedu.address.security.Security;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.security.SecurityManager;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 
-import static java.util.Objects.requireNonNull;
+import seedu.address.commons.events.model.ReloadAddressBookEvent;
+import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.security.Security;
+import seedu.address.security.SecurityManager;
 
 /**
  * Unlocks the address book.
@@ -39,7 +39,7 @@ public class UnlockCommand extends Command {
         requireNonNull(model);
 
         Security security = SecurityManager.getInstance(null);
-        try{
+        try {
             if (!security.isEncrypted()) {
                 return new CommandResult(MESSAGE_DUPLICATED_UNLOCK);
             }

@@ -1,16 +1,18 @@
 package seedu.address.security;
 
-import com.sun.istack.internal.Nullable;
-import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.exceptions.EncryptOrDecryptException;
-import seedu.address.storage.Storage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
+import seedu.address.storage.Storage;
+
+/**
+ * Manages the data security of AddressBook.
+ */
 public class SecurityManager extends ComponentManager implements Security {
 
     private static SecurityManager instance;
@@ -23,7 +25,7 @@ public class SecurityManager extends ComponentManager implements Security {
         permittedCommandList = new ArrayList<>();
     }
 
-    public static SecurityManager getInstance(@Nullable Storage storage) {
+    public static SecurityManager getInstance(Storage storage) {
         if (instance == null && storage != null) {
             instance = new SecurityManager(storage);
         }

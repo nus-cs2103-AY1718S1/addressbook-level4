@@ -1,15 +1,15 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.events.model.ReloadAddressBookEvent;
-import seedu.address.commons.events.storage.DataSavingExceptionEvent;
-import seedu.address.commons.exceptions.EncryptOrDecryptException;
-import seedu.address.security.Security;
-import seedu.address.security.SecurityManager;
-import seedu.address.logic.commands.exceptions.CommandException;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 
-import static java.util.Objects.requireNonNull;
+import seedu.address.commons.events.model.ReloadAddressBookEvent;
+import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.security.Security;
+import seedu.address.security.SecurityManager;
 
 /**
  * Locks the address book.
@@ -43,7 +43,7 @@ public class LockCommand extends Command {
         }
 
         Security security = SecurityManager.getInstance(null);
-        try{
+        try {
             if (security.isEncrypted()) {
                 return new CommandResult(MESSAGE_DUPLICATED_LOCK);
             }

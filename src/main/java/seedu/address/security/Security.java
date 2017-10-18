@@ -1,9 +1,12 @@
 package seedu.address.security;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.storage.SecureStore;
+import seedu.address.storage.SecureStorage;
 
-public interface Security extends SecureStore{
+/**
+ * API of the Security component
+ */
+public interface Security extends SecureStorage {
 
     /**
      * Sets up commands that are allowed to execute when the system is secured.

@@ -1,11 +1,14 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.security.SecurityUtil;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
+/**
+ * Parses input arguments and creates a new UnlockCommand object
+ */
 public class UnlockCommandParser implements Parser<UnlockCommand> {
 
     public static final String PARSE_EXCEPTION_MESSAGE =

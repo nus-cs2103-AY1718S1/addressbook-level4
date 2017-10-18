@@ -1,10 +1,13 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.EncryptOrDecryptException;
-
 import java.io.IOException;
 
-public interface SecureStore {
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
+
+/**
+ * Represents a secure storage which security methods.
+ */
+public interface SecureStorage {
 
     /**
      * @see #isEncrypted()

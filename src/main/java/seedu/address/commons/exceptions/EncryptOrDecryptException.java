@@ -6,7 +6,7 @@ package seedu.address.commons.exceptions;
  */
 public class EncryptOrDecryptException extends Exception {
 
-    public EncryptOrDecryptException(){
+    public EncryptOrDecryptException() {
         super();
     }
 
