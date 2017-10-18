@@ -84,6 +84,11 @@ public interface Model {
     void changeListTo(String listName);
 
     /**
+     * Retrieves the full list of persons
+     */
+    ObservableList<ReadOnlyPerson> getAllPersons();
+
+    /**
      * Increase the debt of a person by the amount indicated
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */

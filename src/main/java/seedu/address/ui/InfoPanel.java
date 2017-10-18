@@ -12,10 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -35,8 +38,12 @@ public class InfoPanel extends UiPart<Region> {
     private static final String MESSAGE_INFO_DATE_BORROW_FIELD = "Date Borrowed: ";
     private static final String MESSAGE_INFO_DEADLINE_FIELD = "Deadline: ";
     private static final String MESSAGE_INFO_DATE_REPAID_FIELD = "Date Repaid: ";
+    private static final String MESSAGE_INFO_NEARBY_PERSON_FIELD = "All contacts in this area: ";
 
+    private Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private NearbyPersonListPanel nearbyPersonListPanel;
 
     @FXML
     private Pane pane;
@@ -83,11 +90,16 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label dateRepaid;
     @FXML
+    private Text nearbyPersonField;
+    @FXML
     private FlowPane tags;
+    @FXML
+    private StackPane nearbyPersonListPanelPlaceholder;
 
-    public InfoPanel() {
+    public InfoPanel(Logic logic) {
         super(FXML);
 
+        this.logic = logic;
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
@@ -107,7 +119,17 @@ public class InfoPanel extends UiPart<Region> {
         dateBorrowField.setText(MESSAGE_INFO_DATE_BORROW_FIELD);
         deadlineField.setText(MESSAGE_INFO_DEADLINE_FIELD);
         dateRepaidField.setText(MESSAGE_INFO_DATE_REPAID_FIELD);
+        nearbyPersonField.setText(MESSAGE_INFO_NEARBY_PERSON_FIELD);
         bindListeners(person);
+    }
+
+    /**
+     * Resets the Nearby Person List Panel
+     * @param person the selected person to display the nearby contacts of
+     */
+    public void resetNearbyPersonListPanel(ReadOnlyPerson person) {
+        nearbyPersonListPanel = new NearbyPersonListPanel(logic.getAllPersons(), person);
+        nearbyPersonListPanelPlaceholder.getChildren().add(nearbyPersonListPanel.getRoot());
     }
 
     /**
@@ -154,6 +176,9 @@ public class InfoPanel extends UiPart<Region> {
             if (node instanceof Label) {
                 label = (Label) node;
                 label.setText("");
+            } else if (node instanceof Text) {
+                text = (Text) node;
+                text.setText("");
             } else if (node instanceof TextFlow) {
                 for (Node subNode: ((TextFlow) node).getChildren()) {
                     if (subNode instanceof Text) {
@@ -207,6 +232,13 @@ public class InfoPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+        resetNearbyPersonListPanel(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection().person);
     }

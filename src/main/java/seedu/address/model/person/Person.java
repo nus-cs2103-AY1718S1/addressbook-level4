@@ -289,6 +289,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    /**
+     * Returns true if both are in same cluster.
+     */
+    public boolean isSameCluster(ReadOnlyPerson other) {
+        return other.getCluster().equals(this.getCluster());
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls

@@ -37,6 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final ObservableList<ReadOnlyPerson> allPersons;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
     private final UserPrefs userPrefs;
@@ -51,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        allPersons = this.addressBook.getPersonList();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredBlacklistedPersons = new FilteredList<ReadOnlyPerson>(this.addressBook.getBlacklistedPersonList());
 
@@ -210,6 +212,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredBlacklistedPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getAllPersons() {
+        return allPersons;
     }
 
     @Override
