@@ -130,6 +130,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;

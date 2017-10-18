@@ -61,7 +61,7 @@ public class FavouriteCommand extends UndoableCommand {
         Person favouritedPerson = createFavouritedPerson(personToFavourite);
 
         try {
-            model.updatePerson(personToFavourite, favouritedPerson);
+            model.favouritePerson(personToFavourite, favouritedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {

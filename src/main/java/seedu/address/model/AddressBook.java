@@ -115,6 +115,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, editedPerson);
 
+    }
+    /**
+     * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
+     * Sorts the list to show favourite contacts first.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code favouritedReadOnlyPerson}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterTagListWith(Person)
+     */
+    public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedReadOnlyPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(favouritedReadOnlyPerson);
+
+        Person favouritedPerson = new Person(favouritedReadOnlyPerson);
+
+        syncMasterTagListWith(favouritedPerson);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        persons.setPerson(target, favouritedPerson);
+
         UniquePersonList notFavouriteList = new UniquePersonList();
         UniquePersonList favouriteList = new UniquePersonList();
         for (ReadOnlyPerson person : persons) {
@@ -129,7 +151,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(person);
         }
     }
-
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
