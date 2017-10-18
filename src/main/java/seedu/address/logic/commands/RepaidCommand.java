@@ -42,10 +42,7 @@ public class RepaidCommand extends UndoableCommand {
         ReadOnlyPerson personToWhitelist = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.resetPersonDebt(personToWhitelist);
             model.addWhitelistedPerson(personToWhitelist);
-        } catch (PersonNotFoundException e) {
-            assert false : "The target person cannot be missing";
         } catch (DuplicatePersonException e) {
             assert false : "The target person is already in whitelist";
         }
