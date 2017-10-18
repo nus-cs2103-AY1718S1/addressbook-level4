@@ -368,7 +368,7 @@ Adding a taskBook to our application originated from our design requirements. In
 * The taskBook is a set of parallel functionalities apart from the addressBook.
 * The taskBook is related to addressbook in the sense that we can link the person and task together.
 * taskBook and addressBook has the following independent components: `model`, `logic`, and `storage`.
-* taskBook and addressBook share the same user interface by taking up taskPanel and personPanel respectively. 
+* taskBook and addressBook share the same user interface by taking up taskPanel and personPanel respectively.
 
 With the extra taskBook working in parallel, the model interface should be modified in this way:
 [source,java]
@@ -381,7 +381,7 @@ void addTask(ReadOnlyTask task) throws DuplicateTaskException;
 void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 ----
 
-With the updated model interface, the ModelManager and ModelStub should be modified accordingly. + 
+With the updated model interface, the ModelManager and ModelStub should be modified accordingly. +
 
 For storage, we save the tasks into another storage file (xml file), the storage interface should be equipped with the following read and write methods:
 [source,java]
@@ -424,11 +424,11 @@ The unit tests stub classes and setUp methods should be updated accordingly. +
 
 ---
 **Aspect** Implementation of modelling and logic of `taskBook` +
-**Alternative 1 (current choice):** Rewrite codes for taskBook, keep the original addressbook codes untouched. + 
+**Alternative 1 (current choice):** Rewrite codes for taskBook, keep the original addressbook codes untouched. +
 **Pros:** The original addressBook logic and modelling will not be affected. We keep an independent book from the original. +
 **Cons:** The code reusage is very low and adding a taskBook become very tedious. +
 **Alternative 2:** Modify the original code base to reutiliza some of the common functionalities. +
-**Pros:** The code reusage is good and adding a taskBook becomes more efficient. + 
+**Pros:** The code reusage is good and adding a taskBook becomes more efficient. +
 **Cons:** The dependency is very high between addressBook and taskBook, there is a high tendency to break original logic and modelling. +
 
 

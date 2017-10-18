@@ -157,7 +157,7 @@ Format: `deleteTask IDNEX`
 
 Examples:
 
-* `list` + 
+* `list` +
 * `deleteTask` 1 +
 Deletes the 1st task in the task book.
 
