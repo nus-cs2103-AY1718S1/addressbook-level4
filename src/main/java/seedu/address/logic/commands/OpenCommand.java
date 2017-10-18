@@ -37,4 +37,11 @@ public class OpenCommand extends Command {
             return new CommandResult(String.format(MESSAGE_NOT_EXIST, filePath));
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof OpenCommand // instanceof handles nulls
+                && this.filePath.equals(((OpenCommand) other).filePath)); // state check
+    }
 }

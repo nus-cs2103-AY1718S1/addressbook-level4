@@ -38,4 +38,11 @@ public class NewCommand extends Command {
             return new CommandResult(String.format(MESSAGE_CREATING, filePath));
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof NewCommand // instanceof handles nulls
+                && this.filePath.equals(((NewCommand) other).filePath)); // state check
+    }
 }
