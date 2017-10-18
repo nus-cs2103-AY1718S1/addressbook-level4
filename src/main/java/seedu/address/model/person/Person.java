@@ -111,12 +111,12 @@ public class Person implements ReadOnlyPerson {
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
-    
-    @Override
+
+    @Override   
     public ObjectProperty<Birthday> birthdayProperty() {
         return birthday;
     }
-    
+
     @Override
     public Birthday getBirthday() {
         return birthday.get();
