@@ -243,7 +243,7 @@ Shows all the people with tag `friend` or tag `classmate`.
 Format: `s-show INDEX`
 
 ****
-* Find the person(s) with the index number.
+* Find the person with the index number.
 * Only one index number is allowed as the input.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The address of the person selected will be shown visually on the browser screen.
@@ -251,8 +251,26 @@ Format: `s-show INDEX`
 
 Examples:
 
-* `s-show 1`
-Shows the address of person with index 1 on the google map.
+* `s-show 1` +
+Shows the address of person with index 1 on the google map
+
+=== Find the route from user's current location to the person seleted: `m-route` _[Coming in v2.0]_
+Format: `s-route INDEX ADDRESS`
+
+****
+* Find the address of the person with the index number.
+* Only one index number is allowed as the input.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The address entered is the current location of the user (the place they want to start from)
+* A route will be shown on the map with the address as start location and selected person's address as destination
+****
+
+Examples:
+
+* `s-route 1 Clementi Street` +
+Shows the route from Clementi Street to the address of person with index number 1
+* `s-route 7 John street, block 123, #01-01` +
+Shows the route from John street, block 123, #01-01 to the address of person with index number 7
 
 === Making a backup address book: `export` _[Coming in v2.0]_
 Format: `export PATH`
