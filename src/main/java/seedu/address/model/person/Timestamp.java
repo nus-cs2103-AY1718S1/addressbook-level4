@@ -9,22 +9,28 @@ public class Timestamp {
 
     private LocalDateTime creationTime = null;
     private LocalDateTime expiryTime = null; //after construction, a null expiryTime means this person will not expire
+    long daysToLive;
 
     public Timestamp(long day) {
-        creationTime = LocalDateTime.now();
+        creationTime = LocalDateTime.now().withNano(0).withSecond(0);
         if (day > 0) {
-            expiryTime = creationTime.plusDays(day);
+            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0);
         }
+        daysToLive = day;
     }
 
     public Timestamp(String expiry) {
         expiryTime = LocalDateTime.parse(expiry);
+        expiryTime = expiryTime.withNano(0).withSecond(0);
     }
 
     public LocalDateTime getCreationTime() {
         return creationTime;
     }
 
+    public long getDaysToLive() {
+        return daysToLive;
+    }
 
     /**
      * following method returns null if this person does not expiry
