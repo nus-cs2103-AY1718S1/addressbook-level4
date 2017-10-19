@@ -40,7 +40,7 @@ public class Appointment {
     @Override
     public String toString() {
         if (date != null) {
-            return "Appointment with " + this.personString + " on " + DATE_FORMATTER.format(date);
+            return "Appointment on " + DATE_FORMATTER.format(date);
         } else {
             return "No appointment set with " + personString;
         }
