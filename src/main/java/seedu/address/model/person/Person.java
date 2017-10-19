@@ -169,5 +169,40 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-    
+
+    @Override
+    public int compareTo(Object T) {
+
+        ReadOnlyPerson person = (ReadOnlyPerson) T;
+        String firstField = this.getName().toString();
+        String secondField = person.getName().toString();
+
+        if (sortCriteria.equals("email")) {
+            firstField = this.getEmail().toString();
+            secondField = person.getEmail().toString();
+
+        } else if (sortCriteria.equals("phone")) {
+            firstField = this.getPhone().toString();
+            secondField = person.getPhone().toString();
+
+        } else if (sortCriteria.equals("address")) {
+            firstField = this.getAddress().toString();
+            secondField = person.getAddress().toString();
+        } else {
+            return firstField.compareTo(secondField);
+        }
+
+        // If a field is "Not Set" put the corresponding person at the end of the list.
+        if (firstField.equals("Not Set") && secondField.equals("Not Set")) {
+            return 0;
+        } else if (!firstField.equals("Not Set") && secondField.equals("Not Set")) {
+            return -1;
+        } else if (firstField.equals("Not Set") && !secondField.equals("Not Set")) {
+            return 1;
+        } else {
+            return firstField.compareTo(secondField);
+        }
+
+    }
+
 }
