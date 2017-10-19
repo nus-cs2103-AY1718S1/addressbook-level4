@@ -6,11 +6,10 @@ import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 
-
+/**
+ * A utility class to help with building Event objects.
+ */
 public class EventBuilder {
-    /**
-     * Event particulars
-     **/
     public static final String DEFAULT_NAME = "ZoukOut";
     public static final String DEFAULT_ADDRESS = "Sentosa, Siloso Beach";
     public static final String DEFAULT_DATE = "12/12/2018";
