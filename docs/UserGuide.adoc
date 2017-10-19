@@ -223,7 +223,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Sorts the contact in the Address Book : `sort`
+=== Sorting contacts in the Address Book : `sort`
 
 Sorts the contacts in the address book based on the name. +
 Format: `sort` or `ss`
@@ -264,6 +264,14 @@ Examples:
 Removes "friends" tag from all persons
 * `rt friends classmates colleagues` +
 Removes "friends", "classmates", "colleagues" tag from all persons
+
+=== Importing Contacts from external source : `import`
+
+Imports contact from external source into the addressbook. Source must be in `.vcf` format. +
+File must also be placed in the /data folder.
+
+Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
+
 
 === Clearing all entries : `clear`
 
@@ -343,4 +351,5 @@ e.g.`select 2`
 * *Sort* : `ss`
 * *Tag*  : `t`
 * *Remove Tag*  : `rt`
+* *Import* : `im FILENAME.vcf`
 
