@@ -8,7 +8,7 @@ import org.junit.Test;
 public class TimestampTest {
 
     @Test
-    public void isValidTimestamp(){
+    public void isValidTimestamp() {
         // invalid Timestamp
         assertFalse(Timestamp.isValidTimestamp(-1));
         assertFalse(Timestamp.isValidTimestamp(-2));
