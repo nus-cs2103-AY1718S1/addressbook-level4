@@ -147,7 +147,7 @@ public class XmlRolodexStorageTest {
         String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.rldx";
         XmlRolodexStorage xmlRolodexStorage = new XmlRolodexStorage(pefsFilePath);
         assertFalse(xmlRolodexStorage.equals(new Object()));
-        assertFalse(xmlRolodexStorage.equals(""));
+        assertFalse(xmlRolodexStorage.equals(new String("")));
     }
 
 

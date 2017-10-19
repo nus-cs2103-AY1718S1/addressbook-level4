@@ -145,7 +145,7 @@ public class JsonUserPrefsStorageTest {
         String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
         JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);
         assertFalse(jsonUserPrefsStorage.equals(new Object()));
-        assertFalse(jsonUserPrefsStorage.equals(""));
+        assertFalse(jsonUserPrefsStorage.equals(new String("")));
     }
 
 }

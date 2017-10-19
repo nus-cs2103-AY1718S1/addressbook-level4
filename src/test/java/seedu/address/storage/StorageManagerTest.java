@@ -120,7 +120,7 @@ public class StorageManagerTest {
     @Test
     public void assertEqualsNotStorageManagerInstanceReturnsFalse() {
         assertFalse(storageManager.equals(new Object()));
-        assertFalse(storageManager.equals(""));
+        assertFalse(storageManager.equals(new String("")));
     }
 
 
