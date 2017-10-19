@@ -1,4 +1,4 @@
-= Codii - User Guide
+﻿= Codii - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -365,5 +365,6 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Nearby* : `nearby`
 * *Undo* : `undo`
 * *Redo* : `redo`
