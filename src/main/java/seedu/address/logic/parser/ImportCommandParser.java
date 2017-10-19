@@ -18,9 +18,11 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      * @throws ParseException if the user input does not conform the expected format, or the storage file is not able to
      * be found or it is in the wrong data format.
      */
-    public ImportCommand parse(String args) throws ParseException {
+    public ImportCommand parse(String arg) throws ParseException {
+        String trimmedArgument = arg.trim();
         try {
-            ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath("./data/importData/" + args);
+            ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath("./data/importData/"
+                    + trimmedArgument);
             return new ImportCommand(readOnlyAddressBook.getParcelList());
         } catch (IllegalValueException ive) {
             throw new ParseException(
