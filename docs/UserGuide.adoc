@@ -303,20 +303,18 @@ You can clear all entries in the address book. +
 === Set Tag Color Mode : `tagcolor`
 
 You can set random colors to all tags OR remove colors. +
-Format: `tagcolor random/off` +
-Shorthand Format: `tc random/off`
+*Format:* `tagcolor random/off` +
+*Shorthand Format:* `tc random/off`
 
 You can set a color to a specific tag type. +
-Format: `tagcolor TAGNAME COLOR` +
-Shorthand Format: `tc TAGNAME COLOR`
+*Format:* `tagcolor TAGNAME COLOR` +
+*Shorthand Format:* `tc TAGNAME COLOR`
 
 [NOTE]
-====
-Only certain colors can be specified.  +
-You can see all the colors that can be specified in the following link +
-https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor +
-and input the color name in english or in hexadecimal form.
-====
+You can see all available colors in the following https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link]
+
+[NOTE]
+Color name input can be in english or hexadecimal form.
 
 === Set appointment: `appointment`
 
