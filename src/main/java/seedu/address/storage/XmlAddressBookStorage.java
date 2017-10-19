@@ -18,6 +18,10 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
 
+    /**
+     * Filename suffix added to address book backups.
+     */
+    public static final String BACKUP_SUFFIX = ".bak";
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
@@ -26,8 +30,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         this.filePath = filePath;
     }
 
+    @Override
     public String getAddressBookFilePath() {
         return filePath;
+    }
+
+    @Override
+    public String getBackupAddressBookFilePath() {
+        return getAddressBookFilePath() + BACKUP_SUFFIX;
     }
 
     @Override
@@ -57,6 +67,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(getBackupAddressBookFilePath());
+    }
+
+    @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
     }
@@ -74,4 +89,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, getBackupAddressBookFilePath());
+    }
 }

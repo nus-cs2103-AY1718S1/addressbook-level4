@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B1/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -721,17 +721,85 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+4+| Create operations
 
 |`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add tags to a person |categorise the people I know
+
+|`* * *` |user |add relationships between people |show that two persons know each other
+
+|`* *` |user |add link:#named-relationship[named relationships] between people |show that two persons know each other via a specific method
+
+|`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
+
+|`* *` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
+
+|`* *` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
+
+4+| Read operations
+
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |see the people a person is related to |find people related to a person
+
+|`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
+
+|`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
+
+|`* *` |user |see the history of commands I have typed |keep track of what I have done to my address book
+
+4+| Find operations
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by address |locate people who are physically close to each other
+
+|`* * *` |user |find a person by tag |locate people who are in the same category
+
+|`* *` |user |find a person by email |locate people who may share the same emails / domains (working for same company)
+
+|`* *` |user |find shortest relationship distance between two people |find the most efficient way to know a person
+
+4+| Update operations
+
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |update a person's details |update a person's details without having to create a new contact
+
+|`* *` |user |update the link:#confidence-estimate[confidence estimate] on a person's attributes |update confidence in pieces of information
+
+|`* *` |user |change the colour of the network |personalise my address book
+
+4+| Delete operations
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |delete relationships between people |remove relationships between people that are incorrect
+
+|`* * *` |user |delete all persons |reset my address book easily
+
+|`* * *` |cautious user |clear my history |hide my previous commands from later users
+
+|`* *` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
+
+4+| Other operations
+
+|`* * *` |careless user | undo the last command that I made | revert any mistakes
+
+|`* * *` |careless user | redo the last command that I made | undo my 'undo'
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in the address book |hide details by default, and only show full details when I select a particular contact |have a less-cluttered address book
+
+|`* *` |user |set a password for my address book |keep my address book private
+
+|`* *` |user |share my address book with other people |
+
+|`* *` |user |have the program autocorrect my commands |input information correctly
+
+|`* *` |advanced user |type shorter link:#command-alias[command aliases] |do operations faster
 |=======================================================================
 
 {More to be added}
@@ -767,6 +835,149 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Edit a person's details
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit the details of a specific person in the list
+4. AddressBook updates details of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify field to edit.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. User updates valid field with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Undo last undoable command
+
+*MSS*
+
+1. User requests to undo last undoable command
+2. AddressBook undoes the last undoable command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The `undo` command is the first command.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo most recent undone command
+
+*MSS*
+
+1. User requests to redo most recently undone command
+2. AddressBook redoes the last undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The `redo` command is the first command
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add a relationship between two persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to link two specific persons in the list
+4.  AddressBook links those two persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Either of the given indices is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add a named relationship between two persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add an relationship between two specific persons
+4.  AddressBook adds an relationship between those two persons
+5.  User requests to show a list of relationships
+6.  AddressBook shows a list of relationships
+7.  User requests to add a name to that relationship
+8.  AddressBook adds a name to that relationship
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Either of the given indices is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 7a. The index of relationship given to be added name on is invalid.
++
+[none]
+** 7a1. AddressBook shows an error message.
++
+Use case resumes at step 6.
+
 {More to be added}
 
 [appendix]
@@ -775,17 +986,41 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should be able to give a response within 1 second
+.  Should be able to hide personal information
+.  Should be simple enough for a novice to utilise and navigate
+.  Data should only be read and modified by authorized party
+.  Should be easily maintained by other programmers
 
 [appendix]
 == Glossary
+
+[[command-alias]]
+Command alias
+
+....
+Shorthand form of a command
+....
+
+[[confidence-estimate]]
+Confidence estimate
+
+....
+A percentage that represents how confident the user is in a particular attribute being accurate
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+
+[[named-relationship]]
+Named relationship
+
+....
+A relationship between two people with a specific status (eg. lecturer-student)
 ....
 
 [[private-contact-detail]]
