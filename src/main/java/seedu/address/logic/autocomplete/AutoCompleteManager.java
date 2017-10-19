@@ -55,7 +55,7 @@ public class AutoCompleteManager {
      * more specifically the parser used is determined by:
      *  > number words in the user input
      *  > closest prefix on the left of the input
-     * @param user input stub
+     * @param stub user input stub
      * @return AutoCompleteParser that should be used to complete the user input
      */
     private AutoCompleteParser chooseParser(String stub) {
