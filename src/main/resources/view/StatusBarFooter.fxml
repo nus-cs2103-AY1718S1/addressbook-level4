@@ -15,6 +15,7 @@
   <StatusBar fx:id="syncStatus" styleClass="anchor-pane" stylesheets="@DarkTheme.css" />
   <StatusBar fx:id="totalPersons" nodeOrientation="LEFT_TO_RIGHT" styleClass="anchor-pane" stylesheets="@DarkTheme.css" GridPane.columnIndex="1" />
    <StatusBar fx:id="saveLocationStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" stylesheets="@DarkTheme.css" GridPane.columnIndex="2" />
+    <StatusBar fx:id="staticClock" styleClass="anchor-pane" stylesheets="@DarkTheme.css" GridPane.columnIndex="2" />
    <rowConstraints>
       <RowConstraints />
    </rowConstraints>
