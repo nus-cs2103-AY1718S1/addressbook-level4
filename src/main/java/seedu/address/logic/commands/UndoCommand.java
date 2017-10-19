@@ -39,12 +39,18 @@ public class UndoCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
 
+        int occurence = 0;
         while (steps > 0) {
             if (!undoRedoStack.canUndo()) {
-                throw new CommandException(MESSAGE_FAILURE);
+                if (occurence == 0) {
+                    throw new CommandException(MESSAGE_FAILURE);
+                } else {
+                    return new CommandResult(MESSAGE_SUCCESS);
+                }
             }
             undoRedoStack.popUndo().undo();
             steps--;
+            occurence++;
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
