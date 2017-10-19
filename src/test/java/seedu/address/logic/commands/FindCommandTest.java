@@ -23,6 +23,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.StorageStub;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -77,7 +78,7 @@ public class FindCommandTest {
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 

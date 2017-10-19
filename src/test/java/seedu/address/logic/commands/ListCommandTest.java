@@ -12,6 +12,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.StorageStub;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -28,7 +29,7 @@ public class ListCommandTest {
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
     }
 
     @Test

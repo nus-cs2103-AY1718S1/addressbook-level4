@@ -10,6 +10,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.StorageStub;
 
 public class ClearCommandTest {
 
@@ -30,7 +31,7 @@ public class ClearCommandTest {
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 }
