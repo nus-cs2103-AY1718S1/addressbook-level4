@@ -413,7 +413,7 @@ The `FindTagCommand` allows the user to locate persons in the addressbook by the
 * Utilises a `TagContainsKeywordsPredicate` class that extends the `Predicate` class.
 ** Allows the `FindTag` feature to function with more than 1 keyword at a time easily.
 
-image::FindTagSequenceDiagram.png[width="800"]
+image::FindTagSequenceDiagram.png[width="1200"]
 
 ==== Design Considerations
 **Aspect:** Searching for tags  +
