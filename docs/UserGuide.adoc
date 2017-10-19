@@ -368,7 +368,7 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
-== Features to be included in V 2.0
+== Features to be included by V 2.0
 
 //[V1.3]
 * List of people who have cleared their debts.
