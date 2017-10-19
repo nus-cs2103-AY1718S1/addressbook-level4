@@ -14,6 +14,7 @@ public class GroupCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "group";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " [group name] [names to add to group]. Example: "
             + COMMAND_WORD + " Vietnam Grant Ali Joey";
+    public static final String MESSAGE_PARAMETERS = "[group name] [person names ...]";
 
     private final String groupName;
     private final List<String> names;
@@ -25,8 +26,8 @@ public class GroupCommand extends UndoableCommand {
 
     /**
      * This is just a stub for execute right now. Need to update the model component before it will work.
+     * Coming in v1.3
      */
-    @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         return null;
     }
