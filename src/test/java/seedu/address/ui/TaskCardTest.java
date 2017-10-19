@@ -43,9 +43,6 @@ public class TaskCardTest extends GuiUnitTest {
         // same object -> returns true
         assertTrue(taskCard.equals(taskCard));
 
-        // null -> returns false
-        assertFalse(taskCard.equals(null));
-
         // different types -> returns false
         assertFalse(taskCard.equals(0));
 
