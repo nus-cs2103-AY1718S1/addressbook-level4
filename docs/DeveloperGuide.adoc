@@ -504,7 +504,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the ModU.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
 +
 ****
 * Hints
@@ -559,7 +559,7 @@ image::getting-started-ui-result-after.png[width="200"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the ModU.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
 +
 **Before**
 +
@@ -572,10 +572,10 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the ModU is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the ModU.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the address book.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
@@ -585,7 +585,7 @@ image::getting-started-ui-status-after.png[width="500"]
 [TIP]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
 
-. Add a new method `backupModU(ReadOnlyAddressBook)`, so that the ModU can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
 +
 ****
 * Hint
