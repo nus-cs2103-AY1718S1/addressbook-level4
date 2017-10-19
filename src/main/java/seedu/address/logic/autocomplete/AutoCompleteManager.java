@@ -12,12 +12,14 @@ import seedu.address.logic.autocomplete.parser.IdentityParser;
  */
 public class AutoCompleteManager {
 
+    private final Model model;
     private final IdentityParser identity = new IdentityParser();
     private final AutoCompleteCommandParser commandParser = new AutoCompleteCommandParser();
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 
-    public AutoCompleteManager(int size) {
+    public AutoCompleteManager(Model model, int size) {
+        this.model = model;
         maxSize = size;
     }
 
@@ -59,6 +61,7 @@ public class AutoCompleteManager {
      * @return AutoCompleteParser that should be used to complete the user input
      */
     private AutoCompleteParser chooseParser(String stub) {
+        // empty input should parse back empty input as well
         if ("".equals(stub)) {
             return identity;
         }
@@ -67,10 +70,11 @@ public class AutoCompleteManager {
 
         if (numberOfWordsInStub == 1) {
             return commandParser;
+        } else {
+            // if the right parser can't be found, return an identity function parser
+            return identity;
         }
 
-        // if the right parser can't be found, return an identity function parser
-        return identity;
     }
 
 }

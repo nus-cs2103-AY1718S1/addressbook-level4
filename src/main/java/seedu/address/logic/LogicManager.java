@@ -37,7 +37,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
         this.autoCompletePossibilities = new AutoCompletePossibilities("", new IdentityParser());
-        this.autoCompleteManager = new AutoCompleteManager(AUTOCOMPLETE_CACHE_SIZE);
+        this.autoCompleteManager = new AutoCompleteManager(model, AUTOCOMPLETE_CACHE_SIZE);
     }
 
     @Override
