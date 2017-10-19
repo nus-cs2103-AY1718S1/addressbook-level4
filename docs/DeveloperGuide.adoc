@@ -356,6 +356,7 @@ Thirdly, Autocomplete also has a parser, like commands, and thus behaves like an
 Therefore Autocomplete seems to be best fit in Logic component.
 
 The following sequence diagram shows where autocomplete possibilities are evaluated, stored, and subsequently used to help the user with command line input:
+
 image::autocomplete.png[width="800"]
 
 AutocompleteCommandParser takes in an incomplete user command, match it with a list of command words currently supported in the application, and parses back the corresponding command skeleton for the user to fill in.
