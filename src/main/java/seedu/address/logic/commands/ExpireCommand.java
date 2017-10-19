@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRE;
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.person.ExpiryDate.MESSAGE_EXPIRY_DATE_CONSTRAINTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRE;
+//import static seedu.address.model.person.ExpiryDate.MESSAGE_EXPIRY_DATE_CONSTRAINTS;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.exceptions.CommandException;
+//import seedu.address.commons.exceptions.IllegalValueException;
+
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.person.ExpiryDate;
+import seedu.address.logic.commands.exceptions.CommandException;
+//import seedu.address.model.person.ExpiryDate;
 
 /**
  * Sets expiry date of a person in the address book.
@@ -28,33 +29,29 @@ public class ExpireCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Date string: %2$s";
 
     private final Index index;
-    private final ExpiryDate date;
+    private final String date;
 
-    public ExpireCommand(Index index, String date) throws IllegalValueException {
+    public ExpireCommand(Index index, String date) {
         requireNonNull(index);
         requireNonNull(date);
 
         this.index = index;
         // create ExpiryDate object
-        try {
-            this.date = new ExpiryDate(date);
-        } catch (IllegalValueException ive) {
-            throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
-        }
+        this.date = date;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), date.toString()));
+        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), date));
     }
 
     @Override
     public boolean equals(Object other) {
-        if(other == this) {
+        if (other == this) {
             return true;
         }
 
-        if(!(other instanceof ExpireCommand)) {
+        if (!(other instanceof ExpireCommand)) {
             return false;
         }
 

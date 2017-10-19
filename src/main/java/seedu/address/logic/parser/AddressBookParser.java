@@ -12,6 +12,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExpireCommand;
 import seedu.address.logic.commands.FilterGroupCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.GroupCommand;
@@ -22,7 +23,6 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.ExpireCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**

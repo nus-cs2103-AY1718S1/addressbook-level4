@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -50,7 +51,7 @@ public class ExpireCommandTest {
 
         // different dateString -> returns false
         assertFalse(standardCommand.equals(new ExpireCommand(INDEX_FIRST_PERSON, VALID_EXPIRE_BOB)));
-        }
+    }
 
     /**
      * Returns an {@code ExpireCommand} with parameters {@code index} and {@code dateString}
