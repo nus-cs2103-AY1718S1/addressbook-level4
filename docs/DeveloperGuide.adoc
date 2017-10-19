@@ -413,6 +413,23 @@ to choose any word to alias if they desire to do so. +
 **Cons:** The user is very restricted on what to alias and cannot have aliases for shortcut words.
 //  end::alias[]
 
+=== Enhanced Delete
+
+The enhanced delete feature allows for multiple indices to be accepted by the parser. This is done by splitting the inputs into multiple string tokens,
+each containing the index of the person to be deleted. A list is then used to store all the indices of the personsToDelete.
+This enhancement is then achieved by iterating through the list and deleting the desired persons using the ModelManager.
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the delete command will be +
+**Alternative 1 (current choice):** Indices are parsed into a list containing all the index of persons to be deleted. +
+A loop is then used to iterate through the list to delete the persons requested by the user. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2:** The indices are deleted one by one, without using a list.
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
+
 == Documentation
 
 We use asciidoc for writing documentation.
