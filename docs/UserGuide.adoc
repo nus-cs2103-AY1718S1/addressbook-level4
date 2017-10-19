@@ -14,7 +14,7 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
-== ModU
+== Introduction
 
 Welcome to ModU, a time slot booking system for professors and administrators in tertiary institutions. +
 ModU brings easy-to-use graphic user interface(GUI). With ModU, you can see time slots that are available.
