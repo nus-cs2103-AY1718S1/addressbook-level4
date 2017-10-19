@@ -22,11 +22,10 @@ public class AddAppointmentCommandTest {
     public void equals() throws ParseException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/08/08 10:10"));
-        Appointment appointment = new Appointment("asd", calendar);
-        AddAppointmentCommand command = new AddAppointmentCommand(appointment);
+        AddAppointmentCommand command = new AddAppointmentCommand("asd", calendar);
 
-        assertEquals(command, new AddAppointmentCommand(new Appointment("asd", calendar)));
-        assertNotEquals(command, new AddAppointmentCommand(new Appointment("das", calendar)));
+        assertEquals(command, new AddAppointmentCommand("asd", calendar));
+        assertNotEquals(command, new AddAppointmentCommand("das", calendar));
     }
 
     @Test
@@ -35,8 +34,7 @@ public class AddAppointmentCommandTest {
         Calendar calendar = Calendar.getInstance();
         //Invalid date (i.e date before current instance)
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2010/08/08 10:10"));
-        Appointment appointment = new Appointment("asd", calendar);
-        AddAppointmentCommand command = new AddAppointmentCommand(appointment);
+        AddAppointmentCommand command = new AddAppointmentCommand("asd", calendar);
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         command.setData(model);
         CommandResult result = command.execute();
@@ -46,8 +44,7 @@ public class AddAppointmentCommandTest {
 
         //Set to valid date
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2019/08/08 10:10"));
-        appointment = new Appointment("asd", calendar);
-        command = new AddAppointmentCommand(appointment);
+        command = new AddAppointmentCommand("asd", calendar);
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         command.setData(model);
         result = command.execute();
@@ -55,10 +52,10 @@ public class AddAppointmentCommandTest {
         //No such person
         assertEquals(result.feedbackToUser, AddAppointmentCommand.INVALID_PERSON);
 
-        appointment = new Appointment(TypicalPersons.ALICE.getName().toString(), calendar);
-        command = new AddAppointmentCommand(appointment);
+        command = new AddAppointmentCommand(TypicalPersons.ALICE.getName().toString(), calendar);
         command.setData(model);
         result = command.execute();
+        Appointment appointment = new Appointment(TypicalPersons.ALICE.getName().toString(), calendar);
 
         //Command success
         assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet " + appointment.toString());

@@ -38,8 +38,8 @@ public class AddAppointmentCommand extends Command {
         appointment = null;
     }
 
-    public AddAppointmentCommand(Appointment appointment) {
-        this.appointment = appointment;
+    public AddAppointmentCommand(String name, Calendar date) {
+        this.appointment = new Appointment(name, date);
     }
 
     @Override

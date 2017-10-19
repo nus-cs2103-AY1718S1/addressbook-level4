@@ -79,7 +79,7 @@ public class AddressBookParserTest {
                 .parseCommand("appointment n/asd d/2018/08/08 20:10");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/08/08 20:10"));
-        assertTrue(command.equals(new AddAppointmentCommand(new Appointment("asd", calendar))));
+        assertTrue(command.equals(new AddAppointmentCommand("asd", calendar)));
     }
 
     @Test

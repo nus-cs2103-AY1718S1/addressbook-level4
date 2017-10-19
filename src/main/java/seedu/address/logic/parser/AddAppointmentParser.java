@@ -45,8 +45,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             Date date = Appointment.DATE_FORMATTER.parse(argumentMultimap.getValue(PREFIX_DATE).get());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            Appointment appointment = new Appointment(name.toString(), calendar);
-            return new AddAppointmentCommand(appointment);
+            return new AddAppointmentCommand(name.toString(), calendar);
 
         } catch (IllegalValueException e) {
             throw new ParseException(e.getMessage(), e);
