@@ -384,6 +384,37 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Custom Field
+==== Model
+A UniqueCustomFieldList Class is created which will be used to store a person's Custom Fields.
+
+Each person can have multiple custom fields which are optional. Example of custom fields include nickname, favourite food, relatives etc.
+
+Each custom field of a person includes two variables: the custom field name and the custom field value.
+For example, nickname is a custom field name whereas Ahchuang is a custom field value. (i.e. Ahchuang is the nickname of the person)
+
+==== Logic
+A Command - CustomCommand - is used to manipulate the custom fields of a person. The CustomCommand is an undoable command.
+
+When a new CustomCommand is created, it will be constructed with 3 parameters: Index, String, String.
+The 3 parameters represents the index of the person in the AddressBook, a custom field name and a custom field value respectively.
+
+If the input custom field name of the person is not existed yet, the custom field with name and value as inputs will be created and added into the person's UniqueCustomFieldList.
+For example, command `custom 1 Nickname Ahchuang` will add a nickname custom field with value "Ahchuang" for the first person in the AddressBook if nickname field previously does not exist.
+Else if the input custom field name of the person has already existed and the input custom field value is not empty, the custom field value of that custom field for the person will be replaced with the input value.
+For example, command `custom 1 Nickname Jon` will change the nickname custom field of the first person from his previous nickname to "Jon".
+Else if the input custom field value is empty, the custom field of the person will be cleared.
+For example, command `custom 1 Nickname` will clear the nickname custom field of the first person in the AddressBook.
+
+==== Storage
+Xml file for Custom Field is created and the Xml for Person is updated for storing the information of the customs fields of every person.
+
+==== Ui
+A new label will be displaced for each person for each custom field.
+
+==== Sequence Diagram
+image::CustomCommandSequenceProgram.png[width="800"]
+
 === Search bar
 ==== Front end
 The search bar is implemented in the front end using `SearchBox.fxml`, which controls the text field that receives query keywords from user.
@@ -442,7 +473,6 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Alternative 2:** +
 **Pros:**   +
 **Cons:**
-
 
 == Documentation
 
