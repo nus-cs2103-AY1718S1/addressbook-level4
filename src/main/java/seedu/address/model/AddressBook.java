@@ -14,11 +14,13 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -128,7 +130,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
-
+    /**
+     * Sorts the list according to name
+     */
+    public void sortPerson(int type) throws InvalidSortTypeException {
+        persons.sortPersonList(type);
+    }
     /**
      * Ensures that every tag in this person:
      * - exists in the master list {@link #tags}
@@ -193,7 +200,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Also checks the new event's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the events to point to those in {@link #tags}.
      */
-    public void addEvent(ReadOnlyEvent e) {
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
         Event newEvent = new Event(e);
         // TODO: create a master list for tags and update it
         // syncMasterTagListWith(newEvent);
