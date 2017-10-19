@@ -100,8 +100,9 @@ public class ModelManager extends ComponentManager implements Model {
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      * @param tag all persons containing this tag will be deleted
      */
-    public void deletePersonsWithTag(Tag tag) {
+    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
         addressBook.deletePersonsWithTag(tag);
+        indicateAddressBookChanged();
     }
 
     /**
@@ -109,7 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @param tags all persons containing this tag will be deleted
      */
     @Override
-    public void deletePersonsByTags(Set<Tag> tags) {
+    public void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException {
         for (Tag tag : tags) {
             deletePersonsWithTag(tag);
         }
