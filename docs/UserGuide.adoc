@@ -41,10 +41,8 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 .  Make sure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [WARNING]
-====
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
-====
 +
 .  You can download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -78,9 +76,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 |=======================================================================
 
 [NOTE]
-====
 Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
 
 === Viewing help : `help`
 You can use the `help` command to access the User Guide from MedNus. +
