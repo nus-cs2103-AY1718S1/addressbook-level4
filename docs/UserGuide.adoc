@@ -330,19 +330,36 @@ Format: `unsync`
 
 == Facebook Integration [Coming in v2.0]:
 
-=== Connecting to Facebook: `connectfacebook`
+=== Connecting to Facebook: `facebook connect`
 
-Synchronizes your AddressBook with your personal Facebook account. +
-Format: `connectfacebook`
+To synchronize your AddressBook with your personal Facebook account. +
+Format: `facebook connect`
 
 ****
 * Launches a Facebook authorization page in the browser
+* Key in your credentials
 ****
 
-=== Adding all Facebook Friends: `addallfacebookfriends`
+=== Posting to Facebook: `facebook post`
 
-Adds all your Facebook friends into your AddressBook. +
-Format: `addallfacebookfriends`
+To post a status to your Facebook account. +
+Format: `facebook post STATUS`
+
+****
+* First you need to ensure your account is recognised by Facebook developers account
+* Checks if account has been authenticated
+* Posts to Facebook
+****
+
+Examples:
+
+* `facebook post helloworld` +
+posts 'helloworld' to Facebook account
+
+=== Adding all Facebook Friends: `facebook addallfriends`
+
+To add all your Facebook friends into your AddressBook. +
+Format: `facebook addallfriends`
 
 ****
 * First ensures that Facebook has already been connected
@@ -350,10 +367,10 @@ Format: `addallfacebookfriends`
 ****
 
 
-=== Adding a Facebook contact: `addfacebookcontact`
+=== Adding a Facebook contact: `facebook addcontact`
 
-Searches for a specific Facebook User to add to AddressBook. +
-Format: `addfacebookcontact USER_NAME`
+To search for a specific Facebook User and add that User to AddressBook. +
+Format: `facebook addcontact USER_NAME`
 
 ****
 * First ensures that Facebook has already been connected
@@ -364,7 +381,7 @@ Format: `addfacebookcontact USER_NAME`
 
 Examples:
 
-* `addfacebookcontact Barack Obama` +
+* `facebook addcontact Barack Obama` +
 adds Facebook User named 'Barack Obama' to AddressBook
 
 == FAQ
