@@ -218,6 +218,14 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== FindTag mechanism
+
+The FindTag mechanism is facilitated by the `FindTagCommand` class which inherits from `Command` class. It allows the user to find persons using tags. User can search using multiple tags too.
+
+Suppose the user has just executed the `FindTagCommand` using `findtag friends`.
+
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTagCommand` feature is being evoked and calls the `FindTagCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and return as a `TagContainsKeywordsPredicate` object to be used to call the `FindTagCommand` class. The `LogicManager` then calls the `execute()` in the `FindTagCommand` class which creates and return a `CommandResult` object.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
