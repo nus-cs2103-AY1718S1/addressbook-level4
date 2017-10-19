@@ -124,8 +124,78 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             commandTextField.positionCaret(commandTextField.getText().length());
             break;
+        case DELETE:
+        case BACK_SPACE:
+            keyEvent.consume();
+            deleteByChunk();
+            break;
         default:
         }
+    }
+
+    /**
+     * Deletes the word or a chunk of blank spaces on the left.
+     * Does not matter if caret is at end of text or between lines. Method will automatically
+     * detect and execute.
+     * 1. If Caret is at far left, break;
+     * 2. If Caret is at far right, check if left side is blank or word and execute appropriately
+     * 3. If " " is present on the left of Caret, delete all blank spaces before
+     * 4. If Caret is between word, execute normal delete method
+     * 5. If Character is on the left and " " is on the right, delete chunk on left
+     */
+    private void deleteByChunk() {
+        int originalCaretPosition = commandTextField.getCaretPosition();
+        int newCaretPosition = commandTextField.getCaretPosition();
+        int mostRight = commandTextField.getText().length();
+        if (newCaretPosition == 0) {
+            return;
+        } else if (newCaretPosition == mostRight) {
+            newCaretPosition = farRightDeleteChunk(newCaretPosition);
+        } else if (isEmptyBefore(newCaretPosition)) {
+            newCaretPosition = shiftLeftIgnoringSpaces(newCaretPosition);
+        } else if (!isEmptyBefore(newCaretPosition) && !isEmptyAfter(newCaretPosition)) {
+            newCaretPosition -= 1;
+        } else {
+            newCaretPosition = shiftLeftIgnoringWords(newCaretPosition);
+        }
+        setNewWord(newCaretPosition, originalCaretPosition);
+        commandTextField.positionCaret(newCaretPosition);
+    }
+
+    /**
+     * Deletes chunk in the situation where caret is at the far right
+     */
+    private int farRightDeleteChunk(int newCaretPosition) {
+        if (isEmptyBefore(newCaretPosition)) {
+            return shiftLeftIgnoringSpaces(newCaretPosition);
+        } else {
+            return shiftLeftIgnoringWords(newCaretPosition);
+        }
+    }
+
+
+    /**
+     * Forms a new word with all string elements between the two parameters removed
+     */
+    private void setNewWord(int newCaretPosition, int originalCaretPosition) {
+        String before = commandTextField.getText().substring(0, newCaretPosition);
+        String answer;
+        if (atEitherEnds(originalCaretPosition)) {
+            answer = before;
+        } else {
+            String after = commandTextField.getText().substring(originalCaretPosition);
+            answer = before + after;
+        }
+        commandTextField.setText(answer);
+    }
+
+    /**
+     * Checks if caret is at either ends
+     */
+    private boolean atEitherEnds(int originalCaretPosition) {
+        boolean atFarLeft = (originalCaretPosition == 0);
+        boolean atFarRight = (originalCaretPosition == commandTextField.getText().length());
+        return atFarLeft || atFarRight;
     }
 
     /**
