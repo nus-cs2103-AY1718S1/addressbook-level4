@@ -48,8 +48,6 @@ public class BorrowCommand extends UndoableCommand {
             model.addDebtToPerson(personThatBorrowed, amount);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
-        } catch (IllegalValueException ive) {
-            throw new CommandException(Debt.MESSAGE_DEBT_CONSTRAINTS);
         }
 
         return new CommandResult(String.format(MESSAGE_BORROW_SUCCESS, personThatBorrowed.getName(), amount));
