@@ -360,6 +360,99 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== Find by Person Details
+
+Unify offers users the option to find people by their details. For example, `find a/NUS t/tutor` searches for person whose `Address` contains `NUS`
+*and* has the Tag `tutor`. This is achieved by setting a `Predicate` on the `filteredPersons` in `Model` by calling `ModelManager#updateFilteredPersonList()`.
+
+To implement the new command syntax, `FindCommandParser` makes use of the `ArgumentTokenizer#tokenize` to generate an `ArgumentMultimap`. The `ArgumentMultimap's`
+`key` contains the detail's prefix and `value` contains the keywords that succeed that prefix.
+
+For each detail, there are specific `Predicates` that are defined. They are `AddressContainsKeywordPredicate`, `EmailContainsKeywordPredicate`,
+`NameContainsKeywordPredicate`, `PhoneContainsKeywordPredicate` and `TagsContainKeywordPredicate`. The implementation is as follows:
+[source,java]
+----
+public class DetailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> {
+
+    private final String keyword;
+
+    public DetailContainsKeywordPredicate(String keyword) {
+        this.keyword = keyword; //this is the keyword parsed from FindCommandParser
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        String detail = person.getDetail(); //getter for person's specific detail
+
+        //we convert detail to lowercase and check if it contains the lower case keyword
+        return detail.toLowerCase().contains(keyword.toLowerCase());
+    }
+
+}
+
+----
+[NOTE]
+For Tags, we test for all tags and check for at least one `String#contains` match.
+
+However, just by having a specific `Predicate` for each detail is insufficient. `ModelManager#updateFilteredPersonList()` and the underlying
+link:https://docs.oracle.com/javase/8/javafx/api/javafx/collections/transformation/FilteredList.html[`FilteredList`]
+representing the list of people only takes in one `Predicate` as an argument. As such, to accept multiple details in one query, we need to encapsulate multiple
+`Predicates` into one `Predicate`. This is encapsulated by `PersonContainsFieldsPredicate` which takes in a list of `Predicates` as an argument.
+Internally, the `Predicates` are stored in a `HashSet`.
+
+[source,java]
+----
+public class PersonContainsFieldsPredicate implements Predicate<ReadOnlyPerson> {
+    private final Set<Predicate> predicates;
+
+    public PersonContainsFieldsPredicate(List<Predicate> predicates) {
+        this.predicates = predicates.stream().collect(Collectors.toSet()); //Collects in a HashSet
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        for (Predicate searchQuery : predicates) {
+            if (!searchQuery.test(person)) {
+                return false;
+            }
+        }
+        return true;
+    }
+----
+
+For `PersonContainsFieldsPredicate#test` we iterate through all `Predicates` and return `false` if any of their `#test` calls return false. Thus this `Predicate` will check for all matches before return `true` (ie an *AND* find).
+Consider a `PersonContainsFieldsPredicate p` with `NameContainsKeywordPredicate n`, `AddressContainsKeywordPredicate a` and a `ReadOnlyPerson rop`. `rop's` `Name` contains keyword found in `n` but `Address` does not contain the keyword found in `a`.
+The following sequence diagram shows `p` being tested on `rop`.
+
+image::PersonContainsFieldsPredicate.png[width="800"]
+
+We can pass this `PersonContainsFieldsPredicate` into `ModelManager#updateFilteredPersonList()` which updates `FilteredList` the with the new `Predicate` which updates
+the list to suit the parameters of the find query.
+
+==== Design Considerations
+
+**Aspect:** Storing of `Predicates` in `PersonContainsFieldsPredicate` +
+**Alternative 1 (current choice):** Store in a `HashSet` +
+**Pros:** We can filter out duplicate `Predicates`. `equals()` implementation is cleaner. +
+**Cons:** Must override `hashCode()` for new `Predicate`. Constructor must iterate through list to create `Set`. +
+**Alternative 2:** Store in a `List` +
+**Pros:** Do not need to override `hashCode()` for new `Predicate`. Constructor only needs to assign constructor arguments. +
+**Cons:** `equals()` results in O(n^2^) execution. Also results in 2 nested `for` loops. +
+
+---
+
+**Aspect:** Encapsulation of multiple `Predicates` +
+**Alternative 1 (current choice):** Create different `Predicates` and wrap them in one `Predicate` +
+**Pros:** Modular code: we can easily implement an *OR* find by creating a new wrapper `Predicate` and reusing the existing `Predicates`. `PersonContainsFieldsPredicate`
+does not have to be aware of new `Predicates` +
+**Cons:** Every new field in `ReadOnlyPerson` requires a new `Predicate` +
+**Alternative 2:** Create one `Predicate` that implements test by switch statements +
+**Pros:** A new field can be added by adding an additional case to the switch statement +
+**Cons:** Implementing *OR* find will require the reuse of switch statements in a new `Predicate`. When creating a new `Predicate`, all the switch
+ statements must be updated. +
+
+---
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
