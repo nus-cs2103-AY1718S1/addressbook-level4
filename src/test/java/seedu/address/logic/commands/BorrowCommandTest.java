@@ -18,6 +18,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author jelneo
 /**
@@ -37,25 +38,22 @@ public class BorrowCommandTest {
     public void execute_successfulBorrowing() {
         Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoBorrowed = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
+        String expectedMessage = String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
+                personWhoBorrowed.getName().toString(), VALID_DEBT_FIGURE);
         try {
-            Debt debtAmount = new Debt(VALID_DEBT_FIGURE);
-            Debt expectedDebt = personWhoBorrowed.getDebt();
-            expectedDebt.addToDebt(debtAmount);
-
-            String expectedMessage = String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
-                    personWhoBorrowed.getName().toString(), debtAmount);
-            BorrowCommand borrowCommand = new BorrowCommand(firstPerson, debtAmount);
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
 
-            borrowCommand.setData(expectedModel, new CommandHistory(), new UndoRedoStack());
+            BorrowCommand borrowCommand = new BorrowCommand(firstPerson, new Debt(VALID_DEBT_FIGURE));
+            borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
             assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
+        } catch (PersonNotFoundException pnfe) {
+            pnfe.printStackTrace();
         }
     }
-
-
 
     @Test
     public void execute_unsuccessfulBorrowing() throws IllegalValueException {

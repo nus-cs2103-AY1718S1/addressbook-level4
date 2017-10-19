@@ -1,4 +1,4 @@
-= Codii - User Guide
+﻿= Codii - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -133,6 +133,23 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Increasing the debt of a person: `borrow`
+
+Increase the debt of a person by the amount entered. +
+Format: `borrow INDEX AMOUNT`
+
+****
+* Increases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
+****
+
+Examples:
+
+* `borrow 1 500` +
+Increases the debt of the 1st person by $500.
+* `borrow 2 1000.10` +
+Increases the debt of the 2nd person by $1000.10.
 
 === Deleting a person : `delete`
 
@@ -349,6 +366,8 @@ e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
+* *Borrow* : `borrow INDEX AMOUNT` +
+e.g. `borrow 1 500.50`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
@@ -365,8 +384,37 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Nearby* : `nearby`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Current features
+
+* `Add` a person (since v1.0)
+* `Delete` a person (since v1.0)
+* Have a help screen with detailed instructions (since v1.0)
+* Add tags to contacts (since v1.0)
+* `Edit` contacts (since v1.0)
+* `Find` contacts by name (since v1.0)
+* Automatic backup storage (since v1.0)
+* `Debt` field (since v1.0)
+* Prevent duplicate contacts (since v1.0)
+
+* `Login` command (since v1.1)
+* Password masking (since v1.1)
+* `Postal code` field (since v1.1)
+* `Deadline` field (since v1.1)
+* `Date borrowed` field (since v1.1)
+* `Blacklist` (since v1.1)
+* Full info panel (since v1.1)
+* `Ban` and `Unban` a person (since v1.1)
+
+* `Nearby` command (since v1.2)
+* Grouping of contacts (since v1.2)
+* Display nearby contacts (since v1.2)
+* `Borrow` command (since v1.2)
+* Display nearby contacts (since v1.2)
+* Interest field (since v1.2)
 
 == Features to be included by `V2.0`
 
