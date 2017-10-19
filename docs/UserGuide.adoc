@@ -228,6 +228,23 @@ Example:
 `comment 2 c/Likes to play computer games.` +
 Selects the 2nd person in the address book and adds the above comment. 
 
+=== Making Appointment for a person : `appoint`
+
+Adds an appointment time slot for a specific user. +
+Format: `appoint INDEX [ap/APPOINT]`
+
+****
+* Makes an appointment for the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Example:
+
+* `list` +
+`appoint 2 ap/20/10/2017 14:45` +
+Selects the 2nd person in the address book and assigns the above appointment slot. 
+
 === Login using Gmail or Yahoo Account: `email_login`
 
 Logs in with a Gmail or Yahoo account to allow sending emails +
@@ -367,6 +384,10 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Comment* : `comment INDEX [c/COMMENT]` +
+e.g. `comment 4 c/Likes to code`
+* *Appoint* : `appoint INDEX [c/APPOINTMENT]` +
+e.g. `appoint 2 ap/20/10/2017 14:30`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

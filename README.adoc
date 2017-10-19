@@ -14,7 +14,7 @@ endif::[]
 * This application specifically targets tutors and businessmen who have numberous contacts, as well as important informations that go along with each of them. As such, *AddressBook* has these following features (not exhaustive):
     ** Importing multiple contacts from a file.
     ** Exporting contacts to a file for printing.
-    ** Attach an image and remarks or tags to a contact.
+    ** Attach an image and appoints or tags to a contact.
     ** Blasting emails to a group of contacts for faster information dissemination.
     ** *And a lot more* :)
 

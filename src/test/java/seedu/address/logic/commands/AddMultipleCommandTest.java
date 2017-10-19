@@ -159,11 +159,6 @@ public class AddMultipleCommandTest {
         }
 
         @Override
-        public void updateFilteredListToShowAll() {
-
-        }
-
-        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
@@ -172,11 +167,7 @@ public class AddMultipleCommandTest {
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
-        
-        @Override
-        public void updateFilteredListToShowAll() {
-            fail("This method should not be called.");
-        }
+
     }
 
     /**
