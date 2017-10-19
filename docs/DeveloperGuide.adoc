@@ -345,6 +345,36 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::eventcrud[]
+=== Events CRUD Mechanism
+The events CRUD (Create, Read, Update, Delete) mechanism is very similar to the persons CRUD system.  Four commands `AddEventCommand`, `FindEventCommand`, `DeleteEventCommand`, `EditEventCommand` are used to execute their respective functions through the `LogicManager`. +
+
+Commands are first read from `CommandBox` which then calls upon the `LogicManager` to detect the type of command. `LogicManager` then creates a `AddressBookParser` which uses `CheckCommandsParser` to detect any synonymous alternatives for their respective commands and returns the specific command type if available. +
+
+The specific command type is passed through its specific parser along with its arguments (E.g. `AddEventCommand` is parsed via `AddEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g. `AddEventCommandParser` returns `AddEventCommand` with the `Event` to be be added once executed). +
+
+`LogicManager` proceeds to exectute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
+
+Once this is complete, an update is sent to the the `filteredEventList` which updates the `UI` Component. +
+
+Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` to indicate a change into so that `XmlAddressBookStorage` can begin saving the new information. It calls on `XmlSerializableAddressBook` to serialize the new event information and saves it to the data file via `XmlFileStorage`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Storage +
+**Alternative 1 (current choice):** Saving to a single data file shared with Person Data +
+**Pros:** We do not need a separate data file to save event information. Additionally, reading data is only done once. +
+**Cons:** Not very modular and intuitive. +
+**Alternative 2:** Create new data file to record events. +
+**Pros:** Modular and intuitive to new developers. Manual additions to the data file will also be easier. +
+**Cons:** Separate files are harder to manage.
+
+---
+
+
+
+// end::eventcrud[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
