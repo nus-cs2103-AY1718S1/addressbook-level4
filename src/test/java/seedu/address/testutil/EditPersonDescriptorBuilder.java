@@ -64,7 +64,7 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         try {
-            ParserUtil.parseEmail(Optional.of(email)).ifPresent(descriptor::setEmail);
+            descriptor.setEmail(ParserUtil.parseEmail(Arrays.asList(email)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }

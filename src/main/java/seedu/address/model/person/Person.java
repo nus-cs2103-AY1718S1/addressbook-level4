@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
-    private ObjectProperty<Email> email;
+    private ObjectProperty<ArrayList<Email>> emails;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
 
@@ -28,11 +29,11 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, ArrayList<Email> email, Address address, Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
+        this.emails = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
@@ -75,18 +76,18 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+    public void setEmail(ArrayList<Email> email) {
+        this.emails.set(requireNonNull(email));
     }
 
     @Override
-    public ObjectProperty<Email> emailProperty() {
-        return email;
+    public ObjectProperty<ArrayList<Email>> emailProperty() {
+        return emails;
     }
 
     @Override
-    public Email getEmail() {
-        return email.get();
+    public ArrayList<Email> getEmail() {
+        return emails.get();
     }
 
     public void setAddress(Address address) {
@@ -147,7 +148,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, emails, address, tags);
     }
 
     @Override

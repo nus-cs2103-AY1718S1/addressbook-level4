@@ -7,11 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,6 +31,7 @@ public class ParserUtilTest {
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_EMAIL_2 = "nicole@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -147,20 +144,22 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
+        ParserUtil.parseEmail(null);
     }
 
     @Test
     public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+        assertFalse(ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
     }
 
     @Test
     public void parseEmail_validValue_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
+        ArrayList<Email> expectedEmail = new ArrayList();
+        expectedEmail.add(new Email(VALID_EMAIL));
+        expectedEmail.add(new Email(VALID_EMAIL_2));
+        ArrayList<Email> actualEmail = ParserUtil.parseEmail(Arrays.asList(VALID_EMAIL, VALID_EMAIL_2));
 
-        assertEquals(expectedEmail, actualEmail.get());
+        assertEquals(expectedEmail, actualEmail);
     }
 
     @Test

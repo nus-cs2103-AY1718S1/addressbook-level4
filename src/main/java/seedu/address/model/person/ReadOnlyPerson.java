@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -16,8 +17,8 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
-    ObjectProperty<Email> emailProperty();
-    Email getEmail();
+    ObjectProperty<ArrayList<Email>> emailProperty();
+    ArrayList<Email> getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
     ObjectProperty<Remark> remarkProperty();

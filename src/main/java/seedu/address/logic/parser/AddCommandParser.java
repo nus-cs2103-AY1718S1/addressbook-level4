@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -43,7 +44,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            ArrayList<Email> email = ParserUtil.parseEmail(argMultimap.getAllValues(PREFIX_EMAIL));
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Remark remark = new Remark(""); // Add command does not allow adding remarks right away
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
@@ -51,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             ReadOnlyPerson person = new Person(name, phone, email, address, remark, tagList);
 
             return new AddCommand(person);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException ive) {    
             throw new ParseException(ive.getMessage(), ive);
         }
     }
