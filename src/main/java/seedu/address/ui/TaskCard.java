@@ -52,7 +52,7 @@ public class TaskCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof TaskCard)) {
             return false;
         }
 
