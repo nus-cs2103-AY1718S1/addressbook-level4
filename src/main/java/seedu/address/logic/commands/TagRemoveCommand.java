@@ -102,8 +102,7 @@ public class TagRemoveCommand extends UndoableCommand {
                 if (i != index.size() - 1) {
                     editedPersonDisplay.append("\n");
                 }
-            }
-            else {
+            } else {
                 tagNotFoundPerson++;
             }
         }
@@ -129,8 +128,8 @@ public class TagRemoveCommand extends UndoableCommand {
      */
     public boolean containsTag(List<Tag> tagList) {
         Set<Tag> tagsToRemove = tagRemoveDescriptor.getTags();
-        for (Tag tagToRemove: tagsToRemove){
-            for (Tag current : tagList){
+        for (Tag tagToRemove: tagsToRemove) {
+            for (Tag current : tagList) {
                 if (tagToRemove.tagName.equalsIgnoreCase(current.tagName)) {
                     return true;
                 }

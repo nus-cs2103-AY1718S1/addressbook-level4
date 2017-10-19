@@ -18,8 +18,8 @@ public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> tagList = person.getTags();
-        for(Tag tag : tagList){
-            if(tag.tagName.equalsIgnoreCase(keyword)){
+        for (Tag tag : tagList) {
+            if (tag.tagName.equalsIgnoreCase(keyword)) {
                 return true;
             }
         }
