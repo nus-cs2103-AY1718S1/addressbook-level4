@@ -53,4 +53,25 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    default String getSearchText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getEmail().getUserName())
+                .append(" ")
+                .append(getEmail().getDomainName());
+        for (Tag tag: getTags()) {
+            builder.append(" ")
+                .append(tag.tagName);
+        }
+
+        return builder.toString();
+    }
+
 }

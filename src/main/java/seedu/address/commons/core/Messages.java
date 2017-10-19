@@ -12,5 +12,8 @@ public class Messages {
             + "ascending order";
     public static final String MESSAGE_REPEATED_INDEXES = "Repeated person indexes are found";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String[] MESSAGE_AUTOCOMPLETE_LIST = {"add", "clear", "delete", "exit", "find", "help",
+        "undo", "redo", "pin", "unpin", "sort", "edit", "history", "list", "select", "sort name", "sort phone",
+        "sort email"};
 
 }
