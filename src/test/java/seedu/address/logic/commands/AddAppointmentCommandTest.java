@@ -23,7 +23,6 @@ public class AddAppointmentCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void equals() throws ParseException {
@@ -60,7 +59,7 @@ public class AddAppointmentCommandTest {
 
         //Out of bounds index
         thrown.expect(CommandException.class);
-        result = command.execute();
+        command.execute();
 
 
 

@@ -316,9 +316,9 @@ Color name input can be in english or hexadecimal form.
 
 === Set appointment: `appointment`
 
-You can set an appointment to a specific contact. +
-*Format:* `appointment n/NAME d/YYYY/MM/DD HH:MM` +
-*Shorthand format:* `apt n/NAME d/YYYY/MM/DD HH:MM`
+You can set an appointment to a specific contact at a given index. +
+*Format:* `appointment INDEX d/YYYY/MM/DD HH:MM` +
+*Shorthand format:* `apt INDEX d/YYYY/MM/DD HH:MM`
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
