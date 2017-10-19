@@ -18,7 +18,7 @@ public class UpdateUserCommand extends Command {
     public static final String COMMAND_ALIAS = "up";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits your user details in a similar "
-            + "format to the ADD command"
+            + "format to the ADD command. Cannot edit tags."
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
@@ -29,8 +29,9 @@ public class UpdateUserCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
+    public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";
+    public static final String MESSAGE_TAGS_NOT_ALLOWED = "Unable to edit your own tags";
 
 
     private final EditPersonDescriptor editPersonDescriptor;
@@ -38,6 +39,10 @@ public class UpdateUserCommand extends Command {
     public UpdateUserCommand (EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(editPersonDescriptor);
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+    }
+
+    public EditPersonDescriptor getEditPersonDescriptor() {
+        return editPersonDescriptor;
     }
 
     @Override
@@ -59,12 +64,12 @@ public class UpdateUserCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof UpdateUserCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
-        return editPersonDescriptor.equals(e.getEditPersonDescriptor());
+        UpdateUserCommand updateUserCommand = (UpdateUserCommand) other;
+        return editPersonDescriptor.equals(updateUserCommand.getEditPersonDescriptor());
     }
 }
