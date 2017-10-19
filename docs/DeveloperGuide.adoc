@@ -352,11 +352,11 @@ The sort mechanism is facilitated by an `Event`. When a sort command is executed
 
 The following sequence diagram shows how the sort operation works:
 
-image:: SortCommandSequenceDiagram.png[width="800"]
+image::SortCommandSequenceDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `Sort Command` when a user executes the command:
 
-image:: SortCommandActivityDiagram.png[width="800"]
+image::SortCommandActivityDiagram.png[width="800"]
 
 ==== Design Considerations
 
