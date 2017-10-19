@@ -362,19 +362,6 @@ image::RemarkModelDiagram[width="200"]
 **Alternative 2:** Add in remarks together with the rest of the detail such as address, phone, email, etc +
 **Pros:** Easy to implement(Don't need to create a new command class, just modify existing add command) +
 **Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
-
----
-
-**Aspect:** How remark command deletes existing remarks +
-**Alternative 1 (current choice):** Overwrite existing remarks with a blank remark, eg. remark 1 r/  +
-**Pros:** No new methods needs to be created which simplifies the implementation and reduces possibility of bugs. +
-**Cons:** Less intuitive than having a distinct command than signifies deletion of remark +
-**Alternative 2:** Extend remark command to delete actual remark data in storage +
-**Pros:** More intuitive for the user. +
-**Cons:** New methods and testing has to be done which can lead to unnecessary bugs +
-
----
-
 // end::RemarkCommand[]
 
 === Logging
