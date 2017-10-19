@@ -460,6 +460,47 @@ public class BrowserPanel extends UiPart<Region> {
 By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
 `PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
 
+//tag::FindCommand[]
+=== FindCommand by any searched field
+
+
+The find function will support the search of contact by any keywords. The keywords must be a full word match. The command will inherit from `FindCommand` .The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
+`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input.
+
+
+[source,java]
+----
+public class FindCommandParser implements Parser<FindCommand> {
+    public FindCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+    //...Check for allocation of Predicate...
+    }
+}
+
+----
+
+
+Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
+[source,java]
+----
+        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TAG)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+----
+
+
+A successful tokenism of lead to the keywords to be allocated to its `containsKeyWordPredicate` under `Model` based on the input prefix.Addressbook will search for the keywords in the revelvant parameters.
+Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using` FindCommand` .
+
+image::FindCommand_Name.PNG[width="200"]
+image::FindCommand_Phone.PNG[width="200"]
+image::FindCommand_Email.PNG[width="200"]
+image::FindCommand_Address.PNG[width="200"]
+image::FindCommand_Tag.PNG[width="200"]
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
