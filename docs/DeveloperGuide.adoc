@@ -516,7 +516,7 @@ command and calls the suitable method to achieve it. Since this enhancement is n
 in other components, new methods have to be created.
 
 [NOTE]
-Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the 
+Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
 SortCommand and SortCommandParser operates.
 
 == Documentation
