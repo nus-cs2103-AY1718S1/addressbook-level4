@@ -25,21 +25,12 @@
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
   </MenuBar>
-   <SplitPane dividerPositions="0.5" prefHeight="38.0" prefWidth="692.0">
+   <SplitPane id="splitPane" dividerPositions="0.5" prefHeight="38.0" prefWidth="692.0">
       <items>
-         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="112.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
-            <children>
-               <ImageView fitHeight="112.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
-                  <image>
-                     <Image url="@../images/logo.png" />
-                  </image>
-               </ImageView>
-            </children>
-         </StackPane>
          <VBox prefHeight="200.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
             <children>
             
-              <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+              <StackPane fx:id="commandBoxPlaceholder" maxHeight="40.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="452.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
                 <padding>
                   <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                 </padding>
@@ -51,10 +42,16 @@
                 </padding>
               </StackPane>
             </children>
-            <padding>
-               <Insets right="100.0" />
-            </padding>
          </VBox>
+         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="112.0" prefWidth="128.0" SplitPane.resizableWithParent="false">
+            <children>
+               <ImageView fitHeight="112.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                  <image>
+                     <Image url="@../images/logo.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </StackPane>
       </items>
    </SplitPane>
 
