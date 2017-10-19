@@ -224,7 +224,7 @@ Creates an alias shortcut that translates ph into Public Holiday every time it i
 === Removes an alias for command or shortcut : `Unalias`
 
 Removes an existing alias based on given keyword and representation +
-Format: `Unalias k/KEYWORD`
+Format: `unalias k/KEYWORD`
 
 ****
 * Removes an existing alias that has been made with the same keyword.
@@ -233,22 +233,22 @@ Format: `Unalias k/KEYWORD`
 
 Examples:
 
-* `Unalias k/disappear` +
+* `unalias k/disappear` +
 Removes the alias command 'disappear'. Next instances of disappear will no longer be a hide command.
-* `Unalias k/ph` +
+* `unalias k/ph` +
 Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
 // end::unalias[]
 
 === Deleting person(s) : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [MORE_INDEX]`
 
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *can be a positive integer* 1, 2, 3, ...
-* The index *can be multiple integers with a space in between* 1 2 3 ...
+* The index *must be a positive integer* 1, 2, 3, ...
+* The index *can be multiple positive integers with a space in between* 1 2 3 ...
 ****
 
 Examples:
@@ -368,7 +368,7 @@ e.g. `add` `n/James Ho` `p/22224444` `e/jamesho@example.com` `a/123, Clementi Rd
 * *Clear* : `clear`
 * *Delete* : `delete` `INDEX` +
 e.g. `delete` `3`
-* *Multi-Delete* : `delete` `INDEX` `INDEX` .. +
+* *Multi-Delete* : `delete` `INDEX` `[MORE_INDEX]` +
 e.g. `delete` `4` `7`
 * *Edit* : `edit` `INDEX` `[n/NAME]` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` ... +
 e.g. `edit` `2` `n/James Lee` `e/jameslee@example.com`
@@ -386,8 +386,21 @@ e.g. `sort` `NAME`
 * *Hide* : `hide` `INDEX` +
 e.g.`hide` `1`
 * *Alias* : `alias k/KEYWORD s/REPRESENTATION`
-* *Unalias : `alias k/KEYWORD`
+* *Unalias* : `alias k/KEYWORD`
+
+== Since v1.2
+
+. Enhanced find to allow you to search using any of the person's detail
+. Hide feature to enable you to hide sensitive contacts from your child
+. Multi-delete feature which helps you to delete multiple contacts effortlessly
+. Alias and Unalias feature which allows you to set custom keywords for any commands
 
 == Coming in v2.0
 
 . Quickstart tutorial for first time users of Bluebird
+. Birthday reminders of selected/all contacts
+. Integration with social media for connecting with your contacts
+. Calender to help you manage your schedule
+. A to-do list which helps manage your tasks
+. Child Mode to prevent your child from modifying vital information in Bluebird
+. Parent Mode which will enable all commands for you
