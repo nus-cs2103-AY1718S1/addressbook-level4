@@ -840,12 +840,9 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The searched person is not in the AddressBook.
+* 1a. The searched person is not in the AddressBook.
 +
-[none]
-** 2a1. Steps 1-2 are repeated as long as the person is not found.
-+
-Use case resumes from step 3.
+Use case ends.
 
 === Use case: List people with a specific tag
 
@@ -859,10 +856,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The person types the tag incorrectly and no contacts are found.
-+
-[none]
-** 2a1. Steps 1-2 are repeated as long as the tag is typed incorrectly.
+* 1a. No contacts are found.
 +
 Use case ends.
 

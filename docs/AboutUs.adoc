@@ -39,9 +39,3 @@ Role: Developer +
 Responsibilities: In charge of model and storage
 
 '''
-
-=== Damith C. Rajapakse
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]]
-
-Role: Project Advisor
