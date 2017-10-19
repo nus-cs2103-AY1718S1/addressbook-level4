@@ -12,6 +12,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -27,6 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_FORMCLASS = "6E1";
     public static final String DEFAULT_GRADES = "123.0";
     public static final String DEFAULT_POSTALCODE = "123456";
+    public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -40,9 +42,10 @@ public class PersonBuilder {
             FormClass defaultFormClass = new FormClass(DEFAULT_FORMCLASS);
             Grades defaultGrades = new Grades(DEFAULT_GRADES);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTALCODE);
+            Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultFormClass,
-                    defaultGrades, defaultPostalCode, defaultTags);
+                    defaultGrades, defaultPostalCode, defaultRemark, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -148,6 +151,15 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+
+        this.person.setRemark(new Remark(remark));
         return this;
     }
 

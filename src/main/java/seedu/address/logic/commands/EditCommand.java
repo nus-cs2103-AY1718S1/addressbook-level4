@@ -28,6 +28,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -113,10 +114,10 @@ public class EditCommand extends UndoableCommand {
         FormClass updatedFormClass = editPersonDescriptor.getFormClass().orElse(personToEdit.getFormClass());
         Grades updatedGrades = editPersonDescriptor.getGrades().orElse(personToEdit.getGrades());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
+        Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks;
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFormClass, updatedGrades,
-                updatedPostalCode, updatedTags);
+                 updatedPostalCode, updatedRemark, updatedTags);
     }
 
     @Override

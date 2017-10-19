@@ -25,14 +25,16 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<FormClass> formClass;
     private ObjectProperty<Grades> grades;
     private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
+
     public Person(Name name, Phone phone, Email email, Address address, FormClass formClass, Grades grades,
-                  PostalCode postalCode, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, formClass, postalCode, tags);
+                  PostalCode postalCode, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, formClass, postalCode, remark, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -40,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.formClass = new SimpleObjectProperty<>(formClass);
         this.grades = new SimpleObjectProperty<>(grades);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
+        this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -49,7 +52,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFormClass(),
-                source.getGrades(), source.getPostalCode(), source.getTags());
+                source.getGrades(), source.getPostalCode(), source.getRemark(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -150,6 +153,20 @@ public class Person implements ReadOnlyPerson {
         return postalCode.get();
     }
 
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -180,7 +197,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, formClass, grades, postalCode, tags);
+        return Objects.hash(name, phone, email, address, formClass, grades, postalCode, remark, tags);
     }
 
     @Override
