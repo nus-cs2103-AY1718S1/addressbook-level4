@@ -400,6 +400,7 @@ If the keywords is not identical to any of the existing tag names, 'CommandResul
 The remove tag command is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
 
 The following sequence diagram shows how the remove tag operation works:
+
 image::removeTag_sequenceDiagram.png[width="800"]
 
 ==== Design Considerations
