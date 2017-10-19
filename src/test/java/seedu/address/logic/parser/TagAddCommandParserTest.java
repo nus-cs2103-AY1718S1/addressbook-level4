@@ -30,15 +30,20 @@ public class TagAddCommandParserTest {
         // no user input
         assertParseFailure(parser, TAGADD_COMMAND, MESSAGE_INVALID_FORMAT);
     }
+
     /*
     @Test
-    public void parse_tagAdd_success() {
+    public void parseTagAddSuccess() throws Exception{
         Index targetIndex = INDEX_SECOND_PERSON;
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(targetIndex);
+
+        Set<Tag> tagSet = new HashSet<Tag>();
+        tagSet.add(new Tag(VALID_TAG_FRIEND));
+
         String userInput = TAGADD_COMMAND + SPACE + VALID_TAG_FRIEND + SPACE + targetIndex.getOneBased();
-        TagAddDescriptor descriptor = new TagAddDescriptor(new PersonBuilder().
-                withTags(VALID_TAG_FRIEND).build());
+        TagAddDescriptor descriptor = new TagAddDescriptor();
+        descriptor.setTags(tagSet);
         TagAddCommand expectedCommand = new TagAddCommand(singlePersonIndexList, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
