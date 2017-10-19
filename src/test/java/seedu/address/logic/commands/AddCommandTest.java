@@ -146,6 +146,16 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        @Override
+        public void recordSearchHistory() throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListBySearchCount() {
+            fail("This method should not be called.");
+        }
     }
 
     /**
