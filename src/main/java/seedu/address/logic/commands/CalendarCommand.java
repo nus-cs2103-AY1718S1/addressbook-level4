@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -15,12 +20,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Returns the google calendar of the person
@@ -102,9 +101,9 @@ public class CalendarCommand extends Command {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
-        Credential credential = authorize();
-        return new com.google.api.services.calendar.Calendar.Builder(
+        getCalendarService() throws IOException {
+            Credential credential = authorize();
+            return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
