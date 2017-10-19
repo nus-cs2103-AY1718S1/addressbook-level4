@@ -25,9 +25,11 @@ import seedu.address.commons.events.ui.ShowThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
+
+/*import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Person;
 import java.util.List;
+*/
 
 /**
  * The Main Window. Provides the basic application layout containing
