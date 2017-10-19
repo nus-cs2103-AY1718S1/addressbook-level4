@@ -38,7 +38,6 @@ public class Person implements ReadOnlyPerson {
 
         if (validFields.contains(field)) {
             this.sortCriteria = field;
-            System.out.println("Changing the sorting criteria for " + name + " to " + sortCriteria);
         } else {
             throw new IllegalArgumentException();
         }
