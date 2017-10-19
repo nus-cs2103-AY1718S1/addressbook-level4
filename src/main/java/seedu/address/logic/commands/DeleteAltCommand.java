@@ -10,7 +10,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a person identified using its last displayed index from the address book.
  */
 public class DeleteAltCommand extends UndoableCommand {
 
