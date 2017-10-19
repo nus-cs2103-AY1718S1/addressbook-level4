@@ -544,12 +544,10 @@ of creating a search on contacts name through he browser panel. +
 **Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a Person Card Viewer
 which is important for GUI enhancement. +
 
----
-
 //end::accessWebsite[]
-=======
+
 // tag::find[]
-== Find Mechanism
+=== Find Mechanism
 The find mechanism is facilitated by the `NameContainsKeyWordsPredicate` class which resides in the person class. It supports finding any person in the address book using their full name or a part of the name.
 
 However, if a user is searching by part of a name, the substring must be in the beginning of the first name or last name and it has to be at least two characters long.
