@@ -218,6 +218,63 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::add
+=== Making Name as the only compulsory field in Add Command
+
+The `add` command follows the format below:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+
+This means when adding a new person in LISA, the user only need to provide value for the compulsory `NAME` field. Every other field is optional.
+
+Every field has one corresponding class. Inside each class, there exists a `final String FIELD_VALIDATION_REGEX` used for validation during construction.
+For instance, the `PHONE` field has `Phone` class containing a `PHONE_VALIDATION_REGEX` which only accepts numbers that are at least three digits long:
+[source,java]
+----
+public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+----
+
+Whenever the phone tag `p/` is provided in the input, e.g. `add n/John Doe p/98765432` and `add n/Johnny Doe p/`,
+the string after `p/` is trimmed and passed into `isValidPhone(String test)` for validation when constructing the `Phone` object.
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+    // ... constructor logic ...
+    if (!isValidPhone(trimmedPhone)) {
+        throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+    this.value = trimmedPhone;
+}
+
+public static boolean isValidPhone(String test) {
+    return test.matches(PHONE_VALIDATION_REGEX);
+}
+----
+
+Therefore, in the first example, `"98765432"` is passed as the argument. In the second example, `""` is passed in since nothing was provided after `p/`.
+According to `PHONE_VALIDATION_REGEX`, the former passes the validation while the latter throws an `IllegalValueException`.
+Overall, this guarantees that the user input will always be validated.
+
+If the phone tag is not provided, e.g. `add n/John Doe e/johnd@email.com`, the no-argument constructor is used.
+It sets the `value` of the `Phone` object to an empty string without any validation.
+[source,java]
+----
+public Phone() {
+    this.value = "";
+}
+----
+
+The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, and `[d/DATE_OF_BIRTH]`.
+`[t/TAG]...` uses a different implementation and will not be covered in this section.
+
+Due to this implementation, the field attribute of a `Person` object can never be `null`.
+If a field is not provided during input, an object with the value of an empty string will still be created and assigned to the corresponding attribute in `Person`.
+
+
+An alternative implementation would be "Do not create the field object at all if it is not specified in the user input".
+This approach is more flexible, but may require resolving `null` value problems when adding and editing a person.
+// end::add[]
+
 // tag::dob
 === Addition of Date of Birth field
 
