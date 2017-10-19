@@ -364,6 +364,65 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Displaying the Usage of a Specific Command [Since v1.2]
+
+This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
+
+For the Model component, `CommandIdentifier` is implemented this way:
+[source,java]
+----
+public class CommandIdentifier {
+
+    // ... required public static final fields ...
+
+    public CommandIdentifier(String commandIdentifier) throws IllegalValueException {
+        requireNonNull(commandIdentifier);
+        if (!isValidCommandIdentifier(commandIdentifier) && !commandIdentifier.equals("")) {
+            throw new IllegalValueException(MESSAGE_COMMAND_WORD_CONSTRAINTS);
+        }
+        this.value = commandIdentifier;
+    }
+
+    public static boolean isValidCommandIdentifier(String test) {
+       // ... checks if the string argument is a valid command identifier ...
+    }
+}
+----
+[NOTE]
+A valid command identifier includes all existing command and their aliases.
+
+For the Logic component, when the user key in help command in the command box, `HelpCommandParser` will be called. It parses user input that folows the help command, which may contain the optional command identifier argument:
+[source,java]
+----
+public HelpCommand parse(String args) throws ParseException {
+    // ... checks if the argument contains at most 1 word ...
+
+    // ... calls ParserUtil to parse command identifier ...
+
+    // ... calls HelpCommand ...
+}
+----
+To accomodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object:
+[source,java]
+----
+public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
+    requireNonNull(commandWord);
+    return new CommandIdentifier(commandWord.trim());
+}
+----
+Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows:
+[source,java]
+----
+public CommandResult execute() {
+    // ... switch cases for all the command words and command aliases ...
+
+    // ... default case: opens help window ...
+}
+----
+The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function.
+
+image::HelpEnhancementScreenShot.PNG[width="800"]
+
 === Locating a person's address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
@@ -461,12 +520,13 @@ By being a subscriber to this event, the `WebView` in `BrowserPanel` will load t
 `PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
 
 //tag::FindCommand[]
-=== FindCommand by any searched field
+=== FindCommand by any search field [Since v1.2]
 
 
-The find function will support the search of contact by any keywords. The keywords must be a full word match. The command will inherit from `FindCommand` .The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
-`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input.
+The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
 
+
+`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via l`FindCommandParserl` which inherits from `FindCommand`.
 
 [source,java]
 ----
@@ -480,7 +540,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 }
 
 ----
-
+[NOTE]
+A valid find command search keywords based on prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
 
 Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
 [source,java]
@@ -490,15 +551,24 @@ Also,the input will first have to be tokenised in order to extract the prefix fo
         }
 ----
 
+A successful tokenism of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
 
-A successful tokenism of lead to the keywords to be allocated to its `containsKeyWordPredicate` under `Model` based on the input prefix.Addressbook will search for the keywords in the revelvant parameters.
-Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using` FindCommand` .
+Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using `FindCommand` .
 
-image::FindCommand_Name.PNG[width="200"]
-image::FindCommand_Phone.PNG[width="200"]
-image::FindCommand_Email.PNG[width="200"]
-image::FindCommand_Address.PNG[width="200"]
-image::FindCommand_Tag.PNG[width="200"]
+
+image::FindCommand_Name.PNG[width="300"]
+
+
+image::FindCommand_Phone.PNG[width="300"]
+
+
+image::FindCommand_Email.PNG[width="300"]
+
+
+image::FindCommand_Address.PNG[width="300"]
+
+
+image::FindCommand_Tag.PNG[width="300"]
 
 
 == Documentation
