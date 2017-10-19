@@ -109,8 +109,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleKeyPressAlt() {
-        //Alt shifts the caret all the way left
+    public void handleKeyPressShiftAlt() {
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
         //Setting up of sandbox environment for testing
@@ -119,15 +118,100 @@ public class CommandBoxTest extends GuiUnitTest {
 
         assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
         //Caret shifted left -> Returns true
-        guiRobot.push(KeyCode.ALT);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ALT);
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 4);
         assertTrue(mySandBox.getCaretPosition() == 0);
     }
 
     @Test
-    public void handleKeyPressControl() {
-        //Alt shifts the caret all the way right
+    public void handleKeyPressAlt() {
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 1. No input retains Caret position
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 2. Empty spaces only input shifts Caret all the way left
+        guiRobot.write("         ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 3. Caret at end of word - Shifts to left side of word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 4, Caret between a word - Gets shifted to the left of current word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("101010101010");
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.ALT);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 5, Word followed by space - Shifts caret immediately to beginning of word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("101010");
+        guiRobot.write("     ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 6, Spaces followed by words - Shifts caret to beginning of word but after spaces
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("     ");
+        guiRobot.write("101010");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 5);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 7, Shortcut works for other non-alphabet strings
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("  (*&^%$ 9876543 <>?:{}|  ");
+        assertTrue(mySandBox.getCaretPosition() == 26);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 17);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 9);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 2);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.ALT);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+    }
+
+    @Test
+    public void handleKeyPressShiftControl() {
+        //Shift-Control shifts the caret all the way right
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
         //Setting up of sandbox environment for testing
@@ -136,13 +220,13 @@ public class CommandBoxTest extends GuiUnitTest {
 
         assertTrue(mySandBox.getCaretPosition() == commandBoxHandle.getInput().length());
         //Caret shifted left -> Returns true
-        guiRobot.push(KeyCode.ALT);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ALT);
         //Ensure caret is at the left
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 4);
         assertTrue(mySandBox.getCaretPosition() == 0);
         //Push caret to right
-        guiRobot.push(KeyCode.CONTROL);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.CONTROL);
         //Ensure caret is at the right
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
@@ -150,10 +234,329 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void handleKeyPressControl() {
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 1. No input retains Caret position
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 2. Empty spaces only input shifts Caret all the way right
+        guiRobot.write("         ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 3. Caret at end of word - Nothing happens
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 4, Caret between a word - Gets shifted to the right of current word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("101010101010");
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 5, Word followed by space - Shifts right twice
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("101010");
+        guiRobot.write("     ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(0);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == 6);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 6, Spaces followed by words - Shifts caret end of word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("     ");
+        guiRobot.write("101010");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(0);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Test 7, Shortcut works for other non-alphabet strings
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("  (*&^%$ 9876543 <>?:{}|  ");
+        assertTrue(mySandBox.getCaretPosition() == 26);
+        mySandBox.positionCaret(0);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == 8);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == 16);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == 24);
+        guiRobot.push(KeyCode.CONTROL);
+        assertTrue(mySandBox.getCaretPosition() == 26);
+
+    }
+
+    @Test
+    public void handleShiftDeleteTestOne() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 1: Test for empty input
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 2a: Test for blank space input caret at most left
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(0);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 2b: Test for blank space input caret at most right
+        mySandBox.positionCaret(mySandBox.getText().length());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        assertTrue(mySandBox.getText().length() == 0);
+
+        //Test 2c: Test for blank space input caret in the middle
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        assertFalse(mySandBox.getText().length() == 0);
+
+        //Test 3: Test for test word input
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+    }
+
+    @Test
+    public void handleShiftDeleteTestTwo() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 4a: Test for blank space + test word input caret at most right
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("    ");
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 4b: Test for black space + test word input caret between word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("    ");
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getCaretPosition() - 2);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertFalse(mySandBox.getText().length() == 0);
+        assertTrue(mySandBox.getText().length() == 2);
+
+        //Test 5a: Test for word + blank space input, Caret at far right
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 5b: Test for word + blank space input, Caret after word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        mySandBox.positionCaret(mySandBox.getText().length());
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+    }
+
+    @Test
+    public void handleShiftBackSpaceTestOne() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 1: Test for empty input
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+        //Test 2a: Test for blank space input caret at most left
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(0);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 2b: Test for blank space input caret at most right
+        mySandBox.positionCaret(mySandBox.getText().length());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        assertTrue(mySandBox.getText().length() == 0);
+
+        //Test 2c: Test for blank space input caret in the middle
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        assertFalse(mySandBox.getText().length() == 0);
+
+        //Test 3: Test for test word input
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+
+    }
+
+    @Test
+    public void handleShiftBackSpaceTestTwo() {
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+
+        //Test 4a: Test for blank space + test word input caret at most right
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("    ");
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 4b: Test for black space + test word input caret between word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("    ");
+        guiRobot.write("Test");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getCaretPosition() - 2);
+        assertFalse(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertFalse(mySandBox.getText().length() == 0);
+        assertTrue(mySandBox.getText().length() == 2);
+
+        //Test 5a: Test for word + blank space input, Caret at the end
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+
+        //Test 5b: Test for word + blank space input, Caret after word
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        guiRobot.write("Test");
+        guiRobot.write("    ");
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        mySandBox.positionCaret(mySandBox.getText().length() / 2);
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.DELETE);
+        assertTrue(mySandBox.getCaretPosition() == 0);
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() > 0);
+        mySandBox.positionCaret(mySandBox.getText().length());
+        assertTrue(mySandBox.getCaretPosition() == 4);
+        mySandBox.clear();
+        assertTrue(mySandBox.getCaretPosition() == 0);
+    }
+
+    @Test
     public void handleValidRightKeyPressLenMaxThree() {
         //This test focuses on ensuring that the key press works only for the add command
-        //and hack triggers only when "a" or "add" is detected at the front of the statement.
-        //Cases like "adda" "addy" "am" or "aa" will not trigger add command hack
+        //and shortcut triggers only when "a" or "add" is detected at the front of the statement.
+        //Cases like "adda" "addy" "am" or "aa" will not trigger add command shortcut
 
         //Extracts the textfield. Needed to use the caret related methods
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -317,7 +720,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void handleInvalidRightKeyPress() {
-        //Test to ensure add command hack does not trigger as long as
+        //Test to ensure add command shortcut does not trigger as long as
         //caret is within the text
 
         //Extracts the textfield. Needed to use the caret related methods
@@ -326,10 +729,10 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue("Add".equals(mySandBox.getText()));
 
         //Caret shifted left -> Returns true
-        guiRobot.push(KeyCode.ALT);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.ALT);
         //Ensure caret is at the left
         assertTrue(mySandBox.getCaretPosition() == 0);
-        //Try to trigger add hack - Nothing happens, Caret + 1
+        //Try to trigger add shortcut - Nothing happens, Caret + 1
         guiRobot.push(KeyCode.RIGHT);
         assertTrue("Add".equals(mySandBox.getText()));
         assertTrue(mySandBox.getCaretPosition() == 1);
@@ -340,7 +743,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue("Add".equals(mySandBox.getText()));
         assertTrue(mySandBox.getCaretPosition() == 3);
 
-        //Trigger add hack - n/ is concatenated
+        //Trigger add shortcut - n/ is concatenated
         guiRobot.push(KeyCode.RIGHT);
         assertTrue("Add n/".equals(mySandBox.getText()));
 
@@ -350,7 +753,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Test
     public void handleValidRightKeyPressPrefixInOrder() {
         //Add Command allows users to enter the prefix in any order
-        //The Add Command hack accounts for missing prefix or jump in prefix but for this test
+        //The Add Command shortcut accounts for missing prefix or jump in prefix but for this test
         //it will focus on testing under the assumption that the prefix in the right order: n p e a b t
 
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -369,13 +772,13 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
         assertNotNull(mySandBox.getCaretPosition());
         assertFalse(mySandBox.getCaretPosition() == 0);
-        //Ensure that hack does not run if caret is not at end of line
+        //Ensure that shortcut does not run if caret is not at end of line
         int currentCaretPosition = mySandBox.getCaretPosition();
         mySandBox.positionCaret(currentCaretPosition - 1);
         guiRobot.push(KeyCode.RIGHT);
         assertTrue(testString.equals(mySandBox.getText()));
         //Return caret back to original position
-        guiRobot.push(KeyCode.CONTROL);
+        guiRobot.push(KeyCode.SHIFT, KeyCode.CONTROL);
         //Simulate User Input
         guiRobot.write("98765432");
         testString += "98765432";
@@ -408,7 +811,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Test
     public void handleValidRightKeyPressPrefixRandom() {
-        //The Add Command hack accounts for missing prefix or jump in prefix.
+        //The Add Command shortcut accounts for missing prefix or jump in prefix.
         //This functionality will be tested in this test
 
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -427,7 +830,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testString += " " + STRING_EMAIL + "jeremylsw@u.nus.edu";
         assertTrue((testString).equals(mySandBox.getText()));
 
-        //Add command hack will detect missing p/ and concatenate it
+        //Add command shortcut will detect missing p/ and concatenate it
         guiRobot.push(KeyCode.RIGHT);
         testString += " " + STRING_PHONE;
         assertTrue((testString).equals(mySandBox.getText()));

@@ -756,6 +756,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Easily navigate through the User Guide |Easily access information I need from the User Guide
 
+|`* * *` |User |Delete all text easily |Delete everything without having to slowly press the backspace key
+
+|`* * *` |User |Delete a chunk of words easily|Delete a bunch of empty spaces or words without having to slowly press the backspace
+
+|`* * *` |User |Have a keyboard shortcut to navigate to the start or end of my input text
+
+|`* * *` |User |Navigate through my input text be it left or right by individual words or chunks of white spaces
+
+|`* * *` |User |Use the add command without having to worry about the necessary prefixes|Add contacts even if i forget the format of the add command
+
 |`* * *` |Doctor |List all patients with specific tags based on number of searches|
 
 |`* * *` |Doctor |Delete contacts by tags |Delete the whole group at once
@@ -1059,3 +1069,43 @@ Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
 * Animations are unnecessarily slow
+
+
+[appendix]
+== Implementation of enhancement
+
+=== *Enhancement: Set appointment* +
+
+
+*Reason for implementation* +
+
+Our address book is designed for doctors to use. Doctors often have fixed appointments with patients and the list
+maybe very long. This implementation allows doctors to set an appointment date with a patient. +
+On top of just setting appointment time, the user can also sort the contacts by appointment timing. This is so that the
+doctor will be remind of their most upcoming appointment in the midst of their busy schedule. +
+
+*How is it implemented* +
+
+An appointment class is created and has 2 different constructors. +
+
+ new Appointment("Alice Yeo")               new Appointment("Alice Yeo", calendarInstance);
+
+The first constructor only consists of the person's name in string. It is used if the person has no appointment set. +
+
+The second constructor has person's name in string, and also a date wrapped in a Calendar class.
+
+As of version 1.2, Person constructor includes Appointment.
+
+ new Person(name, phone, email, address, bloodType, tags, remark, appointment);
+
+*Reasons for how it is implemented*
+
+The reason for two constructors is so that the person can be initialized with or without an appointment. As of version
+1.2, our address book does not support the setting of appointment concurrent with the addition of the contact. To ease
+the implementation of that, we have decided that the Person class should have appointment in its constructor.
+
+*Future enhancements*
+
+We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
+enhancements for parsing, it should be done in the AddAppointmentParser class.
+
