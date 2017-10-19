@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared
  */
 public class Website {
-    public static final String MESSAGE_WEBSITE_CONSTRAINS =
+    public static final String MESSAGE_WEBSITE_CONSTRAINTS =
             "Website should contain a prefix of http://www https://www.";
     public static final String WEBSITE_VALIDATION_REGEX =
             "https?://(www\\.)?[-a-z0-9]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)";
@@ -21,7 +21,7 @@ public class Website {
     public Website(String website)throws IllegalValueException {
         String trimmedWebsite = website == WEBSITE_NULL ? WEBSITE_NULL : website.trim();
         if (!isValidWebsite(trimmedWebsite)) {
-            throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINS);
+            throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
         }
 
         this.value = trimmedWebsite;
