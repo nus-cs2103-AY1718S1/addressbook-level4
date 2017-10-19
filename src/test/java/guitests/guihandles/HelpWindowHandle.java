@@ -4,6 +4,7 @@ import java.net.URL;
 
 import guitests.GuiRobot;
 import javafx.stage.Stage;
+import org.testfx.api.FxRobot;
 
 /**
  * A handle to the {@code HelpWindow} of the application.
@@ -25,6 +26,7 @@ public class HelpWindowHandle extends StageHandle {
         return new GuiRobot().isWindowShown(HELP_WINDOW_TITLE);
     }
 
+    public FxRobot getLoadedPage() { return new GuiRobot().targetWindow(HELP_WINDOW_TITLE);}
     /**
      * Returns the {@code URL} of the currently loaded page.
      */
