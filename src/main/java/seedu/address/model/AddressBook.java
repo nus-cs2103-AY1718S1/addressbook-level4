@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.AlreadySortedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -160,6 +161,18 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+
+    //// sort address book
+
+    public void sortBy(String sortCriteria) throws AlreadySortedException {
+
+        if (persons.getCurrentlySortedBy().equals(sortCriteria)) {
+            throw new AlreadySortedException("List already sorted by: " + sortCriteria);
+        } else {
+            persons.sortBy(sortCriteria);
+        }
     }
 
     //// util methods
