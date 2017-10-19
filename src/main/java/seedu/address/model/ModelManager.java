@@ -88,6 +88,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, favouritedPerson);
+
+        addressBook.favouritePerson(target, favouritedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void sortPerson(String option) throws NoPersonFoundException {
         requireNonNull(option);
 
