@@ -28,12 +28,14 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -120,6 +122,13 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_remove() throws Exception {
+        Tag tag = new Tag("friends");
+        RemoveCommand command = (RemoveCommand) parser.parseCommand(RemoveCommand.COMMAND_WORD + " friends 1" );
+        assertEquals(new RemoveCommand(tag, INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
@@ -138,15 +147,6 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
         assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
-
-    //TODO: dont know why dont work :(
-    /*@Test
-    public void parseCommand_removeCommandWord_returnsRemoveCommand() throws Exception {
-        final Tag tag = new Tag("friends");
-        RemoveCommand command = (RemoveCommand) parser.parseCommand(RemoveCommand.COMMAND_WORD + " friends "
-                + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new RemoveCommand(tag, INDEX_FIRST_PERSON), command);
-    }*/
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
