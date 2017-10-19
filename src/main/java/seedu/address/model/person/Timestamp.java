@@ -9,7 +9,7 @@ public class Timestamp {
 
     private LocalDateTime creationTime = null;
     private LocalDateTime expiryTime = null; //after construction, a null expiryTime means this person will not expire
-    long daysToLive;
+    private long daysToLive;
 
     public Timestamp(long day) {
         creationTime = LocalDateTime.now().withNano(0).withSecond(0);
