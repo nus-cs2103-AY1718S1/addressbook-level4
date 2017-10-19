@@ -172,9 +172,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws IllegalValueException
      */
     public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
-        Tag tagToRemove = tags.removeTag(tagGettingRemoved);
-        for (Person person: persons) {
-            person.removeTag(tagToRemove);
+        try {
+            Tag tagToRemove = tags.removeTag(tagGettingRemoved);
+            for (Person person : persons) {
+                Person temp = person;
+                person.removeTag(tagToRemove);
+                persons.setPerson(temp, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "impossible to happen as the person from whom the tag is removed definitely exists.";
         }
     }
 
