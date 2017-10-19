@@ -209,11 +209,9 @@ public class ModelManager extends ComponentManager implements Model {
      * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     * @throws IllegalValueException if {@code amount} is invalid.
      */
     @Override
-    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
-            IllegalValueException {
+    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
         addressBook.addDebtToPerson(target, amount);
         indicateAddressBookChanged();
     }
