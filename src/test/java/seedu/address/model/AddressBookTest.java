@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.DUP;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
