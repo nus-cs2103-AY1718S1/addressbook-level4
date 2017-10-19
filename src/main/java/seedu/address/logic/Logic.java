@@ -19,6 +19,13 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    /**
+     * Executes the search and returns the search result
+     * @param searchText The search text as entered in search bar
+     * @return the result of the search
+     */
+    CommandResult executeSearch(String searchText) throws CommandException, ParseException;
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
