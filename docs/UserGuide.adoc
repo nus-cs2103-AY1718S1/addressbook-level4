@@ -229,10 +229,50 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Play background music : `music`
+=== Playing background music : `music play`
 
-Plays a random music track from a list of built in mp3 music from Address Book. +
-Format: `music`
+Plays a specific genre music track from a list of built in mp3 music from Unify or resumes playing currently paused music track. +
+Format: `music play GENRE`
+
+[NOTE]
+The genre can only be either pop, dance or classic
+
+=== Stopping background music : `music stop`
+
+Stops the current music track playing. +
+Format: `music stop`
+
+[NOTE]
+This is different from pausing, as it does not allow resuming.
+
+=== Pausing background music : `music pause`
+
+Pause the current music track playing. +
+Format: `music pause`
+
+[NOTE]
+This is different from stopping, as it can be resumed playing by using the play background music command.
+
+=== Adding / Editing a remark : `remark`
+
+Adds or edits the remark for a person specified in the INDEX. +
+Format: `remark INDEX r/[REMARK]`
+
+Examples:
+
+* `remark 1 r/Likes to drink coffee` +
+Add / Edits the remark for the first person to Likes to drink coffee.
+
+
+=== Remove a remark : `remark`
+
+Edits the remark for a person specified in the INDEX. +
+Format: `remark INDEX r/`
+
+Examples:
+
+* `remark 1 r/` +
+Removes the remark for the first person.
 
 === Adding aliases : `alias`
 
