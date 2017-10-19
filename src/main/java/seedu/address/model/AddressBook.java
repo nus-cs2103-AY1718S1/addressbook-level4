@@ -247,7 +247,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     * @throws IllegalValueException if new {@code Debt} object could not be created.
      */
     public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
         Person editedPerson = new Person(target);
