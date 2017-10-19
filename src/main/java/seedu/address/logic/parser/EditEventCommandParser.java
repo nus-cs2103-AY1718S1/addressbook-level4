@@ -36,7 +36,7 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
 
         EditEventDescriptor editEventDescriptor = new EditEventDescriptor();
         try {
-            ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_DESCRIPTION)).ifPresent(
+            ParserUtil.parseEventName(argMultimap.getValue(PREFIX_EVENT_NAME)).ifPresent(
                     editEventDescriptor::setEventName);
             ParserUtil.parseEventDescription(argMultimap.getValue(PREFIX_EVENT_DESCRIPTION)).ifPresent(
                     editEventDescriptor::setEventDescription);
