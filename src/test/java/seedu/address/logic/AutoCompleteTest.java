@@ -27,7 +27,7 @@ public class AutoCompleteTest {
     @Test
     public void getBaseCommands() {
         String[] actualBaseCommands = { "add", "edit", "select", "delete", "clear",
-                "backup", "find", "list", "history", "exit", "help", "undo", "redo" };
+            "backup", "find", "list", "history", "exit", "help", "undo", "redo" };
         String[] baseCommands = autoComplete.getAutoCompleteList();
         assertTrue(Arrays.equals(actualBaseCommands, baseCommands));
     }
@@ -46,7 +46,7 @@ public class AutoCompleteTest {
     @Test
     public void resetAutoCompleteList() {
         String[] actualBaseCommands = { "add", "edit", "select", "delete", "clear",
-                "backup", "find", "list", "history", "exit", "help", "undo", "redo" };
+            "backup", "find", "list", "history", "exit", "help", "undo", "redo" };
         autoComplete.updateAutoCompleteList("");
         String[] baseCommands = autoComplete.getAutoCompleteList();
         assertTrue(Arrays.equals(actualBaseCommands, baseCommands));
