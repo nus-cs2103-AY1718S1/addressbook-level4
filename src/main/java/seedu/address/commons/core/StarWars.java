@@ -7,6 +7,7 @@ import org.apache.commons.net.telnet.TelnetClient;
 
 /**
  * A star wars object that includes the streamer and telnet client source of the stream.
+ * Obviously doesn't work if their server is down.
  * @author towel.blinkenlights.nl
  */
 public class StarWars {
