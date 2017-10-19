@@ -360,6 +360,22 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== Birthday attribute
+
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. Birthday class has a very similar implementation compared to the other attribute classes. New instance of Birthday is initialized by giving the constructor the parameter birthday in String format. The parameter is required to be non-null, and it is first validated before accepting it as a birthday value for the class.
+
+*Validation*
+
+The valid form for a birthday string is `DD/MM/YYYY`, where every character must be a digit except for the slashes. This validation is performed to prohibit the user from inputting something completely peculiar, for example a string of spaces or a long sequence of characters.
+
+Examples for a valid birthday:
+
+* `14/12/1993`
+* `22/02/2001`
+* `99/99/9999`
+
+Notice that the current implementation doesn't validate the validity of the date, only the format of the birthday and this was a conscious decision. This implementation manages to preserve the simplicity of this class. It could have been possible to use for example Java's Date class to implement a second validator for also the date, but this would have created inconsistency between the other attribute classes. Also, because the end product is an address book which only has to store the birthday, the validity of the date is not a concern for the program.
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
