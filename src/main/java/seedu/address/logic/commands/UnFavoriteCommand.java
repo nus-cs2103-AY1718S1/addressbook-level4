@@ -72,7 +72,6 @@ public class UnFavoriteCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_UNFAVORITE_PERSON_SUCCESS, names));
     }
 
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
