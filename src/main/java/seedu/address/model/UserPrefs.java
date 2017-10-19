@@ -85,11 +85,7 @@ public class UserPrefs {
      * @return true if password is valid
      */
     public boolean checkPassword(String input) {
-        if (password.equals("")) {
-            return true;
-        } else {
-            return password.equals(hashBySha256(input));
-        }
+        return (("").equals(password)) || password.equals(hashBySha256(input));
     }
 
     /**
