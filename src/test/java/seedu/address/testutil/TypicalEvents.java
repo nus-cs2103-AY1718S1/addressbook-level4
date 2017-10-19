@@ -6,8 +6,11 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+
 
 /**
+ * @@reginleiff
  * A utility class containing a list of {@code Event} objects to be used in tests.
  */
 public class TypicalEvents {
@@ -30,7 +33,11 @@ public class TypicalEvents {
     public static AddressBook getTypicalEventAddressBook() {
         AddressBook ab = new AddressBook();
         for (ReadOnlyEvent event : getTypicalEvents()) {
-            ab.addEvent(event);
+            try {
+                ab.addEvent(event);
+            } catch (DuplicateEventException e) {
+                assert false : "not possible";
+            }
         }
         return ab;
     }

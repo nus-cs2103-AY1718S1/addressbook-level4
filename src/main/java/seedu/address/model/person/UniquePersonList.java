@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -94,6 +96,30 @@ public class UniquePersonList implements Iterable<Person> {
             replacement.add(new Person(person));
         }
         setPersons(replacement);
+    }
+    /**
+     *
+     */
+    public void sortPersonList(int type) throws InvalidSortTypeException {
+        final Comparator<Person> sortByName = (
+            Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
+        final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
+            .getTags().toString()));
+        final Comparator<Person> sortByAdd = (Person a, Person b) -> a.getAddress().toString().compareToIgnoreCase(b
+            .getAddress().toString());
+        switch(type) {
+        case 1:
+            internalList.sort(sortByName);
+            break;
+        case 2:
+            internalList.sort(sortByTags);
+            break;
+        case 3:
+            internalList.sort(sortByAdd);
+            break;
+        default:
+            System.out.printf("Sorting type entered not found!\n");
+        }
     }
 
     /**

@@ -15,7 +15,6 @@ public class EventBuilder {
     public static final String DEFAULT_TITLE = "Jack's Birthday";
     public static final String DEFAULT_TIMING = "1900-2100";
     public static final String DEFAULT_DESCRIPTION = "Celebrating Jack's 21st, party all night";
-    public static final String DEFAULT_TAGS = "birthday";
 
     private Event event;
 
@@ -69,6 +68,7 @@ public class EventBuilder {
         try {
             this.event.setDescription(new Description(description));
         } catch (IllegalValueException ive) {
+
             throw new IllegalArgumentException("description is expected to be unique.");
         }
         return this;

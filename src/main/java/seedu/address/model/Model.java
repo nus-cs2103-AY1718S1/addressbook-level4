@@ -4,9 +4,11 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -54,6 +56,10 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /**
+     * Sorts person according to user input option
+     */
+    void sortPerson(int type) throws InvalidSortTypeException;
+    /**
      * Returns an unmodifiable view of the filtered person list
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -66,16 +72,19 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
+     * @@reginleiff
      * Adds the given event
      */
-    void addEvent(ReadOnlyEvent event);
+    void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
     /**
+     * @@reginleiff
      * Deletes the given event.
      */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
     /**
+     * @@reginleiff
      * Replaces the given event {@code target} with {@code editedPerson}.
      *
      * @throws EventNotFoundException if {@code target} could not be found in the list.
@@ -83,11 +92,13 @@ public interface Model {
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException;
 
     /**
+     * @@reginleiff
      * Returns an unmodifiable view of the filtered event list
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
+     * @@reginleiff
      * Updates the filter of the filtered event list to filter by the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.

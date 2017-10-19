@@ -5,12 +5,17 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -43,6 +48,7 @@ public class MainWindow extends UiPart<Region> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
+    private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
 
@@ -66,6 +72,21 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane tabPane;
+
+    @FXML
+    private Tab eventTab;
+
+    @FXML
+    private Tab contactTab;
+
+    @FXML
+    private AnchorPane notificationButton;
+
+    @FXML
+    private AnchorPane calendarButton;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -149,6 +170,22 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //When calendar button is clicked, the browserPlaceHolder will switch
+        // to the calendar view
+        calendarView = new CalendarView();
+        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
+                EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!browserPlaceholder.getChildren().contains(calendarView
+                        .getRoot())) {
+                    browserPlaceholder.getChildren().add(calendarView.getRoot());
+                } else {
+                    browserPlaceholder.getChildren().remove(calendarView.getRoot());
+                }
+            }
+        });
     }
 
     void hide() {
