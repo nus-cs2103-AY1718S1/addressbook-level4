@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `SearchBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `ProfilePanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -426,6 +426,85 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::searchbox[]
+=== Searchbox
+
+The additional searchbox used for quick partial search/filter is a child of `UiParts` and is based on using `Listener` to detect any changes to `TextProperty`.
+
+Upon detecting changes in observables, a handler (using Lambda Expression) then passes them to `Logic` to execute the pfind command.
+----
+public SearchBox (Logic logic) {
+        super(FXML);
+
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (newValue.equals("")) {
+                try {
+                    CommandResult commandResult = logic.execute("list");
+                    // ... log ...
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // ...
+                }
+            } else {
+                try {
+                    CommandResult commandResult = logic.execute("pfind " + newValue);
+                    // ... log ....
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // ...
+                }
+            }
+
+        });
+    }
+----
+
+Seen from the script, this handle takes care of 2 cases.
+
+1) When `newValue` is empty string, it calls `list` command
+
+2) Otherwise, calls `pfind` command with the `newValue` as arguments
+
+[NOTE]
+Case (1) is to restore the default list of all contacts after users have used the searchbox and removed all text from field after usage
+
+The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
+
+
+==== Design Considerations
+
+**Aspect:** Approach user should follow to input the command +
+**Alternative 1 (current choice):** Track every single changes in `SearchBox` textField. +
+**Pros:** Intuitive, need no additional step as the person card below changes real-time. +
+**Cons:** Many handler calls, duplicate execution when retyping same characters +
+**Alternative 2:** Confirmation with `Enter` key or similar feedback. +
+**Pros:** Less calls and hence more effective logging. +
+**Cons:** May not be intuitive pressing `Enter` with partially filled input.
+
+---
+
+**Aspect:** Execution of `pfind` +
+**Alternative 1 (current choice):** Through `Logic` +
+**Pros:** Reusing code. Binding it to `Logic` will automatically update any related possible changes occuring in `Logic Component`. Also easier to perform tests. +
+**Cons:** More detoured execution, going through checking of command type and parser. +
+**Alternative 2:** Directly create `PartialCommand` object with trimmed list of arguments. +
+**Pros:** Lowers coupling and dependencies, less irrelevant logs.  +
+**Cons:** Lower accountability and assumes no future changes to `Command` signature +
+
+---
+
+**Aspect:** Position and choice of FXML container  +
+**Alternative 1 (current choice):** Follows `CommandBox` styleClass` which is in turn contained by `VBox` together with and directly above `PersonListCard`. +
+**Pros:** Similar aesthetic look to `CommandBox` to promote intuition to type in command, but within immediate proximity of person cards to suggest some sort of filtering. +
+**Cons:** Looks somewhat awkward if the person list is scrolled down (slight disjoint in seperation line and card) +
+**Alternative 2:** Popup textField ui upon hover +
+**Pros:** Can save space in case this software is run on very low resolution. Also prevent confusion of which textField to type in command. +
+**Cons:** More keyboard-based user may not notice the feature and/or movement in cursor may close the popup unintentionally. +
+// end::searchbox[]
 
 == Documentation
 
