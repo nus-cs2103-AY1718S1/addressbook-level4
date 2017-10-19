@@ -381,19 +381,19 @@ Alternatives considered is to allow user input multiple details in each search. 
 
 *Scenario one*
 
-* Contact 1 : Name `John Tan` and phone number `12345678`
-* Contact 2 : Name `John Doe` and phone number `12349875`
-* Contact 3 : Name `Amy Chan` and phone number `98765432`
+* `Contact 1` : Name `John Tan` and phone number `12345678`
+* `Contact 2` : Name `John Doe` and phone number `12349875`
+* `Contact 3` : Name `Amy Chan` and phone number `98765432`
 * User wants to find `John Tan` but do not recall surname and key in `John` only
 * User cannot recall the number and key in a random number `43567823`
-* There will be no results returned in this scenario as input phone number does not match the phone numbers in Contact 1 and 2 that contains `John`
+* There will be no results returned in this scenario as input phone number does not match the phone numbers in `Contact 1` and `Contact 2` that contains `John`
 
 *Scenario two*
 
-* Contact 1 : Name `John Tan` and phone number `12345678`
+* `Contact 1` : Name `John Tan` and phone number `12345678`
 * User wants to find `John Tan` and key in `John Tan`
 * User cannot recall the number and key in a random number `43567823`
-* There will be no results returned in this scenario as input phone number does not match the phone number in the Contact 1 although the name matches exactly.
+* There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
 From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise this `finds` command is practically not useful as no results will be returned.
 
