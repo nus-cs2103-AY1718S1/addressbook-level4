@@ -25,7 +25,7 @@ public class ExpireCommandParserTest {
         ExpireCommand expectCommand = new ExpireCommand(INDEX_SECOND_PERSON, dateString);
 
         assertParseSuccess(parser, userInput, expectCommand);
-        
+
         // no date
         userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString();
         expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, "");

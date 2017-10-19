@@ -19,8 +19,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 public class ExpireCommandTest {
+    
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
+    
     @Test
     public void execute() throws Exception {
         final String dateString = "2011-01-01";
