@@ -16,7 +16,12 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyRolodex;
 import seedu.address.model.Rolodex;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.RolodexStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlRolodexStorage;
 import seedu.address.storage.XmlSerializableRolodex;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
@@ -98,6 +103,26 @@ public class TestApp extends MainApp {
     public Model getModel() {
         Model copy = new ModelManager((model.getRolodex()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getLatestPersonList());
+        return copy;
+    }
+
+    /**
+     * Returns a defensive copy of the storage.
+     */
+    public Storage getStorage() {
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        UserPrefs userPrefsCopy = initPrefs(userPrefsStorage);
+        RolodexStorage rolodexStorage = new XmlRolodexStorage(userPrefsCopy.getRolodexFilePath());
+
+        return new StorageManager(rolodexStorage, userPrefsStorage);
+    }
+
+    /**
+     * Returns a defensive copy of the user prefs.
+     */
+    public UserPrefs getUserPrefs() {
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        UserPrefs copy = initPrefs(userPrefsStorage);
         return copy;
     }
 
