@@ -312,12 +312,6 @@
     -fx-text-fill: #F70D1A;
 }
 
-#browserPlaceholder {
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: 235 135;
-    -fx-background-image: null;
-}
-
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
