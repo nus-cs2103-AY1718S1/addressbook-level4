@@ -364,6 +364,20 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Find person(s) using different details
+
+The `finds` command is an improved version from `find` command. It allows user to search using other details such as phone number, email or tag instead of just name.
+
+The user can use this command with only ONE of the following prefixes:
+* `n/` to search by name(s)
+* `p/` to search by phone number(s)
+* `e/` to search by email(s)
+* `t/` to search by tag(s)
+
+It is implemented to search with one type of detail only so that the returned results will be relevant to that type of detail used only. i.e. if a user search for a person with phone number then only the phone numbers of the returned contacts are relevant, and other details are irrelevant to the input phone number during the search.
+
+Alternatives considered is to allow user input multiple details in each search. It may help to narrow down and shorten the list of contacts that will be returned but it is not implemented as user may only recalled some details of a person only. i.e. user know the name but do not recall the number.
+
 == Documentation
 
 We use asciidoc for writing documentation.
