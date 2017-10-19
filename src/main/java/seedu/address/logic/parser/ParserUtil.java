@@ -129,14 +129,14 @@ public class ParserUtil {
 
     /**
      * Parses and trims {@code filePath} if it is not empty.
-     * @throws PropertyNotFoundException if the {@code filePath} is not empty.
+     * @throws IllegalValueException if the {@code filePath} is not empty.
      */
-    public static String parseFilePath(String filePath) throws PropertyNotFoundException {
+    public static String parseFilePath(String filePath) throws IllegalValueException {
         requireNonNull(filePath);
         filePath = filePath.trim();
 
         if (filePath.isEmpty()) {
-            throw new PropertyNotFoundException();
+            throw new IllegalValueException("File path is required");
         }
         return filePath;
     }

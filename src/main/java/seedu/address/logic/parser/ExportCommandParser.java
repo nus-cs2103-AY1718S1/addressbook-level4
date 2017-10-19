@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
@@ -20,7 +21,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         try {
             String filePath = ParserUtil.parseFilePath(args);
             return new ExportCommand(filePath);
-        } catch (PropertyNotFoundException ive) {
+        } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
