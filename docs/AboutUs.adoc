@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::lincrediblejc.png[width="150", align="left"]
 {empty}[https://github.com/lincredibleJC] [<<JiaChao#, portfolio>>]
 
-Role: Team lead, Developer, Testing, Integration, Tool Expert +
+Role: Team lead, Developer, Integration, Scheduling and tracking, Tool Expert +
 Responsibilities: Logic
 
 '''
@@ -23,7 +23,7 @@ Responsibilities: Logic
 image::limcel.png[width="150", align="left"]
 {empty}[https://github.com/limcel] [<<Celine#, portfolio>>]
 
-Role: Developer, Documentation, Deliverables and Deadlines, Scheduling and Tracking, Tool Expert  +
+Role: Developer, Documentation, Tool Expert  +
 Responsibilities: Model
 
 '''
@@ -32,7 +32,7 @@ Responsibilities: Model
 image::lenaldnwj.png[width="150", align="left"]
 {empty}[https://github.com/Lenaldnwj] [<<Lenald#, portfolio>>]
 
-Role: Developer, Documentation, Code Quality, Integration +
+Role: Developer, Code Quality +
 Responsibilities: UI
 
 '''
@@ -41,7 +41,7 @@ Responsibilities: UI
 image::nahtanojmil.png[width="150", align="left"]
 {empty}[https://github.com/nahtanojmil] [<<Jonathan#, portfolio>>]
 
-Role: Developer, Testing, Code Quality, Deliverables and Deadlines, Scheduling and Tracking +
+Role: Developer, Testing, Deliverables and Deadlines +
 Responsibilities: Storage
 
 '''

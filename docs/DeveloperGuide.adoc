@@ -345,6 +345,84 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sort[]
+=== Sort mechanism
+The sort mechanism is implemented using SortCommand. It supports sorting of contacts names in the AddressBook according to alphabetical order from A to Z.
+
+When user calls for sorting to be implemented in cherBook, an empty ArrayList would be created. Under the Model component, UniquePersonList would compare the names of all persons in lower case using a comparator and return an Observable List containing of ReadOnlyPerson.
+
+`SortCommand` inherits from Command.
+
+SortCommand is implemented this way:
+[source,java]
+----
+public class SortCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... sort logic ...
+    }
+}
+----
+[NOTE]
+The sort is case insensitive.
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortSequenceDiagram.png[width="800"]
+
+When the user calls ‘sort’ or ‘st’ to sort the contacts in cherBook, the Model will take in an ArrayList named contactList from the Parser.
+
+Upon a successful sort, contacts are displayed in alphabetical order.
+If an empty list is given, the address book will return with message: “No contacts to be sorted”.
+If the list is already in correct order, the address book will return with: “All contacts are sorted alphabetically by name”.
+
+The following will show how the list is being returned to the user:
+[source,java]
+----
+public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
+    internalList.sort(new Comparator<Person>() {
+        @Override
+        public int compare(Person o1, Person o2) {
+           return ((o1.getName().toString().toLowerCase()).compareTo(o2.getName().toString().toLowerCase()));
+        }
+     });
+     return FXCollections.unmodifiableObservableList(mappedList);
+    }
+}
+----
+It is implemented this way to ensure that all person names in the UniquePersonList is compared to at the lowest level of abstraction.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** `SortCommand` inherits from Command +
+**Pros:** After sorting his/her contacts, it remains sorted and the original list of unsorted contacts is replaced by this list. +
+**Cons:** The user is unable to save the list of contacts in the original order(unsorted format). +
+**Alternative 2:** Implement undo/redo function for SortCommand +
+**Pros:** When undo is called, the list will return back to the most recent unsorted list. When redo is called, the list will return back to the sorted list of contacts. +
+**Cons:** The user is able to alter the list easily and may get confused whether is the current list the most recent sorted list.
+
+---
+
+**Aspect:** How sort executes +
+**Alternative 1 (current choice):** Uses the comparator in Java Collections to sort the arrays in alphabetical order. +
+**Pros:** Easy to implement. +
+**Cons:** Since method is inherited, it is difficult to debug and the only way is via the usage of vigorous user testing and logging. +
+**Alternative 2:** Writing a sort algorithm. +
+**Pros:** Case sensitivity can be accounted for and debugging is made simpler. +
+**Cons:** More error-proned as algorithm's logic must be checked constantly to ensure it accounts for all cases.
+
+---
+
+**Aspect:** Data structure to support the sort command +
+**Alternative 1 (current choice):** Creates an empty ArrayList to obtain the names from the UniquePersonList before sorting occurs. The sort overwrites the existing list of unsorted contacts.  +
+**Pros:** The original list of unsorted contacts is not altered. +
+**Cons:** Additional space usage and longer time needed to overwrite the original contact list, inefficiency and memory wastage may arise. +
+**Alternative 2:** Manually edit the list of contacts in the AddressBook +
+**Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
+**Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
+// end::sort[]
+=======
 // tag::studentparentcontact[]
 === Add student/parent phone contact mechanism
 
@@ -813,59 +891,75 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by tags |locate people easily
 
-|`* * *` |user |sort people by name |locate people easily
-
-|`* * *` |user |set a list of favourite people|search for my favourites easily
-
-|`* * *` |user |get confirmation before I edit or delete contacts|
+|`* * *` |user |get confirmation before I edit or delete contacts| [Coming in v2.0]
 
 |`* * *` |user |undo my actions |fix my mistakes
 
 |`* * *` |user |add multiple numbers to a contact |separate their mobile and home numbers
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |teacher |sort students by name and classes |find students easily [Coming in v2.0]
 
-|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes
+|`* * *` |busy teacher |be able to see who are the underperforming students|find out who I should spend more time on [Coming in v2.0]
 
-|`* *` |user |customise screensavers|personalise the addressBook
+|`* * *` |teacher |have contact information of students and parents|contact either of them [Coming in v2.0]
 
-|`* *` |user |customise the colour and wallpaper of the address book |personalise my addressBook
+|`* * *` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
 
-|`* *` |first time user |prompt user to input name |personalise the addressBook
+|`* * *` |concerned teacher |display statistics for the current group of students in the list|analyse the individual groups' academic progress [Coming in v2.0]
 
-|`* *` |user |back up my address book data online |I can access my address book data from other places
+|`* * *` |precise teacher |find out the 25th, 50th and 75th percentile scores for each class|get a better idea of students' academic progress [Coming in v2.0]
 
-|`* *` |user with many friends |autoComplete my searches |
+|`* * *` |precise teacher |compare the grades statistics between any two groups of students|make a quick comparison [Coming in v2.0]
 
-|`* *` |user |share my friend's contact with others |
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident [Coming in v2.0]
 
-|`* *` |user |delete all people with a tag |clean up addressBook faster
+|`* *` |user |customise the welcome page of the address book |feel motivated from wallpaper and quotes [Coming in v2.0]
 
-|`* *` |lazy user |addressBook to auto delete contacts after a certain date |
+|`* *` |first time user |prompt user to input name |personalise the addressBook [Coming in v2.0]
+
+|`* *` |user |back up my address book data online |I can access my address book data from other places [Coming in v2.0]
+
+|`* *` |user with many friends |autoComplete my searches | [Coming in v2.0]
+
+|`* *` |user |share my friend's contact with others | [Coming in v2.0]
+
+|`* *` |user |delete all people with a tag |clean up addressBook faster [Coming in v2.0]
+
+|`* *` |lazy user |addressBook to auto delete contacts after a certain date | [Coming in v2.0]
 
 |`* *` |user |redo an action |redo an undone action
 
-|`* *` |expert user |have separate address books |can separate my work and personal contacts
+|`* *` |expert user |have separate address books |can separate my work and personal contacts [Coming in v2.0]
 
 |`* *` |expert user |customise shorthand commands |so that I can search for contacts faster
 
-|`* *` |user |a calendar to sync my events |can plan them more efficiently
+|`* *` |user |a calendar to sync my events |can plan them more efficiently [Coming in v2.0]
 
-|`* *` |user |see most recently accessed contacts |so that I can access them faster
+|`* *` |user |see most recently accessed contacts |so that I can access them faster [Coming in v2.0]
 
-|`* *` |busy user |see a list of frequently accessed contacts|so that I locate them faster
+|`* *` |busy user |see a list of frequently accessed contacts|so that I locate them faster [Coming in v2.0]
 
-|`* *` |user |password protect my addressBook |protect my contacts' information
+|`* *` |user |password protect my addressBook |protect my contacts' information [Coming in v2.0]
 
-|`* *` |forgetful user |see a history of my last used commands |
+|`* *` |forgetful user |see a history of my last used commands|
 
-|`*` |user |add profile pictures to contacts |find my friends easily
+|`* *` |caring teacher| help students find suitable study buddies|motivate and aid them in their academic progress [Coming in v2.0]
 
-|`*` |user |set the colour of the tags |can view the tags easily
+|`* *` |caring teacher |be able to see my students' home location in extended screen using google maps|conduct house visits easily if they fall sick [Coming in v2.0]
 
-|`*` |user |use facial recognition |enhance security
+|`* *` |caring teacher |schedule appointments with my students|conduct extra classes when they ask for it [Coming in v2.0]
 
-|`*` |user |call/message directly from my address book |reach them easily
+|`*` |user |add profile pictures to contacts |find my friends easily [Coming in v2.0]
+
+|`*` |user |set the colour of the tags |can view the tags easily [Coming in v2.0]
+
+|`*` |user |use facial recognition |enhance security [Coming in v2.0]
+
+|`*` |user |call/message directly from my address book |reach them easily [Coming in v2.0]
+
+|`*` |teacher |schedule my timetable according to my classes|plan my timetable to fit other activities [Coming in v2.0]
+
+|`*` |thoughtful teacher |remind students about homework assignments| [Coming in v2.0]
 |=======================================================================
 
 {More to be added}
@@ -1039,6 +1133,25 @@ Use case ends.
 ** 2a1. AddressBook displays an empty list
 
 Use case ends.
+
+[discrete]
+=== Use case: Sort
+
+*MSS*
+
+1.  User requests to sort persons in alphabetical order
+2.  AddressBook sorts the list of persons
+3.  AddressBook displays the sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
 
 [discrete]
 === Use case: Undo
