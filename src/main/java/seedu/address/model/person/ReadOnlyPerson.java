@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.customField.CustomField;
+import seedu.address.model.customField.UniqueCustomFieldList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,6 +24,9 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<UniqueCustomFieldList> customFieldProperty();
+    Set<CustomField> getCustomFields();
+    UniqueCustomFieldList getCustomFieldList();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -49,6 +54,7 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        getCustomFields().forEach(builder::append);
         return builder.toString();
     }
 

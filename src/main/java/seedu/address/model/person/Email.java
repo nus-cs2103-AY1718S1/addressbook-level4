@@ -24,7 +24,7 @@ public class Email {
     public Email(String email) throws IllegalValueException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
-        if (!isValidEmail(trimmedEmail)) {
+        if (!isUnknownEmail(email) && !isValidEmail(trimmedEmail)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
         this.value = trimmedEmail;
@@ -35,6 +35,21 @@ public class Email {
      */
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if given string is empty, representing an unknown email
+     */
+    private static boolean isUnknownEmail(String test) {
+        return test.equals("");
+    }
+
+    /**
+     *
+     * @return true if given email has unknown value
+     */
+    public boolean isUnknownEmail() {
+        return this.value.equals("");
     }
 
     @Override

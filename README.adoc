@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= Contact Book v1.2
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,11 +15,11 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
+* This is a desktop Address Book application. It has a GUI that allows user to interact with it to perform operations included in the address book.
+* It is a Java application intended for students in National University of Singapore, which means features of this address book are tailored to the needs of the students.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
 * What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
+** A more sophisticated GUI that includes a list  panel and a panel with details of the selected person.
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 

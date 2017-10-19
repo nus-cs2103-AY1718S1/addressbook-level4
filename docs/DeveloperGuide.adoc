@@ -216,7 +216,27 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+=== Person Information Panel
+
+The person information panel is created using javafx. It should display detailed information of a person when the person is selected from the person list panel. Before any person is selected, the person information panel should be blank.
+
+The event of the selection of a person is registered using the Event Bus system.
+
+The following shows the usage of the person information panel:
+
+Before selecting a person:
+
+image::AddressAppPre-selection.png[width="800"]
+
+After selecting a person:
+
+image::AddressAppPost-selection.png[width="800"]
+
+The following diagram shows the class diagram for person information panel:
+
+image::PersonInformationPanelClassDiagram.png[width="800"]
+
+As we can see, it inherits from the UiPart class, and that MainWindow class has access to the panel, which is then displayed in the GUI.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -363,6 +383,146 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Custom Field
+==== Model
+A UniqueCustomFieldList Class is created which will be used to store a person's Custom Fields.
+
+Each person can have multiple custom fields which are optional. Example of custom fields include nickname, favourite food, relatives etc.
+
+Each custom field of a person includes two variables: the custom field name and the custom field value.
+For example, nickname is a custom field name whereas Ahchuang is a custom field value. (i.e. Ahchuang is the nickname of the person)
+
+==== Logic
+A Command - CustomCommand - is used to manipulate the custom fields of a person. The CustomCommand is an undoable command.
+
+When a new CustomCommand is created, it will be constructed with 3 parameters: Index, String, String.
+The 3 parameters represents the index of the person in the AddressBook, a custom field name and a custom field value respectively.
+
+If the input custom field name of the person is not existed yet, the custom field with name and value as inputs will be created and added into the person's UniqueCustomFieldList.
+For example, command `custom 1 Nickname Ahchuang` will add a nickname custom field with value "Ahchuang" for the first person in the AddressBook if nickname field previously does not exist.
+Else if the input custom field name of the person has already existed and the input custom field value is not empty, the custom field value of that custom field for the person will be replaced with the input value.
+For example, command `custom 1 Nickname Jon` will change the nickname custom field of the first person from his previous nickname to "Jon".
+Else if the input custom field value is empty, the custom field of the person will be cleared.
+For example, command `custom 1 Nickname` will clear the nickname custom field of the first person in the AddressBook.
+
+==== Storage
+Xml file for Custom Field is created and the Xml for Person is updated for storing the information of the customs fields of every person.
+
+==== Ui
+A new label will be displaced for each person for each custom field.
+
+==== Sequence Diagram
+image::CustomCommandSequenceProgram.png[width="800"]
+
+=== Search bar
+==== Front end
+The search bar is implemented in the front end using `SearchBox.fxml`, which controls the text field that receives query keywords from user.
+
+At construction time, a buffer string is initialised to empty and is ready to store the current user input on the search bar.
+Each time a user types an alphanumeric character, a `KeyTypedEvent` is generated which is captured by the handler `handleKeyTyped()`.
+The character is concatenated to the buffer string and passed to logic component and executed using `#logic:executeSearch(String)`.
+Conversely, if a user hits backspace, a `KeyPressedEvent` is generated and captured in `handleKeyPress()`.
+The handler deletes the last character in the buffer string using `Substring()` and passes the resulting buffer string to logic for processing.
+
+==== Back end
+You are expected to have read `2.3 logic component` (especially the class diagram) before you could understand this part.
+
+Like `CommandBox`, `SearchBox` has the same logic component to execute query words. Different from `#logic:execute(commandText)` that executes commands,
+a dedicated method `executeSearch(searchText)` is used to parse the user input.
+A separate parser `SearchParser` is implemented in the same level of abstraction as `AddressBookParser`, and would return a `Command` like `AddressbookParser` does.
+What is different is `SearchParser` returns either `FindCommand(Predicate)` or `ListCommand`,
+depending on whether the searchText is empty - empty search word is interpreted as listing all persons, like other convenient modern address book search features behave.
+
+The logic that executes commands returned by `SearchParser` is largely the same as before, with minor modifications.
+Previously, a person would only be listed if an exact match of name is found; in this version, a person will be displayed as long as
+all words in his full name contains all the search keywords as prefix.
+For example, `Hansen Johannah` can be found by typing `Han Johan` in the search bar,
+but `Hansen Jonannah` cannot be found because the prefix `Johan` is not in any part of the full name.
+
+==== Sequence diagram
+image::SearchBarSequenceDiagram.png[width="800"]
+
+==== Design considerations
+---
+**Aspect:** parsing search text +
+**Alternative 1 (current choice):** dedicated parser for search text +
+**Pros:** modularity, ease of implementation +
+**Cons:** added complexity of abstraction for parsing at the highest level, decreases cohesion. +
+**Alternative 2:** integrate search parsing to `AddressBookparser` using a flag +
+**Pros:** cohesion maintained +
+**Cons:** modularity compromised, harder to implement a second parameter in original parser; heterogeneous nature of
+inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
+
+---
+**Aspect:** execution of search command +
+**Alternative 1 (current choice):** dedicated execution in Logic interface with independent `executeSearch()` method +
+**Pros:** modularity, ease of implementation and maintenance +
+**Cons:** decrease cohesion of Logic component slightly +
+**Alternative 2:** integrate into `execute()` method using a flag +
+**Pros:** cohesion in `execute()` is maintained +
+**Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
+
+---
+{stub to be copied and pasted later on for further entries}
+
+**Aspect:** +
+**Alternative 1 (current choice):** +
+**Pros:**  +
+**Cons:** +
+**Alternative 2:** +
+**Pros:**   +
+**Cons:**
+
+=== More than one instance for each field
+ (Coming in V1.3)
+ 
+ ====Description
+ 
+Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
+
+==== Model
+UniquePhoneList, UniqueEmailList and UniqueAddressList Classes are created for each person to store the person's respective Fields.
+
+UniquePhoneList is a list of Phone object. It will contain at least one local phone number as the primary phone number, this phone number is recognized by the country code +65.
+ 
+This primary phone number must not be null, and it will be at the front of the UniquePhoneList.
+ 
+While other additonal numbers are optional. Note that if the person has more than one local phone numbers, the one added first will be the primary number. 
+ 
+Likewise for UniqueEmailList and UniqueAddressList. The primary email will be NUS webmail and the primary address will be the local address.
+ 
+Phone, Email and Address Classes are altered accordingly.
+ 
+A Phone object now has two field, country code ("+" + two digits integer) and the actual number.
+
+A Email object will be parsed in two parts, first part is the string before @ and the second part is after @, NUS webmail is recognized by the second part (.equals(u.nus.edu));
+
+==== Logic
+UpdatePhoneCommand, UpdateEmailCommand and UpdateAddressCommand will be created to add/remove these fields.
+ 
+When a Update[sth]Command is created, it will be constructed with 3 parameters: Index, String, String.
+The 3 parameters represents the index of the person in the AddressBook, action to be taken (add/remove) and a value respectively.
+ 
+When action is add, we will create an object of the added instance and add it to the end of the Unique[sth]List.
+When action is remove, we first check if the value equals to the primary value in the Unique[sth]List, this will flag an "primary [field] cannot be removed" message, otherwise we will just remove the value from the Unique[sth]List.
+
+
+For example, command `updatePhone 1 add p/+8623333333` will add a phone number to the first person in the list of the addressBook.
+  
+command 'updatePhone 1 remove p/+6583060774' will first check whether p/+6583060774 is the primary phone number is the UniquePhoneList.
+If yes, error messge "Primary phone number p/+6583060774 cannot be removed."
+Else, p/+6583060774 will be removed from the UniquePhoneList.
+  
+Likewise for UpdateEmail and UpdateAddress.
+ 
+==== Storage
+Xml file for newly created list will be created and the Xml for Person is updated for storing the information of the fields of every person.
+ 
+==== Ui
+A new label will be displaced for each person for each instance of the same fields.
+  
+ 
 
 == Documentation
 
@@ -721,7 +881,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |refer to help page whenever I forget how to use the app
 
 |`* * *` |user |add a person |record name, phone number, email and address
 
@@ -729,15 +889,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |find a person by middle or last name |accurately locate details of persons without having to go through the entire list
-
-|`* * *` |user |click buttons to work in the app |use the app more conveniently
-
-|`* * *` |user |add custom fields |store special info about a person
+|`* * *` |user |add custom fields |store special info about a person e.g. favourite food
 
 |`* * *` |user |list contacts in alphabetical order |locate persons more easily
 
-|`* * *` |user |edit fields |use the app more easily
+|`* * *` |user |edit fields |
 
 |`* * *` |user |add multiple instances of the same field e.g. multiple phone numbers |do not have to store additional email, phone, etc in a fresh contact
 
@@ -745,13 +901,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |back up the addressbook (save as...) |know where to look when addressbook is accidentally deleted
 
-|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |have aesthetically pleasing UI |
-
-|`* *` |user |find a person by a custom search criterion |help recognize a person without knowledge of name
+|`* *` |user |find a person by phone number |help recognize a person without knowledge of name
 
 |`* *` |teacher |list individual fields e.g. phone number |mass message students
 
@@ -759,11 +911,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |alternate English and Chinese in a custom field |accommodate to the Chinese population
 
-|`* *` |user |see the details of a person in an organised manner |use the app more easily
-
 |`* *` |user |list contacts according to custom groups |easily reach a certain group of contacts
-
-|`*` |user |add/delete/find information in (O logN) time |fast information retrieval
 
 |`*` |user |add picture as a field |see my contacts' faces
 
@@ -772,9 +920,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |search with ambiguous criteria |allow for more margin of error with searches
 
 |`*` |user |display frequency of contact information retrieval |know which contacts I visit more frequently
+
+|`*` |user |change language of the app |users who only understands Mandarin can also use the app
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -842,29 +991,21 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to find a person
-2.  AddressBook shows an example of find person message
-3.  User follows the format and provide the name of the person
-4.  AddressBook finds the person
+1.  User type in the name of the desired person in the search bar
+2.  AddressBook displays the list of matched persons in the panel
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. User uses the wrong format.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 * 3b. Name given by the user is not in the AddressBook
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. AddressBook displays nothing.
 +
-Use case resumes at step 2.
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Change language
@@ -889,14 +1030,6 @@ Use case ends.
 Use case resumes at step 2.
 
 
-
-
-
-
-
-
-{More to be added}
-
 [appendix]
 == Non Functional Requirements
 
@@ -912,12 +1045,13 @@ Use case resumes at step 2.
 .  Should not be easily hacked, e.g. data corruption, data access by other.
 .  Should be able to change the font type and size easily.
 .  Changes of the address book should be saved in a log file.
-
-{More to be added}
+.  UI should be aesthetically pleasing
+.  add, delete, edit and find operation should take no longer than O(log n)
 
 [appendix]
 == Glossary
 
+.  Search bar: the upper right-hand-side bar which allows convenient searching
 .  Address Book: The specific book that the user is using the application on.
 .  Format: The way in which command is entered.
 .  History: Commands entered previously.
