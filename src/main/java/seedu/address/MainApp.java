@@ -44,6 +44,7 @@ public class MainApp extends Application {
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
+
     protected Ui ui;
     protected Logic logic;
     protected Storage storage;
