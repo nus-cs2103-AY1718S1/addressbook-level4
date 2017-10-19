@@ -129,10 +129,11 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws PersonNotFoundException if no person is found.
      */
     @Override
-    public synchronized void removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removeWhitelistedPerson(target);
+    public synchronized ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ReadOnlyPerson whitelistedPerson = addressBook.removeWhitelistedPerson(target);
         updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
         indicateAddressBookChanged();
+        return whitelistedPerson;
     }
 
     @Override

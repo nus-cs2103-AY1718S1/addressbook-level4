@@ -46,7 +46,7 @@ public class BorrowCommand extends UndoableCommand {
 
         try {
             if (personThatBorrowed.getIsWhitelisted()) {
-                model.removeWhitelistedPerson(personThatBorrowed);
+                personThatBorrowed = model.removeWhitelistedPerson(personThatBorrowed);
             }
             model.addDebtToPerson(personThatBorrowed, amount);
         } catch (PersonNotFoundException pnfe) {

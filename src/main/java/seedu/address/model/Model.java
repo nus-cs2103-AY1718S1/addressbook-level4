@@ -46,7 +46,7 @@ public interface Model {
     void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Removes the given person from whitelist. */
-    void removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
