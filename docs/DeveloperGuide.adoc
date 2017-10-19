@@ -419,7 +419,8 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
-The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function:
+The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function.
+
 image::HelpEnhancementScreenShot.png[width="200"]
 
 === Locating a person's address [Since v1.2]
