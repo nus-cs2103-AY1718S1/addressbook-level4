@@ -218,6 +218,69 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::dob
+=== Addition of Date of Birth field
+
+The Date of birth field includes information concerning the age of the user stored in the record.
+Its impact is noticed in the add and edit command.
+
+The `add` command has the following format:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+
+The prefix d/ as indicated in the CliSyntax.java denotes the beginning of the date of birth argument.
+
+The class DateOfBirth.java within the Model component , validates the input from the user through the following regex:
+[source,java]
+----
+ public static final String DOB_VALIDATION_REGEX = "[0-9][0-9]\\s+[0-9][0-9]\\s+[0-9][0-9][0-9][0-9].*";
+----
+The above regex only accepts dates with format : dd mm yyyy
+
+When the d/ is encountered , the trailing argument is passed into `isValidDateOfBirth(String test)` for validation when constructing the `DateOfBirth` object.
+eg : `add n/John Doe p/98765432 d/27 01 1997`
+
+[source,java]
+----
+ /**
+ * Validates given Date of Birth.
+ *
+ * @throws IllegalValueException if given date of birth string is invalid.
+ */
+ public DateOfBirth(String dob) throws IllegalValueException {
+        requireNonNull(dob);
+        if (!isValidDateOfBirth(dob)) {
+            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
+        }
+        this.finalDateOfBirth = dob;
+  }
+
+ /**
+ * Returns true if a given string is a valid person date of birth.
+ */
+ public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+ }
+----
+
+Therefore, in the above example, `"27 01 1997"` is passed as the argument.
+
+Date of birth field is also an optional field , unlike the Name field. When the date of birth is not specified,
+eg :  add n/Johnny Doe  , the no-argument constructor is used.
+It sets the `value` of the `DateOfBirth` object to an empty string without any validation.
+
+[source,java]
+----
+public DateOfBirth() {
+        this.finalDateOfBirth = "";
+    }
+----
+
+An alternative implementation would be to implement JAVA 8 to easily calculate the age of the entry using the string input.
+
+
+// end::dob[]
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -722,6 +785,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |Include date of birth as a field in record entry|
 
 |`* * *` |user |add a new person by providing only his/her name|
 
