@@ -29,7 +29,8 @@ public class UnfavouriteCommandTest {
         ReadOnlyPerson personToFavourite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnfavouriteCommand unfavouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(UnfavouriteCommand.MESSAGE_UNFAVOURITE_PERSON_SUCCESS, personToFavourite);
+        String expectedMessage = String.format(UnfavouriteCommand.MESSAGE_UNFAVOURITE_PERSON_SUCCESS,
+                personToFavourite);
         CommandResult commandResult = unfavouriteCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
