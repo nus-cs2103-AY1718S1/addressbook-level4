@@ -54,7 +54,7 @@ public class AutoCompleteCommandParser implements AutoCompleteParser {
         final LinkedList<String> possibleCommands = new LinkedList<String>();
 
         for (CommandWordUsageTuple commandTuple : COMMAND_WORDS_LIST) {
-            if (startWithSameLetters(stub, commandTuple.getCommandWord())) {
+            if (AutoCompleteUtils.startWithSameLetters(stub, commandTuple.getCommandWord())) {
                 possibleCommands.add(commandTuple.getCommandUsage());
             }
         }
@@ -63,19 +63,4 @@ public class AutoCompleteCommandParser implements AutoCompleteParser {
 
         return possibleCommands;
     }
-
-    /**
-     * Checks if the command word starts with the letters of the incomplete command stub provided
-     * @param stub incomplete command supplied by the user
-     * @param commandWord {@code COMMAND_WORD} constant specified in each command class
-     * @return true if commandWord contains stub as the first few letters
-     */
-    private boolean startWithSameLetters(String stub, String commandWord) {
-        if (stub.length() <= commandWord.length()) {
-            return stub.equals(commandWord.substring(0, stub.length()));
-        } else {
-            return false;
-        }
-    }
-
 }

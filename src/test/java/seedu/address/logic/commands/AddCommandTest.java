@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
+import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -110,6 +111,12 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllNamesInAddressBook() {
             fail("This method should not be called.");
             return null;
         }
