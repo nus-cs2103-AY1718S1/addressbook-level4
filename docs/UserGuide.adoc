@@ -189,12 +189,12 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Locating persons by name: `findregex`
 
-Finds persons whose names match the regex given. Note that only the name is searched. +
+Finds persons whose names match the regex given. Note that only the name is searched. (Since v1.2) +
 Format: `findregex REGEX`
 
 Examples:
 
-* `findregex ^^Joh?n$` +
+* `findregex ^Joh?n$` +
 Returns `Jon` and `John`
 
 === Deleting a person : `delete`
