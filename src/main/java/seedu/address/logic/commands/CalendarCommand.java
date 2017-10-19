@@ -32,6 +32,7 @@ public class CalendarCommand extends Command {
     public static final String COMMAND_ALIAS = "cal";
 
     public static final String MESSAGE_SUCCESS = "Calendar Retrieved Successfully!";
+    public static final String MESSAGE_NO_EVENTS = "No Events Found!";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
 
     /** Application name. */
@@ -138,9 +139,8 @@ public class CalendarCommand extends Command {
         }
         List<Event> items = events.getItems();
         if (items.size() == 0) {
-            System.out.println("No upcoming events found.");
+            return new CommandResult(MESSAGE_NO_EVENTS);
         } else {
-            System.out.println("Upcoming events");
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
                 if (start == null) {
@@ -149,7 +149,6 @@ public class CalendarCommand extends Command {
                 System.out.printf("%s (%s)\n", event.getSummary(), start);
             }
         }
-
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
