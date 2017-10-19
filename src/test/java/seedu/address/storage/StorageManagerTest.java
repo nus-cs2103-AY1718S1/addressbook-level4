@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,7 +21,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.UserPerson;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.model.util.SampleUserPersonUtil;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
