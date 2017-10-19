@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103-T10-B1/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T10-B1/AcquaNote
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -210,34 +210,6 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Favouriting a person : `favourite`
-
-Favourites the person identified by the index number used in the last person listing. +
-If person identified is already a favourite, the person is no longer a favourite.
-Format: `favourite INDEX`
-
-****
-* Changes the font colour of the person's name at the specified `INDEX` to red.
-* Shifts the person up to the top of the list.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`favourite 2` +
-Favourites the 2nd person in the address book.
-* `find Betsy` +
-`favourite 1` +
-Favourites the 1st person in the results of the `find` command.
-* `list` +
-`favourite 1` +
-Favourites the 1st person in the address book. +
-`favourite 1` +
-Unfavourite the 1st person in the address book.
-
-
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -325,12 +297,7 @@ Format: `sort OPTION`
 * Sorts all persons by specified `OPTION`.
 * The OPTION refers to a contact's field, e.g. 'name', 'phone', 'email', ...
 * The OPTION *must be a hyphen followed by a single lower case alphabet* -n, -p, -e, ...
-* Available options:
-**'-n': sort by name
-**'-p': sort by phone number
-**'-e': sort by email address
-**'-a': sort by address
-**'-t': sort by tag
+* Available options: '-n': sort by name; '-p': sort by phone number; -e': sort by email address; '-a': sort by address; '-t': sort by tag.
 ****
 
 Examples:
@@ -368,6 +335,33 @@ Format: `unlock PASSWORD`
 
 A dialog window pops up during contact editing.
 
+=== Favouriting a person : `favourite`
+
+Favourites the person identified by the index number used in the last person listing. +
+If person identified is already a favourite, the person is no longer a favourite.
+Format: `favourite INDEX`
+
+****
+* Changes the font colour of the person's name at the specified `INDEX` to red.
+* Shifts the person up to the top of the list.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`favourite 2` +
+Favourites the 2nd person in the address book.
+* `find Betsy` +
+`favourite 1` +
+Favourites the 1st person in the results of the `find` command.
+* `list` +
+`favourite 1` +
+Favourites the 1st person in the address book. +
+`favourite 1` +
+Unfavourite the 1st person in the address book.
+
 === To-do list: `sch`
 
 Attach a To-do list to a specified person to manage schedule with that person. +
@@ -398,6 +392,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`, `del john`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Favourite* : `favourite INDEX` +
+e.g. `favourite 1`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` or +
 `find -u KEYWORD` or +
 `find -d [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
@@ -406,8 +402,8 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Sort* : 'sort OPTION' +
-e.g. 'sort -n'
+* *Sort* : `sort OPTION` +
+e.g. `sort -n`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
