@@ -3,7 +3,6 @@ package seedu.address.email;
 import seedu.address.email.exceptions.EmailSendFailedException;
 import seedu.address.email.exceptions.LoginFailedException;
 import seedu.address.email.exceptions.NotAnEmailException;
-
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 

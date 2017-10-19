@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import com.google.common.eventbus.Subscribe;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -14,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -22,6 +20,8 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+
+import java.util.logging.Logger;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -78,6 +78,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        scene.getStylesheets().add(MainApp.class.getResource("/view/"+prefs.getCurrentUserTheme()+".css").toExternalForm());
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -190,6 +191,17 @@ public class MainWindow extends UiPart<Region> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     * Opens themeing window.
+     */
+    @FXML
+    public void handleTheme() {
+        System.out.println("Entering themeing mode!");
+        ThemeSelectionWindow themeSelectionWindow = new ThemeSelectionWindow(prefs);
+        themeSelectionWindow.show();
+
     }
 
     void show() {

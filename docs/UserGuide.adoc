@@ -354,6 +354,16 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::themeselect[]
+=== Selecting an application theme
+From the top menu bar, select `Themes`, and then `Select Themes`.
+
+Click on a theme, the left side label will indicate which theme is currently selected.
+
+*Important!* +
+The application must be **restarted** before the newly selected theme is activated.
+// end::themeselect[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

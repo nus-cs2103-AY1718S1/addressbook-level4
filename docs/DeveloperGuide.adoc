@@ -451,6 +451,45 @@ image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
 
 // end::multiple[]
 
+// tag::themeing[]
+
+=== Theme Support
+
+Theme support is implemented by leveraging the separation of styling from views since `css` files can be created by the end user, and imported into `fxml` views. +
+
+Currently, v1.2 is shipped with two themes, *Dark* and *Light*.
+
+*Importing Styles at Runtime*
+
+By default, `fxml` files in the AddressBook application contain the line `<URL value="@THEME.css" />` to import CSS stylesheets.
+
+For a user selectable theme, this declaration is removed from each `fxml` file, and replaced by a method call via each model's associated `javafx.scene.Scene` object. Styling is now set in the pattern: +
+`scene.getStylesheets().add(THEME RESOURCE);`
+
+*Saving Theme as User Preference*
+
+User Preferences are saved and loaded by default from the `preferences.json` file in the parent directory. The current user theme is also saved in this file as the key-value pair `currentUserTheme: THEME_NAME`.
+
+The User Preferences wrapper class is then updated to incorporate getters and setters for this new attribute, and each model may now access the current user theme to load the proper stylesheet at runtime.
+
+*Allowing User to Preview Themes*
+
+Theme previews are supported with thumbnails. Each thumbnail is simply a screenshot of the selected theme loaded in the AddressBook application.
+
+These theme preview thumbnails are placed in `/images/theme_thumbnails`.
+
+*GUI Interface for Theme Selection*
+
+Similar to the help window, a *Theme Selection* window has been added to the application to facilitate theme switching.
+
+The view is declared in `ThemeSelectionWindow.fxml` and controlled by `ThemeSelectionWindow.java`. This windows is created and opened after an `onAction` event from a menu button in `MainWindow.java`.
+
+*Improvements for Scalability*
+
+In the next version a format will be incorporated to standardize theme name, resource location, thumbnail. With this, the end user can create and load multiple custom themes into the AddressBook application.
+
+// end::themeing[]
+
 === Commenting
 The commenting feature was implemented as an end-to-end feature that touched upon all components. 
 
