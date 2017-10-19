@@ -3,10 +3,10 @@ package seedu.address.logic.parser;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.tag.Tag;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.BatchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
