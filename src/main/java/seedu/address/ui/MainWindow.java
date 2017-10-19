@@ -42,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private RemarkPanel remarkPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -62,6 +63,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane remarkDisplayPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -134,6 +138,9 @@ public class MainWindow extends UiPart<Region> {
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        remarkPanel = new RemarkPanel();
+        remarkDisplayPlaceholder.getChildren().add(remarkPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 logic.getFilteredPersonList().size());

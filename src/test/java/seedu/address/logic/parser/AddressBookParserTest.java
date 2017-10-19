@@ -8,6 +8,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -142,10 +143,11 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_remarkCommandWord_returnsRemarkCommand() throws Exception {
-        final Remark remark = new Remark("Some remark.");
+        ArrayList<Remark> remarks = new ArrayList<>();
+        remarks.add(new Remark("Some remark."));
         RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
-        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + "Some remark.");
+        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remarks), command);
     }
 
     @Test

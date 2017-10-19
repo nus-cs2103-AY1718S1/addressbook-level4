@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -107,7 +108,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
+        ArrayList<Remark> updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
         FavouriteStatus updatedFavouriteStatus =
                 personToEdit.getFavouriteStatus(); // edit command does not allow editing favourite status
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(currentTags);
