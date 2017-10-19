@@ -44,10 +44,10 @@ public class DeleteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        queue.offer(personToDelete);
 
         try {
             model.deletePerson(personToDelete);
+            queue.offer(personToDelete);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
