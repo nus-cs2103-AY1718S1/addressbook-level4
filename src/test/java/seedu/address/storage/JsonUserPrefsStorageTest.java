@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -130,6 +131,21 @@ public class JsonUserPrefsStorageTest {
         jsonUserPrefsStorage.saveUserPrefs(original);
         readBack = jsonUserPrefsStorage.readUserPrefs().get();
         assertEquals(original, readBack);
+    }
+
+    @Test
+    public void assertEqualsSameInstanceReturnsTrue() {
+        String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
+        JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);
+        assertTrue(jsonUserPrefsStorage.equals(jsonUserPrefsStorage));
+    }
+
+    @Test
+    public void assertEqualsNotJsonUserPrefsStorageInstanceReturnsFalse() {
+        String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
+        JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);
+        assertFalse(jsonUserPrefsStorage.equals(new Object()));
+        assertFalse(jsonUserPrefsStorage.equals(""));
     }
 
 }

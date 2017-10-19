@@ -2,11 +2,13 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalRolodex;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Rule;
@@ -131,6 +133,21 @@ public class XmlRolodexStorageTest {
         XmlRolodexStorage rolodexStorage = new XmlRolodexStorage(invalidExtensionedFilePath);
         thrown.expect(InvalidExtensionException.class);
         rolodexStorage.saveRolodex(new Rolodex());
+    }
+
+    @Test
+    public void assertEqualsSameInstanceReturnsTrue() {
+        String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.rldx";
+        XmlRolodexStorage xmlRolodexStorage = new XmlRolodexStorage(pefsFilePath);
+        assertTrue(xmlRolodexStorage.equals(xmlRolodexStorage));
+    }
+
+    @Test
+    public void assertEqualsNotXmlRolodexStorageInstanceReturnsFalse() {
+        String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.rldx";
+        XmlRolodexStorage xmlRolodexStorage = new XmlRolodexStorage(pefsFilePath);
+        assertFalse(xmlRolodexStorage.equals(new Object()));
+        assertFalse(xmlRolodexStorage.equals(""));
     }
 
 
