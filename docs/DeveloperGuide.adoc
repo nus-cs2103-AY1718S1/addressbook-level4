@@ -176,7 +176,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a lesson) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the link:#sequence-diagram[Sequence Diagram] for interactions within the `Logic` component for the `execute("delete 1")` link:#api[API] call.
@@ -195,7 +195,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the ModU data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the link:#ui[UI] can be bound to this list so that the link:#ui[UI] automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyLesson>` that can be 'observed' e.g. the link:#ui[UI] can be bound to this list so that the link:#ui[UI] automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -262,18 +262,18 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the ModU. The current state of the ModU is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th lesson in the ModU. The current state of the ModU is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new lesson.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the lesson was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the ModU to the state before the `add` command executed.
 
@@ -320,7 +320,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
-**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Pros:** Will use less memory (e.g. for `delete`, just save the lesson being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
@@ -487,7 +487,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all lessons in the list.
 +
 ****
 * Hints
@@ -521,7 +521,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `link:#ui[UI]` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different tags inside lesson cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
 +
 **Before**
 +
@@ -749,11 +749,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
 
-|`* * *` |teacher |delete an existing module in a particular timeslot |I can make changes to the timeslot
+|`* * *` |teacher |delete an existing module in a particular time slot |I can make changes to the time slot
 
-|`* * *` |teacher |delete an existing module in a particular location |I can make changes to the timeslot
+|`* * *` |teacher |delete an existing module in a particular location |I can make changes to the time slot
 
-|`* * *` |teacher |update an existing module timeslot |I can change the current timeslot to an updated one
+|`* * *` |teacher |update an existing module time slot |I can change the current time slot to an updated one
 
 |`* * *` |teacher |update an existing module location |I can change the current location to an updated one
 
@@ -783,13 +783,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a lesson |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a lecturer by name |locate details of lecturers without having to go through the entire list
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the ModU |sort persons by name |locate a person easily
+|`*` |user with many lessons in the ModU |sort lessons by code |locate a lesson easily
 
 |=======================================================================
 
@@ -1013,7 +1013,7 @@ Use case ends.
        .  Compatible with both 32-bits and 64-bits systems
 
    Capacity
-       .  Should be able to hold up to 10000 persons without a noticeable sluggishness in performance for typical usage.
+       .  Should be able to hold up to 10000 lessons without a noticeable sluggishness in performance for typical usage.
 
    Constraint(s)
        .  The system should be backward compatible with data produced by earlier version of the system
