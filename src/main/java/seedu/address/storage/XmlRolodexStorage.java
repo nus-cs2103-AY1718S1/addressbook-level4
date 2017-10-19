@@ -82,4 +82,21 @@ public class XmlRolodexStorage implements RolodexStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableRolodex(rolodex));
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof XmlRolodexStorage)) {
+            return false;
+        }
+
+        // state check
+        XmlRolodexStorage other = (XmlRolodexStorage) obj;
+        return filePath.equals(other.filePath);
+    }
+
 }

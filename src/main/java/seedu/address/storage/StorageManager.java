@@ -98,4 +98,24 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //=========== State accessor =============================================================
+
+    @Override
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof StorageManager)) {
+            return false;
+        }
+
+        // state check
+        StorageManager other = (StorageManager) obj;
+        return rolodexStorage.equals(other.rolodexStorage)
+                && userPrefsStorage.equals(other.userPrefsStorage);
+    }
+
 }

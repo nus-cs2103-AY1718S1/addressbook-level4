@@ -145,7 +145,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return rolodex.equals(other.rolodex)
-                && getLatestPersonList().equals(other.getLatestPersonList());
+                && sortedPersons.equals(other.sortedPersons)
+                && filteredPersons.equals(other.filteredPersons);
     }
 
 }
