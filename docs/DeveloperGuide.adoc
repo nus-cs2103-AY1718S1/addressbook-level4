@@ -489,6 +489,77 @@ comparator before executing a sort and filter which is handled by the event cons
 **Cons:** The displayed listing will not comply with the model comparator.
 // end::sorting[]
 
+// tag::shortcut[]
+=== Keyboard Shortcuts Mechanism
+The keyboard shortcuts mechanism is implemented in the `KeyListener` class under the `UI` component of the application.
+It listens for key presses done by the user and executes actions mapped to these key presses, or key events.
+The mapping of actions to key events are found in the `KeyListenerUtil` class.
+
+The following class diagram shows the relationship between classes concerning the keyboard shortcuts mechanism.
+
+image::KeyListenerDiagram.png[width="800"]
+
+The `KeyListener` requires access to the `CommandBox`, `PersonListPanel` and `Logic` components for key event executions,
+such as changing the focus node and executing word commands.
+
+When the user launches the application, the `UiManager` calls `mainWindow.setKeyListeners()`
+which creates the `KeyListener` class to handle the key events.
+In `KeyListener`, the main method for handling the key events has the following code:
+
+[source,java]
+----
+public void handleKeyPress() {
+    mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        // actions to execute key event
+    });
+}
+----
+The `mainNode` refers to the node containing the all UI components in the application,
+and `addEventFilter` captures key events received by that node.
+
+NOTE: Another common method used for capturing key events is `keyOnPressed`.
+In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
+`addEventFilter` captures the key events before they are consumed by the `TextField`.
+
+A `HashMap` is used for mapping actions to key combinations. When the user presses a key combination matching one that is assigned in the
+`HashMap`, the corresponding action will be executed. An example of such an execution is given as shown:
+
+[source, java]
+----
+private void executeKeyEvents(KeyEvent keyEvent) {
+	if (keys.get(“FOCUS_PERSON_LIST”).match(keyEvent)) {
+		// action to focus on person list
+	}
+	// … more cases
+}
+----
+Where the key combination for the action `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+
+NOTE: If an action that is not mapped to a key combination is called, a warning message will be displayed in the terminal.
+
+NOTE: If a mapped key combination is invalid, an `IllegalArgumentException` is thrown and the application terminates.
+
+==== Design Considerations
+
+**Aspect:** Data structure for mapping actions to key combinations +
+**Alternative 1 (current choice):** `HashMap` in a separate utility class +
+**Pros:** Allows easy addition of an action-key combination pair. +
+**Cons:** Keys are re-mapped whenever the `KeyListener` calls for the `HashMap`,
+since the `HashMap` has to be instantiated and mapped at the same time. +
+**Alternative 2:** Constant variables in the same class +
+**Pros:** Constant values are only created once. +
+**Cons:** The `KeyListener` class is less cohesive since it acts as a storage for key mappings in addition to handling key events.
+
+**Aspect:** Exception handling for missing key mappings +
+**Alternative 1 (current choice):** Catches the `NullPointerException` and display a warning message in the terminal +
+**Pros:**  Does not flood the terminal with exception messages since the exception will be thrown for every key press. +
+**Cons:** More difficult to locate the missing mapping. +
+**Alternative 2:** Throw a `NullPointerException` +
+**Pros:** May be easier to locate the missing mapping using the stack trace from the exception thrown. +
+**Cons:** Less feasible as, since the number of mappings is currently reasonably small,
+it is simpler to look through all the key mappings and locate the missing map. +
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
