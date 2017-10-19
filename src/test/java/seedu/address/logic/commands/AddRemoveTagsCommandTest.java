@@ -29,7 +29,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
-public class AddTagsCommandTest {
+public class AddRemoveTagsCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -43,9 +43,9 @@ public class AddTagsCommandTest {
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
 
-        AddTagsCommand addTagsCommand = prepareCommand(INDEX_FIRST_PERSON, ParserUtil.parseTags(tagsList));
+        AddRemoveTagsCommand addTagsCommand = prepareCommandAdd(INDEX_FIRST_PERSON, ParserUtil.parseTags(tagsList));
 
-        String expectedMessage = String.format(AddTagsCommand.MESSAGE_ADD_TAGS_SUCCESS,
+        String expectedMessage = String.format(AddRemoveTagsCommand.MESSAGE_ADD_TAGS_SUCCESS,
                 editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
@@ -56,14 +56,35 @@ public class AddTagsCommandTest {
     }
 
     @Test
+    public void execute_removeTags_success() throws Exception {
+        Person editedPerson = new PersonBuilder(
+                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).withTags().build();
+
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add("friends");
+
+        AddRemoveTagsCommand removeTagsCommand = prepareCommandRemove(INDEX_FIRST_PERSON,
+                ParserUtil.parseTags(tagsList));
+
+        String expectedMessage = String.format(AddRemoveTagsCommand.MESSAGE_REMOVE_TAGS_SUCCESS,
+                editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(removeTagsCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         ArrayList<String> tagsList = new ArrayList<>();
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
-        AddTagsCommand addTagsCommand = prepareCommand(outOfBoundIndex, ParserUtil.parseTags(tagsList));
+        AddRemoveTagsCommand addRemoveTagsCommand = prepareCommandAdd(outOfBoundIndex, ParserUtil.parseTags(tagsList));
 
-        assertCommandFailure(addTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(addRemoveTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
@@ -80,9 +101,9 @@ public class AddTagsCommandTest {
         ArrayList<String> tagsList = new ArrayList<>();
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
-        AddTagsCommand addTagsCommand = prepareCommand(outOfBoundIndex, ParserUtil.parseTags(tagsList));
+        AddRemoveTagsCommand addRemoveTagsCommand = prepareCommandAdd(outOfBoundIndex, ParserUtil.parseTags(tagsList));
 
-        assertCommandFailure(addTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(addRemoveTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
@@ -91,14 +112,18 @@ public class AddTagsCommandTest {
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
         Set<Tag> tags = ParserUtil.parseTags(tagsList);
-        final AddTagsCommand standardCommand = new AddTagsCommand(INDEX_FIRST_PERSON, tags);
+        final AddRemoveTagsCommand standardCommand = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
 
         // Returns true with itself
         assertTrue(standardCommand.equals(standardCommand));
 
         // Returns true with same values
-        AddTagsCommand commandWithSameValues = new AddTagsCommand(INDEX_FIRST_PERSON, tags);
+        AddRemoveTagsCommand commandWithSameValues = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
         assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // Return false with different type
+        AddRemoveTagsCommand commandWithDifferentType = new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags);
+        assertFalse(standardCommand.equals(commandWithDifferentType));
 
         // Returns false with null
         assertFalse(standardCommand.equals(null));
@@ -107,24 +132,33 @@ public class AddTagsCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // Returns false with different indexes
-        AddTagsCommand commandWithDifferentIndex = new AddTagsCommand(INDEX_SECOND_PERSON,
+        AddRemoveTagsCommand commandWithDifferentIndex = new AddRemoveTagsCommand(true, INDEX_SECOND_PERSON,
                 ParserUtil.parseTags(tagsList));
         assertFalse(standardCommand.equals(commandWithDifferentIndex));
 
         // Returns false with different tags
         ArrayList<String> differentTagsList = new ArrayList<>();
         tagsList.add(VALID_TAG_HUSBAND);
-        AddTagsCommand commandWithDifferentTags = new AddTagsCommand(INDEX_FIRST_PERSON,
+        AddRemoveTagsCommand commandWithDifferentTags = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON,
                 ParserUtil.parseTags(differentTagsList));
         assertFalse(standardCommand.equals(commandWithDifferentTags));
     }
 
     /**
-     * Returns an {@code AddTagsCommand} with parameters {@code index} and {@code tags}.
+     * Returns an add {@code AddRemoveTagsCommand} with parameters {@code index} and {@code tags}.
      */
-    private AddTagsCommand prepareCommand(Index index, Set<Tag> tags) {
-        AddTagsCommand addTagsCommand = new AddTagsCommand(index, tags);
-        addTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addTagsCommand;
+    private AddRemoveTagsCommand prepareCommandAdd(Index index, Set<Tag> tags) {
+        AddRemoveTagsCommand addRemoveTagsCommand = new AddRemoveTagsCommand(true, index, tags);
+        addRemoveTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addRemoveTagsCommand;
+    }
+
+    /**
+     * Returns a remove {@code AddRemoveTagsCommand} with parameters {@code index} and {@code tags}.
+     */
+    private AddRemoveTagsCommand prepareCommandRemove(Index index, Set<Tag> tags) {
+        AddRemoveTagsCommand addRemoveTagsCommand = new AddRemoveTagsCommand(false, index, tags);
+        addRemoveTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addRemoveTagsCommand;
     }
 }

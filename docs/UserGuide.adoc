@@ -128,43 +128,26 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `edit 3 f/becca93` +
 Edits the Facebook username of 3rd person.
 
-=== Add tag/s to existing contact : `addtags` (Since v1.2)
+=== Add/Remove tag/s to existing contact : `tags` (Since v1.2)
 
 Add one or more tags to an existing person in the address book. +
-Format: `addtags INDEX TAG [TAG]...` +
-Alias: `at`
+Format: `tags TYPE INDEX TAG [TAG]...` +
+Alias: `t`
 
 ****
+* The TYPE can be either "add" or "remove".
 * Add tag/s to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least 1 tag must be added
-* The command will ignore tags that already exist in that contact.
+* For adding, the command will ignore tags that already exist in that contact.
+* For removing, the command will ignore tags that do not exist in that contact.
 ****
 
 Examples:
 
-* `addtags 1 friends` +
+* `tags add 1 friends` +
 Add a tag 'friends' to the 1st person.
-* `addtags 2 classmate CS2103` +
-Add tags "classmate" and "CS2103" to the 2nd person.
-
-=== Remove tag/s to existing contact : `removetags`
-
-Remove one or more tags from an existing person in the address book. +
-Format: `removetags INDEX TAG [TAG]...` +
-Alias: `rt`
-
-****
-* Remove tag/s from the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least 1 tag must be removed
-* The command will ignore tags that do not exist in that contact.
-****
-
-Examples:
-
-* `removetags 1 friends` +
-Remove the tag 'friends' from the 1st person.
-* `removetags 2 classmate CS2103` +
-Remove tags "classmate" and "CS2103"(if they exist) from the 2nd person.
+* `tags remove 2 classmate CS2103` +
+Remove tags "classmate" and "CS2103" from the 2nd person.
 
 === Locating persons by name: `find`
 

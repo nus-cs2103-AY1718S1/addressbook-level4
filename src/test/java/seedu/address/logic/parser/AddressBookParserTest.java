@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddTagsCommand;
+import seedu.address.logic.commands.AddRemoveTagsCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -119,9 +119,10 @@ public class AddressBookParserTest {
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
         Set<Tag> tags = ParserUtil.parseTags(tagsList);
-        AddTagsCommand command = (AddTagsCommand) parser.parseCommand(AddTagsCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
-        assertEquals(new AddTagsCommand(INDEX_FIRST_PERSON, tags), command);
+        AddRemoveTagsCommand command = (AddRemoveTagsCommand) parser.parseCommand(
+                AddRemoveTagsCommand.COMMAND_WORD + " add " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
+        assertEquals(new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags), command);
     }
 
     @Test
@@ -131,9 +132,36 @@ public class AddressBookParserTest {
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
         Set<Tag> tags = ParserUtil.parseTags(tagsList);
-        AddTagsCommand command = (AddTagsCommand) parser.parseCommand(AddTagsCommand.COMMAND_ALIAS + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
-        assertEquals(new AddTagsCommand(INDEX_FIRST_PERSON, tags), command);
+        AddRemoveTagsCommand command = (AddRemoveTagsCommand) parser.parseCommand(
+                AddRemoveTagsCommand.COMMAND_ALIAS + " add " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
+        assertEquals(new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags), command);
+    }
+
+    @Test
+    public void parseCommand_removetags() throws Exception {
+        Person person = new PersonBuilder().build();
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        Set<Tag> tags = ParserUtil.parseTags(tagsList);
+        AddRemoveTagsCommand command = (AddRemoveTagsCommand) parser.parseCommand(
+                AddRemoveTagsCommand.COMMAND_WORD + " remove " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
+        assertEquals(new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags), command);
+    }
+
+    @Test
+    public void parseCommand_removetags_alias() throws Exception {
+        Person person = new PersonBuilder().build();
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        Set<Tag> tags = ParserUtil.parseTags(tagsList);
+        AddRemoveTagsCommand command = (AddRemoveTagsCommand) parser.parseCommand(
+                AddRemoveTagsCommand.COMMAND_ALIAS + " remove " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
+        assertEquals(new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags), command);
     }
 
     @Test

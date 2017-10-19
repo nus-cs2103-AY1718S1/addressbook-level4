@@ -902,14 +902,14 @@ Use case resumes at step 2.
 +
 Use case ends.
 
-=== Use case: Add tags to person
+=== Use case: Add/Remove tags to person
 
 *MSS*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to add tags to a specific person in the list
-4.  AddressBook adds the tags to the specific person
+3.  User requests to add/remove tags to/from a specific person in the list
+4.  AddressBook adds/removes the tags to/from the specific person
 +
 Use case ends.
 

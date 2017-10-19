@@ -19,28 +19,31 @@ import seedu.address.model.tag.Tag;
 /**
  * Adds tags to an existing person in the address book.
  */
-public class AddTagsCommand extends UndoableCommand {
+public class AddRemoveTagsCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addtags";
-    public static final String COMMAND_ALIAS = "at";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add tags to the person identified "
+    public static final String COMMAND_WORD = "tags";
+    public static final String COMMAND_ALIAS = "t";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add or remove tags to the person identified "
             + "by the index number used in the last person listing. \n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: TYPE (either add or remove) INDEX (must be a positive integer) "
             + "TAG [TAG] (can add 1 or more tags)... \n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " add 1 "
             + "NUS CS2103 classmate";
 
     public static final String MESSAGE_ADD_TAGS_SUCCESS = "Added Tag/s to Person: %1$s";
-    public static final String MESSAGE_NO_TAG = "One or more tags must be added.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_REMOVE_TAGS_SUCCESS = "Removed Tag/s to Person: %1$s";
+    public static final String MESSAGE_NO_TAG = "One or more tags must be entered.";
 
+    private final boolean isAdd;
     private final Index index;
     private final Set<Tag> tags;
 
-    public AddTagsCommand(Index index, Set<Tag> tags) {
+    public AddRemoveTagsCommand(boolean isAdd, Index index, Set<Tag> tags) {
+        requireNonNull(isAdd);
         requireNonNull(index);
         requireNonNull(tags);
 
+        this.isAdd = isAdd;
         this.index = index;
         this.tags = tags;
     }
@@ -58,7 +61,14 @@ public class AddTagsCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, tags);
+        Person editedPerson;
+
+        if (isAdd) {
+            editedPerson = addTagsToPerson(personToEdit, tags);
+        } else {
+            editedPerson = removeTagsFromPerson(personToEdit, tags);
+        }
+
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -68,19 +78,35 @@ public class AddTagsCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson));
+        return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
+                : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with the {@code tags} to be added.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
+    private static Person addTagsToPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
         assert personToEdit != null;
 
         Set<Tag> personTags = personToEdit.getTags();
         HashSet<Tag> newTags = new HashSet<Tag>(personTags);
         newTags.addAll(tags);
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), newTags);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with the {@code tags} to be removed.
+     */
+    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
+        assert personToEdit != null;
+
+        Set<Tag> personTags = personToEdit.getTags();
+        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
+        newTags.removeAll(tags);
 
         return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), newTags);
@@ -94,11 +120,11 @@ public class AddTagsCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddTagsCommand)) {
+        if (!(other instanceof AddRemoveTagsCommand)) {
             return false;
         }
 
-        AddTagsCommand e = (AddTagsCommand) other;
-        return index.equals(e.index) && tags.equals(e.tags);
+        AddRemoveTagsCommand e = (AddRemoveTagsCommand) other;
+        return isAdd == e.isAdd && index.equals(e.index) && tags.equals(e.tags);
     }
 }
