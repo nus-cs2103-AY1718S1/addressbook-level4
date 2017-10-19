@@ -345,6 +345,52 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::borrowCommand[]
+=== Borrow command mechanism
+
+The `BorrowCommand` class extends `UndoableCommand` so that this command can be undone or redone if necessary.
+
+The borrow command requires the index (as listed in the person list panel on the left side of the application window) of the person who borrowed money and the amount that the person borrowed. The arguments (index and amount borrowed) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String::split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 3.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor.
+
+The `Debt` attribute in the target `Person` object is updated in the `AddressBook` class in the `Model` component. A new `Person` object is created with the debt amount updated to reflect the new total debt. The target `Person` object is then replaced with this new `Person` object.
+
+[NOTE]
+`DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date when the `Person` object was created is set as the date for the `DateBorrow` field.
+
+The following sequence diagram, Figure 3.2.1, shows the further details of the interaction between the `Logic` and `Model` component when the borrow command is executed:
+
+image::BorrowCommandSequenceDiagram.png[width="800"]
+_Figure 3.2.1 : Sequence Diagram of How the Borrow Command Works_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `BorrowCommandParser` +
+**Alternative 1 (current choice):** Tokenize arguments using `String::split` method +
+**Pros:** Easier to parse arguments using `String::split` method since there are no prefixes in the command input. It is also easier to validate the number of arguments entered by the user. This can be done through checking the length of the `String` array return by `String::split`. +
+**Cons:** User has to follow the format for entering the command strictly as an extra whitespace between the index and the amount borrowed would invoke a `ParseException`. +
+**Alternative 2:** Modify `ArgumentTokenizer::tokenize` method to tokenize arguments +
+**Pros:** Increased modularity +
+**Cons:** Requires modifications of `ArgumentTokenizer::tokenize` method since supplying whitespace as a prefix to the current `ArgumentTokenizer::tokenize` method incorrectly tokenizes arguments.
+
+          For example:
+
+          Entered command: `borrow 1 500`
+
+          Prefixes supplied to `ArgumentTokenizer::tokenize` method: " "
+
+          Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amount borrowed are not separated.
+
+---
+
+**Aspect:** Updating `Debt` field +
+**Alternative 1 (current choice):** Create a new `Person` object, called `editedPerson`, by copying all the attributes from the target `Person` object and update the `Debt` field before replacing the old `Person` object with the `editedPerson`. +
+**Pros:** Straightforward and simple to implement +
+**Cons:** Have to create a copy of all the attributes even though `Debt` is the only attribute to be updated. +
+**Alternative 2:** Reusing the `updatePerson()` method in `AddressBook.java` +
+**Pros:** Do not have to code the method from scratch +
+**Cons:** Have to write more code to convert `editedPerson` to be of object type `ReadOnlyPerson` because the `updatePerson()` method only accepts `ReadOnlyPerson` objects as parameters. +
+// end::borrowCommand[]
+
 // tag::backup[]
 === Backup storage mechanism
 The backup storage mechanism is facilitated by the `StorageManager`. It backs up the address book data automatically each time the application starts up, if there is existing data available. The backup file is saved in the same location as the main file as `addressbook.xml-backup.xml`.
@@ -367,7 +413,6 @@ The `backupAddressBook` method is called in `MainApp#init()` which is called eac
 **Pros:** This will create backups that are guaranteed to be recent. +
 **Cons:** It is difficult to determine the ideal number of commands to ensure that the backup is both recent enough, yet outdated enough for the user to want to restore state to should he/she mess up a command at some point. +
 // end::backup[]
-
 
 === Logging
 
