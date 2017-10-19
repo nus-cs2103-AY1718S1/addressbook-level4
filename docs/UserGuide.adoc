@@ -311,28 +311,23 @@ You can set a color to a specific tag type. +
 *Shorthand Format:* `tc TAGNAME COLOR`
 
 [NOTE]
-You can see all available colors in the following https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link]
-
-[NOTE]
+You can see all available colors in the following https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
 Color name input can be in english or hexadecimal form.
 
 === Set appointment: `appointment`
 
 You can set an appointment to a specific contact. +
-Format: `appointment n/NAME d/YYYY/MM/DD HH:MM` +
-Shorthand format: `apt n/NAME d/YYYY/MM/DD HH:MM`
+*Format:* `appointment n/NAME d/YYYY/MM/DD HH:MM` +
+*Shorthand format:* `apt n/NAME d/YYYY/MM/DD HH:MM`
 
 You can sort list by appointment dates. +
-Format: `appointment` +
-Shorthand format: `appointment`
+*Format:* `appointment` +
+*Shorthand format:* `apt`
 
 [NOTE]
-====
-You can only set dates that are after current time. (i.e. you can set a time to yesterday)
+You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
+Input is case-sensitive. e.g. `hans` will not match `Hans`.
 
-The name entered is case-sensitive. e.g. `hans` will match `Hans`.
-
-====
 
 === Adding/Removing Remarks to a person : `remark`
 
