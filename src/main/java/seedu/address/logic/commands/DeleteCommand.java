@@ -44,9 +44,7 @@ public class DeleteCommand extends UndoableCommand {
         String result = "";
         String people = "";
         ReadOnlyPerson personToDelete = null;
-        System.out.println("here");
-
-        System.out.println("targetIndexArraylist size: " + this.targetIndexArraylist.size());
+        
         for (Index i : this.targetIndexArraylist) {
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

@@ -24,10 +24,10 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             ArrayList<Index> indexArrayList = new ArrayList<Index>();
             String[] indexArray = args.split(" ");
             // if the first element in the array is an empty string, do not parse it
-            if (indexArray[0].equals("")) {
+            if ("".equals(indexArray[0])) {
                 // start looping from i = 1 as the first element in the array is an empty string
                 for (int i = 1; i < indexArray.length; i++) {
-                    if (!indexArray[i].equals(" ") && !indexArray[i].equals("")) {
+                    if (!" ".equals(indexArray[i]) && !"".equals(indexArray[i])) {
                         Index index = ParserUtil.parseIndex(indexArray[i]);
                         indexArrayList.add(index);
                     }
@@ -35,15 +35,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             } else {
                 // otherwise parse the first element
                 for (String s : indexArray) {
-                    if (!s.equals(" ") && !s.equals("")) {
+                    if (!"".equals(s) && !"".equals(s) {
                         Index index = ParserUtil.parseIndex(s);
                         indexArrayList.add(index);
                     }
                 }
-            }
-
-            for (Index i : indexArrayList) {
-                System.out.println("i: " + i.getZeroBased());
             }
             return new DeleteCommand(indexArrayList);
         } catch (IllegalValueException ive) {
