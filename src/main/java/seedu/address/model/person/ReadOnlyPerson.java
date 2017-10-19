@@ -28,6 +28,8 @@ public interface ReadOnlyPerson {
     Birthday getBirthday();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Boolean> favouriteProperty();
+    Boolean getFavourite();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -41,7 +43,8 @@ public interface ReadOnlyPerson {
                 && other.getSchEmail().equals(this.getSchEmail())
                 && other.getWebsite().equals(this.getWebsite())
                 && other.getAddress().equals(this.getAddress())
-                && other.getBirthday().equals(this.getBirthday()));
+                && other.getBirthday().equals(this.getBirthday()))
+                && other.getFavourite().equals(this.getFavourite());
     }
 
     /**

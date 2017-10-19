@@ -13,6 +13,8 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FavouriteCommand;
+import seedu.address.logic.commands.FavouriteListCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -23,6 +25,7 @@ import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.ThemeListCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnfavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -99,6 +102,15 @@ public class AddressBookParser {
 
         case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
             return new AddEventCommandParser().parse(arguments);
+
+        case FavouriteCommand.COMMAND_WORD: case FavouriteCommand.COMMAND_ALIAS:
+            return new FavouriteCommandParser().parse(arguments);
+
+        case UnfavouriteCommand.COMMAND_WORD: case UnfavouriteCommand.COMMAND_ALIAS:
+            return new UnfavouriteCommandParser().parse(arguments);
+
+        case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
+            return new FavouriteListCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
