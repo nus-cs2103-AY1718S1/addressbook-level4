@@ -1,4 +1,4 @@
-= Codii - User Guide
+﻿= Codii - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -134,6 +134,23 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Increasing the debt of a person: `borrow`
+
+Increase the debt of a person by the amount entered. +
+Format: `borrow INDEX AMOUNT`
+
+****
+* Increases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
+****
+
+Examples:
+
+* `borrow 1 500` +
+Increases the debt of the 1st person by $500.
+* `borrow 2 1000.10` +
+Increases the debt of the 2nd person by $1000.10.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -200,7 +217,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -213,6 +230,25 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Selecting a nearby person: `nearby`
+
+Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
+Format: `nearby INDEX`
+
+****
+* Selects the person and loads the full information of the person at the specified `INDEX`.
+* The index refers to the index number shown in the nearby contacts listing.
+* The index *must be a positice integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+* `nearby 1` +
+Selects the 1st person in the nearby contacts listing of the previously selected person.
 
 === Listing entered commands : `history`
 
@@ -330,6 +366,8 @@ e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
+* *Borrow* : `borrow INDEX AMOUNT` +
+e.g. `borrow 1 500.50`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
@@ -346,5 +384,66 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Nearby* : `nearby`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Current features
+
+* `Add` a person (since v1.0)
+* `Delete` a person (since v1.0)
+* Have a help screen with detailed instructions (since v1.0)
+* Add tags to contacts (since v1.0)
+* `Edit` contacts (since v1.0)
+* `Find` contacts by name (since v1.0)
+* Automatic backup storage (since v1.0)
+* `Debt` field (since v1.0)
+* Prevent duplicate contacts (since v1.0)
+
+* `Login` command (since v1.1)
+* Password masking (since v1.1)
+* `Postal code` field (since v1.1)
+* `Deadline` field (since v1.1)
+* `Date borrowed` field (since v1.1)
+* `Blacklist` (since v1.1)
+* Full info panel (since v1.1)
+* `Ban` and `Unban` a person (since v1.1)
+
+* `Nearby` command (since v1.2)
+* Grouping of contacts (since v1.2)
+* Display nearby contacts (since v1.2)
+* `Borrow` command (since v1.2)
+* Display nearby contacts (since v1.2)
+* Interest field (since v1.2)
+
+== Features to be included by `V2.0`
+
+//[V1.3]
+* List of people who have cleared their debts.
+* A `Repaid` command to fully pay off a person's debt.
+* List of people who have overdue debts.
+* A command to `Sort` the list of person's by name.
+* A person's debts are automatically incremented according to the interest rate of their loan.
+* Group debtors by location.
+//[end of V1.3]
+//[V1.4]
+* A progress bar to indicate how much of the person's debt has been paid off.
+* A feature to export a person's contact in another format.
+* Profile pictures of clients shown next to their details.
+* Different appearance themes.
+* `Add`/`Edit` command allows user to save multiple contact numbers for each person.
+//[end of V1.4]
+//[V1.5]
+* `Help` command that displays screenshots of positive examples.
+* Able to view the last login time.
+* Able to impose different periods of ban on a specified person in the blacklist
+* A feature to filter commands by tags.
+//[end of V1.5]
+* Two FA authentication for login and every other important actions.
+* Validity checks on client's personal information.
+* Email notifications when the user's account in logged in from an unknown device.
+* An automated journey scheduler.
+* 'Add-log' button that generates specific date and time.
+* A file uploading feature.
+* Random generation of a contact from the cleared list.
+* Feature to create a custom field.

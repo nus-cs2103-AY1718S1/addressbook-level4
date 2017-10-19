@@ -3,6 +3,7 @@ package guitests.guihandles;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -74,6 +75,8 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedDateRepaid;
     private List<String> lastRememberedTags;
 
+    private NearbyPersonListPanelHandle nearbyPersonListPanel;
+
     public InfoPanelHandle(Node infoPanelNode) {
         super(infoPanelNode);
 
@@ -106,6 +109,11 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
         this.deadlineText = getChildNode(DEADLINE_FIELD_FIELD_ID);
         this.dateRepaidText = getChildNode(DATE_REPAID_FIELD_FIELD_ID);
+
+        Platform.runLater(() -> {
+            nearbyPersonListPanel = new NearbyPersonListPanelHandle(getChildNode(NearbyPersonListPanelHandle
+                    .NEARBY_PERSON_LIST_VIEW_ID));
+        });
     }
 
     public String getName() {
@@ -197,6 +205,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());
+    }
+
+    public NearbyPersonListPanelHandle getNearbyPersonListPanel() {
+        return nearbyPersonListPanel;
     }
 
     /**

@@ -234,12 +234,15 @@ public class InfoPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonInfo(event.getNewSelection().person);
+        logic.updateSelectedPerson(event.getNewSelection().person);
         resetNearbyPersonListPanel(event.getNewSelection().person);
     }
 
     @Subscribe
     private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.updateSelectedPerson(event.getNewSelection().person);
         loadPersonInfo(event.getNewSelection().person);
+
     }
 }
