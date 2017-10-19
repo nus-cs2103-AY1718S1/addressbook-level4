@@ -53,17 +53,24 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         Tag deletedTag = removeTag(expectedModel, targetTag);
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-//        assertCommandSuccess(targetTag);
 
 //        /* Case: delete the last parcel in the list -> deleted */
 //        Model modelBeforeDeletingLast = getModel();
 //        Index lastParcelIndex = getLastIndex(modelBeforeDeletingLast);
-//        assertCommandSuccess(lastParcelIndex);
+//        targetParcel = getParcel(modelBeforeDeletingLast, lastParcelIndex);
 //
-//        /* Case: undo deleting the last parcel in the list -> last parcel restored */
-//        command = UndoCommand.COMMAND_WORD;
-//        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-//        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+//        targetTags = targetParcel.getTags().iterator();
+//
+//        if(targetTags.hasNext()) {
+//            targetTag = targetTags.next();
+//        }
+//
+//        assertCommandSuccess(modelBeforeDeletingLast, targetTag);
+
+        /* Case: undo deleting the previous tag in the list -> deleted tag restored */
+        command = UndoCommand.COMMAND_WORD;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
 //
 //        /* Case: redo deleting the last parcel in the list -> last parcel deleted again */
 //        command = RedoCommand.COMMAND_WORD;
@@ -124,23 +131,23 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         try {
             model.deleteTag(targetTag);
         } catch (TagNotFoundException | TagInternalErrorException e) {
-            throw new AssertionError("targetParcel is retrieved from model.");
+            throw new AssertionError("targetTag is retrieved from model.");
         }
         return targetTag;
     }
 
     /**
-     * Deletes the parcel at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+     * Deletes the tag at {@code toDelete} by creating a default {@code DeleteTagCommand} using {@code toDelete} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteTagCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
-    private void assertCommandSuccess(Tag toDelete) {
-        Model expectedModel = getModel();
-        Tag deletedTag = removeTag(expectedModel, toDelete);
+    private void assertCommandSuccess(Model model, Tag toDelete) {
+//        Model expectedModel = getModel();
+        Tag deletedTag = removeTag(model, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
 
         assertCommandSuccess(
-                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, expectedModel, expectedResultMessage);
+                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, model, expectedResultMessage);
     }
 
     /**
