@@ -349,9 +349,9 @@ Shorthand Format: `b TAG`
 
 Examples:
 * `batch friends`
-Removes all persons with the friends tag from the address book
+Removes all persons with the friends tag from the address book +
 * `b family`
-Removes all persons with the family tag from the address book
+Removes all persons with the family tag from the address book +
 
 === Setting Appointments : [Coming in v2.0]
 ****
