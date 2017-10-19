@@ -364,6 +364,38 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+
+// tag::undoredo[]
+=== Temporary Contact mechanism
+
+Temporary contacts is implemented using the java LocalDateTime class to keep track of the time that the temporary contact
+ is created, and more importantly, when this temporary contact will expire.
+
+The level of precision chosen is to the nearest Hour. Originally, LocalDateTime is used to the nearest nanoseconds, but
+ this high level of precision is unnecessary to the users, and also cumbersome for developers to do tests due to the small
+ room for difference in system time.
+
+When creating a temporary contact, users should input temp/ followed by the number of days they want this contact to remain
+ i.e. "temp/2", without the quotation marks. The use of this temp/ prefix is optional. When temp/ is not used, a normal
+ contact which does not expire is created.
+
+Earlier implementation: A temporary contact that expires when the application boots up the next time. This implementation
+ does not give much flexibility to the users in terms of how long they want the temporary contact to remain.
+
+The temporary contact is implemented this way:
+[source,java]
+----
+    public Timestamp(long day) {
+        creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
+        if (day > 0) {
+            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
+        }
+        daysToLive = day;
+    }
+----
+As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
+minute
+
 == Documentation
 
 We use asciidoc for writing documentation.
