@@ -30,7 +30,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ImportCommand parse(String args) {
-        String filename = "./data/" + args.trim();
+        String filename = args.trim();
         ArrayList<ReadOnlyPerson> p = new ArrayList<ReadOnlyPerson>();
         BufferedReader br = null;
         FileReader fr = null;
@@ -50,22 +50,18 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
                 if (currLine.contains("FN")) {
                     name = currLine.split(":")[1];
-                    System.out.println(name);
                 }
 
                 if (currLine.contains("TEL")) {
                     phone = currLine.split(":")[1];
-                    System.out.println(phone);
                 }
 
                 if (currLine.contains("ADR")) {
                     address = currLine.split(";")[2];
-                    System.out.println(address);
                 }
 
                 if (currLine.contains("EMAIL")) {
                     email = currLine.split(":")[1];
-                    System.out.println(email);
                 }
 
                 if (currLine.contains("END")) {

@@ -268,7 +268,7 @@ Removes "friends", "classmates", "colleagues" tag from all persons
 === Importing Contacts from external source : `import`
 
 Imports contact from external source into the addressbook. Source must be in `.vcf` format. +
-File must also be placed in the /data folder.
+File must also be placed in the main folder.
 
 Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
 

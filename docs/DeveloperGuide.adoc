@@ -406,9 +406,9 @@ Once the required information (name, email, address, phone number) is retrieved 
 ---
 
 **Aspect:** Which directory to access the source file. +
-**Alternative 1 (current choice):** Currently, the file has to be stored in /data directory. +
+**Alternative 1 (current choice):** Currently, the file has to be stored in /main directory. +
 **Pros:** Easy to develop the logic as there is only one filepath . +
-**Cons:** User will have to specifically place the file in the /data directory which does not really make sense. +
+**Cons:** User will have to specifically place the file in the /main directory which does not really make sense. +
 **Alternative 2:** Create a `File upload` function. +
 **Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
 **Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
