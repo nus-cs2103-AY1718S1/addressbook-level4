@@ -12,16 +12,16 @@ public class Timestamp {
     private long daysToLive;
 
     public Timestamp(long day) {
-        creationTime = LocalDateTime.now().withNano(0).withSecond(0);
+        creationTime = LocalDateTime.now().withNano(0).withSecond(0).withMinute(0);
         if (day > 0) {
-            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0);
+            expiryTime = creationTime.plusDays(day).withNano(0).withSecond(0).withMinute(0);
         }
         daysToLive = day;
     }
 
     public Timestamp(String expiry) {
         expiryTime = LocalDateTime.parse(expiry);
-        expiryTime = expiryTime.withNano(0).withSecond(0);
+        expiryTime = expiryTime.withNano(0).withSecond(0).withMinute(0);
     }
 
     public LocalDateTime getCreationTime() {
