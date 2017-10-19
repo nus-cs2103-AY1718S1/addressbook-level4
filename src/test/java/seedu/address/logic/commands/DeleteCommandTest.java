@@ -31,25 +31,12 @@ public class DeleteCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-//        String people = personToDelete + "\n";
         String people = personToDelete.toString();
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-//         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, people);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-//        System.out.println(personToDelete.getName());
-//        System.out.println("expectedModel length: " + expectedModel.getFilteredPersonList().size());
-//        for (ReadOnlyPerson p : expectedModel.getFilteredPersonList()) {
-//            System.out.println("person: " + p.getName().toString());
-//        }
         expectedModel.deletePerson(personToDelete);
-        System.out.println("expectedModel length: " + expectedModel.getFilteredPersonList().size());
-        for (ReadOnlyPerson p : expectedModel.getFilteredPersonList()) {
-            System.out.println("person: " + p.getName().toString());
-        }
-
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
@@ -57,7 +44,6 @@ public class DeleteCommandTest {
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
-
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -66,11 +52,8 @@ public class DeleteCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-//        String people = personToDelete + "\n";
         String people = personToDelete.toString();
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        // String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, people);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());

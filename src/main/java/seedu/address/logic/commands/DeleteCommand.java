@@ -28,20 +28,11 @@ public class DeleteCommand extends UndoableCommand {
 
     private ArrayList<Index> targetIndexArraylist = new ArrayList<Index>();
 
-//    private final Index targetIndex;
-
-//        public DeleteCommand(Index targetIndex) {
-//        this.targetIndex = targetIndex;
-//    }
-
     public DeleteCommand(ArrayList<Index> targetIndexArraylist) {
         this.targetIndexArraylist = targetIndexArraylist;
     }
-//
+
     public DeleteCommand(Index targetIndex) {
-//        ArrayList<Index> targetIndexArrayList = new ArrayList<Index>();
-//        targetIndexArrayList.add(targetIndex);
-//        this.targetIndexArraylist = targetIndexArraylist;
         this.targetIndexArraylist.add(targetIndex);
     }
 
@@ -50,34 +41,17 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-//        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-//            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-//        }
-//
-//        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-//
-//        try {
-//            model.deletePerson(personToDelete);
-//        } catch (PersonNotFoundException pnfe) {
-//            assert false : "The target person cannot be missing";
-//        }
-
-
-
         String result = "";
         String people = "";
         ReadOnlyPerson personToDelete = null;
         System.out.println("here");
 
         System.out.println("targetIndexArraylist size: " + this.targetIndexArraylist.size());
-//
         for (Index i : this.targetIndexArraylist) {
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-//            ReadOnlyPerson personToDelete = lastShownList.get(i.getZeroBased());
             personToDelete = lastShownList.get(i.getZeroBased());
 
             try {
@@ -87,24 +61,15 @@ public class DeleteCommand extends UndoableCommand {
             }
 
             people += personToDelete + "\n";
-//            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
 
         people = people.substring(0, people.length() - 1);
 //
         result = String.format(MESSAGE_DELETE_PERSON_SUCCESS, people);
-
-//        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         return new CommandResult(result);
     }
 
     @Override
-//    public boolean equals(Object other) {
-//        return other == this // short circuit if same object
-//                || (other instanceof DeleteCommand // instanceof handles nulls
-//                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
-//    }
-
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
