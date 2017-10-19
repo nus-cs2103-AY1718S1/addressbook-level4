@@ -27,7 +27,6 @@ public class OpenCommandSystemTest extends RolodexSystemTest {
 
     @Test
     public void open() {
-        Storage storage = getStorage();
         /* Case: open a new directory with different valid filepath, command with leading spaces and trailing spaces
          * -> opened
          */

@@ -25,7 +25,6 @@ public class NewCommandSystemTest extends RolodexSystemTest {
 
     @Test
     public void newFile() {
-        Storage storage = getStorage();
         /* Case: Create a new directory with different random valid filepath,
          * command with leading spaces and trailing spaces
          * -> opened
