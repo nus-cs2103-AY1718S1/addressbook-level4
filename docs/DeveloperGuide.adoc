@@ -345,6 +345,38 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::RemarkCommand[]
+=== Remark mechanism
+The remark command takes in the user input through command line in the format remark INDEX /r REMARK, where INDEX is the index of the person in the addressbook and REMARK is the remark of the relationship of that person to another person. +
+Eg. remark 1 /r is the husband of Chelsea +
+image::RemarkLogicDiagram[width="200"]
+
+image::RemarkModelDiagram[width="200"]
+
+==== Design Considerations
+
+**Aspect:** How remark command receive user input +
+**Alternative 1 (current choice):** Addition of a remarks command is a standalone +
+**Pros:** There is more flexibility and remarks does not have to be stated upon addition of Person to addressbook. +
+**Cons:** More difficult to implement as new Remark Command Class and Tests needs to be made +
+**Alternative 2:** Add in remarks together with the rest of the detail such as address, phone, email, etc +
+**Pros:** Easy to implement(Don't need to create a new command class, just modify existing add command) +
+**Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
+
+---
+
+**Aspect:** How remark command deletes existing remarks +
+**Alternative 1 (current choice):** Overwrite existing remarks with a blank remark, eg. remark 1 r/  +
+**Pros:** No new methods needs to be created which simplifies the implementation and reduces possibility of bugs. +
+**Cons:** Less intuitive than having a distinct command than signifies deletion of remark +
+**Alternative 2:** Extend remark command to delete actual remark data in storage +
+**Pros:** More intuitive for the user. +
+**Cons:** New methods and testing has to be done which can lead to unnecessary bugs +
+
+---
+
+// end::RemarkCommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
