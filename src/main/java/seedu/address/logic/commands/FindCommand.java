@@ -21,7 +21,7 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose specified field contain "
             + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: PREFIX KEYWORD... (KEYWORD must not be partial words)\n"
+            + "Parameters: PREFIX KEYWORD [MORE_KEYWORDS] (KEYWORD must not be partial words)\n"
             + "PREFIX: \n"
             + "Name - " + PREFIX_NAME + "\n"
             + "Phone - " + PREFIX_PHONE + "\n"

@@ -75,7 +75,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [MORE_TAGS]`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,25 +92,39 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Finding persons : `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose given field contain any of the given keywords. +
+Format: `find PREFIX KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* Prefix has to be given to specify which field to search for.
+* The search is case insensitive for all fields. +
+e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Any fields can be searched. (`name`, `phone`, `address`, `email`, `tags`)
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
+[NOTE]
+====
+PREFIX: +
+`n/` -> name +
+`p/` -> phone +
+`a/` -> address +
+`e/` -> email +
+`t/` -> tag
+====
+
 Examples:
 
-* `find John` +
+* `find n/ John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/ Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find t/ friends colleagues` +
+Returns any person having tags `friends`, `colleagues`, or both.
 
 === Deleting a person : `delete`
 
@@ -170,7 +184,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content +
+(`add`, `delete`, `edit`, `remove` and `clear`).
 ====
 
 Examples:
@@ -212,6 +227,27 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Removing a tag : `remove`
+
+Removes a specified tag. +
+Format: `remove TAG INDEX`
+
+[NOTE]
+====
+Executing command without the INDEX field will remove the given tag from the whole address book.
+====
+
+Examples:
+
+* `list` +
+`remove friends 1` +
+Removes the `friends` tag from the first person in the address book.
+
+* `list` +
+`remove friends` +
+Removes the `friends` tag from every person in the address book.
+// end::remove[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -227,11 +263,27 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Since v1.2
+
+=== Enhanced `find` command to accept different fields
+
+Allows user to find persons based on other fields apart from name based on prefix given. +
+
+Format: `find n/ John john`
+
+=== Enhanced `remove` command to remove tag from specified index
+
+Allows user to remove tag from individual person in the address book by specifying the corresponding index. +
+
+Format: `remove friends 1`
+
+
+
 == Coming in v2.0
 
 === Ability to create private accounts: `create`
 
-Allow user to have a private contact list that is protected by login username and password +
+Allow user to have a private contact list that is protected by login username and password. +
 
 Format: `create u/USERNAME p/PASSWORD`
 
@@ -306,12 +358,15 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Find* : `find PREFIX KEYWORD [MORE_KEYWORDS]` +
+e.g. `find n/ James Jake`
 * *List* : `list`
 * *Help* : `help`
+* *Remove* : `remove TAG INDEX` +
+e.g. `remove friends 1`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
