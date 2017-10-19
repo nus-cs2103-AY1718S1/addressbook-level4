@@ -32,7 +32,7 @@ public class NewCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         if (new File(filePath).exists()) {
-            return new CommandResult(String.format(MESSAGE_ALREADY_EXISTS, filePath));
+            throw  new CommandException(String.format(MESSAGE_ALREADY_EXISTS, filePath));
         } else {
             EventsCenter.getInstance().post(new OpenRolodexRequestEvent(filePath));
             return new CommandResult(String.format(MESSAGE_CREATING, filePath));

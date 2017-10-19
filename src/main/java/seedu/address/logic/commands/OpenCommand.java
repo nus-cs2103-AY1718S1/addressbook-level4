@@ -34,7 +34,7 @@ public class OpenCommand extends Command {
             EventsCenter.getInstance().post(new OpenRolodexRequestEvent(filePath));
             return new CommandResult(String.format(MESSAGE_OPENING, filePath));
         } else {
-            return new CommandResult(String.format(MESSAGE_NOT_EXIST, filePath));
+            throw new CommandException(String.format(MESSAGE_NOT_EXIST, filePath));
         }
     }
 
