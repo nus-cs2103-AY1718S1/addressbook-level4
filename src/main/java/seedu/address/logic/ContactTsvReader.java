@@ -12,12 +12,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -73,7 +68,8 @@ public class ContactTsvReader {
                                     .replaceAll("^[,\"\\s]+", "")
                                     .replace("\"", "")
                                     .split("[,\\s]+"))));
-                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, tagList);
+                    Remark remark = new Remark("");
+                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, remark, tagList);
                     toAddPeople.add(toAddPerson);
                 } catch (IllegalValueException ive) {
                     throw new ParseException(ive.getMessage(), ive);

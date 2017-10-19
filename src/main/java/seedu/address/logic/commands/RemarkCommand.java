@@ -76,7 +76,7 @@ public class RemarkCommand extends UndoableCommand {
         if (!remark.value.isEmpty()) {
             return  String.format(MESSAGE_ADD_REMARK_SUCCESS, persontoEdit);
         } else {
-            return String.format(MESSAGE_DELETE_REMARK_SUCCESS);
+            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, persontoEdit);
         }
     }
 
