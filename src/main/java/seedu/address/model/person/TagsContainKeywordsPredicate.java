@@ -10,8 +10,7 @@ import seedu.address.model.tag.Tag;
 
 /**
  */
-public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>
-{
+public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
     public TagsContainKeywordsPredicate(List<String> keywords) {
