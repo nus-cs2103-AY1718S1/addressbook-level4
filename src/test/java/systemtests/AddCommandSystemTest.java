@@ -35,8 +35,8 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.LORETTA;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.LORETTA;
 
 import org.junit.Test;
 
@@ -102,7 +102,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_LORETTA + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_LORETTA).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_LORETTA).withAddress(VALID_ADDRESS_LORETTA).withTags(VALID_TAG_FRIEND).build();
@@ -123,7 +122,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_LORETTA + PHONE_DESC_LORETTA + EMAIL_DESC_LORETTA
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
-        
 
         /* Case: filters the person list before adding -> added*/
         executeCommand(FindCommand.COMMAND_WORD + " n/ " + KEYWORD_MATCHING_MEIER);
