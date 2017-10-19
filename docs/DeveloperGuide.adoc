@@ -366,6 +366,50 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Storage with back up
+
+Upon the first-time run of this application, user is provided with a sample list of people, provided by link:{repoURL}/src/main/java/seedu/address/storage/model/util/SampleDataUtil.java[`SampleDataUtil.java`]. This is to give the user an idea of how the working application should look like.
+
+If this is not a first-time run, under normal operation, addressbook.xml storage file in application directory/main/data is used to instantiate model for current session.
+
+However if user's main storage file addressbook.xml is non-existant, of incorrect format or unreadable, we make a best effort retrieval of back up data in addressbook.xml-backup.xml.
+
+Pseudo code for initiation of model:
+[source,java]
+----
+private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    ...
+    try {
+        read addressbook using storage
+        if storage file is not present:
+            initModelWithBackup
+    } catch (addressbook has incorrect format) {
+        initModelWithBackup
+    } catch (unreadable addressbook) {
+        initModelWithBackup
+    }
+    ...
+}
+
+private Model initModelWithBackup(Storage storage, UserPrefs userPrefs) {
+    ...
+    try {
+        read backup addressbook using storage
+        if backup storage file is present:
+            retrieve back up addressbook
+            save back up addressbook content to addressbook
+        else:
+            retrieve sample addressbook
+    } catch (addressbook has incorrect format) {
+        create empty addressbook
+    } catch (unreadable addressbook) {
+        create empty addressbook
+    }
+}
+----
+
+Back up file is kept up-to-date by updating itself when an AddressBookChangedEvent is raised.
+
 === Favorite
 
 The Favorite function is created for frequent users who have have certain "close contacts" and
@@ -466,7 +510,6 @@ Edit a person, Add a person or Favorite a person.
 **Pros:** No mutation of data list. +
 **Cons:** Difficult to implement system tests.
 // end::favorite[]
-
 
 == Documentation
 

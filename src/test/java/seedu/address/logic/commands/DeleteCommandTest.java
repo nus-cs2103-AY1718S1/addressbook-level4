@@ -9,6 +9,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -19,6 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.TypicalIndexes;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -26,26 +29,38 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private ArrayList<Index> testIndexes = new ArrayList<>();
 
     @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
+    public void execute_validIndexUnfilteredListSinglePerson_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        testIndexes.clear();
+        testIndexes.add(INDEX_FIRST_PERSON);
+        DeleteCommand deleteCommand = prepareCommand(testIndexes);
 
+        StringBuilder sb = new StringBuilder();
+        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
+        sb.append("1. ");
+        sb.append(personToDelete);
+        sb.append("\n");
+        String expectedMessage = sb.toString();
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+    public void execute_invalidIndexUnfilteredListSingleOutOfBound_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+        testIndexes.clear();
+        testIndexes.add(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        DeleteCommand deleteCommand = prepareCommand(testIndexes);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
     }
 
     @Test
@@ -53,11 +68,20 @@ public class DeleteCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        testIndexes.clear();
+        testIndexes.add(INDEX_FIRST_PERSON);
+        DeleteCommand deleteCommand = prepareCommand(testIndexes);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
+        sb.append("1. ");
+        sb.append(personToDelete);
+        sb.append("\n");
+        String expectedMessage = sb.toString();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
@@ -69,24 +93,33 @@ public class DeleteCommandTest {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
+
+        testIndexes.clear();
+        testIndexes.add(outOfBoundIndex);
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+        DeleteCommand deleteCommand = prepareCommand(testIndexes);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
     }
 
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+
+        testIndexes.clear();
+        testIndexes.add(TypicalIndexes.INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(testIndexes);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(testIndexes);
+
+        ArrayList<Index> testIndexes2 = new ArrayList<>();
+        testIndexes2.add(TypicalIndexes.INDEX_SECOND_PERSON);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(testIndexes2);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -102,8 +135,9 @@ public class DeleteCommandTest {
     /**
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private DeleteCommand prepareCommand(Index index) {
-        DeleteCommand deleteCommand = new DeleteCommand(index);
+    private DeleteCommand prepareCommand(ArrayList<Index> index) {
+        //testIndexes.clear();
+        DeleteCommand deleteCommand = new DeleteCommand(testIndexes);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
