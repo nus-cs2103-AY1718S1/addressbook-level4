@@ -39,6 +39,7 @@ public class Phone {
             phoneStr += s + "\n";
 
         }
+        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
         this.phonelist = phones;
         value = phoneStr;
     }

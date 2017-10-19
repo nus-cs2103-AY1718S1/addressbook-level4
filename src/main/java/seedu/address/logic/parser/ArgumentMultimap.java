@@ -60,6 +60,7 @@ public class ArgumentMultimap {
         for (String v : values) {
             str += v + "\n";
         }
+        str = str.substring(0, str.length() - 1);
         return str.isEmpty() ? Optional.empty() : Optional.of(str);
     }
 
