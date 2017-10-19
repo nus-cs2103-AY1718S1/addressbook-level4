@@ -364,6 +364,31 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+//  tag::find[]
+=== Enhanced find
+
+The enhanced find feature is implemented by comparing every `Person` 's `Name`, `Phone`, `Email`,
+`Address`, and `Tag` with the keyword provided by the user. The user need not have to type the keywords
+in full and partial keywords will still be able to find the person (e.g find jos will return Josephine).
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the find command will be +
+**Alternative 1 (current choice):** The person will be found if their names, phone, email or tags start with the
+ keywords typed by the user. The address on the other hand can be found if any part of it contains
+ the keyword. In addition, partial keywords will be able to match the person. +
+**Pros:** If the person's name, phone, email or tags can be found as long as it contains any of the keywords,
+the user may end up with a list full of person they did not want (e.g find br will return Brandon and also Abraham). Hence,
+it is better to find a person if their names start with keywords.
+For the address, users generally tend to type only the street name, hence it is better to find address as long as it contains
+any of the keywords. +
+**Cons:** By finding using partial keywords, users may also end up with a list of people they did not want. +
+**Alternative 2:** The person will be found only if the user type out the details of the person they want in full (e.g
+find Josephine, or find Blk 231, Sembawang Close 221 #02-232, S750231). +
+**Pros:** It is the most accurate way to find the exact person the user wants. +
+**Cons:** The user may forget certain details of the person and be unable to find him.
+//  end::find[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
