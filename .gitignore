@@ -19,5 +19,5 @@ classes/
 src/main/resources/docs/
 out/
 
-# exception to the rule above
-!/data/import
+!/data/import/testValidAddressBook.xml
+!/data/import/testNotXmlFormatAddressBook.xml
