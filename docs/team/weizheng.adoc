@@ -34,8 +34,22 @@ Speed up the use of the address book and make it easier for new users to learn t
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
-image::UiClassDiagram.png[width="800"]
+The command box helper is meant to work similarly to the auto fill functions in IDEs. Two different classes are created, `CommandBoxHelper` and `HelperCard`.
+`CommandBoxHelper` contains a ListView which is populated by VBox containers holding the `HelperCard` class. `CommandBoxHelper` retrieves a list of commands and command templates from the `logic` class and performs a check to populate the listview everytime the user enters a key in the command box
+The commands are matched using the `contain()` function and comparing the first character of the user's input. Commands that are matched are placed in a list and mapped to their corresponding `HelperCard` classes.
+For example, an "add" command will create a new instance of `HelperCard` using "add" as a parameter for the `HelperCard` constructor.
 
+To emulate the behaviour of command helpers in IDEs, the use can also navigate the list of commands using the arrow keys. To prevent it from overwriting the existing code of loading input history, an if-else statement is used. The command box helper takes priority in this case; as long as there is a command
+that corresponds to the user's entered string in the CLI, i.e. the command box helper is shown, interaction with the command helper will take precedence over interactions with the CLI. This is implemented similarly in the key inputs `TAB` and `ENTER`, which are used to fill in the CLI after the user has selected his
+desired command in the command helper.
+
+==== Design Considerations
+
+**Aspect:** Implementation of the list view in `CommandBoxHelper` +
+**Alternative:** Instead of creating a new class to populate the ListView, use a StackPane instead of a ListView and add Strings to it +
+**Pros:** Easier to implement the display for command helper +
+**Cons:** Fragile architecture, have to change a few functions every time an extra command is added. This involves hardcoding the additional command Strings into the functions.
+Slightly harder to display selection of command in the helper box to the user.
 #End of Extract#
 
 ---

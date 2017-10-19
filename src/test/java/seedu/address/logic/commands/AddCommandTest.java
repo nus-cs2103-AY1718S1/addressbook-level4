@@ -139,6 +139,16 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void recordSearchHistory() throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListBySearchCount() {
+            fail("This method should not be called.");
+        }
     }
 
     /**
