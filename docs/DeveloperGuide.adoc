@@ -28,7 +28,7 @@ This app will not work with earlier versions of Java 8.
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has link:#Gradle[Gradle] and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
@@ -72,7 +72,7 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up link:#Travis_CI[Travis] to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
@@ -117,7 +117,7 @@ The rest of the App consists of four components.
 
 Each of the four components
 
-* Defines its _API_ in an `interface` with the same name as the Component.
+* Defines its link:#API[_API_] in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
@@ -345,6 +345,88 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::studentparentcontact[]
+=== Add student/parent phone contact mechanism
+
+The student/parent phone contact mechanism is facilitated by making changes
+to the Phone class in the model component. It enables the input
+of the phone contact information of the student and his/her parent.
+
+To ensure consistency across the user inputs for add command, users have to input p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)
+instead of p/ Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER).
+
+The following method replaces `/` with `:`````, `s` with `S`, and `p` with `P` in the user input string
+for appropriate presentation of `displayed person card phone information`:
+[source,java]
+----
+public static String changeToAppropriateUiFormat(String value) {
+        value = value.replace("/", ": ");
+        value = value.replace("s", "S");
+        value = value.replace("p", "P");
+        return value;
+    }
+----
+Validity of the `displayed person card phone information` is checked in the following method in the Phone class:
+[source,java]
+----
+public static boolean isValidPhone(String test) {
+        return test.matches(PHONE_VALIDATION_REGEX);
+    }
+----
+where the `PHONE_VALIDATION_REGEX` refers to:
+[source,java]
+----
+public static final String PHONE_VALIDATION_REGEX =
+"(Student: )(\\d\\d\\d\\d\\d\\d\\d\\d)( Parent: )(\\d\\d\\d\\d\\d\\d\\d\\d)";
+----
+The regex ensures that the string for `displayed person card phone information` adheres to the
+correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)`, and that the
+phone numbers must be exactly 8 digits long.
+
+image::PhoneDisplay.png[width="800"]
+
+If the string format for `displayed person card phone information` is valid, the
+phone contact information of the student and his/her parent will be displayed
+below the student's name in the person card as seen in the picture above.
+
+image::message_constraint.png[width="1100"]
+
+If the string format for `displayed person card phone information` is invalid: an IllegalValueException
+is thrown. Prompting the user to enter the correct format as seen in the picture above.
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+        requireNonNull(phone);
+        String trimmedPhone = phone.trim();
+        trimmedPhone = changeToAppropriateUiFormat(trimmedPhone);
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Phone numbers  +
+**Alternative 1 (current choice):** Both the student's phone number and their parent's phone number is a single string. +
+**Pros:** Easy to implement as separate classes for student's phone and parent's phone is not required. +
+**Cons:** Harder to implement features that require solely the student's number or parent's number. +
+**Alternative 2:** Have a phoneStudent class for student's phone number and phoneParent class for parent's phone number. +
+**Pros:** Can edit properties of the student's phone number or parent's phone number separately. +
+**Cons:** Harder to implement as now there will be two phone classes instead of one. +
+
+---
+
+**Aspect:** Validity of phone number +
+**Alternative 1 (current choice):** Only allow numbers that are exactly 8 digits long. +
+**Pros:** Ensures consistency across all phone numbers. +
+**Cons:** Student's parents might not have foreign numbers that are not exactly 8 digits long. +
+**Alternative 2:** Modify phone validity regex to allow any length of phone numbers. +
+**Pros:** Able to have phone numbers that are local or non-local. +
+**Cons:** Inconsistent phone lengths displayed, might look very messy. +
+// end::studentparentcontact[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -403,7 +485,7 @@ There are three ways to run tests.
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-*Method 1: Using IntelliJ JUnit test runner*
+*Method 1: Using IntelliJ link:#JUnit[JUnit] test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
 * To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
@@ -487,7 +569,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a link:#Shorthand-Commands[shorthand] equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
 +
 ****
 * Hints
