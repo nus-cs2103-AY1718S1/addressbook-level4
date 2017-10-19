@@ -11,7 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
-public class ExpireCommandParser {
+public class ExpireCommandParserTest {
 
     private ExpireCommandParser parser = new ExpireCommandParser();
 
