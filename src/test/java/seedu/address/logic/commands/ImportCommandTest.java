@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_DUPLICATE_PARCELS;
 import static seedu.address.logic.commands.ImportCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.TypicalParcels.ALICE;
+import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.HOON;
 
@@ -76,8 +77,8 @@ public class ImportCommandTest {
         List<ReadOnlyParcel> sameParcels = TypicalParcels.getTypicalParcels();
         List<ReadOnlyParcel> otherParcels = new ArrayList<>();
 
-        otherParcels.add(TypicalParcels.ALICE);
-        otherParcels.add(TypicalParcels.AMY);
+        otherParcels.add(ALICE);
+        otherParcels.add(AMY);
 
         ImportCommand importCommand = new ImportCommand(parcels);
         ImportCommand importCommandWithSameParcels = new ImportCommand(sameParcels);
