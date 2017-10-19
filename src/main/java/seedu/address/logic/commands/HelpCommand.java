@@ -48,6 +48,13 @@ public class HelpCommand extends Command {
             commandResult = ClearCommand.MESSAGE_USAGE;
             break;
 
+        case CopyCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case CopyCommand.COMMAND_WORD:
+            commandResult = CopyCommand.MESSAGE_USAGE;
+            break;
+
         case DeleteCommand.COMMAND_ALIAS:
             //Fallthrough
 
