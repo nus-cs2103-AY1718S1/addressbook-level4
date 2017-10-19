@@ -8,20 +8,20 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.PaybackCommand;
+import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.model.person.Debt;
 
 //@@author jelneo
 public class BorrowCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =  String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-            PaybackCommand.MESSAGE_USAGE);
+            BorrowCommand.MESSAGE_USAGE);
     private static final String VALID_DEBT_FIGURE = "500.20";
     private static final String INVALID_DEBT_FIGURE = "-500";
     private static final String VALID_INDEX = "1";
     private static final String INVALID_INDEX = "-1";
 
-    private PaybackCommandParser parser  = new PaybackCommandParser();
+    private BorrowCommandParser parser  = new BorrowCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -49,14 +49,13 @@ public class BorrowCommandParserTest {
 
     @Test
     public void parse_validArguments() {
-        Index index = Index.fromOneBased(Integer.valueOf(VALID_INDEX));
-        Debt amount = null;
         try {
-            amount = new Debt(VALID_DEBT_FIGURE);
+            Index index = Index.fromOneBased(Integer.valueOf(VALID_INDEX));
+            Debt amount = new Debt(VALID_DEBT_FIGURE);
+            BorrowCommand expectedBorrowCommand = new BorrowCommand(index, amount);
+            assertParseSuccess(parser, VALID_INDEX + " " + VALID_DEBT_FIGURE, expectedBorrowCommand);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }
-        PaybackCommand expectedPaybackCommand = new PaybackCommand(index, amount);
-        assertParseSuccess(parser, VALID_INDEX + " " + VALID_DEBT_FIGURE, expectedPaybackCommand);
     }
 }
