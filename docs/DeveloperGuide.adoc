@@ -1176,3 +1176,4 @@ The second constructor takes in a String from the user.
 *Reasons for how it is implemented*
 
 The reason for the use of ListByBloodtypeCommandParser is to filter out extra spaces that the user may have typed in.
+
