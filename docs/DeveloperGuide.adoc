@@ -369,10 +369,10 @@ Certain properties of the application can be controlled (e.g App name, logging l
 The `finds` command is an improved version from `find` command. It allows user to search using other details such as phone number, email or tag instead of just name.
 
 The user can use this command with only ONE of the following prefixes:
-* `n/` to search by name(s)
-* `p/` to search by phone number(s)
-* `e/` to search by email(s)
-* `t/` to search by tag(s)
+* `n/` : To search by name(s)
+* `p/` : To search by phone number(s)
+* `e/` : To search by email(s)
+* `t/` : To search by tag(s)
 
 It is implemented to search with one type of detail only so that the returned results will be relevant to that type of detail used only. i.e. if a user search for a person with phone number then only the phone numbers of the returned contacts are relevant, and other details are irrelevant to the input phone number during the search.
 
