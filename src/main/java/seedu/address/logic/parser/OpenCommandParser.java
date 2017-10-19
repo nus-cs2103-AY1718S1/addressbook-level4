@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.util.StringUtil.replaceBackslashes;
 import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorageFilepath;
 
 import seedu.address.logic.commands.OpenCommand;
@@ -17,7 +18,7 @@ public class OpenCommandParser implements Parser<OpenCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public OpenCommand parse(String args) throws ParseException {
-        String trimmedAndFormattedArgs = args.trim().replace("\\", "/");
+        String trimmedAndFormattedArgs = replaceBackslashes(args.trim());
         if (trimmedAndFormattedArgs.isEmpty()
                 || !isValidRolodexStorageFilepath(trimmedAndFormattedArgs)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
