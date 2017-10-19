@@ -24,6 +24,7 @@ public interface ReadOnlyPerson {
     Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    boolean isPrivate();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

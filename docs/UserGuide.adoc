@@ -70,7 +70,7 @@ prone in the hands of the child
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `Bluebird.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -159,15 +159,16 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::find[]
+=== Locating persons by the person's details: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose details contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* The person's name, phone, email, address and tags will be searched.
 * Partial words will be matched e.g. `Ha` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -178,6 +179,9 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find friend` +
+Returns any person having the tag `friend`
+// end::find[]
 
 === Hiding a person: `hide`
 
@@ -194,6 +198,44 @@ Examples:
 
 * `hide 2`
 Hides the 2nd person in the address book.
+
+// tag::alias[]
+=== Creates an alias for command or shortcut : `alias`
+
+Creates an alias based on given keyword and representation +
+Format: `alias k/KEYWORD s/REPRESENTATION`
+
+****
+* Adds an alias with the keyword as as a substitute for the respective representation.
+* The keyword is case-insensitive.
+****
+
+Examples:
+
+* `alias k/disappear s/hide` +
+Creates an alias command 'disappear' that is understood as the 'hide' command word.
+* `alias k/ph s/Public Holiday` +
+Creates an alias shortcut that translates ph into Public Holiday every time it is entered by user.
+// end::alias[]
+
+// tag::unalias[]
+=== Removes an alias for command or shortcut : `Unalias`
+
+Removes an existing alias based on given keyword and representation +
+Format: `Unalias k/KEYWORD`
+
+****
+* Removes an existing alias that has been made with the same keyword.
+* The keyword is case-insensitive.
+****
+
+Examples:
+
+* `Unalias k/disappear` +
+Removes the alias command 'disappear'. Next instances of disappear will no longer be a hide command.
+* `Unalias k/ph` +
+Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
+// end::unalias[]
 
 === Deleting person(s) : `delete`
 
@@ -341,7 +383,8 @@ e.g. `sort` `NAME`
 * *Redo* : `redo`
 * *Hide* : `hide` `INDEX` +
 e.g.`hide` `1`
-* *Alias* :
+* *Alias* : `alias k/KEYWORD s/REPRESENTATION`
+* *Unalias : `alias k/KEYWORD`
 
 == Coming in v2.0
 
