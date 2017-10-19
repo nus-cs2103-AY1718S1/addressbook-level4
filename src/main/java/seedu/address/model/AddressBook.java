@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -20,8 +21,7 @@ import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.group.Group;
-import seedu.address.model.group.UniqueGroupList;
+
 
 /**
  * Wraps all data at the address-book level
@@ -125,7 +125,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(editedPerson);
         syncMasterGroupListWith(editedPerson);
         // TODO: the tags master list and the groups master list will be updated even though the below line fails.
-        // This can cause the tags master list and group master list to have additional tags or groups that are not tagged to any person
+        // This can cause the tags master list and group master list to have additional
+        // tags or groups that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
@@ -196,7 +197,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  @see #syncMasterGroupListWith(Person)
      */
     private void syncMasterGroupListWith(UniquePersonList persons) {
-            persons.forEach(this::syncMasterGroupListWith);
+        persons.forEach(this::syncMasterGroupListWith);
     }
 
     /**

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 
@@ -13,12 +14,12 @@ import seedu.address.model.person.Person;
  */
 public class Group {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Group names should contain only " +
-            "alphanumeric characters, spaces, underscores and dashes";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Group names should contain only "
+            + "alphanumeric characters, spaces, underscores and dashes";
     public static final String GROUP_VALIDATION_REGEX = "^[a-zA-Z0-9]([\\w -]*[a-zA-Z0-9])?$";
 
     public final String groupName;
-    public Set<Person> members;
+    private Set<Person> members;
 
     /**
      * Validates given group name.

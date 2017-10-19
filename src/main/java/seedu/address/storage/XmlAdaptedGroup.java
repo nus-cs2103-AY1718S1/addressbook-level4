@@ -1,9 +1,11 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlValue;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
 
-import javax.xml.bind.annotation.XmlValue;
+
 
 /**
  * JAXB-friendly adapted version of the Tag.

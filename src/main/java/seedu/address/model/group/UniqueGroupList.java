@@ -24,7 +24,7 @@ import seedu.address.commons.util.CollectionUtil;
  */
 
 
-public class UniqueGroupList implements Iterable<Group>{
+public class UniqueGroupList implements Iterable<Group> {
 
     private final ObservableList<Group> internalList = FXCollections.observableArrayList();
 
@@ -85,7 +85,8 @@ public class UniqueGroupList implements Iterable<Group>{
     /**
      * Adds a Group to the list.
      *
-     * @throws seedu.address.model.group.UniqueGroupList.DuplicateGroupException if the Tag to add is a duplicate of an existing Tag in the list.
+     * @throws seedu.address.model.group.UniqueGroupList.DuplicateGroupException
+     * if the Tag to add is a duplicate of an existing Tag in the list.
      */
     public void add(Group toAdd) throws DuplicateGroupException {
         requireNonNull(toAdd);
