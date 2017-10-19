@@ -72,10 +72,8 @@ public class StarWarsWindow extends UiPart<Region> {
             char ch = (char) in.read();
             while ((int) ch != -1) {
                 sb.append(ch);
-                if (ch == lastChar) {
-                    if (sb.toString().endsWith(delimeterPattern)) {
-                        return sb.toString().replace(delimeterPattern, "");
-                    }
+                if (ch == lastChar && sb.toString().endsWith(delimeterPattern)) {
+                    return sb.toString().replace(delimeterPattern, "");
                 }
                 ch = (char) in.read();
             }
