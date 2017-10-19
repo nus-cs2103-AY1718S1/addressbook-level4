@@ -46,7 +46,7 @@ public abstract class StageHandle {
      * Retrieves the {@code query} node owned by the {@code stage}.
      *
      * @param query name of the CSS selector for the node to retrieve.
-     * @throws NodeNotFoundException if no such node exists.
+     * throws NodeNotFoundException if no such node exists.
      */
     protected <T extends Node> T getChildNode(String query) {
         Optional<T> node = guiRobot.from(stage.getScene().getRoot()).lookup(query).tryQuery();

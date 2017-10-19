@@ -22,6 +22,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -54,7 +55,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -102,7 +103,10 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         boolean isPrivate = personToEdit.isPrivate();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, isPrivate);
+        Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+                updatedTags, isPrivate);
     }
 
     @Override
@@ -134,7 +138,8 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
