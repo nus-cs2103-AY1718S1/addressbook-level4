@@ -62,6 +62,17 @@ include::../UserGuide.adoc[tag=viewAddress]
 
 ---
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=websitebuttonbar]
+
+#End of Extract#
+
+---
+
 ==== Justification
 
 This allows a user view the address of a contact directly within the application.
