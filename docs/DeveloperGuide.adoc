@@ -228,15 +228,15 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 
 The following activity diagram summarize what happens when a user executes a new command:
 
-image::AddTaskCommand.png[width="200"]
+image::AddTaskCommand.png[width="800", height="500"]
 
 === Design Considerations
-**Aspect:** Implementation of AddTaskCommand
-**Alternative 1 (current choice):** Use Strings to contains the StartDates and Deadlines.
-**Pros:** Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI.
-**Cons:** Date not stored the correct format.
-**Alternative 2:** Use java.time.LocalDate class.
-**Pros:** Dates are in correct format.
+**Aspect:** Implementation of AddTaskCommand +
+**Alternative 1 (current choice):** Use Strings to contains the StartDates and Deadlines. +
+**Pros:** Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI. +
+**Cons:** Date not stored the correct format. +
+**Alternative 2:** Use java.time.LocalDate class. +
+**Pros:** Dates are in correct format. +
 **Cons:** LocalDate cannot be initialized when no input is given. Extra code needed to make dates optional.
 
 // tag::undoredo[]
