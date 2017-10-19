@@ -36,6 +36,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -144,6 +145,16 @@ public class ModelManager extends ComponentManager implements Model {
                     personToUnpin.getAddress(), updatedTags.toSet());
         } catch (IllegalValueException ive) {
             throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
+    }
+
+    public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) throws IllegalValueException {
+        try {
+            Tag targetTag = new Tag(arg);
+            Predicate<ReadOnlyPerson> taggedPredicate = p -> p.getTags().contains(targetTag);
+            return taggedPredicate;
+        }  catch (IllegalValueException ive) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
     }
     //=========== Filtered Person List Accessors =============================================================

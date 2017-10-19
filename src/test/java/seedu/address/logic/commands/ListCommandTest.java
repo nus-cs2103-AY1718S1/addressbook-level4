@@ -27,18 +27,29 @@ public class ListCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        listCommand = new ListCommand("all");
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        assertCommandSuccess(listCommand, model, String.format(ListCommand.MESSAGE_SUCCESS, "."), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
+        listCommand = new ListCommand("all");
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         showFirstPersonOnly(model);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listCommand, model, String.format(ListCommand.MESSAGE_SUCCESS, "."), expectedModel);
+    }
+
+    @Test
+    public void execute_listFriends_success() {
+        listCommand = new ListCommand("friends");
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        assertCommandSuccess(listCommand, model,
+                String.format(ListCommand.MESSAGE_SUCCESS, " with friends tag."),
+                expectedModel);
     }
 }
