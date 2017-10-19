@@ -31,7 +31,7 @@ public class AutoCompleteTest {
         assert commandTrie.attemptAutoComplete("red").equals("redo");
         assert commandTrie.attemptAutoComplete("rem").equals("remark");
         assert commandTrie.attemptAutoComplete("s").equals("select");
-        assert commandTrie.attemptAutoComplete("u").equals("un");
+        assert commandTrie.attemptAutoComplete("u").equals("undo");
         assert commandTrie.attemptAutoComplete("fil").equals("filter");
         assert commandTrie.attemptAutoComplete("fin").equals("find");
         assert commandTrie.attemptAutoComplete("g").equals("group");
