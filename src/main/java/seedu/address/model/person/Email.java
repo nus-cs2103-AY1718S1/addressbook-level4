@@ -8,7 +8,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Email {
 
-
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
         "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
@@ -42,9 +41,17 @@ public class Email {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof Email // instanceof handles nulls
-            && (this.value == ((Email) other).value || this.value.equals(((Email) other).value))); // state check
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Email)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Email) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Email) other).value)) { // state check
+            return true;
+        }
+
+        return false;
     }
 
     @Override

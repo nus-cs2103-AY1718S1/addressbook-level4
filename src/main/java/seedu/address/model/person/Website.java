@@ -41,10 +41,17 @@ public class Website {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Website // instanceof handles nulls
-                && (this.value == ((Website) other).value
-                || this.value.equals(((Website) other).value))); // state check
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Website)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Website) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Website) other).value)) { // state check
+            return true;
+        }
+
+        return false;
     }
 
     @Override
