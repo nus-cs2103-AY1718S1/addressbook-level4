@@ -33,6 +33,19 @@ public class ImportCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void testFormattedString() {
+        List<ReadOnlyParcel> parcels = new ArrayList<>();
+        parcels.add(ALICE);
+        parcels.add(BENSON);
+
+        String expectedString = "\n  " + ALICE.toString() + "\n  " + BENSON.toString();
+        assertEquals(expectedString, ImportCommand.getImportFormattedParcelListString(parcels));
+
+        List<ReadOnlyParcel> empty = new ArrayList<>();
+        assertEquals("\n  (none)", ImportCommand.getImportFormattedParcelListString(empty));
+    }
+
+    @Test
     public void executeImportCommand_throwsCommandException() throws CommandException {
         AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
@@ -61,14 +74,15 @@ public class ImportCommandTest {
         parcels.add(BENSON);
 
         // importing without any duplicates
+        String importListWithAliceBenson = ImportCommand.getImportFormattedParcelListString(parcels);
         ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
         assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, 2, 0,
-                "\n  " + ALICE.toString() + "\n  " + BENSON.toString(), "\n  (none)")).feedbackToUser);
+                importListWithAliceBenson, "\n  (none)")).feedbackToUser);
 
         // importing with some duplicates
         parcels.add(HOON);
         assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, 1, 2,
-                "\n  " + HOON.toString(), "\n  " + ALICE.toString() + "\n  " + BENSON.toString())).feedbackToUser);
+                "\n  " + HOON.toString(), importListWithAliceBenson)).feedbackToUser);
     }
 
     @Test

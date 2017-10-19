@@ -48,18 +48,28 @@ public class ImportCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PARCELS);
         }
 
-        String addedParcelsString = ""; // formatted string of parcels added
-        for (ReadOnlyParcel parcel : addedParcels) {
-            addedParcelsString = addedParcelsString + "\n  " + parcel.toString();
-        }
-
-        String duplicatedParcelsString = (duplicateParcels.size() > 0) ? "" : "\n  (none)"; // string of duplicates
-        for (ReadOnlyParcel parcel : duplicateParcels) {
-            duplicatedParcelsString = duplicatedParcelsString + "\n  " + parcel.toString();
-        }
+        String addedParcelsString = getImportFormattedParcelListString(addedParcels);
+        String duplicatedParcelsString = getImportFormattedParcelListString(duplicateParcels);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, addedParcels.size(), duplicateParcels.size(),
                 addedParcelsString, duplicatedParcelsString));
+    }
+
+    /**
+     * @return formatted list of parcels added/not added for ImportCommand execution feedback
+     */
+    public static String getImportFormattedParcelListString(List<ReadOnlyParcel> parcels) {
+        if(parcels.size() == 0) {
+            return "\n  (none)";
+        }
+
+        String formattedString = "";
+
+        for (ReadOnlyParcel parcel : parcels) {
+            formattedString += "\n  " + parcel.toString();
+        }
+
+        return formattedString;
     }
 
     @Override
