@@ -27,3 +27,19 @@ Role: Developer +
 Responsibilities: Integration, Testing, Git Expert, In charge of Storage component
 
 '''
+
+=== Sarah Ng
+image::sarahnzx.jpg[width="150", align="left"]
+{empty}[http://github.com/sarahnzx[github]] [<<sarahnzx#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Deliverables and deadlines, Code quality, In charge of Logic component
+
+'''
+
+=== Alex Foo
+image::alexfoodw.png[width="150", align="left"]
+{empty}[http://github.com/alexfoodw[github]] [<<alexfoodw#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Integration, Documentation, Intellij Expert, In charge of Model component
