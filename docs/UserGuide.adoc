@@ -131,37 +131,51 @@ component.
 
 Format: `help`
 
-=== Adding a person/event : `add(E)`
+=== Adding a person : `add`
 
-Adds a person/event to the application. +
+Adds a person to the application. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-Format: `addE n/NAME d/DATE_TIME a/EMAIL a/ADDRESS `
 
 [TIP]
 A person can have any number of tags (including 0).
-Events added will be automatically sorted by date/time
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+
+=== Adding an event : `addE`
+
+Adds an event to the application. +
+Format: `addE n/NAME d/DATE_TIME a/EMAIL a/ADDRESS `
+
+[TIP]
+Events added will be automatically sorted by date/time
+
+Examples:
+
 * `addE n/Does Birthday d/25122015 20:30 a/Does crib `
 * `addE n/Betsy Birthday d/25122016 21:30 a/Betsy crib `
 
 
-=== Listing all persons/events : `list(E)`
+=== Listing all persons/events : `list`
 
-Shows a list of all persons/events in the application. +
+Shows a list of all persons in the application. +
 Format: `list`
 
-=== Editing a person/event : `edit(E)`
+=== Listing all events : `listE`
 
-Edits an existing person/event in the application. +
+Shows a list of all events in the application. +
+Format: `listE`
+
+=== Editing a person : `edit`
+
+Edits an existing person in the application. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-Format: `editE INDEX [n/NAME] [d/DATE_TIME] [a/ADDRESS]`
 
 ****
-* Edits the person/event at the specified `INDEX`. The index refers to the index number shown in the last listing.
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last listing.
 The index *must be a positive integer* like 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values of the selected data item will be updated to the input values.
@@ -176,11 +190,27 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-* `editE 1 n/Telegram Birthday` +
-Edits the name of the 1st event to be `Telegram Birthday`.
+=== Editing an event : `editE`
 
-* `editE 2 d/25102017 21:30` +
-Edits the date of the 2nd event to be `25102017 21:30`.
+Edits an existing event in the application. +
+Format: `editE INDEX [n/NAME] [d/DATE_TIME] [a/ADDRESS]`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last listing.
+The index *must be a positive integer* like 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values of the selected data item will be updated to the input values.
+****
+
+Examples:
+
+* `editE 1 d/18052013 03:30 +
+Edits the date/time the 1st event to be `18052013 03:30`.
+* `editE 2 n/Lunch with Betsy  +
+Edits the name of the 2nd event to be `Lunch with Betsy`.
+
+
+
 === Locating persons/events by any property : `find`
 
 Finds events whose corresponding field(s) contain any of the given keywords. +
@@ -206,13 +236,13 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person/event : `delete(E)`
+=== Deleting a person : `delete`
 
-Deletes the specified person/event from the application. +
-Format: `delete(E) INDEX`
+Deletes the specified person from the application. +
+Format: `delete INDEX`
 
 ****
-* Deletes the person/event at the specified `INDEX`.
+* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* like 1, 2, 3, ...
 ****
@@ -220,13 +250,30 @@ Format: `delete(E) INDEX`
 Examples:
 
 * `list` +
-`delete(E) 2` +
-Deletes the 2nd person/event in the address book.
+`delete 2` +
+Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete(E) 1` +
-Deletes the 1st person/event in the results of the `find` command.
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person/event: `select`
+=== Deleting an event : `deleteE`
+
+Deletes the specified event from the application. +
+Format: `deleteE INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteE 2` +
+Deletes the 2nd event in the address book.
+
+=== Selecting a person: `select`
 
 Selects the person/event identified by the index number used in the last listing. +
 Format: `select INDEX`
@@ -380,14 +427,21 @@ Format: `exit`
 
 * *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add event* : `addE n/NAME d/DATE_TIME a/ADDRESS` +
+e.g. `addE n/James birthday d/18022017 13:30 a/123, Clementi Rd, 1234665`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete event* : `deleteE INDEX` +
+e.g. `deleteE 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit event* : `edit INDEX [n/NAME] [d/DATE_TIME] [a/ADDRESS]` +
+e.g. `editE 2 n/Lees Day`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *List event* : `listE`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
