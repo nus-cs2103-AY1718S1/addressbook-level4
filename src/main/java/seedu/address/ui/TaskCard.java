@@ -17,9 +17,6 @@ public class TaskCard extends UiPart<Region> {
     public final ReadOnlyTask task;
 
     @FXML
-    private HBox cardPanel;
-
-    @FXML
     private Label id;
 
     @FXML
