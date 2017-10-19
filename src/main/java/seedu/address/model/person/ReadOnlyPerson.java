@@ -26,6 +26,8 @@ public interface ReadOnlyPerson {
     Grades getGrades();
     ObjectProperty<PostalCode> postalCodeProperty();
     PostalCode getPostalCode();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -41,7 +43,8 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress())
                 && other.getFormClass().equals(this.getFormClass())
                 && other.getGrades().equals(this.getGrades())
-                && other.getPostalCode().equals(this.getPostalCode()));
+                && other.getPostalCode().equals(this.getPostalCode()))
+                && other.getRemark().equals((this.getRemark()));
     }
 
     /**
@@ -62,6 +65,8 @@ public interface ReadOnlyPerson {
                .append(getGrades())
                .append(" PostalCode: ")
                .append(getPostalCode())
+               .append(" Remark: ")
+               .append(getRemark())
                .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

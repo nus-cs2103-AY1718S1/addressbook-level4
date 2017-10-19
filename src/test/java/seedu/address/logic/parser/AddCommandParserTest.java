@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_ADDEDITCOMMANDREMARK_INVALID;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
@@ -23,6 +24,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.POSTALCODE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.POSTALCODE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -82,6 +84,7 @@ public class AddCommandParserTest {
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + TAG_DESC_FRIEND
                 + POSTALCODE_DESC_AMY + POSTALCODE_DESC_BOB, new AddCommand(expectedPerson));
 
+
         // multiple addresses - last address accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + TAG_DESC_FRIEND
@@ -106,6 +109,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_AMY,
                 new AddCommand(expectedPerson));
+
     }
 
     @Test
@@ -173,7 +177,6 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + INVALID_GRADES_DESC + POSTALCODE_DESC_BOB + TAG_DESC_HUSBAND
                 + TAG_DESC_FRIEND, Grades.MESSAGE_GRADES_CONSTRAINTS);
 
-
         // invalid postalCode
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + INVALID_POSTALCODE_DESC + TAG_DESC_HUSBAND
@@ -188,5 +191,10 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_ADDRESS_DESC + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + POSTALCODE_DESC_BOB,
                 Name.MESSAGE_NAME_CONSTRAINTS);
+
+        // invalid field remarks
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + FORMCLASS_DESC_BOB + GRADES_DESC_BOB + POSTALCODE_DESC_BOB + REMARK_DESC_BOB,
+                MESSAGE_ADDEDITCOMMANDREMARK_INVALID);
     }
 }

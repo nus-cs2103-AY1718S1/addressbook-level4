@@ -23,6 +23,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -32,12 +33,14 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_GRADES = "-123";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_REMARK = null;
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "student/97272031 parent/97979797";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_GRADES = "123.0";
+    private static final String VALID_REMARK = "Top 25 percentile";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -176,7 +179,7 @@ public class ParserUtilTest {
     @Test
     public void parseGrades_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseGrades(Optional.of(INVALID_EMAIL));
+        ParserUtil.parseGrades(Optional.of(INVALID_GRADES));
     }
 
     @Test
@@ -192,6 +195,30 @@ public class ParserUtilTest {
         assertEquals(expectedGrades, actualGrades.get());
     }
 
+    @Test
+    public void parseRemark_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseEmail(null);
+    }
+
+    @Test
+    public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRemark(Optional.of(INVALID_REMARK));
+    }
+
+    @Test
+    public void parseRemark_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRemark_validValue_returnsEmail() throws Exception {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
+
+        assertEquals(expectedRemark, actualRemark.get());
+    }
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

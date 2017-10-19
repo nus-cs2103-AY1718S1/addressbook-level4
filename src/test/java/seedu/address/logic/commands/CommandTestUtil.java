@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTALCODE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class CommandTestUtil {
     public static final String VALID_POSTALCODE_BOB = "987654";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_REMARK_AMY = "I am female";
+    public static final String VALID_REMARK_BOB = "I am your father";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -59,6 +62,7 @@ public class CommandTestUtil {
     public static final String GRADES_DESC_BOB = " " + PREFIX_GRADES + VALID_GRADES_BOB;
     public static final String POSTALCODE_DESC_AMY = " " + PREFIX_POSTALCODE + VALID_POSTALCODE_AMY;
     public static final String POSTALCODE_DESC_BOB = " " + PREFIX_POSTALCODE + VALID_POSTALCODE_BOB;
+    public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
