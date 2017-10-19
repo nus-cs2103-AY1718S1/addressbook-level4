@@ -82,8 +82,7 @@ Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUM
 You can use the `help` command to access the User Guide from MedNus. +
 You can also click the `Help` at the top left corner of MedNus.
 
-image::helpUi.png[width="790"]
-
+image::helpUI.png[width="790"]
 
 === Adding a person: `add`
 
