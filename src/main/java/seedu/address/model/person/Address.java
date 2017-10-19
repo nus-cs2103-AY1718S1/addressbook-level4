@@ -48,7 +48,7 @@ public class Address {
         if (value.indexOf("#") < 0) {
             return value;
         }
-        return value.substring(0,value.indexOf("#"));
+        return value.substring(0, value.indexOf("#"));
     }
 
     @Override
