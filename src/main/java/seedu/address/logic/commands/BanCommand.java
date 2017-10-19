@@ -45,8 +45,7 @@ public class BanCommand extends UndoableCommand {
         try {
             if (personToBan.getIsBlacklisted()) {
                 messagetoDisplay = MESSAGE_BAN_PERSON_FAILURE;
-            }
-            else {
+            } else {
                 model.addBlacklistedPerson(personToBan);
             }
         } catch (DuplicatePersonException e) {
