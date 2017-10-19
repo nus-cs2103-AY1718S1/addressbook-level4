@@ -298,6 +298,47 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+=== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+== Since v1.2
+
+// tag::sort[]
+=== Sorting all persons : `sort`
+
+Shows a sorted list of all persons in the address book. +
+Format: `sort OPTION`
+
+****
+* Sorts all persons by specified `OPTION`.
+* The OPTION refers to a contact's field, e.g. 'name', 'phone', 'email', ...
+* The OPTION *must be a hyphen followed by a single lower case alphabet* -n, -p, -e, ...
+* Available options:
+**'-n': sort by name
+**'-p': sort by phone number
+**'-e': sort by email address
+**'-a': sort by address
+**'-t': sort by tag
+****
+
+Examples:
+
+* `sort -n` +
+Sorts the address book alphabetically by name.
+// end::sort[]
+
 === Locking the address book : `lock`
 
 Locks the address book by a password. +
@@ -321,45 +362,6 @@ Format: `unlock PASSWORD`
 * Person contact list will reload.
 ****
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-== Since v1.2
-
-=== Sorting all persons : `sort`
-
-Shows a sorted list of all persons in the address book. +
-Format: `sort OPTION`
-
-****
-* Sorts all persons by specified `OPTION`.
-* The OPTION refers to a contact's field, e.g. 'name', 'phone', 'email', ...
-* The OPTION *must be a hyphen followed by a single lower case alphabet* -n, -p, -e, ...
-* Available options:
-'-n': sort by name
-'-p': sort by phone number
-'-e': sort by email address
-'-a': sort by address
-'-t': sort by tag
-****
-
-Examples:
-
-* `sort -n` +
-Sorts the address book alphabetically by name.
-
 == Coming in v2.0
 
 === Popup dialog window during editing
@@ -378,6 +380,10 @@ Adds schedule with the 1st person: `dinner at 7`.
 * `sch 2 s/` +
 Clears all existing schedules with the 2nd person.
 
+=== real time highlight
+
+Real time highlight when input command is not correct.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -392,7 +398,9 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`, `del john`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` or +
+`find -u KEYWORD` or +
+`find -d [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
@@ -403,3 +411,5 @@ e.g. 'sort -n'
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Lock* : `lock PASSWORD`
+* *Unlock* : `unlock PASSWORD`

@@ -247,6 +247,18 @@ public class FindOptionByName extends CommandOption<FindCommand> {
 }
 ----
 
+==== Design Consideration
+
+**Aspect:** Implementation of Command Options +
+**Alternative 1 (current choice):** Extend abstract class `CommandOption`. +
+**Pros:** It is easier to understand the architecture of parsing chain. +
+**Cons:** Using inheritance makes it more troublesome than implementing directly. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve inheritance. Only needs to change one file.
+**Cons:** This structure is not clear.
+
+---
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -334,16 +346,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Command Options +
-**Alternative 1 (current choice):** Extend abstract class `CommandOption`. +
-**Pros:** It is easier to understand the architecture of parsing chain. +
-**Cons:** Using inheritance makes it more troublesome than implementing directly. +
-**Alternative 2:** Just override `execute()` +
-**Pros:** Does not involve inheritance. Only needs to change one file.
-**Cons:** This structure is not clear.
-
----
-
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
@@ -383,6 +385,58 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism makes use of sort() method in Java 8, which takes in Comparator as parameter. It is written in Lambda expression which makes the code more concise.
+
+The advantage of Lambda expression can be illustrated by the following two code examples.
+
+Example of codes written in pre Java 8 fashion:
+[source,java]
+----
+Collection.sort(fruitList, new Comparator<Fruit>() {
+    @Override
+    public int compare(Fruit a, Fruit b) {
+        return a.getSize().compareTo(b.getSize());
+    }
+});
+----
+
+With Lambda expression:
+[source,java]
+----
+Collection.sort(fruitList, (Fruit a, Fruit b) -> a.getSize().compareTo(b.getSize()));
+----
+
+Both examples sort the fruits in the fruitList according to their size, where smallest on top and largest at the bottom. The amount of verbosity has been reduced by using the Lambda expression. In fact, it can be more concise by removing the variable type from the parameters as the type information is inferred from the context in which the Lambda expression is being used (adopted by sort command):
+[source,java]
+----
+Collection.sort(fruitList, (a, b) -> a.getSize().compareTo(b.getSize()));
+----
+
+[NOTE]
+Lambda expression is equivalent to overriding the 'compare(T o1, T o2)' method in 'Comparator' class.
+
+==== Design Considerations
+
+**Aspect:** Implementation of 'SortCommand' 'OPTION' +
+**Alternative 1 (current choice):** Make use of `CommandOptionUtil` +
+**Pros:** Standardised usage of command options format which can be implemented into other commands. +
+**Cons:** Need to extend abstract class 'CommandOption' if a more complex parsing procedure is involved. e.g. 'find' command. +
+**Alternative 2:** Declare new 'OPTION' format +
+**Pros:** No inheritance required, minimise error. +
+**Cons:** 'SortCommand' class specific, cannot be reused by other commands.
+
+**Aspect:** Implementation of sort +
+**Alternative 1 (current choice):** Lambda expression +
+**Pros:** Short and concise. +
+**Cons:** Increase bug occurrence as variable type can be omitted. +
+**Alternative 2:** Pre Java 8 practice +
+**Pros:** Widely practised, minimise error. +
+**Cons:** Long and unclear, need to manually override 'compare' method.
+// end::sort[]
 
 === Logging
 
