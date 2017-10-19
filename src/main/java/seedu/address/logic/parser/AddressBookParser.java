@@ -103,7 +103,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-            
+
         case CalendarCommand.COMMAND_WORD:
         case CalendarCommand.COMMAND_ALIAS:
             return new CalendarCommand();
