@@ -1,5 +1,8 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
+
+import java.util.ArrayList;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -25,10 +28,8 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final boolean DEFAULT_FAVORITE = true;
     public static final String DEFAULT_TAGS = "friends";
-    public static final SocialInfo DEFAULT_SOCIAL = new SocialInfo(
-            "FACEBOOK",
-            "alicepauline",
-            "https://facebook.com/alicepauline");
+    public static final SocialInfo DEFAULT_SOCIAL =
+            new SocialInfo("facebook", "default", "https://facebook.com/default");
 
     private Person person;
 
@@ -74,7 +75,28 @@ public class PersonBuilder {
         try {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
+            // Note(Marvin): The exception here is actually thrown when the tag does not conform to the
+            // constraints set for tags (alphanumeric).
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code socialInfos} into a {@code Set<SocialInfo} and set it to the {@code Person}
+     * that we are building.
+     */
+    public PersonBuilder withSocialInfos(String... rawSocialInfos) {
+        try {
+            ArrayList<SocialInfo> socialInfos = new ArrayList<>();
+            for (String rawSocialInfo : rawSocialInfos) {
+                socialInfos.add(parseSocialInfo(rawSocialInfo));
+            }
+            // convert to array to be passed as varargs in getSocialInfoSet
+            SocialInfo[] socialInfosArray = socialInfos.toArray(new SocialInfo[rawSocialInfos.length]);
+            this.person.setSocialInfos(SampleDataUtil.getSocialInfoSet(socialInfosArray));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("raw social infos must be valid.");
         }
         return this;
     }

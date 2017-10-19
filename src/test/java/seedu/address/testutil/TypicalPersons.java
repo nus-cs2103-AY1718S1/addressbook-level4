@@ -10,6 +10,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SOCIAL_AMY_INSTAGRAM;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SOCIAL_BOB_FACEBOOK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
@@ -102,6 +104,7 @@ public class TypicalPersons {
             .withAddress(VALID_ADDRESS_AMY)
             .withFavorite(VALID_FAVORITE_NO)
             .withTags(VALID_TAG_FRIEND)
+            .withSocialInfos(VALID_SOCIAL_AMY_INSTAGRAM)
             .build();
     public static final ReadOnlyPerson BOB = new PersonBuilder()
             .withName(VALID_NAME_BOB)
@@ -110,6 +113,7 @@ public class TypicalPersons {
             .withAddress(VALID_ADDRESS_BOB)
             .withFavorite(VALID_FAVORITE_YES)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .withSocialInfos(VALID_SOCIAL_BOB_FACEBOOK)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

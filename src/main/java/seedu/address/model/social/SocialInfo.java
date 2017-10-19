@@ -51,4 +51,19 @@ public class SocialInfo {
             + "Username: " + getUsername() + ", "
             + "Link: " + getSocialUrl() + "]";
     }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof SocialInfo
+                && this.getUsername().equals(((SocialInfo) other).getUsername())
+                && this.getSocialType().equals(((SocialInfo) other).getSocialType())
+                && this.getSocialUrl().equals(((SocialInfo) other).getSocialUrl()));
+
+    }
 }

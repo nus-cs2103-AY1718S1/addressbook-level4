@@ -16,6 +16,8 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.SOCIAL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.SOCIAL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -27,6 +29,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SOCIAL_AMY_INSTAGRAM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -73,7 +76,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   "
                 + ADDRESS_DESC_AMY + "   "
-                + TAG_DESC_FRIEND + " ";
+                + TAG_DESC_FRIEND + " "
+                + SOCIAL_DESC_AMY + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -93,7 +97,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + TAG_DESC_FRIEND
+                + SOCIAL_DESC_AMY;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a duplicate person except with different tags -> rejected */
@@ -105,7 +110,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
-                + " " + PREFIX_TAG.getPrefix() + "friends";
+                + " " + PREFIX_TAG.getPrefix() + "friends"
+                + SOCIAL_DESC_AMY;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add a person with all fields same as another person in the address book except name -> added */
@@ -116,6 +122,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY)
                 .withFavorite(VALID_FAVORITE_YES)
                 .withTags(VALID_TAG_FRIEND)
+                .withSocialInfos(VALID_SOCIAL_AMY_INSTAGRAM)
                 .build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_BOB
@@ -123,7 +130,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
                 + FAVORITE_DESC_YES
-                + TAG_DESC_FRIEND;
+                + TAG_DESC_FRIEND
+                + SOCIAL_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except phone -> added */
@@ -134,6 +142,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY)
                 .withFavorite(VALID_FAVORITE_YES)
                 .withTags(VALID_TAG_FRIEND)
+                .withSocialInfos(VALID_SOCIAL_AMY_INSTAGRAM)
                 .build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_AMY
@@ -141,7 +150,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
                 + FAVORITE_DESC_YES
-                + TAG_DESC_FRIEND;
+                + TAG_DESC_FRIEND
+                + SOCIAL_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */
@@ -152,6 +162,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY)
                 .withFavorite(VALID_FAVORITE_YES)
                 .withTags(VALID_TAG_FRIEND)
+                .withSocialInfos(VALID_SOCIAL_AMY_INSTAGRAM)
                 .build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_AMY
@@ -159,7 +170,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_BOB
                 + ADDRESS_DESC_AMY
                 + FAVORITE_DESC_YES
-                + TAG_DESC_FRIEND;
+                + TAG_DESC_FRIEND
+                + SOCIAL_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except address -> added */
@@ -170,6 +182,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_BOB)
                 .withFavorite(VALID_FAVORITE_YES)
                 .withTags(VALID_TAG_FRIEND)
+                .withSocialInfos(VALID_SOCIAL_AMY_INSTAGRAM)
                 .build();
         command = AddCommand.COMMAND_WORD
                 + NAME_DESC_AMY
@@ -177,7 +190,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_BOB
                 + FAVORITE_DESC_YES
-                + TAG_DESC_FRIEND;
+                + TAG_DESC_FRIEND
+                + SOCIAL_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
         /* Case: filters the person list before adding -> added */
@@ -200,7 +214,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_BOB
                 + NAME_DESC_BOB
                 + TAG_DESC_HUSBAND
-                + EMAIL_DESC_BOB;
+                + EMAIL_DESC_BOB
+                + SOCIAL_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */

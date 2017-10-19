@@ -18,6 +18,8 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.SOCIAL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.SOCIAL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
@@ -25,6 +27,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FAVORITE_YES;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SOCIAL_BOB_FACEBOOK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -75,7 +78,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_BOB + "  "
                 + ADDRESS_DESC_BOB + " "
                 + FAVORITE_DESC_YES + " "
-                + TAG_DESC_HUSBAND + " ";
+                + TAG_DESC_HUSBAND + " "
+                + SOCIAL_DESC_BOB + " ";
         Person editedPerson = new PersonBuilder()
                 .withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB)
@@ -83,6 +87,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_BOB)
                 .withFavorite(VALID_FAVORITE_YES)
                 .withTags(VALID_TAG_HUSBAND)
+                .withSocialInfos(VALID_SOCIAL_BOB_FACEBOOK)
                 .build();
         assertCommandSuccess(command, index, editedPerson);
 
@@ -107,7 +112,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_BOB
                 + FAVORITE_DESC_YES
                 + TAG_DESC_FRIEND
-                + TAG_DESC_HUSBAND;
+                + TAG_DESC_HUSBAND
+                + SOCIAL_DESC_BOB;
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
@@ -157,7 +163,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY
                 + FAVORITE_DESC_NO
-                + TAG_DESC_FRIEND;
+                + TAG_DESC_FRIEND
+                + SOCIAL_DESC_AMY;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new person's name
         assertCommandSuccess(command, index, AMY, index);
