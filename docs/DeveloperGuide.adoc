@@ -396,6 +396,339 @@ public class AddEventCommand extends UndoableCommand {
 **Cons:** Developer might get confused with the different use of imports as Name and Address are from person while Date is from events. +
 // end::addevent[]
 
+// tag::switch[]
+=== Switch Theme Mechanism
+
+The switch theme mechanism is facilitated by a `ThemesList`, which resides inside `AddressBook`. `ThemesList` contains a list of CSS files, in which each file are of differing colour themes for the application user interface. It sets the theme of the application to the theme specified by the index given by the user. This command will inherit from `Command`.
+
+image::SwitchThemeCommandDiagram1.png[width="800"]
+
+As seen from the diagram above, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+Suppose that the user has just launched the application. The `ThemesList` will be initialised based on the current existing colour themes.
+
+The user executes `themeslist` to look through the existing colour themes, and pick one that he or she wants.
+
+The user will then execute `switch 2`, with `2` being the `index` of the theme that the user prefers, provided by the executed `themeslist`.
+
+The `ThemesList` will take the `index` provided by the user, and return a `String` of the CSS file name based on the `index`.
+
+The execution of `switch 2` toggles an event `ChangeThemeRequestEvent`, which will then be listened and handled by `MainWindow`.
+
+The `Stylesheets` of the `MainWindow` will then remove the current existing CSS file, which is the current theme, and add the given `String` of the CSS file into `Stylesheets`. That will set the current colour theme of `The Myth's Book` to the preferred colour theme.
+
+Code of SwitchThemeCommand :
+[source, java]
+----
+public class SwitchThemeCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... switch theme logic ...
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent(themeToChange));
+    }
+}
+----
+
+Listener for ChangeThemeRequestEvent in MainWindow.java :
+[source,java]
+----
+@Subscribe
+private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    handleChangeTheme(event.theme);
+}
+----
+
+Removing and adding of CSS file into Stylesheets in MainWindow.java :
+[source, java]
+----
+public void handleChangeTheme(String theme) {
+    if (getRoot().getStylesheets().size() > 1) {
+        getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
+    }
+    getRoot().getStylesheets().add("/view/" + theme);
+}
+----
+
+The following sequence diagram shows how the switch theme operation works:
+
+image::SwitchThemeCommandDiagram2.png[width="800"]
+
+As seen from the diagram above, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
+
+image::SwitchThemeCommandDiagram3.png[width="800"]
+
+As seen from the diagram above, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
+
+Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to handle the event, update the `MainWindow` accordingly and update its status bar.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SwitchThemeCommand` +
+**Alternative 1 (current choice):** Extending to `Command` class. +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** `SwitchThemeCommand` cannot be undone and have to repeatedly call command to switch to different themes. +
+**Alternative 2:** Extending to `UndoableCommand` class. +
+**Pros:** Might be more favourable to users to undo `SwitchThemeCommand` if he/she switch to an incorrect theme. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Difficult to implement. +
+
+---
+
+**Aspect:** How switch theme executes +
+**Alternative 1 (current choice):** Taking in index (type Integer) as the argument. +
+**Pros:** Simple to implement since the index will tally with `ThemesList`. Simple to use since users don't have to remember the names and look at the index in `ThemesList`. +
+**Cons:** Maybe less favourable for users when the size of `ThemesList` increase. +
+**Alternative 2:** Taking in theme's name (type String) as the argument. +
+**Pros:** Might be more favourable for long-time users since names may be easier to remember than numbers after using the application for a long time. +
+**Cons:** Harder to implement and test. +
+// end::switch[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism sorts the names of people inside the `addressbook` which
+is inside the 'ModelManager'. It organizes the position of the people existing in
+the addressbook based on their names in an alphabetical order. The sort command inherits
+from UndoableCommand.
+
+From Figure 5.2.1 below, it is visible that `SortCommand` inherits from `UndoableCommand`
+which is an extra layer between abstract `Command` class in which the SortCommand
+can be undoable, where the previous state of the address book before sorting
+is saved.
+
+image::SortCommandLogicClassDiagram.PNG[width="800"]
+Figure 5.2.1 SortCommand Logic Class Diagram
+
+Suppose a user has an unorganized list of contacts and executes the
+`SortCommand` to organize his contacts based on their names in an
+alphabetical order.
+
+The execution of SortCommand is processed in this way:
+
+. User will execute a new `SortCommand` so as to sort the address book.
+. This is carried out by `model.sort()` in `executeUndoableCommand()`.
+. The `internalList` of the address book is accessed and is sorted through a `lambda` function which
+  compares the name of everyone and necessarily switches the position between contacts throughout the `internalList` by comparing names between person r1 and r2 sequentially.
+. After `internalList` is sorted, function `updateFilterPersonList(PREDICATE_SHOW_ALL_PERSONS)` is called
+  to update the list being filtered and also call an event `indicatedAddressBookChanged()`
+  to update the `PersonListPanel` of the GUI being shown.
+
+Code of SortCommand :
+[source,java]
+----
+public class SortCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sort();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+Sort method inside ModelManager.java :
+[source,java]
+----
+@Override
+public synchronized void sort() {
+    addressBook.sort();
+    updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    indicateAddressBookChanged();
+}
+----
+
+Sort method inside UniquePersonList.java :
+[source,java]
+----
+public void sort() {
+    internalList.sort((r1, r2) -> (
+            r1.getName().toString().compareTo(r2.getName().toString())));
+}
+
+----
+The following sequence diagram shows how the sort operation works:
+
+When sort is typed into command line input, new SortCommand is created.
+
+image::SortCommandLogicSequenceDiagram.PNG[width="800"]
+
+When executeUndoableCommand is called in SortCommand class, it will call the sort function in ModelManager.
+It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of contacts based on their names will begin.
+
+image::SortCommandModelSequenceDiagram.PNG[width="800"]
+
+==== Design Considerations
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** extending to `UndoableCommand` class +
+**Pros:** Sort function call is able to be undone if needed as it now inherits from the Super Class. +
+**Cons:** Developers might need to understand how `UndoableCommand` works before implementation. +
+**Alternative 2:** Just extend to `Command` class +
+**Pros:** Does not need understanding of `UndoableCommand` class. +
+**Cons:** Unable to undo sort function and work from previous state of address book if user has called `SortCommand` to sort address book.
+
+---
+**Aspect:** Implementation of how sort executes +
+**Alternative 1 (current choice):** Compare and sort the names of every individual alphabetically. +
+**Pros:** Easy to implement and uses less complexity. +
+**Cons:** Unable to sort based on user preferences like email, phone number. +
+**Alternative 2:** Include all types of sorting like sorting phone numbers and emails. +
+**Pros:** Might be more favourable for user who have specific needs to collate certain information such as
+ email or phone number about his contacts in an alphanumeric order. +
+**Cons:** Difficult to implement and wastes memory space as sorting might be unnecessary and complex for general users
+          since main goal is to keep address book organized. +
+
+---
+//end::sort[]
+
+// tag::accessWebsite[]
+=== Access Website mechanism
+
+The access website mechanism has an `AccessCommand` that allows user to access the website by stating the
+index of the desired contact in the contact list viewed. The `AccessCommand` class inherits from the `Command` class.
+
+Suppose a user would like access one of his contacts website that is listed in the address book
+and executes the `AccessCommand` to access the website.
+
+The execution of AccessCommand is processed in this way:
+
+. User will input `access index` where index refers to the index of the person listed in the person card list in GUI.
+. Input of user will be parse as an argument through the AddressBookParser and AccessCommandParser to extract the index.
+. A new `AccessCommand` with the index inputted will be executed.
+. In the execute() of AccessCommand, the person of the website that the user wants to access will be obtained through the
+ index of the `lastShownList` and stored into `ReadOnlyPerson` class variable.
+. The `EventsCenter` will then post a new `AccessWebsiteRequestEvent` which contains the website of the person.
+. The `AccessWebsiteRequestEvent` event would then be handled by an event handler `handleAccessWebsiteEvent`.
+. The event handler will help to load the website of the person through the browser panel based on the website inputted.
+
+Code of AccessCommand :
+[source,java]
+----
+public class AccessCommand extends Command {
+    private final Index targetIndex;
+
+    public AccessCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
+        return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased()));
+    }
+}
+----
+[source,java]
+----
+public class MainWindow extends UiPart<Region> {
+    public void handleWebsiteAccess(String website) {
+        browserPanel.loadPage(website);
+    }
+
+    @Subscribe
+    private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleWebsiteAccess(event.website);
+    }
+}
+----
+
+Through the sequence diagram, you can see how the code executes when a user
+inputs `access 1` into the command line.
+
+Sequence diagram for Logic Component of AccessCommand:
+
+image::AccessCommandLogicSequenceDiagram.PNG[width="800"]
+
+After creating a new `AccessCommand`, `LogicManager` will call execute on `AccessCommand`
+and this will result in the website of the person at the index inputted to be called through an event request and event handler.
+The website will then be loaded onto the browser of the `BrowserPanel` of the `MainWindow`.
+
+Sequence diagram for execute() of AccessCommand:
+
+image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
+
+==== Design Considerations
+**Aspect:** How accessing a website of a person executes +
+**Alternative 1 (current choice):** Create a new event request and event handler for AccessCommand. +
+**Pros:** Able to have more features as AccessWebsite and Select feature is able to exist concurrently in the application. +
+**Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
+**Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access website of their contacts instead
+of creating a search on contacts name through he browser panel. +
+**Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
+**Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a Person Card Viewer
+which is important for GUI enhancement. +
+
+//end::accessWebsite[]
+
+// tag::find[]
+=== Find Mechanism
+The find mechanism is facilitated by the `NameContainsKeyWordsPredicate` class which resides in the person class. It supports finding any person in the address book using their full name or a part of the name.
+
+However, if a user is searching by part of a name, the substring must be in the beginning of the first name or last name and it has to be at least two characters long.
+
+The `find` command is an undoable command and therefore it inherits from `Command` rather than `Undoablecommand`.
+
+The `NameContainsKeyWordsPredicate` class has a test function that uses stream, a new feature of Java 8 to process data more efficiently than using loops. The `test()` returns true if either the full name(first name + last name) ignoring case or it contains a substring of the name ignoring case.
+
+The main logic in the `NameContainsKeyWordsPredicate` class comes from the `StringUtil` class that acts as a helper function for handling any operations related to strings.
+
+How the `containsPartofWord()` function works:
+[source,java]
+----
+public static boolean containsPartOfWord(String sentence, String word) {
+    requireNonNull(sentence);
+    requireNonNull(word);
+    ...
+}
+----
+
+The function takes in two string arguments, one being the name of the person and the other being the substring. The function first checks to see if either of these arguments are null using java.util.Objects.requireNonNull. If any of the arguments are null, it throws a NullPointerException.
+[source,java]
+----
+public static boolean containsPartOfWord(String sentence, String word) {
+    ....
+    checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+    String preppedSentence = sentence;
+    String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+    ...
+}
+----
+
+If both strings are valid, it then checks that the substring is only one word. The function then splits up the person’s name into first name and last name.
+[source,java]
+----
+public static boolean containsPartOfWord(String sentence, String word) {
+    ....
+    if (preppedWord.length() >= 2) {
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
+                && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
+            return true;
+            }
+        }
+    ....
+----
+The function first checks if the length of the substring is greater than, equal to 2. Using an enhanced for loop, the function iterates through the words in a person’s name and checks to see if any of them start with the substring ignoring cases.
+
+If yes, then the function returns true else it returns false.
+
+==== Design Considerations
+**Aspect:** Implementation of `containsPartOfWord` +
+**Alternative 1 (current choice):** length>=2 +
+**Pros:** Making sure that not every person's name comes up in find. For e.g: 'find a' +
+**Cons:** There might exist people whose first or last name is stored as a single character +
+**Alternative 2:** Allow any length of substrings +
+**Pros:** No exception cases +
+**Cons:** No purpose of using find as if you search for one character, all contacts might get filtered +
+// end::find[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -646,6 +979,28 @@ image::getting-started-ui-status-after.png[width="500"]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
 
 . Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+
+The new backUpAddressBook stores the address book at a back up location.
+
+private AddressBookStorage backUpLocation;
+
+public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    super();
+    this.addressBookStorage = addressBookStorage;
+    this.userPrefsStorage = userPrefsStorage;
+    this.backUpLocation = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath());
+}
+
+public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+    return readAddressBook(backUpLocation.getAddressBookFilePath());
+}
+
+private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    String backupPath = backUpLocation.getAddressBookFilePath();
+    logger.fine("Backing up data to: " + backupPath);
+    saveAddressBook(addressBook, backupPath);
+}
+
 +
 ****
 * Hint

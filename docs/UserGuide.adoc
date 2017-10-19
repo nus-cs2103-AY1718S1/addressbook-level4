@@ -265,6 +265,46 @@ Examples:
 * `add n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach`
 * `add n/Orbital d/1/5/2018 a/NUS School Of Computing`
 
+=== Favouriting a person : `favourite`
+
+Favourites the specified person from the address book. +
+Format: `favourite INDEX`
+
+****
+* Favourites the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`favourite 2` +
+Favourites the 2nd person in the address book.
+* `find Betsy` +
+`favourite 1` +
+Favourites the 1st person in the results of the `find` command.
+
+=== Unfavouriting a person : `unfavourite`
+
+Unfavourites the specified person from the address book. +
+Format: `unfavourite INDEX`
+
+****
+* Unfavourites the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`unfavourite 2` +
+Unfavourites the 2nd person in the address book.
+* `find Betsy` +
+`unfavourite 1` +
+Unfavourites the 1st person in the results of the `find` command.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
