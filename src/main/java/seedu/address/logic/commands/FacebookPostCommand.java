@@ -32,7 +32,7 @@ public class FacebookPostCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if(!FacebookConnectCommand.isAuthenticated()){
+        if (!FacebookConnectCommand.isAuthenticated()) {
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
             newFacebookConnect.execute();
         }
