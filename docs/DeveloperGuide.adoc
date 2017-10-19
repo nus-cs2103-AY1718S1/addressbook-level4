@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ModU - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -735,23 +735,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |admin |view the commands/function i can use in this software |I no need to memorise the function in this software and can review them conviencely whenever i want
 
+|`* * *` |admin |add new location |I can update the list of location in the system whenever a new location is constructed
+
 |`* *` |admin |find a particular lecturer |I no need to search manually in the list of teachers
 
 |`* *` |admin |generate comprehensive reports of the current semester detail |I can save time from making this report myself
 
 |`* *` |admin |view the history of commands |so I no need to go through the list to know what I have added so far
 
-|`* * *` |admin |add new location |I can update the list of location in the system whenever a new location is constructed
+|`* * *` |student |check location and time slot of different modules |I can make my study plan
 
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |student |view all modules that are available next semester |I plan what module I would like to take next semester
 
 |`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
 
@@ -781,30 +775,36 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |teacher |back up my file |I can retrieve back data
 
-|`* * *` |student |check location and time slot of different modules |I can make my study plan
-
-|`* * *` |student |view all modules that are available next semester |I plan what module I would like to take next semester
-
 |`* *` |teacher/student |export the timetable to various files (pdf, excel, png, jpeg) |I can print the timetable
 
 |`* *` |teacher/student |report bugs to developers | developer can solve the bug and improve the product
 
 |`* *` |teacher/student |bookmark a particular module |I can have easy access to the particular module
 
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `ModU` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add module to timeslot
+=== Use case: Add module to time slot
 
 *MSS*
 
-1. User requests to add module timeslot.
-2. AddressBook adds module shows “successfully added” message.
+1. User requests to add module time slot.
+2. ModU adds module shows “successfully added” message.
 +
 Use case ends.
 
@@ -814,26 +814,26 @@ Use case ends.
 * 1a. User enter wrong command format.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. ModU shows an error message.
 +
 Use case ends.
 
 * 2a. The module code, class type, time-slot or location is not available.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. ModU shows an error message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Update module in a particular timeslot
+=== Use case: Update module in a particular time slot
 
 *MSS*
 
 1. User requests to list modules.
-2. AddressBook shows a list of modules.
+2. ModU shows a list of modules.
 3. User requests to update a specific module in the list.
-4. AddressBook updates the module.
+4. ModU updates the module.
 +
 Use case ends.
 
@@ -847,19 +847,19 @@ Use case ends.
 * 3a. The module code, class type, time-slot or location is not available.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ModU shows an error message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Delete module by module/timeslot/location
+=== Use case: Delete module by module/time slot/location
 
 *MSS*
 
-1. User requests to list module by module/timeslot/location.
-2. AddressBook shows a list of module/timeslot/location.
-3. User requests to delete a specific item (module/timeslot/location) on the list
-4. AddressBook deletes the item
+1. User requests to list module by module/time slot/location.
+2. ModU shows a list of module/time slot/location.
+3. User requests to delete a specific item (module/time slot/location) on the list.
+4. ModU deletes the item.
 +
 Use case ends.
 
@@ -873,7 +873,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ModU shows an error message.
 +
 Use case resumes at step 3.
 
@@ -884,15 +884,15 @@ Use case resumes at step 3.
 
 *MSS*
 
-1.  User requests redo the previously command
-2.  AddressBook redo previous command
+1.  User requests redo the previously command.
+2.  AddressBook redo previous command.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Unable to find previous command
+* 2a. Unable to find previous command.
 +
 Use case ends.
 
@@ -901,15 +901,15 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to undo previous command
-2.  AddressBook undo previous command
+1.  User requests to undo previous command.
+2.  ModU undo previous command.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Unable to find previous command
+* 2a. Unable to find previous command.
 +
 Use case ends.
 
@@ -918,8 +918,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to list history of commands
-2.  AddressBook shows a list of history of commands
+1.  User requests to list history of commands.
+2.  ModU shows a list of history of commands.
 +
 Use case ends.
 
@@ -935,8 +935,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests show help guide
-2.  AddressBook shows help guide
+1.  User requests show help guide.
+2.  ModU shows help guide.
 +
 Use case ends.
 
@@ -945,8 +945,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to list all modules time-slots
-2.  AddressBook shows all modules time-slots
+1.  User requests to list all modules time-slots.
+2.  ModU shows all modules time-slots.
 +
 Use case ends.
 
@@ -962,9 +962,9 @@ Use case ends.
 
 *MSS*
 
-1. User requests to list by tag-name
-2. AddressBook shows a list of information by tag-name
-3. User requests to view specific information of tag-name
+1. User requests to list by tag-name.
+2. ModU shows a list of information by tag-name.
+3. User requests to view specific information of tag-name.
 +
 Use case ends.
 
@@ -978,7 +978,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ModU shows an error message.
 +
 Use case resumes at step 2.
 
@@ -987,10 +987,10 @@ Use case resumes at step 2.
 
 *MSS*
 
-1. User requests to login with a User Account
-2. AddressBook asks user to key in password
-3. User key in password
-4. AddressBook checks the password and show successful message
+1. User requests to login with a User Account.
+2. ModU asks user to key in password.
+3. User key in password.
+4. ModU checks the password and show successful message.
 +
 Use case ends.
 
@@ -999,7 +999,7 @@ Use case ends.
 * 4a. The account is not registered.
 +
 [none]
-** 4a1. AddressBook shows an error message.
+** 4a1. ModU shows an error message.
 +
 Use case ends.
 
@@ -1019,7 +1019,6 @@ Use case ends.
        .  The system should be backward compatible with data produced by earlier version of the system
        .  The total project cost should not exceed $10,000
        .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
 
    Performance requirement(s):
        .  The application should be respond to 1000 people within 2 seconds
