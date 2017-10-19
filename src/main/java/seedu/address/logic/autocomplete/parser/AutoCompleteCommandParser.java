@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.autocomplete.parser;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,7 +24,7 @@ import seedu.address.logic.commands.UndoCommand;
 /**
  * Parses incomplete user input into list of possible command skeletons.
  */
-public class AutoCompleteCommandParser {
+public class AutoCompleteCommandParser implements AutoCompleteParser {
 
     private static final List<CommandWordUsageTuple> COMMAND_WORDS_LIST = Arrays.asList(new CommandWordUsageTuple[] {
         new CommandWordUsageTuple(AddCommand.COMMAND_WORD, AddCommand.COMMAND_USAGE),
@@ -49,7 +49,8 @@ public class AutoCompleteCommandParser {
      * @param stub incomplete user input
      * @return list of possible commands determined from incomplete user input
      */
-    public List<String> parseForCommands(String stub) {
+    @Override
+    public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleCommands = new LinkedList<String>();
         // empty string will match everything,
         // short circuit method to prevent greedy matching
