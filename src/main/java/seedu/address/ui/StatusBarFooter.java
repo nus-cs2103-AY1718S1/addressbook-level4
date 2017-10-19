@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -42,6 +44,8 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar totalPersons;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar staticClock;
 
 
     public StatusBarFooter(String saveLocation, int totalPersons) {
@@ -50,6 +54,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
         setTotalPersons(totalPersons);
+        setClockLabel();
     }
 
     /**
@@ -84,5 +89,11 @@ public class StatusBarFooter extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
         setTotalPersons(event.data.getPersonList().size());
+    }
+    private void setClockLabel() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatDateTime = now.format(sdf);
+        this.staticClock.setText(formatDateTime);
     }
 }
