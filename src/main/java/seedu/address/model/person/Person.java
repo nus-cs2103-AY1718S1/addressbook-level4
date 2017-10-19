@@ -23,13 +23,15 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    private boolean isPrivate = false;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags,
+                  boolean isPrivate) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -38,6 +40,7 @@ public class Person implements ReadOnlyPerson {
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.isPrivate = isPrivate;
     }
 
     /**
@@ -45,7 +48,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags());
+                source.getTags(), source.isPrivate());
     }
 
     public void setName(Name name) {
@@ -64,6 +67,15 @@ public class Person implements ReadOnlyPerson {
 
     public void setPhone(Phone phone) {
         this.phone.set(requireNonNull(phone));
+    }
+
+    public boolean setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+        return true;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
     }
 
     @Override

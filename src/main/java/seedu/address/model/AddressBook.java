@@ -33,8 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     *
     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
     *   among constructors.
-    */
-    {
+    */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -159,6 +158,19 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     * Hides (@code toHide) from this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code toHide} is not in this {@code AddressBook}.
+     */
+    public boolean hidePerson(ReadOnlyPerson toHide) throws PersonNotFoundException {
+        if (persons.hide(toHide)) {
             return true;
         } else {
             throw new PersonNotFoundException();
