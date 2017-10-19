@@ -10,14 +10,13 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
-
 public class AddAppointmentParserTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private AddAppointmentParser parser = new AddAppointmentParser();
+
     @Test
     public void prefixesNotPresent() throws ParseException {
         thrown.expect(ParseException.class);
@@ -57,7 +56,7 @@ public class AddAppointmentParserTest {
         //No name and no date will just call the parser to return a command with no attributes initialized
         try {
             AddAppointmentCommand command = parser.parse("appointment");
-            assertTrue(command.getAppointment() == null);
+            assertTrue(command.getIndex() == null);
         } catch (ParseException e) {
             fail(e.getMessage());
         }
