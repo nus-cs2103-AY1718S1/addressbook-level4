@@ -345,6 +345,61 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::Scheduling[]
+=== Event Scheduling
+
+Whenever an event is created, it will be added into a `TreeMap` of
+events, ranked by the scheduled date and time. This will enable us to
+implement the event scheduling feature comprised of three essential
+sub-features：
+
+* A GUI displaying all the events scheduled for the current week
+* A reminder feature to alert user of the upcoming events
+* A scheduling check mechanism to prevent events with time clash to be
+scheduled at the same time
+
+==== Schedule for the week
+
+When a `Check Schedule` command is typed into the command box, or the
+`Calendar` button on the main window is clicked, a
+`ShowCalendarEvent` will be sent to the EventsCenter. In response, the calendar
+GUI will appear in the main window, and events with a scheduled `timing`
+within the week will be identified from the `TreeMap` of events and reflected
+ in the  calendar GUI. A corresponding List of events will also appear in the
+  `EventListPanel`, just like with a `List` command for event.
+
+==== Event Reminder
+
+When the Sales Nagivator app is opened, a `ShowUrgentEvents` event will
+automatically be sent, which will find all the events scheduled before the
+end of the next day. After identifying these events, a small circle will
+appear on the `notification` button on the main window to alert users of the
+number of urgent events he/she should attend to. Upon clicking the
+`notification` button, a list of urgent events will then appear in the
+`EventListPanel`.
+
+==== Avoid time clash
+
+When a new event is added to the TreeMap, if the `timing` of the event has
+any overlap with an existing event, this will generate a `ConflictingEvent`
+exception that prevents the event from being added.
+
+==== Design Considerations
+
+**Aspect:** Date structure implementation of saved events +
+**Alternative 1:** use an `ArrayList` +
+**Pros:** Easy to implement and easy to access individual element +
+**Cons:** Will be very slow for searching urgent events. +
+**Alternative 2:** use a `HashMap` +
+**Pros:** Very fast search (O(1)) if a good hash function is used +
+**Cons:** Since a long period of time needs to be covered (at least 1 year),
+the hash table size could be very big, which is not space efficient.
+**Alternative 3 (current choice):** use a `TreeMap` +
+**Pros:** Reasonably fast search operations +
+**Cons:** Not as fast as a well-implemented `HashMap`.
+
+// end::Scheduling[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
