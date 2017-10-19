@@ -29,13 +29,6 @@ public class EventBuilder {
     }
 
     /**
-     * Initializes the EventBuilder with the data of {@code EventToCopy}.
-     */
-    public EventBuilder(ReadOnlyEvent eventToCopy) {
-        this.event = new Event(eventToCopy);
-    }
-
-    /**
      * Sets the {@code Name} of the {@code Event} that we are building.
      */
     public EventBuilder withName(String name) {

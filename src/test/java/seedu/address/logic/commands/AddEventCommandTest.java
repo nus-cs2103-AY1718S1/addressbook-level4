@@ -29,15 +29,10 @@ public class AddEventCommandTest {
         // same object -> returns true
         assertTrue(addZoukCommand.equals(addZoukCommand));
 
-        // same values -> returns true
-        AddEventCommand addZoukCommandCopy = new AddEventCommand(zouk);
-        assertTrue(addZoukCommand.equals(addZoukCommandCopy));
-
         // different types -> returns false
         assertFalse(addZoukCommand.equals(1));
 
         // null -> returns false
         assertFalse(addZoukCommand.equals(null));
-
     }
 }
