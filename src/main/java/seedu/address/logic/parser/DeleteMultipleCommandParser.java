@@ -5,13 +5,16 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteMultipleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand>{
+/**
+ * Parses input arguments and creates a new DeleteMultipleCommand object
+ */
+
+public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -28,8 +31,7 @@ public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand
         ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));
         Collections.reverse(list);
         ArrayList<Index> arrayOfIndex = new ArrayList<Index>();
-        
-        for(int n = 0; n < list.size(); n++ ) {
+        for (int n = 0; n < list.size(); n++) {
             String indexString = list.get(n);
             int foo = Integer.parseInt(indexString) - 1;
             Index index = new Index(foo);

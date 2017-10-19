@@ -2,13 +2,16 @@ package seedu.address.logic.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.*;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ * Deletes a person identified using it's last displayed index from the address book.
+ */
 
 public class DeleteMultipleCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "deleteMul";
@@ -25,7 +28,6 @@ public class DeleteMultipleCommand extends UndoableCommand {
     private final ArrayList<Index> arrayOfIndex;
 
     public DeleteMultipleCommand(ArrayList<Index> arrayOfIndex) {
-        
         this.arrayOfIndex = arrayOfIndex;
     }
 
@@ -34,7 +36,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         String listOfDeletedContacts = "";
 
-        for(int n = 0; n < arrayOfIndex.size(); n++ ) {
+        for (int n = 0; n < arrayOfIndex.size(); n++) {
 
             Index targetIndex = arrayOfIndex.get(n);
             List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -54,7 +56,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
             }
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, listOfDeletedContacts)); //return new CommandResult(listOfDeletedContacts)
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, listOfDeletedContacts));
     }
 
     @Override

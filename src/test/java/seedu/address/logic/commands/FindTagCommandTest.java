@@ -1,12 +1,21 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.*;
+import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -14,14 +23,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainKeywordsPredicate;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class FindTagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -67,6 +70,11 @@ public class FindTagCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, FIONA, GEORGE));
     }
 
+    /**
+     *
+     * @param userInput
+     * @return
+     */
     private FindTagCommand prepareCommand(String userInput) {
         FindTagCommand command =
                 new FindTagCommand(new TagsContainKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
@@ -74,11 +82,17 @@ public class FindTagCommandTest {
         return command;
     }
 
-    private void assertCommandSuccess(FindTagCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    /**
+     *
+     * @param command
+     * @param expectMessage
+     * @param expectedList
+     */
+    private void assertCommandSuccess(FindTagCommand command, String expectMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
