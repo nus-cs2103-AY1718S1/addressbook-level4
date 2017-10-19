@@ -14,6 +14,7 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookConnectCommand;
+import seedu.address.logic.commands.FacebookPostCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -61,6 +62,10 @@ public class AddressBookParser {
         case FacebookConnectCommand.COMMAND_WORD:
         case FacebookConnectCommand.COMMAND_ALIAS:
             return new FacebookConnectCommand();
+
+        case FacebookPostCommand.COMMAND_WORD:
+        case FacebookPostCommand.COMMAND_ALIAS:
+            return new FacebookPostCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:

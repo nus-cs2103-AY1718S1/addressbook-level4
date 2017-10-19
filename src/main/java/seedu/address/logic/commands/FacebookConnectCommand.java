@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import facebook4j.FacebookException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -19,9 +20,10 @@ public class FacebookConnectCommand extends Command {
     public static final String COMMAND_WORD = "facebook connect";
     public static final String COMMAND_ALIAS = "fbconnect";
     public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
+    public static boolean authenticated = false;
 
     private static String domain = "https://www.facebook.com/";
-    private static String appID = "1985095851775955";
+    private static String appID = "131555220900267";
     private static String commaSeparetedPermissions = "user_about_me,email,publish_actions,user_birthday,"
             + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
             + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
@@ -34,8 +36,13 @@ public class FacebookConnectCommand extends Command {
             + "instagram_manage_insights,read_audience_network_insights,read_insights";
     private static String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
             + "&redirect_uri=" + domain + "&scope=" + commaSeparetedPermissions;
+    private static String welcomeUser;
+    private static Facebook facebookInstance;
     private String accessToken;
 
+    public static Facebook getFacebookInstance() {
+        return facebookInstance;
+    }
 
     public static String getAuthUrl() {
         return authUrl;
@@ -49,7 +56,7 @@ public class FacebookConnectCommand extends Command {
         WebDriver driver = new ChromeDriver();
         driver.get(authUrl);
         while (true) {
-            if (driver.getCurrentUrl().contains("facebook.com/?#access_token")) {
+            if (driver.getCurrentUrl().contains("access_token")) {
                 Pattern p = Pattern.compile("access_token=(.*?)\\&");
                 String url = driver.getCurrentUrl();
                 Matcher m = p.matcher(url);
@@ -58,15 +65,21 @@ public class FacebookConnectCommand extends Command {
                 accessToken = m.group(1);
                 driver.quit();
 
-                Facebook facebook = new FacebookFactory().getInstance();
-                facebook.setOAuthPermissions(commaSeparetedPermissions);
-                facebook.setOAuthAccessToken(new AccessToken(accessToken, null));
+                facebookInstance = new FacebookFactory().getInstance();
+                facebookInstance.setOAuthPermissions(commaSeparetedPermissions);
+                facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
+                try {
+                    welcomeUser = facebookInstance.getName();
+                } catch (FacebookException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
 
         if (accessToken != null) {
-            return new CommandResult(MESSAGE_SUCCESS);
+            authenticated = true;
+            return new CommandResult(MESSAGE_SUCCESS + " User name: " + welcomeUser);
         } else {
             throw new CommandException("Error in Facebook Authorisation");
         }
