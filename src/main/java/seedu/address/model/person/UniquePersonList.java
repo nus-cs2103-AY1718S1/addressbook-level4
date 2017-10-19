@@ -10,6 +10,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.AlreadySortedException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -26,6 +27,7 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+    private String currentlySortedBy = "name";
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -94,6 +96,20 @@ public class UniquePersonList implements Iterable<Person> {
             replacement.add(new Person(person));
         }
         setPersons(replacement);
+        sortBy(currentlySortedBy);
+    }
+
+    /**
+     * Sorts the Person's List by sorting criteria
+     */
+    public void sortBy(String sortCriteria) {
+        this.currentlySortedBy = sortCriteria;
+        for (Person p : internalList) {p.setComparator(sortCriteria); }
+        FXCollections.sort(internalList);
+    }
+
+    public String getCurrentlySortedBy() {
+        return this.currentlySortedBy;
     }
 
     /**
