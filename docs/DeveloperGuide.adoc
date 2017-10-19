@@ -386,7 +386,7 @@ Although this seems inefficient, it supports syncing of the various lists well. 
 
 The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
 
-image::BlacklistCommandSequenceDiagram1.png[width="800"]
+image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
 Figure 3.2.1 : Sequence Diagram of How the Blacklist Command Works_
 
 The following sequence diagram, Figure 3.2.1, shows further details of the interaction between `Model` and 'Addressbook` to obtain the blacklist:
