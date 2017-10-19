@@ -1041,21 +1041,74 @@ Pros:
 Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
-* Cannot integrate contacts from user's active WhatsApp groups
-
-
-*iTunes*
-
-Author: Apple Inc.
-
-Pros:
-
-* Users can browse by album instead of a plain song list
-* Similar to browsing contacts by group instead of by individual
-* Supports automatic retrieval of missing songs if user's local album is incomplete ("Show Complete Album")
-* Analogous to automatic addition of unknown contacts from a user's active WhatsApp groups
-
-Cons:
-
-* Lacks command-line (or keyboard-only) interface for power users
 * Animations are unnecessarily slow
+
+
+[appendix]
+== Implementation of enhancements
+
+=== *Enhancement: Set appointment* +
+
+
+*Reason for implementation* +
+
+Our address book is designed for doctors to use. Doctors often have fixed appointments with patients and the list
+maybe very long. This implementation allows doctors to set an appointment date with a patient. +
+On top of just setting appointment time, the user can also sort the contacts by appointment timing. This is so that the
+doctor will be remind of their most upcoming appointment in the midst of their busy schedule. +
+
+*How is it implemented* +
+
+An appointment class is created and has 2 different constructors. +
+
+ new Appointment("Alice Yeo")               new Appointment("Alice Yeo", calendarInstance);
+
+The first constructor only consists of the person's name in string. It is used if the person has no appointment set. +
+
+The second constructor has person's name in string, and also a date wrapped in a Calendar class.
+
+As of version 1.2, Person constructor includes Appointment.
+
+ new Person(name, phone, email, address, bloodType, tags, remark, appointment);
+
+*Reasons for how it is implemented*
+
+The reason for two constructors is so that the person can be initialized with or without an appointment. As of version
+1.2, our address book does not support the setting of appointment concurrent with the addition of the contact. To ease
+the implementation of that, we have decided that the Person class should have appointment in its constructor.
+
+*Future enhancements*
+
+We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
+enhancements for parsing, it should be done in the AddAppointmentParser class.
+
+=== *Enhancement: Batch delete all persons who share a particular tag* +
+
+
+*Reason for implementation* +
+
+MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on contacts.
+
+*How is it implemented* +
+
+An additional command class is implemented in the logic component. Its constructor is as follows: +
+
+ BatchCommand(Set<Tag> tagsToDelete)
+
+This command passes a set of tags to the model component. The model component will handle the necessary deletion
+operations. To support this, an additional method is defined in the Model interface for implementation. +
+
+ void deletePersonsByTags(Set<Tag> tags)
+
+It causes the associated addressBook attribute to iterate through each person and delete it if any of the target tags are found.
+
+*Reasons for how it is implemented*
+
+Coupling between the logic and model component is minimised into the sole function call `deletePersonsByTags(Set<Tag> tags)`. This
+is for simplicity as much as it is for ease of implementation. Future batch operations ought to be implemented
+in a similar fashion – whereby only one point of interaction occurs between components.
+
+*Future enhancements*
+
+We would like to include more batch operations beyond deletion. For example, editing tags, remarks, and other contact attributes by batch.
+A general function call between the logic and model components ought to be created. This could serve all batch operations, depending on its arguments.
