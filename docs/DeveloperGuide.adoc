@@ -421,7 +421,7 @@ public CommandResult execute() {
 ----
 The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function.
 
-image::HelpEnhancementScreenShot.png[width="200"]
+image::HelpEnhancementScreenShot.PNG[width="200"]
 
 === Locating a person's address [Since v1.2]
 
