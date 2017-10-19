@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
@@ -24,6 +25,7 @@ public class ParcelBuilder {
     public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
+    public static final String DEFAULT_DELIVERYDATE = "01-01-2001";
 
     private Parcel parcel;
 
@@ -34,9 +36,10 @@ public class ParcelBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            DeliveryDate defaultDeliveryDate = new DeliveryDate(DEFAULT_DELIVERYDATE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultTags);
+                    defaultDeliveryDate, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default parcel's values are invalid.");
         }
@@ -117,6 +120,18 @@ public class ParcelBuilder {
             this.parcel.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code DeliveryDate} of the {@code Parcel} that we are building.
+     */
+    public ParcelBuilder withDeliveryDate(String deliveryDate) {
+        try {
+            this.parcel.setDeliveryDate(new DeliveryDate(deliveryDate));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("delivery date is expected to be unique.");
         }
         return this;
     }
