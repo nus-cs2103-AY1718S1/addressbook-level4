@@ -391,7 +391,7 @@ Figure 3.2.1 : Sequence Diagram of How the Blacklist Command Works_
 
 The following sequence diagram, Figure 3.2.1, shows further details of the interaction between `Model` and 'Addressbook` to obtain the blacklist:
 
-image::BlacklistCommandSequenceDiagram2.PNG[width="800"]
+image::BlacklistCommandSequenceDiagram2.png[width="800"]
 Figure 3.2.2 : Sequence Diagram of Model and Addressbook Interacts To Generate The Blacklist From All Persons_
 
 ==== Design Constraints:
