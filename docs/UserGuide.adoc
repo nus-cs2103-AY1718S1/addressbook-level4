@@ -270,6 +270,21 @@ There is no need to save manually.
 Address book data can be stored in a back up file when necessary. This is good in case any the existing address book is corrupted. +
 Format: `backup`
 
+=== Import data : `import` (Since v1.2)
+
+Add contact details from external xml file into current address book. +
+Format: import FILE_PATH
+
+****
+* Adds all person that is not already in the address book.
+* The FILE_PATH must contain a valid xml file.
+****
+
+Examples:
+
+* `import C:\Desktop\colleagues.xml` +
+Imports colleagues.xml into current address book.
+
 === Facebook Search (coming in V2.0)
 
 Query Facebook using list of emails from address book.
