@@ -414,6 +414,64 @@ The `backupAddressBook` method is called in `MainApp#init()` which is called eac
 **Cons:** It is difficult to determine the ideal number of commands to ensure that the backup is both recent enough, yet outdated enough for the user to want to restore state to should he/she mess up a command at some point. +
 // end::backup[]
 
+// tag::datestoring[]
+=== Date storing mechanism
+
+The date storing mechanism only begins to work when an instance of the `Person` class is implemented. An instance of the `Date` class is created and used to store the current date that the `Person` instance was created.
+An example of such an implementation of this is the `dateBorrow` field of `Person`.
+[source,java]
+----
+public class Person implements ReadOnlyPerson {
+
+    private ObjectProperty<Name> name;
+    private ObjectProperty<Phone> phone;
+    private ObjectProperty<Email> email;
+    private ObjectProperty<Address> address;
+    private ObjectProperty<PostalCode> postalCode;
+    private ObjectProperty<Cluster> cluster;
+    private ObjectProperty<Debt> debt;
+    private ObjectProperty<Interest> interest;
+    private ObjectProperty<DateBorrow> dateBorrow;
+----
+Such an implementation doesn't allow for errors when creating the field as there is no room for mistakes on the user's side. When the `Person` instance is created, the following line is called: +
+[source,java]
+----
+    this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
+----
+Suppose the above line is called, the `DateBorrow` class creates a new `Date` with the following line:
+[source, java]
+----
+    public DateBorrow() {
+        Date date = new Date();
+        value = formatDate(date);
+    }
+----
+This way of implementation is rather intuitive when adding a new `Person` as a new `Date` can simply be created. However, whenever a `Person` constructor is called, such as the following:
+[source,java]
+----
+    public Person(ReadOnlyPerson source) {
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
+                source.getDebt(), source.getInterest(), source.getDeadline(), source.getTags());
+----
+This would result in inconsistencies in the code. For example, an `Edit` command is implemented in such a way that it creates an `editedPerson`.
+This is because the above mentioned constructor was meant to make a copy of the `Person` with a given source. Hence the following line was added to ensure consistency.
+[source,java]
+----
+        this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of `DateBorrow` +
+**Alternative 1(current choice):** Create a `DateBorrow` class as such but modify the constructor to maintain consistency. +
+**Pros:** Blends well with existing coding style and how the commands work. +
+**Cons:** As of now there is no problems with the implementation. +
+**Alternative 2:** Have the user manually key in the date. +
+**Pros:** Implementation is very simple as the developer could just follow current coding style to create a new field. +
+**Cons:** Such an implementation would not be as user-friendly as the first alternative. Currently the amount of fields for the user to key in
+is rather high. Implementing alternative 2 would be more tedious on the user's side.
+// end::datestoring[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
