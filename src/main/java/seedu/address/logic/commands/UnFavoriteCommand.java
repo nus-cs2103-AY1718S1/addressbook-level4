@@ -19,7 +19,7 @@ public class UnFavoriteCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Unfavorites the person(s) identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a positive integer) or INDEXES\n"
             + "Example: " + COMMAND_WORD + " 1 OR " + COMMAND_WORD + " 1 2 3";
 
     public static final String MESSAGE_UNFAVORITE_PERSON_SUCCESS = "Removed from favorite contact(s): %1$s";
@@ -70,5 +70,13 @@ public class UnFavoriteCommand extends UndoableCommand {
         }
 
         return new CommandResult(String.format(MESSAGE_UNFAVORITE_PERSON_SUCCESS, names));
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UnFavoriteCommand // instanceof handles nulls
+                && this.targetIndexList.equals(((UnFavoriteCommand) other).targetIndexList)); // state check
     }
 }

@@ -56,10 +56,11 @@ public class ParserUtil {
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static List<Index> parseMultipleIndexes(String args) throws IllegalValueException {
-        List<String> argsList = Arrays.asList(args.split(" ")); // example of args: " 1 2 3" (has a space in front)
+        // Example of args: " 1 2 3" (has a space in front). Hence, remove the first space -> then split
+        List<String> argsList = Arrays.asList(args.replaceFirst(" ", "").split(" "));
         List<Index> indexList = new ArrayList<>();
 
-        for (String index : argsList.subList(1, argsList.size())) { // skip first item in argsList since it is a space
+        for (String index : argsList) {
             Index i = parseIndex(index);
             indexList.add(i); // Add each valid index into indexList
         }

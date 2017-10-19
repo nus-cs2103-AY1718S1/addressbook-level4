@@ -125,7 +125,7 @@ public class AddressBookParserTest {
     public void parseCommand_favorite_multi() throws Exception {
         FavoriteCommand command = (FavoriteCommand) parser.parseCommand(
                 FavoriteCommand.COMMAND_WORD + " "
-                        + INDEX_FIRST_PERSON.getOneBased()
+                        + INDEX_FIRST_PERSON.getOneBased() + " "
                         + INDEX_SECOND_PERSON.getOneBased());
         assertEquals(new FavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON)), command);
     }
@@ -232,7 +232,7 @@ public class AddressBookParserTest {
     public void parseCommand_unFavorite_multi() throws Exception {
         UnFavoriteCommand command = (UnFavoriteCommand) parser.parseCommand(
                 UnFavoriteCommand.COMMAND_WORD + " "
-                        + INDEX_FIRST_PERSON.getOneBased()
+                        + INDEX_FIRST_PERSON.getOneBased() + " "
                         + INDEX_SECOND_PERSON.getOneBased());
         assertEquals(new UnFavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON)), command);
     }

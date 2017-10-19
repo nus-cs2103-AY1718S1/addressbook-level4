@@ -35,7 +35,8 @@ public class FavoriteCommandTest {
         ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         FavoriteCommand favoriteCommand = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON));
 
-        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, personToFavorite);
+        String expectedMessage = String.format(
+                FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, "\n★ " + personToFavorite.getName().toString());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.toggleFavoritePerson(personToFavorite, FavoriteCommand.COMMAND_WORD);
@@ -53,16 +54,14 @@ public class FavoriteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-
         ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         FavoriteCommand favoriteCommand = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON));
 
-        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, personToFavorite);
+        String expectedMessage = String.format(
+                FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, "\n★ " + personToFavorite.getName().toString());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.toggleFavoritePerson(personToFavorite, FavoriteCommand.COMMAND_WORD);
-        showNoPerson(expectedModel);
 
         assertCommandSuccess(favoriteCommand, model, expectedMessage, expectedModel);
     }
@@ -109,14 +108,5 @@ public class FavoriteCommandTest {
         FavoriteCommand favoriteCommand = new FavoriteCommand(indexList);
         favoriteCommand.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
         return favoriteCommand;
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assert model.getFilteredPersonList().isEmpty();
     }
 }
