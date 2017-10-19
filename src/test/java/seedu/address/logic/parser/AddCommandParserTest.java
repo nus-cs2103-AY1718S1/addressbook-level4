@@ -86,9 +86,9 @@ public class AddCommandParserTest {
                 + TAG_DESC_FRIEND,
                 new AddCommand(expectedParcel));
 
-        // multiple delivery dates - last delivery date accepted
+        // multiple delivery dates - last address accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                        + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_AMY + DELIVERYDATE_DESC_AMY
+                        + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_AMY
                         + DELIVERYDATE_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedParcel));
 

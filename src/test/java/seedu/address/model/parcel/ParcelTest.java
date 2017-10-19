@@ -80,7 +80,7 @@ public class ParcelTest {
         assertEquals(parcel.toString(), sameParcel.toString());
         assertEquals(parcel.toString(), "Tracking No.: " + DEFAULT_TRACKING_NUMBER + " Recipient Name: "
                 + DEFAULT_NAME + " Phone: " + DEFAULT_PHONE  + " Email: " + DEFAULT_EMAIL + " Address: "
-                + DEFAULT_ADDRESS + " Tags: [" + DEFAULT_TAGS + "]");
+                + DEFAULT_ADDRESS + " Delivery Date: " + DEFAULT_DELIVERYDATE + " Tags: ["  + DEFAULT_TAGS + "]");
 
     }
 }
