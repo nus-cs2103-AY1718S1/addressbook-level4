@@ -121,6 +121,26 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by address: `findByAddress`
+
+Finds persons whose addresses contain any of the given keywords. +
+Format: `findByAddress KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the address is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Bread Avenue` will return `Bread Street`, `Sixth Avenue`
+****
+
+Examples:
+
+* `findByAddress stadium` +
+Returns `john` and `John Doe` whose addresses contain the word 'stadium'.
+* `findByAddress stadium pier` +
+Returns any person having addresses containing `stadium` or `pier`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
