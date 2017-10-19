@@ -14,7 +14,7 @@ import seedu.address.model.person.Debt;
  */
 public class BorrowCommandParser implements Parser<BorrowCommand> {
 
-    // index and debt amount borrowed
+    // arguments: index and debt amount borrowed
     private static final int ARGS_LENGTH = 2;
 
     @Override
