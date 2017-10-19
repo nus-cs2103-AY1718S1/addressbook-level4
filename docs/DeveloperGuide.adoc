@@ -446,6 +446,23 @@ just its size
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
 (default: `config.json`).
 
+=== Google Maps Search Browser
+
+The google maps search browser enhancement resides within the `BrowserPanel`.
+It takes in a `ReadOnlyParcel` 's postal code number substring of the parcel's address and concatenates it
+to the back of Google Map's search URL prefix to get a URL for the browser to load.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Google Maps Search Browser +
+**Alternative 1 (current choice):** Change browser loadPage URL to Google Map search URL +
+**Pros:** Its easy to implement new methods to load a new URLs if required to display a different URL. +
+**Cons:** The map has no other functionality besides searching for the postal code. +
+**Alternative 2 (future implementation choice):** Implementing through Google Maps API +
+**Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
+ in future versions of the Ark application. +
+**Cons:** More difficult to implement and integrate into a command line interface.
+
 === Delete Tag mechanism
 
 The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
