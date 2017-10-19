@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import seedu.address.logic.autocomplete.parser.AutoCompleteCommandParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
 import seedu.address.logic.autocomplete.parser.IdentityParser;
+import seedu.address.model.Model;
 
 /**
  * Manages cache and memoization for autocomplete possibilities.
