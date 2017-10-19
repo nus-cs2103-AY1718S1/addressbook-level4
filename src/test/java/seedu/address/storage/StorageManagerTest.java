@@ -94,7 +94,8 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                 new JsonUserPrefsStorage("dummy"), new XmlUserProfileStorage("dummy"));
-        storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(new UserPerson(SampleUserPersonUtil.getDummySamplePerson())));
+        storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(
+                new UserPerson(SampleUserPersonUtil.getDummySamplePerson())));
         assertFalse(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 

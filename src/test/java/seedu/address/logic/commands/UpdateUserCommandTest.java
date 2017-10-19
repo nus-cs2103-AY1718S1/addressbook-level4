@@ -41,7 +41,8 @@ public class UpdateUserCommandTest {
 
         String expectedMessage = String.format(UpdateUserCommand.MESSAGE_UPDATE_USER_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(), new UserPerson());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs(),
+                new UserPerson());
         expectedModel.updateUserPerson(editedPerson);
 
         assertCommandSuccess(updateUserCommand, model, expectedMessage, expectedModel);
