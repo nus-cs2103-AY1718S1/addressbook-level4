@@ -32,9 +32,9 @@ public class FacebookPostCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if(!FacebookConnectCommand.authenticated){
-            FacebookConnectCommand newfbconnect = new FacebookConnectCommand();
-            newfbconnect.execute();
+        if(!FacebookConnectCommand.isAuthenticated()){
+            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
+            newFacebookConnect.execute();
         }
 
         Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();

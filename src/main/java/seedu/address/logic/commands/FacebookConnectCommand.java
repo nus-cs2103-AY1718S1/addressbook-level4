@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import facebook4j.FacebookException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import facebook4j.Facebook;
+import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
 
@@ -20,8 +20,8 @@ public class FacebookConnectCommand extends Command {
     public static final String COMMAND_WORD = "facebook connect";
     public static final String COMMAND_ALIAS = "fbconnect";
     public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
-    public static boolean authenticated = false;
 
+    private static boolean authenticated = false;
     private static String domain = "https://www.facebook.com/";
     private static String appID = "131555220900267";
     private static String commaSeparetedPermissions = "user_about_me,email,publish_actions,user_birthday,"
@@ -40,13 +40,25 @@ public class FacebookConnectCommand extends Command {
     private static Facebook facebookInstance;
     private String accessToken;
 
+    /**
+     * Returns the authenticated Facebook instance
+     */
     public static Facebook getFacebookInstance() {
         return facebookInstance;
     }
 
+    /**
+     * Checks if there is an authenticated Facebook instance
+     */
+    public static boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    /*
     public static String getAuthUrl() {
         return authUrl;
     }
+    */
 
     @Override
     public CommandResult execute() throws CommandException {
