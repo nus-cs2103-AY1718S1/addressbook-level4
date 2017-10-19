@@ -10,6 +10,7 @@ public class NameTest {
     @Test
     public void isValidName() {
         // invalid name
+        assertFalse(Name.isValidName(null));
         assertFalse(Name.isValidName("")); // empty string
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters

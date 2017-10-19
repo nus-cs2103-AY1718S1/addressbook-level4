@@ -189,7 +189,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid website -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_WEBSITE_DESC,
-                Website.MESSAGE_WEBSITE_CONSTRAINS);
+                Website.MESSAGE_WEBSITE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_TAG_DESC,
