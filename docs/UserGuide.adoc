@@ -135,6 +135,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns any person having the tag `friend`
 // end::find[]
 
+// tag::hide[]
 === Hiding a person: `hide`
 
 Hide specified person according to index from the address book. +
@@ -150,6 +151,7 @@ Examples:
 
 * `hide 2`
 Hides the 2nd person in the address book.
+// end::hide[]
 
 // tag::alias[]
 === Creates an alias for command or shortcut : `alias`
