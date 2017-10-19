@@ -574,7 +574,7 @@ image::FindCommand_Tag.PNG[width="300"]
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
 
-The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard. 
+The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
 The index(es) selected must exist in the current result display window.
 
 [source,java]
