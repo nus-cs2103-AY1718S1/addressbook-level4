@@ -6,6 +6,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.storage.Storage;
 
+/**
+ * Backs up the address book to a fixed location (current file name).bak.
+ */
 public class BackupCommand extends Command {
 
     public static final String COMMAND_WORD = "backup";
