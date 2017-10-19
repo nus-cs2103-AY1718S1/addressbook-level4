@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -29,6 +30,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Comment;
+import seedu.address.model.person.Appoint;
 import seedu.address.model.tag.Tag;
 import sun.net.www.ParseUtil;
 
@@ -53,11 +55,11 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
         ArrayList<ReadOnlyPerson> personsList = new ArrayList<>();
         File fileToRead = new File(AddMultipleCommand.DEFAULT_FOLDER_PATH, fileName);
         String data;
-        
+
         if (!FileUtil.isFileExists(fileToRead)) {
             throw new ParseException(String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, fileName));
         }
-        
+
         try {
             data = FileUtil.readFromFile(fileToRead);
         } catch (IOException ie) {
@@ -65,7 +67,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
         }
 
         String lines[] = data.split(System.lineSeparator());
-        
+
         for (String eachLine: lines) {
             String toAdd = " " + eachLine;
             ArgumentMultimap argMultimap =
@@ -80,14 +82,15 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
                 Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
                 Comment comment = new Comment(""); // add command does not allow adding comments straight away
-                ReadOnlyPerson person = new Person(name, phone, email, address, comment, tagList);
+                Appoint appoint = new Appoint("");
+                ReadOnlyPerson person = new Person(name, phone, email, address, comment, appoint, tagList);
 
                 personsList.add(person);
             } catch (IllegalValueException ive) {
                 throw new ParseException(ive.getMessage(), ive);
             }
         }
-        
+
         return new AddMultipleCommand(personsList);
     }
 

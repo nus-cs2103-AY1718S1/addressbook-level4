@@ -17,6 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Comment;
+import seedu.address.model.person.Appoint;
 import seedu.address.model.tag.Tag;
 import sun.security.x509.AVA;
 
@@ -34,13 +35,15 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String comment;
     @XmlElement(required = true)
+    private String appoint;
+    @XmlElement(required = true)
     private String address;
-
     @XmlElement
     private String avatar;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -61,6 +64,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         avatar = source.getAvatar().getAvatarFilePath();
         comment = source.getComment().value;
+        appoint = source.getAppoint().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -81,6 +85,7 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+
         final Avatar avatar;
         if (this.avatar != null) {
             avatar = new Avatar(this.avatar);
@@ -88,7 +93,8 @@ public class XmlAdaptedPerson {
             avatar = new Avatar();
         }
         final Comment comment = new Comment(this.comment);
+        final Appoint appoint = new Appoint(this.appoint);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, comment, tags);
+        return new Person(name, phone, email, address, comment, appoint, tags);
     }
 }

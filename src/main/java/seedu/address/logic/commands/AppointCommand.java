@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 
 import java.util.List;
 
@@ -10,42 +10,42 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Comment;
+import seedu.address.model.person.Appoint;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Changes the comment of an existing person in the address book.
+ * Changes the appoint of an existing person in the address book.
  */
-public class CommentCommand extends UndoableCommand {
+public class AppointCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "comment";
+    public static final String COMMAND_WORD = "appoint";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the comment of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the appoint of the person identified "
             + "by the index number used in the last person listing. "
-            + "Existing comment will be overwritten by the input.\n"
+            + "Existing appoint will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_COMMENT + "[COMMENT]\n"
+            + PREFIX_APPOINT + "[APPOINT]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_COMMENT + "Likes to swim.";
+            + PREFIX_APPOINT + "20/10/2017 14:30";
 
-    public static final String MESSAGE_ADD_COMMENT_SUCCESS = "Added comment to Person: %1$s";
-    public static final String MESSAGE_DELETE_COMMENT_SUCCESS = "Removed comment from Person: %1$s";
+    public static final String MESSAGE_ADD_APPOINT_SUCCESS = "Added appoint to Person: %1$s";
+    public static final String MESSAGE_DELETE_APPOINT_SUCCESS = "Removed appoint from Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final Comment comment;
+    private final Appoint appoint;
 
     /**
-     * @param index of the person in the filtered person list to edit the comment
-     * @param comment of the person
+     * @param index of the person in the filtered person list to edit the appoint
+     * @param appoint of the person
      */
-    public CommentCommand(Index index, Comment comment) {
+    public AppointCommand(Index index, Appoint appoint) {
         requireNonNull(index);
-        requireNonNull(comment);
+        requireNonNull(appoint);
 
         this.index = index;
-        this.comment = comment;
+        this.appoint = appoint;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CommentCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), comment, personToEdit.getAppoint(), personToEdit.getTags());
+                personToEdit.getAddress(), personToEdit.getComment(), appoint, personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -73,10 +73,10 @@ public class CommentCommand extends UndoableCommand {
     }
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!comment.value.isEmpty()) {
-            return String.format(MESSAGE_ADD_COMMENT_SUCCESS, personToEdit);
+        if (!appoint.value.isEmpty()) {
+            return String.format(MESSAGE_ADD_APPOINT_SUCCESS, personToEdit);
         } else {
-            return String.format(MESSAGE_DELETE_COMMENT_SUCCESS, personToEdit);
+            return String.format(MESSAGE_DELETE_APPOINT_SUCCESS, personToEdit);
         }
     }
 
@@ -88,13 +88,13 @@ public class CommentCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof CommentCommand)) {
+        if (!(other instanceof AppointCommand)) {
             return false;
         }
 
         // state check
-        CommentCommand e = (CommentCommand) other;
+        AppointCommand e = (AppointCommand) other;
         return index.equals(e.index)
-                && comment.equals(e.comment);
+                && appoint.equals(e.appoint);
     }
 }
