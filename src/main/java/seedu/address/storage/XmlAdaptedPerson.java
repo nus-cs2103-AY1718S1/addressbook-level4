@@ -75,7 +75,7 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Timestamp timestamp;
-        if(this.timestamp.equals("null")) {
+        if (this.timestamp.equals("null")) {
             timestamp = new Timestamp(0);
         } else {
             timestamp = new Timestamp(this.timestamp);
