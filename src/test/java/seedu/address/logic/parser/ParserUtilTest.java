@@ -83,7 +83,8 @@ public class ParserUtilTest {
     @Test
     public void parseImportFilePath_notXmlFormat_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(MESSAGE_INVALID_DATA);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_DATA
+                , "./src/test/data/XmlAddressBookStorageTest/NotXmlFormatAddressBook.xml"));
         ParserUtil.parseImportFilePath("./src/test/data/XmlAddressBookStorageTest/NotXmlFormatAddressBook.xml");
     }
 
@@ -96,7 +97,8 @@ public class ParserUtilTest {
         assertEquals(importedAddressBook.getTagList().size(), 2);
 
         // ensure same addressbook
-        ReadOnlyAddressBook importedAddressBookWithWhiteSpace = ParserUtil.parseImportFilePath(" " + TEST_VALID_FILEPATH + "  ");
+        ReadOnlyAddressBook importedAddressBookWithWhiteSpace = ParserUtil.parseImportFilePath(" "
+                + TEST_VALID_FILEPATH + "  ");
         assertEquals(importedAddressBook.getParcelList(), importedAddressBookWithWhiteSpace.getParcelList());
         assertEquals(importedAddressBook.getTagList(), importedAddressBookWithWhiteSpace.getTagList());
     }

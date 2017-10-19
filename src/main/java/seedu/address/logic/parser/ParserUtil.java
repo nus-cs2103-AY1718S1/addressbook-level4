@@ -33,7 +33,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_FILE_NOT_FOUND = "File to import not found.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_DATA = "Xml file to import at {0} is not in the correct format.";
+    public static final String MESSAGE_INVALID_DATA = "Xml file to import at %1$s is not in the correct format.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -70,7 +70,7 @@ public class ParserUtil {
         } catch (FileNotFoundException e) {
             throw new IllegalValueException(MESSAGE_FILE_NOT_FOUND);
         } catch (Exception e) {
-            throw new IllegalValueException(String.format(MESSAGE_INVALID_DATA, trimmedFilePath));
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_DATA, filePath));
         }
     }
 
