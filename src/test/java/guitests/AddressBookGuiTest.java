@@ -15,6 +15,8 @@ import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.SearchFieldHandle;
+import guitests.guihandles.SortMenuHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
@@ -91,8 +93,17 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    protected SearchFieldHandle getSearchField() {
+        return mainWindowHandle.getSearchField();
+    }
+
+    protected SortMenuHandle getSortMenu() {
+        return mainWindowHandle.getSortMenu();
+    }
+
     /**
      * Runs {@code command} in the application's {@code CommandBox}.
+     *
      * @return true if the command was executed successfully.
      */
     protected boolean runCommand(String command) {
