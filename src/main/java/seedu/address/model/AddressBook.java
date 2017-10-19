@@ -218,6 +218,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         newPerson.setTags(newTags);
 
         updatePerson(oldPerson, newPerson);
+    }
 
     ////task-level operations
 
