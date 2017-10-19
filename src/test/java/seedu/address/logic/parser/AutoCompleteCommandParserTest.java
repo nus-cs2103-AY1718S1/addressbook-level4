@@ -37,7 +37,8 @@ public class AutoCompleteCommandParserTest {
         assertEquals(parser.parseForCommands("d"), Arrays.asList(new String[] {DeleteCommand.COMMAND_USAGE, "d"}));
         assertEquals(parser.parseForCommands("e"),
                 Arrays.asList(new String[] {EditCommand.COMMAND_USAGE, ExitCommand.COMMAND_USAGE, "e"}));
-        assertEquals(parser.parseForCommands("f"), Arrays.asList(new String[] {FindCommand.COMMAND_USAGE, "f"}));
+        assertEquals(parser.parseForCommands("f"),
+                Arrays.asList(new String[] {FindCommand.COMMAND_USAGE, FindTagCommand.COMMAND_USAGE, "f"}));
         assertEquals(parser.parseForCommands("g"), Arrays.asList(new String[] {"g"}));
         assertEquals(parser.parseForCommands("h"),
                 Arrays.asList(new String[] {HelpCommand.COMMAND_USAGE, HistoryCommand.COMMAND_USAGE, "h"}));
