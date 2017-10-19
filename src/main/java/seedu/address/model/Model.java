@@ -72,16 +72,19 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
+     * @@reginleiff
      * Adds the given event
      */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
     /**
+     * @@reginleiff
      * Deletes the given event.
      */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
     /**
+     * @@reginleiff
      * Replaces the given event {@code target} with {@code editedPerson}.
      *
      * @throws EventNotFoundException if {@code target} could not be found in the list.
@@ -89,11 +92,13 @@ public interface Model {
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException;
 
     /**
+     * @@reginleiff
      * Returns an unmodifiable view of the filtered event list
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
+     * @@reginleiff
      * Updates the filter of the filtered event list to filter by the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.

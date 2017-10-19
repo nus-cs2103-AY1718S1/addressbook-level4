@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import org.junit.Test;
 
 import seedu.address.logic.commands.event.DeleteEventCommand;
-import seedu.address.logic.parser.DeleteEventCommandParser;
 
 public class DeleteEventCommandParserTest {
 

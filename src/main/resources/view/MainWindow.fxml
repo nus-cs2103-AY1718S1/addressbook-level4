@@ -93,7 +93,7 @@
                     </Tab>
                     <Tab fx:id="eventTab" styleClass="eventsTab"
                          closable="false" text="Events">
-                        <StackPane fx:id="eventListPanePlaceholder" VBox.vgrow="ALWAYS" />
+                        <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                     </Tab>
                 </tabs>
             </TabPane>
