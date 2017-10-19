@@ -887,7 +887,6 @@ Use case resumes at step 2.
 ** 3b1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-=======
 
 [discrete]
 === Use case: List by most searched
@@ -914,6 +913,7 @@ Use case ends.
 ** AddressBook continues to step 3
 +
 Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
@@ -948,19 +948,20 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+//[appendix]
+//== Product Survey
+//
+//*Product Name*
+//
+//Author: ...
+//
+//Pros:
+//
+//* ...
+//* ...
+//
+//Cons:
+//
+//* ...
+//* ...
