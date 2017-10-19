@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.trie.Trie;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -23,6 +25,8 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
+    private Trie commandTrie;
+    private Set<String> commandSet;
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -33,6 +37,8 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        commandTrie = logic.getCommandTrie();
+        commandSet = commandTrie.getCommandSet();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -54,6 +60,10 @@ public class CommandBox extends UiPart<Region> {
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case TAB:
+            keyEvent.consume();
+            handleAutoComplete();
             break;
         default:
             // let JavaFx handle the keypress
@@ -84,6 +94,35 @@ public class CommandBox extends UiPart<Region> {
         }
 
         replaceText(historySnapshot.next());
+    }
+
+    /**
+     * Handles the Tab button pressed event.
+     */
+    private void handleAutoComplete() {
+        String input = commandTextField.getText();
+        try {
+            String command = commandTrie.attemptAutoComplete(input);
+
+            if (input.equals(command)) {
+                //No command exists in trie
+                setStyleToIndicateCommandFailure();
+                logger.info("Autocomplete failed with input: " + input);
+            } else if (commandSet.contains(command)) {
+                //Able to autocomplete to a correct command
+                this.replaceText(command);
+                logger.info("Autocomplete successful with input: " + input + " to " + command);
+            } else if (commandSet.contains(input)) {
+                //Add parameters
+                this.replaceText(input + command);
+                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
+            }
+        } catch (NullPointerException e) {
+            setStyleToIndicateCommandFailure();
+            logger.info("Autocomplete failed with input: " + input);
+        }
+
+
     }
 
     /**
