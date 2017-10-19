@@ -1074,6 +1074,41 @@ Cons:
 [appendix]
 == Implementation of enhancement
 
+=== *Enhancement: Bloodtype* +
+
+
+*Reason for implementation* +
+
+As our address book is designed for doctors to use, being able to record the blood types of patients will be a helpful +
+feature for them. There are many times that doctors need to know what blood type their patients have for medical +
+reasons; cases where blood transfusion is required for patients are of utmost importance to prevent a patient +
+from receiving a incompatible blood type.
+
+*How it is implemented* +
+
+A Bloodtype class is created with one constructor. +
+
+....
+new Bloodtype("AB+")
+....
+
+The constructor requires a string input with one to three character limit. "+" and "-" are allowed as Bloodtype +
+has a ascii regex. +
+
+As of version 1.1, Person constructor includes Bloodtype.
+
+....
+new Person(name, phone, email, address, bloodType, tags, remark);
+....
+
+*Reasons for how it is implemented*
+
+The reason that there is a one to three character limit as blood types are one character input at minimum (e.g "A") +
+and three characters input, inclusive of "+" or "-", at maximum (e.g "AB-"). +
+
+The reason that ascii is used as the regex is to allowed "+" and "-" to be entered as inputs to take into account +
+the Rh factor of blood types.
+
 === *Enhancement: Set appointment* +
 
 
@@ -1109,3 +1144,35 @@ the implementation of that, we have decided that the Person class should have ap
 We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
 enhancements for parsing, it should be done in the AddAppointmentParser class.
 
+=== *Enhancement: ListByBloodtypeCommand* +
+
+
+*Reason for implementation* +
+
+Since our address book have Bloodtype implemented, we decided that being able to list people according to blood types +
+is going to be helpful for doctors. There are going to be times where hospitals run out of blood for blood transfusion +
+and related medical procedures. Being able to find patients quicklywith compatible blood types is going to be critical +
+in these types of emergencies.
+
+*How it is implemented* +
+
+A ListByBloodtypeCommand class is created with one constructor with input from ListByBloodtypeCommandParser. +
+
+....
+new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate("B+"));
+....
+
+A ListByBloodtypeCommandParser is created with one constructor.
+
+....
+new ListByBloodtypeCommandParser("B+");
+....
+
+The first constructor takes the input from ListByBloodtypeParser and compares blood types with people listed in +
+the address book through BloodtypeContainsKeywordPredicate. +
+
+The second constructor takes in a String from the user.
+
+*Reasons for how it is implemented*
+
+The reason for the use of ListByBloodtypeCommandParser is to filter out extra spaces that the user may have typed in.
