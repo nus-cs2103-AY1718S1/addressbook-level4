@@ -218,6 +218,34 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::detag[]
+=== Detag mechanism
+
+The detag mechanism is facilitated by the `DetagCommand` class which inherited from the `UndoableCommand` class. It allows for the removing of existing tag from multiple person, i.e. detag. The minimum number of person specified is 1 and the maximum number is the number of person on the filtered list.
+
+Suppose the user to execute the command `detag` using the following code
+----
+detag 1, 2 t/friends
+----
+
+The `DetagCommandParser` class will check for the validity of the indices specified, i.e. within the range of the filtered list. Afterwards, the `LogicManager` invokes the method `deleteTag`, which removes the specific tag from the `Set` of tags from the specified persons, and update the storage.
+
+[NOTE]
+If one or more of the persons specified by the indices does not contain the specified tag to remove, the removal will not be executed even for those persons that have the tag.
+
+[NOTE]
+The current detag mechanism does not support multiple tags removal, i.e. remove 2 different tags in one command line.
+
+==== Design Considerations
+**Aspect:** Implementation of `DetagCommand` +
+**Alternative 1 (current choice):** Directly removes the tag from `Set` of person(s) +
+**Pros:** Easier and more specific command to remove tag, and could remove from multiple persons in one command +
+**Cons:** Makes the tags of person skeptical for changes, and introducing of new additional command specifically for removal of tag may be not necessary +
+**Alternative 2:** Just use the `EditCommand` to change the tag +
+**Pros:** Use of one command to edit any details of a person is more organised +
+**Cons:** Could not remove tag of multiple persons, and have to type in the tags that do not need to be remove +
+// end::detag[]
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
