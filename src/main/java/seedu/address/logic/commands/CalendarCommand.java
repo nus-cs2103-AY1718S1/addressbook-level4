@@ -15,7 +15,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
-import seedu.address.Quickstart;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,7 +78,7 @@ public class CalendarCommand extends Command {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-                Quickstart.class.getResourceAsStream("/client_secret.json");
+                CalendarCommand.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
