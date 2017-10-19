@@ -216,19 +216,18 @@ You can check the index using the `list` command
 
 === Selecting a person : `select`
 
-You can select a person based on their index number. +
- +
+You can select a person based on their `INDEX` number. +
 Format: `select INDEX` +
 Shorthand Format: `s INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-* You can check the index using the `list` command.
-****
 
-Examples:
+[WARNING]
+The index *must be a positive integer* `1, 2, 3, ...`
+
+[NOTE]
+The index refers to the index number shown in the most recent listing
+
+*Examples:*
 
 * `list` +
 `s 2` +
