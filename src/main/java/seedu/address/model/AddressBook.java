@@ -257,7 +257,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when updating the debt of a person";
-        } catch (IllegalValueException e) {
+        } catch (IllegalValueException ive) {
             assert false : "New debt amount should not be invalid since amount and debt field in target have "
                     + "been validated";
         }
