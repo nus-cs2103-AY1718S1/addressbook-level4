@@ -345,6 +345,65 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::group[]
+=== Grouping mechanism
+==== Groups vs Tags
+* Conceptually different. Groups are long-term, standalone constructs, while Tags are individual Person's attributes
+* Groups have attributes (number of members)
+* Groups can be listed together with their members
+* Adding and removal from a Group can be done in batches (multiple Persons at a time)
+
+Big picture. Note that AddressBook further updates the Person's references to the groups.
+`filtered` denotes the Person extracted by applying the index filtering.
+
+image::GroupSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Storing information about group members +
+**Alternative 1 (current choice):** Members store list of groups they belong to +
+**Pros:** Code related to the tags (filtering, storing) can be reused +
+**Cons:** Finding the members of specific group more computationally expensive. +
+ Information about groups has to be added wherever Person is used (add, edit commands). Some code duplicated +
+**Alternative 2:** Group stores list of members +
+**Pros:** Easier to understand. Easier to retrieve all the members of a group +
+**Cons:** Even though some mechanisms are similar to ones related to Tag, new classes are needed to handle them.
+
+---
+**Aspect:** Managing groups +
+**Alternative 1 (current choice):** Groups can be managed (members added, removed) only using group-specific commands +
+**Pros:** Avoids cluttering other commands (add, edit).
+ Separates the concepts of Person and Group, also Tag and Group. +
+**Cons:** Adding a Person to a group at the moment of the Person's creation is impossible +
+**Alternative 2:** Groups are accessed and managed just as Tags, when managing a Person +
+**Pros:** Avoids creation of a new command. +
+**Cons:** Adds another attribute to a Person increasing its complexity.
+Not intuitive to manage group by managing Person.
+
+// end::undoredo[]
+
+// tag::searching[]
+=== Searching mechanism
+Here, searching entails the autocomplete function, finding mechanism and suggesting mechanism.
+The search mechanism is done with user's usability in mind and is fully implemented such that it is most intuitive to use for the users.
+
+==== Autocomplete function
+The autocomplete function mimics the behaviour of familiar Unix-based command lines. The autocomplete function is managed by a class `AutocompleteManager`,
+whose function `attemptAutocomplete` searches for the string starting with the specified characters in the string array provided and will return the
+string if a unique match is present. +
+
+==== Finding mechanism
+The find function currently matches name in the address book if those name starts with the find keyword. Whenever the a find event is triggered, the address book
+will filter the address book based on the predicate provided, the mechanism of which is specified by `NameContainsKeywordsPredicate` class.
+This class overrides the `test` function to filter the list based on `containsWordsStartWithString`, a `StringUtil` method which returns whether
+a string starts with another string. For example, 'Dav' will return 'Dave' +
+Looking forward, the finding mechanism will be more flexible, by implementing fuzzy search mechanism which allows returning
+close matches. For example, 'Dve' will return 'Dave' or 'Dove'. +
+
+==== Suggesting mechanism
+The suggestion mechanism will be a hybrid of the above two functionalities, in which suggestion, whether commands or a match string inside the addressbook
+will be shown as the user type commands. This has not been implemented but will be a UI-heavy component that anchor on the fuzzy search logic.
+// end::searching[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

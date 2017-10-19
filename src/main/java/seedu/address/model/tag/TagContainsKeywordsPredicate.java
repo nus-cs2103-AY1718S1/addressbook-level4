@@ -1,13 +1,12 @@
-package seedu.address.model.person;
+package seedu.address.model.tag;
 
 import java.util.List;
 import java.util.Set;
-import java.lang.reflect.Array;
 import java.util.StringJoiner;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -24,12 +23,12 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         Set<Tag> set = person.getTags();
         Tag[] array = set.toArray(new Tag[0]);
         StringJoiner stringjoiner = new StringJoiner(" ");
-        for (int i = 0; i < array.length; i++ ) {
+        for (int i = 0; i < array.length; i++) {
             stringjoiner.add(array[i].toString());
         }
         String finalString = stringjoiner.toString();
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(finalString, '[' + keyword + ']'));
     }
 
     @Override

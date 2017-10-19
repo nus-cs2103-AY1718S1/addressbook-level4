@@ -127,6 +127,26 @@ Returns any person having names starting with `Betsy`, `Tim`, or `John`
 * `f Nam` +
 Returns `Nam`
 
+=== Locating persons by tag: `findtag` (alias `ft`)
+
+Finds persons who has a tag that matches the given keyword. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]` or `ft KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `CS2103 Groupmate` will match `Groupmate CS2103`
+* Only the tag is searched.
+****
+
+Examples:
+
+* `find friends` +
+Returns `Alex Yeoh` and `Bernice Yu`
+* `find colleagues` +
+Returns 'bernice Yu' and 'Roy Balakrishnan'
+* `ft Malay` +
+Returns `Adil`
+
 === Deleting a person : `delete` (alias `del`)
 
 Deletes the specified person from the address book. +
@@ -182,25 +202,25 @@ Selects all persons currently displayed.
 
 === Grouping persons : `group`
 
-[NOTE]
-Coming in v2.0: group
+Since v1.2
 
-Used to manage groups of persons identified by the indices used in the last person listing. +
-Format: `group n/NAME INDEX...` +
+Used to add to a group with GROUP_NAME a person identified by the index used in the last person listing. +
+If such a group does not exit, it is created. +
+Format: `group INDEX gn/GROUP_NAME` +
 
 ****
-* If a group with such a name exists, adds the persons at `INDEX...`.
+* If a group with such a name exists, adds the persons at `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1`
 ****
 
 Examples:
 
 * `list` +
-`group n/CS2103 2 3` +
-Adds the 2nd and 3rd person to the group CS2103 in the address book.
+`group 2 gn/CS2103` +
+Adds the 2nd person to the group CS2103 in the address book.
 * `find Betsy` +
-`group n/Family 1` +
+`group 1 gn/Family` +
 Adds the 1st person from the results of the `find` command to the group Family.
 
 === Removing from groups : `ungroup`
@@ -330,6 +350,11 @@ There is no need to save manually.
 
 Commands and parameters will be suggested as you type, where applicable.
 
+=== Autocomplete commands
+
+After you type first few characters, user can press TAB to autocomplete to the if there is a unique command starting +
+with those characters.
+
 === Exporting the data : `export`
 
 [NOTE]
@@ -389,8 +414,8 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` (also `select me`) +
 e.g.: `select 2`, `select all` +
 `select me`
-* *Group* : `group n/NAME INDEX...` +
-e.g.: `group n/Family 2 3`
+* *Group* : `group INDEX gn/GROUP_NAME` +
+e.g.: `group 2 gn/Family`
 * *Ungroup* : `ungroup n/NAME INDEX...` +
 e.g.: `ungroup n/Family 2 3`
 * *History* : `history` (`h`)
