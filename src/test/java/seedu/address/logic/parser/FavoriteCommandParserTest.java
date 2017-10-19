@@ -17,12 +17,12 @@ public class FavoriteCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsFavoriteCommand() {
-        assertParseSuccess(parser, " 1", new FavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON)));
+        assertParseSuccess(parser, "1", new FavoriteCommand(Arrays.asList(INDEX_FIRST_PERSON)));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, " a",
+        assertParseFailure(parser, "a",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavoriteCommand.MESSAGE_USAGE));
     }
 }
