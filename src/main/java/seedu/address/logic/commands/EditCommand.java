@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
@@ -22,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HomeNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -46,6 +48,7 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_HOME_NUMBER + "HOME NUMBER] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_SCH_EMAIL + "SCHOOL EMAIL] "
             + "[" + PREFIX_WEBSITE + "WEBSITE] "
@@ -107,6 +110,7 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        HomeNumber updatedHomeNumber = editPersonDescriptor.getHomeNumber().orElse(personToEdit.getHomeNumber());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         SchEmail updatedSchEmail = editPersonDescriptor.getSchEmail().orElse(personToEdit.getSchEmail());
         Website updatedWebsite = editPersonDescriptor.getWebsite().orElse(personToEdit.getWebsite());
@@ -114,7 +118,7 @@ public class EditCommand extends UndoableCommand {
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedSchEmail,
+        return new Person(updatedName, updatedPhone, updatedHomeNumber, updatedEmail, updatedSchEmail,
                         updatedWebsite, updatedAddress, updatedBirthday, updatedTags);
     }
 
@@ -143,6 +147,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
+        private HomeNumber homeNumber;
         private Email email;
         private SchEmail schEmail;
         private Website website;
@@ -155,6 +160,7 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
+            this.homeNumber = toCopy.homeNumber;
             this.email = toCopy.email;
             this.schEmail = toCopy.schEmail;
             this.website = toCopy.website;
@@ -168,9 +174,8 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
 
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.schEmail,
-                    this.website, this.address,
-                    this.birthday, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.homeNumber,
+                    this.email, this.schEmail, this.website, this.address, this.birthday, this.tags);
         }
 
         public void setName(Name name) {
@@ -187,6 +192,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
+        }
+
+        public void setHomeNumber(HomeNumber homeNumber) {
+            this.homeNumber = homeNumber;
+        }
+
+        public Optional<HomeNumber> getHomeNumber() {
+            return Optional.ofNullable(homeNumber);
         }
 
         public void setEmail(Email email) {
@@ -254,6 +267,7 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
+                    && getHomeNumber().equals(e.getHomeNumber())
                     && getEmail().equals(e.getEmail())
                     && getSchEmail().equals(e.getSchEmail())
                     && getWebsite().equals(e.getWebsite())
