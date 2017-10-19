@@ -443,6 +443,24 @@ will again try to find and execute `set<PreferenceKey>` method.
 **Cons:** Data structure is more restricted; may need to write native code to parse JSON if a library cannot be found to convert JSON to hashmap +
 // end::preferences[]
 
+=== Google Calendar Request
+
+Google calendar request allows user to retrieve their google calendar information with a single command. The method uses
+an OAuth API token, requiring a one-time login to the user's google account.
+
+==== Implementation
+
+Uses the command word 'Calendar' or 'cal' to return the results. Implementation is the same as any other command, having the CommandWord parse through
+'AddressBookParser', and then executes 'CalendarCommand'. The API token is stored in the 'client_secret.json' file under main/java/resources.
+The login credentials are stored locally in the user/.credentials folder.
+
+==== Design Considerations
+
+**Aspect:** Requires internet access to retrieve calendar +
+**Alternative:** Create a storage for previously retrieved calendar events +
+**Pros:** Retains some functionality even when offline  +
+**Cons:** Will take up unnecessary storage space in the application
+
 == Documentation
 
 We use asciidoc for writing documentation.
