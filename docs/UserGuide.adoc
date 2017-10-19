@@ -367,3 +367,14 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== Features to be included in V 2.0
+
+* Two FA authentication for login and every other important actions.
+* Validity checks on client's personal information.
+* Email notifications when the user's account in logged in from an unknown device.
+* An automated journey scheduler.
+* 'Add-log' button that generates specific date and time.
+* A file uploading feature.
+* Random generation of a contact from the cleared list.
+* Feature to create a custom field.
