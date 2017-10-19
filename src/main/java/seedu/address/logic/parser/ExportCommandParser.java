@@ -5,7 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * Parses input arguments and creates a new {@code ExportCommand} object

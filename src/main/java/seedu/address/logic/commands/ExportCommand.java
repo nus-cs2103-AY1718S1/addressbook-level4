@@ -35,13 +35,6 @@ public class ExportCommand extends Command {
         this.filePath = filePath;
     }
 
-    /**
-     * Provides the dependency of a {@code Storage} to {@code ExportCommand}
-     */
-    public void setStorage(Storage storage) {
-        this.storage = storage;
-    }
-
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -53,6 +46,11 @@ public class ExportCommand extends Command {
         } catch (InvalidFileExtensionException e) {
             throw new CommandException(MESSAGE_NOT_XML_FILE);
         }
+    }
+
+    @Override
+    public void setStorage(Storage storage) {
+        this.storage = storage;
     }
 
     @Override
