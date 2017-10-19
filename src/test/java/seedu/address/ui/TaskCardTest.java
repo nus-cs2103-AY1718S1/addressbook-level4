@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplayTask;
 
-import guitests.guihandles.TaskCardHandle;
 import org.junit.Test;
 
+import guitests.guihandles.TaskCardHandle;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
