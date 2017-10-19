@@ -10,6 +10,10 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.EventDescription;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -18,10 +22,10 @@ import seedu.address.model.person.Person;
 public class XmlAdaptedEvent {
 
     @XmlElement(required = true)
-    private String name;
-    private String desc;
+    private String eventName;
+    private String eventDesc;
     @XmlElement(required = true)
-    private String time;
+    private String eventTime;
 
     @XmlElement
     private List<XmlAdaptedPerson> participants = new ArrayList<>();
@@ -39,9 +43,9 @@ public class XmlAdaptedEvent {
      * @param source future changes to this will not affect the created XmlAdaptedEvent
      */
     public XmlAdaptedEvent(ReadOnlyEvent source) {
-        name = source.getEName().value;
-        desc = source.getDesc().value;
-        time = source.getETime().value;
+        eventName = source.getEName().fullEventName;
+        eventDesc = source.getDesc().EventDesc;
+        eventTime = source.getETime().EventTime;
         participants = new ArrayList<>();
         for (Person participant : source.getParticipants()) {
             participants.add(new XmlAdaptedPerson(participant));
@@ -58,10 +62,10 @@ public class XmlAdaptedEvent {
         for (XmlAdaptedPerson participant : participants) {
             eventParticipants.add(participant.toModelType());
         }
-        final Name name = new Name(this.name);
-        final Desc desc = new Desc(this.desc);
-        final Time time = new Time(this.time);
+        final EventName eventName = new EventName(this.eventName);
+        final EventDescription eventDesc = new EventDescription(this.eventDesc);
+        final EventTime eventTime = new EventTime(this.eventTime);
         final Set<Person> participants = new HashSet<>(eventParticipants);
-        return new Event(name, desc, time, participants);
+        return new Event(eventName, eventDesc, eventTime, participants);
     }
 }
