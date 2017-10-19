@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import java.util.ArrayList;
+
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -43,6 +44,8 @@ public class AutoComplete {
         case "delete":
             this.autoCompleteList = getConcatPersonsArray("delete");
             break;
+        default:
+            return;
         }
     }
 
@@ -59,12 +62,16 @@ public class AutoComplete {
         return newAutoCompleteList;
     }
 
-    // Reset autocomplete suggestions
+    /**
+     * Reset autocomplete suggestions to base commands
+     */
     public void resetAutocompleteList() {
         this.autoCompleteList = baseCommands;
     }
 
-    // Update array of persons suggestions when list modified
+    /**
+     * Update array of persons suggestions when list modified
+     */
     public void updatePersonsArray() {
         personsStringArray.clear();
         for (ReadOnlyPerson p: model.getFilteredPersonList()) {
@@ -72,7 +79,10 @@ public class AutoComplete {
         }
     }
 
-    // Getter for autoCompleteList
+    /**
+     * Getter for auto-complete list suggestions
+     */
+    // Update array of persons suggestions when list modified
     public String[] getAutoCompleteList() {
         return autoCompleteList;
     }

@@ -3,13 +3,14 @@ package seedu.address.ui;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-import org.controlsfx.control.textfield.TextFields;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -32,7 +33,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
-    SuggestionProvider suggestions;
+    private SuggestionProvider suggestions;
 
     public CommandBox(Logic logic) {
         super(FXML);
