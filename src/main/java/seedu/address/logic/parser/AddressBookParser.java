@@ -160,7 +160,7 @@ public class AddressBookParser {
             if (token != null) {
                 keyword = token.getRepresentation().representation;
             }
-
+            builder.append(" ");
             builder.append(keyword);
             builder.append(spaces);
         }
