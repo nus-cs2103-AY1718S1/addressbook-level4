@@ -48,7 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
-        // Sort contacts by favourite status, then name
+        // Sort contacts by favourite status, then name, then phone, then email, then address
         sortedFilteredPersons.setComparator(new Comparator<ReadOnlyPerson>() {
             @Override
             public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
@@ -66,7 +66,22 @@ public class ModelManager extends ComponentManager implements Model {
             public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
                 return p1.getName().toString().compareTo(p2.getName().toString());
             }
-        }));
+        }.thenComparing(new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+                return p1.getPhone().toString().compareTo(p2.getName().toString());
+            }
+        }.thenComparing(new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+                return p1.getEmail().toString().compareTo(p2.getEmail().toString());
+            }
+        }.thenComparing(new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
+                return p1.getAddress().toString().compareTo(p2.getAddress().toString());
+            }
+        })))));
     }
 
     public ModelManager() {
