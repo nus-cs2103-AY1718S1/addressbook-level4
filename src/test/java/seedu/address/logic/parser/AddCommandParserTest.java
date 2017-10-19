@@ -193,7 +193,7 @@ public class AddCommandParserTest {
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + INVALID_NAME_DESC
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + INVALID_DELIVERYDATE_DESC
-                , Name.MESSAGE_NAME_CONSTRAINTS);
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + INVALID_DELIVERYDATE_DESC,
+                Name.MESSAGE_NAME_CONSTRAINTS);
     }
 }

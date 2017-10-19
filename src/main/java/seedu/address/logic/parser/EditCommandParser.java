@@ -54,7 +54,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editParcelDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editParcelDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editParcelDescriptor::setAddress);
-            ParserUtil.parseDeliveryDate(argMultimap.getValue(PREFIX_DELIVERYDATE)).ifPresent(editParcelDescriptor::setDeliveryDate);
+            ParserUtil.parseDeliveryDate(argMultimap.getValue(PREFIX_DELIVERYDATE))
+                      .ifPresent(editParcelDescriptor::setDeliveryDate);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editParcelDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
