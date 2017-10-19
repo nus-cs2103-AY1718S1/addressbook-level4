@@ -130,7 +130,6 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target lesson cannot be missing");
         }
 
-        model.handleListingUnit();
         return new CommandResult(String.format(MESSAGE_EDIT_LESSON_SUCCESS, editedLesson));
     }
 

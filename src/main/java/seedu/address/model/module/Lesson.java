@@ -147,7 +147,7 @@ public class Lesson implements ReadOnlyLesson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(classType, location, group, timeSlot, lecturers);
+        return Objects.hash(classType, location, group, timeSlot, code, lecturers);
     }
 
     @Override

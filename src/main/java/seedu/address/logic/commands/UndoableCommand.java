@@ -5,7 +5,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
+
+import java.util.function.Predicate;
 
 
 /**
@@ -48,7 +52,6 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
     }
-
 
 
     @Override

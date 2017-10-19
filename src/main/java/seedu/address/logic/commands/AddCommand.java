@@ -65,6 +65,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addLesson(toAdd);
+            model.handleListingUnit();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateLessonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
