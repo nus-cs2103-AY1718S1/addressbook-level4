@@ -169,7 +169,7 @@ public class FindCommandTest {
         assertCommandSuccess(phoneCommand, expectedMessage, Arrays.asList(FIONA));
 
         FindCommand tagCommand = prepareTagCommand("owesMoney");
-        assertCommandSuccess(tagCommand, expectedMessage, Arrays.asList(BENSON));
+        assertCommandSuccess(tagCommand, expectedMessage(2), Arrays.asList(BENSON, FIONA));
     }
 
     @Test
@@ -191,8 +191,8 @@ public class FindCommandTest {
         assertCommandSuccess(phoneCommand, expectedMessage(2), Arrays.asList(FIONA, GEORGE));
 
         FindCommand tagCommand = prepareTagCommand("friends");
-        assertCommandSuccess(tagCommand, expectedMessage(6),
-                Arrays.asList(ALICE, BENSON, DANIEL, ELLE, FIONA, GEORGE));
+        assertCommandSuccess(tagCommand, expectedMessage(5),
+                Arrays.asList(ALICE, BENSON, CARL, DANIEL, GEORGE));
     }
 
     @Test
@@ -213,7 +213,7 @@ public class FindCommandTest {
         assertCommandSuccess(phoneCommand, expectedMessage(3), Arrays.asList(CARL, FIONA, GEORGE));
 
         FindCommand tagCommand = prepareTagCommand("owesMoney enemy");
-        assertCommandSuccess(tagCommand, expectedMessage(2), Arrays.asList(BENSON, CARL));
+        assertCommandSuccess(tagCommand, expectedMessage(3), Arrays.asList(BENSON, CARL, FIONA));
     }
 
     /**
