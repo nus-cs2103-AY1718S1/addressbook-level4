@@ -2,18 +2,11 @@ package seedu.address.model.graph;
 
 import javafx.collections.ObservableList;
 import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
-import org.graphstream.util.set.FixedArrayList;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.HashMap;
-import java.util.Observable;
 
 import static java.util.Objects.requireNonNull;
 
@@ -26,8 +19,6 @@ public class GraphWrapper {
     private SingleGraph graph;
     private final Model model;
     private final ObservableList<ReadOnlyPerson> filteredPersons;
-    private final AdjacencyList adjList;
-    private final HashMap<Integer, String> personsFixedIndexList;
     private final String graphID = "ImARandomGraphID";
 
     private final String nodeAttributePersonName = "PersonName";
@@ -39,8 +30,6 @@ public class GraphWrapper {
         this.graph = new SingleGraph(graphID);
         this.model = model;
         this.filteredPersons = model.getFilteredPersonList();
-        this.adjList = model.getAdjList();
-        this.personsFixedIndexList = model.getPersonsFirxedIndexList();
     }
 
     /**
@@ -76,7 +65,7 @@ public class GraphWrapper {
      * fix the format of edge ID
      */
     private String computeEdgeID(ReadOnlyPerson person1, ReadOnlyPerson person2) {
-        return  Integer.toString(filteredPersons.indexOf(person1)) + "--"
+        return  Integer.toString(filteredPersons.indexOf(person1)) + "_"
                 + Integer.toString(filteredPersons.indexOf(person2));
     }
 

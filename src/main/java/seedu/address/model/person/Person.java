@@ -9,6 +9,9 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.relationship.DuplicateRelationshipException;
+import seedu.address.model.relationship.UniqueRelationshipList;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,11 +27,12 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueRelationshipList> relationships;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Relationship> relationships) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -36,6 +40,8 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protected internal relationships from changes in the arg list
+        this.relationships = new SimpleObjectProperty<>(new UniqueRelationshipList(relationships));
     }
 
     /**
@@ -43,7 +49,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getTags(), source.getRelationships());
     }
 
     public void setName(Name name) {
@@ -111,6 +117,7 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
+    @Override
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -131,6 +138,45 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public Set<Relationship> getRelationships() {
+        return Collections.unmodifiableSet(relationships.get().toSet());
+    }
+
+    @Override
+    public ObjectProperty<UniqueRelationshipList> relationshipProperty() {
+        return relationships;
+    }
+
+    /**
+     * Replaces this person's relationships with the relationships in the argument relationship set.
+     */
+    public void setRelationships(Set<Relationship> replacement) {
+        relationships.set(new UniqueRelationshipList(replacement));
+    }
+
+    /**
+     * Add a relationship to a person's relationships
+     */
+    public boolean addRelationship(Relationship re) throws DuplicateRelationshipException {
+        UniqueRelationshipList reList = relationships.get();
+        try {
+            reList.add(re);
+        } catch (DuplicateRelationshipException dre) {
+            throw new DuplicateRelationshipException();
+        }
+
+        return true;
+    }
+
+    /**
+     * Removes a relationship from a person's relationships
+     */
+    public boolean removeRelationship(Relationship re) {
+        UniqueRelationshipList reList = relationships.get();
+        return reList.removeRelationship(re);
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
@@ -140,7 +186,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, relationships);
     }
 
     @Override
