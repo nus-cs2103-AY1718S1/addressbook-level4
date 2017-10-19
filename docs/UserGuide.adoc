@@ -289,6 +289,19 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::viewAddress[]
+=== Viewing address in Google Maps : `coming in v1.3`
+
+Changes the internal browser to the maps view of the address of a selected contact.
+
+[NOTE]
+====
+Contact must be selected before selecting the buttons.
+
+A CLI command will be implemented `coming in v1.3`
+====
+// end::viewAddress[]
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
