@@ -270,29 +270,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Locking the address book : `lock`
-
-Locks the address book by a password. +
-Format: `lock PASSWORD`
-
-****
-* Password should be longer than 4 characters.
-* After locking, user cannot input any commands except `unlock`.
-* Data file will be encrypted after locking.
-* Person contact list will be cleared.
-****
-
-=== Unlocking the address book: `unlock`
-
-Unlocks the address book after entering correct password. +
-Format: `unlock PASSWORD`
-
-****
-* Password should be longer than 4 characters.
-* Encrypted data file will be decrypted after locking.
-* Person contact list will reload.
-****
-
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -334,6 +311,29 @@ Examples:
 Sorts the address book alphabetically by name.
 // end::sort[]
 
+=== Locking the address book : `lock`
+
+Locks the address book by a password. +
+Format: `lock PASSWORD`
+
+****
+* Password should be longer than 4 characters.
+* After locking, user cannot input any commands except `unlock`.
+* Data file will be encrypted after locking.
+* Person contact list will be cleared.
+****
+
+=== Unlocking the address book: `unlock`
+
+Unlocks the address book after entering correct password. +
+Format: `unlock PASSWORD`
+
+****
+* Password should be longer than 4 characters.
+* Encrypted data file will be decrypted after locking.
+* Person contact list will reload.
+****
+
 == Coming in v2.0
 
 === Popup dialog window during editing
@@ -352,6 +352,10 @@ Adds schedule with the 1st person: `dinner at 7`.
 * `sch 2 s/` +
 Clears all existing schedules with the 2nd person.
 
+=== real time highlight
+
+Real time highlight when input command is not correct.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -366,7 +370,9 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`, `del john`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` or +
+`find -u KEYWORD` or +
+`find -d [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
@@ -377,3 +383,5 @@ e.g. 'sort -n'
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Lock* : `lock PASSWORD`
+* *Unlock* : `unlock PASSWORD`
