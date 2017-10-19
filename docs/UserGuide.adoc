@@ -148,15 +148,15 @@ Examples:
 === Adding an event : `addE`
 
 Adds an event to the application. +
-Format: `addE n/NAME d/DATE_TIME a/EMAIL a/ADDRESS `
+Format: `addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS `
 
 [TIP]
 Events added will be automatically sorted by date/time
 
 Examples:
 
-* `addE n/Does Birthday d/25122015 20:30 a/Does crib `
-* `addE n/Betsy Birthday d/25122016 21:30 a/Betsy crib `
+* `addE n/Does Birthday dt/25122015 20:30 a/Does crib `
+* `addE n/Betsy Birthday dt/25122016 21:30 a/Betsy crib `
 
 
 === Listing all persons/events : `list`
@@ -193,7 +193,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Editing an event : `editE`
 
 Edits an existing event in the application. +
-Format: `editE INDEX [n/NAME] [d/DATE_TIME] [a/ADDRESS]`
+Format: `editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]`
 
 ****
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the last listing.
@@ -204,7 +204,7 @@ The index *must be a positive integer* like 1, 2, 3, ...
 
 Examples:
 
-* `editE 1 d/18052013 03:30 +
+* `editE 1 dt/18052013 03:30 +
 Edits the date/time the 1st event to be `18052013 03:30`.
 * `editE 2 n/Lunch with Betsy  +
 Edits the name of the 2nd event to be `Lunch with Betsy`.
@@ -427,8 +427,8 @@ Format: `exit`
 
 * *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Add event* : `addE n/NAME d/DATE_TIME a/ADDRESS` +
-e.g. `addE n/James birthday d/18022017 13:30 a/123, Clementi Rd, 1234665`
+* *Add event* : `addE n/NAME dt/DATE_TIME a/ADDRESS` +
+e.g. `addE n/James birthday dt/18022017 13:30 a/123, Clementi Rd, 1234665`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -436,7 +436,7 @@ e.g. `delete 3`
 e.g. `deleteE 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit event* : `edit INDEX [n/NAME] [d/DATE_TIME] [a/ADDRESS]` +
+* *Edit event* : `edit INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]` +
 e.g. `editE 2 n/Lees Day`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
