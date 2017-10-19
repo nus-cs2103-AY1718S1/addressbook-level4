@@ -423,6 +423,19 @@ image::removeTag_sequenceDiagram.png[width="800"]
 **Pros:** Less overhead as can compare between keyword strings and tag name strings +
 **Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
 
+=== Change colour theme mechanism
+The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI` +
+on the `MainWindow` MenuBar as MenuItems. When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem +
+will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets +
+that belongs to other colours. +
+The diagrams shows the UI of the additional colour themes:
+
+image::whiteThemeUI.png[width="800"]
+_Figure 3.6.1 : White Theme_
+
+image::greenThemeUI.png[width="800"]
+_Figure 3.6.2 : Green Theme_
+
 == Documentation
 
 We use asciidoc for writing documentation.
