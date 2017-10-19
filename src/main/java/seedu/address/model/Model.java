@@ -46,7 +46,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-     /** Sorts the Address Book by name, phone, address or phone depending on the sortCriteria */
-     void sortBy(String sortCriteria) throws AlreadySortedException;
+    /** Sorts the Address Book by name, phone, address or phone depending on the sortCriteria */
+    void sortBy(String sortCriteria) throws AlreadySortedException;
 
 }

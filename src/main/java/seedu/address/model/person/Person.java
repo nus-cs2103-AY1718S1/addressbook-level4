@@ -3,15 +3,16 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-import com.sun.org.apache.regexp.internal.RE;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-
-import javax.print.DocFlavor;
 
 /**
  * Represents a Person in the address book.
@@ -26,22 +27,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Picture> picture;
     private ObjectProperty<UniqueTagList> tags;
     private String sortCriteria = "name";
-
-
-    /**
-     * Sets the field the list should be sorted by
-     */
-    public void setComparator(String field) {
-        Set<String> validFields = new HashSet<String>(Arrays.asList(
-                new String[] {"name", "phone", "email", "address"}
-        ));
-
-        if (validFields.contains(field)) {
-            this.sortCriteria = field;
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
 
     /**
      * Every field must be present and not null.
@@ -169,10 +154,25 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
-    @Override
-    public int compareTo(Object T) {
+    /**
+     * Sets the field the list should be sorted by
+     */
+    public void setComparator(String field) {
+        Set<String> validFields = new HashSet<String>(Arrays.asList(
+                new String[] {"name", "phone", "email", "address"}
+        ));
 
-        ReadOnlyPerson person = (ReadOnlyPerson) T;
+        if (validFields.contains(field)) {
+            this.sortCriteria = field;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public int compareTo(Object otherPerson) {
+
+        ReadOnlyPerson person = (ReadOnlyPerson) otherPerson;
         String firstField = this.getName().toString();
         String secondField = person.getName().toString();
 

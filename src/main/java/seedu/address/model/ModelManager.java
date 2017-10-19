@@ -147,7 +147,7 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     //=========== Sorting Person List =============================================================
-
+    /** Sorts the Address Book by name, phone, address or phone depending on the sortCriteria */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
         addressBook.sortBy(sortCriteria);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

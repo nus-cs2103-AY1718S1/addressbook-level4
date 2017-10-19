@@ -10,7 +10,6 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.commands.exceptions.AlreadySortedException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -107,7 +106,9 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void sortBy(String sortCriteria) {
         this.currentlySortedBy = sortCriteria;
-        for (Person p : internalList) {p.setComparator(sortCriteria); }
+        for (Person p : internalList) {
+            p.setComparator(sortCriteria);
+        }
         FXCollections.sort(internalList);
     }
 

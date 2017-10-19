@@ -165,7 +165,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 
     //// sort address book
-
+    /**
+     * Sorts the UniquePersonList, persons.
+     * @throws AlreadySortedException if the list is already sorted by given criteria.
+     */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
 
         if (persons.getCurrentlySortedBy().equals(sortCriteria)) {
