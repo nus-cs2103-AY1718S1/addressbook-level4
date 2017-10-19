@@ -860,6 +860,28 @@ image::getting-started-ui-status-after.png[width="500"]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
 
 . Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+
+The new backUpAddressBook stores the address book at a back up location.
+
+private AddressBookStorage backUpLocation;
+
+public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    super();
+    this.addressBookStorage = addressBookStorage;
+    this.userPrefsStorage = userPrefsStorage;
+    this.backUpLocation = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath());
+}
+
+public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+    return readAddressBook(backUpLocation.getAddressBookFilePath());
+}
+
+private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    String backupPath = backUpLocation.getAddressBookFilePath();
+    logger.fine("Backing up data to: " + backupPath);
+    saveAddressBook(addressBook, backupPath);
+}
+
 +
 ****
 * Hint
