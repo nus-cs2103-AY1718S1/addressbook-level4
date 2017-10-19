@@ -50,12 +50,17 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
+     * Returns the userPref which the model is initialized with
+     * @return UserPrefs object
+     */
+    UserPrefs getUserPrefs();
+
+    /**
      * Updates search count for each person who is searched using {@code FindCommand}
      * Assumes filtered List of persons contains search results
      * @author Sri-vatsa
      */
     void recordSearchHistory() throws CommandException;
-
 
     /**
      *  Sort everyone in addressbook by searchCount

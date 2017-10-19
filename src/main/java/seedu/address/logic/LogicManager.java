@@ -20,6 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -81,7 +82,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 ListByMostSearchedCommand.COMMAND_WORD,
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
-                UndoCommand.COMMAND_WORD
+                UndoCommand.COMMAND_WORD,
+                PrefCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -101,7 +103,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 ListByMostSearchedCommand.MESSAGE_TEMPLATE,
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
-                UndoCommand.MESSAGE_TEMPLATE
+                UndoCommand.MESSAGE_TEMPLATE,
+                PrefCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }
