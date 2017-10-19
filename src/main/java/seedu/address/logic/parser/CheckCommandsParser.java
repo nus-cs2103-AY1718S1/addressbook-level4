@@ -46,6 +46,8 @@ public class CheckCommandsParser {
         final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
         final String[] subSortCommands = new String[] {"sort", "arrange", "organise"};
         final String[] subUndoCommands = new String[] {"undo", "u"};
+        final String[] subCheckScheduleCommands = new String[] {"thisweek",
+                "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
         final String[] subDeleteEventsCommands = new String[] { "eventdel", "delevent", "deleteevent",
             "eventdelete", "de", "ed" };
@@ -69,6 +71,8 @@ public class CheckCommandsParser {
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
         final Set<String> commandsForUndo = new HashSet<>(Arrays.asList(subUndoCommands));
+        final Set<String> commandsForCheckCalendar = new HashSet<>(Arrays.asList
+                (subCheckScheduleCommands));
         final Set<String> commandsForAddEvent = new HashSet<>(Arrays.asList(subAddEventsCommands));
         final Set<String> commandsForDeleteEvent = new HashSet<>(Arrays.asList(subDeleteEventsCommands));
         final Set<String> commandsForEditEvent = new HashSet<>(Arrays.asList(subEditEventsCommands));
@@ -103,6 +107,8 @@ public class CheckCommandsParser {
             finalUserCommand = "sort";
         } else if (!Collections.disjoint(userInputCommand, commandsForUndo)) {
             finalUserCommand = "undo";
+        } else if (!Collections.disjoint(userInputCommand, commandsForCheckCalendar)) {
+            finalUserCommand = "checkschedule";
         } else if (!Collections.disjoint(userInputCommand, commandsForAddEvent)) {
             finalUserCommand = "eventadd";
         } else if (!Collections.disjoint(userInputCommand, commandsForDeleteEvent)) {
