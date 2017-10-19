@@ -132,15 +132,17 @@ Returns any person having addresses with `street`
 * `find friends` +
 Returns any person with the tag `friends`
 
-=== Deleting a person : `delete`
+=== Deleting a person /multiple people : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` for single deletion or +
+`delete INDEX, INDEX` for multiple deletions.
 
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* For multiple deletions, indexes stated must be in ascending order.
 ****
 
 Examples:
@@ -151,6 +153,9 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`delete 1, 3, 5` +
+Deletes the 1st, 3rd and 5th persons in the address book.
 
 === Pinning a person: `pin`
 
