@@ -1127,6 +1127,147 @@ the implementation of that, we have decided that the Person class should have ap
 We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
 enhancements for parsing, it should be done in the AddAppointmentParser class.
 
+=== *Enhancement: List based on Tags* +
+
+*Reason for implementation* +
+
+Contacts in the address book have various tags. Be it family, patients or colleagues, users can now sort their +
+contacts based on such tags
+
+*How is it implemented* +
+
+Implementation passes through two main segments: Logic and Model for this feature
+
+1. Logic
+
+* AddressBookParser: Detects if list keyword contains tag name after +
+e.g. list friends family colleagues
+* ListByTagParser:
+** Parses the input by splitting the string of tags that come after the list keyword +
+Parsed string : friends family colleagues
+** Forms a predicate based on the parsed tags
+** Creates a ListByTagCommand class and passes the predicate as an argument
+* ListByTagCommand:
+** Sets the predicate locally
+** Runs the execution which calls the model segment for filtering using the set predicate
+
+2. Model
+
+* Updates the filter of the filtered person list to filter by the given predicate +
+e.g. Predicate with the parsed string above filters all persons in MedNus +
+that has the tag "friends", "family" or "colleague"
+* Saves the filtered list in the memory
+* Outputs the filtered list onto the result display screen of the application
+
+*Reason for how it is implemented*
+
+ListByTagCommand builds on and makes use of existing implementations +
+
+* Building on existing implementations +
+Instead of recreating the list feature, a listByTags command is created +
+so that developers can easily pinpoint the cause of the error in the unlikely event that one surfaces.
+
+* Makes use of existing implementations +
+Instead of thinking of new algorithms, the command uses existing implementations such as +
+filtering of contacts and parsing of text inputs to reduce errors and complexity.
+
+*Future enhancements*
+
+Potential enhancements include the use of complex search algorithms such as google's search algorithms +
+which involve the use of terms such as AND, OR etc. to provide users with the ability to search +
+for users with greater detail. However, this is something unlikely to have and will ensue only +
+once all existing must-have and good-to-have are completed.
+
+
+=== *Enhancement: Command Box Keyboard Shortcuts*
+
+*Reason for implementation* +
+
+Such a feature is implemented to enhance the experience of users and allows developers to debug +
+newly implemented features with greater ease that requires the use of the command input text box. +
+
+The feature allows users and developers to easily navigate and edit input text.
+
+*How is it implemented* +
+
+There are three key improvements that the enhancement brings
+
+1. Navigation
+
+* Shifting cursor all the way to the
+** Start using SHIFT-ALT +
+by setting the caret position to 0
+** End using SHIFT-CONTROL +
+by setting the caret position to the length of the input text which brings +
+the caret all the way to the right.
+
+* Shifting cursor by chunks (word/empty spaces) +
+in the scenario where the user does not want to travel all the way to the end but also +
+does not want to manually shift right by 1 cursor space every time.
+** Shift Left using ALT +
+by first checking if a black space or character is on the left and shifting until +
+a character or blank space is found respectively
+** Shift Right using CONTROL +
+by first checking if a black space or character is on the right and shifting until +
+a character or blank space is found respectively
+
+2. Deletion
+
+* Deleting all text by pressing the ESCAPE key +
+which resets the input text field in the commandTextField
+
+* Deletes by chunk (word/blank space) +
+for users who do not want to delete the entire text input and do not want to manually delete +
+character by character. +
+** Chunks are deleted by covering all possible text deletion combination of characters and blank space, +
+using the following order as check formula +
+1.Checks if caret is at the start of text +
+2.Checks if caret is at the end of text +
+3.Checks for empty space before +
+4.Checks if caret is between characters +
+5.Else, assumes that blank space is present on the right and character is present on the left.
+
+
+3. Usage of Add Command +
+* Purpose: As the text required to create a contact can be long with all the required prefixes, +
+this shortcut eliminates the need for users to memorize the order in which the prefixes are needed +
+and eliminates the need to remember what prefixes are needed even if in random order.
+
+* Logic: +
++
+First, check if caret is at the end of the text +
++
+Secondly, check if valid add command keyword is present at the start of the text +
++
+Next, checks which prefix is missing from the text needed to create the person and adds on to the existing text +
+based on the priority of : name, phone, email, address, bloodtype and tag. +
++
+If all necessary prefixes are present, subsequent concatenation will be that of the tag prefix.
+
+
+*Reason for how it is implemented*
+
+* Using of Shift-Key +
+Shift key is needed to minimize the number of keys used. +
++
+Firstly, if a certain function such as left navigation is tagged to ALT, an association is formed and it will be easy for users to remember +
++
+Secondly, we want to avoid using the alphabet keys and other important keys which may already possess usable functionalities.
+
+* Brute Force +
+Many of the commands are done by doing a brute force checking of all possible combinations +
+though not ideal, it is workable as there is only a limited number of combinations not exceeding 5. +
++
+Brute force is used to eliminate the need to throw exceptions which can never be called which in turn +
+adversely affect test coverage as these exception can never be thrown.
+
+*Future enhancements*
+
+* Add Command Shortcut: As of now, Prefixes are hard-coded to reflect existing available prefixes +
++
+Potential enhancements involves syncing the shortcut to the CliSyntax.java file to obtain the necessary +
+prefixes
+
 === *Enhancement: ListByBloodtypeCommand* +
 
 Since our address book have Bloodtype implemented, we decided that being able to list people according to blood types +
