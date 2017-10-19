@@ -28,13 +28,13 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] keywords = trimmedArgs.split("\\s+");
 
         switch (ListingUnit.getCurrentListingUnit()) {
         case LOCATION:
-            return new FindCommand(new LocationContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            return new FindCommand(new LocationContainsKeywordsPredicate(Arrays.asList(keywords)));
         default:
-            return new FindCommand(new ModuleContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            return new FindCommand(new ModuleContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
     }
 

@@ -4,9 +4,8 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -17,10 +16,11 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all module or location whose names contain any of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Example: " + COMMAND_WORD + " LT25";
+    public static final String MESSAGE_SUCCESS = "find command executed";
 
     private final Predicate<ReadOnlyLesson> predicate;
 
@@ -30,9 +30,8 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredLessonList(predicate);
-        EventsCenter.getInstance().post(new FindLessonRequestEvent());
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredLessonList().size()));
+        EventsCenter.getInstance().post(new FindLessonRequestEvent(this.predicate));
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override

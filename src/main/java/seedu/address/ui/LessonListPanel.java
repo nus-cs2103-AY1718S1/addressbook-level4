@@ -18,6 +18,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 
 import java.util.Comparator;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 
@@ -88,7 +89,9 @@ public class LessonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleFindLessonRequestEvent(FindLessonRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(lessonList);
+        Predicate<ReadOnlyLesson> predicate = event.getPredicate();
+        FilteredList<ReadOnlyLesson> foundList = new FilteredList<ReadOnlyLesson>(lessonList,predicate);
+        setConnections(foundList);
     }
 
     @Subscribe
