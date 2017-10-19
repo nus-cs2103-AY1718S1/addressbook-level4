@@ -227,7 +227,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
             .withAddress(VALID_ADDRESS_AMY).withBirthday(EMPTY_BIRTHDAY).withWebsite(VALID_WEBSITE_AMY)
             .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + " n/Adeep" + PHONE_DESC_AMY + EMAIL_DESC_AMY
-            + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
+            + ADDRESS_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: invalid keyword -> rejected */
@@ -261,12 +261,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid birthday -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + INVALID_BIRTHDAY_DESC + WEBSITE_DESC_AMY + INVALID_TAG_DESC;
+                + INVALID_BIRTHDAY_DESC + WEBSITE_DESC_AMY;
         assertCommandFailure(command, Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
 
         /* Case: invalid website -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-            + BIRTHDAY_DESC_AMY + INVALID_WEBSITE_DESC + INVALID_TAG_DESC;
+            + BIRTHDAY_DESC_AMY + INVALID_WEBSITE_DESC;
         assertCommandFailure(command, Website.MESSAGE_WEBSITE_CONSTRAINTS);
     }
 
