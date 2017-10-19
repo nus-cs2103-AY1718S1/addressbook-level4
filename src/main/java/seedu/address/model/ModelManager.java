@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -13,11 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -90,27 +87,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public void deleteTag(Tag tag)
-            throws PersonNotFoundException, DuplicatePersonException {
-        boolean isAddressBookChanged = false;
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-            ReadOnlyPerson originalPerson = addressBook.getPersonList().get(i);
-            Set<Tag> tagList = originalPerson.getTags();
-            tagList.remove(tag);
-            Person newPerson = new Person(originalPerson.getName(), originalPerson.getPhone(),
-                    originalPerson.getEmail(), originalPerson.getAddress(),
-                    originalPerson.getRemark(), tagList);
-            if (!newPerson.equals(originalPerson)) {
-                addressBook.updatePerson(originalPerson, newPerson);
-                isAddressBookChanged = true;
-            }
-        }
-        if (isAddressBookChanged) {
-            indicateAddressBookChanged();
-        }
     }
 
     //=========== Filtered Person List Accessors =============================================================

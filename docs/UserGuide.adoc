@@ -210,6 +210,11 @@ Selects the 1st person in the results of the `find` command.
 Add a remark to a person in the contact list. +
 Format: `edit INDEX [r/REMARK]`
 
+=== Deleting tags from all persons : `deleteTag`
+
+Delete one specific tag from all persons in the contact list. +
+Format: `deleteTag [KEYWORD]`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +

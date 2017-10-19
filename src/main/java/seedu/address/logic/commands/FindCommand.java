@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import java.util.function.Predicate;
 
 
+
+
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
@@ -33,6 +35,11 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+
+        // displays a popup window to show number of persons found
+        //      JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+        //      getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
