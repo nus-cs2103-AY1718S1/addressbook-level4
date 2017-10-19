@@ -325,7 +325,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         syncWhitelist();
-        raise (new ChangeInternalListEvent("whitelist"));
         filteredWhitelistedPersons.setPredicate(predicate);
     }
 
