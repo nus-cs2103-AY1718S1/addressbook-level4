@@ -16,7 +16,7 @@ public class DescriptionTest {
         //valid description
         assertTrue(Description.isValidDescription("Self evaluation for CS2103T"));
         assertTrue(Description.isValidDescription("a")); //only 1 char
-        assertTrue(Description.isValidDescription("This is a long description and i am not sure " +
-            "what to type now but i still need to continue typing")); //long description
+        assertTrue(Description.isValidDescription("This is a long description and i am not sure "
+            + "what to type now but i still need to continue typing")); //long description
     }
 }
