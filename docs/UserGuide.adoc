@@ -355,24 +355,21 @@ The index *must be a positive integer* `1, 2, 3, ...`
 
 === KeyBoard Shortcuts [Since v1.2]
 
-You can use keyboard shortcuts to use the address book more efficiently.
-When typing in the command bar, various key bindings consists of different functions.
+You can use keyboard shortcuts in the command box to use the address book more efficiently.
+You can refer to the <<Keyboard shortcut, summary>> for a table version of the shortcuts available.
 
-****
-* Escape: Clears entire command box text field
-* Alt: Shifts text cursor to the left of an existing word/previous word
-* Control: Shifts text cursor to the right of an existing word/previous word
-* Shift-Alt: Shifts text cursor all the way to the left
-* Shift-Control: Shifts text cursor all the way to the right
-* Right: Activate Add Command shortcut if conditions are right +
-Condition 1: Add Command shortcut will trigger only if the caret is at the end of the line +
-Condition 2: "Add" or "A" must be the first word & character respectively at the start of the line
-* Shift-Delete : Deletes a chunk of word/blank space (For Mac Users)
-* Shift-Backspace : Deletes a chunk of word/blank space (For Windows Users)
-****
+=== Exiting the program : `exit`
 
+You can exit MedNus by using the `exit` command. +
+You can also exit MedNus by clicking on `File` in the top left corner +
+and clicking on `Exit`.
 
+image::exitUI.png[width="790"]
 
+=== Saving the data
+
+MedNus data are saved in the hard disk automatically after any command that changes the data. +
+You do not need to save manually.
 
 === Deleting all persons with a particular tag : [In Progress]
 ****
@@ -441,17 +438,7 @@ The index *must be a positive integer* 1, 2, 3, ...
 described condition
 ****
 
-=== Exiting the program : `exit`
 
-You can exit MedNus by using the `exit` command. +
-You can also exit MedNus by clicking on `File` in the top left corner +
-and clicking on `Exit`. +
-Format: `exit`
-
-=== Saving the data
-
-MedNus data are saved in the hard disk automatically after any command that changes the data. +
-You do not need to save manually.
 
 == *FAQ*
 
