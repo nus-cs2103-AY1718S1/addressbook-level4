@@ -58,10 +58,10 @@ public class HelpCommandTest {
         assertEquals(DeleteCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(DeleteCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
-        commandResultWord = getHelpCommand("select").execute();
-        commandResultAlias = getHelpCommand("s").execute();
-        assertEquals(SelectCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
-        assertEquals(SelectCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+        commandResultWord = getHelpCommand("locate").execute();
+        commandResultAlias = getHelpCommand("lc").execute();
+        assertEquals(LocateCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(LocateCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
         commandResultWord = getHelpCommand("history").execute();
         commandResultAlias = getHelpCommand("his").execute();

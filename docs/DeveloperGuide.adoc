@@ -364,6 +364,143 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Locating a person's address [Since v1.2]
+
+This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
+
+When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`:
+[source,java]
+----
+public class LocateCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        //... check targetIndex ...
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+
+        //... return CommandResult ...
+    }
+}
+----
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    // Handling method for JumpToListRequestEvent
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+}
+----
+The UI outcome of scrolling and selecting a PersonCard in the `PersonListPanel` is shown below:
+
+image::PersonListPanelSelect.png[width="200"]
+
+When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+
+    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+        super(FXML);
+        setConnections(personList); // calls addListenerForSelectionChangeEvent() method
+        registerAsAnEventHandler(this);
+    }
+
+     /**
+     * Creates a list of {@code PersonCard} from {@code personList}, sets them to the {@code personListView}
+     * and adds listener to {@code personListView} for selection change.
+     */
+    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+        //... set up personListView with personList ...
+        addListenerForSelectionChangeEvent();
+    }
+
+    /**
+     * Adds a listener to {@code personListView} so that
+     * selected item raises {@code PersonPanelSelectionChangedEvent}.
+     */
+    private void addListenerForSelectionChangeEvent() {
+        personListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+}
+----
+
+The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+
+    @Subscribe
+    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IllegalValueException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+}
+----
+By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
+`PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
+
+//tag::FindCommand[]
+=== FindCommand by any searched field
+
+
+The find function will support the search of contact by any keywords. The keywords must be a full word match. The command will inherit from `FindCommand` .The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
+`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input.
+
+
+[source,java]
+----
+public class FindCommandParser implements Parser<FindCommand> {
+    public FindCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+    //...Check for allocation of Predicate...
+    }
+}
+
+----
+
+
+Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
+[source,java]
+----
+        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TAG)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+----
+
+
+A successful tokenism of lead to the keywords to be allocated to its `containsKeyWordPredicate` under `Model` based on the input prefix.Addressbook will search for the keywords in the revelvant parameters.
+Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using` FindCommand` .
+
+image::FindCommand_Name.PNG[width="200"]
+image::FindCommand_Phone.PNG[width="200"]
+image::FindCommand_Email.PNG[width="200"]
+image::FindCommand_Address.PNG[width="200"]
+image::FindCommand_Tag.PNG[width="200"]
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -767,6 +904,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |write down remarks for a contact |record specific information about the contact
 
+|`* *` |user |to create new task|keep track on ongoing task and stay on track
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |choose the colour for my contact's tag |differentiate contact's with different tags just by looking at them
@@ -788,7 +927,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [discrete]
 === Use case: Delete person
-
 *MSS*
 
 1.  User requests to list persons
@@ -849,18 +987,27 @@ Use case resumes at step 2.
 +
 Use case ends.
 
+=== Use case: Search by phone
+#Pre-condition :The identitifed phone exist in AddressBook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to search for phone number by inputting 4 or 8 digits
+4. AddressBook successfully find the persons with matching phone numbers
++
+Use case ends.
+
 **Extensions**
 
 2a. The list is empty
 
 > Use case ends
 
-3a. The given tag is invalid
+3a. The given phone number is invalid
 
 > 3a1. AddressBook shows an error message
   Use case resumes at step 2
-
-5a. User disconfirm the changes
 
 > Use case ends
 

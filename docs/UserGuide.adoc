@@ -126,16 +126,42 @@ Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRES
 ****
 * The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain
 * Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain
+* Phone serch must be of either 4 or 8 digits only
 ****
 
 Examples:
-
 * `find n/John` +
 Returns `john` and `John Doe`
 * `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+
 * `find e/yahoo` +
-Returns person with email of `[yahoo.com]` domain
+Returns person with email of `yahoo.com` domain
+* `find e/yahoo hotmail` +
+Returns person with email of `yahoo.com` and `hotmail.com` domain
+
+
+* `find p/98989898` +
+Returns person with phone of `98989898`
+
+* `find p/9898` +
+Returns person with phone of `98989898`
+
+* `find p/9898 7888` +
+Returns person with phone of `98989898` and `99997888`
+
+
+* `find a/Geyalng` +
+Returns person with address `BLK 30 Geylang Street 29 , #10-08`
+* `find a/#10-08` +
+Returns person with address `BLK 30 Geylang Street 29 , #10-08`
+
+
+* `find t/friends` +
+Returns all persons with tag `friends`
+* `find t/friends lovers` +
+Returns all persons with tag `friends` and `lovers`
 
 === Deleting person(s) : `delete`
 
@@ -160,7 +186,7 @@ Deletes the 1st and 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Locating a person's address : `locate` [Coming in v2.0]
+=== Locating a person's address : `locate` [Since v1.2]
 
 Alias: `lc`
 
