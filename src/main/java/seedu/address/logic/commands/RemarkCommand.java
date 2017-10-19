@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -15,7 +16,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Adds a remark to a person in the address book.
+ * Adds remarks to a person in the address book.
  */
 public class RemarkCommand extends UndoableCommand {
 
@@ -34,18 +35,18 @@ public class RemarkCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final Remark remark;
+    private final ArrayList<Remark> remarkArrayList;
 
     /**
      * @param index of the person in the filtered person list to edit
-     * @param remark details to add remarks
+     * @param remarkArrayList details to add remarks
      */
-    public RemarkCommand(Index index, Remark remark) {
+    public RemarkCommand(Index index, ArrayList<Remark> remarkArrayList) {
         requireNonNull(index);
-        requireNonNull(remark);
+        requireNonNull(remarkArrayList);
 
         this.index = index;
-        this.remark = remark;
+        this.remarkArrayList = remarkArrayList;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class RemarkCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), remark, personToEdit.getFavouriteStatus(), personToEdit.getTags());
+                personToEdit.getAddress(), remarkArrayList, personToEdit.getFavouriteStatus(), personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -78,7 +79,7 @@ public class RemarkCommand extends UndoableCommand {
      * @return String that shows whether add or delete was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remark.value.isEmpty()) {
+        if (!remarkArrayList.isEmpty() && !remarkArrayList.get(0).value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
         } else {
             return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
@@ -98,6 +99,6 @@ public class RemarkCommand extends UndoableCommand {
         // state check
         RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index)
-                && remark.equals(e.remark);
+                && remarkArrayList.equals(e.remarkArrayList);
     }
 }

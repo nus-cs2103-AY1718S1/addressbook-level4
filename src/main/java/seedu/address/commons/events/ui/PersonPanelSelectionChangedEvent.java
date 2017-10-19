@@ -8,7 +8,6 @@ import seedu.address.ui.PersonCard;
  */
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
-
     private final PersonCard newSelection;
 
     public PersonPanelSelectionChangedEvent(PersonCard newSelection) {

@@ -32,7 +32,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
-    private String remark;
+    private List<XmlAdaptedRemark> remarked = new ArrayList<>();
     @XmlElement(required = true)
     private boolean favouriteStatus;
     @XmlElement
@@ -55,7 +55,10 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        remark = source.getRemark().value;
+        remarked = new ArrayList<>();
+        for (Remark remark: source.getRemark()) {
+            remarked.add(new XmlAdaptedRemark(remark));
+        }
         favouriteStatus = source.getFavouriteStatus().isFavourite;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -73,13 +76,18 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<Remark> personRemarks = new ArrayList<>();
+        for (XmlAdaptedRemark remark: remarked) {
+            personRemarks.add(remark.toModelType());
+        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-        final Remark remark = new Remark(this.remark);
+        final ArrayList<Remark> remarks = new ArrayList<>(personRemarks);
+        remarks.add(new Remark(""));
         final FavouriteStatus favouriteStatus = new FavouriteStatus(this.favouriteStatus);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, favouriteStatus, tags);
+        return new Person(name, phone, email, address, remarks, favouriteStatus, tags);
     }
 }
