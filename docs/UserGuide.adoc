@@ -41,7 +41,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* *`module`* : lists all module
-* *`add`* *`m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun`* : adds a lesson with module code `MA1101R` to the Address Book.
+* *`add`* *`m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun`* : adds a lesson with module code `MA1101R` to the ModU list.
 * *`sort`* : sort lesson shown in the current list
 * *`exit`* : exits the app
 
@@ -64,7 +64,7 @@ Format: `help`
 
 === Adding a lesson: `add`
 
-Adds a lesson to the ModU +
+Adds a lesson to the ModU list +
 Format: `add m/MODULE_CODE ct/CLASS_TYPE v/VENUE gp/GROUP ts/TIME_SLOT l/LECTURER...`
 
 [TIP]
@@ -103,7 +103,7 @@ View the detail information with the second index shown in the location list.
 
 === Editing a lesson : `edit`
 
-Edits an existing lesson in the ModU. +
+Edits an existing lesson in the ModU list. +
 Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIME_SLOT] [l/Lecturer...]`
 
 ****
@@ -113,7 +113,7 @@ Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIM
 * When editing lecturers, the existing lecturers of the lesson will be removed i.e adding of lecturers is not cumulative.
 ****
 
-Edits an existing attribute(module/location) in the ModU. +
+Edits an existing attribute(module/location) in the ModU list. +
 Format: `edit INDEX [CODE/LOCATION]...`
 
 ****
@@ -179,7 +179,7 @@ Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
 
 === Deleting a lesson : `delete`
 
-Deletes all the lessons with specified attribute value in the attribute list from the ModU. +
+Deletes all the lessons with specified attribute value in the attribute list from the ModU list. +
 Format: `delete INDEX`
 
 ****
@@ -216,7 +216,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd lesson in the address book.
+Selects the 2nd lesson in the ModU list.
 * `find MA1101R` +
 `select 1` +
 Selects the 1st lesson in the results of the `find` command.
@@ -234,12 +234,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the list to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the list's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -283,7 +283,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the ModU. +
+Clears all entries from the ModU list. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -293,7 +293,7 @@ Format: `exit`
 
 === Customising the font size : `customise fs/FONT-SIZE`
 
-Customise the font size of ModU +
+Customise the font size of ModU list +
 Format: `customise fs\FONT-SIZE`
 
 [TIP]
@@ -317,13 +317,13 @@ Examples:
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+ModU data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ModU folder.
 
 *Q*: How do I enable the highlighting of keyword feature? +
 *A*: Type `color enable` in the command box.
