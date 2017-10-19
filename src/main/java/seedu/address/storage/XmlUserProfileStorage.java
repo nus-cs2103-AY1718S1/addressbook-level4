@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.person.UserPerson;
@@ -35,7 +36,15 @@ public class XmlUserProfileStorage implements UserProfileStorage {
     }
 
     @Override
-    public Optional<UserPerson> readUserProfile() throws DataConversionException,
+    public Optional<UserPerson> readUserProfile() throws DataConversionException, IOException {
+        return readUserProfile(filePath);
+    }
+
+    /**
+     * Similar to {@link #readUserProfile()}
+     * @throws DataConversionException if the file format is not as expected.
+     */
+    public Optional<UserPerson> readUserProfile(String filePath) throws DataConversionException,
             FileNotFoundException {
 
         requireNonNull(filePath);
@@ -43,27 +52,22 @@ public class XmlUserProfileStorage implements UserProfileStorage {
         File userProfileFile = new File(filePath);
 
         if (!userProfileFile.exists()) {
-            logger.info("AddressBook file "  + userProfileFile + " not found");
+            logger.info("UserProfile file "  + userProfileFile + " not found");
             return Optional.empty();
         }
 
         UserPerson userPersonOptional;
 
         try {
-            userPersonOptional = XmlUtil.getDataFromFile(userProfileFile, UserPerson.class);
+            XmlUserPerson xml = XmlUtil.getDataFromFile(userProfileFile, XmlUserPerson.class);
+            userPersonOptional = xml.getUser();
+            return Optional.of(userPersonOptional);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
+        } catch (IllegalValueException e){
+            logger.warning("Illegal parameters");
+            return null;
         }
-
-        return Optional.of(userPersonOptional);
-    }
-
-    /**
-     * Similar to {@link #readUserProfile()}
-     * @throws DataConversionException if the file format is not as expected.
-     */
-    public Optional<UserPerson> readUserProfile(String filePath) throws DataConversionException, IOException {
-        return readUserProfile(filePath);
     }
 
     @Override
@@ -82,17 +86,8 @@ public class XmlUserProfileStorage implements UserProfileStorage {
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
-        saveDataToFile(file, new XmlUserPerson(userPerson));
-    }
-
-
-    /**
-     * Saves the given UserPerson data to the specified file.
-     */
-    public void saveDataToFile(File file, XmlUserPerson xmlUserPerson)
-            throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, xmlUserPerson);
+            XmlUtil.saveDataToFile(file, new XmlUserPerson(userPerson));
         } catch (JAXBException e) {
             assert false : "Unexpected exception " + e.getMessage();
         }

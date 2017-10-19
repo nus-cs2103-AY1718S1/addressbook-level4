@@ -135,7 +135,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateUserPerson(ReadOnlyPerson editedPerson) {
         requireAllNonNull(editedPerson);
-        logger.info("EDITEDPERSON = " + editedPerson);
         userPerson.update(editedPerson);
         indicateUserPersonChanged();
     }
@@ -143,7 +142,7 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     public void indicateUserPersonChanged() {
         raise(new UserPersonChangedEvent(userPerson));
-        logger.info("UPDATED USERPERSON: NEW USER PERSON = " + userPerson);
+        logger.info("Updated User Person: " + userPerson);
     }
 
     @Override

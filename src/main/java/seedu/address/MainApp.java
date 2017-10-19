@@ -53,7 +53,6 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-    protected UserPerson userPerson;
 
 
     @Override
@@ -67,7 +66,6 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         UserProfileStorage userProfileStorage = new XmlUserProfileStorage(userPrefs.getUserProfileFilePath());
-        userPerson = initUserPerson(userProfileStorage);
         storage = new StorageManager(addressBookStorage, userPrefsStorage, userProfileStorage);
 
         initLogging(config);
@@ -216,7 +214,7 @@ public class MainApp extends Application {
             initializedPerson = userPersonOptional.orElse(new UserPerson());
         } catch (DataConversionException e) {
             logger.warning("UserProfile file at " + userProfileFilePath + " is not in the correct format. "
-                    + "Using default user profile" + e.toString());
+                    + "Using default user profile");
             initializedPerson = new UserPerson();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with a new user Profile");
@@ -249,8 +247,7 @@ public class MainApp extends Application {
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
-            logger.info("UserProfile filepath at " + storage.getUserProfileFilePath());
-            storage.saveUserPerson(userPerson);
+            storage.saveUserPerson(model.getUserPerson());
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }

@@ -25,13 +25,10 @@ public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     public UserPerson() {
-        this.name = new SimpleObjectProperty<>();
-        this.email = new SimpleObjectProperty<>();
-        this.phone = new SimpleObjectProperty<>();
-        this.address = new SimpleObjectProperty<>();
-        this.remark = new SimpleObjectProperty<>(new Remark(""));
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList());
-        update(SampleUserPersonUtil.getSamplePerson());
+        this(SampleUserPersonUtil.getSamplePerson().getName(),
+                SampleUserPersonUtil.getSamplePerson().getPhone(),
+                SampleUserPersonUtil.getSamplePerson().getEmail(),
+                SampleUserPersonUtil.getSamplePerson().getAddress());
     }
 
 

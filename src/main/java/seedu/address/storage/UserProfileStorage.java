@@ -3,6 +3,8 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.xml.bind.JAXBException;
+
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.UserProfileManager;
 import seedu.address.model.person.UserPerson;
