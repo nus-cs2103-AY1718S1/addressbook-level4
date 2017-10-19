@@ -49,7 +49,7 @@ public class XmlRolodexStorageTest {
     }
 
     @Test
-    public void read_missingFileEmptyResult() throws Exception {
+    public void readMissingFileEmptyResult() throws Exception {
         assertFalse(readRolodex("NonExistentFile.rldx").isPresent());
     }
 
