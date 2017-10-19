@@ -507,7 +507,7 @@ the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e
 makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
 **Cons:** This implementation increases the coupling of `StorageManager#backupAddressBook()` and
 `StorageManager#saveAddressBook()` where changes in `saveAddressBook()` will cause changes in `backupAddressBook()`. +
-**Alternative 2:** Separate the implemnetation of `Storage#backupAddressBook()` from `StorageManager#saveAddressBook()`
+**Alternative 2:** Separate the implementation of `Storage#backupAddressBook()` from `StorageManager#saveAddressBook()`
  +
 **Pros:** Reduced coupling of saveAddressBook() and backupAddressBook() and allows the backup file to be saved at a
 different location from the main save file. This prevents the backup file from being corrupted if the folder of the
@@ -533,6 +533,44 @@ other. +
 **Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
+
+=== Tab autocomplete mechanism
+
+The tab autocomplete mechanism is facilitated by the `autocomplete` method residing inside the `Autocompleter`.
+It supports the tab autocompletion for possible commands that that match the text in the CommandBox. +
+
+A new `Autocompleter` is initialized when the `CommandBox` is initialized as an attribute of the `CommandBox`. When
+the `tab` key is pressed by the user, `CommandBox#processAutocomplete` retrieves the text that is currently in
+the `commandTextField` and passes it into the `Autocompleter#autocomplete` as a string. If the string is empty,
+`autocomplete` raises a `NewResultAvailableEvent` to prompt the user to use the help command and returns
+an empty string. +
+
+If the string is not empty, the text in `commandTextField` will be converted into an array and stored in
+`commandBoxTextArray`. If there is only one word in the `commandBoxTextArray`,
+`AutoCompleter#processOneWordAutocomplete` will be called and the only word in commandBoxTextArray is passed in as a
+string `commandBoxText`. `processOneWordAutocomplete` will then pass `commandBoxText` into `getClosestCommands`.
+`getClosestCommands` then iterates through all the possible commands in `commandList` and compares them with
+`commandBoxText` using  `AutoComplete#isPossibleMatch` . If `isPossibleMatch` returns true, the command is then stored
+inside the arrayList `possibleResults`. After iterating through `commandList`, `getClosestCommands` then returns
+`possibleResults`. If there is only one item inside `possibleResults`, `processOneWordAutoComplete` will return it to
+`autocomplete` which then returns it to `processAutocomplete`. If there is more than one item, a
+`NewResultAvailableEvent` is raised which prompts the user on the possible autocomplete commands available and returns
+the original value of `commandBoxText`. +
+
+After `autocomplete` returns a string to `processAutocomplete`, it then passes the string into `CommandBox#replaceText`
+to replace the text in `commandFieldText` with the string. +
+
+==== Design Considerations
+
+**Aspect:** Implementation of `autocomplete` +
+**Alternative 1 (current choice):** Create a new `Autocompleter` class to implement `autocomplete` and its helper
+functions. +
+**Pros:** Single Responsibility Principle (SRP) is maintained +
+**Cons:** More tedious to implement and test since the feature is implemented in both `Autocompleter` and `CommandBox`.
+Also creates coupling between the `Autocompleter` and `CommandBox`. +
+**Alternative 2:** Implement `autocomplete` inside `CommandBox`
+**Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
+**Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +
 
 == Documentation
 
