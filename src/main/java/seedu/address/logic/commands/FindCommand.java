@@ -58,7 +58,7 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(person -> findPersonDescriptor.equals(person));
+        model.updateFilteredPersonList(person -> findPersonDescriptor.match(person));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -106,6 +106,21 @@ public class FindCommand extends Command {
                 && this.birthday == null
                 && this.website == null
                 && this.tags == null;
+        }
+
+        /**
+         *
+         * @param other to check
+         * @return true if other matches all fields
+         */
+        public boolean match(Object other) {
+            if (!(other instanceof Person)) return false;
+            if (this.name != null && !this.name.equals(((Person) other).getName())) { return false; }
+            if (this.phone != null && !this.phone.equals(((Person) other).getPhone())) { return false; }
+            if (this.email != null && !this.email.equals(((Person) other).getEmail())) { return false; }
+            if (this.address != null && !this.address.equals(((Person) other).getAddress())) { return false; }
+
+            return true;
         }
 
         public void setName(Name name) {
@@ -176,13 +191,26 @@ public class FindCommand extends Command {
 
         @Override
         public boolean equals(Object other) {
-            if (!(other instanceof Person)) return false;
-            if (this.name != null && !this.name.equals(((Person) other).getName())) { return false; }
-            if (this.phone != null && !this.phone.equals(((Person) other).getPhone())) { return false; }
-            if (this.email != null && !this.email.equals(((Person) other).getEmail())) { return false; }
-            if (this.address != null && !this.address.equals(((Person) other).getAddress())) { return false; }
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
 
-            return true;
+            // instanceof handles nulls
+            if (!(other instanceof FindPersonDescriptor)) {
+                return false;
+            }
+
+            // state check
+            FindPersonDescriptor e = (FindPersonDescriptor) other;
+
+            return getName().equals(e.getName())
+                && getPhone().equals(e.getPhone())
+                && getEmail().equals(e.getEmail())
+                && getAddress().equals(e.getAddress())
+                && getBirthday().equals(e.getBirthday())
+                && getWebsite().equals(e.getWebsite())
+                && getTags().equals(e.getTags());
         }
     }
 }

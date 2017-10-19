@@ -43,7 +43,7 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_BENSON_MEIER;
 
 import org.junit.Test;
 
@@ -136,7 +136,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: filters the person list before adding -> added */
-        executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
+        executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_BENSON_MEIER);
         assert getModel().getFilteredPersonList().size()
             < getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
