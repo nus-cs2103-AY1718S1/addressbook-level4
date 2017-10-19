@@ -83,9 +83,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-
+    @Override
     public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
         addressBook.removeTag(tagGettingRemoved);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================
