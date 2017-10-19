@@ -386,8 +386,21 @@ e.g. `sort` `NAME`
 * *Hide* : `hide` `INDEX` +
 e.g.`hide` `1`
 * *Alias* : `alias k/KEYWORD s/REPRESENTATION`
-* *Unalias : `alias k/KEYWORD`
+* *Unalias* : `alias k/KEYWORD`
+
+== Since v1.2
+
+. Enhanced find to allow you to search using any of the person's detail
+. Hide feature to enable you to hide sensitive contacts from your child
+. Multi-delete feature which helps you to delete multiple contacts effortlessly
+. Alias and Unalias feature which allows you to set custom keywords for any commands
 
 == Coming in v2.0
 
 . Quickstart tutorial for first time users of Bluebird
+. Birthday reminders of selected/all contacts
+. Integration with social media for connecting with your contacts
+. Calender to help you manage your schedule
+. A to-do list which helps manage your tasks
+. ChildMode to prevent your child from modifying vital information in Bluebird
+. ParentMode which will enable all commands for you
