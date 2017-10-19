@@ -83,8 +83,8 @@ public class ParserUtilTest {
     @Test
     public void parseImportFilePath_notXmlFormat_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(String.format(MESSAGE_INVALID_DATA
-                , "./src/test/data/XmlAddressBookStorageTest/NotXmlFormatAddressBook.xml"));
+        thrown.expectMessage(String.format(MESSAGE_INVALID_DATA,
+                "./src/test/data/XmlAddressBookStorageTest/NotXmlFormatAddressBook.xml"));
         ParserUtil.parseImportFilePath("./src/test/data/XmlAddressBookStorageTest/NotXmlFormatAddressBook.xml");
     }
 

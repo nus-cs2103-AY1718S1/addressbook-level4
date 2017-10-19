@@ -50,7 +50,7 @@ public class ModelManagerTest {
         assertEquals(2, duplicateParcels.size());
 
         // elements in parcels test
-        for(int i = 0; i < expectedParcels.size(); i++) {
+        for (int i = 0; i < expectedParcels.size(); i++) {
             assertEquals(expectedParcels.get(i), parcels.get(i));
         }
 

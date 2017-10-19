@@ -32,64 +32,64 @@ public class ImportCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-	public void executeImportCommand_throwsCommandException() throws CommandException {
-		AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).build();
-		UserPrefs userPrefs = new UserPrefs();
+    public void executeImportCommand_throwsCommandException() throws CommandException {
+        AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
 
-		ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
 
-		List<ReadOnlyParcel> parcels = new ArrayList<>();
-		parcels.add(ALICE);
-		parcels.add(BENSON);
+        List<ReadOnlyParcel> parcels = new ArrayList<>();
+        parcels.add(ALICE);
+        parcels.add(BENSON);
 
-		ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
-		thrown.expect(CommandException.class);
-		thrown.expectMessage(MESSAGE_DUPLICATE_PARCELS);
-		importCommand.execute();
-	}
+        ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(MESSAGE_DUPLICATE_PARCELS);
+        importCommand.execute();
+    }
 
-	@Test
-	public void executeImportCommandSuccess() throws CommandException {
-		AddressBook addressBook = new AddressBookBuilder().build();
-		UserPrefs userPrefs = new UserPrefs();
+    @Test
+    public void executeImportCommandSuccess() throws CommandException {
+        AddressBook addressBook = new AddressBookBuilder().build();
+        UserPrefs userPrefs = new UserPrefs();
 
-		ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
 
-		List<ReadOnlyParcel> parcels = new ArrayList<>();
-		parcels.add(ALICE);
-		parcels.add(BENSON);
+        List<ReadOnlyParcel> parcels = new ArrayList<>();
+        parcels.add(ALICE);
+        parcels.add(BENSON);
 
-		// importing without any duplicates
-		ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
-		assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, "\n "
-				+ ALICE.toString() + "\n " + BENSON.toString(), "\n (none)")).feedbackToUser);
+        // importing without any duplicates
+        ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
+        assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, "\n "
+                + ALICE.toString() + "\n " + BENSON.toString(), "\n (none)")).feedbackToUser);
 
-		// importing with some duplicates
-		parcels.add(HOON);
-		assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, "\n " +
-		HOON.toString(), "\n " + ALICE.toString() + "\n " + BENSON.toString())).feedbackToUser);
-	}
+        // importing with some duplicates
+        parcels.add(HOON);
+        assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS,
+                "\n " + HOON.toString(), "\n " + ALICE.toString() + "\n " + BENSON.toString())).feedbackToUser);
+    }
 
     @Test
     public void equals() {
         List<ReadOnlyParcel> parcels = TypicalParcels.getTypicalParcels();
-		List<ReadOnlyParcel> sameParcels = TypicalParcels.getTypicalParcels();
-		List<ReadOnlyParcel> otherParcels = new ArrayList<>();
+        List<ReadOnlyParcel> sameParcels = TypicalParcels.getTypicalParcels();
+        List<ReadOnlyParcel> otherParcels = new ArrayList<>();
 
-		otherParcels.add(TypicalParcels.ALICE);
-		otherParcels.add(TypicalParcels.AMY);
+        otherParcels.add(TypicalParcels.ALICE);
+        otherParcels.add(TypicalParcels.AMY);
 
-		ImportCommand importCommand = new ImportCommand(parcels);
-		ImportCommand importCommandWithSameParcels = new ImportCommand(sameParcels);
-		ImportCommand importCommandWithDifferentParcels = new ImportCommand(otherParcels);
+        ImportCommand importCommand = new ImportCommand(parcels);
+        ImportCommand importCommandWithSameParcels = new ImportCommand(sameParcels);
+        ImportCommand importCommandWithDifferentParcels = new ImportCommand(otherParcels);
 
-		// basic equality
-		assertEquals(importCommand, importCommand);
-		assertEquals(importCommand, importCommandWithSameParcels);
+        // basic equality
+        assertEquals(importCommand, importCommand);
+        assertEquals(importCommand, importCommandWithSameParcels);
 
-		assertFalse(importCommand.equals(importCommandWithDifferentParcels));
+        assertFalse(importCommand.equals(importCommandWithDifferentParcels));
 
-		// shift parcel in the list.
+        // shift parcel in the list.
         ReadOnlyParcel parcel = sameParcels.get(0);
         sameParcels.remove(parcel);
         sameParcels.add(parcel);
@@ -98,13 +98,13 @@ public class ImportCommandTest {
         assertEquals(importCommand, importCommandWithSameParcels);
     }
 
-	/**
-	 * Generates a new ImportCommand with the details of the given parcel.
-	 */
-	private ImportCommand getImportCommandForParcel(List<ReadOnlyParcel> parcels, Model model) {
-		ImportCommand command = new ImportCommand(parcels);
-		command.setData(model, new CommandHistory(), new UndoRedoStack());
-		return command;
-	}
+    /**
+     * Generates a new ImportCommand with the details of the given parcel.
+     */
+    private ImportCommand getImportCommandForParcel(List<ReadOnlyParcel> parcels, Model model) {
+        ImportCommand command = new ImportCommand(parcels);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
 
 }

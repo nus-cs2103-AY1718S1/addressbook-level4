@@ -14,29 +14,30 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class ImportCommandParserTest {
 
-	@Rule
-	public final ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
 
-	@Test
-	public void parseImportFilePath_invalidInput_throwsIllegalValueException() throws Exception {
-		thrown.expect(ParseException.class);
-		thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
-				+ "\nMore Info: " + MESSAGE_FILE_NOT_FOUND);
-		new ImportCommandParser().parse("Missing.xml");
-	}
+    @Test
+    public void parseImportFilePath_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
+                + "\nMore Info: " + MESSAGE_FILE_NOT_FOUND);
+        new ImportCommandParser().parse("Missing.xml");
+    }
 
-	@Test
-	public void parseImportFilePath_notXmlFormat_throwsIllegalValueException() throws Exception {
-		thrown.expect(ParseException.class);
-		thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
-				+ "\nMore Info: " + String.format(MESSAGE_INVALID_DATA
-				, "./data/importData/NotXmlFormatAddressBook.xml"));
-		new ImportCommandParser().parse("NotXmlFormatAddressBook.xml");
-	}
+    @Test
+    public void parseImportFilePath_notXmlFormat_throwsIllegalValueException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
+                + "\nMore Info: " + String.format(MESSAGE_INVALID_DATA,
+                "./data/importData/NotXmlFormatAddressBook.xml"));
 
-	@Test
-	public void parseImportFilePath_validInput_success() throws Exception {
-		ImportCommand importCommand = new ImportCommandParser().parse("validAddressBook.xml");
-		assertTrue(importCommand instanceof ImportCommand);
-	}
+        new ImportCommandParser().parse("NotXmlFormatAddressBook.xml");
+    }
+
+    @Test
+    public void parseImportFilePath_validInput_success() throws Exception {
+        ImportCommand importCommand = new ImportCommandParser().parse("validAddressBook.xml");
+        assertTrue(importCommand instanceof ImportCommand);
+    }
 }
