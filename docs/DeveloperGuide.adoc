@@ -389,6 +389,30 @@ find Josephine, or find Blk 231, Sembawang Close 221 #02-232, S750231). +
 **Cons:** The user may forget certain details of the person and be unable to find him.
 //  end::find[]
 
+//  tag::alias[]
+=== Alias / Unalias
+
+The alias and unalias features are implemented by comparing creating a new AliasToken model which contains all created aliases,
+this model is checked against user input in the parser and converts any alias keywords to their representations before other
+commands are parsed. Each AliasToken consists of a keyword (the main alias) and representation (what it means) and they can 
+be used for both commands or shortcuts. For example : alias k/disappear s/hide , this makes the hide command
+to work with AliasToken keyword disappear. Unaliasing the AliasToken keyword token simply removes the AliasToken.
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the alias command will be +
+**Alternative 1 (current choice):** Aliases are parsed based on their keywords which are stored in a UniqueAliasTokenList.
+ All user input will parse for aliases first before dispatching to command parser, including parsing of both the command
+ word as well as the command arguments.+
+**Pros:** If the alias keyword is valid, it can be used as both a command alias and a shortcut alias. The user has the choice
+to choose any word to alias if they desire to do so. +
+**Cons:** It may take longer to parse user input. +
+**Alternative 2:** The alias is only checked for commands words in the parser, without the implementation of a 
+ model. +
+**Pros:** The parsing of user input is more straightforward and quicker. +
+**Cons:** The user is very restricted on what to alias and cannot have aliases for shortcut words.
+//  end::alias[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
