@@ -78,6 +78,7 @@ public class ViewCommand extends Command {
             result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
         }
 
+        ListingUnit.setCurrentPredicate(predicate);
         model.updateFilteredLessonList(predicate);
         return result;
     }

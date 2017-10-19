@@ -15,8 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.Location;
@@ -168,24 +170,19 @@ public class ModelManager extends ComponentManager implements Model {
         if (unit.equals(LOCATION)) {
             UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
             updateFilteredLessonList(predicate);
-        } else if (unit.equals(MODULE)) {
+        } else if (unit.equals(MODULE)) { ;
             UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
             updateFilteredLessonList(predicate);
         } else {
-            ListingUnit previousUnit = ListingUnit.getPreviousListingUnit();
-            if (!getFilteredLessonList().isEmpty()) {
-                ReadOnlyLesson typicalLesson = getFilteredLessonList().get(0);
-                if (previousUnit == MODULE) {
-                    Code code = typicalLesson.getCode();
-                    FixedCodePredicate predicate = new FixedCodePredicate(code);
-                    updateFilteredLessonList(predicate);
-                } else {
-                    Location location = typicalLesson.getLocation();
-                    FixedLocationPredicate predicate = new FixedLocationPredicate(location);
-                    updateFilteredLessonList(predicate);
-                }
-            }
+            updateFilteredLessonList(ListingUnit.getCurrentPredicate());
 
+            if (getFilteredLessonList().isEmpty()) {
+                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+                updateFilteredLessonList(predicate);
+                ListingUnit.setCurrentPredicate(predicate);
+                ListingUnit.setCurrentListingUnit(MODULE);
+                EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+            }
         }
     }
 
