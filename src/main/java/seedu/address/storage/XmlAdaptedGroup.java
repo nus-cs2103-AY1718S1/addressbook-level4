@@ -1,10 +1,14 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
-
+import seedu.address.model.group.ReadOnlyGroup;
 
 
 /**
@@ -12,9 +16,10 @@ import seedu.address.model.group.Group;
  */
 public class XmlAdaptedGroup {
 
-    @XmlValue
+    @XmlElement(required = true)
     private String groupName;
-
+    @XmlElement
+    private List<XmlAdaptedPerson> members = new ArrayList<>();
     /**
      * Constructs an XmlAdaptedGroup.
      * This is the no-arg constructor that is required by JAXB.
@@ -26,8 +31,8 @@ public class XmlAdaptedGroup {
      *
      * @param source future changes to this will not affect the created
      */
-    public XmlAdaptedGroup(Group source) {
-        groupName = source.groupName;
+    public XmlAdaptedGroup(ReadOnlyGroup source) {
+        groupName = source.getName().toString();
     }
 
     /**

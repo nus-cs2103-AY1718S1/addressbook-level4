@@ -2,52 +2,54 @@ package seedu.address.model.group;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents a Group in an address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidGroupName(String)}
+ * Guarantees: details are present and not null, field values are validated.
  */
-public class Group {
+public class Group implements ReadOnlyGroup {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Group names should contain only "
-            + "alphanumeric characters, spaces, underscores and dashes";
-    public static final String GROUP_VALIDATION_REGEX = "^[a-zA-Z0-9]([\\w -]*[a-zA-Z0-9])?$";
-
-    public final String groupName;
-    private Set<Person> members;
+    private ObjectProperty<GroupName> groupName;
+    /**
+     *  A Group will have an empty persons list by default
+     */
+    private final UniquePersonList groupMembers = new UniquePersonList();
 
     /**
-     * Validates given group name.
-     *
-     * @throws IllegalValueException if the given group name string is invalid.
+     * Every field must be present and not null.
      */
-    public Group(String name) throws IllegalValueException {
+    public Group(GroupName name) {
         requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!isValidGroupName(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
-        }
-        this.groupName = trimmedName;
-        members = new HashSet<>();
+        this.groupName = new SimpleObjectProperty<>(name);
     }
 
     /**
-     * Returns true if a given string is a valid tag name.
+     * Every field must be present and not null.
      */
-    public static boolean isValidGroupName(String test) {
-        return test.matches(GROUP_VALIDATION_REGEX);
+    public Group(String name) throws IllegalValueException {
+        requireNonNull(name);
+        this.groupName = new SimpleObjectProperty<>(new GroupName(name));
+    }
+    /**
+     * Creates a copy of the given ReadOnlyGroup.
+     */
+    public Group(ReadOnlyGroup source) {
+        this(source.getName());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Group // instanceof handles nulls
-                && this.groupName.equals(((Group) other).groupName)); // state check
+                && this.groupName.toString().equals(((Group) other).groupName.toString())); // state check
     }
 
     @Override
@@ -59,17 +61,34 @@ public class Group {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + groupName + ']';
+        return getAsText();
     }
 
-
-
-    public void addMember(Person person) {
-        this.members.add(person);
+    public void addMember(ReadOnlyPerson person) throws DuplicatePersonException {
+        this.groupMembers.add(person);
     }
 
-    public void deleteMember(Person person) {
-        this.members.remove(person);
+    public void deleteMember(ReadOnlyPerson person) throws PersonNotFoundException {
+        this.groupMembers.remove(person);
+    }
+
+    @Override
+    public ObjectProperty<GroupName> nameProperty() {
+        return groupName;
+    }
+
+    @Override
+    public GroupName getName() {
+        return groupName.get();
+    }
+
+    public void setGroupName(GroupName name) {
+        this.groupName.set(requireNonNull(name));
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getMembers() {
+        return groupMembers.asObservableList();
     }
 
 }

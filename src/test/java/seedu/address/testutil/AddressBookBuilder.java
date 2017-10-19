@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -51,11 +53,11 @@ public class AddressBookBuilder {
     /**
      * Parses {@code groupName} into a {@code Group} and adds it to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withGroup(String groupName) {
+    public AddressBookBuilder withGroup(ReadOnlyGroup group) {
         try {
-            addressBook.addGroup(new Group(groupName));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("groupName is expected to be valid.");
+            addressBook.addGroup(new Group(group));
+        } catch (DuplicateGroupException dge) {
+            throw new IllegalArgumentException("group is expected to be unique.");
         }
         return this;
     }

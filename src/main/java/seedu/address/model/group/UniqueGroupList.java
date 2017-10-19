@@ -5,14 +5,16 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
+import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
-
-
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 
 
 /**
@@ -27,6 +29,16 @@ import seedu.address.commons.util.CollectionUtil;
 public class UniqueGroupList implements Iterable<Group> {
 
     private final ObservableList<Group> internalList = FXCollections.observableArrayList();
+    // used by asObservableList()
+    private final ObservableList<ReadOnlyGroup> mappedList = EasyBind.map(internalList, (group) -> group);
+
+    /**
+     * Returns true if the list contains an equivalent Group as the given argument.
+     */
+    public boolean contains(ReadOnlyGroup toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
 
     /**
      * Constructs empty GroupList.
@@ -54,15 +66,6 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Replaces the Groups in this list with those in the argument group list.
-     */
-    public void setGroups(Set<Group> groups) {
-        requireAllNonNull(groups);
-        internalList.setAll(groups);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
      * Ensures every group in the argument list exists in this object.
      */
     public void mergeFrom(UniqueGroupList from) {
@@ -75,27 +78,33 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Returns true if the list contains an equivalent Group as the given argument.
+     * Adds a Group to the list.
+     *
+     * @throws seedu.address.model.group.exceptions.DuplicateGroupException
+     * if the Tag to add is a duplicate of an existing Tag in the list.
      */
-    public boolean contains(Group toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+    public void add(ReadOnlyGroup toAdd) throws DuplicateGroupException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateGroupException();
+        }
+        internalList.add(new Group(toAdd));
+
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
-     * Adds a Group to the list.
+     * Removes the equivalent person from the list.
      *
-     * @throws seedu.address.model.group.UniqueGroupList.DuplicateGroupException
-     * if the Tag to add is a duplicate of an existing Tag in the list.
+     * @throws GroupNotFoundException if no such group could be found in the list.
      */
-    public void add(Group toAdd) throws DuplicateGroupException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new seedu.address.model.group.UniqueGroupList.DuplicateGroupException();
+    public boolean remove(ReadOnlyGroup toRemove) throws GroupNotFoundException {
+        requireNonNull(toRemove);
+        final boolean groupFoundAndDeleted = internalList.remove(toRemove);
+        if (!groupFoundAndDeleted) {
+            throw new GroupNotFoundException();
         }
-        internalList.add(toAdd);
-
-        assert CollectionUtil.elementsAreUnique(internalList);
+        return groupFoundAndDeleted;
     }
 
     @Override
@@ -104,12 +113,24 @@ public class UniqueGroupList implements Iterable<Group> {
         return internalList.iterator();
     }
 
+    public void setGroups(UniqueGroupList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setGroups(List<? extends ReadOnlyGroup> groups) throws DuplicateGroupException {
+        final UniqueGroupList replacement = new UniqueGroupList();
+        for (final ReadOnlyGroup group : groups) {
+            replacement.add(new Group(group));
+        }
+        setGroups(replacement);
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Group> asObservableList() {
+    public ObservableList<ReadOnlyGroup> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
+        return FXCollections.unmodifiableObservableList(mappedList);
     }
 
     @Override
@@ -136,13 +157,5 @@ public class UniqueGroupList implements Iterable<Group> {
         return internalList.hashCode();
     }
 
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateGroupException extends DuplicateDataException {
-        protected DuplicateGroupException() {
-            super("Operation would result in duplicate tags");
-        }
-    }
 }
 

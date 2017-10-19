@@ -12,7 +12,9 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -66,7 +68,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(List<? extends ReadOnlyGroup> groups) throws DuplicateGroupException {
         this.groups.setGroups(groups);
     }
 
@@ -84,7 +86,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
 
-        setGroups(new HashSet<>(newData.getGroupList()));
+        try {
+            setGroups(newData.getGroupList());
+        } catch (DuplicateGroupException e) {
+            assert false : "AddressBooks should not have duplicate groups";
+        }
         syncMasterGroupListWith(persons);
     }
 
@@ -220,8 +226,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// group-level operations
 
-    public void addGroup(Group g) throws UniqueGroupList.DuplicateGroupException {
-        groups.add(g);
+    public void addGroup(ReadOnlyGroup g) throws DuplicateGroupException {
+        Group newGroup = new Group(g);
+        groups.add(newGroup);
     }
 
     //// util methods
@@ -243,7 +250,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Group> getGroupList() {
+    public ObservableList<ReadOnlyGroup> getGroupList() {
         return groups.asObservableList();
     }
 

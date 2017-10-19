@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
+import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -34,7 +35,7 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
-    private List<XmlAdaptedGroup> groups = new ArrayList<>();
+    private List<XmlAdaptedGroup> grouped = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -58,9 +59,9 @@ public class XmlAdaptedPerson {
             tagged.add(new XmlAdaptedTag(tag));
         }
 
-        groups = new ArrayList<>();
-        for (Group group: source.getGroups()) {
-            groups.add(new XmlAdaptedGroup(group));
+        grouped = new ArrayList<>();
+        for (ReadOnlyGroup group: source.getGroups()) {
+            grouped.add(new XmlAdaptedGroup(group));
         }
     }
 
@@ -76,7 +77,7 @@ public class XmlAdaptedPerson {
         }
 
         final List<Group> personGroups = new ArrayList<>();
-        for (XmlAdaptedGroup group: groups) {
+        for (XmlAdaptedGroup group: grouped) {
             personGroups.add(group.toModelType());
         }
 
