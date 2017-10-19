@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+/**
+ * A handle to the {@code DetailsPanel} of the application.
+ */
 public class DetailsPanelHandle extends NodeHandle<Node> {
     public static final String DETAILS_PANEL_ID = "#detailsPanelPlaceholder";
 
@@ -75,7 +78,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         this.schEmailText = getChildNode(SCHOOL_EMAIL_FIELD_FIELD_ID);
         this.birthdayText = getChildNode(BIRTHDAY_FIELD_FIELD_ID);
         this.websiteText = getChildNode(WEBSITE_FIELD_FIELD_ID);
-        }
+    }
 
     public String getName() {
         return nameLabel.getText();
