@@ -39,8 +39,6 @@ public class AddFacebookContactParser implements Parser<AddFacebookContactComman
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddFacebookContactCommand.MESSAGE_USAGE));
         }
 
-
-
         try {
             Facebook facebook = new FacebookFactory().getInstance();
             ResponseList<User> contactsList = facebook.searchUsers(trimmedArgs);
