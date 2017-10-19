@@ -3,14 +3,15 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+import javax.print.DocFlavor;
 
 /**
  * Represents a Person in the address book.
@@ -23,8 +24,25 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Picture> picture;
-
     private ObjectProperty<UniqueTagList> tags;
+    private String sortCriteria = "name";
+
+
+    /**
+     * Sets the field the list should be sorted by
+     */
+    public void setComparator(String field) {
+        Set<String> validFields = new HashSet<String>(Arrays.asList(
+                new String[] {"name", "phone", "email", "address"}
+        ));
+
+        if (validFields.contains(field)) {
+            this.sortCriteria = field;
+            System.out.println("Changing the sorting criteria for " + name + " to " + sortCriteria);
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 
     /**
      * Every field must be present and not null.
@@ -151,5 +169,5 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsText();
     }
-
+    
 }
