@@ -25,8 +25,7 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
-    private final String[] commandList = {"add", "clear", "delete", "edit", "find", "help", "history", "list", "redo",
-        "select", "undo"};
+    private Autocompleter autocompleter = new Autocompleter();
     private ListElementPointer historySnapshot;
 
     @FXML
@@ -58,7 +57,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         case TAB:
             keyEvent.consume();
-            selectClosestResultBasedOnTextFieldValue();
+            processAutocomplete();
             break;
         default:
             // let JavaFx handle the keypress
@@ -68,16 +67,10 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Updates the text field with the command that is the closest to the current text field string
      */
-    private void selectClosestResultBasedOnTextFieldValue() {
-        String currentText = commandTextField.getText().toLowerCase();
-        if (currentText.length() != 0) {
-            for (String commandWord : commandList) {
-                if (currentText.length() <= commandWord.length()
-                        && currentText.equals(commandWord.substring(0, currentText.length()))) {
-                    replaceText(commandWord);
-                }
-            }
-        }
+    private void processAutocomplete() {
+        String currentText = commandTextField.getText();
+        String autocompleteText = autocompleter.autocomplete(currentText);
+        replaceText(autocompleteText);
     }
 
     /**
