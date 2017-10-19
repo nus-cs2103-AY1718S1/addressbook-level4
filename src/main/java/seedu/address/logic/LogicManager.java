@@ -18,6 +18,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -77,6 +78,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 HelpCommand.COMMAND_WORD,
                 HistoryCommand.COMMAND_WORD,
                 ListCommand.COMMAND_WORD,
+                ListByMostSearchedCommand.COMMAND_WORD,
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD
@@ -96,6 +98,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 HelpCommand.MESSAGE_TEMPLATE,
                 HistoryCommand.MESSAGE_TEMPLATE,
                 ListCommand.MESSAGE_TEMPLATE,
+                ListByMostSearchedCommand.MESSAGE_TEMPLATE,
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
                 UndoCommand.MESSAGE_TEMPLATE

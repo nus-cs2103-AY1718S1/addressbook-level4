@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -48,4 +49,17 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Updates search count for each person who is searched using {@code FindCommand}
+     * Assumes filtered List of persons contains search results
+     * @author Sri-vatsa
+     */
+    void recordSearchHistory() throws CommandException;
+
+
+    /**
+     *  Sort everyone in addressbook by searchCount
+     * @author Sri-vatsa
+     */
+    void sortPersonListBySearchCount();
 }
