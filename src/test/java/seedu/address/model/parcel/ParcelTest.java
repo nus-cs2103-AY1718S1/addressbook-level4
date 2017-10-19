@@ -3,6 +3,7 @@ package seedu.address.model.parcel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_ADDRESS;
+import static seedu.address.testutil.ParcelBuilder.DEFAULT_DELIVERYDATE;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_EMAIL;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_NAME;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_PHONE;
@@ -25,6 +26,7 @@ public class ParcelTest {
         Parcel sameParcel = new Parcel(new TrackingNumber(DEFAULT_TRACKING_NUMBER),
                 new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
                 new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
+                new DeliveryDate(DEFAULT_DELIVERYDATE),
                 SampleDataUtil.getTagSet(DEFAULT_TAGS));
         Parcel differentParcel = new Parcel(parcel);
 
@@ -55,6 +57,11 @@ public class ParcelTest {
         assertEquals(differentParcel.getAddress(), new Address("test drive S123661"));
         assertEquals(differentParcel.addressProperty().get(),
                 new SimpleObjectProperty<>(new Address("test drive S123661")).get());
+
+        differentParcel.setDeliveryDate(new DeliveryDate("05-05-2005"));
+        assertEquals(differentParcel.getDeliveryDate(), new DeliveryDate("05-05-2005"));
+        assertEquals(differentParcel.deliveryDateProperty().get(),
+                new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
 
         differentParcel.setTags(SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet("test"));

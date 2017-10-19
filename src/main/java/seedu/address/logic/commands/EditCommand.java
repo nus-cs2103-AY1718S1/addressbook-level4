@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -45,6 +46,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_DELIVERYDATE + "DELIVERY DATE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -105,10 +107,12 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editParcelDescriptor.getPhone().orElse(parcelToEdit.getPhone());
         Email updatedEmail = editParcelDescriptor.getEmail().orElse(parcelToEdit.getEmail());
         Address updatedAddress = editParcelDescriptor.getAddress().orElse(parcelToEdit.getAddress());
-        DeliveryDate updatedDeliveryDate = editParcelDescriptor.getDeliveryDate().orElse(parcelToEdit.getDeliveryDate());
+        DeliveryDate updatedDeliveryDate = editParcelDescriptor.getDeliveryDate()
+                                           .orElse(parcelToEdit.getDeliveryDate());
         Set<Tag> updatedTags = editParcelDescriptor.getTags().orElse(parcelToEdit.getTags());
 
-        return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDeliveryDate, updatedTags);
+        return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress,
+                          updatedDeliveryDate, updatedTags);
     }
 
     @Override
@@ -159,7 +163,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.trackingNumber, this.name, this.phone, this.email, this.address,
-                    this.tags);
+                    this.deliveryDate, this.tags);
         }
 
         public void setTrackingNumber(TrackingNumber trackingNumber) {

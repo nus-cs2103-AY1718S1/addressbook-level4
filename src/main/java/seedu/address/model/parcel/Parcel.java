@@ -2,7 +2,6 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.parcel.DeliveryDate.DEFAULT_DELIVERYDATE_VALUE;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -10,7 +9,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -32,7 +30,8 @@ public class Parcel implements ReadOnlyParcel {
     /**
      * Every field must be present and not null.
      */
-    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address, DeliveryDate deliveryDate, Set<Tag> tags) {
+    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address,
+                  DeliveryDate deliveryDate, Set<Tag> tags) {
         requireAllNonNull(trackingNumber, name, phone, email, address, deliveryDate, tags);
         this.trackingNumber = new SimpleObjectProperty<>(trackingNumber);
         this.name = new SimpleObjectProperty<>(name);
@@ -40,13 +39,6 @@ public class Parcel implements ReadOnlyParcel {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.deliveryDate = new SimpleObjectProperty<>(deliveryDate);
-
-//        try {
-//            String default_deliverydate = DEFAULT_DELIVERYDATE_VALUE;
-//            this.deliveryDate = new SimpleObjectProperty<>(new DeliveryDate(default_deliverydate));
-//        } catch (IllegalValueException e) {
-//            e.printStackTrace();
-//        }
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
