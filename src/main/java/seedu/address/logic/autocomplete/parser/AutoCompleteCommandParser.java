@@ -52,12 +52,6 @@ public class AutoCompleteCommandParser implements AutoCompleteParser {
     @Override
     public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleCommands = new LinkedList<String>();
-        // empty string will match everything,
-        // short circuit method to prevent greedy matching
-        if (stub.equals("")) {
-            possibleCommands.add(stub);
-            return possibleCommands;
-        }
 
         for (CommandWordUsageTuple commandTuple : COMMAND_WORDS_LIST) {
             if (startWithSameLetters(stub, commandTuple.getCommandWord())) {
