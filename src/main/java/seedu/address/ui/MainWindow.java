@@ -182,6 +182,9 @@ public class MainWindow extends UiPart<Region> {
         }
 
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        infoPanel = new InfoPanel(logic);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 
     void hide() {
