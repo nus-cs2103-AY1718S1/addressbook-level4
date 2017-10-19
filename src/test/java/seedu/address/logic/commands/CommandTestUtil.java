@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
+import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -68,6 +69,8 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
     public static final TagAddCommand.TagAddDescriptor DESC_JAMES;
     public static final TagAddCommand.TagAddDescriptor DESC_LUCY;
+    public static final TagRemoveCommand.TagRemoveDescriptor DESCR_JAMES;
+    public static final TagRemoveCommand.TagRemoveDescriptor DESCR_LUCY;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -80,6 +83,12 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_JAMES).withEmail(VALID_EMAIL_JAMES).withAddress(VALID_ADDRESS_JAMES)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build());
         DESC_LUCY = new TagAddDescriptor(new PersonBuilder().withName(VALID_NAME_LUCY)
+                .withPhone(VALID_PHONE_LUCY).withEmail(VALID_EMAIL_LUCY).withAddress(VALID_ADDRESS_LUCY)
+                .withTags(VALID_TAG_FRIEND).build());
+        DESCR_JAMES = new TagRemoveDescriptor(new PersonBuilder().withName(VALID_NAME_JAMES)
+                .withPhone(VALID_PHONE_JAMES).withEmail(VALID_EMAIL_JAMES).withAddress(VALID_ADDRESS_JAMES)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build());
+        DESCR_LUCY = new TagRemoveDescriptor(new PersonBuilder().withName(VALID_NAME_LUCY)
                 .withPhone(VALID_PHONE_LUCY).withEmail(VALID_EMAIL_LUCY).withAddress(VALID_ADDRESS_LUCY)
                 .withTags(VALID_TAG_FRIEND).build());
     }
