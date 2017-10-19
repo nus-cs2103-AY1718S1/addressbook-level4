@@ -48,6 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+        this.sortBy(currentlySortedBy);
     }
 
     /**
@@ -70,6 +71,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, new Person(editedPerson));
+        this.sortBy(currentlySortedBy);
     }
 
     /**
@@ -83,6 +85,7 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
+        this.sortBy(currentlySortedBy);
         return personFoundAndDeleted;
     }
 
@@ -116,6 +119,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
+        sortBy(currentlySortedBy);
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
