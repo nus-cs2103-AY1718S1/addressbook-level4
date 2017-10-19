@@ -506,6 +506,92 @@ public Phone(String phone) throws IllegalValueException {
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
 
+
+// tag::findtagsmechanism[]
+=== FindTags Mechanism
+
+The FindTags mechanism is implemented using FindTagsCommand.
+It supports searching for persons whose tags contains at least all the tags input by the user.
+
+When the user uses the FindTags feature, a `TagsContainKeywordsPredicate` is created.
+The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user.
+Under the Model component, `TagsContainKeywordsPredicate` is used to filter the persons in the addressbook.
+After filtering, `PersonListPanel` only shows persons whose tags contain all keywords input by the user.
+
+This search operation is an AND search. Suppose the user executes `findtags friends NUS`. +
+Only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
+
+The FindTagsCommand is implemented this way:
+
+----
+public class FindTagsCommand extends Command {
+    private final TagsContainsKeywordsPredicate predicate;
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(
+            getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+    // ... other logic ...
+}
+----
+
+`Model.updateFilteredPersonList()` updates the `PersonListPanel` display by filter using the `TagsContainsKeywordsPredicate` instance.
+
+And the `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
+
+----
+public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString(), keyword));
+    }
+    // ... other logic ...
+}
+----
+[NOTE]
+The test is case insensitive as `StringUtil.containsWordIgnoreCase()` ignores case.
+
+
+The `keywords.stream().allMatch()` method in `test()` returns true if the person's tags contains all keywords in `keywords`.
+It supports the evaluation of the person using the predicate.
+
+The following sequence diagram shows how the sort operation works:
+
+
+==== Why it is implemented that way.
+
+FindTags is implemented this way because the `Model` 's API updates the list of `Person` to show using the `updateFilteredPersonList()` method.
+And that that method requires a `Predicate` as an argument.
+
+----
+public interface Model {
+    ...
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    ...
+}
+----
+
+==== Alternatives considered.
+
+**Aspect:** Data structure to support the findtags commands +
+**Alternative 1 (current choice):** Use A `Predicate` to evaluate which `Person` s to show +
+**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. For example, a new `Predicate` class `FindTagsCommandPredicate` is needed when the same can be done by inserting a method that does the same in the `FindTagsCommand` class. +
+**Alternative 2:** Write a method in the `FindTagsCommand` class that does what `FindTagsCommandPredicate` does  +
+**Pros:** It makes the codebase less complex as there are less classes. +
+**Cons:** Violates Single Responsibility Principle and Separation of Concerns as `FindTagsCommand` now needs to do two different things. +
+// tag::findtagsmechanism[]
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
