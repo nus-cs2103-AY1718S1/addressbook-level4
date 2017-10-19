@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddLifeInsuranceCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -32,7 +33,7 @@ public class AddressBookParser {
      * Enumerator list to define the types of commands.
      */
     private enum CommandType {
-        ADD, CLEAR, DEL, EDIT, EXIT, FIND, PFIND, HELP, HISTORY, LIST, REDO, UNDO, SELECT, WHY, NONE
+        ADD, ADDLI, CLEAR, DEL, EDIT, EXIT, FIND, PFIND, HELP, HISTORY, LIST, REDO, UNDO, SELECT, WHY, NONE
     }
 
     /**
@@ -62,7 +63,8 @@ public class AddressBookParser {
 
         case ADD:
             return new AddCommandParser().parse(arguments);
-
+        case ADDLI:
+            return new AddLifeInsuranceCommandParser().parse(arguments);
         case EDIT:
             return new EditCommandParser().parse(arguments);
 
@@ -117,6 +119,11 @@ public class AddressBookParser {
         for (String word : AddCommand.COMMAND_WORDS) {
             if (commandWord.contentEquals(word)) {
                 return CommandType.ADD;
+            }
+        }
+        for (String word : AddLifeInsuranceCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.ADDLI;
             }
         }
         for (String word : ClearCommand.COMMAND_WORDS) {
