@@ -448,11 +448,18 @@ described condition
 == *COMMAND SUMMARY*
 
 === MedNus Features
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
-* *Add Shorthand Form* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
-* *Clear* : `clear`
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Command |Purpose |Format |Example
+
+|*Add* |Adds a contact to the Address Book |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+
+|*Add Shorthand* |Adds a contact to the Address Book |`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+
+|*Clear* |Clears all contacts from the Address Book |`clear` |`clear`
+|=======================================================================
+
 * *Clear Shorthand Form* : `c`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
