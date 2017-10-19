@@ -453,53 +453,75 @@ described condition
 |=======================================================================
 |Command |Purpose |Format |Example
 
-|*Add* |Adds a contact to the Address Book |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+|*Add* |Adds a contact |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
 
-|*Add Shorthand* |Adds a contact to the Address Book |`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+|*Add Shorthand* |Adds a contact |`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
 
-|*Clear* |Clears all contacts from the Address Book |`clear` |`clear`
+|*Clear* |Clears all contacts |`clear` |`clear`
+
+|*Clear Shorthand* |Clears all contacts |`c` |`c`
+
+|*Delete* |Delete a contact |`delete INDEX` |`delete 3`
+
+|*Delete Shorthand* |Delete a contact |`d INDEX` |`d 3`
+
+|*Edit* |Edits a contact's details |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+
+|*Edit Shorthand* |Edits a contact's details |`e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` |`e 2 n/James Lee e/jameslee@example.com`
+
+|*Find* |Finds a contact based on keyword |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+
+|*Find Shorthand* |Finds a contact based on keyword |`f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
+
+|*List* |Lists all existing contacts |`list` |`list`
+
+|*Help* |Shows you the user guide |`help` |`help`
+
+|*Help Shorthand* |Shows you the user guide |`h` |`h`
+
+|*Select* |Selects a contact at the specified `INDEX` |`select INDEX` |`select 2`
+
+|*Select Shorthand* |Selects a contact at the specified `INDEX` |`s INDEX` |`s 2`
+
+|*History* |Shows you a history of all used commands |`history` |`history`
+
+|*History Shorthand* |Shows you a history of all used commands |`h` |`h`
+
+|*Undo* |Undo your previous command |`undo` |`undo`
+
+|*Undo Shorthand* |Undo your previous command |`u` |`u`
+
+|*Redo* |Redo your undo |`redo` |`redo`
+
+|*Redo Shorthand* |Redo your undo |`r` |`r`
+
+|*Adding a Remark* |Adds a remark to a contact |`remark INDEX r/REMARK` |`remark 1 r/Likes coffee`
+
+|*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
+
 |=======================================================================
 
-* *Clear Shorthand Form* : `c`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Delete Shorthand Form* : `d INDEX` +
-e.g. `d 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit Shorthand Form* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *Find Shorthand Form* : `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `f James Jake`
-* *List* : `list`
-* *List Shorthand Form* : `l`
-* *Help* : `help`
-* *Help Shorthand Form* : `h`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Select Shorthand Form* : `s INDEX` +
-e.g.`s 2`
-* *History* : `history`
-* *History Shorthand Form* : `h`
-* *Undo* : `undo`
-* *Undo Shorthand Form* : `u`
-* *Redo* : `redo`
-* *Redo Shorthand Form* : `r`
-* *Adding/Deleting a Remark* : `remark`
-
 === Keyboard Shortcut
-* *Escape* : Clears entire command box text field
-* *Alt* : Shifts text cursor to the
-- Start of the word if cursor is in a word or
-- Start of previous word if cursor is not in a word
-* *Control* : Shifts text cursor to the
-- End of the word if cursor is in a word or
-- End of the next word if cursor is not in a word
-* *Shift-Alt* : Shifts text cursor all the way to the left
-* *Shift-Control* : Shifts text cursor all the way to the right
-* *Shift-Delete* : Deletes a chunk of word/blank space (For Mac Users)
-* *Shift-Backspace* : Deletes a chunk of word/blank space (For Windows Users)
-* *Right* : Add Command Shortcut will trigger if the caret is at the end of the line +
-or "Add" or "A" is present at the start of the line.
+
+[width="59%",cols="22%,<78%",options="header",]
+|=======================================================================
+|Shortcut |Purpose |Remarks
+
+|*Escape* |Clears entire command box text field |-
+
+|*Alt* |Shifts text cursor to the start of the previous word |-
+
+|*Control* |Shifts text cursor to the end of the next word |-
+
+|*Shift-Alt* |Shifts text cursor all the way to the left |-
+
+|*Shift-Control* |Shifts text cursor all the way to the right |-
+
+|*Shift-Delete* |Deletes a chunk of word/blank space |For Mac Users
+
+|*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
+
+|*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+|=======================================================================
+
+
