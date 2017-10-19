@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Predicate;
 
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
