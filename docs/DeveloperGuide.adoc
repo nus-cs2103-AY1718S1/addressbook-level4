@@ -345,6 +345,29 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Enhanced Find Command
+
+The enhanced `find` command now allows searches for a Person's Name, Phone Number, Email, Address and Tags. It uses the
+`PersonContainsKeywordsPredicate` to search for the keywords in the address book. It also allows users to search for a person even when they search with an incomplete name (e.g: `find lex` will return Alex).
+
+To search whether a person contains the specific keywords, `PersonContainsKeywordsPredicate` will run 2 boolean methods:
+
+. First, it will call `getSearchText` from the `ReadOnlyPerson` class, which will return a String, and searches the String for the requested keyword. +
+. Second, it will get the Person's name by using `getName` method from `ReadOnlyPerson`, and check if the name contains the requested keyword by using `contains(CharSequence keyword)`.
+
+The `getSearchText` method inside the `ReadOnlyPerson` class will convert all the Name, Phone Number, Email, Address and Tags into a String, that can be used to search for the person.
+
+==== Design Considerations
+*Aspect:* Search conditions for `Person` +
+*Alternative 1 (current choice):* Search CharSequence in person's name, and full word in all other fields +
+*Pros:* By checking CharSequence only in name, and not on others, usage such as `find a` will not just show everyone that has `a` in their contact information. +
+*Cons:* Typing partial email, phone number, address and tag will not show the any result. +
+*Alternative 2:* Search CharSequence for all fields inside a `Person`. +
+*Pros:* Partial search words will show results for any fields in contact information +
+*Cons:* Usage such as `find a` will search for everything that contains `a` in a person's contact information, which is not useful for the user.
+
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
