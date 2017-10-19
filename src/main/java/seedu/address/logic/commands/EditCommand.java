@@ -215,25 +215,45 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setCompany(Company company) { this.company = company; }
+        public void setCompany(Company company) {
+            this.company = company;
+        }
 
-        public Optional<Company> getCompany() { return Optional.ofNullable(company); }
+        public Optional<Company> getCompany() {
+            return Optional.ofNullable(company);
+        }
 
-        public void setPosition(Position position) { this.position = position; }
+        public void setPosition(Position position) {
+            this.position = position;
+        }
 
-        public Optional<Position> getPosition() { return Optional.ofNullable(position); }
+        public Optional<Position> getPosition() {
+            return Optional.ofNullable(position);
+        }
 
-        public void setStatus(Status status) { this.status = status; }
+        public void setStatus(Status status) {
+            this.status = status;
+        }
 
-        public Optional<Status> getStatus() { return Optional.ofNullable(status); }
+        public Optional<Status> getStatus() {
+            return Optional.ofNullable(status);
+        }
 
-        public void setPriority(Priority priority) { this.priority = priority; }
+        public void setPriority(Priority priority) {
+            this.priority = priority;
+        }
 
-        public Optional<Priority> getPriority() { return Optional.ofNullable(priority); }
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
+        }
 
-        public void setNote(Note note) { this.note = note; }
+        public void setNote(Note note) {
+            this.note = note;
+        }
 
-        public Optional<Note> getNote() { return Optional.ofNullable(note); }
+        public Optional<Note> getNote() {
+            return Optional.ofNullable(note);
+        }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
