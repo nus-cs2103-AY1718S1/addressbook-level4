@@ -16,7 +16,6 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Website;
@@ -95,7 +94,6 @@ public class FindCommand extends Command {
         }
 
         /**
-         *
          * @return false if no fields are provided
          */
         public boolean allNull() {
@@ -109,16 +107,25 @@ public class FindCommand extends Command {
         }
 
         /**
-         *
          * @param other to check
          * @return true if other matches all fields
          */
         public boolean match(Object other) {
-            if (!(other instanceof Person)) return false;
-            if (this.name != null && !this.name.equals(((Person) other).getName())) { return false; }
-            if (this.phone != null && !this.phone.equals(((Person) other).getPhone())) { return false; }
-            if (this.email != null && !this.email.equals(((Person) other).getEmail())) { return false; }
-            if (this.address != null && !this.address.equals(((Person) other).getAddress())) { return false; }
+            if (!(other instanceof Person)) {
+                return false;
+            }
+            if (this.name != null && !this.name.equals(((Person) other).getName())) {
+                return false;
+            }
+            if (this.phone != null && !this.phone.equals(((Person) other).getPhone())) {
+                return false;
+            }
+            if (this.email != null && !this.email.equals(((Person) other).getEmail())) {
+                return false;
+            }
+            if (this.address != null && !this.address.equals(((Person) other).getAddress())) {
+                return false;
+            }
 
             return true;
         }
