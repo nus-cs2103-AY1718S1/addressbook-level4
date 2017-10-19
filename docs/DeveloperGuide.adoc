@@ -558,7 +558,7 @@ since the `HashMap` has to be instantiated and mapped at the same time. +
 **Pros:** May be easier to locate the missing mapping using the stack trace from the exception thrown. +
 **Cons:** Less feasible as, since the number of mappings is currently reasonably small,
 it is simpler to look through all the key mappings and locate the missing map. +
-
+// end::shortcut[]
 
 === Logging
 

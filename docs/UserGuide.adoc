@@ -237,6 +237,7 @@ Sets the note of the 1st person to `Likes fishing`.
 * `n 1 r/` +
 Removes the note for the 1st person.
 
+// tag::picture[]
 === Adding a profile picture: `picture` or `pic` _(Coming in V2.0)_
 
 Adds a profile picture to the specified person in Rolodex. +
@@ -268,6 +269,7 @@ image::profile_pic_before.png[width="500"]
 3. If the command is entered correctly, you should see the updated profile picture as specified in the `FILE_DIRECTORY` of the command.
 +
 image::profile_pic_after.png[width="500"]
+// end::picture[]
 
 === Listing entered commands : `history` or `his` or `past`
 
@@ -427,6 +429,7 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 | kbd:[Ctrl + D] | Delete the selected contact _(Coming in V2.0)_
 | kbd:[Alt + F4] | Exit the application
 |===
+// end::shortcut[]
 
 // end::excludeNavbar[]
 
