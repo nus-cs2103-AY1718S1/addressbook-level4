@@ -238,6 +238,7 @@ public class MainWindow extends UiPart<Region> {
             vBox.getStylesheets().remove("view/DarkTheme.css");
         }
         vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
         vBox.getStylesheets().add("view/DarkTheme.css");
     }
 
@@ -250,7 +251,22 @@ public class MainWindow extends UiPart<Region> {
             vBox.getStylesheets().remove("view/WhiteTheme.css");
         }
         vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
         vBox.getStylesheets().add("view/WhiteTheme.css");
+    }
+
+
+    /**
+     * Changes to green theme.
+     */
+    @FXML
+    private void handleGreenTheme() {
+        if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
+            vBox.getStylesheets().remove("view/GreenTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().add("view/GreenTheme.css");
     }
 
     public PersonListPanel getPersonListPanel() {
