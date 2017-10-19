@@ -12,7 +12,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author jelneo
 /**
- * Updates debt field by amount that has been repaid by person
+ * Updates debt field when a person borrows more money
  */
 public class BorrowCommand extends UndoableCommand {
 
