@@ -2,7 +2,16 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_NUMBER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,9 +36,6 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_EVENT_A_NAME = "Zouk Out";
-    public static final String VALID_EVENT_A_DATE = "12/12/2017";
-    public static final String VALID_EVENT_A_ADDRESS = "Sentosa, Siloso Beach";
     public static final String VALID_EVENT_B_NAME = "Finals";
     public static final String VALID_EVENT_B_DATE = "04/12/2017";
     public static final String VALID_EVENT_B_ADDRESS = "MPSH 2A, NUS";
@@ -54,9 +60,6 @@ public class CommandTestUtil {
     public static final String HOME_NUM_DESC_BOB = " " + PREFIX_HOME_NUMBER + VALID_HOME_NUM_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
-    public static final String EVENT_NAME_A_DESC = " " + PREFIX_NAME + VALID_EVENT_A_NAME;
-    public static final String EVENT_DATE_A_DESC = " " + PREFIX_DATE + VALID_EVENT_A_DATE;
-    public static final String EVENT_ADDRESS_A_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_A_ADDRESS;
     public static final String EVENT_NAME_B_DESC = " " + PREFIX_NAME + VALID_EVENT_B_NAME;
     public static final String EVENT_DATE_B_DESC = " " + PREFIX_DATE + VALID_EVENT_B_DATE;
     public static final String EVENT_ADDRESS_B_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_B_ADDRESS;

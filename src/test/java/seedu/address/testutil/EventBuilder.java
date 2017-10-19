@@ -1,22 +1,24 @@
 package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.Date;
-import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
 
 
 public class EventBuilder {
+    /**
+     * Event particulars
+     **/
     public static final String DEFAULT_NAME = "ZoukOut";
     public static final String DEFAULT_ADDRESS = "Sentosa, Siloso Beach";
     public static final String DEFAULT_DATE = "12/12/2018";
 
     private Event event;
 
-    public EventBuilder(){
-        try{
+    public EventBuilder() {
+        try {
             Name defaultName = new Name(DEFAULT_NAME);
             Date defaultDate = new Date(DEFAULT_DATE);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
