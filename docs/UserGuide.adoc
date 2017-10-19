@@ -102,7 +102,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose names, phone number, email, address and tags contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -119,24 +119,18 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Locating persons by address: `address`
-
-Finds persons whose address contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `Geylang` will match `geylang`
-* Only full words will be matched e.g. `Gey` will not match `Geylang`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Geylang` will return `Geylang Street 5`, `Geylang Street 2`
-****
-
-Examples:
-
-* `address Bukit` +
+* `find johndoe@gmail.com` +
+Returns any person with the email `johndoe@gmail.com`
+* `find johndoe` +
+Returns any person with the email username `johndoe`
+* `find gmail.com` +
+Returns any person with the email domain from `gmail.com`
+* `find Bukit` +
 Returns names of addresses containing `Bukit Batok` and `Bukit Timah`
 * `find street` +
 Returns any person having addresses with `street`
+* `find friends` +
+Returns any person with the tag `friends`
 
 === Deleting a person : `delete`
 
