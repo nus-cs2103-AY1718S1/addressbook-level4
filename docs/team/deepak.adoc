@@ -8,7 +8,35 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Alias/Unalias
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users will want to have their own preference of commands to use, they will also want to
+add shortcuts to words that they regularly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Remark
 
 ==== External behavior
 
@@ -23,7 +51,7 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Users will want to have a remark for their contacts to better identify them.
 
 ==== Implementation
 
@@ -35,8 +63,7 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 #End of Extract#
 
 ---
-
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add command `task'
 
 {Explain similar to the Undo/Redo feature above.}
 
