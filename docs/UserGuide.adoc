@@ -287,6 +287,7 @@ There is no need to save manually.
 
 == Since v1.2
 
+// tag::sort[]
 === Sorting all persons : `sort`
 
 Shows a sorted list of all persons in the address book. +
@@ -297,17 +298,18 @@ Format: `sort OPTION`
 * The OPTION refers to a contact's field, e.g. 'name', 'phone', 'email', ...
 * The OPTION *must be a hyphen followed by a single lower case alphabet* -n, -p, -e, ...
 * Available options:
-'-n': sort by name
-'-p': sort by phone number
-'-e': sort by email address
-'-a': sort by address
-'-t': sort by tag
+**'-n': sort by name
+**'-p': sort by phone number
+**'-e': sort by email address
+**'-a': sort by address
+**'-t': sort by tag
 ****
 
 Examples:
 
 * `sort -n` +
 Sorts the address book alphabetically by name.
+// end::sort[]
 
 === Locking the address book : `lock`
 
