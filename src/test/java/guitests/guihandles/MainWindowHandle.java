@@ -48,5 +48,4 @@ public class MainWindowHandle extends StageHandle {
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
     }
-
 }
