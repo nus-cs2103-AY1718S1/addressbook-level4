@@ -38,7 +38,7 @@ public class DetailsPanelTest extends GuiUnitTest {
 
     @Test
     public void display() throws Exception {
-        // default info panel
+
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getName());
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getAddress());
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getAddressField());
@@ -55,22 +55,22 @@ public class DetailsPanelTest extends GuiUnitTest {
         assertEquals(new ArrayList<>(), detailsPanelHandle.getTags());
         detailsPanelHandle.rememberSelectedPersonDetails();
 
-        // associated info of a person
+        // associated details of a person
         postNow(selectionChangedEventStub);
-        assertInfoDisplay(detailsPanel, ALICE);
+        assertDetailsDisplay(detailsPanel, ALICE);
         assertTrue(detailsPanelHandle.isSelectedPersonChanged());
         detailsPanelHandle.rememberSelectedPersonDetails();
 
         // asserts that no change is registered when same person is clicked
         postNow(selectionChangedEventStub);
-        assertInfoDisplay(detailsPanel, ALICE);
+        assertDetailsDisplay(detailsPanel, ALICE);
         assertFalse(detailsPanelHandle.isSelectedPersonChanged());
 
         // associated info of next person
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1));
         postNow(selectionChangedEventStub);
         assertTrue(detailsPanelHandle.isSelectedPersonChanged());
-        assertInfoDisplay(detailsPanel, BOB);
+        assertDetailsDisplay(detailsPanel, BOB);
     }
 
     @Test
@@ -97,12 +97,12 @@ public class DetailsPanelTest extends GuiUnitTest {
     /**
      * Asserts that {@code infoPanel} displays the details of {@code expectedPerson} correctly.
      */
-    private void assertInfoDisplay(DetailsPanel detailsPanel, ReadOnlyPerson expectedPerson) {
+    private void assertDetailsDisplay(DetailsPanel detailsPanel, ReadOnlyPerson expectedPerson) {
         guiRobot.pauseForHuman();
 
-        DetailsPanelHandle personInfoHandle = new DetailsPanelHandle(detailsPanel.getRoot());
+        DetailsPanelHandle personDetailsHandle = new DetailsPanelHandle(detailsPanel.getRoot());
 
         // verify person details are displayed correctly
-        assertDetailsDisplaysPerson(expectedPerson, personInfoHandle);
+        assertDetailsDisplaysPerson(expectedPerson, personDetailsHandle);
     }
 }
