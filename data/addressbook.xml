@@ -56,21 +56,6 @@
         <address>Mary street, block 123</address>
         <dob>05 05 1990, #01-01</dob>
     </persons>
-    <persons>
-        <name>Oscar</name>
-        <phone></phone>
-        <email></email>
-        <address></address>
-        <dob></dob>
-    </persons>
-    <persons>
-        <name>Oscar Wang</name>
-        <phone></phone>
-        <email></email>
-        <address></address>
-        <dob></dob>
-        <tagged>ppl</tagged>
-    </persons>
     <tags>colleagues</tags>
     <tags>classmates</tags>
     <tags>neighbours</tags>
