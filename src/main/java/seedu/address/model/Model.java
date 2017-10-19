@@ -34,6 +34,12 @@ public interface Model {
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
+    /** Favourites the given person */
+    void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Unfavourites the given person */
+    void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -57,6 +63,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
 
     void sort();
 }

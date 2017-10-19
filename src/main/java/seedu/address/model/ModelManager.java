@@ -98,6 +98,18 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addEvent(event);
         indicateAddressBookChanged();
     }
+  
+    @Override
+    public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.favouritePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.unfavouritePerson(target);
+        indicateAddressBookChanged();
+    }
 
     @Override
     public ArrayList<String> getThemesList() {
