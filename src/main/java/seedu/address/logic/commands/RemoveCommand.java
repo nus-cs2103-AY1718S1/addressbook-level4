@@ -73,6 +73,23 @@ public class RemoveCommand extends UndoableCommand {
 
     }
 
-
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+        // instanceof handles nulls
+        if (!(other instanceof RemoveCommand)) {
+            return false;
+        }
+        // state check
+        RemoveCommand e = (RemoveCommand) other;
+        if ((index == null) && (e.index == null)) {
+            return tag.equals(e.tag);
+        }
+        return index.equals(e.index)
+                && tag.equals(e.tag);
+    }
 
 }
