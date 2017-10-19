@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import com.sun.org.apache.bcel.internal.generic.Select;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.SelectCommand;
@@ -15,6 +17,7 @@ public class SelectCommandParser implements Parser<SelectCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the SelectCommand
      * and returns an SelectCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public SelectCommand parse(String args) throws ParseException {
@@ -25,5 +28,15 @@ public class SelectCommandParser implements Parser<SelectCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
         }
+    }
+
+    @Override
+    public String getCommandWord() {
+        return SelectCommand.COMMAND_WORD;
+    }
+
+    @Override
+    public String getCommandUsage() {
+        return SelectCommand.MESSAGE_USAGE;
     }
 }

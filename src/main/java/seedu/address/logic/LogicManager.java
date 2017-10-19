@@ -8,9 +8,16 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AddCommandParser;
 import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.AliasCommandParser;
+import seedu.address.logic.parser.DeleteCommandParser;
+import seedu.address.logic.parser.EditCommandParser;
+import seedu.address.logic.parser.FindCommandParser;
+import seedu.address.logic.parser.UnaliasCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -29,6 +36,9 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+
+        registerAllDefaultCommandParsers();
+        loadAllAliasTokens();
     }
 
     @Override
@@ -45,9 +55,38 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    /**
+     * Registers all commands with parsers into addressBookParser
+     */
+    private void registerAllDefaultCommandParsers() {
+        addressBookParser.registerCommandParser(new AddCommandParser());
+        addressBookParser.registerCommandParser(new DeleteCommandParser());
+        addressBookParser.registerCommandParser(new FindCommandParser());
+        addressBookParser.registerCommandParser(new EditCommandParser());
+        addressBookParser.registerCommandParser(new AliasCommandParser());
+        addressBookParser.registerCommandParser(new UnaliasCommandParser());
+    }
+
+    /**
+     * Loads existing aliases in model into addressBookParser
+     */
+    private void loadAllAliasTokens() {
+        ObservableList<ReadOnlyAliasToken> allAliasTokens = model.getAddressBook().getAliasTokenList();
+        for (ReadOnlyAliasToken token : allAliasTokens) {
+            addressBookParser.addAliasToken(token);
+        }
+
+
+    }
+
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList() {
+        return model.getFilteredAliasTokenList();
     }
 
     @Override

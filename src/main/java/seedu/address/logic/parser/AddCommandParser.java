@@ -30,6 +30,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
@@ -64,4 +65,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    @Override
+    public String getCommandWord() {
+        return AddCommand.COMMAND_WORD;
+    }
+
+    @Override
+    public String getCommandUsage() {
+        return AddCommand.MESSAGE_USAGE;
+    }
 }

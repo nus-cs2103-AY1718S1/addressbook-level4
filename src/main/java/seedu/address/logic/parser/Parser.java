@@ -13,4 +13,18 @@ public interface Parser<T extends Command> {
      * @throws ParseException if {@code userInput} does not conform the expected format
      */
     T parse(String userInput) throws ParseException;
+
+    /**
+     * Gets the command word of the respective command parser.
+     * @return command word string
+     */
+    String getCommandWord();
+
+    /**
+     *  Gets the format of the string required to parse the respective command correctly
+     * @return comamnd usage string
+     */
+    String getCommandUsage();
+    
+    
 }

@@ -10,6 +10,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.alias.Keyword;
+import seedu.address.model.alias.Representation;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -33,6 +35,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -89,5 +92,25 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> keyword} into an {@code Optional<Keyword>} if {@code keyword} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Keyword> parseKeyword(Optional<String> keyword) throws IllegalValueException {
+        requireNonNull(keyword);
+        return keyword.isPresent() ? Optional.of(new Keyword(keyword.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> representation} into an {@code Optional<Representation>}
+     * if {@code representation} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Representation> parseRepresentation(Optional<String> representation)
+            throws IllegalValueException {
+        requireNonNull(representation);
+        return representation.isPresent() ? Optional.of(new Representation(representation.get())) : Optional.empty();
     }
 }

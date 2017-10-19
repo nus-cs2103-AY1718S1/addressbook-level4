@@ -1,12 +1,18 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -20,8 +26,11 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.alias.ReadOnlyAliasToken;
+
 
 /**
  * Parses user input.
@@ -32,6 +41,17 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern KEYWORD_PATTERN =
+            Pattern.compile("([^\\s]+)([\\s/]+|$)");
+
+    private final Map<String, Parser<? extends Command>> commandParsers;
+    private final Map<String, ReadOnlyAliasToken> aliasedTokens;
+    private final ObservableList<ReadOnlyAliasToken> aliasList = FXCollections.observableArrayList();
+
+    public AddressBookParser() {
+        this.commandParsers = new HashMap<String, Parser<? extends Command>>();
+        this.aliasedTokens = new HashMap<String, ReadOnlyAliasToken>();
+    }
 
     /**
      * Parses user input into command for execution.
@@ -48,34 +68,39 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
+
+        final String checkedCommandWord = commandWordCheck(commandWord);
+        final String checkedArguments = argumentsCheck(arguments);
+
+
+        switch (checkedCommandWord) {
 
         case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new AddCommandParser().parse(checkedArguments);
 
         case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new EditCommandParser().parse(checkedArguments);
 
         case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
+            return new SelectCommandParser().parse(checkedArguments);
 
         case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new DeleteCommandParser().parse(checkedArguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            return new FindCommandParser().parse(checkedArguments);
 
         case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
+            return new RemarkCommandParser().parse(checkedArguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
         case SortCommand.COMMAND_WORD:
-            return new SortCommandParser().parse(arguments);
+            return new SortCommandParser().parse(checkedArguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -92,9 +117,112 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
+        case AliasCommand.COMMAND_WORD:
+            return new AliasCommandParser().parse(checkedArguments);
+        case UnaliasCommand.COMMAND_WORD:
+            return new UnaliasCommandParser().parse(checkedArguments);
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    /**
+     * Checks if the commandWord is used with an alias
+     *
+     * @param commandWord - the first arg of the command statement
+     * @return checkedCommandWord , containing the representation if it has been aliased
+     */
+    private String commandWordCheck(String commandWord) {
+        String checkedCommandWord = commandWord;
+
+        ReadOnlyAliasToken token = aliasedTokens.get(commandWord);
+        if (token != null) {
+            checkedCommandWord = token.getRepresentation().representation;
+        }
+        return checkedCommandWord;
+    }
+
+    /**
+     * Checks if any of the arguments have an alias
+     *
+     * @param arguments - the arguments after the command word
+     * @returns a string that contains the arguments with replaced representations if any of them had aliases.
+     */
+    private String argumentsCheck(String arguments) {
+        StringBuilder builder = new StringBuilder();
+        Matcher matcher = KEYWORD_PATTERN.matcher(arguments);
+
+        while (matcher.find()) {
+            String keyword = matcher.group(1);
+            String spaces = matcher.group(2); // The amount of spaces entered is kept the same
+
+            ReadOnlyAliasToken token = aliasedTokens.get(keyword);
+            if (token != null) {
+                keyword = token.getRepresentation().representation;
+            }
+
+            builder.append(keyword);
+            builder.append(spaces);
+        }
+
+        return builder.toString();
+    }
+
+    /**
+     * Adds an AliasToken to be used by parser to replace all alias's keyword with its representation
+     * before parsing.
+     *
+     * @param token
+     * @return
+     */
+    public boolean addAliasToken(ReadOnlyAliasToken token) {
+        requireNonNull(token);
+
+        if (aliasedTokens.containsKey(token.getKeyword().keyword)) {
+            return false;
+        }
+
+        if (isCommandParserRegistered(token.getKeyword().keyword)) {
+            return false;
+        }
+
+        aliasList.add(token);
+        aliasedTokens.put(token.getKeyword().keyword, token);
+        return true;
+    }
+
+
+    /**
+     * Registers a command parser into the commandParsers map.
+     *
+     * @param commandParser the map of command parsers
+     * @return true if successfully registered, false if parser with same command word
+     * already registered or if an alias with the same keyword is previously added.
+     */
+    public boolean registerCommandParser(Parser<? extends Command> commandParser) {
+        assert commandParser != null;
+
+        if (commandParsers.containsKey(commandParser.getCommandWord())) {
+            return false;
+        }
+        if (aliasedTokens.containsKey(commandParser.getCommandWord())) {
+            return false;
+        }
+
+        commandParsers.put(commandParser.getCommandWord(), commandParser);
+        return true;
+    }
+
+    public boolean isCommandParserRegistered(String header) {
+        return commandParsers.containsKey(header);
+    }
+
+    public Parser<? extends Command> unregisterCommandParser(String header) {
+        return commandParsers.remove(header);
+    }
+
+    public ObservableList<ReadOnlyAliasToken> getAliasTokenList() {
+        return aliasList;
     }
 
 }

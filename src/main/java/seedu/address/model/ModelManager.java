@@ -12,6 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.alias.ReadOnlyAliasToken;
+import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
+import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +28,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyAliasToken> filteredAliases;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredAliases = new FilteredList<>(this.addressBook.getAliasTokenList());
     }
 
     public ModelManager() {
@@ -87,6 +92,28 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAliasToken(ReadOnlyAliasToken toAdd) throws DuplicateTokenKeywordException {
+        addressBook.addAliasToken(toAdd);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void removeAliasToken(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
+        addressBook.removeAliasToken(toRemove);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public int getAliasTokenCount() {
+        return addressBook.getAliasTokenCount();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList() {
+        return FXCollections.unmodifiableObservableList(filteredAliases);
     }
 
     //=========== Filtered Person List Accessors =============================================================
