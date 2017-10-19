@@ -14,10 +14,10 @@ preferences.json
 .DS_Store
 ./screenshot*.png
 classes/
-/data/
+/data/*
+!/data/import/testValidAddressBook.xml
+!/data/import/testNotXmlFormatAddressBook.xml
 /bin/
 src/main/resources/docs/
 out/
 
-!/data/import/testValidAddressBook.xml
-!/data/import/testNotXmlFormatAddressBook.xml
