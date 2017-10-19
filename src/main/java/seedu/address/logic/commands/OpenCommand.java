@@ -14,7 +14,7 @@ public class OpenCommand extends Command {
     public static final String COMMAND_WORD = "open";
     public static final String COMMAND_WORD_ABBREV = "o"; //TODO: Add `cd` and `ls` abbreviations
 
-    public static final String MESSAGE_OPENING = "Opening file: %1$s";
+    public static final String MESSAGE_OPENING = "Opening file: `%1$s`";
     public static final String MESSAGE_NOT_EXIST = "Unable to find `%1$s`. "
             + "Use the `" + NewCommand.COMMAND_WORD + "` command for creating a new file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"

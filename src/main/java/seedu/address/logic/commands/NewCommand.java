@@ -14,7 +14,7 @@ public class NewCommand extends Command {
     public static final String COMMAND_WORD = "new";
     public static final String COMMAND_WORD_ABBREV = "n"; //TODO: Add `>` abbreviation
 
-    public static final String MESSAGE_CREATING = "Creating new file: %1$s";
+    public static final String MESSAGE_CREATING = "Creating new file: `%1$s`";
     private static final String MESSAGE_ALREADY_EXISTS = "`%1$s` already exists. "
             + "Use the `" + OpenCommand.COMMAND_WORD + "` command for opening an existing file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
