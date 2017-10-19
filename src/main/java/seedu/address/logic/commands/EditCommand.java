@@ -3,8 +3,11 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FORMCLASS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GRADES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTALCODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -18,9 +21,12 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FormClass;
+import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -42,11 +48,16 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_FORMCLASS + "FORMCLASS] "
+            + "[" + PREFIX_GRADES + "GRADES] "
+            + "[" + PREFIX_POSTALCODE + "POSTALCODE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
-
+            + PREFIX_PHONE + "student/97272031 parent/97979797 "
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_FORMCLASS + "14S14 "
+            + PREFIX_GRADES + "123.0 "
+            + PREFIX_POSTALCODE + "679123";
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -55,7 +66,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -92,17 +103,20 @@ public class EditCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        FormClass updatedFormClass = editPersonDescriptor.getFormClass().orElse(personToEdit.getFormClass());
+        Grades updatedGrades = editPersonDescriptor.getGrades().orElse(personToEdit.getGrades());
+        PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFormClass, updatedGrades,
+                updatedPostalCode, updatedTags);
     }
 
     @Override
@@ -132,15 +146,22 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private FormClass formClass;
+        private Grades grades;
+        private PostalCode postalCode;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.formClass = toCopy.formClass;
+            this.grades = toCopy.grades;
+            this.postalCode = toCopy.postalCode;
             this.tags = toCopy.tags;
         }
 
@@ -148,7 +169,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.formClass,
+                    this.grades, this.postalCode, this.tags);
         }
 
         public void setName(Name name) {
@@ -183,6 +205,30 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setFormClass(FormClass formClass) {
+            this.formClass = formClass;
+        }
+
+        public Optional<FormClass> getFormClass() {
+            return Optional.ofNullable(formClass);
+        }
+
+        public void setGrades(Grades grades) {
+            this.grades = grades;
+        }
+
+        public Optional<Grades> getGrades() {
+            return Optional.ofNullable(grades);
+        }
+
+        public void setPostalCode(PostalCode postalCode) {
+            this.postalCode = postalCode;
+        }
+
+        public Optional<PostalCode> getPostalCode() {
+            return Optional.ofNullable(postalCode);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -210,6 +256,9 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getFormClass().equals(e.getFormClass())
+                    && getGrades().equals(e.getGrades())
+                    && getPostalCode().equals(e.getPostalCode())
                     && getTags().equals(e.getTags());
         }
     }

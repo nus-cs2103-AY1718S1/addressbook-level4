@@ -57,18 +57,21 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-Shorthand: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
+Shorthand: `a n/NAME p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER) e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+A person can choose whether to have labels assigned to their contact numbers
+Available labels for the contacts numbers are: +
+H: (Home number) HP: (HandPhone number) O: (Office number)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `a n/Jane Doe p/98761243 e/janed@example.com a/Jane street, block 456, #01-01`
-* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/ student/97272032 parent/97979797 e/johnd@example.com a/John street, block 123, #01-01 c/203904`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/ student/97272030 parent/97979797 t/criminal`
+* `a n/Jane Doe p/ student/97272031 parent/97979791 e/janed@example.com a/Jane street, block 456, #01-01`
+* `a n/Lily Crowe t/friend e/lilycrowe@example.com a/Newgate Prison p/ student/97272231 parent/97979997 t/criminal`
 
 === Listing all persons : `list`
 
@@ -79,8 +82,8 @@ Shorthand: `l`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`+
-Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,8 +95,8 @@ Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`+
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567 e/johndoe@example.com c/309428` +
+Edits the phone number, email address and postal code of the 1st person to be `91234567`, `johndoe@example.com` and `309428` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `e 1 p/91234567 e/johndoe@example.com` +
@@ -125,6 +128,31 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Returns `john` and `John Doe`
 * `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by tags: `findtags`
+
+Finds persons whose tags contain all of the given keywords. +
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friends` will not match `closefriends`
+* Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
+****
+
+Examples:
+
+* `findtags friends` +
+Returns any person having the tag `friends`
+* `findtags friends owesMoney` +
+Returns any person having both `friends` and `owesMoney` tags
+* `ft John` +
+Returns any person having the tag `friends`
+* `ft Betsy Tim John` +
+Returns any person having both `friends` and `owesMoney` tags
 
 === Deleting a person : `delete`
 
@@ -173,6 +201,27 @@ Selects the 1st person in the results of the `find` command.
 * `l` (`list` command) +
 `s 3` (`select 3` command) +
 Selects the 3rd person in the address book.
+
+=== Sorting all persons : `sort`
+
+Shows a list of all persons in the address book sorted in alphabetical order. +
+Format: `sort` +
+Shorthand: `st`
+
+****
+* Sorts the addressbook in alphabetical order.
+* The sort is case insensitive. e.g `hans` will match `Hans`
+* If addressbook is empty, sort does nothing.
+****
+
+Examples:
+
+* `list` +
+`sort` +
+Sorts the list in alphabetical order.
+* `find Betsy` +
+`st` +
+Sorts the list in alphabetical order.
 
 === Listing entered commands : `history`
 
@@ -267,19 +316,22 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/120380 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com c/120283`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Findtags* : `findtags KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtags computing NUS engineering`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
