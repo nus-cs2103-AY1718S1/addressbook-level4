@@ -600,6 +600,8 @@ messageOutput = messageOutput.replace(",", ";");
 ----
 
 Examples of copy command on UI:
+
+
 image::CopyCommand_single_index.PNG[width="300"]
 
 
@@ -607,7 +609,7 @@ image::CopyCommand_multiple_index.PNG[width="300"]
 
 Figures 1 and 2 show the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.
 
-image::CopyCommand_single_index.PNG[width="300"]
+image::CopyCommand_browser_result.PNG[width="300"]
 
 Figure 3 shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
