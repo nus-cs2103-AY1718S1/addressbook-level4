@@ -164,19 +164,13 @@ public class ModelManager extends ComponentManager implements Model {
         ReadOnlyPerson whitelistedPerson = person;
         try {
             whitelistedPerson = addressBook.resetPersonDebt(person);
+            whitelistedPerson = addressBook.setDateRepaid(whitelistedPerson);
         } catch (PersonNotFoundException e) {
             assert false : "This person cannot be missing";
         }
 
         addressBook.addWhitelistedPerson(whitelistedPerson);
         updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void resetPersonDebt(ReadOnlyPerson person) throws PersonNotFoundException {
-        addressBook.resetPersonDebt(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 

@@ -286,6 +286,7 @@ public class Person implements ReadOnlyPerson {
         this.isWhitelisted = isWhitelisted;
     }
     //@@author
+
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.

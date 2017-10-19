@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.util.DateUtil.formatDate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -335,6 +338,30 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when resetting the debt of a person";
         }
+
+        return persons.getReadOnlyPerson(index);
+    }
+
+    /**
+     * Resets person's {@code dateRepaid} field to current date, in the mainlist of the addressbook.
+     *
+     *  @throws PersonNotFoundException if person does not exist in list.
+     */
+    public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person existingPerson = new Person(p);
+        existingPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+
+        persons.remove(p);
+
+        try {
+            persons.add(index, existingPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There should be no duplicate when resetting the date repaid field of a person";
+        }
+
         return persons.getReadOnlyPerson(index);
     }
 
