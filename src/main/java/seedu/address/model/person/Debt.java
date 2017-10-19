@@ -29,7 +29,20 @@ public class Debt {
             throw new IllegalValueException(MESSAGE_DEBT_CONSTRAINTS);
         }
         this.value = String.format("%.2f", Double.valueOf(trimmedDebt));
+    }
 
+    /**
+     * Validates given debt.
+     *
+     * @throws IllegalValueException if given debt double is invalid.
+     */
+    public Debt(Double debt) throws IllegalValueException {
+        requireNonNull(debt);
+        String debtInString = String.format("%.2f", Double.valueOf(debt));
+        if (!isValidDebt(debtInString)) {
+            throw new IllegalValueException(MESSAGE_DEBT_CONSTRAINTS);
+        }
+        this.value = debtInString;
     }
 
     /**
@@ -42,27 +55,8 @@ public class Debt {
     /**
      * Returns the double value represented by the string {@code value}
      */
-    public double toNumber(String value) {
+    public double toNumber() {
         return Double.valueOf(value);
-    }
-
-    /**
-     * Adds the indicated amount to debt
-     */
-    public void addToDebt(Debt amount) {
-        Double newValue = toNumber(value) + toNumber(amount.value);
-        value = String.format("%.2f", newValue);
-    }
-
-    /**
-     * Deducts an indicated amount from debt
-     */
-    public void deductFromDebt(Debt amount) throws IllegalValueException {
-        if (toNumber(amount.toString()) > toNumber(value)) {
-            throw new IllegalValueException("Amount to deduct from debt cannot be more than debt itself");
-        }
-        Double newValue = toNumber(value) - toNumber(amount.value);
-        value = String.format("%.2f", newValue);
     }
 
     @Override
