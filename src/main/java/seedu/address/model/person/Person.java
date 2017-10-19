@@ -29,6 +29,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Boolean> favourite;
 
     /**
      * Every field must be present and not null.
@@ -48,6 +49,7 @@ public class Person implements ReadOnlyPerson {
         this.birthday = new SimpleObjectProperty<>(birthday);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.favourite = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -169,6 +171,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Birthday getBirthday() {
         return birthday.get();
+    }
+
+    public void setFavourite(Boolean favourite) {
+        this.favourite.set(requireNonNull(favourite));
+    }
+
+    @Override
+    public ObjectProperty<Boolean> favouriteProperty() {
+        return favourite;
+    }
+
+    @Override
+    public Boolean getFavourite() {
+        return favourite.get();
     }
 
 

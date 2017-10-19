@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.DetailsPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -21,12 +22,12 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
-        assertEquals(expectedCard.getHomeNumber(), actualCard.getHomeNumber());
-        assertEquals(expectedCard.getSchEmail(), actualCard.getSchEmail());
-        assertEquals(expectedCard.getWebsite(), actualCard.getWebsite());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getHomeNumber(), actualCard.getHomeNumber());
         assertEquals(expectedCard.getBirthday(), actualCard.getBirthday());
+        assertEquals(expectedCard.getSchEmail(), actualCard.getSchEmail());
+        assertEquals(expectedCard.getWebsite(), actualCard.getWebsite());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -38,12 +39,27 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getHomeNumber().value, actualCard.getHomeNumber());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getSchEmail().value, actualCard.getSchEmail());
-        assertEquals(expectedPerson.getWebsite().value, actualCard.getWebsite());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getBirthday().value, actualCard.getBirthday());
+        assertEquals(expectedPerson.getSchEmail().value, actualCard.getSchEmail());
+        assertEquals(expectedPerson.getWebsite().value, actualCard.getWebsite());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
+     */
+    public static void assertDetailsDisplaysPerson(ReadOnlyPerson expectedPerson, DetailsPanelHandle actualInfo) {
+        assertEquals(expectedPerson.getName().fullName, actualInfo.getName());
+        assertEquals(expectedPerson.getPhone().value, actualInfo.getPhone());
+        assertEquals(expectedPerson.getEmail().value, actualInfo.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualInfo.getAddress());
+        assertEquals(expectedPerson.getBirthday().value, actualInfo.getBirthday());
+        assertEquals(expectedPerson.getWebsite().value, actualInfo.getWebsite());
+        assertEquals(expectedPerson.getSchEmail().value, actualInfo.getSchEmail());
+        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualInfo.getTags());
     }
 
     /**

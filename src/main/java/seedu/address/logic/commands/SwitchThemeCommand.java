@@ -11,10 +11,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Switches the current theme to a theme identified using it's index from the themes list in address book.
  */
-public class SwitchThemeCommand extends UndoableCommand {
+public class SwitchThemeCommand extends Command {
 
-    public static final String COMMAND_WORD = "switchtheme";
-    public static final String COMMAND_ALIAS = "st";
+    public static final String COMMAND_WORD = "switch";
+    public static final String COMMAND_ALIAS = "sw";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Switches the current theme to the theme identified by the index number in the themes list.\n"
@@ -31,7 +31,7 @@ public class SwitchThemeCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         ArrayList<String> themesList = model.getThemesList();
 
