@@ -505,6 +505,20 @@ The 4 required fields are checked to see if they are present. If any of them are
 
 The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
 
+// tag::Sorting[]
+=== Sorting of persons list
+
+When viewing the persons list, user is able to sort them according to `Name`, `Tags`, `Priority` or `Status`. This
+allows the user to be able to view the list much easier by sorting them to whichever preference he/she wants/needs.
+
+This enhancement is achieved by first creating a new SortCommand and SortCommandParser that processes the user input
+command and calls the suitable method to achieve it. Since this enhancement is not able to reuse some of the method
+in other components, new methods have to be created.
+
+[NOTE]
+Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
+SortCommand and SortCommandParser operates.
+
 == Documentation
 
 We use asciidoc for writing documentation.
