@@ -77,7 +77,7 @@ public class XmlAdaptedPerson {
         final Timestamp timestamp;
         if(this.timestamp.equals("null")) {
             timestamp = new Timestamp(0);
-        }else{
+        } else {
             timestamp = new Timestamp(this.timestamp);
         }
         final Set<Tag> tags = new HashSet<>(personTags);

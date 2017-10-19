@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
  */
 public class Timestamp {
 
-    LocalDateTime creationTime = null;
-    LocalDateTime expiryTime = null; //after construction, a null expiryTime means this person will not expire
+    private LocalDateTime creationTime = null;
+    private LocalDateTime expiryTime = null; //after construction, a null expiryTime means this person will not expire
 
     public Timestamp(long day) {
         creationTime = LocalDateTime.now();
@@ -17,11 +17,11 @@ public class Timestamp {
         }
     }
 
-    public Timestamp(String expiry){
+    public Timestamp(String expiry) {
         expiryTime = LocalDateTime.parse(expiry);
     }
 
-    public LocalDateTime getCreationTime(){
+    public LocalDateTime getCreationTime() {
         return creationTime;
     }
 
@@ -34,10 +34,14 @@ public class Timestamp {
         return expiryTime;
     }
 
+    /**
+     *
+     * @return the expiry time of the timestamp in String
+     */
     public String toString() {
-        if(expiryTime == null){
+        if (expiryTime == null) {
             return "null";
-        }else{
+        } else {
             return expiryTime.toString();
         }
     }

@@ -78,7 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
             Person person = itr.next();
             LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
             LocalDateTime current = LocalDateTime.now();
-            if(personExpiry != null) { //if this is a temporary contact
+            if (personExpiry != null) { //if this is a temporary contact
                 if (current.compareTo(personExpiry) == 1) { //if current time is past the time of expiry
                     itr.remove();
                 }
