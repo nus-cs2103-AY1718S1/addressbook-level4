@@ -126,6 +126,7 @@ public class ModelManager extends ComponentManager implements Model {
             if (tagName.equals(tag.tagName)) {
                 tagColours.put(tag, colour);
                 updateAllPersons(tagColours);
+                indicateAddressBookChanged();
                 raise(new NewTagColourChangedEvent(addressBook.getPersonList()));
                 return;
             }
