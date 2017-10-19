@@ -1,7 +1,13 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+
+
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -15,6 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static List<String> colors = new ArrayList<String>();
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -49,6 +57,17 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        /* add colors to colors list*/
+        colors.add("aqua");
+        colors.add("cadetblue");
+        colors.add("cornflowerblue");
+        colors.add("dodgerblue");
+        colors.add("lightskyblue");
+        colors.add("mediumblue");
+        colors.add("royalblue");
+        colors.add("steelblue");
+        colors.add("slateblue");
+        colors.add("teal");
     }
 
     /**
@@ -63,12 +82,25 @@ public class PersonCard extends UiPart<Region> {
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue) && !colors.isEmpty()) {
+            tagColors.put(tagValue, colors.get(0));
+            colors.remove(0);
+        }
+
+        return tagColors.get(tagValue);
     }
 
     @Override
