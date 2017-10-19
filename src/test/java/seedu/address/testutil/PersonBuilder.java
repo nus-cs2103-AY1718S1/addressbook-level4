@@ -98,6 +98,18 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Phone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCountry(String country) {
+        try {
+            this.person.setCountry(new Country(country));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("country is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {

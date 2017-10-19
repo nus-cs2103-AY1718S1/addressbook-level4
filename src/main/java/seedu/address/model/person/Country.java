@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Country {
 
 
-    public static final String MESSAGE_CODE_CONSTRAINTS =
+    public static final String MESSAGE_COUNTRY_CONSTRAINTS =
             "Country codes can only contain numbers, and should be 1-4 digits long";
     public static final String CODE_VALIDATION_REGEX = "\\d{1,4}";
     public final String value;
@@ -25,13 +25,13 @@ public class Country {
         requireNonNull(countryCode);
         String trimmedCountryCode = countryCode.trim();
         if (!isValidCode(trimmedCountryCode)) {
-            throw new IllegalValueException(MESSAGE_CODE_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_COUNTRY_CONSTRAINTS);
         }
         this.value = trimmedCountryCode;
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid person country code.
      */
     public static boolean isValidCode(String test) {
         return test.matches(CODE_VALIDATION_REGEX);
