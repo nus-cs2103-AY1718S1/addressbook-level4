@@ -67,6 +67,9 @@ public class ImportCommand extends UndoableCommand {
                 && hasSameParcels(parcelsToAdd, ((ImportCommand) other).parcelsToAdd));
     }
 
+    /**
+     * check if the elements of parcels and otherParcels have the same elements, disregarding order.
+     */
     public boolean hasSameParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> otherParcels) {
         // check # of parcels are equal
         if (parcels.size() != otherParcels.size()) {

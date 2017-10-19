@@ -62,7 +62,7 @@ public class ParserUtil {
             Optional<ReadOnlyAddressBook> addressBookOptional = new XmlAddressBookStorage(trimmedFilePath)
                     .readAddressBook();
 
-            if(addressBookOptional.isPresent()) {
+            if (addressBookOptional.isPresent()) {
                 return addressBookOptional.get();
             } else {
                 throw new FileNotFoundException();

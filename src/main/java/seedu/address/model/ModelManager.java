@@ -75,8 +75,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded
-            , List<ReadOnlyParcel> duplicateParcels) {
+    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+                                           List<ReadOnlyParcel> duplicateParcels) {
+
         for (ReadOnlyParcel parcel : parcels) {
             ReadOnlyParcel parcelToAdd = new Parcel(parcel);
             try {
