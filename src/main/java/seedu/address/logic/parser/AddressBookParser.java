@@ -42,7 +42,7 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case MusicCommand.COMMAND_WORD:
-            return new MusicCommand();
+            return new MusicCommandParser().parse(arguments);
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
