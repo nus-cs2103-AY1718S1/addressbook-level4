@@ -343,16 +343,17 @@ Condition 2: "Add" or "A" must be the first word & character respectively at the
 * Shift-Backspace : Deletes a chunk of word/blank space (For Windows Users)
 ****
 
+=== Deleting all persons with a particular tag : [Since v1.2]
+You can delete all persons in the address book who have a given tag. +
 
+Format: `batch TAG`
+Shorthand Format: `b TAG`
 
-
-=== Deleting all persons with a particular tag : [In Progress]
-****
-* Delete all contacts with a particular tag
-* Basic Error catching: Throws error when tag is not present
-* Potential Upgrades:
-1. Input many tags & delete all persons with that tag
-****
+Examples:
+* `batch friends`
+Removes all persons with the friends tag from the address book +
+* `b family`
+Removes all persons with the family tag from the address book +
 
 === Setting Appointments : [Coming in v2.0]
 ****

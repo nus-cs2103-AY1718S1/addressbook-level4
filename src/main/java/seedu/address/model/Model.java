@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -38,9 +39,6 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    /** Removes the specified tag from everyone in the address book. */
-    void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
-
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
@@ -54,6 +52,11 @@ public interface Model {
      * Sets and updates the tag colors of a person
      */
     void setTagColor(boolean toSet, String tag, String color);
+
+    /**
+     * Deletes all persons in the {@code AddressBook} who have any of the {@code tags}.
+     */
+    void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException;
 
     /**
      * Adds appoints to a person

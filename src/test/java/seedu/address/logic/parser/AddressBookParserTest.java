@@ -12,7 +12,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -25,6 +27,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BatchCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -46,6 +49,7 @@ import seedu.address.model.person.BloodtypeContainsKeywordPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -99,6 +103,17 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+
+    @Test
+    public void parseCommand_batch() throws Exception {
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("friends", Tag.DEFAULT_COLOR));
+
+        BatchCommand command = (BatchCommand) parser.parseCommand(
+                BatchCommand.COMMAND_WORD + " " + "friends");
+        assertEquals(new BatchCommand(tagSet), command);
+    }
+
 
     @Test
     public void parseCommand_edit() throws Exception {

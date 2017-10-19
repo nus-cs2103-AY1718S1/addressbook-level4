@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -159,6 +160,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        Set<Tag> personTags = key.getTags();
+        removeUnusedTags(personTags);
+
         if (persons.remove(key)) {
             return true;
         } else {
@@ -166,10 +170,48 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     * @param tag all persons containing this tag will be deleted
+     */
+    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
+        ArrayList<Person> toRemove = new ArrayList<>();
+        for (Person person : persons) {
+            if (person.hasTag(tag)) {
+                toRemove.add(person);
+            }
+        }
+
+        for (Person person : toRemove) {
+            removePerson(person);
+            removeUnusedTags(person.getTags());
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+     * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
+     */
+    public void removeUnusedTags(Set<Tag> tagsToRemove) {
+        Set<Tag> cleanedTagList = getTagsExcluding(tagsToRemove);
+        tags.setTags(cleanedTagList);
+        syncMasterTagListWith(persons);
+    }
+
+    /**
+     * Returns tag list from this {@code AddressBook} excluding {@code excludedTags}.
+     */
+    public Set<Tag> getTagsExcluding(Set<Tag> excludedTags) {
+        Set<Tag> results = tags.toSet();
+        for (Tag excludedTag : excludedTags) {
+            results.remove(excludedTag);
+        }
+        return results;
     }
 
     //// util methods

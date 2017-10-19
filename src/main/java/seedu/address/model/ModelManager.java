@@ -15,7 +15,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Appointment;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -86,21 +85,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException {
-        ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
-        for (ReadOnlyPerson oldPerson : persons) {
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newPersonTags = new HashSet<>(newPerson.getTags());
-            boolean isPersonModified = newPersonTags.remove(tag);
-
-            if (isPersonModified) {
-                newPerson.setTags(newPersonTags);
-                addressBook.updatePerson(oldPerson, newPerson);
-            }
-        }
-    }
-
     /**
      * On/Off tag colors for AddressBook
      * Updates UI by refreshing personListPanel
@@ -110,6 +94,26 @@ public class ModelManager extends ComponentManager implements Model {
         Set<Tag> tag = new HashSet<>(addressBook.getTagList());
         addressBook.setTags(tag, isOn, tagString, color);
         indicateAddressBookChanged();
+    }
+
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     * @param tag all persons containing this tag will be deleted
+     */
+    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
+        addressBook.deletePersonsWithTag(tag);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     * @param tags all persons containing this tag will be deleted
+     */
+    @Override
+    public void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException {
+        for (Tag tag : tags) {
+            deletePersonsWithTag(tag);
+        }
     }
 
     /**
@@ -169,5 +173,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
 }

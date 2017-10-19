@@ -1051,28 +1051,11 @@ Pros:
 Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
-* Cannot integrate contacts from user's active WhatsApp groups
-
-
-*iTunes*
-
-Author: Apple Inc.
-
-Pros:
-
-* Users can browse by album instead of a plain song list
-* Similar to browsing contacts by group instead of by individual
-* Supports automatic retrieval of missing songs if user's local album is incomplete ("Show Complete Album")
-* Analogous to automatic addition of unknown contacts from a user's active WhatsApp groups
-
-Cons:
-
-* Lacks command-line (or keyboard-only) interface for power users
 * Animations are unnecessarily slow
 
 
 [appendix]
-== Implementation of enhancement
+== Implementation of enhancements
 
 === *Enhancement: Bloodtype* +
 
@@ -1287,9 +1270,6 @@ prefixes
 
 === *Enhancement: ListByBloodtypeCommand* +
 
-
-*Reason for implementation* +
-
 Since our address book have Bloodtype implemented, we decided that being able to list people according to blood types +
 is going to be helpful for doctors. There are going to be times where hospitals run out of blood for blood transfusion +
 and related medical procedures. Being able to find patients quicklywith compatible blood types is going to be critical +
@@ -1319,3 +1299,30 @@ The second constructor takes in a String from the user.
 The reason for the use of ListByBloodtypeCommandParser is to filter out extra spaces that the user may have typed in.
 
 
+=== *Enhancement: Batch delete all persons who share a particular tag* +
+
+MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on contacts.
+
+*How is it implemented* +
+
+An additional command class is implemented in the logic component. Its constructor is as follows: +
+
+ BatchCommand(Set<Tag> tagsToDelete)
+
+This command passes a set of tags to the model component. The model component will handle the necessary deletion
+operations. To support this, an additional method is defined in the Model interface for implementation. +
+
+ void deletePersonsByTags(Set<Tag> tags)
+
+It causes the associated addressBook attribute to iterate through each person and delete it if any of the target tags are found.
+
+*Reasons for how it is implemented*
+
+Coupling between the logic and model component is minimised into the sole function call `deletePersonsByTags(Set<Tag> tags)`. This
+is for simplicity as much as it is for ease of implementation. Future batch operations ought to be implemented
+in a similar fashion – whereby only one point of interaction occurs between components.
+
+*Future enhancements*
+
+We would like to include more batch operations beyond deletion. For example, editing tags, remarks, and other contact attributes by batch.
+A general function call between the logic and model components ought to be created. This could serve all batch operations, depending on its arguments.
