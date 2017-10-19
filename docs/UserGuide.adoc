@@ -503,7 +503,7 @@ described condition
 
 === Keyboard Shortcut
 
-[width="59%",cols="22%,<78%",options="header",]
+[width="59%",cols="22%,<40%,<40%",options="header",]
 |=======================================================================
 |Shortcut |Purpose |Remarks
 
