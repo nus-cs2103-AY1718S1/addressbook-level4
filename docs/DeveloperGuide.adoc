@@ -422,7 +422,7 @@ It is implemented this way to ensure that all person names in the UniquePersonLi
 **Pros:** We do not need to maintain a separate list, and just reuse what is already in the codebase, and it saves space. +
 **Cons:**  Inefficient as compared to using an algorithm. If the user made a mistake, the change cannot be reverted as the original list of contacts is not saved. +
 // end::sort[]
-=======
+
 // tag::studentparentcontact[]
 === Add student/parent phone contact mechanism
 
