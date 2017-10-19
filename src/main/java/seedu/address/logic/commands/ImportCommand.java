@@ -16,7 +16,7 @@ public class ImportCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "import";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the data of a storage file stored in "
-            + "data/dataImports/ directory into Ark.\n"
+            + "data/import/ directory into Ark.\n"
             + "Parameters: FILE (Must be a valid addressbook file stored in xml format)\n"
             + "Example: " + COMMAND_WORD + " addressbook.xml";
 
