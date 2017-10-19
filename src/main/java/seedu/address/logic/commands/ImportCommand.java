@@ -20,7 +20,8 @@ public class ImportCommand extends UndoableCommand {
             + "Parameters: FILE (Must be a valid addressbook file stored in xml format)\n"
             + "Example: " + COMMAND_WORD + " addressbook.xml";
 
-    public static final String MESSAGE_SUCCESS = "Parcels added: %1$s\nDuplicate Parcels: %2$s";
+    public static final String MESSAGE_SUCCESS = "Summary: %1$d parcels added and %2$d duplicate parcels not added.\n"
+            + "Parcels added: %3$s\nDuplicate Parcels: %4$s";
     public static final String MESSAGE_DUPLICATE_PARCELS = "All parcels in the imported save file will create "
             + "duplicate parcels";
 
@@ -49,15 +50,16 @@ public class ImportCommand extends UndoableCommand {
 
         String addedParcelsString = ""; // formatted string of parcels added
         for (ReadOnlyParcel parcel : addedParcels) {
-            addedParcelsString = addedParcelsString + "\n " + parcel.toString();
+            addedParcelsString = addedParcelsString + "\n  " + parcel.toString();
         }
 
-        String duplicatedParcelsString = (duplicateParcels.size() > 0) ? "" : "\n (none)"; // string of duplicates
+        String duplicatedParcelsString = (duplicateParcels.size() > 0) ? "" : "\n  (none)"; // string of duplicates
         for (ReadOnlyParcel parcel : duplicateParcels) {
-            duplicatedParcelsString = duplicatedParcelsString + "\n " + parcel.toString();
+            duplicatedParcelsString = duplicatedParcelsString + "\n  " + parcel.toString();
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, addedParcelsString, duplicatedParcelsString));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, addedParcels.size(), duplicateParcels.size(),
+                addedParcelsString, duplicatedParcelsString));
     }
 
     @Override

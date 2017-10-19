@@ -61,13 +61,13 @@ public class ImportCommandTest {
 
         // importing without any duplicates
         ImportCommand importCommand = getImportCommandForParcel(parcels, modelManager);
-        assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, "\n "
-                + ALICE.toString() + "\n " + BENSON.toString(), "\n (none)")).feedbackToUser);
+        assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, 2, 0,
+                "\n  " + ALICE.toString() + "\n  " + BENSON.toString(), "\n  (none)")).feedbackToUser);
 
         // importing with some duplicates
         parcels.add(HOON);
-        assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS,
-                "\n " + HOON.toString(), "\n " + ALICE.toString() + "\n " + BENSON.toString())).feedbackToUser);
+        assertEquals(importCommand.execute().feedbackToUser, new CommandResult(String.format(MESSAGE_SUCCESS, 1, 2,
+                "\n  " + HOON.toString(), "\n  " + ALICE.toString() + "\n  " + BENSON.toString())).feedbackToUser);
     }
 
     @Test
