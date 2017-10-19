@@ -38,15 +38,22 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first parcel in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PARCEL.getOneBased() + "       ";
 
         ReadOnlyParcel targetParcel = getParcel(expectedModel, INDEX_FIRST_PARCEL);
 
-        Iterator<Tag> targetTags = 
+        Iterator<Tag> targetTags = targetParcel.getTags().iterator();
+        Tag targetTag = null;
 
-        ReadOnlyParcel deletedParcel = removeTag(expectedModel, targetTag);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
+        if(targetTags.hasNext()) {
+            targetTag = targetTags.next();
+        }
+
+        String command = "     " + DeleteTagCommand.COMMAND_WORD + "      " + targetTag.tagName + "       ";
+
+        Tag deletedTag = removeTag(expectedModel, targetTag);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
+//        assertCommandSuccess(targetTag);
 
 //        /* Case: delete the last parcel in the list -> deleted */
 //        Model modelBeforeDeletingLast = getModel();
@@ -107,7 +114,7 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 //
 //        /* Case: mixed case command word -> rejected */
 //        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
-//    }
+    }
 
     /**
      * Removes the {@code ReadOnlyParcel} at the specified {@code index} in {@code model}'s address book.
@@ -133,23 +140,7 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
 
         assertCommandSuccess(
-                DeleteTagCommand.COMMAND_WORD + " " + toDelete, expectedModel, expectedResultMessage);
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card remains unchanged.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
+                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, expectedModel, expectedResultMessage);
     }
 
     /**
@@ -158,16 +149,9 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
      * @see DeleteTagCommandSystemTest#assertCommandSuccess(String, Model, String)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
 
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
