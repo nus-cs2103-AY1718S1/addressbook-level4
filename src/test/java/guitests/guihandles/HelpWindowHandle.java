@@ -2,11 +2,11 @@ package guitests.guihandles;
 
 import java.net.URL;
 
-import javafx.stage.Stage;
-
 import org.testfx.api.FxRobot;
 
 import guitests.GuiRobot;
+
+import javafx.stage.Stage;
 
 /**
  * A handle to the {@code HelpWindow} of the application.
@@ -25,7 +25,8 @@ public class HelpWindowHandle extends StageHandle {
      * Returns true if a help window is currently present in the application.
      */
     public static boolean isWindowPresent() {
-        return new GuiRobot().isWindowShown(HELP_WINDOW_TITLE); }
+        return new GuiRobot().isWindowShown(HELP_WINDOW_TITLE);
+    }
 
     public FxRobot getLoadedPage() { return new GuiRobot().targetWindow(HELP_WINDOW_TITLE); }
 
