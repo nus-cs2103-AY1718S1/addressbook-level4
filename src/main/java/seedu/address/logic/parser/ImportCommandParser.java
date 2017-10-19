@@ -21,7 +21,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     public ImportCommand parse(String arg) throws ParseException {
         String trimmedArgument = arg.trim();
         try {
-            ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath("./data/importData/"
+            ReadOnlyAddressBook readOnlyAddressBook = ParserUtil.parseImportFilePath("./data/import/"
                     + trimmedArgument);
             return new ImportCommand(readOnlyAddressBook.getParcelList());
         } catch (IllegalValueException ive) {

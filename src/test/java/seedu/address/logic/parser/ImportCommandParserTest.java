@@ -30,14 +30,14 @@ public class ImportCommandParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE)
                 + "\nMore Info: " + String.format(MESSAGE_INVALID_DATA,
-                "./data/importData/NotXmlFormatAddressBook.xml"));
+                "./data/import/testNotXmlFormatAddressBook.xml"));
 
-        new ImportCommandParser().parse("NotXmlFormatAddressBook.xml");
+        new ImportCommandParser().parse("testNotXmlFormatAddressBook.xml");
     }
 
     @Test
     public void parseImportFilePath_validInput_success() throws Exception {
-        ImportCommand importCommand = new ImportCommandParser().parse("validAddressBook.xml");
+        ImportCommand importCommand = new ImportCommandParser().parse("testValidAddressBook.xml");
         assertTrue(importCommand instanceof ImportCommand);
     }
 }
