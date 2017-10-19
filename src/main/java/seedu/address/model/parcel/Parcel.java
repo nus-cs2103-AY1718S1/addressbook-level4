@@ -23,19 +23,22 @@ public class Parcel implements ReadOnlyParcel {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<DeliveryDate> deliveryDate;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(trackingNumber, name, phone, email, address, tags);
+    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address,
+                  DeliveryDate deliveryDate, Set<Tag> tags) {
+        requireAllNonNull(trackingNumber, name, phone, email, address, deliveryDate, tags);
         this.trackingNumber = new SimpleObjectProperty<>(trackingNumber);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.deliveryDate = new SimpleObjectProperty<>(deliveryDate);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -45,7 +48,7 @@ public class Parcel implements ReadOnlyParcel {
      */
     public Parcel(ReadOnlyParcel source) {
         this(source.getTrackingNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getDeliveryDate(), source.getTags());
     }
 
     public void setTrackingNumber(TrackingNumber trackingNumber) {
@@ -138,6 +141,18 @@ public class Parcel implements ReadOnlyParcel {
         tags.set(new UniqueTagList(replacement));
     }
 
+    public void setDeliveryDate(DeliveryDate deliveryDate) {
+        this.deliveryDate.set(requireNonNull(deliveryDate));
+    }
+
+    public ObjectProperty<DeliveryDate> deliveryDateProperty() {
+        return deliveryDate;
+    }
+
+    public DeliveryDate getDeliveryDate() {
+        return deliveryDate.get();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -157,3 +172,4 @@ public class Parcel implements ReadOnlyParcel {
     }
 
 }
+

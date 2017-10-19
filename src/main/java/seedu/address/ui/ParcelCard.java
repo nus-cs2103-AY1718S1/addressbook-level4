@@ -46,6 +46,8 @@ public class ParcelCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label deliveryDate;
+    @FXML
     private FlowPane tags;
 
     public ParcelCard(ReadOnlyParcel parcel, int displayedIndex) {
@@ -66,6 +68,7 @@ public class ParcelCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(parcel.phoneProperty()));
         address.textProperty().bind(Bindings.convert(parcel.addressProperty()));
         email.textProperty().bind(Bindings.convert(parcel.emailProperty()));
+        deliveryDate.textProperty().bind(Bindings.convert(parcel.deliveryDateProperty()));
         parcel.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(parcel);

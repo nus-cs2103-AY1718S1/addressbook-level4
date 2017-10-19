@@ -77,15 +77,15 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
 
 Examples:
 
-* `add #/11111111111 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121`
-* `add #/11111112222 n/Betsy Crowe t/friend e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile`
+* `add #/11111111111 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001`
+* `add #/11111112222 n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile`
 
 === Listing all parcels : `list`
 
@@ -95,7 +95,7 @@ Format: `list`
 === Editing a parcel : `edit`
 
 Edits an existing parcel in Ark. +
-Format: `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DELIVERYDATE] [t/TAG]...`
 
 ****
 * Edits the parcel at the specified `INDEX`. The index refers to the index number shown in the last parcel listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -111,6 +111,8 @@ Examples:
 Edits the phone number and email address of the 1st parcel to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the recipient's name of the 2nd parcel to be `Betsy Crower` and clears all existing tags.
+* `edit 1 d/03-03-2003` +
+Edits the delivery date of the 1st parcel to be 03-03-2003.
 
 === Locating parcels by name: `find`
 
@@ -278,12 +280,12 @@ The data from the backup file has to be loaded manually by copying the contents 
 
 == Command Summary
 
-* *Add* `add #/PARCEL_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add #/PARCEL_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/12-12-2012 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERYDATE] [t/TAG]...` +
 e.g. `edit 2 #/1111111111111 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
