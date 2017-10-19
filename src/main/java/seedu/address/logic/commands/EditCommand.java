@@ -90,6 +90,12 @@ public class EditCommand extends UndoableCommand {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
+            if (personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
+                editedPerson.setIsWhitelisted(false);
+            }
+            else if (!personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() == 0) {
+                editedPerson.setIsWhitelisted(true);
+            }
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -122,6 +128,7 @@ public class EditCommand extends UndoableCommand {
                 updatedDebt, updatedInterest, updatedDeadline, updatedTags);
 
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
+        personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.getIsBlacklisted());
         personCreated.setIsWhitelisted(personToEdit.getIsWhitelisted());
         return personCreated;

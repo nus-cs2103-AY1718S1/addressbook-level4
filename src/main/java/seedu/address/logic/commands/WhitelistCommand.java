@@ -16,8 +16,8 @@ public class WhitelistCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.changeListTo(COMMAND_WORD);
         model.updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
+        model.changeListTo(COMMAND_WORD);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
