@@ -34,8 +34,8 @@ public class Deadline extends TaskDates {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof StartDate // instanceof handles nulls
-                && this.date.equals(((StartDate) other).date)); // state check
+                || (other instanceof Deadline // instanceof handles nulls
+                && this.date.equals(((Deadline) other).date)); // state check
     }
 
     @Override
