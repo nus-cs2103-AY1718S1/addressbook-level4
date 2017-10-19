@@ -54,9 +54,9 @@ public class ModelManager extends ComponentManager implements Model {
             public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
                 boolean v1 = p1.getFavouriteStatus().getStatus();
                 boolean v2 = p2.getFavouriteStatus().getStatus();
-                if ( v1 && !v2 ) {
+                if (v1 && !v2) {
                     return -1;
-                } else if ( !v1 && v2 ) {
+                } else if (!v1 && v2) {
                     return 1;
                 }
                 return 0;
