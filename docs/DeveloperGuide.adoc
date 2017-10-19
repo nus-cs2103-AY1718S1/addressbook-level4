@@ -421,7 +421,7 @@ public CommandResult execute() {
 ----
 The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function.
 
-image::HelpEnhancementScreenShot.PNG[width="800"]
+image::HelpEnhancementScreenShot.PNG[width="200"]
 
 === Locating a person's address [Since v1.2]
 
@@ -520,12 +520,13 @@ By being a subscriber to this event, the `WebView` in `BrowserPanel` will load t
 `PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
 
 //tag::FindCommand[]
-=== FindCommand by any searched field
+=== FindCommand by any search field [Since v1.2]
 
 
-The find function will support the search of contact by any keywords. The keywords must be a full word match. The command will inherit from `FindCommand` .The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
-`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input.
+The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
 
+
+`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via l`FindCommandParserl` which inherits from `FindCommand`.
 
 [source,java]
 ----
@@ -539,7 +540,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 }
 
 ----
-
+[NOTE]
+A valid find command search keywords based on prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
 
 Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
 [source,java]
@@ -549,15 +551,24 @@ Also,the input will first have to be tokenised in order to extract the prefix fo
         }
 ----
 
+A successful tokenism of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
 
-A successful tokenism of lead to the keywords to be allocated to its `containsKeyWordPredicate` under `Model` based on the input prefix.Addressbook will search for the keywords in the revelvant parameters.
-Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using` FindCommand` .
+Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using `FindCommand` .
 
-image::FindCommand_Name.PNG[width="200"]
-image::FindCommand_Phone.PNG[width="200"]
-image::FindCommand_Email.PNG[width="200"]
-image::FindCommand_Address.PNG[width="200"]
-image::FindCommand_Tag.PNG[width="200"]
+
+image::FindCommand_Name.PNG[width="300"]
+
+
+image::FindCommand_Phone.PNG[width="300"]
+
+
+image::FindCommand_Email.PNG[width="300"]
+
+
+image::FindCommand_Address.PNG[width="300"]
+
+
+image::FindCommand_Tag.PNG[width="300"]
 
 
 == Documentation
