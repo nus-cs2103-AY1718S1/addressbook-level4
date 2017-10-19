@@ -28,7 +28,9 @@ public class HelpWindowHandle extends StageHandle {
         return new GuiRobot().isWindowShown(HELP_WINDOW_TITLE);
     }
 
-    public FxRobot getLoadedPage() { return new GuiRobot().targetWindow(HELP_WINDOW_TITLE); }
+    public FxRobot getLoadedPage() {
+        return new GuiRobot().targetWindow(HELP_WINDOW_TITLE);
+    }
 
     /**
      * Returns the {@code URL} of the currently loaded page.
