@@ -6,11 +6,12 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-
 
 /**
  * The API of the Model component.
@@ -34,8 +35,13 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-    /** Change tag of given person */
-    void changeTag(Tag oldTag, Tag newTag)throws PersonNotFoundException, DuplicatePersonException;
+    /** Delete tag of given person */
+    void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+            DuplicatePersonException, TagNotFoundException;
+
+    /** Add tag of given person */
+    void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+            DuplicatePersonException, UniqueTagList.DuplicateTagException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
