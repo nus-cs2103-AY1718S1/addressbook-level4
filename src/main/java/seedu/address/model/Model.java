@@ -54,7 +54,7 @@ public interface Model {
      * @return UserPrefs object
      */
     UserPrefs getUserPrefs();
-  
+
     /**
      * Updates search count for each person who is searched using {@code FindCommand}
      * Assumes filtered List of persons contains search results
