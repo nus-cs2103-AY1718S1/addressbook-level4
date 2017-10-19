@@ -53,7 +53,7 @@ public class TagRemoveCommandTest {
         String toRemoveS;
         Tag toRemove;
 
-        if (existingTagSet.size() == 0 ) {
+        if (existingTagSet.size() == 0) {
             Tag onlyTag = new Tag(VALID_TAG_HUSBAND);
             singleTagSet.add(onlyTag);
             TagAddDescriptor tagAddDescriptor = new TagAddDescriptor(personInFilteredList);
@@ -64,9 +64,8 @@ public class TagRemoveCommandTest {
             tagAddCommand.executeUndoableCommand();
             toRemove = onlyTag;
             toRemoveS = VALID_TAG_HUSBAND;
-        }
-        else {
-            toRemove = (Tag)existingTagSet.toArray()[0];
+        } else {
+            toRemove = (Tag) existingTagSet.toArray()[0];
             toRemoveS = toRemove.tagName;
         }
         singleTagSet.add(toRemove);
@@ -100,7 +99,7 @@ public class TagRemoveCommandTest {
      * but smaller than size of address book
      */
     @Test
-    public void executeInvalidPersonIndexFilteredListFailure() throws Exception{
+    public void executeInvalidPersonIndexFilteredListFailure() throws Exception {
         showFirstPersonOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();

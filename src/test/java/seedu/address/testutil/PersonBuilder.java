@@ -94,7 +94,7 @@ public class PersonBuilder {
 
         Set<Tag> newTags = new HashSet<>();
         for (Tag current :  this.person.getTags()) {
-            if(!tag.equals(current.tagName)) {
+            if (!tag.equals(current.tagName)) {
                 newTags.add(current);
             }
         }
