@@ -108,10 +108,7 @@ public class CommandBox extends UiPart<Region> {
         assert autoCompleteSnapshot != null;
         if (!isAutoCompletePossibilitiesUpToDate) {
             // Update the autocomplete possibilities only when textbox is changed by non-shortcut user key press
-            // Autocomplete support only for commands at the moment, only updarte when only 1 word in textbox
-            if (commandTextField.getText().split(" ").length == 1) {
-                initAutoComplete();
-            }
+            initAutoComplete();
             // Remember old caret position, so that selected text include all autocompleted text
             oldCaretPosition = commandTextField.getCaretPosition();
         }
