@@ -36,7 +36,7 @@ b) Project management :
 image::liuhang0213.jpg[width="150", align="left"]
 {empty}[http://github.com/liuhang0213[github]] [<<liuhang#, portfolio>>]
 
-Role: Developer +
+Role: Developer + Functionality check +
 Responsibilities: Storage
 
 '''

@@ -4,20 +4,53 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: OurAb
-OurAb is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+OurAb is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
 
-=== Enhancement Added: Backup and restoring data
+=== Enhancement Added: User Preferences Management
 
 ==== External behavior
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
 
-* When the addressbook is loaded when the application starts, a backup copy will be saved in another folder.
-+
+* Edits the user preference. +
 
 #End of Extract#
+
+User can change the value of a preference by entering `pref PREFERENCE_KEY NEW_PREFERENCE_VALUE`.
+
+image::liuhang-pref-command-ss.png[width="800"]
+
+If no new value is entered, the current value for the preference will be displayed.
+
+image::liuhang-pref-command-ss2.png[width="800"]
+
+---
+
+==== Justification
+
+To allow users to customize the address book application conveniently.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When a `pref` command is entered, the `PrefCommand` will attempt to find and execute `get<PreferenceKey>`
+method in the `UserPrefs` class using Java Reflection API. If an exception is encountered, it is assumed that the method
+does not exist and the preference key entered by the user was invalid. Similarly, if two arguments were entered, `PrefCommand`
+will again try to find and execute `set<PreferenceKey>` method.
+
+#End of Extract#
+
+---
+=== Enhancement Added: Backup and restoring data
+
+==== External behavior
+
+* When the addressbook is loaded when the application starts, a backup copy will be saved in another folder.
 
 ---
 
@@ -37,7 +70,7 @@ image::StorageClassDiagram.png[width="800"]
 
 ---
 
-=== Enhancement Proposed
+=== Enhancement Proposed: Encryption
 
 === Other contributions
 

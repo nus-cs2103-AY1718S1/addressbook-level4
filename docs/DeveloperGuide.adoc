@@ -384,6 +384,65 @@ desired command in the command helper.
 **Cons:** Fragile architecture, have to change a few functions every time an extra command is added. This involves hardcoding the additional command Strings into the functions.
 Slightly harder to display selection of command in the helper box to the user.
 
+// tag::preferences[]
+=== Preferences
+
+In addition to configuration, user can customize the address book application by editing preferences. The difference between
+configurations and preferences is that configuration stores basic information requried to start the application, while
+preferences determine high level functionalities and UI styles. +
+
+==== Implementation
+The preferences are stored in `preferences.json` by default. This location is set in `config.json`. When the application
+is started, the `initPrefs` method reads the preferences file and converts it into a `UserPrefs` object using jackson-databind
+API. +
+In `UserPrefs` class, each valid preference key is defined as a field in the class, with initial value set to the default
+value of the preference. For example, the default path to the address book local storage is :
+[source,java]
+----
+private String addressBookFilePath = "data/addressbook.xml";
+----
+There are also two methods defined for each preference: `get<PreferenceKey>` and `set<PreferenceKey>`. These are used for
+reading and writing to the preference respectively. For example, for AddressBookFilePath, we have :
+[source,java]
+----
+public String getAddressBookFilePath() {
+    return addressBookFilePath;
+}
+
+public void setAddressBookFilePath(String addressBookFilePath) {
+    this.addressBookFilePath = addressBookFilePath;
+}
+----
+
+==== Command: `pref`
+The `pref` command allows users to view or edit the preferences. The details of its usage can be found in the
+<<UserGuide, UserGuide.adoc>>. The implementation of the command will be explained here. +
+When a `pref` command is entered, the `PrefCommand` will attempt to find and execute `get<PreferenceKey>`
+method in the `UserPrefs` class using Java Reflection API. If an exception is encountered, it is assumed that the method
+does not exist and the preference key entered by the user was invalid. Similarly, if two arguments were entered, `PrefCommand`
+will again try to find and execute `set<PreferenceKey>` method.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `PrefCommand` +
+**Alternative 1 (current choice):** Use Reflection API +
+**Pros:** Easier to add in a new preference by changing only the `UserPrefs` class +
+**Cons:** Hard to debug since it is less intuitive +
+**Alternative 2:** Design another parser similar to the command parser +
+**Pros:** Easier to understand the code +
+**Cons:** More difficult to add in a new preference,
+
+---
+
+**Aspect:** Data structure to store the preferences : +
+**Alternative 1 (current choice):** JSON and jackson-databind +
+**Pros:** Most of the parsing is taken care of by the API +
+**Cons:** Adding new preference is slightly troublesome; the API documentation is not beginner-friendly +
+**Alternative 2:** Use a hashmap to store the preferences +
+**Pros:** Intuitive, easy to add more preferences +
+**Cons:** Data structure is more restricted; may need to write native code to parse JSON if a library cannot be found to convert JSON to hashmap +
+// end::preferences[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -906,7 +965,6 @@ Use case resumes at step 2.
 ** 3b1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-=======
 
 [discrete]
 === Use case: List by most searched
@@ -933,6 +991,7 @@ Use case ends.
 ** AddressBook continues to step 3
 +
 Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
@@ -967,19 +1026,20 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+//[appendix]
+//== Product Survey
+//
+//*Product Name*
+//
+//Author: ...
+//
+//Pros:
+//
+//* ...
+//* ...
+//
+//Cons:
+//
+//* ...
+//* ...
