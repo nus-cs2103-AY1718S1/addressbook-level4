@@ -37,6 +37,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -261,5 +263,19 @@ public abstract class RolodexSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Returns a defensive copy of the current storage.
+     */
+    protected Storage getStorage() {
+        return testApp.getStorage();
+    }
+
+    /**
+     * Returns a defensive copy of the current userPrefs.
+     */
+    protected UserPrefs getUserPrefs() {
+        return testApp.getUserPrefs();
     }
 }
