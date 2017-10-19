@@ -64,7 +64,6 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         people = people.substring(0, people.length() - 1);
-//
         result = String.format(MESSAGE_DELETE_PERSON_SUCCESS, people);
         return new CommandResult(result);
     }
