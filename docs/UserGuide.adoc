@@ -102,22 +102,22 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` / just type in the search bar the name or the phone number you want to search for, and the results will be automatically displayed in the left pane in no time. `coming in v2.0`
+Format: just type in the search bar the name or the phone number you want to search for, and the results will be automatically displayed in the left panel. `since v1.2`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Either name or phone number is searched. `coming in v2.0`
-* Words will be matched according to prefix e.g. `Han` will match `Hans` and `Hansen` `coming in v2.0`
-* Only persons matching all keyword as prefixes will be returned (i.e. `AND` search). e.g. `Hans Bo` will return `Hanschler Bonobo`, `Hansen Boening` `coming in v2.0`
+* Words will be matched according to prefix e.g. `Han` will match `Hans` and `Hansen` `since v1.2`
+* Only persons matching all keyword as prefixes will be returned (i.e. `AND` search). e.g. `Hans Bo` will return `Hanschler Bonobo`, `Hansen Boening` `since v1.2`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, and `John` as name prefixes
+* `John` +
+Displays `john` and `Johnson`
+* `Betsy Tim John` +
+Displays persons who have ALL prefixes `Betsy`, `Tim`, and `John` in ANY part of their names
 
 === Deleting a person : `delete`
 
@@ -282,7 +282,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *(DEPRECATED FORMAT)* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
