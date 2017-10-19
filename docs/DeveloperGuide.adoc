@@ -216,7 +216,27 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+=== Person Information Panel
+
+The person information panel is created using javafx. It should display detailed information of a person when the person is selected from the person list panel. Before any person is selected, the person information panel should be blank.
+
+The event of the selection of a person is registered using the Event Bus system.
+
+The following shows the usage of the person information panel:
+
+Before selecting a person:
+
+image::AddressAppPre-selection.png[width="800"]
+
+After selecting a person:
+
+image::AddressAppPost-selection.png[width="800"]
+
+The following diagram shows the class diagram for person information panel:
+
+image::PersonInformationPanelClassDiagram.png[width="800"]
+
+As we can see, it inherits from the UiPart class, and that MainWindow class has access to the panel, which is then displayed in the GUI.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
