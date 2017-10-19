@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -29,6 +30,7 @@ public class RedoCommandTest {
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
     }
 
     @Test
@@ -41,6 +43,7 @@ public class RedoCommandTest {
 
         // multiple commands in redoStack
         deleteFirstLesson(expectedModel);
+
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in redoStack

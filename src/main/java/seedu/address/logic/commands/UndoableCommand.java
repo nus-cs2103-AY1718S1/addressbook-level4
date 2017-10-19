@@ -47,7 +47,6 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.handleListingUnit();
     }
 
 

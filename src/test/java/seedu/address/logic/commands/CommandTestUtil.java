@@ -90,13 +90,10 @@ public class CommandTestUtil {
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
             Model expectedModel) {
         try {
-
             CommandResult result = command.execute();
-            System.out.println();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
-            System.out.println(ce.getMessage());
             throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
