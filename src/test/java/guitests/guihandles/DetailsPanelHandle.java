@@ -9,20 +9,20 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class DetailsPanelHandle extends NodeHandle<Node> {
-    public static final String DETAILS_PANEL_ID = "#DetailsPanelPlaceholder";
+    public static final String DETAILS_PANEL_ID = "#detailsPanelPlaceholder";
 
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
-    private static final String SCHOOL_EMAIL_FIELD_ID = "#schEmail";
+    private static final String SCHOOL_EMAIL_FIELD_ID = "#schoolEmail";
     private static final String BIRTHDAY_FIELD_ID = "#birthday";
     private static final String WEBSITE_FIELD_ID = "#website";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
     private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
-    private static final String SCHOOL_EMAIL_FIELD_FIELD_ID = "#schEmailField";
+    private static final String SCHOOL_EMAIL_FIELD_FIELD_ID = "#schoolEmailField";
     private static final String BIRTHDAY_FIELD_FIELD_ID = "#birthdayField";
     private static final String WEBSITE_FIELD_FIELD_ID = "#websiteField";
 
