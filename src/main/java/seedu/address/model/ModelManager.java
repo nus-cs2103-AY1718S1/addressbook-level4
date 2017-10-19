@@ -165,12 +165,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void removeTag(Tag tag, Index index) throws DuplicatePersonException, PersonNotFoundException {
-        int totalSize = addressBook.getPersonList().size();
+        int totalSize = getFilteredPersonList().size();
         Boolean tagExist = false;
 
         if (index != null) {
             int targetIndex = index.getZeroBased();
-            Person toDelete =  new Person(addressBook.getPersonList().get(targetIndex));
+            Person toDelete =  new Person(getFilteredPersonList().get(targetIndex));
             Person toUpdate = new Person(toDelete);
             Set<Tag> oldTags = toDelete.getTags();
 
@@ -182,7 +182,7 @@ public class ModelManager extends ComponentManager implements Model {
             }
         } else {
             for (int i = 0; i < totalSize; i++) {
-                Person toDelete = new Person(addressBook.getPersonList().get(i));
+                Person toDelete = new Person(getFilteredPersonList().get(i));
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
 
