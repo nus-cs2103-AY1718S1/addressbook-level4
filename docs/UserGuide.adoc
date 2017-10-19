@@ -119,7 +119,7 @@ Format: `edit INDEX [CODE/LOCATION]...`
 ****
 * Edits the attribute at the specified `INDEX`. The index refers to the index number shown in the last attribute listing. The index *must be a positive integer* 1, 2, 3, ...
 * Requires to list by that specified attribute(module/location) first.
-* All persons with the specifed attribute value will be updated to with the attribute of input values.
+* All lessons with the specifed attribute value will be updated to with the attribute of input values.
 ****
 
 Examples:
@@ -177,7 +177,7 @@ Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
  Return a list sorted by code lexicographically
 
 
-=== Deleting a person : `delete`
+=== Deleting a lesson : `delete`
 
 Deletes all the lessons with specified attribute value in the attribute list from the ModU. +
 Format: `delete INDEX`
@@ -203,7 +203,7 @@ Deletes the 2nd lesson in the ModU location list.
 
 === Selecting a lesson : `select`
 
-Selects the lesson identified by the index number used in the last person listing. +
+Selects the lesson identified by the index number used in the last lesson listing. +
 Format: `select INDEX`
 
 ****
