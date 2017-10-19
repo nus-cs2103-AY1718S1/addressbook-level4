@@ -65,9 +65,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add #/PARCEL_ID`,
- `PARCEL_ID` is a parameter which can be used as `add #/1110201700000001`.
-* Items in square brackets are optional e.g `#/PARCEL_ID [t/TAG]` can be used as `#/1110201700000001 t/fragile` or as
- `#/1110201700000001`.
+ `PARCEL_ID` is a parameter which can be used as `add #/RR000000000SG`.
+* Items in square brackets are optional e.g `#/PARCEL_ID [t/TAG]` can be used as `#/RR000000000SG t/fragile` or as
+ `#/RR000000000SG`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
  (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
 * Parameters can be in any order e.g. if the command specifies `#/PARCEL_ID p/PHONE_NUMBER`,
@@ -88,8 +88,8 @@ A parcel can have any number of tags (including 0)
 
 Examples:
 
-* `add #/11111111111 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001`
-* `add #/11111112222 n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
+* `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001`
+* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
 === Listing all parcels : `list`
@@ -296,7 +296,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERYDATE] [t/TAG]...` +
-e.g. `edit 2 #/1111111111111 n/James Lee e/jameslee@example.com`
+e.g. `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
