@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "Bluebird.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
