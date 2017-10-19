@@ -23,12 +23,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
+import seedu.address.model.person.UserPerson;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FilterCommandTest {
-    private Model model = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
 
     @Test
     public void equals() {

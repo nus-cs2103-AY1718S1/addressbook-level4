@@ -1,11 +1,14 @@
 package seedu.address.storage;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 
 import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,6 +22,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.UserPerson;
+import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.util.SampleUserPersonUtil;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class StorageManagerTest {
@@ -89,8 +94,8 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                 new JsonUserPrefsStorage("dummy"), new XmlUserProfileStorage("dummy"));
-        storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(new UserPerson()));
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+        storage.handleUserPersonChangedEvent(new UserPersonChangedEvent(new UserPerson(SampleUserPersonUtil.getDummySamplePerson())));
+        assertFalse(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
 

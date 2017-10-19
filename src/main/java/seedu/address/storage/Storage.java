@@ -45,7 +45,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, UserProfi
     @Override
     void saveUserPerson(UserPerson userPerson, String filePath) throws IOException;
 
-    void handleUserPersonChangedEvent(UserPersonChangedEvent upce) throws JAXBException;
+    void handleUserPersonChangedEvent(UserPersonChangedEvent upce);
 
 
     /**

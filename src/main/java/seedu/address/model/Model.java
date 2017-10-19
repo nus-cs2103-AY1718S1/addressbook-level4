@@ -22,9 +22,6 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Returns the UserPerson */
-    UserPerson getUserPerson();
-
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
@@ -42,12 +39,6 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
 
-    /**
-     * Updates the UserPerson with an editedPerson
-     * @param editedPerson
-     */
-    void updateUserPerson(ReadOnlyPerson editedPerson);
-
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Returns an unmodifiable view of the filtered person list */
@@ -60,5 +51,14 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /** Returns the UserPerson */
+    UserPerson getUserPerson();
+
+    /**
+     * Updates the UserPerson with an editedPerson
+     * @param editedPerson
+     */
+    void updateUserPerson(ReadOnlyPerson editedPerson);
 
 }

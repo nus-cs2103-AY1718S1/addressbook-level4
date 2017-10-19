@@ -45,6 +45,18 @@ public class UserPerson implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
     }
 
+    /**
+     * Every field must be present and not null.
+     */
+    public UserPerson(ReadOnlyPerson src) {
+        this.name = new SimpleObjectProperty<>(src.getName());
+        this.phone = new SimpleObjectProperty<>(src.getPhone());
+        this.email = new SimpleObjectProperty<>(src.getEmail());
+        this.address = new SimpleObjectProperty<>(src.getAddress());
+        this.remark = new SimpleObjectProperty<>(new Remark(""));
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+    }
+
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
     }

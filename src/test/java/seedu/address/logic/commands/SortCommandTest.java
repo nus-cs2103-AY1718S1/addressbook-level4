@@ -14,6 +14,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.UserPerson;
+
 /**
  * Contains integration tests (interaction with the Model) for {@code SortCommand}.
  */
@@ -26,8 +28,8 @@ public class SortCommandTest {
 
     @Test
     public void execute_unsortedList_becomesSorted() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
+        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
 
         sortCommand = prepareCommand(filterType);
         assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SUCCESS, expectedModel);
@@ -36,8 +38,8 @@ public class SortCommandTest {
 
     @Test
     public void execute_filteredList_showsEverything() {
-        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getUnsortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
+        expectedModel = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
         showFirstPersonOnly(model);
 
         sortCommand = prepareCommand(filterType);

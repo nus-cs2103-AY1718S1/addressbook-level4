@@ -43,7 +43,7 @@ public class UserPrefs {
     }
 
     public void setUserProfileFilePath(String newProfileFilePath) {
-        this.addressBookFilePath = newProfileFilePath;
+        this.userProfileFilePath = newProfileFilePath;
     }
 
     public String getAddressBookName() {
