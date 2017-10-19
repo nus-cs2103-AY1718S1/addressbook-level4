@@ -2,6 +2,7 @@ package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_TAG_NOT_FOUND;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -117,7 +118,7 @@ public class UniqueTagList implements Iterable<Tag> {
         requireNonNull(tagGettingRemoved);
         int tagIndexInList = indexOfTagWithName(tagGettingRemoved);
         if (tagIndexInList == -1) {
-            throw new TagNotFoundException("Tag is not found.");
+            throw new TagNotFoundException(MESSAGE_TAG_NOT_FOUND);
         } else {
             return internalList.remove(tagIndexInList);
         }

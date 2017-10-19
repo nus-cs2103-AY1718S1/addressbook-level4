@@ -3,6 +3,7 @@ package seedu.address.logic;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,5 +24,13 @@ public class CommandHistoryTest {
         history.add(validCommand);
         history.add(invalidCommand);
         assertEquals(Arrays.asList(validCommand, invalidCommand), history.getHistory());
+    }
+
+    @Test
+    public void clear() {
+        history.add("list");
+        history.add("clear");
+        history.clear();
+        assertEquals(Collections.EMPTY_LIST, history.getHistory());
     }
 }
