@@ -329,7 +329,7 @@ There is no need to save manually.
 *A*: Type `color enable` in the command box.
 
 *Q*: How do I get support? +
-*A*: if you have any questions, you can contact us by https://liangcao@yahoo.com[email].
+*A*: if you have any questions, you can contact us by mailto:liangcao@yahoo.com[email].
 
 == Command Summary
 
