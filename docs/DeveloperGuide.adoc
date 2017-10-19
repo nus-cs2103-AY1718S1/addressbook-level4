@@ -345,67 +345,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-// tag::list[]
-=== List (Mainlist, Blacklist etc) mechanism
-
-List feature is a useful feature to view persons of a certain category. In the context of this project, master list contains all the contacts of the debt collection agency.
-
-We are displaying multiple lists to suit the need for the direction of the project. The lists could be viewed with the respective commands that will bring it to picture. The commands to materialize these lists are named after the lists itself. Meaning, to view the blacklist, the command typed is "blacklist" or "bl'.
-
-These commands will inherit from `UndoableCommand`. Thus, these commands are supported by `undo` and `redo` command residing in the current state of Addressbook.
-
-This List mechanism is facilitated by commands which uses `Logic` interface to obtain the copy of the list that is required. As seen by the diagram 3.2.1 and 3.2.2 above, to obtain the current blacklist of the address book, "list" string is first captured by the `CommandBox`. The `CommandBox` then passes this string to the `Logic` interface for execution.
-
-`Logic` interface uses `LogicManager`, the class that implements its methods, to package it as a `Command` object. The respective command is then executed by this following statement in `LogicManager` class:
-
-[source,java]
-----
-CommandResult result = command.execute();
-----
-
-Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `Logic` `Manager` subsequently calls `Model` interface. `ModelManager` handles the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `AddressBook` class handles this request and thus will return the required list, since the various lists are stored in this class. Technically, the `List` `Object` that exists in the current structure just contains all persons. The blacklisted persons are obtained by running a check on all persons residing in this variable. This is shown by the following code below:
-
-[source,java]
-----
-public UniquePersonList getBlacklistedPersons() {
-    UniquePersonList blacklistedPersons = new UniquePersonList();
-    for (Person person : persons.getInternalList()) {
-        if (person.getIsBlacklisted()) {
-            try {
-                blacklistedPersons.add(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "This is not possible as prior checks have been done";
-            }
-        }
-    }
-    return blacklistedPersons;
-}
-----
-
-Although this seems inefficient, it supports syncing of the various lists well. Meaning, any changes that occurred in main list will be reflected in blacklist as well. For example, if a person is deleted from the main list, he will also be deleted from the blacklist. This also works for various other commands. Thus, it is efficient in this aspect.
-
-The following sequence diagram, Figure 3.2.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
-
-image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
-Figure 3.2.1 : Sequence Diagram of How the Blacklist Command Works_
-
-The following sequence diagram, Figure 3.2.1, shows further details of the interaction between `Model` and 'Addressbook` to obtain the blacklist:
-
-image::BlacklistCommandSequenceDiagram2.png[width="800"]
-Figure 3.2.2 : Sequence Diagram of Model and Addressbook Interacts To Generate The Blacklist From All Persons_
-
-==== Design Constraints:
-
-**Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command). +
-**Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list. +
-**Pros:** Easy to implement. +
-**Cons:** Performance issues as users are bound to make a mistake. +
-**Alternative 2:** Restrict other command usages in certain lists. +
-**Pros:** Users will never make a mistake sending the wrong person to the wrong list. +
-**Cons:** Implementation is complicated and thus implementation has to revisited whenever new commands are introduced.
-
-// end::list[]
-
 // tag::borrowCommand[]
 === Borrow command mechanism
 
@@ -532,6 +471,67 @@ This is because the above mentioned constructor was meant to make a copy of the 
 **Cons:** Such an implementation would not be as user-friendly as the first alternative. Currently the amount of fields for the user to key in
 is rather high. Implementing alternative 2 would be more tedious on the user's side.
 // end::datestoring[]
+
+// tag::list[]
+=== List (Mainlist, Blacklist etc) mechanism
+
+List feature is a useful feature to view persons of a certain category. In the context of this project, master list contains all the contacts of the debt collection agency.
+
+We are displaying multiple lists to suit the need for the direction of the project. The lists could be viewed with the respective commands that will bring it to picture. The commands to materialize these lists are named after the lists itself. Meaning, to view the blacklist, the command typed is "blacklist" or "bl'.
+
+These commands will inherit from `UndoableCommand`. Thus, these commands are supported by `undo` and `redo` command residing in the current state of Addressbook.
+
+This List mechanism is facilitated by commands which uses `Logic` interface to obtain the copy of the list that is required. As seen by the diagram 3.2.1 and 3.2.2 above, to obtain the current blacklist of the address book, "list" string is first captured by the `CommandBox`. The `CommandBox` then passes this string to the `Logic` interface for execution.
+
+`Logic` interface uses `LogicManager`, the class that implements its methods, to package it as a `Command` object. The respective command is then executed by this following statement in `LogicManager` class:
+
+[source,java]
+----
+CommandResult result = command.execute();
+----
+
+Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `Logic` `Manager` subsequently calls `Model` interface. `ModelManager` handles the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `AddressBook` class handles this request and thus will return the required list, since the various lists are stored in this class. Technically, the `List` `Object` that exists in the current structure just contains all persons. The blacklisted persons are obtained by running a check on all persons residing in this variable. This is shown by the following code below:
+
+[source,java]
+----
+public UniquePersonList getBlacklistedPersons() {
+    UniquePersonList blacklistedPersons = new UniquePersonList();
+    for (Person person : persons.getInternalList()) {
+        if (person.getIsBlacklisted()) {
+            try {
+                blacklistedPersons.add(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "This is not possible as prior checks have been done";
+            }
+        }
+    }
+    return blacklistedPersons;
+}
+----
+
+Although this seems inefficient, it supports syncing of the various lists well. Meaning, any changes that occurred in main list will be reflected in blacklist as well. For example, if a person is deleted from the main list, he will also be deleted from the blacklist. This also works for various other commands. Thus, it is efficient in this aspect.
+
+The following sequence diagram, Figure 3.5.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
+
+image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
+Figure 3.5.1 : Sequence Diagram of How the Blacklist Command Works_
+
+The following sequence diagram, Figure 3.5.2, shows further details of the interaction between `Model` and 'Addressbook` to obtain the blacklist:
+
+image::BlacklistCommandSequenceDiagram2.png[width="800"]
+Figure 3.5.2 : Sequence Diagram of Model and Addressbook Interacts To Generate The Blacklist From All Persons_
+
+==== Design Constraints:
+
+**Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command). +
+**Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list. +
+**Pros:** Easy to implement. +
+**Cons:** Performance issues as users are bound to make a mistake. +
+**Alternative 2:** Restrict other command usages in certain lists. +
+**Pros:** Users will never make a mistake sending the wrong person to the wrong list. +
+**Cons:** Implementation is complicated and thus implementation has to revisited whenever new commands are introduced.
+
+// end::list[]
 
 === Logging
 
