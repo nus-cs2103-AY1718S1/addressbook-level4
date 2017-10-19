@@ -1,3 +1,5 @@
+:imagesDir: images
+image::UG_cover.png[width="750", align="left"]
 = AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
