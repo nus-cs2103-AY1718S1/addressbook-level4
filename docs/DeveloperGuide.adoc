@@ -368,7 +368,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 === Filter by tag mechanism
 
 The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
-then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person  +
+then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
 that has the tags similar to the keywords. +
 After which, the predicate returned by `TagContainsKeywordsPredicate` will then update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
 The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
@@ -391,7 +391,7 @@ The remove tag mechanism is implemented by `Logic` and `Model`. When parsing the
 The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
 In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
 `ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
-The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson +
+The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
 and then removes the `Tag` that is parsed into the method. The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
 `RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
 [NOTE]
@@ -424,9 +424,10 @@ image::removeTag_sequenceDiagram.png[width="800"]
 **Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
 
 === Change colour theme mechanism
-The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI` +
-on the `MainWindow` MenuBar as MenuItems. When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem +
-will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets +
+The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
+on the `MainWindow` MenuBar as MenuItems. +
+When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
+will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
 that belongs to other colours. +
 The diagrams shows the UI of the additional colour themes:
 
