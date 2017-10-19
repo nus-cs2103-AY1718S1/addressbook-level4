@@ -21,7 +21,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
          */
         String command = "  " + FindTagCommand.COMMAND_WORD + " " + "owesMoney" + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON);
+        ModelHelper.setFilteredPersonsList(expectedModel, BENSON);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -38,13 +38,13 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
         command = FindTagCommand.COMMAND_WORD + " family";
-        ModelHelper.setFilteredList(expectedModel, CARL);
+        ModelHelper.setFilteredPersonsList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in address book, 2 keywords -> 2 persons found */
         command = FindTagCommand.COMMAND_WORD + " owesMoney colleague";
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        ModelHelper.setFilteredPersonsList(expectedModel, BENSON, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -67,19 +67,19 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: find tag in address book, keyword is same as tag but of different case -> 1 person found */
         command = FindTagCommand.COMMAND_WORD + " FaMiLy";
-        ModelHelper.setFilteredList(expectedModel, CARL);
+        ModelHelper.setFilteredPersonsList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find tag in address book, keyword is substring of tag -> 0 persons found */
         command = FindTagCommand.COMMAND_WORD + " fri";
-        ModelHelper.setFilteredList(expectedModel);
+        ModelHelper.setFilteredPersonsList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find tag in address book, tag is substring of keyword -> 0 persons found */
         command = FindTagCommand.COMMAND_WORD + " friend";
-        ModelHelper.setFilteredList(expectedModel);
+        ModelHelper.setFilteredPersonsList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -108,7 +108,7 @@ public class FindTagCommandSystemTest extends AddressBookSystemTest {
         assert getModel().getAddressBook().getPersonList().size() == 0;
         command = FindTagCommand.COMMAND_WORD + " " + "owesMoney";
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredPersonsList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
     }
