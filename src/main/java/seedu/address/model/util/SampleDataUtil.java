@@ -70,7 +70,6 @@ public class SampleDataUtil {
 
         return tags;
     }
-    
     /**
      * @return a email set containing the list of strings given
      * @throws IllegalValueException
@@ -80,7 +79,6 @@ public class SampleDataUtil {
         for (String e : emails) {
             emailList.add(new Email(e));
         }
-        
         return emailList;
     }
 

@@ -52,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             ReadOnlyPerson person = new Person(name, phone, email, address, remark, tagList);
 
             return new AddCommand(person);
-        } catch (IllegalValueException ive) {    
+        } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
