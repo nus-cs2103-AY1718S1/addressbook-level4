@@ -363,7 +363,37 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Add Event
 // tag::addevent[]
-Add event mechanism adds an event which stores in the AddressBook, which willthen be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
+Add event mechanism adds an event which stores in the AddressBook, which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
+
+The add event mechanism is facilitated by a `EventList`, which is stored in AddressBook. Similar to the PersonList and TagList, the list contains the
+different events with their information given by the user. This command inherits from `UndoableCommand`.
+
+Code of AddEventCommand:
+public class AddEventCommand extends UndoableCommand {
+
+@Override
+ public CommandResult executeUndoableCommand() throws CommandException {
+    requireNonNull(model);
+     try {
+         model.addEvent(toAdd);
+         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateEventException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
+    }
+}
+
+=== Design Consideration
+**Aspect:** Implementation of `AddEventCommand` +
+**Alternative 1 (current choice):** Extends to UndoableCommand +
+**Pros:** Developer can undo their command when they do not want to add the event. +
+**Cons:** Developer has to understand the implementation of UndoableCommand +
+
+---
+**Aspect:** How does add event executes +
+**Alternative 1 (current choice):** Take in Name(person) , Date(event) and Address(person) +
+**Pros:** Simple to implement as add event uses the current Name for the Person as the Name of event and Address of the event due to similar CliSyntax. +
+**Cons:** Developer might get confused with the different use of imports as Name and Address are from person while Date is from events. +
 // end::addevent[]
 
 === Logging
