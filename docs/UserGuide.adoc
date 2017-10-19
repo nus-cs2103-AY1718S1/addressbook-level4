@@ -220,13 +220,6 @@ You can select a person based on their `INDEX` number. +
 Format: `select INDEX` +
 Shorthand Format: `s INDEX`
 
-
-[WARNING]
-The index *must be a positive integer* `1, 2, 3, ...`
-
-[NOTE]
-The index refers to the index number shown in the most recent listing
-
 *Examples:*
 
 * `list` +
@@ -236,30 +229,32 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+[WARNING]
+The index *must be a positive integer* `1, 2, 3, ...`
+
+[NOTE]
+The index refers to the index number shown in the most recent listing
+
 === Listing entered commands : `history`
 
 You can list all the commands that you have entered in reverse chronological order. +
-Format: `history` +
-Shorthand Format: `h`
+*Format:* `history` +
+*Shorthand Format:* `h`
 
 [NOTE]
-====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Shorthand Format: `u`
+*Format:* `undo` +
+*Shorthand Format:* `u`
 
 [NOTE]
-====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
 
-Examples:
+*Examples:*
 
 * `delete 1` +
 `list` +
@@ -278,10 +273,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 You can reverse the most recent `undo` command. +
-Format: `redo` +
-Shorthand Format: `r`
+*Format:* `redo` +
+*Shorthand Format:* `r`
 
-Examples:
+*Examples:*
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -302,8 +297,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 You can clear all entries in the address book. +
-Format: `clear` +
-Shorthand Format: `c`
+*Format:* `clear` +
+*Shorthand Format:* `c`
 
 === Set Tag Color Mode : `tagcolor`
 
