@@ -26,7 +26,7 @@ public class TagCommand extends UndoableCommand {
             + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME\n"
             + "Example: " + COMMAND_WORD + "1,2,3 friends";
 
-    public static final String MESSAGE_TAG_PERSON_SUCCESS = "";
+    public static final String MESSAGE_SUCCESS = "Tagged successfully.";
 
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
     public static final String MESSAGE_DUPLICATE_TAG = "One or more persons already have this tag.";
@@ -78,7 +78,7 @@ public class TagCommand extends UndoableCommand {
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult("Tagged successfully");
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override

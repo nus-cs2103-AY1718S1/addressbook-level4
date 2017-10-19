@@ -4,7 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -31,9 +34,11 @@ public class TagCommandParser implements Parser<TagCommand> {
         }
 
         List<Index> indexList = new ArrayList<>();
+        String[] indexArgs = splittedArgs[0].split(",");
+
+        Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(indexArgs));
         try {
-            String[] indexArgs = splittedArgs[0].split(",");
-            for (String indexArg : indexArgs) {
+            for (String indexArg : uniqueIndexes) {
                 indexList.add(ParserUtil.parseIndex(indexArg));
             }
         } catch (IllegalValueException ive) {
