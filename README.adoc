@@ -2,10 +2,10 @@
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/CS2103AUG2017-W10-B3/DeathNote[image:https://travis-ci.org/CS2103AUG2017-W10-B3/DeathNote.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/chrisboo/deathnote/build/1.0.1[image:https://ci.appveyor.com/api/projects/status/mg2oh1l3aw3j318v?svg=true[Build status]]
-https://coveralls.io/github/CS2103AUG2017-W10-B3/DeathNote?branch=master[image:https://s3.amazonaws.com/assets.coveralls.io/badges/coveralls_89.svg[Coverage Status]]
-https://www.codacy.com/app/chrisboo/DeathNote?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-W10-B3/DeathNote&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/a8d551036b1c4f2f84a16291a9fe1df0[Codacy Badge]]
+https://travis-ci.org/CS2103AUG2017-W10-B3/main[image:https://travis-ci.org/CS2103AUG2017-W10-B3/main.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/chrisboo/main/build/1.0.1[image:https://ci.appveyor.com/api/projects/status/kgb8pkn381a39lrs?svg=true[Build status]]
+https://coveralls.io/github/CS2103AUG2017-W10-B3/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-W10-B3/main/badge.svg?branch=master[Coverage Status]]
+https://www.codacy.com/app/chrisboo/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-W10-B3/main&utm_campaign=Badge_Grade[image:image:https://api.codacy.com/project/badge/Grade/01c453c6f53149f59eaf2563ba02ed04["Codacy Badge"]]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
