@@ -290,16 +290,18 @@ Examples:
 * `import` [filename] +
 Imports the file and store it in [app].
 
-=== Displaying user's schedule command: `schedule`
+=== Displaying user's schedule command: `checkschedule`
 
-`Coming in v2.0` +
-Displays user's schedule
-Format: `schedule` / `calendar`
+`Coming in v1.4` +
+Displays user's schedule for the current week upon executing the command.
+After execution, a calendar GUI will appear in the main window, with events
+displayed in the corresponding time slots.
+Format: `checkschedule` / `thisweek`/`cs`/`tw`
 
 Example:
 
-* `schedule` +
-Displays user's schedule.
+* `checkschedule` +
+Displays user's schedule for the week.
 
 === App opens at startup of user's OS command: `startup`
 
