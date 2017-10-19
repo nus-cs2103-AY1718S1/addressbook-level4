@@ -29,11 +29,6 @@ public class GroupCommandParser implements Parser<GroupCommand> {
 
         String[] groupKeyWords = trimmedArgs.split("\\s+");
 
-        if (groupKeyWords.length < 2) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
-        }
-
         return new GroupCommand(groupKeyWords[0], makeNameList(groupKeyWords));
     }
 

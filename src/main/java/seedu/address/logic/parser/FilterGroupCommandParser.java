@@ -18,9 +18,6 @@ public class FilterGroupCommandParser implements Parser<FilterGroupCommand> {
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterGroupCommand.MESSAGE_USAGE));
-        } else if (trimmedArgs.length() > 1) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterGroupCommand.MESSAGE_USAGE));
         }
 
         return new FilterGroupCommand(new GroupContainsKeywordsPredicate(trimmedArgs));
