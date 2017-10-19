@@ -64,8 +64,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add #/PARCEL_ID`, `PARCEL_ID` is a parameter which can be used as `add i/1110201700000001`.
-* Items in square brackets are optional e.g `i/PARCEL_ID [t/TAG]` can be used as `#/1110201700000001 t/fragile` or as `#/1110201700000001`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add #/PARCEL_ID`, `PARCEL_ID` is a parameter which can be used as `add #/1110201700000001`.
+* Items in square brackets are optional e.g `#/PARCEL_ID [t/TAG]` can be used as `#/1110201700000001 t/fragile` or as `#/1110201700000001`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
 * Parameters can be in any order e.g. if the command specifies `#/PARCEL_ID p/PHONE_NUMBER`, `p/PHONE_NUMBER #/PARCEL_ID` is also acceptable.
 ====
