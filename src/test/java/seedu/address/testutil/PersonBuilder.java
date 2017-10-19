@@ -3,7 +3,6 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -23,7 +22,6 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_GROUPS = "Bamboo";
 
     private Person person;
 
@@ -34,9 +32,8 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            Set<Group> defaultGroup = SampleDataUtil.getGroupSet(DEFAULT_GROUPS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultTags, defaultGroup);
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }

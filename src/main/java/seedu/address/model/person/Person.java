@@ -25,11 +25,25 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    /**
+     *  A Person will have an empty group list by default
+     */
+    private ObjectProperty<UniqueGroupList> groups = new SimpleObjectProperty<>(new UniqueGroupList());
 
-    private ObjectProperty<UniqueGroupList> groups;
 
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
 
     /**
      * Every field must be present and not null.
@@ -51,7 +65,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getGroups());
+                source.getTags());
     }
 
     public void setName(Name name) {
