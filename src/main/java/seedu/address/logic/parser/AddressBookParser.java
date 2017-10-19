@@ -77,7 +77,7 @@ public class AddressBookParser {
 
         case DetagCommand.COMMAND_WORD:
             return new DetagCommandParser().parse(arguments);
-            
+
         case AddTaskCommand.COMMAND_WORD:
             return new AddTaskCommandParser().parse(arguments);
 
