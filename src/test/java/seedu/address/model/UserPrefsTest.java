@@ -12,7 +12,6 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefsTest {
 
     private GuiSettings guiSettings;
-    private String rolodexFilePath;
     private String rolodexName;
     private UserPrefs userPrefs;
 
@@ -20,7 +19,7 @@ public class UserPrefsTest {
     public void setUp() {
         // Set up default values to values from an empty UserPrefs object
         guiSettings = new GuiSettings((double) 500, (double) 500, 0, 0);
-        rolodexFilePath = "data/default.rldx";
+        String rolodexFilePath = "data/default.rldx";
         rolodexName = "MyRolodex";
         userPrefs = new UserPrefs();
         assertEquals(guiSettings, userPrefs.getGuiSettings());
