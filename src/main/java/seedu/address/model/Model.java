@@ -56,7 +56,7 @@ public interface Model {
     /**
      * Deletes all persons in the {@code AddressBook} who have any of the {@code tags}.
      */
-    void deletePersonsByTags(Set<Tag> tags);
+    void deletePersonsByTags(Set<Tag> tags) throws PersonNotFoundException;
 
     /**
      * Adds appoints to a person
