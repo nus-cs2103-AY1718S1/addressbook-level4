@@ -18,20 +18,20 @@
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="Email: " />
+                <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
+                <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text= "\$address" wrapText="true" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+                <Text fx:id="emailField" fill="gray" styleClass="window_small_label" text="School Email: " />
                 <Label fx:id="email" styleClass="window_small_label" text= "\$email" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-                <Text fx:id="schField" fill="gray" styleClass="window_small_label" text="School Email: " />
-                <Label fx:id="schEmail" styleClass="window_small_label" text= "\$schEmail" />
-            </children>
-        </TextFlow>
-        <TextFlow prefHeight="50.0" prefWidth="400.0">
-            <children>
-                <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
-                <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text= "\$address" wrapText="true" />
+                <Text fx:id="schoolEmailField" fill="gray" styleClass="window_small_label" text="Email: " />
+                <Label fx:id="schoolEmail" styleClass="window_small_label" text= "\$schoolEmail" />
             </children>
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
