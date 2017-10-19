@@ -2,8 +2,10 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
 import java.util.Set;
+
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -13,8 +15,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.SearchData;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -115,6 +119,45 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    @Override
+    public void recordSearchHistory() throws CommandException {
+
+        int searchResultsCount = filteredPersons.size();
+
+        for (int i = 0; i < searchResultsCount; i++) {
+            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
+            SearchData updatedSearchData = searchedPerson.getSearchData();
+            updatedSearchData.incrementSearchCount();
+            Person modifiedPerson = new Person(searchedPerson.getName(), searchedPerson.getPhone(),
+                    searchedPerson.getEmail(), searchedPerson.getAddress(), searchedPerson.getTags(),
+                    updatedSearchData);
+
+            try {
+                updatePerson(searchedPerson, modifiedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+        }
+    }
+
+    //=========== Sort addressBook methods =============================================================
+
+    /***
+     * Sorts persons in Addressbook by searchCount
+     * @author Sri-vatsa
+     */
+    @Override
+    public void sortPersonListBySearchCount() {
+        addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+
+    //=========== Util methods =============================================================
 
     @Override
     public boolean equals(Object obj) {

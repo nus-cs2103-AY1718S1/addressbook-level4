@@ -4,10 +4,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-NetworkAB is an addressbook developed by team https://github.com/orgs/CS2103AUG2017-F09-B4/people[F09-B4], modified from AddressBook - Level 4 developed by https://github.com/se-edu/addressbook-level4[se-edu]. +
+OurAB is an addressbook developed by team https://github.com/orgs/CS2103AUG2017-F09-B4/people[F09-B4], modified from AddressBook - Level 4 developed by https://github.com/se-edu/addressbook-level4[se-edu]. +
 {empty} +
 We are a team based in the http://www.nus.edu.sg/[National University of Singapore], with students from +
-http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[School of Computer Engineering].
+http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[Faculty of Electrical & Computer Engineering].
 
 == Project Team
 
@@ -15,8 +15,20 @@ http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[S
 image::sri-vatsa.jpg[width="150", align="left"]
 {empty}[https://github.com/Sri-vatsa[github]] [<<srivatsa#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Model
+Role : Developer +
+Responsibilities :
+
+a) Technical :
+
+** Handle LinkedIn API calls
+** Implement sorting method based on search data
+** Ensure appropriate behaviour of model elements
+** Ensure model methods conform to style regulations
+
+b) Project management :
+
+** Ensure that the technical environment is in place and operational throughout the project
+** Ensure team follows workflow
 
 '''
 

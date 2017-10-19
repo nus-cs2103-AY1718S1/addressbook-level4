@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= OurAB - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `OurAB` repo. If you plan to develop this as a separate product (i.e. instead of contributing to `OurAB`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -874,7 +874,7 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. No one has been searched before
 +
 [none]
 ** 3a1. AddressBook shows an error message.
@@ -889,6 +889,31 @@ Use case resumes at step 2.
 Use case resumes at step 2.
 =======
 
+[discrete]
+=== Use case: List by most searched
+
+*MSS*
+
+1.  User requests to list persons by search frequency
+2.  AddressBook sorts persons by number of times each person is searched
+3.  Addressbook lists persons in descending order, with the person most searched
+being at the top of the list.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. No one has been searched before
++
+** AddressBook continues to step 3
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements

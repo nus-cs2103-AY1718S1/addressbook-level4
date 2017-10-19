@@ -114,6 +114,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -161,6 +163,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
+
+    //// Sort methods
+
+    /***
+     * sorts persons in the addressbook by number of times they were previously searched
+     * @author Sri-vatsa
+     */
+    public void sortBySearchCount() {
+        persons.sortBySearchCount();
+    }
+
+
 
     //// util methods
 
