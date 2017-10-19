@@ -151,6 +151,44 @@ Examples:
 * `hide 2`
 Hides the 2nd person in the address book.
 
+// tag::alias[]
+=== Creates an alias for command or shortcut : `alias`
+
+Creates an alias based on given keyword and representation +
+Format: `alias k/KEYWORD s/REPRESENTATION`
+
+****
+* Adds an alias with the keyword as as a substitute for the respective representation.
+* The keyword is case-insensitive.
+****
+
+Examples:
+
+* `alias k/disappear s/hide` +
+Creates an alias command 'disappear' that is understood as the 'hide' command word.
+* `alias k/ph s/Public Holiday` +
+Creates an alias shortcut that translates ph into Public Holiday every time it is entered by user.
+// end::alias[]
+
+// tag::unalias[]
+=== Removes an alias for command or shortcut : `Unalias`
+
+Removes an existing alias based on given keyword and representation +
+Format: `Unalias k/KEYWORD`
+
+****
+* Removes an existing alias that has been made with the same keyword.
+* The keyword is case-insensitive.
+****
+
+Examples:
+
+* `Unalias k/disappear` +
+Removes the alias command 'disappear'. Next instances of disappear will no longer be a hide command.
+* `Unalias k/ph` +
+Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
+// end::unalias[]
+
 === Deleting person(s) : `delete`
 
 Deletes the specified person from the address book. +
@@ -292,6 +330,8 @@ e.g.`select 2`
 e.g `sort name`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Alias* : `alias k/KEYWORD s/REPRESENTATION`
+* *Unalias : `alias k/KEYWORD`
 
 == Coming in v2.0
 
