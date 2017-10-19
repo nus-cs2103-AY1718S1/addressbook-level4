@@ -1,18 +1,18 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
 /**
  *  Changes the remark of an existing person in the address book
@@ -59,12 +59,13 @@ public class RemarkCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(), remark, personToEdit.getTags());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), remark, personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON) ;
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
@@ -72,6 +73,11 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(generateSucessMessage(editedPerson));
     }
 
+    /**
+     * Generate success message to users given the person to edit
+     * @param persontoEdit
+     * @return
+     */
     private String generateSucessMessage(ReadOnlyPerson persontoEdit) {
         if (!remark.value.isEmpty()) {
             return  String.format(MESSAGE_ADD_REMARK_SUCCESS, persontoEdit);
