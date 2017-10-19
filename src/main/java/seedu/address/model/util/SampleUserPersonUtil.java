@@ -12,8 +12,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Contains utility methods for creating sample UserPerson data.
+ */
 public class SampleUserPersonUtil {
-    public static ReadOnlyPerson getSamplePerson() {
+    public static ReadOnlyPerson getDefaultSamplePerson() {
         try {
             return new Person (new Name("Default"), new Phone("00000000"), new Email("default@default.com"),
                             new Address("Default"), new Remark(""), new HashSet<Tag>());

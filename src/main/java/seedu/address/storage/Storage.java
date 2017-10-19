@@ -3,8 +3,6 @@ package seedu.address.storage;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.xml.bind.JAXBException;
-
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;

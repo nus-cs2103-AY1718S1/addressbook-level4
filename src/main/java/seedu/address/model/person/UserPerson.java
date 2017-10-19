@@ -25,10 +25,10 @@ public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     public UserPerson() {
-        this(SampleUserPersonUtil.getSamplePerson().getName(),
-                SampleUserPersonUtil.getSamplePerson().getPhone(),
-                SampleUserPersonUtil.getSamplePerson().getEmail(),
-                SampleUserPersonUtil.getSamplePerson().getAddress());
+        this(SampleUserPersonUtil.getDefaultSamplePerson().getName(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getPhone(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getEmail(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getAddress());
     }
 
 
@@ -165,6 +165,10 @@ public class UserPerson implements ReadOnlyPerson {
         return getAsText();
     }
 
+    /**
+     * Update the UserPerson details with that of the ReadOnlyPerson target
+     * @param target
+     */
     public void update(ReadOnlyPerson target) {
         this.name = new SimpleObjectProperty<>(target.getName());
         this.email = new SimpleObjectProperty<>(target.getEmail());

@@ -9,11 +9,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.UpdateUserCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.UpdateUserCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new UpdateUserCommand object
@@ -31,7 +29,7 @@ public class UpdateUserCommandParser implements Parser<UpdateUserCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         String preamble = argMultimap.getPreamble();
-        if (!preamble.isEmpty()){
+        if (!preamble.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateUserCommand.MESSAGE_USAGE));
         }
 

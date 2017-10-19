@@ -22,7 +22,11 @@ public class UserProfileManager extends ComponentManager {
         raise(new UserPersonChangedEvent(userPerson));
     }
 
-    public void updateUserPerson(UserPerson target){
+    /**
+     * Updates the UserPerson to another UserPerson
+     *
+     */
+    public void updateUserPerson(UserPerson target) {
         userPerson.update(target);
         indicateUserPersonChanged();
     }
