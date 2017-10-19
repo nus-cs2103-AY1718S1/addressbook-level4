@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -43,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads google maps web page locating person's address.
      */
-    private void loadPersonPage(ReadOnlyPerson person) throws UnsupportedEncodingException {
+    private void loadPersonPage(ReadOnlyPerson person) {
         Address personAddress = person.getAddress();
 
         String urlEncodedAddressIntermediate = personAddress.toString().replaceAll("#", "%23");
@@ -74,8 +73,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event)
-            throws UnsupportedEncodingException {
+    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
