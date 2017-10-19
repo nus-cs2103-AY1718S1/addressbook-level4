@@ -35,7 +35,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             } else {
                 // otherwise parse the first element
                 for (String s : indexArray) {
-                    if (!"".equals(s) && !"".equals(s) {
+                    if (!"".equals(s) && !"".equals(s)) {
                         Index index = ParserUtil.parseIndex(s);
                         indexArrayList.add(index);
                     }
