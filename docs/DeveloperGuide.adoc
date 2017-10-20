@@ -242,23 +242,22 @@ public class ListCommand extends Command {
 
 With the extra layer, the commands that are undoable are implemented this way:
 [source,java]
-----[.line-through]####
 public abstract class UndoableCommand extends Command {
     @Override
     public CommandResult execute() {
         // ... undo logic ...
-
         executeUndoableCommand();
     }
 }
 
+[source,java]
 public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         // ... delete logic ...
     }
 }
-----
+
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
