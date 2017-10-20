@@ -19,6 +19,10 @@ By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 This user guide will give you an overview of how to properly use the Codii app.
 This guide includes step by step instructions on how each commands work, FAQs and a summary on every command you will learn.
 
+The terms used in this guide are as followed:
+* Blacklist - List of people who are banned
+* Index - The ordering of a contact on the list
+
 == Introduction
 
 Codii is a free to use address book catered to suit the needs of debt collectors. You can enter debtors into the Codii app,
