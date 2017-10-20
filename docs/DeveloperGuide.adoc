@@ -492,25 +492,38 @@ is rather high. Implementing alternative 2 would be more tedious on the user's s
 // end::datestoring[]
 
 // tag::list[]
-=== List (Mainlist, Blacklist etc) mechanism
+=== List (Masterlist, Blacklist etc) mechanism
 
-List feature is a useful feature to view persons of a certain category. In the context of this project, master list contains all the contacts of the debt collection agency.
+Having multiple lists is useful for debt collectors to view debtors of different categories. Currently, these different lists include masterlist and blacklist.
 
-We are displaying multiple lists to suit the need for the direction of the project. The lists could be viewed with the respective commands that will bring it to picture. The commands to materialize these lists are named after the lists itself. Meaning, to view the blacklist, the command typed is "blacklist" or "bl'.
+These lists could be viewed with the respective commands that will update the panel that is currently displayed. The commands to display these lists are named after the lists themselves. For example, to view the `blacklist`, the command typed is "blacklist" or "bl".
 
-These commands will inherit from `UndoableCommand`. Thus, these commands are supported by `undo` and `redo` command residing in the current state of Addressbook.
+The following sequence diagram, Figure 3.5.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
 
-This List mechanism is facilitated by commands which uses `Logic` interface to obtain the copy of the list that is required. As seen by the diagram 3.2.1 and 3.2.2 above, to obtain the current blacklist of the address book, "list" string is first captured by the `CommandBox`. The `CommandBox` then passes this string to the `Logic` interface for execution.
+image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
+_Figure 3.5.1 : Sequence diagram of how the `blacklist` command works_
 
-`Logic` interface uses `LogicManager`, the class that implements its methods, to package it as a `Command` object. The respective command is then executed by this following statement in `LogicManager` class:
+The following sequence diagram, Figure 3.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
+
+image::BlacklistCommandSequenceDiagram2.png[width="800"]
+_Figure 3.5.2 : Sequence diagram of how `ModelManager` interacts with `ReadOnlyAddressBook` To generate blacklist From all persons_
+
+The List mechanism is facilitated by commands which use `Logic` interface to obtain the copy of the list that is required. As seen from Figure 3.5.1 and Figure 3.5.2 above, to obtain the current blacklist of the addressbook, "blacklist" `String` is first captured by the `CommandBox` class. The `CommandBox` class then passes this `String` to the `Logic` interface for execution.
+
+`Logic` interface uses `LogicManager` class to validate the written command and package it as a `Command` object. The respective command is then executed in `LogicManager` class. These are the instructions that are executed for this command:
 
 [source,java]
 ----
-CommandResult result = command.execute();
+public CommandResult execute() {
+        model.changeListTo(COMMAND_WORD);
+        model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        return new CommandResult(MESSAGE_SUCCESS);
+}
 ----
 
-Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `Logic` `Manager` subsequently calls `Model` interface. `ModelManager` handles the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `AddressBook` class handles this request and thus will return the required list, since the various lists are stored in this class. Technically, the `List` `Object` that exists in the current structure just contains all persons. The blacklisted persons are obtained by running a check on all persons residing in this variable. This is shown by the following code below:
+Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `LogicManager` subsequently calls `Model` interface. `Model` uses `ModelManager` class to handle the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `ReadOnlyAddressBook` uses `AddressBook` class to handle this request.
 
+In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `ReadOnlyPerson#getIsBlacklisted()` method, as shown below:
 [source,java]
 ----
 public UniquePersonList getBlacklistedPersons() {
@@ -528,17 +541,7 @@ public UniquePersonList getBlacklistedPersons() {
 }
 ----
 
-Although this seems inefficient, it supports syncing of the various lists well. Meaning, any changes that occurred in main list will be reflected in blacklist as well. For example, if a person is deleted from the main list, he will also be deleted from the blacklist. This also works for various other commands. Thus, it is efficient in this aspect.
-
-The following sequence diagram, Figure 3.5.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
-
-image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
-Figure 3.5.1 : Sequence Diagram of How the Blacklist Command Works_
-
-The following sequence diagram, Figure 3.5.2, shows further details of the interaction between `Model` and 'Addressbook` to obtain the blacklist:
-
-image::BlacklistCommandSequenceDiagram2.png[width="800"]
-Figure 3.5.2 : Sequence Diagram of Model and Addressbook Interacts To Generate The Blacklist From All Persons_
+Although this way of implementation seems inefficient, it supports robust synchronisation among the various other lists. For example, if a person is deleted from the masterlist, he will also be deleted from the blacklist. Likewise for various other commands that changes the `ReadOnlyPerson` object. Thus, it is efficient in this aspect. Moreover, this implementation sets the groundwork for future implementations of various other lists.
 
 ==== Design Constraints:
 
