@@ -235,7 +235,7 @@ Plays a specific genre music track from a list of built in mp3 music from Unify 
 Format: `music play GENRE`
 
 [NOTE]
-The genre can only be either pop, dance or classic
+The genre can only be pop, dance or classic. "music play" alone will play pop songs as default.
 
 === Stopping background music : `music stop`
 
@@ -251,7 +251,7 @@ Pause the current music track playing. +
 Format: `music pause`
 
 [NOTE]
-This is different from stopping, as it can be resumed playing by using the play background music command.
+This is different from stopping, as it can be resumed by using the play background music command.
 
 === Adding / Editing a remark : `remark`
 
