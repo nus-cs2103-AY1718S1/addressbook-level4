@@ -218,6 +218,107 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::find[]
+=== Enhanced Find mechanism 
+
+The enhanced version of find mechanism is facilitated by the `AddressBookParser`, which resides inside `LogicManager`. It allows the users to search for person(s) by substrings of multiple different attributes (e.g. `Name`, `Phone`, `Email`, `Address`), which the case is insensitive for `Name`, `Email` and `Address` attributes.
+
+Users can only do searching by `Name`, `Phone`, `Email` or `Address`. They are not allowed to search by `Tag`. Instead, they can search for person(s) by tags using `t-find` command.
+
+The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+When the users are using the find command, they are required to provided at least one keyword for any available attribute. Keywords of the same attribute need to be grouped together with a prefix (e.g. `n/`, `p/`, `e/`, `a/`). In this case, each prefix is allowed to appear at most once. 
+
+During the implementation, `FindCommandParser` class splits the keywords of different attributes by searching for the location of the prefixes, and store the keywords into separate ArrayLists. As a `NameContainsKeywordsPredicate` needs to be passed to `FindCommand` class, all the keywords from the ArrayLists are added to the predicate in order with each prefix added at front for separation.
+
+For example, the parser for name keywords is implemented this way:
+[source,java]
+----
+int indexOfName = trimmedArgs.indexOf(PREFIX_NAME.getPrefix());
+
+if (indexOfName != -1) {
+    int index = 0;
+    for (int i = 0; i < attributeIndexArray.length; i++) {
+        if (attributeIndexArray[i] == indexOfName) {
+            index = i;
+            break;
+        }
+    }
+    trimmedNames = trimmedArgs.substring(indexOfName + 2, attributeIndexArray[index + 1]).trim();
+}
+
+List<String> keyWordsToSearch = new ArrayList<>();
+
+if (trimmedNames != null) {
+    String[] nameKeywords = trimmedNames.split(" ");
+    keyWordsToSearch.add(PREFIX_NAME.getPrefix());
+    for (int i = 0; i < nameKeywords.length; i++) {
+        keyWordsToSearch.add(nameKeywords[i]);
+    }
+}
+
+NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(keyWordsToSearch);
+----
+
+When the `FindCommand` class is executing, the keywords are taken out from the predicate and stored into separate ArrayLists again by distinguishing the prefixes stored in front of each type of keywords. The reason we do this twice is because we want to keep the consistency of all the command classes instead of changing the parameter type passed into `FindCommand` class to a list of ArrayLists. Then the person(s) can be searched separately by different attributes. For each attribute, every keyword is taken out and compared to the corresponding details of all the persons in the list. Once the keyword is matched to any substring of the detail of a person, then the person's name will be stored into an ArrayList `namesToSearch`. After searching all the keywords, a name list with persons with details matching at least one keyword is obtained and passed to `updateFilteredPersonList` method. Finally, the person list is updated and shown on the user interface.
+
+For example, searching for name keywords is implemented this way:
+[source,java]
+----
+for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+    nameList.add(model.getAddressBook().getPersonList().get(i).getName().toString().toLowerCase());
+}
+for (int i = 0; i < nameKeywords.size(); i++) {
+    for (int j = 0; j < nameList.size(); j++) {
+        if (nameList.get(j).contains(nameKeywords.get(i).toLowerCase())) {
+            matchedNames.add(nameList.get(j));
+        }
+    }
+}
+
+if (namesMatched != null) {
+    namesToSearch.addAll(matchedNames);
+}
+
+NameContainsKeywordsPredicate updatedPredicate = new NameContainsKeywordsPredicate(namesToSearch);
+model.updateFilteredPersonList(updatedPredicate);
+----
+
+The following sequence diagram shows how the find command works:
+
+image::FindCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+If no argument is provided by users after the command word, an invalid format `Exception` will be thrown.
+
+
+[NOTE]
+If no prefix is found inside the argument, then an invalid format `Exception` will be thrown.
+
+
+[NOTE]
+If some dummy values are found before the first prefix and after the command word, then an invalid format `Exception` will be thrown.
+
+
+[NOTE]
+If no keywords are provided by user after a prefix, then an invalid format `Exception` will be thrown.
+
+
+[NOTE]
+If more than one same prefix is provided by user, then the person list will be searched only by keywords behind the first prefix.
+
+==== Design Considerations
+
+**Aspect:** Find person by `Address` keyword +
+**Alternative 1 (current choice):** Find person by a single `Address` keyword +
+**Pros:** We will not need to separate multiple addresses since it is difficult to distinguish. +
+**Cons:** It is inconvenient for users to find persons from different locations. +
+**Alternative 2:** Separate different addresses by a special character (e.g. `;` or `*`) +
+**Pros:** Users are able to find person(s) staying at different locations. +
+**Cons:** The find command becomes very long. It is hard for users to type the addresses correctly.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
