@@ -10,6 +10,7 @@ import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertTaskListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +30,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -99,6 +101,10 @@ public abstract class AddressBookSystemTest {
     public ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
     }
+    
+    public TaskListPanelHandle getTaskListPanel() {
+        return mainWindowHandle.getTaskListPanelHandle();
+    }
 
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
@@ -121,6 +127,14 @@ public abstract class AddressBookSystemTest {
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
+    }
+
+    /**
+     * Displays all tasks in the address book.
+     */
+    protected void showAllTasks() {
+        executeCommand(ListCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
     }
 
     /**
@@ -163,6 +177,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getTaskListPanel().rememberSelectedTaskCard();
     }
 
     /**
@@ -173,6 +188,7 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
+        assertFalse(getTaskListPanel().isAnyTaskCardSelected());
     }
 
     /**
@@ -249,6 +265,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertTaskListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

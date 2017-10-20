@@ -9,6 +9,7 @@ import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
@@ -43,7 +44,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTask}.
      */
-    public static void assertCardDisplayTask(ReadOnlyTask expectedTask, TaskCardHandle actualCard) {
+    public static void assertCardDisplaysTask(ReadOnlyTask expectedTask, TaskCardHandle actualCard) {
         assertEquals(expectedTask.getDescription().taskDescription, actualCard.getDescription());
         assertEquals(expectedTask.getStartDate().toString(), actualCard.getStartDate());
         assertEquals(expectedTask.getDeadline().toString(), actualCard.getDeadline());
@@ -68,11 +69,37 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, ReadOnlyTask... tasks) {
+        for (int i = 0; i < tasks.length; i++) {
+            assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, List<ReadOnlyTask> tasks) {
+        assertTaskListMatching(taskListPanelHandle, tasks.toArray(new ReadOnlyTask[0]));
+    }
+
+    /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
+    }
+
+    /**
+     * Asserts the size of the list in {@code taskListPanelHandle} equals to {@code size}.
+     */
+    public static void assertTaskListSize(TaskListPanelHandle taskListPanelHandle, int size) {
+        int numberOfTasks = taskListPanelHandle.getListSize();
+        assertEquals(size, numberOfTasks);
     }
 
     /**
