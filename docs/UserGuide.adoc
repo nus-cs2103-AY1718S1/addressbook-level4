@@ -92,10 +92,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Editing a person : `favourite`
+=== Starring a person : `favourite`
 
 Change the `favourite` status of an existing person in the address book. +
-Format: `favourite INDEX`
+Format: `favourite INDEX` OR `fav INDEX`
 
 ****
 * Modify the `favourite` field of the person with the input index.
@@ -109,6 +109,20 @@ Examples:
 
 * `favourite 1` +
 Changes the `favourite` status of the 1st person in the latest list.
+
+=== Filtering persons by favourite status : `showfavourite`
+
+Show all favourite persons. +
+Format: `showfavourite`
+
+****
+* Every person with `favourite` status "True" will be listed.
+****
+
+Examples:
+
+* `showfavourite` +
+Shows a list of all favourite persons.
 
 === Filtering persons by tags: `filter`
 
