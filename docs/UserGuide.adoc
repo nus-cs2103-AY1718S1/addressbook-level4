@@ -170,7 +170,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `removeTag +
+` and `clear`).
 ====
 
 Examples:
@@ -229,32 +230,98 @@ There is no need to save manually.
 
 == Features(Coming in v2.0)
 
-=== Add relationship
+=== Add a relationship
 
-Enters the indices of the two people in between whom the user wants to add an relationship +
-as seen in the last shown list. +
-Format: `Add Relationship NAME1 NAME2`
+Adds a relationship between two persons. +
+Format: `addRelationship INDEXOFSOURCE INDEXOFDESTINATION DIRECTION`
 
-=== Add named relationship between people
+****
+* Add a relationship between the person with `INDEXOFSOURCE` and `INDEXOFDESTINATION`, +
+with the direction of the relationship specified.
+* `INDEXOFSOURCE` refers to the index of the person from whom the relationship is +
+initiated as shown in the most recent listing.
+* `INDEXOFDESTINATION` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` referring to the direction of this relationship, can only be String input of `directed` or `undirected`.
+* If the `DIRECTION` is `directed`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` matters.
+* If the `DIRECTION` is `undirected`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` does not matter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
-Enters the indices of the two people in between whom the user wants to add an relationship +
-as seen in the last shown list and the name of the relationship. +
-If the relationship between these two people is not in the address book, one new relationship will be created upon +
-entering this command and given a name. +
-The order of the names of people entered does not matter.
-Format: `Add Named Relationship NAME1 NAME 2 NAMEOFRELATIONSHIP`
+Examples:
 
-=== Add confidence estimate for an attribute of a person
+* `list` +
+`addRelationship 2 3 directed` +
+Adds a directed relationship starting from the 2nd person to the 3rd person in the list.
+* `list` +
+`addRelationship 2 3 undirected` +
+Adds an undirected relationship between the 2nd person and the 3rd person in the list.
 
-Enters the index of the person as shown in the last seen list, the name of the attribute +
-and the estimate (the estimate >= 0 and <= 1). +
-Format: `Add CEstimate INDEX NAMEOFATTRIBUTE ESTIMATE`
+=== Add a named relationship
 
-=== Delete confidence estimate for an attribute of a person
+Adds a relationship between two persons and gives this relationship a name. +
+Format: `addNamedRelationship INDEXOFTHESOURCE INDEXOFTHEDESTINATION DIRECTION NAME`
 
-Enters the index of the person as shown in the last seen list and the name of the attribute +
-of which the confidence estimate is to be deleted. +
-Format: `Delete CEstimate INDEX NAMEOFATTRIBUTE`
+****
+* Adds a relationship between `INDEXOFTHESOURCE` and `INDEXOFTHEDESTINATION` +
+with the direction of the relationship specified and name of the relationship given.
+* `INDEXOFSOURCE` refers to the index of the person from whom the relationship is +
+initiated as shown in the most recent listing.
+* `INDEXOFDESTINATION` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` referring to the direction of this relationship, can only be String input of `directed` or `undirected`.
+* `NAME` referring to the name of the relationship *can only be alphanumeric*.
+* If the `DIRECTION` is `directed`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` matters.
+* If the `DIRECTION` is `undirected`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` does not matter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`addRelationship 2 3 directed knows` +
+Adds a directed relationship starting from the 2nd person to the 3rd person in the list. +
+The relationship is named as `knows`.
+* `list` +
+`addRelationship 2 3 undirected cousins` +
+Adds an undirected relationship between the 2nd person and the 3rd person in the list. +
+The relationship is named as `cousins`.
+
+=== Add a confidence estimate
+
+Adds a confidence estimate for an attribute of a person. +
+Format: `addConfidenceEstimate INDEX TYPEOFATTRIBUTE ESTIMATE`
+
+****
+* `INDEX` refers to the index of the person whose attribute the user wants to add a confidence estimate to +
+as shown in the most recent listing.
+* `TYPEOFATTRIBUTE` refers to the `type` of the attribute that the confidence estimate is added to.
+* The `type` of the attribute refers to `Address`, `Email`, `Name`, `Phone`, `Tags`, `Relationships`.
+* `ESTIMATE` refers to the estimate the user gives to the attribute.
+* The estimate *has to be non-negative and smaller or equal to 1*.
+****
+
+Example:
+
+* `list` +
+`addConfidenceEstimate 2 Address 0.8` +
+Adds a confidence estimate of 0.8 to the `Address` of the 2nd person in the list.
+
+=== Delete a confidence estimate
+
+Deletes a confidence estimate for an attribute of a person. +
+Format: `deleteConfidenceEstimate INDEX TYPEOFATTRIBUTE`
+
+****
+* `INDEX` refers to the index of the person whose attribute the user wants to delete the confidence estimate to +
+as shown in the most recent listing.
+* `TYPEOFATTRIBUTE` refers to the `type` of the attribute that the confidence estimate is deleted from.
+* The `type` of the attribute refers to `Address`, `Email`, `Name`, `Phone`, `Tags`, `Relationships`.
+****
+
+Example:
+
+* `list` +
+`deleteConfidenceEstimate 2 Address` +
+Deletes a confidence estimate from the `Address` of the 2nd person in the list.
 
 == FAQ
 
