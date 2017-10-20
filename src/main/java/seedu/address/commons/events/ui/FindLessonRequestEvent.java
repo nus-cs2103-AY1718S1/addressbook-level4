@@ -11,14 +11,6 @@ import java.util.function.Predicate;
 
 public class FindLessonRequestEvent extends BaseEvent {
 
-    public final Predicate<ReadOnlyLesson> predicate;
-
-    public FindLessonRequestEvent(Predicate<ReadOnlyLesson> currentPredicate){ this.predicate = currentPredicate;}
-
-    public Predicate<ReadOnlyLesson> getPredicate() {
-        return predicate;
-    }
-
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

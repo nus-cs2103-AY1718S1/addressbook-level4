@@ -30,7 +30,8 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new FindLessonRequestEvent(this.predicate));
+        model.updateFilteredLessonList(predicate);
+        EventsCenter.getInstance().post(new FindLessonRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

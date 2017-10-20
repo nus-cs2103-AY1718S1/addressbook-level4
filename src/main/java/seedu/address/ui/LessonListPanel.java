@@ -89,9 +89,7 @@ public class LessonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleFindLessonRequestEvent(FindLessonRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Predicate<ReadOnlyLesson> predicate = event.getPredicate();
-        FilteredList<ReadOnlyLesson> foundList = new FilteredList<ReadOnlyLesson>(lessonList,predicate);
-        setConnections(foundList);
+        setConnections(lessonList);
     }
 
     @Subscribe

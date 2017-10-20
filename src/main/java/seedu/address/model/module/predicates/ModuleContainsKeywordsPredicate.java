@@ -1,6 +1,7 @@
 package seedu.address.model.module.predicates;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
 import java.util.List;
@@ -18,8 +19,15 @@ public class ModuleContainsKeywordsPredicate implements Predicate<ReadOnlyLesson
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
-        return keywords.stream().distinct()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(lesson.getCode().fullCodeName, keyword));
+
+        for(int i=0;i<keywords.size();i++){
+            if(lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase())){
+                keywords.set(i,"xxxxxx");
+                return true;
+            }
+        }
+        return false;
+
     }
 
     @Override
