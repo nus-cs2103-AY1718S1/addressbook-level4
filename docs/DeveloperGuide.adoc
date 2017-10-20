@@ -351,6 +351,92 @@ _Figure 3.1.3: Flow of activities inside `UndoRedoStack`_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+
+// tag::facebook[]
+=== Facebook Post mechanism
+
+The Facebook Post mechanism is facilitated by the Facebook Graph API and utilised through the Facebook4j unofficial public API.
+Facebook4j supports all facebook related features such as `facebook connect` and `facebook post`.
+
+The Facebook Graph API first required us to set up a Facebook Application on the Facebook for developers website. We did so following this link:https://developers.facebook.com/docs/apps/register/#create-app[`guide`].
+
+Completing the creation led to a page as shown below:
+
+image::facebook_developers_app.png[width="800"]
+
+Since our AddressBook application is, for now, hosted on a private environment and not a website, we need to authenticate `Testers` on the developers platform as follows:
+
+image::facebook_dashboard_testers.png[width="800"]
+
+The Facebook4j API requires us to build a Gradle dependency in the `gradle.properties` file:
+
+----
+compile group: 'org.facebook4j', name: 'facebook4j-core', version: '2.4.10'
+----
+
+Once the above have been set up, we need to attain a user access key from Facebook through a Facebook Login. This is done through a browser.
+
+Once the access key has been attained, we then set the application credentials in the `facebook4j.properties` and `FacebookConnectCommand.java` files respectively as follows:
+
+----
+debug=true
+oauth.appId=*************
+oauth.appSecret=***********************
+----
+
+----
+facebookInstance = new FacebookFactory().getInstance();
+facebookInstance.setOAuthPermissions(commaSeparetedPermissions);
+facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
+----
+
+Lastly, we simply post the status to Facebook through the authenticated `facebookInstance` using the following code:
+
+----
+Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
+facebookInstance.postStatusMessage(toPost);
+----
+
+The following diagram displays a summary of the entire process:
+
+image::facebook_post_sequence_diagram.png[width="800"]
+
+_Figure 3.2.1: Interactions for the `facebook post` Command_
+
+
+==== Design Considerations
+
+**Aspect:** Choice of Facebook API Wrapper (Java) +
+**Alternative 1 (current choice):** Use `Facebook4j` wrapper +
+**Pros:** User friendly API, well documented. +
+**Cons:** Less available online support. +
+**Alternative 2:**  Use `Restfb` wrapper +
+**Pros:** Easily available online support. +
+**Cons:** API is well documented, however less user friendly and functionalities compared to Facebook4j.
+
+---
+
+**Aspect:** How User is authenticated +
+**Alternative 1 (current choice):** Manually login to Facebook using a browser +
+**Pros:** Easier to implement given the intended environment of the application (private host rather than website) +
+**Cons:** May not be authenticated to use a few Facebook API functions +
+**Alternative 2:** Host the entire application on a website and attain Facebook approval. +
+**Pros:** Have full access to most features and functions of Graph API +
+**Cons:** As Facebook has a very strict criteria for all their applications, preparing the application for approval requires a lot of work that includes proper hosting, implementing SSH protection, having a privacy and terms document, etc.
+
+---
+
+**Aspect:** Implementation of Facebook commands +
+**Alternative 1 (current choice):** Each Facebook [COMMAND] is task oriented, e.g. Facebook connect, Facebook post, etc. +
+**Pros:** Modular, all commands are separate and taken as blackbox although there are dependencies. +
+**Cons:** Increase in possible dependencies in the software, like how most will depend on `Facebook connect`. +
+**Alternative 2:** Ensure each command is stand-alone and fully independent +
+**Pros:** Will have less dependencies. +
+**Cons:** May incur more code overhead and make the software less 'lean'. +
+
+---
+// end::facebook[]
+
 === Social Info
 
 Information about contact's social media accounts are encapsulated by the `SocialInfo` class. The list of `SocialInfo` associated
