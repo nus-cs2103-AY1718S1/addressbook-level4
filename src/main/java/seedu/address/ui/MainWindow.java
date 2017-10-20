@@ -63,7 +63,11 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+
+
         super(FXML);
 
         // Set dependencies
