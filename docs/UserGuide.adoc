@@ -529,5 +529,3 @@ described condition
 |*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
 |=======================================================================
 
-
-
