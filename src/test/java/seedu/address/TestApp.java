@@ -33,6 +33,8 @@ public class TestApp extends MainApp {
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
+    protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_PASSWORD_TESTING =
+            TestUtil.getFilePathInSandboxFolder("pref_password_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;

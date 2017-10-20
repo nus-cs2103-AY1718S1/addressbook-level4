@@ -28,6 +28,8 @@ This app will not work with earlier versions of Java 8.
 +
 image::Ui.png[width="790"]
 +
+.  By default, the user will not have a password. To set one, use this command : *`changepw admin__desiredpassword`,
+where 2 whitespaces separates `admin` and `desiredpassword`.
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -62,6 +64,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Option 1: Format: `help` +
 Option 2.1: Menu -> File -> Help +
 Option 2.2: Menu -> File -> `F1`
+
+=== Changing password : `changepw`
+Changes a user's password needed to access H.M.U v1.2 +
+Format: `changepw username old_password new_password` +
+
+Examples:
+
+* `changepw admin password newpassword`
+* `changepw admin tom harry`
+* `changepw admin !@# !!!!`
 
 === Adding a person: `add`
 
@@ -285,9 +297,16 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Change Password* : `changepw username old_password new_password`
 
 == Coming Soon in v2.0
 Customizable Toolbar +
-Password Support +
+Password Support (Available in v1.2) +
 Google Maps Support (Available in v1.1) +
-Contact's photo support
+Contact's photo support +
+Search by Address (Available in v1.2) +
+Add Closest MRT Station to Contacts (Available in v1.2) +
+Search Contacts by Phone Number(Available in v1.2) +
+Scheduling +
+Closest Meet-up Point +
+
