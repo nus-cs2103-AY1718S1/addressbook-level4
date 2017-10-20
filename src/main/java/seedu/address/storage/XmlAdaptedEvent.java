@@ -23,6 +23,7 @@ public class XmlAdaptedEvent {
 
     @XmlElement(required = true)
     private String eventName;
+    @XmlElement
     private String eventDesc;
     @XmlElement(required = true)
     private String eventTime;
