@@ -45,7 +45,7 @@ public class PinCommand extends Command {
         if (personToPin.isPinned()) {
             throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_PINNED);
         }
-        
+
         try {
             model.pinPerson(personToPin);
         } catch (PersonNotFoundException pnfe) {
