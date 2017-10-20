@@ -22,6 +22,7 @@ public class BanCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_BAN_PERSON_SUCCESS = "Added person to blacklist: %1$s";
+    public static final String MESSAGE_BAN_PERSON_FAILURE = "Person is already in blacklist!";
 
     private final Index targetIndex;
 
@@ -32,6 +33,7 @@ public class BanCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
+        String messagetoDisplay = MESSAGE_BAN_PERSON_SUCCESS;
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -41,12 +43,16 @@ public class BanCommand extends UndoableCommand {
         ReadOnlyPerson personToBan = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.addBlacklistedPerson(personToBan);
+            if (personToBan.getIsBlacklisted()) {
+                messagetoDisplay = MESSAGE_BAN_PERSON_FAILURE;
+            } else {
+                model.addBlacklistedPerson(personToBan);
+            }
         } catch (DuplicatePersonException e) {
             assert false : "The target person is already in blacklist";
         }
 
-        return new CommandResult(String.format(MESSAGE_BAN_PERSON_SUCCESS, personToBan));
+        return new CommandResult(String.format(messagetoDisplay, personToBan));
     }
 
     @Override
