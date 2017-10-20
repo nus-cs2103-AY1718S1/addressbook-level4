@@ -470,32 +470,32 @@ If the list is found to be empty, an `EmptyListException` will be thrown from `U
 
 ==== Design Considerations
 
-**Aspect:** Initialising of `Comparator<ReadOnlyPerson>`+
-**Alternative 1 (current choice):** Initialise in `SortCommand`+
-**Pros:** Clear separation of concerns, `SortCommandParser` to handle identifying of attribute to sort by only.+
-**Cons:** Hard for new developers to follow as other commands like `AddCommand` handles object creation in its parser.+
-**Alternative 2: ** Initialise in `UniquePersonList`+
-**Pros:** Straightforward as initialises the `Comparator` where it is used.+
-**Cons:** `UniquePersonList` is at a lower level and should only handle a minimal set of `Person` related operations, and not logical operations like string matching+
+**Aspect:** Initialising of `Comparator<ReadOnlyPerson>` +
+**Alternative 1 (current choice):** Initialise in `SortCommand` +
+**Pros:** Clear separation of concerns, `SortCommandParser` to handle identifying of attribute to sort by only. +
+**Cons:** Hard for new developers to follow as other commands like `AddCommand` handles object creation in its parser. +
+**Alternative 2: ** Initialise in `UniquePersonList` +
+**Pros:** Straightforward as initialises the `Comparator` where it is used. +
+**Cons:** `UniquePersonList` is at a lower level and should only handle a minimal set of `Person` related operations, and not logical operations like string matching. +
 
 ---
 
-**Aspect:** Sorting by multiple attribute+
-**Alternative 1 (current choice):** Only allows sorting by single attribute+
-**Pros:** Fast and arguments to input is straightforward.+
-**Cons:** Unable to have fine grain control of how list should appear.+
-**Alternative 2:** Allow sorting by multiple attribute+
-**Pros:** Enables fine grain control of how list should appear.+
-**Cons:** Not necessary as effect is only obvious when contact list is long and has multiple common names. As target audience for iConnect are students, contact list will not be more than few thousand contacts long.+
+**Aspect:** Sorting by multiple attribute +
+**Alternative 1 (current choice):** Only allows sorting by single attribute +
+**Pros:** Fast and arguments to input is straightforward. +
+**Cons:** Unable to have fine grain control of how list should appear. +
+**Alternative 2:** Allow sorting by multiple attribute +
+**Pros:** Enables fine grain control of how list should appear. +
+**Cons:** Not necessary as effect is only obvious when contact list is long and has multiple common names. As target audience for iConnect are students, contact list will not be more than few thousand contacts long. +
 
 
-**Aspect:** Justification for sorting contacts by time added+
-**Alternative 1 (current choice):** Allows sorting by time added+
-**Pros:** iConnect is design to be an all-in-one scheduling app where it is left open for extended period of time for students to check schedule. Previous implementations required user to exit and relaunch the application for viewing contacts in chronological order again. By allowing sorting by time added, user are also able to toggle to see recently added contacts first.+
-**Cons:** Extra attribute has to be added to each user.+
+**Aspect:** Justification for sorting contacts by time added +
+**Alternative 1 (current choice):** Allows sorting by time added +
+**Pros:** iConnect is design to be an all-in-one scheduling app where it is left open for extended period of time for students to check schedule. Previous implementations required user to exit and relaunch the application for viewing contacts in chronological order again. By allowing sorting by time added, user are also able to toggle to see recently added contacts first. +
+**Cons:** Extra attribute has to be added to each user. +
 **Alternative 2:** Not implementing sorting by time added +
-**Pros:** Can be achieved by restarting app+
-**Cons:** Requires restarting of app which waste time and processing resources when list is long.+
+**Pros:** Can be achieved by restarting app. +
+**Cons:** Requires restarting of app which waste time and processing resources when list is long. +
 //end::sortmech[]
 
 === Logging
