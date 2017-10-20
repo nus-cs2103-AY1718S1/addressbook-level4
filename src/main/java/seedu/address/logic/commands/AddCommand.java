@@ -7,23 +7,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
-import seedu.address.model.ListingUnit;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.*;
+import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.model.module.predicates.*;
-
-import java.util.List;
 
 /**
  * Adds a lesson to the address book.
@@ -50,6 +39,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New lesson added: %1$s";
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_BOOKEDSLOT = "This time slot have already been booked in this location";
 
     private final Lesson toAdd;
 
@@ -64,11 +54,14 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
+            model.bookingSlot(new BookedSlot(toAdd.getLocation(),toAdd.getTimeSlot()));
             model.addLesson(toAdd);
             model.handleListingUnit();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateLessonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
+        } catch (DuplicateBookedSlotException s) {
+            throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         }
 
     }

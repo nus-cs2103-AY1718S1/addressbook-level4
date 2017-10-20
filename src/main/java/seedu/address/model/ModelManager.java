@@ -20,6 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.model.module.*;
+import seedu.address.model.module.exceptions.BookedSlotNotFoundException;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
@@ -140,9 +141,25 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void bookTimeSlot(BookedSlot target) throws DuplicateBookedSlotException{
+    public void unbookBookedSlot(BookedSlot target){
+        if(bookedList.contains(target))
+            bookedList.remove(target);
+    }
+
+    @Override
+    public void bookingSlot(BookedSlot target) throws DuplicateBookedSlotException{
         if(!bookedList.contains(target)){
             bookedList.add(target);
+        }else{
+            throw new DuplicateBookedSlotException();
+        }
+    }
+
+    @Override
+    public void updateBookedSlot(BookedSlot target, BookedSlot toReplace) throws DuplicateBookedSlotException{
+        if(!bookedList.contains(toReplace)){
+            bookedList.remove(target);
+            bookedList.add(toReplace);
         }else{
             throw new DuplicateBookedSlotException();
         }
