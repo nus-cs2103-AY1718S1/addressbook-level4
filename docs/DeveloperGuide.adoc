@@ -364,6 +364,13 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::picture
+=== Add Picture
+
+The add picture mechanism allows the adding of a picture to every individual person.
+
+Images are saved in he format `<name><contact>` to differentiate between persons with the same name
+
 // tag::autocomplete
 === Autocomplete Feature
 
