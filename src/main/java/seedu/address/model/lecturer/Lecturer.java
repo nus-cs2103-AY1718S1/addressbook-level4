@@ -33,7 +33,7 @@ public class Lecturer {
      * Returns true if a given string is a valid Lecturer name.
      */
     public static boolean isValidLecturerName(String test) {
-        return test.matches(LECTURER_VALIDATION_REGEX);
+        return test.matches(LECTURER_VALIDATION_REGEX) && !test.isEmpty();
     }
 
     @Override
