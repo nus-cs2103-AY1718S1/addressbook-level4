@@ -78,8 +78,8 @@
 }
 
 .split-pane:vertical .split-pane-divider {
-    -fx-background-color: derive(white, 20%);
-    -fx-padding: 0.1%;
+    -fx-background-color: white;
+    -fx-padding: 0.000001;
 }
 
 .split-pane:vertical .label {
