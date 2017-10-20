@@ -25,7 +25,8 @@ public class TutorialMessages {
             + "you are able to search for the person you want.";
     public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
     public static final String INTRO_SEVEN = "This is the calender panel, which will help you manage your schedule";
-    public static final String INTRO_EIGHT = "This is the pinned person panel, where you can see your list of pinned contacts";
+    public static final String INTRO_EIGHT = "This is the pinned person panel,"
+            + " where you can see your list of pinned contacts";
     public static final String INTRO_END = "Features of Bluebird:\n"
             + "1. Add a contact\n"
             + "2. Delete a contact\n"
