@@ -271,6 +271,7 @@ public class MainWindow extends UiPart<Region> {
         handleChangeTheme(event.theme);
     }
 
+    /*
     @Subscribe
     private void handlePanelSwitchEvent(PanelSwitchRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -283,5 +284,5 @@ public class MainWindow extends UiPart<Region> {
             detailsPanelPlaceholder.getChildren().clear();
             detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
         }
-    }
+    }*/
 }
