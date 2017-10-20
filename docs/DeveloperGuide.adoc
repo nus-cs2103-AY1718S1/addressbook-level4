@@ -30,7 +30,7 @@ This app is not compatible with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Please install them if they are disabled. +
-Checking plug-ins by going to `File` > `Settings` > `Plugins`. 
+Checking plug-ins by going to `File` > `Settings` > `Plugins`.
 
 
 === Setting up the project in your computer
@@ -45,8 +45,8 @@ Checking plug-ins by going to `File` > `Settings` > `Plugins`.
 . Click `Open as Project`
 . Click `OK` to accept the default settings
 . Open a console and run the `gradle` command.
-.. Windows users please use `gradlew processResources` 
-.. Mac/Linux users please use  `./gradlew processResources`). 
+.. Windows users please use `gradlew processResources`
+.. Mac/Linux users please use  `./gradlew processResources`).
 .. It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
@@ -96,7 +96,7 @@ When you are ready to start coding,
 
 === Architecture
 
-This *_Architecture Diagram_* given below explains the high-level design of the App. 
+This *_Architecture Diagram_* given below explains the high-level design of the App.
 
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
@@ -270,8 +270,8 @@ public class DeleteCommand extends UndoableCommand {
 
 . Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-. The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. 
-.. The current state of the address book is saved before the `delete 5` command executes. 
+. The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book.
+.. The current state of the address book is saved before the `delete 5` command executes.
 . The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
@@ -286,7 +286,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 * The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-* We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. 
+* We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
 * We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
@@ -305,7 +305,7 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. +
 
-. As before, `clear` will be pushed into the `undoStack`. 
+. As before, `clear` will be pushed into the `undoStack`.
 . This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
