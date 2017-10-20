@@ -138,6 +138,28 @@ public class TagRemoveCommandTest {
         assertFalse(standardCommand.equals(new TagRemoveCommand(singlePersonIndexList1, DESCR_LUCY)));
     }
 
+    @Test
+    public void tagRemoveDescriptorTest()throws Exception {
+        PersonBuilder personBuilder = new PersonBuilder();
+        personBuilder.withName("Name").withAddress("Address").withEmail("Email@email.com")
+                .withPhone("123").withTags("Tags");
+        TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor(personBuilder.build());
+        TagRemoveDescriptor toCopy = new TagRemoveDescriptor(tagRemoveDescriptor);
+
+        assertTrue(tagRemoveDescriptor.equals(toCopy));
+
+        assertTrue(tagRemoveDescriptor.getName().equals(toCopy.getName()));
+
+        assertTrue(tagRemoveDescriptor.getPhone().equals(toCopy.getPhone()));
+
+        assertTrue(tagRemoveDescriptor.getAddress().equals(toCopy.getAddress()));
+
+        assertTrue(tagRemoveDescriptor.getEmail().equals(toCopy.getEmail()));
+
+        assertTrue(tagRemoveDescriptor.getTags().equals(toCopy.getTags()));
+    }
+
+
     /**
      * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
      */

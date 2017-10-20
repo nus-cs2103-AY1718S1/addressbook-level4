@@ -136,8 +136,30 @@ public class TagAddCommandTest {
 
     }
 
+
+    @Test
+    public void tagAddDescriptorTest()throws Exception {
+        PersonBuilder personBuilder = new PersonBuilder();
+        personBuilder.withName("Name").withAddress("Address").withEmail("Email@email.com")
+                .withPhone("123").withTags("Tags");
+        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor(personBuilder.build());
+        TagAddDescriptor toCopy = new TagAddDescriptor(tagAddDescriptor);
+
+        assertTrue(tagAddDescriptor.equals(toCopy));
+
+        assertTrue(tagAddDescriptor.getName().equals(toCopy.getName()));
+
+        assertTrue(tagAddDescriptor.getPhone().equals(toCopy.getPhone()));
+
+        assertTrue(tagAddDescriptor.getAddress().equals(toCopy.getAddress()));
+
+        assertTrue(tagAddDescriptor.getEmail().equals(toCopy.getEmail()));
+
+        assertTrue(tagAddDescriptor.getTags().equals(toCopy.getTags()));
+    }
+
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
      */
     private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
         TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);

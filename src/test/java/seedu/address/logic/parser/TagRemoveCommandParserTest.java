@@ -1,11 +1,21 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagRemoveCommand;
+import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
+import seedu.address.model.tag.Tag;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TagRemoveCommandParserTest {
 
@@ -23,7 +33,6 @@ public class TagRemoveCommandParserTest {
         assertParseFailure(parser, TAG_EMPTY, MESSAGE_INVALID_FORMAT);
     }
 
-    /*
     @Test
     public void parseTagRemoveSuccess() throws Exception{
         Index targetIndex = INDEX_SECOND_PERSON;
@@ -32,17 +41,13 @@ public class TagRemoveCommandParserTest {
 
         Set<Tag> tagSet = new HashSet<Tag>();
         tagSet.add(new Tag(VALID_TAG_FRIEND));
-        TagAddDescriptor addDescriptor= new TagAddDescriptor();
-        addDescriptor.setTags(tagSet);
-        TagAddCommand tagAdd = new TagAddCommand(singlePersonIndexList, addDescriptor);
-        tagAdd.executeUndoableCommand();
 
-        String userInput = VALID_TAG_FRIEND + SPACE + targetIndex.getOneBased();
+        String userInput = VALID_TAG_FRIEND + " " + targetIndex.getOneBased();
         TagRemoveCommand.TagRemoveDescriptor descriptor = new TagRemoveDescriptor();
         descriptor.setTags(tagSet);
         TagRemoveCommand expectedCommand = new TagRemoveCommand(singlePersonIndexList, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-    */
+
 }
