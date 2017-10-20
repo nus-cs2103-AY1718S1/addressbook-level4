@@ -147,7 +147,7 @@ public class EditCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         // code
-        Index targetIndex = INDEX_THIRD_LESSON;
+        Index targetIndex = INDEX_SECOND_LESSON;
         String userInput = targetIndex.getOneBased() + CODE_DESC_MA1101R;
         EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withCode(VALID_CODE_MA1101R).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -161,25 +161,25 @@ public class EditCommandParserTest {
 
         // venue
         userInput = targetIndex.getOneBased() + VENUE_DESC_MA1101R;
-        descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_MA1101R).build();
+        descriptor = new EditLessonDescriptorBuilder().withLocation(VALID_VENUE_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // group
         userInput = targetIndex.getOneBased() + GROUP_DESC_MA1101R;
-        descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_GROUP_MA1101R).build();
+        descriptor = new EditLessonDescriptorBuilder().withGroup(VALID_GROUP_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // time slot
         userInput = targetIndex.getOneBased() + TIMESLOT_DESC_MA1101R;
-        descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_TIMESLOT_MA1101R).build();
+        descriptor = new EditLessonDescriptorBuilder().withTimeSlot(VALID_TIMESLOT_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
         userInput = targetIndex.getOneBased() + LECTURER_DESC_MA1101R;
-        descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_LECTURER_MA1101R).build();
+        descriptor = new EditLessonDescriptorBuilder().withLecturers(VALID_LECTURER_MA1101R).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -235,7 +235,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editLesson() {
         Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + VALID_CODE_MA1101R;
+        String userInput = targetIndex.getOneBased()  + " " + CODE_DESC_MA1101R;
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, VALID_CODE_MA1101R);
@@ -246,7 +246,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editLocation() {
         Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + VALID_VENUE_MA1101R;
+        String userInput = targetIndex.getOneBased()  + " " + VENUE_DESC_MA1101R;
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
         EditCommand expectedCommand = new EditCommand(targetIndex, VALID_VENUE_MA1101R);
@@ -257,7 +257,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_editClassType() {
         Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + VALID_CLASSTYPE_CS2101;
+        String userInput = targetIndex.getOneBased()  + " " + CLASSTYPE_DESC_MA1101R;
 
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         EditCommand expectedCommand = new EditCommand(targetIndex, VALID_CLASSTYPE_CS2101);
