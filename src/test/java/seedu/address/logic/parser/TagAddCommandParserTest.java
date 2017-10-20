@@ -2,11 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,12 +12,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagAddCommand;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.tag.Tag;
 
 public class TagAddCommandParserTest {
@@ -31,7 +25,6 @@ public class TagAddCommandParserTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE);
 
     private TagAddCommandParser parser = new TagAddCommandParser();
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void parseMissingPartsFailure() {
@@ -63,24 +56,6 @@ public class TagAddCommandParserTest {
         TagAddCommand expectedCommand = new TagAddCommand(singlePersonIndexList, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parseTagAddFail() throws Exception {
-        showFirstPersonOnly(model);
-        Index targetIndex = INDEX_SECOND_PERSON;
-        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
-        singlePersonIndexList.add(targetIndex);
-
-        Set<Tag> tagSet = new HashSet<>();
-        tagSet.add(new Tag(VALID_TAG_FRIEND));
-
-        String userInput = VALID_TAG_FRIEND + SPACE + targetIndex.getOneBased();
-        TagAddCommand.TagAddDescriptor descriptor = new TagAddCommand.TagAddDescriptor();
-        descriptor.setTags(tagSet);
-        TagAddCommand expectedCommand = new TagAddCommand(singlePersonIndexList, descriptor);
-
-        assertParseFailure(parser, userInput, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /*
