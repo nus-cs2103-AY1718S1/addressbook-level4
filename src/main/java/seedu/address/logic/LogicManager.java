@@ -90,6 +90,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public boolean isCommandWord(String keyword) {
+        return addressBookParser.isCommandParserRegistered(keyword);
+    }
+
+    @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }

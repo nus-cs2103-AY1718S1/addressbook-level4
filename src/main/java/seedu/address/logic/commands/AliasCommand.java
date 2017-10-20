@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS_KEYWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS_REPRESENTATION;
 
+import seedu.address.logic.Logic;
 import seedu.address.model.alias.AliasToken;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
@@ -28,6 +29,7 @@ public class AliasCommand extends UndoableCommand {
     public static final String MESSAGE_INVALID_KEYWORD = "Unable to use a command name as a keyword!";
 
     private final AliasToken toAdd;
+    private Logic logic;
 
     /**
      * Creates an AliasCommand to add the specified {@code ReadOnlyAliasToken}
@@ -37,8 +39,18 @@ public class AliasCommand extends UndoableCommand {
     }
 
     @Override
+    public void setLogic(Logic logic) {
+        requireNonNull(logic);
+        this.logic = logic;
+    }
+
+    @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
+
+        if (logic.isCommandWord(toAdd.getKeyword().keyword)) {
+            return new CommandResult(MESSAGE_INVALID_KEYWORD);
+        }
         try {
             model.addAliasToken(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));

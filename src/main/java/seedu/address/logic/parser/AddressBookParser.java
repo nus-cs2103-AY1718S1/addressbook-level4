@@ -42,7 +42,7 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     private static final Pattern KEYWORD_PATTERN =
-            Pattern.compile("([^\\s]+)([\\s/]+|$)");
+            Pattern.compile("([^\\s/]+)([\\s/]+|$)");
 
     private final Map<String, Parser<? extends Command>> commandParsers;
     private final Map<String, ReadOnlyAliasToken> aliasedTokens;
@@ -155,12 +155,10 @@ public class AddressBookParser {
         while (matcher.find()) {
             String keyword = matcher.group(1);
             String spaces = matcher.group(2); // The amount of spaces entered is kept the same
-
             ReadOnlyAliasToken token = aliasedTokens.get(keyword);
             if (token != null) {
                 keyword = token.getRepresentation().representation;
             }
-            builder.append(" ");
             builder.append(keyword);
             builder.append(spaces);
         }
@@ -172,23 +170,41 @@ public class AddressBookParser {
      * Adds an AliasToken to be used by parser to replace all alias's keyword with its representation
      * before parsing.
      *
-     * @param token
+     * @param toAdd
      * @return
      */
-    public boolean addAliasToken(ReadOnlyAliasToken token) {
-        requireNonNull(token);
+    public boolean addAliasToken(ReadOnlyAliasToken toAdd) {
+        requireNonNull(toAdd);
 
-        if (aliasedTokens.containsKey(token.getKeyword().keyword)) {
+        if (aliasedTokens.containsKey(toAdd.getKeyword().keyword)) {
             return false;
         }
 
-        if (isCommandParserRegistered(token.getKeyword().keyword)) {
+        if (isCommandParserRegistered(toAdd.getKeyword().keyword)) {
             return false;
         }
 
-        aliasList.add(token);
-        aliasedTokens.put(token.getKeyword().keyword, token);
+        aliasList.add(toAdd);
+        aliasedTokens.put(toAdd.getKeyword().keyword, toAdd);
         return true;
+    }
+
+    /**
+     * Removes an AliasToken that is used by parser to replace all alias's keyword with its representation
+     * before parsing.
+     *
+     * @param toRemove
+     * @return
+     */
+    public boolean removeAliasToken(ReadOnlyAliasToken toRemove) {
+        requireNonNull(toRemove);
+
+        ReadOnlyAliasToken token = aliasedTokens.remove(toRemove);
+        if (token != null) {
+            return aliasList.remove(token);
+        } else {
+            return false;
+        }
     }
 
 
@@ -200,7 +216,7 @@ public class AddressBookParser {
      * already registered or if an alias with the same keyword is previously added.
      */
     public boolean registerCommandParser(Parser<? extends Command> commandParser) {
-        assert commandParser != null;
+        requireNonNull(commandParser);
 
         if (commandParsers.containsKey(commandParser.getCommandWord())) {
             return false;

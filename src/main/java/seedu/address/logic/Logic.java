@@ -30,7 +30,12 @@ public interface Logic {
      * Returns an unmodifiable view of the filtered list of AliasTokens
      */
     ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList();
-    
+
+    /**
+     * Returns true if first token of user input is a valid command word
+     */
+    boolean isCommandWord(String keyword);
+
     /**
      * Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object
      */
