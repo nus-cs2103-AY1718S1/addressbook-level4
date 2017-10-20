@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel`, `TaskListPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -262,9 +262,9 @@ Suppose the user has just executed the `addtask` command using `addtask CS assig
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `AddTask` feature is being evoked and calls the `AddTaskCommandParser` to parse the String and separate it into three components: `Description`, `StartDate` and `Deadline`. These are validated and formatted by the `Task` class and returned as a `Task` object to be used to call the `AddTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `AddTaskCommand` class which creates and returns a `CommandResult` object.
 
-The following activity diagram summarize what happens when a user executes a new command:
+The following sequence diagram summarizes how this operation works:
 
-image::AddTaskCommand.png[width="800", height="500"]
+image::AddTaskCommandSequenceDiagram.png[width="800", height="500"]
 
 ==== Design Considerations
 **Aspect:** Implementation of AddTaskCommand +
