@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
@@ -38,6 +39,9 @@ public interface Model {
 
     /** Adds the given group */
     void addGroup(ReadOnlyGroup group) throws DuplicateGroupException;
+
+    /** Deletes the given group */
+    void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

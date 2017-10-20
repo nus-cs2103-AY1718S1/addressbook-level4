@@ -15,6 +15,7 @@ import seedu.address.model.group.Group;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -237,6 +238,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         groups.add(newGroup);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws GroupNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(ReadOnlyGroup key) throws GroupNotFoundException {
+        if (groups.remove(key)) {
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
     //// util methods
 
     @Override

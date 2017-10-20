@@ -15,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
@@ -97,6 +98,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
         addressBook.addGroup(group);
         updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteGroup(ReadOnlyGroup target) throws GroupNotFoundException {
+        addressBook.removeGroup(target);
         indicateAddressBookChanged();
     }
 
