@@ -22,7 +22,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      */
     @Override
     public UnlockCommand parse(String userInput) throws ParseException {
-        if (!SecurityUtil.isPasswordValid(userInput)) {
+        if (!SecurityUtil.isValidPassword(userInput)) {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 

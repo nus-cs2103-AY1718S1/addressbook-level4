@@ -29,7 +29,7 @@ public class SecurityUtil {
 
     private static final String xmlStarter = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
-    public static boolean isPasswordValid(String password) {
+    public static boolean isValidPassword(String password) {
         return !(password == null || password.length() < MIN_KEY_LENGTH);
     }
 

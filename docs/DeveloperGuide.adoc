@@ -480,7 +480,7 @@ public interface SecureStorage {
             throws IOException, EncryptOrDecryptException;
 }
 
-public SecurityManager implements Security {
+public class SecurityManager extends ComponentManager implements Security {
     // ... implementations
 }
 
