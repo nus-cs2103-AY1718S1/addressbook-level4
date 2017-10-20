@@ -9,7 +9,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -130,14 +129,17 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void sortBy(String order) throws IllegalArgumentException {
         switch (order) {
-            case "name":
-                internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
-                break;
-            case "debt":
-                internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid sort ordering");
+        case "name":
+            internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
+            break;
+        case "debt":
+            internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
+            break;
+        case "cluster":
+            internalList.sort((Person p1, Person p2) -> p1.getCluster().compareTo(p2.getCluster()));
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid sort ordering");
         }
     }
 

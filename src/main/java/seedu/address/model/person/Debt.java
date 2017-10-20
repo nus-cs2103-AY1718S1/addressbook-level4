@@ -72,7 +72,7 @@ public class Debt {
     }
 
     public int compareTo(Debt other) {
-        return (int)(this.toNumber() - other.toNumber());
+        return (int) (this.toNumber() - other.toNumber());
     }
 
     @Override

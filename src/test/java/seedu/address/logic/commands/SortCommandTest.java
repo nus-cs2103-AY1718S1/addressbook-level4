@@ -18,12 +18,14 @@ import seedu.address.model.UserPrefs;
  * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
  */
 public class SortCommandTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     private static final String ORDERING_NAME = "name";
     private static final String ORDERING_DEBT = "debt";
+    private static final String ORDERING_CLUSTER = "cluster";
     private static final String INVALID_ORDERING = "height";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -43,6 +45,11 @@ public class SortCommandTest {
         sortCommand = prepareCommand(ORDERING_DEBT);
         expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEBT);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+
+        expectedModel.sortBy(ORDERING_CLUSTER);
+        sortCommand = prepareCommand(ORDERING_CLUSTER);
+        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_CLUSTER);
+        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -52,7 +59,7 @@ public class SortCommandTest {
         thrown.expect(IllegalArgumentException.class);
         expectedModel.sortBy(INVALID_ORDERING);
     }
-    
+
     private SortCommand prepareCommand(String order) {
         SortCommand sortCommand = new SortCommand(order);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());

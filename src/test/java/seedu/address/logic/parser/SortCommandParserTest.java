@@ -13,7 +13,8 @@ public class SortCommandParserTest {
 
     private static final String ORDERING_NAME = "name";
     private static final String ORDERING_DEBT = "debt";
-    
+    private static final String ORDERING_CLUSTER = "cluster";
+
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
 
@@ -40,5 +41,8 @@ public class SortCommandParserTest {
 
         expectedCommand = new SortCommand(ORDERING_DEBT);
         assertParseSuccess(parser, ORDERING_DEBT, expectedCommand);
+
+        expectedCommand = new SortCommand(ORDERING_CLUSTER);
+        assertParseSuccess(parser, ORDERING_CLUSTER, expectedCommand);
     }
 }
