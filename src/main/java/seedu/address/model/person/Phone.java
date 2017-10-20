@@ -47,12 +47,15 @@ public class Phone {
 //            phoneStr += s + "\n";
 
         }
-        if (phone.isEmpty() && invalid) {
+        if (phones.isEmpty() && invalid) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
 
+        if (!phoneStr.isEmpty()) {
+            phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
+        }
 
-        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
+//        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
         this.phonelist = phones;
         value = phoneStr;
     }
@@ -61,6 +64,9 @@ public class Phone {
         requireNonNull(phone);
 
         String[] numbers = phone.split("\n");
+
+//        System.out.println("phone: " + phone);
+//        System.out.println("numbers.length: " + numbers.length);
 
         ArrayList<String> phones = new ArrayList<String>();
         boolean invalid = false;
@@ -81,11 +87,18 @@ public class Phone {
 //            phones.add(numbers[i]);
         }
 
-        if (phone.isEmpty() && invalid) {
+//        System.out.println("phones.size(): " + phones.size());
+//        System.out.println("phones.isEmpty(): " + phone.isEmpty());
+
+        if (phones.isEmpty() && invalid) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
 
-        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
+        if (!phoneStr.isEmpty()) {
+            phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
+        }
+
+//        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
 
         this.phonelist = phones;
 //        this.value = phone;

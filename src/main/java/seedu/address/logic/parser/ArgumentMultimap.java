@@ -56,9 +56,16 @@ public class ArgumentMultimap {
      */
     public Optional<String> getMultipleValues(Prefix prefix) {
         List<String> values = getAllValues(prefix);
+        ArrayList<String> added = new ArrayList<>();
         String str = "";
         for (String v : values) {
-            str += v + "\n";
+            if (!added.contains(v)) {
+                str += v + "\n";
+                added.add(v);
+            }
+
+
+//            str += v + "\n";
         }
         if (!str.isEmpty()) {
             str = str.substring(0, str.length() - 1);
