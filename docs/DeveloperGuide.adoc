@@ -567,7 +567,9 @@ This is implemented using Predicates because Predicates help move the business l
 Also, the Predicate can can be reused, improving code manageability. +
 The code with Predicates is also much more readable than using if-else blocks.
 
-The following sequence diagram shows how the sort operation works:
+The following sequence diagram shows how the FindTags operation works:
+
+image::FindtagsSequenceDiagramForLogic.png[width="800"]
 
 ==== Alternatives considered.
 
