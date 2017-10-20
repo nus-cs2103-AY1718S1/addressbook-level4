@@ -69,7 +69,7 @@ public class KeyListener {
             commandBox.setFocus();
 
         } else if (DELETE_SELECTION.match(keyEvent)) {
-            // TODO: add support for deletion at selected list
+            deleteSelectedContact();
 
         } else if (CLEAR.match(keyEvent)) {
             executeCommand(ClearCommand.COMMAND_WORD);
@@ -120,4 +120,10 @@ public class KeyListener {
     private void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);
     }
+
+    /**
+     * Deletes the selected contact
+     * TODO: Implement deletion at selected contact
+     */
+    private void deleteSelectedContact() {}
 }
