@@ -108,14 +108,15 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#security-component[*`Security`*] : Secures the address book.
 
-Each of the four components
+Each of the five components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -209,6 +210,19 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+
+=== Security component
+
+image::SecurityClassDiagram.png[width="800"]
+_Figure 2.6.1 : Structure of the Security Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/security/Security.java[`Security.java`]
+
+The `Security` component,
+
+* can encrypt address book and decrypt by a given password.
+* can prevent user from executing commands if address book is secured.
 
 === Common classes
 
@@ -437,6 +451,46 @@ Lambda expression is equivalent to overriding the 'compare(T o1, T o2)' method i
 **Pros:** Widely practised, minimise error. +
 **Cons:** Long and unclear, need to manually override 'compare' method.
 // end::sort[]
+
+// tag::lock[]
+=== Lock/Unlock mechanism
+
+The lock/unlock mechanism is based on `SecurityManager`. When lock/unlock command is executed, it gets an singleton instance from `SecurityManager` and calls its security methods. +
+
+Some important methods in `SecurityManager` are as follows:
+[source,java]
+----
+public interface Security extends SecureStorage {
+
+    void raise(BaseEvent event);
+
+    boolean isPermittedCommand(String commandWord);
+
+    // ... other methods
+}
+
+public interface SecureStorage {
+
+    boolean isEncrypted() throws IOException;
+
+    void encryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException;
+
+    void decryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException;
+}
+
+public class SecurityManager extends ComponentManager implements Security {
+    // ... implementations
+}
+
+----
+
+When methods in interface `SecureStorage` are called, `SecurityManager` will not realize them by itself. Instead, it calls the methods in `Storage` which also implements `SecureStorage`, because component `Secure` should not read and save files. +
+
+The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component.
+
+// end::lock[]
 
 === Logging
 
