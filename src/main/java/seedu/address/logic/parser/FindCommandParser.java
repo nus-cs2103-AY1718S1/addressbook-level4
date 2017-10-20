@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -19,12 +20,14 @@ import seedu.address.model.person.EmailContainsKeywordPredicate;
 import seedu.address.model.person.NameContainsKeywordPredicate;
 import seedu.address.model.person.PersonContainsFieldsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordPredicate;
+import seedu.address.model.person.RemarkContainsKeywordPredicate;
 import seedu.address.model.person.TagsContainKeywordPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
  */
 public class FindCommandParser implements Parser<FindCommand> {
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -52,7 +55,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String formattedText = " " + trimmedArgs;
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(formattedText,
-                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_REMARK);
 
         List<Predicate> predicateList = new ArrayList<>();
 
@@ -85,6 +88,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new TagsContainKeywordPredicate(value);
         case CliSyntax.PREFIX_EMPTY_STRING:
             return new NameContainsKeywordPredicate(value);
+        case CliSyntax.PREFIX_REMARK_STRING:
+            return new RemarkContainsKeywordPredicate(value);
         default:
             return new NameContainsKeywordPredicate(value);
         }

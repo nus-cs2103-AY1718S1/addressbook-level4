@@ -246,12 +246,12 @@ public class HintParser {
      * returns a hint specific to the find command
      */
     private static String generateFindHint() {
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK);
+        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY);
 
         if (endHintOptional.isPresent()) {
             return endHintOptional.get();
         }
-        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_REMARK);
+        return offerHint("prefix/KEYWORD", PREFIX_EMPTY);
     }
 
     /**
