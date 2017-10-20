@@ -38,7 +38,6 @@
         </padding>
     </StackPane>
     <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border"/>
-
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4860335195530726, 0.5251396648044693"
                VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" style="-fx-border-color: white; -fx-border-width: 1.70;"

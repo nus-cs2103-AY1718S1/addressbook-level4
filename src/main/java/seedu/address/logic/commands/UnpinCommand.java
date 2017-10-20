@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_PINNED;
+
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -18,7 +20,7 @@ public class UnpinCommand extends Command {
     public static final String COMMAND_WORD = "unpin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unpins the person identified by the index number in the last person listing.\n"
+            + ": Unpins the person identified by the index number in the pinned person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -34,13 +36,17 @@ public class UnpinCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> pinnedList = model.getFilteredPersonList().filtered(PREDICATE_SHOW_ONLY_PINNED);
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= pinnedList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToUnpin = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToUnpin = pinnedList.get(targetIndex.getZeroBased());
+
+        if (!personToUnpin.isPinned()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
+        }
 
         try {
             model.unpinPerson(personToUnpin);
