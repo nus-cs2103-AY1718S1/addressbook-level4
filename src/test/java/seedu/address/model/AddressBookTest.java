@@ -101,6 +101,11 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+            return getWhitelistedPersons(persons).asObservableList();
+        }
+
+        @Override
         public ObservableList<Tag> getTagList() {
             return tags;
         }
@@ -118,6 +123,21 @@ public class AddressBookTest {
                 }
             }
             return blacklistedPersons;
+        }
+
+        public UniquePersonList getWhitelistedPersons(ObservableList<ReadOnlyPerson> persons) {
+            UniquePersonList whitelistedPersons = new UniquePersonList();
+            for (ReadOnlyPerson readOnlyPerson : persons) {
+                Person person = new Person(readOnlyPerson);
+                if (person.getIsWhitelisted()) {
+                    try {
+                        whitelistedPersons.add(person);
+                    } catch (DuplicatePersonException e) {
+                        assert false : "This is not possible as prior checks have been done";
+                    }
+                }
+            }
+            return whitelistedPersons;
         }
 
     }
