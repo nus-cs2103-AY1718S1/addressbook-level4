@@ -6,14 +6,14 @@ import seedu.address.model.tag.exceptions.TagInternalErrorException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
- * Deletes a tag from all contacts from the address book.
+ * Deletes a tag from all parcels from the address book.
  */
 public class DeleteTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deleteTag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the tag from all contacts in the address book.\n"
+            + ": Deletes the tag from all parcels in the address book.\n"
             + "Parameters: Tag name\n"
             + "Example: " + COMMAND_WORD + " friends";
 
