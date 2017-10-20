@@ -31,6 +31,17 @@ public class Event implements ReadOnlyEvent {
         this.participants = new SimpleObjectProperty<>(new ParticipantList(participants));
     }
 
+    /**
+     * Event name and time must be present and not null.
+     */
+    public Event (EventName name, EventDescription desc, EventTime time) {
+        requireAllNonNull(name, time);
+        this.name = new SimpleObjectProperty<>(name);
+        this.desc = new SimpleObjectProperty<>(desc);
+        this.time = new SimpleObjectProperty<>(time);
+        this.participants = new SimpleObjectProperty<>(new ParticipantList());
+    }
+
     public Event (ReadOnlyEvent source) {
         this(source.getEventName(), source.getDescription(), source.getEventTime(), source.getParticipants());
     }
