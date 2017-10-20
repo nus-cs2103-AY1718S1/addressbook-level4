@@ -56,7 +56,8 @@ public interface ReadOnlyLesson {
                 .append(" Group: ")
                 .append(getGroup())
                 .append(" Time Slot: ")
-                .append(getTimeSlot());
+                .append(getTimeSlot())
+                .append(" Lecturers: ");
         getLecturers().forEach(builder::append);
         return builder.toString();
     }

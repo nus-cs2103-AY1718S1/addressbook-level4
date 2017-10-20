@@ -6,6 +6,7 @@ import static seedu.address.model.ListingUnit.LESSON;
 import static seedu.address.model.ListingUnit.LOCATION;
 import static seedu.address.model.ListingUnit.MODULE;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -147,6 +149,12 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updateLesson(target, editedLesson);
         indicateAddressBookChanged();
     }
+
+    @Override
+    public void sortLessons() {
+        addressBook.sortLessons();
+    }
+
 
     //=========== Filtered Module List Accessors =============================================================
 

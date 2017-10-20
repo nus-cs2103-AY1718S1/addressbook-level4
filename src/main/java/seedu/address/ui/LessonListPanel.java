@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -9,7 +8,6 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -19,8 +17,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.SortListRequestEvent;
-import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
 
@@ -86,42 +82,6 @@ public class LessonListPanel extends UiPart<Region> {
     private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(lessonList);
-    }
-
-    @Subscribe
-    private void handleSortListRequestEvent(SortListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        SortedList<ReadOnlyLesson> sortedList;
-
-        switch (ListingUnit.getCurrentListingUnit()) {
-        case LESSON:
-            sortedList = new SortedList<ReadOnlyLesson>(lessonList, new Comparator<ReadOnlyLesson>() {
-                @Override
-                public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                    return firstLesson.getClassType().value.compareTo(secondLesson.getClassType().value);
-                }
-            });
-            break;
-
-        case LOCATION:
-            sortedList = new SortedList<ReadOnlyLesson>(lessonList, new Comparator<ReadOnlyLesson>() {
-                @Override
-                public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                    return firstLesson.getLocation().value.compareTo(secondLesson.getLocation().value);
-                }
-            });
-            break;
-
-        default:
-            sortedList = new SortedList<ReadOnlyLesson>(lessonList, new Comparator<ReadOnlyLesson>() {
-                @Override
-                public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                    return firstLesson.getCode().fullCodeName.compareTo(secondLesson.getCode().fullCodeName);
-                }
-            });
-            break;
-        }
-        setConnections(sortedList);
     }
 
     /**

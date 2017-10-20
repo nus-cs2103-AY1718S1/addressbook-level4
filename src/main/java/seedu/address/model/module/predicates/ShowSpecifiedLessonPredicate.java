@@ -28,7 +28,7 @@ public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ShowSpecifiedLessonPredicate // instanceof handles nulls
-                && this.hashcode == (((ShowSpecifiedLessonPredicate) other).hashCode())); // state check
+                && this.hashcode == (((ShowSpecifiedLessonPredicate) other).hashcode)); // state check
     }
 
 }

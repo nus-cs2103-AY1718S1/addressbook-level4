@@ -17,6 +17,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
@@ -63,6 +64,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         Lesson lesson = new LessonBuilder().build();
         EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder(lesson).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "

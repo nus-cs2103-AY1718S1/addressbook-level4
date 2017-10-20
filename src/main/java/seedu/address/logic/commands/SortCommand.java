@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.SortListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /***
@@ -20,10 +18,8 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-
-        EventsCenter.getInstance().post(new SortListRequestEvent());
+        model.sortLessons();
         return new CommandResult(MESSAGE_SORT_LESSON_SUCCESS);
-
     }
 
 }

@@ -88,19 +88,18 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
-        assertParseFailure(parser, "1" + INVALID_CODE_DESC, Code.MESSAGE_CODE_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_CLASSTYPE_DESC, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "1" + INVALID_VENUE_DESC, Location.MESSAGE_LOCATION_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_GROUP_DESC, Group.MESSAGE_GROUP_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_TIMESLOT_DESC, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_LECTURER_DESC, Lecturer.MESSAGE_LECTURER_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, "1" + INVALID_CODE_DESC, Code.MESSAGE_CODE_CONSTRAINTS); // invalid module code
+        assertParseFailure(parser, "1" + INVALID_CLASSTYPE_DESC, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS); // invalid class type
+        assertParseFailure(parser, "1" + INVALID_VENUE_DESC, Location.MESSAGE_LOCATION_CONSTRAINTS); // invalid venue
+        assertParseFailure(parser, "1" + INVALID_GROUP_DESC, Group.MESSAGE_GROUP_CONSTRAINTS); // invalid group
+        assertParseFailure(parser, "1" + INVALID_TIMESLOT_DESC, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS); // invalid time slot
 
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
         // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        assertParseFailure(parser, "1" + VALID_CLASSTYPE_MA1101R + INVALID_CLASSTYPE_DESC, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + CLASSTYPE_DESC_MA1101R + INVALID_CLASSTYPE_DESC, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
@@ -110,7 +109,7 @@ public class EditCommandParserTest {
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_CODE_DESC + INVALID_CLASSTYPE_DESC + INVALID_VENUE_DESC + INVALID_GROUP_DESC + INVALID_TIMESLOT_DESC,
-                Code.MESSAGE_CODE_CONSTRAINTS);
+                ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
     }
 
     @Test
@@ -194,7 +193,7 @@ public class EditCommandParserTest {
 
         EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101)
                 .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
-                .withLecturers(LECTURER_DESC_MA1101R, LECTURER_DESC_CS2101).build();
+                .withLecturers(VALID_LECTURER_CS2101, VALID_LECTURER_MA1101R).build();
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -203,6 +202,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         // no other valid values specified
         Index targetIndex = INDEX_THIRD_LESSON;
         String userInput = targetIndex.getOneBased() + INVALID_CLASSTYPE_DESC + CLASSTYPE_DESC_CS2101;
@@ -211,17 +211,17 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + VENUE_DESC_CS2101 + INVALID_CLASSTYPE_DESC + GROUP_DESC_CS2101
+        userInput = targetIndex.getOneBased() + VENUE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + GROUP_DESC_CS2101
                 + CLASSTYPE_DESC_CS2101;
         descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101).withGroup(VALID_GROUP_CS2101)
-                .withTimeSlot(VALID_TIMESLOT_CS2101).build();
+                .withLocation(VALID_VENUE_MA1101R).build();
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
-    public void parse_resetTags_success() {
+    public void parse_resetLecturers_success() {
         Index targetIndex = INDEX_THIRD_LESSON;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
@@ -233,11 +233,11 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_editLesson() {
+    public void parse_editModule() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + CODE_DESC_MA1101R;
+        String userInput = targetIndex.getOneBased()  + " " + VALID_CODE_MA1101R;
 
-        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, VALID_CODE_MA1101R);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -245,22 +245,12 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_editLocation() {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
         Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + VENUE_DESC_MA1101R;
+        String userInput = targetIndex.getOneBased()  + " " + VALID_VENUE_MA1101R;
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
         EditCommand expectedCommand = new EditCommand(targetIndex, VALID_VENUE_MA1101R);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_editClassType() {
-        Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + CLASSTYPE_DESC_MA1101R;
-
-        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
-        EditCommand expectedCommand = new EditCommand(targetIndex, VALID_CLASSTYPE_CS2101);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

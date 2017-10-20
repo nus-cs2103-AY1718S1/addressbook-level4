@@ -71,4 +71,9 @@ public interface Model {
      */
     void handleListingUnit();
 
+    /**
+     * Sort the filtered lesson/module/location list regarding different listing unit.
+     */
+    void sortLessons();
+
 }

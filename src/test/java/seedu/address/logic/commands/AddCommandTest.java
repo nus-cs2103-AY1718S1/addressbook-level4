@@ -171,6 +171,11 @@ public class AddCommandTest {
         public void handleListingUnit() {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void sortLessons() {
+            fail("This method should not be called.");
+        }
     }
 
     /**
@@ -197,6 +202,11 @@ public class AddCommandTest {
         @Override
         public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
             lessonsAdded.add(new Lesson(lesson));
+        }
+
+        @Override
+        public void handleListingUnit() {
+
         }
 
         @Override
