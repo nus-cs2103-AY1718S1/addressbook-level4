@@ -26,6 +26,7 @@ public class ParcelBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
     public static final String DEFAULT_DELIVERYDATE = "01-01-2001";
+    public static final String DEFAULT_STATUS = "PENDING";
 
     private Parcel parcel;
 
