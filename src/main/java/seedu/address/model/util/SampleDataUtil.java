@@ -41,7 +41,7 @@ public class SampleDataUtil {
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), getEmailSet("irfan@example.com"),
                     new Address("Blk 47 Tampines Street 20, #17-35"), new Remark(""),
                     getTagSet("classmates"),
-                    getWebLinkSet("https://www.facebook.com/Phua.Han.Siang")), 
+                    getWebLinkSet("https://www.facebook.com/Phua.Han.Siang")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), getEmailSet("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), new Remark(""),
                     getTagSet("colleagues"), getWebLinkSet("https://www.facebook.com/Phua.Han.Siang"))
