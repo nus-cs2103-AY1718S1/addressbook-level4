@@ -106,6 +106,10 @@ public class HintParserTest {
         assertHintEquals("find t/", "TAG");
         assertHintEquals("find t/1", " n/NAME");
 
+        assertHintEquals("find r", "/REMARK");
+        assertHintEquals("find r/", "REMARK");
+        assertHintEquals("find r/a", " n/NAME");
+
 
     }
 

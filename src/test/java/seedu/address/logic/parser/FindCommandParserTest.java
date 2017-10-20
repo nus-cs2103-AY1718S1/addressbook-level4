@@ -17,6 +17,7 @@ import seedu.address.model.person.EmailContainsKeywordPredicate;
 import seedu.address.model.person.NameContainsKeywordPredicate;
 import seedu.address.model.person.PersonContainsFieldsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordPredicate;
+import seedu.address.model.person.RemarkContainsKeywordPredicate;
 import seedu.address.model.person.TagsContainKeywordPredicate;
 
 public class FindCommandParserTest {
@@ -37,13 +38,14 @@ public class FindCommandParserTest {
                                         new TagsContainKeywordPredicate("friend"),
                                         new PhoneContainsKeywordPredicate("111"),
                                         new AddressContainsKeywordPredicate("Big Road"),
-                                        new EmailContainsKeywordPredicate("email@email.com"))));
+                                        new EmailContainsKeywordPredicate("email@email.com"),
+                                        new RemarkContainsKeywordPredicate("likes"))));
 
-        assertParseSuccess(parser, "n/Alice t/friend a/Big Road e/email@email.com p/111", expectedFindCommand);
+        assertParseSuccess(parser, "n/Alice t/friend a/Big Road e/email@email.com p/111 r/likes", expectedFindCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser,
-                " \n n/Alice a/Big Road\n  \ne/email@email.com\t t/friend   p/111\t", expectedFindCommand);
+                " \n n/Alice a/Big Road\n \r\nr/likes \ne/email@email.com\t t/friend   p/111\t", expectedFindCommand);
     }
 
     @Test

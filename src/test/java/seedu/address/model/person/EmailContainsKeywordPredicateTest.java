@@ -35,7 +35,7 @@ public class EmailContainsKeywordPredicateTest {
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
+    public void test_containsKeywords_returnsTrue() {
         // One keyword
         EmailContainsKeywordPredicate predicate = new EmailContainsKeywordPredicate("email@address.com");
         assertTrue(predicate.test(new PersonBuilder().withEmail("email@address.com").build()));
@@ -46,7 +46,7 @@ public class EmailContainsKeywordPredicateTest {
     }
 
     @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
+    public void test_doesNotContainKeywords_returnsFalse() {
         EmailContainsKeywordPredicate predicate = new EmailContainsKeywordPredicate("address@email.com");
         assertFalse(predicate.test(new PersonBuilder().withEmail("email@address.com").build()));
 

@@ -28,7 +28,7 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
      * Returns true if person's tags list contains keyword (case insensitive)
      */
     private boolean personTagsContainKeyword(ReadOnlyPerson person, String keyword) {
-        return person.getTags().stream().anyMatch(tag -> tag.tagName.contains(keyword));
+        return person.getTags().stream().anyMatch(tag -> tag.tagName.toLowerCase().contains(keyword.toLowerCase()));
     }
 
     @Override

@@ -36,7 +36,7 @@ public class PhoneContainsKeywordPredicateTest {
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
+    public void test_containsKeywords_returnsTrue() {
         // One keyword
         PhoneContainsKeywordPredicate predicate = new  PhoneContainsKeywordPredicate("123456");
         assertTrue(predicate.test(new PersonBuilder().withPhone("123456").build()));
@@ -47,7 +47,7 @@ public class PhoneContainsKeywordPredicateTest {
     }
 
     @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
+    public void test_doesNotContainKeywords_returnsFalse() {
 
         PhoneContainsKeywordPredicate predicate = new PhoneContainsKeywordPredicate("654321");
         assertFalse(predicate.test(new PersonBuilder().withPhone("123456").build()));
