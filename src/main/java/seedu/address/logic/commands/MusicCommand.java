@@ -7,7 +7,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 /**
- * Lists all persons in the address book to the user.
+ * Plays Music with music play command
+ * Pause Music with music pause command
+ * Stop Music with music stop command
  */
 public class MusicCommand extends Command {
 
@@ -65,7 +67,7 @@ public class MusicCommand extends Command {
                 Media sound = new Media(new File(musicFile).toURI().toString());
                 mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(5.0);
+                mediaPlayer.setVolume(2.0);
                 mediaPlayer.play();
                 return new CommandResult(MESSAGE_SUCCESS);
             } else {
