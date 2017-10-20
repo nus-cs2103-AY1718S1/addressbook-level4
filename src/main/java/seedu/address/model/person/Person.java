@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,13 +26,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Favorite> favorite;
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueSocialInfoList> socialInfos;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address,
-                  Favorite favorite, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, favorite, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Favorite favorite,
+                  Set<Tag> tags, Set<SocialInfo> socialInfos) {
+        requireAllNonNull(name, phone, email, address, tags, socialInfos);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -38,14 +41,15 @@ public class Person implements ReadOnlyPerson {
         this.favorite = new SimpleObjectProperty<>(favorite);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.socialInfos = new SimpleObjectProperty<>(new UniqueSocialInfoList(socialInfos));
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getFavorite(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavorite(),
+                source.getTags(), source.getSocialInfos());
     }
 
     public void setName(Name name) {
@@ -136,6 +140,20 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<UniqueSocialInfoList> socialInfoProperty() {
+        return socialInfos;
+    }
+
+    @Override
+    public Set<SocialInfo> getSocialInfos() {
+        return Collections.unmodifiableSet(socialInfos.get().toSet());
+    }
+
+    public void setSocialInfos(Set<SocialInfo> replacement) {
+        socialInfos.set(new UniqueSocialInfoList(replacement));
     }
 
     @Override

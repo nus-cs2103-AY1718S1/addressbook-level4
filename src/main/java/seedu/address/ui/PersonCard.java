@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -48,12 +49,15 @@ public class PersonCard extends UiPart<Region> {
     private ImageView favorite;
     @FXML
     private FlowPane tags;
+    @FXML
+    private VBox socialInfos;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initSocialInfos(person);
         bindListeners(person);
     }
 
@@ -89,6 +93,10 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        person.socialInfoProperty().addListener((observable, oldValue, newValue) -> {
+            socialInfos.getChildren().clear();
+            initSocialInfos(person);
+        });
     }
 
     /**
@@ -108,6 +116,18 @@ public class PersonCard extends UiPart<Region> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Creates a social info label for each {@code Person}
+     */
+    private void initSocialInfos(ReadOnlyPerson person) {
+        person.getSocialInfos().forEach(socialInfo -> {
+            String labelText = socialInfo.getSocialType() + ": " + socialInfo.getUsername();
+            Label socialLabel = new Label(labelText);
+            socialLabel.getStyleClass().add("cell_small_label");
+            socialInfos.getChildren().add(socialLabel);
         });
     }
 
