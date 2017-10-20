@@ -23,7 +23,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
-    private final Label emailLabel;
+    private final List<Label> emailLabel;
     private final Label remarkLabel;
     private final List<Label> tagLabels;
 
@@ -34,7 +34,12 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
-        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        Region emailsContainer = getChildNode(EMAIL_FIELD_ID);
+        this.emailLabel = emailsContainer
+                .getChildrenUnmodifiable()
+                .stream()
+                .map(Label.class::cast)
+                .collect(Collectors.toList());
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -61,8 +66,11 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return phoneLabel.getText();
     }
 
-    public String getEmail() {
-        return emailLabel.getText();
+    public List<String> getEmail() {
+        return emailLabel
+                .stream()
+                .map(Label::getText)
+                .collect(Collectors.toList());
     }
 
     public String getRemark() {

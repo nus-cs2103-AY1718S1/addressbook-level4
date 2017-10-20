@@ -62,7 +62,7 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
+    public EditPersonDescriptorBuilder withEmail(String... email) {
         try {
             descriptor.setEmail(ParserUtil.parseEmail(Arrays.asList(email)));
         } catch (IllegalValueException ive) {
