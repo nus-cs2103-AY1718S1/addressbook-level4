@@ -14,6 +14,18 @@ endif::[]
 
 By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
+== About
+
+This user guide will give you an overview of how to properly use the Codii app.
+This guide includes step by step instructions on how each commands work, FAQs and a summary on every command you will learn.
+
+== Introduction
+
+Codii is a free to use address book catered to suit the needs of debt collectors. You can enter debtors into the Codii app,
+track the amount of debt owed, manage deadlines, ban and unban debtors and even organise them by location.
+
+Codii is available for the Linux, Unix, Windows XP, and Mac OS X operating systems.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
