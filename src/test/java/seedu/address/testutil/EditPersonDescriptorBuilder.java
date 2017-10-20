@@ -6,6 +6,7 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -32,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setFavorite(person.getFavorite());
         descriptor.setTags(person.getTags());
     }
 
@@ -80,6 +82,14 @@ public class EditPersonDescriptorBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Favorite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavorite(boolean favorite) {
+        descriptor.setFavorite(new Favorite(favorite));
         return this;
     }
 
