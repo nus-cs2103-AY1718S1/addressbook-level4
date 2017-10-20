@@ -505,6 +505,61 @@ There is no need to synchronize manually.
 Stops synchronizing of contact information with any previously configured cloud accounts. +
 Format: `unsync`
 
+== Facebook Integration [Coming in v2.0]:
+
+=== Connecting to Facebook: `facebook connect`
+
+To synchronize your AddressBook with your personal Facebook account. +
+Format: `facebook connect`
+
+****
+* Launches a Facebook authorization page in the browser
+* Key in your credentials
+****
+
+=== Posting to Facebook: `facebook post`
+
+To post a status to your Facebook account. +
+Format: `facebook post STATUS`
+
+****
+* First you need to ensure your account is recognised by Facebook developers account
+* Checks if account has been authenticated
+* Posts to Facebook
+****
+
+Examples:
+
+* `facebook post helloworld` +
+posts 'helloworld' to Facebook account
+
+=== Adding all Facebook Friends: `facebook addallfriends`
+
+To add all your Facebook friends into your AddressBook. +
+Format: `facebook addallfriends`
+
+****
+* First ensures that Facebook has already been connected
+* Adds all the friends to AddressBook
+****
+
+
+=== Adding a Facebook contact: `facebook addcontact`
+
+To search for a specific Facebook User and add that User to AddressBook. +
+Format: `facebook addcontact USER_NAME`
+
+****
+* First ensures that Facebook has already been connected
+* Searches Facebook database for User
+* Prompts user to choose which contact to add
+* Adds that contact to AddressBook
+****
+
+Examples:
+
+* `facebook addcontact Barack Obama` +
+adds Facebook User named 'Barack Obama' to AddressBook
 
 == FAQ
 
