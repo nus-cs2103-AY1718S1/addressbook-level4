@@ -9,22 +9,22 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Pins a person identified using it's last displayed index from the address book.
+ * Unpins a person identified using it's last displayed index from the address book.
  */
-public class PinCommand extends Command {
+public class UnpinCommand extends Command {
 
-    public static final String COMMAND_WORD = "pin";
+    public static final String COMMAND_WORD = "unpin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Pins the person identified by the index number in the last person listing.\n"
+            + ": Unpins the person identified by the index number in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Person: %1$s";
+    public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
 
     private final Index targetIndex;
 
-    public PinCommand(Index targetIndex) {
+    public UnpinCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -38,20 +38,20 @@ public class PinCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToPin = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToUnpin = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.pinPerson(personToPin);
+            model.unpinPerson(personToUnpin);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-        return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin));
+        return new CommandResult(String.format(MESSAGE_UNPIN_PERSON_SUCCESS, personToUnpin));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof PinCommand // instanceof handles nulls
-                && this.targetIndex.equals(((PinCommand) other).targetIndex)); // state check
+                || (other instanceof UnpinCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UnpinCommand) other).targetIndex)); // state check
     }
 }
