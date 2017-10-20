@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.person.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
  * Adds an event to the address book.

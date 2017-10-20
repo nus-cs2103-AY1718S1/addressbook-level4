@@ -18,7 +18,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.EventNameContainsKeywordsPredicate;
 import seedu.address.model.property.NameContainsKeywordsPredicate;

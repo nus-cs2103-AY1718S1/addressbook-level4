@@ -8,7 +8,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
