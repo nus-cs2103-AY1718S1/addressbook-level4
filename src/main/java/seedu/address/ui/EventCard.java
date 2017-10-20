@@ -49,8 +49,8 @@ public class EventCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyEvent event) {
-        name.textProperty().bind(Bindings.convert(event.EnameProperty()));
-        description.textProperty().bind(Bindings.convert(event.descProperty()));
+        name.textProperty().bind(Bindings.convert(event.eventNameProperty()));
+        description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
     }
 
