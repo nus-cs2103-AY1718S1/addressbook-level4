@@ -9,15 +9,15 @@ import seedu.address.model.module.ReadOnlyLesson;
  * Tests that a {@code ReadOnlyLesson} matches the given lesson.
  */
 public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
-    private final ReadOnlyLesson specifiedLesson;
+    private final int hashcode;
 
-    public ShowSpecifiedLessonPredicate(ReadOnlyLesson lesson) {
-        this.specifiedLesson = lesson;
+    public ShowSpecifiedLessonPredicate(int hashcode) {
+        this.hashcode = hashcode;
     }
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
-        if (lesson.equals(specifiedLesson)) {
+        if (lesson.hashCode() == hashcode) {
             return true;
         } else {
             return false;
@@ -28,7 +28,7 @@ public class ShowSpecifiedLessonPredicate implements Predicate<ReadOnlyLesson> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ShowSpecifiedLessonPredicate // instanceof handles nulls
-                && this.specifiedLesson.equals(((ShowSpecifiedLessonPredicate) other).specifiedLesson)); // state check
+                && this.hashcode == (((ShowSpecifiedLessonPredicate) other).hashCode())); // state check
     }
 
 }

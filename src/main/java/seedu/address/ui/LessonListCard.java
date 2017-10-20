@@ -1,13 +1,6 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-
 import com.google.common.eventbus.Subscribe;
-
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,6 +11,12 @@ import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
+
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 
 
 /**
@@ -57,7 +56,7 @@ public class LessonListCard extends UiPart<Region> {
     public LessonListCard(ReadOnlyLesson lesson, int displayedIndex) {
         super(FXML);
         this.lesson = lesson;
-        id.setText(displayedIndex + ". ");
+        id.setText("( " + displayedIndex + " ) ");
         initLecturers(lesson);
         bindListeners(lesson);
         registerAsAnEventHandler(this);
@@ -112,7 +111,7 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(false);
         classType.setVisible(false);
         lecturers.setVisible(false);
-        code.setStyle("-fx-font: 16 arial;");
+        code.setStyle("-fx-font: 24 arial;");
     }
 
     /**
@@ -125,7 +124,7 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(false);
         classType.setVisible(false);
         lecturers.setVisible(false);
-        venue.setStyle("-fx-font: 16 arial;");
+        venue.setStyle("-fx-font: 24 arial;");
 
     }
 

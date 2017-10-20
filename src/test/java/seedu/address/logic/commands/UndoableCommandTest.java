@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstLesson;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
@@ -24,7 +24,7 @@ public class UndoableCommandTest {
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        deleteFirstLesson(expectedModel);
         assertEquals(expectedModel, model);
 
         showFirstLessonOnly(model);
@@ -41,7 +41,7 @@ public class UndoableCommandTest {
 
         // redo() should cause the model's filtered list to show all persons
         dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        deleteFirstLesson(expectedModel);
         assertEquals(expectedModel, model);
     }
 

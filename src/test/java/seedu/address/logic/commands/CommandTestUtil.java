@@ -5,11 +5,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -30,11 +29,11 @@ public class CommandTestUtil {
     public static final String VALID_CODE_MA1101R = "MA1101R";
     public static final String VALID_CODE_CS2101 = "CS2101";
     public static final String VALID_CLASSTYPE_MA1101R = "Lec";
-    public static final String VALID_CLASSTYPE_CS2101 = "Lec";
+    public static final String VALID_CLASSTYPE_CS2101 = "Tut";
     public static final String VALID_VENUE_MA1101R = "LT30";
     public static final String VALID_VENUE_CS2101 = "COM02-04";
     public static final String VALID_GROUP_MA1101R = "3";
-    public static final String VALID_GROUP_CS2101 = "3";
+    public static final String VALID_GROUP_CS2101 = "2";
     public static final String VALID_TIMESLOT_MA1101R = "TUE[1300-1500]";
     public static final String VALID_TIMESLOT_CS2101 = "TUE[1600-1800]";
     public static final String VALID_LECTURER_MA1101R = "Ma Siu Lun";
@@ -59,12 +58,12 @@ public class CommandTestUtil {
 
 
 
-    public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA1101&"; // '&' not allowed in code
+    public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA*"; //code format is not correct
     public static final String INVALID_CLASSTYPE_DESC = " " + PREFIX_CLASS_TYPE + "1a"; // 'a' not allowed in class type
     public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed for venue
     public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
     public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
-    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + "Ma *"; // '*' not allowed in tags
+    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
     public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
             + "small!"; // '!' not allowed in font size
 
@@ -120,20 +119,19 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the first lesson in the {@code model}'s address book.
      */
     public static void showFirstLessonOnly(Model model) {
         ReadOnlyLesson lesson = model.getAddressBook().getLessonList().get(0);
-        final String[] splitName = lesson.getCode().fullCodeName.split("\\s+");
-        model.updateFilteredLessonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson.hashCode()));
 
         assert model.getFilteredLessonList().size() == 1;
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first lesson in {@code model}'s filtered list from {@code model}'s address book.
      */
-    public static void deleteFirstPerson(Model model) {
+    public static void deleteFirstLesson(Model model) {
         ReadOnlyLesson firstLesson = model.getFilteredLessonList().get(0);
         try {
             model.deleteLesson(firstLesson);

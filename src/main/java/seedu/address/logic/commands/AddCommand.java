@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
@@ -7,23 +12,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
-
-import seedu.address.model.ListingUnit;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.model.module.predicates.*;
-
-import java.util.List;
 
 /**
  * Adds a lesson to the address book.
@@ -65,6 +53,7 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addLesson(toAdd);
+            model.handleListingUnit();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateLessonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);

@@ -1,6 +1,10 @@
 package seedu.address.model;
 
 
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+
+import java.util.function.Predicate;
+
 /**
  * A Enumeration class that consists of all possible Listing
  * Unit in the panel.
@@ -9,7 +13,7 @@ public enum ListingUnit {
     MODULE, LOCATION, LESSON;
 
     private static ListingUnit currentListingUnit = MODULE;
-    private static ListingUnit previousListingUnit = null;
+    private static Predicate currentPredicate;
 
     /** Get current Listing unit */
     public static ListingUnit getCurrentListingUnit() {
@@ -18,11 +22,13 @@ public enum ListingUnit {
 
     /** Reset listing unit in the panel with the new ListingUnit and set previous listing unit */
     public static void setCurrentListingUnit(ListingUnit unit) {
-        previousListingUnit = currentListingUnit;
         currentListingUnit = unit;
     }
 
-    /** Get previous Listing unit */
-    public static ListingUnit getPreviousListingUnit() { return previousListingUnit; }
+    /** Get current predicate */
+    public static Predicate getCurrentPredicate() { return currentPredicate; }
+
+    /** Set current predicate */
+    public static void setCurrentPredicate(Predicate predicate) { currentPredicate = predicate; }
 
 }

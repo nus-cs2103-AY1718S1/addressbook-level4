@@ -65,7 +65,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
-    private String userPrefFontSize;
+    private String userPrefFontSize = "-fx-font-size: normal;";
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -177,6 +177,7 @@ public class CommandBox extends UiPart<Region> {
 
             configInActiveTag();
             configInactiveKeyword();
+
             configBorderColor(allTextInput);
 
             for (int i = 0; i < inputArray.length; i++) {
@@ -281,10 +282,12 @@ public class CommandBox extends UiPart<Region> {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
             checkBox.setGraphic(tick);
+            checkBox.toFront();
 
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
             checkBox.setGraphic(cross);
+            checkBox.toFront();
         }
     }
     
@@ -303,11 +306,11 @@ public class CommandBox extends UiPart<Region> {
         switch (fontIndex) {
         case 1:
             keywordLabel.getStyleClass().add("keyword-label-xsmall");
-            leftInset = new Insets(0, 0, 0, 9);
+            leftInset = new Insets(0, 0, 0,11);
             break;
         case 2:
             keywordLabel.getStyleClass().add("keyword-label-small");
-            leftInset = new Insets(0, 0, 0, 10);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         case 3:
             keywordLabel.getStyleClass().add("keyword-label-default");
@@ -315,11 +318,11 @@ public class CommandBox extends UiPart<Region> {
             break;
         case 4:
             keywordLabel.getStyleClass().add("keyword-label-large");
-            leftInset = new Insets(0, 0, 0, 10);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         case 5:
             keywordLabel.getStyleClass().add("keyword-label-xlarge");
-            leftInset = new Insets(0, 0, 0, 9);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         default:
             keywordLabel.getStyleClass().add("keyword-label-default");
@@ -354,27 +357,27 @@ public class CommandBox extends UiPart<Region> {
         case 1:
             tagLabel.getStyleClass().add("keyword-label-xsmall");
             margin = computeMargin(1, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 9);
+            leftInset = new Insets(0, 0, 0, margin +11);
             break;
         case 2:
             tagLabel.getStyleClass().add("keyword-label-small");
             margin = computeMargin(2, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 10);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         case 3:
             tagLabel.getStyleClass().add("keyword-label-default");
             margin = computeMargin(3, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 14);
+            leftInset = new Insets(0, 0, 0, margin + 15);
             break;
         case 4:
             tagLabel.getStyleClass().add("keyword-label-large");
             margin = computeMargin(4, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 10);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         case 5:
             tagLabel.getStyleClass().add("keyword-label-xlarge");
             margin = computeMargin(5, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 9);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         default:
             tagLabel.getStyleClass().add("keyword-label-default");

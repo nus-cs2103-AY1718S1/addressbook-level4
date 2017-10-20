@@ -26,7 +26,7 @@ public class Code {
      */
     public Code(String code) throws IllegalValueException {
         requireNonNull(code);
-        String trimmedCode = code.trim();
+        String trimmedCode = code.trim().toUpperCase();
         if (!isValidCode(trimmedCode)) {
             throw new IllegalValueException(MESSAGE_CODE_CONSTRAINTS);
         }

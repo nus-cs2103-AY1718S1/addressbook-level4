@@ -5,7 +5,12 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 
 /**
@@ -13,6 +18,8 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private Predicate previousPredicate;
+    private ListingUnit previousListingUnit;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +29,8 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+        this.previousPredicate = ListingUnit.getCurrentPredicate();
+        this.previousListingUnit = ListingUnit.getCurrentListingUnit();
     }
 
     /**
@@ -36,8 +45,7 @@ public abstract class UndoableCommand extends Command {
     }
 
     /**
-     * Executes the command and updates the filtered lessons
-     * list to show all lessons.
+     * Redo the previous command only if predicates hasn't changed.
      */
     protected final void redo() {
         requireNonNull(model);
@@ -47,9 +55,12 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        model.handleListingUnit();
     }
 
+    public boolean canRedo() {
+        return previousListingUnit.equals(ListingUnit.getCurrentListingUnit()) &&
+                previousPredicate.equals(ListingUnit.getCurrentPredicate());
+    }
 
 
     @Override
