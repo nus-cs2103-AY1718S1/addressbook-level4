@@ -35,6 +35,7 @@ import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 
 /**
@@ -129,7 +130,6 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target lesson cannot be missing");
         }
 
-        model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_LESSON_SUCCESS, editedLesson));
     }
 
@@ -182,7 +182,7 @@ public class EditCommand extends UndoableCommand {
                     model.updateLesson(p, curEditedLesson);
                 }
             }
-            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));

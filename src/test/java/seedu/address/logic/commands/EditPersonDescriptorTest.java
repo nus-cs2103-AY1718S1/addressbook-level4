@@ -30,11 +30,11 @@ public class EditPersonDescriptorTest {
 
         // different module code -> returns false
         EditLessonDescriptor editedAmy =
-                new EditLessonDescriptorBuilder(DESC_MA1101R).withCode(VALID_CLASSTYPE_CS2101).build();
+                new EditLessonDescriptorBuilder(DESC_MA1101R).withCode(VALID_CODE_CS2101).build();
         assertFalse(DESC_MA1101R.equals(editedAmy));
 
         // different class type -> returns false
-        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withCode(VALID_CLASSTYPE_CS2101).build();
+        editedAmy = new EditLessonDescriptorBuilder(DESC_MA1101R).withCode(VALID_CODE_CS2101).build();
         assertFalse(DESC_MA1101R.equals(editedAmy));
 
         // different time slot -> returns false

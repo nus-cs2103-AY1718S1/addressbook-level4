@@ -65,7 +65,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
-    private String userPrefFontSize;
+    private String userPrefFontSize = "-fx-font-size: normal;";
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");

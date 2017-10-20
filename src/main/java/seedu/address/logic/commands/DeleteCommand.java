@@ -82,11 +82,14 @@ public class DeleteCommand extends UndoableCommand {
         try {
             model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
             ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-            for (ReadOnlyLesson l : lessonList) {
-                if (l.getCode().equals(location)) {
+            for (int i = 0; i < lessonList.size(); i++) {
+                ReadOnlyLesson l = lessonList.get(i);
+                if (l.getLocation().equals(location)) {
                     model.deleteLesson(l);
+                    i--;
                 }
             }
+
         } catch (LessonNotFoundException e) {
             assert false : "The target lesson cannot be missing";
         }
@@ -103,9 +106,11 @@ public class DeleteCommand extends UndoableCommand {
         try {
             model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
             ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
-            for (ReadOnlyLesson l : lessonList) {
-                if (l.getCode().equals(code)) {
-                    model.deleteLesson(l);
+            for (int i = 0; i < lessonList.size(); i++) {
+                ReadOnlyLesson lesson = lessonList.get(i);
+                if (lesson.getCode().equals(code)) {
+                    model.deleteLesson(lesson);
+                    i--;
                 }
             }
         } catch (LessonNotFoundException e) {

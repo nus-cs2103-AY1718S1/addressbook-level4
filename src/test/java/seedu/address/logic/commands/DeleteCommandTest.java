@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
@@ -20,6 +21,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+
+import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -106,31 +111,56 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexDeleteByModule_success() throws Exception {
+
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
-        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS,
                 lessonToDelete.getCode());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteLesson(lessonToDelete);
+
+        expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        List<ReadOnlyLesson> lastShownList = expectedModel.getFilteredLessonList();
+        for (int i = 0; i < lastShownList.size(); i++) {
+            ReadOnlyLesson lesson = lastShownList.get(i);
+            if (lesson.getCode().equals(lessonToDelete.getCode())) {
+                expectedModel.deleteLesson(lesson);
+                i--;
+            }
+        }
+
+        expectedModel.updateFilteredLessonList(new UniqueModuleCodePredicate(expectedModel.getUniqueCodeSet()));
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_validIndexDeleteByLocation_success() throws Exception {
+
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
         ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
-        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS,
                 lessonToDelete.getLocation());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteLesson(lessonToDelete);
 
+        expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+
+        List<ReadOnlyLesson> lastShownList = expectedModel.getFilteredLessonList();
+
+        for (int i = 0; i < lastShownList.size(); i++) {
+            ReadOnlyLesson lesson = lastShownList.get(i);
+            if (lesson.getLocation().equals(lessonToDelete.getLocation())) {
+                expectedModel.deleteLesson(lesson);
+                i--;
+            }
+        }
+
+        expectedModel.updateFilteredLessonList(new UniqueLocationPredicate(expectedModel.getUniqueLocationSet()));
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 

@@ -6,6 +6,7 @@ import seedu.address.model.Model;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class CommandTestUtil {
     public static final String VALID_VENUE_MA1101R = "LT30";
     public static final String VALID_VENUE_CS2101 = "COM02-04";
     public static final String VALID_GROUP_MA1101R = "3";
-    public static final String VALID_GROUP_CS2101 = "3";
+    public static final String VALID_GROUP_CS2101 = "2";
     public static final String VALID_TIMESLOT_MA1101R = "TUE[1300-1500]";
     public static final String VALID_TIMESLOT_CS2101 = "TUE[1600-1800]";
     public static final String VALID_LECTURER_MA1101R = "Ma Siu Lun";
@@ -120,20 +121,19 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the first lesson in the {@code model}'s address book.
      */
     public static void showFirstLessonOnly(Model model) {
         ReadOnlyLesson lesson = model.getAddressBook().getLessonList().get(0);
-        final String[] splitName = lesson.getCode().fullCodeName.split("\\s+");
-        model.updateFilteredLessonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson));
 
         assert model.getFilteredLessonList().size() == 1;
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first lesson in {@code model}'s filtered list from {@code model}'s address book.
      */
-    public static void deleteFirstPerson(Model model) {
+    public static void deleteFirstLesson(Model model) {
         ReadOnlyLesson firstLesson = model.getFilteredLessonList().get(0);
         try {
             model.deleteLesson(firstLesson);
