@@ -11,12 +11,13 @@ public class Picture {
     public static final String BASE_URL = System.getProperty("user.dir")
             + "/data/contact_images/";
 
-    public static final String PLACEHOLDER_IMAGE = "placeholder_person.png";
+    public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
+            + "/src/main/resources/images/placeholder_person.png";
 
     private String pictureUrl;
 
     public Picture() {
-        this.pictureUrl = BASE_URL + PLACEHOLDER_IMAGE;
+        this.pictureUrl = PLACEHOLDER_IMAGE;
     }
 
     public String getPictureUrl() {
