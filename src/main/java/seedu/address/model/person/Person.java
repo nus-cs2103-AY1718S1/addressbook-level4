@@ -33,7 +33,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Relationship> relationships) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, phone, email, address, tags, relationships);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -41,7 +41,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         // protected internal relationships from changes in the arg list
-        this.relationships = new SimpleObjectProperty<>(new UniqueRelationshipList(relationships));
+        this.relationships = new SimpleObjectProperty<>(new UniqueRelationshipList());
     }
 
     /**
