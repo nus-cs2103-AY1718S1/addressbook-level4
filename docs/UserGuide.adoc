@@ -370,7 +370,7 @@ e.g.`select 2`
 *Address*:  a/Address of person (can be any value) +
 *Birthday*: b/(DD/MM/YYYY) +
 *Remark*^1^: r/Can be any value or blank +
-*Website*: w/Should be a valid website +
+*Website*: w/Website beginning with http:// or https:// that ends with a proper domain +
 *Tags*^2^: t/Tag names should be alphanumeric +
 
 ^1^Only available during editting +
