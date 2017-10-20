@@ -41,7 +41,16 @@ public class CommandBox extends UiPart<Region> {
     private int caretPosition;
     private String selectedText = "";
     private String input;
-    private int JUMP_TO_NEXT_FIELD = 3;
+    final String ADD_COMMAND_FORMAT = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
+    final String EDIT_COMMAND_FORMAT = "edit INDEX [Field(s) you want to change]";
+    final String FIND_COMMAND_FORMAT = "find KEYWORD(S)";
+    final String SELECT_COMMAND_FORMAT = "select INDEX";
+    final String DELETE_COMMAND_FORMAT = "delete INDEX";
+    final String[] AUTOCOMPLETE_COMMAND_LIST = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
+            "list", "l", "select", "s"};
+    final String[] ADD_COMMAND_FIELD_LIST = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX", "KEYWORD"};
+    final String[] ALL_COMMAND_LIST = {"add", "a", "delete", "edit", "find", "search",
+            "list", "l", "select", "s"};
 
 
     @FXML
@@ -50,10 +59,6 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private ImageView keyboardIcon;
 
-    private String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
-    "list", "redo", "select", "undo"};
-
-    private String[] fieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX", "KEYWORD"};
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -62,8 +67,8 @@ public class CommandBox extends UiPart<Region> {
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        TextFields.bindAutoCompletion(commandTextField, commandList);
-        input = commandTextField.getText().trim().toLowerCase();
+        TextFields.bindAutoCompletion(commandTextField, ALL_COMMAND_LIST);
+        //input = commandTextField.getText().trim().toLowerCase();
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         //commandTextField.textProperty().addListener(((observable, oldValue, newValue) -> autocomplete()));
         historySnapshot = logic.getHistorySnapshot();
@@ -138,7 +143,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void replaceText(String text) {
         commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        //commandTextField.positionCaret(commandTextField.getText().length());
     }
 
     /**
@@ -180,8 +185,21 @@ public class CommandBox extends UiPart<Region> {
      * to text field after some time.
      */
     protected void setStyleToDefault() {
-        ObservableList<String> styleClass = commandTextField.getStyleClass();
+        input = commandTextField.getText();
+        updateKeyboardIconAndStyle();
+        autoSelectFirstField();
+        if (input.startsWith("add ") && Arrays.asList(ADD_COMMAND_FIELD_LIST).contains(selectedText)) {
+            updateSelection();
+        }
+    }
 
+    private void updateSelection() {
+        commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
+        selectedText = "";
+    }
+
+    private void updateKeyboardIconAndStyle() {
+        ObservableList<String> styleClass = commandTextField.getStyleClass();
         keyboardIcon.setImage(keyboardTyping);
         pause.setOnFinished(event -> {
             if (!styleClass.contains(ERROR_STYLE_CLASS)) {
@@ -190,33 +208,90 @@ public class CommandBox extends UiPart<Region> {
         });
         pause.playFromStart();
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
-        commandTextField.requestFocus();
-        if (commandTextField.getText().equals("add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS")) {
-            commandTextField.selectRange(6, 10);
-        } else if (Arrays.asList(fieldList).contains(selectedText)) {
-            System.out.println("unequal");
-            commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
-            selectedText = "";
+    }
+
+    private void autoSelectFirstField() {
+        setFocus();
+        switch (input) {
+            case ADD_COMMAND_FORMAT:
+                commandTextField.selectRange(6, 10);
+                break;
+            case EDIT_COMMAND_FORMAT:
+            case FIND_COMMAND_FORMAT:
+            case SELECT_COMMAND_FORMAT:
+            case DELETE_COMMAND_FORMAT:
+                int indexOfFirstSpace = input.indexOf(" ");
+                commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
+                break;
         }
     }
 
+    protected boolean isAutoCompleteCommand(String command) {
+        return Arrays.asList(AUTOCOMPLETE_COMMAND_LIST).contains(command);
+    }
+
+    protected boolean isAddCommandFormat(String input) {
+        return input.startsWith("add") &&
+                input.contains("n/") && input.contains("p/") && input.contains("e/") && input.contains("a/");
+    }
+
+    protected void changeSelectionToNextField() {
+        commandTextField.selectNextWord();
+        anchorPosition = commandTextField.getAnchor();
+        caretPosition = commandTextField.getCaretPosition();
+        selectedText = commandTextField.getSelectedText().toString().trim();
+    }
+
+
     protected void autocomplete() {
         input = commandTextField.getText().trim().toLowerCase();
-        if (Arrays.asList(commandList).contains(input)) {
-            switch (input) {
-                case "add":
-                    replaceText("add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS");
-                    break;
-                default:
-            }
-
-        } else {
+        if (isAutoCompleteCommand(input)) {
+            displayFullFormat(input);
+        } else if (isAddCommandFormat(input)){
+            int positionOfNameField = input.indexOf("n/");
+            int positionOfPhoneField = input.indexOf("p/");
+            int positionOfEmailField = input.indexOf("e/");
+            int positionOfAddressField = input.indexOf("a/");
             int currentPosition = commandTextField.getCaretPosition();
-            commandTextField.positionCaret(currentPosition + JUMP_TO_NEXT_FIELD);
-            commandTextField.selectNextWord();
-            anchorPosition = commandTextField.getAnchor();
-            caretPosition = commandTextField.getCaretPosition();
-            selectedText = commandTextField.getSelectedText().toString().trim();
+            if (currentPosition > positionOfNameField && currentPosition < positionOfPhoneField) {
+                commandTextField.positionCaret(positionOfPhoneField + 2);
+                changeSelectionToNextField();
+            } else if (currentPosition > positionOfPhoneField && currentPosition < positionOfEmailField) {
+                commandTextField.positionCaret(positionOfEmailField + 2);
+                changeSelectionToNextField();
+            } else if (currentPosition > positionOfEmailField && currentPosition < positionOfAddressField) {
+                commandTextField.positionCaret(positionOfAddressField + 2);
+                changeSelectionToNextField();
+            } else {
+
+            }
+        }
+    }
+
+    private void displayFullFormat(String command) {
+        switch (command) {
+            case "add":
+            case "a":
+                replaceText(ADD_COMMAND_FORMAT);
+                break;
+            case "edit":
+            case "e":
+                replaceText(EDIT_COMMAND_FORMAT);
+                break;
+            case "find":
+            case "f":
+            case "search":
+                replaceText(FIND_COMMAND_FORMAT);
+                break;
+            case "select":
+            case "s":
+                replaceText(SELECT_COMMAND_FORMAT);
+                break;
+            case "delete":
+            case "d":
+                replaceText(DELETE_COMMAND_FORMAT);
+                break;
+            default:
         }
     }
 
