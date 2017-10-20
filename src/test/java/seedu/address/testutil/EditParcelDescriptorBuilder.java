@@ -113,9 +113,9 @@ public class EditParcelDescriptorBuilder {
     /**
      * Sets the {@code Status} of the {@code EditParcelDescriptor} that we are building.
      */
-    public EditParcelDescriptorBuilder withDeliveryDate(String deliveryDate) {
+    public EditParcelDescriptorBuilder withStatus(String status) {
         try {
-            ParserUtil.parseDeliveryDate(Optional.of(deliveryDate)).ifPresent(descriptor::setDeliveryDate);
+            ParserUtil.parseStatus(Optional.of(status)).ifPresent(descriptor::setStatus);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }
