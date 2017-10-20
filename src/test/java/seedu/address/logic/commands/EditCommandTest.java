@@ -25,6 +25,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -49,6 +50,21 @@ public class EditCommandTest {
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_deadlineBeforeDateBorrow_failure() throws Exception {
+        Person editedPerson = new PersonBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        descriptor.setDeadline(new Deadline("11-11-2001"));
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format("Deadline cannot be before date borrow.");
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandFailure(editCommand, model, expectedMessage);
     }
 
     @Test
