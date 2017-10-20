@@ -173,10 +173,32 @@ Examples:
 * `addmeeting 1 n/John Doe d/31-10-2017 21:00 l/School of Computing, NUS`
 * `addmeeting 2 n/Betsy Crowe d/27-12-2017 08:30 l/iCube Auditorium, NUS`
 
+=== Deleting a meeting: `deletemeeting`
+Upcoming in V2.0 (Since V1.2): deletemeeting by index of meeting in the Meeting
+Since V1.2:
+
+Deletes a meeting in the address book at the specified INDEX +
+Format: `dm INDEX`
+
+[NOTE]
+INDEX must be a positive integer
+
+****
+* Deletes meeting with person at the specified INDEX. The index refers to the index number shown in the meetings tab
+****
+
+Examples:
+
+* `dm 1`
+* `dm 2`
+
 === Listing all meetings : `listMeeting`
 
 Shows a list of all meetings in the address book. +
 Format: `listMeeting`
+
+****
+
 
 === Editing a meeting : `editmeeting`
 
@@ -288,8 +310,9 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Add Meeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
 e.g. `addmeeting 5 n/Mary Jane d/22-11-2017 l/Vivo City`
+* *Delete Meeting* `dm INDEX` + e.g. `dm 1`
 * *Edit Meeting* `editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
-* *List Meeting* : `listmeeting`
+* *List Meeting* : `lm`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
