@@ -177,6 +177,32 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Pins (@code toPin) from this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code toPin} is not in this {@code AddressBook}.
+     */
+    public boolean pinPerson(ReadOnlyPerson toPin) throws PersonNotFoundException {
+        if (persons.pin(toPin)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     * Pins (@code toPin) from this {@code AddressBook}.
+     *
+     * @throws PersonNotFoundException if the {@code toPin} is not in this {@code AddressBook}.
+     */
+    public boolean unpinPerson(ReadOnlyPerson toPin) throws PersonNotFoundException {
+        if (persons.unpin(toPin)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
