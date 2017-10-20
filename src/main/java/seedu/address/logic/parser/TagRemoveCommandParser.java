@@ -33,7 +33,7 @@ public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
         String newTag;
         int lastIndex = 0;
         String[] argsArray;
-        if (args.isEmpty()) {
+        if (args.trim().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagRemoveCommand.MESSAGE_USAGE));
         }
         argsArray = args.trim().split(" ");
