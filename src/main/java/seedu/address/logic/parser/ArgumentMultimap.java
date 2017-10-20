@@ -77,7 +77,6 @@ public class ArgumentMultimap {
         return argMultimap.containsKey(prefix);
     }
 
-
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
