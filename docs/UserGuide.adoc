@@ -253,7 +253,7 @@ Removes tag from all persons with tags that is specified by the keywords. +
 Format: `rtag KEYWORD [MORE_KEYWORDS]` or `rt KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The keyword is case insensitive. e.g `Friends` will match `friends`
+* The keyword is case sensitive. e.g `Friends` will not match `friends`
 * The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
 * Any tags of all persons that matches the keyword will be removed e.g. `friends classmates` will remove tags `friends`, `classmates` from all persons
 ****
