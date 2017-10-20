@@ -27,12 +27,12 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI, as seen in Figure 1.1 below, should appear in a few seconds.
 +
 image::UiStartUp.PNG[width="790"]
-_Figure 1.1 : Codii Login Page
+_Figure 1.1 : Codii login page_
 +
 .  Log into the app using the format specified in the welcome screen. The application should look similar to Figure 1.2 after clicking on a person in the left panel.
 +
 image::Ui.png[width="790"]
-_Figure 1.2 : Full Information of the Person That is Selected in the Left Panel_
+_Figure 1.2 : Full information of the person that is selected in the left panel_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
