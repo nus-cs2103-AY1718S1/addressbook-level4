@@ -19,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class RecentlyDeletedCommand extends Command {
     public static final String COMMAND_WORD = "recentlyDel";
     public static final String COMMAND_ALIAS = "recentD";
-    public static final String MESSAGE_SUCCESS = "Listed all recently deleted";
+    public static final String MESSAGE_SUCCESS = "Listed all recently deleted:\n%1$s";
     public static final String MESSAGE_NO_RECENTLY_DELETED = "You have not yet deleted any contacts.";
 
     @Override
