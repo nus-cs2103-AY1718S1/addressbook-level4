@@ -42,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
     private static final int CURRENT_THEME_INDEX = 1;
+    private static final String VIEW_PATH = "/view/";
 
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -243,7 +244,7 @@ public class MainWindow extends UiPart<Region> {
         if (getRoot().getStylesheets().size() > 1) {
             getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
         }
-        getRoot().getStylesheets().add("/view/" + theme);
+        getRoot().getStylesheets().add(VIEW_PATH + theme);
     }
 
     void show() {
