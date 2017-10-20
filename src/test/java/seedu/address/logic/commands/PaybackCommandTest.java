@@ -1,9 +1,12 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -75,6 +78,32 @@ public class PaybackCommandTest {
             paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
             assertCommandFailure(paybackCommand, model, PaybackCommand.MESSAGE_PAYBACK_FAILURE);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+    }
+
+    @Test
+    public void equals() {
+        try {
+            PaybackCommand paybackFirstCommand = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
+            PaybackCommand paybackSecondCommand = new PaybackCommand(INDEX_SECOND_PERSON, new Debt("300"));
+
+            // same object -> returns true
+            assertTrue(paybackFirstCommand.equals(paybackFirstCommand));
+
+            // same values -> returns true
+            PaybackCommand paybackFirstCommandCopy = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
+            assertTrue(paybackFirstCommand.equals(paybackFirstCommandCopy));
+
+            // different types -> returns false
+            assertFalse(paybackFirstCommand.equals(1));
+
+            // null -> returns false
+            assertFalse(paybackFirstCommand.equals(null));
+
+            // different person -> returns false
+            assertFalse(paybackFirstCommand.equals(paybackSecondCommand));
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }
