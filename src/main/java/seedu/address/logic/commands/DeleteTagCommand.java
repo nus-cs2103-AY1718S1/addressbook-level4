@@ -18,6 +18,7 @@ public class DeleteTagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " friends";
 
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Deleted Tag: %1$s";
+    public static final String MESSAGE_INVALID_DELETE_TAG_NOT_FOUND = "Tag not found: %1$s";
 
     private final Tag targetTag;
 
@@ -32,8 +33,10 @@ public class DeleteTagCommand extends UndoableCommand {
 
         try {
             model.deleteTag(tagToDelete);
-        } catch (TagNotFoundException | TagInternalErrorException tnfe) {
+        } catch (TagInternalErrorException tiee) {
             throw new CommandException(MESSAGE_USAGE);
+        } catch (TagNotFoundException tnfe) {
+            throw new CommandException(String.format(MESSAGE_INVALID_DELETE_TAG_NOT_FOUND, tagToDelete));
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, tagToDelete));

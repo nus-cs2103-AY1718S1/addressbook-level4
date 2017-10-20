@@ -1,28 +1,24 @@
 package systemtests;
 
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_DELETE_TAG_SUCCESS;
+import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_INVALID_DELETE_TAG_NOT_FOUND;
 import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getParcel;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
-import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 
 import java.util.Iterator;
 
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagInternalErrorException;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -33,7 +29,7 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE);
 
     @Test
-    public void deleteTag() {
+    public void deleteTag() throws IllegalValueException {
         /* ---------------- Performing deleteTag operation while an unfiltered list is being shown ---------------- */
 
         /* Case: delete the first parcel in the list, command with leading spaces and trailing spaces -> deleted */
@@ -44,7 +40,7 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         Iterator<Tag> targetTags = targetParcel.getTags().iterator();
         Tag targetTag = null;
 
-        if(targetTags.hasNext()) {
+        if (targetTags.hasNext()) {
             targetTag = targetTags.next();
         }
 
@@ -54,73 +50,40 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-//        /* Case: delete the last parcel in the list -> deleted */
-//        Model modelBeforeDeletingLast = getModel();
-//        Index lastParcelIndex = getLastIndex(modelBeforeDeletingLast);
-//        targetParcel = getParcel(modelBeforeDeletingLast, lastParcelIndex);
-//
-//        targetTags = targetParcel.getTags().iterator();
-//
-//        if(targetTags.hasNext()) {
-//            targetTag = targetTags.next();
-//        }
-//
-//        assertCommandSuccess(modelBeforeDeletingLast, targetTag);
+        /* Case: delete the last parcel in the list -> deleted */
+        Model modelBeforeDeletingLast = getModel();
+        Index lastParcelIndex = getLastIndex(modelBeforeDeletingLast);
+        targetParcel = getParcel(modelBeforeDeletingLast, lastParcelIndex);
+
+        targetTags = targetParcel.getTags().iterator();
+
+        if (targetTags.hasNext()) {
+            targetTag = targetTags.next();
+        }
+
+        assertCommandSuccess(targetTag);
 
         /* Case: undo deleting the previous tag in the list -> deleted tag restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-//
-//        /* Case: redo deleting the last parcel in the list -> last parcel deleted again */
-//        command = RedoCommand.COMMAND_WORD;
-//        removeParcel(modelBeforeDeletingLast, lastParcelIndex);
-//        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-//        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
-//
-//        /* Case: delete the middle parcel in the list -> deleted */
-//        Index middleParcelIndex = getMidIndex(getModel());
-//        assertCommandSuccess(middleParcelIndex);
-//
-//        /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
-//
-//        /* Case: filtered parcel list, delete index within bounds of address book and parcel list -> deleted */
-//        showParcelsWithName(KEYWORD_MATCHING_MEIER);
-//        Index index = INDEX_FIRST_PARCEL;
-//        assertTrue(index.getZeroBased() < getModel().getFilteredParcelList().size());
-//        assertCommandSuccess(index);
-//
-//        /* Case: filtered parcel list, delete index within bounds of address book but out of bounds of parcel list
-//         * -> rejected
-//         */
-//        showParcelsWithName(KEYWORD_MATCHING_MEIER);
-//        int invalidIndex = getModel().getAddressBook().getParcelList().size();
-//        command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-//        assertCommandFailure(command, MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
-//
-//        /* --------------------- Performing delete operation while a parcel card is selected ------------------------ */
-//
-//        /* Case: delete the selected parcel -> parcel list panel selects the parcel before the deleted parcel */
-//        showAllParcels();
-//        expectedModel = getModel();
-//        Index selectedIndex = getLastIndex(expectedModel);
-//        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-//        selectParcel(selectedIndex);
-//        command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-//        deletedParcel = removeParcel(expectedModel, selectedIndex);
-//        expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
-//        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
-//
-//        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
-//
-//        /* Case: invalid arguments (alphabets) -> rejected */
-//        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
-//
-//        /* Case: invalid arguments (extra argument) -> rejected */
-//        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
-//
-//        /* Case: mixed case command word -> rejected */
-//        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case: redo deleting the last parcel in the list -> last tag deleted again */
+        command = RedoCommand.COMMAND_WORD;
+        removeTag(modelBeforeDeletingLast, targetTag);
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+
+        /* ------------------------------- Performing invalid deleteTag operation ----------------------------------- */
+
+        /* Case: invalid arguments (tag not founds) -> rejected */
+        expectedResultMessage = String.format(MESSAGE_INVALID_DELETE_TAG_NOT_FOUND,
+                new Tag("relatives"));
+        assertCommandFailure(DeleteTagCommand.COMMAND_WORD + " relatives",
+                expectedResultMessage);
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("DelETEtAG friends", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
@@ -141,13 +104,13 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteTagCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
-    private void assertCommandSuccess(Model model, Tag toDelete) {
-//        Model expectedModel = getModel();
-        Tag deletedTag = removeTag(model, toDelete);
+    private void assertCommandSuccess(Tag toDelete) {
+        Model expectedModel = getModel();
+        Tag deletedTag = removeTag(expectedModel, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
 
         assertCommandSuccess(
-                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, model, expectedResultMessage);
+                DeleteTagCommand.COMMAND_WORD + " " + toDelete.tagName, expectedModel, expectedResultMessage);
     }
 
     /**

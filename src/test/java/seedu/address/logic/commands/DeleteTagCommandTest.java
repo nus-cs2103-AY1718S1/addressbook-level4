@@ -80,9 +80,9 @@ public class DeleteTagCommandTest {
 
         deleteTagCommand = prepareCommand(tagToDelete);
 
-        String expectedMessage = DeleteTagCommand.MESSAGE_USAGE;
+        String exceptionMessage = String.format(DeleteTagCommand.MESSAGE_INVALID_DELETE_TAG_NOT_FOUND, tagToDelete);
 
-        assertCommandFailure(deleteTagCommand, model, expectedMessage);
+        assertCommandFailure(deleteTagCommand, model, exceptionMessage);
     }
 
     @Test
