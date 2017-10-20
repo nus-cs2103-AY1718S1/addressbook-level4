@@ -76,10 +76,8 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
      */
     public void add(ReadOnlyAliasToken toAdd) throws DuplicateTokenKeywordException {
         requireNonNull(toAdd);
-        for (ReadOnlyAliasToken token : internalList) {
-            if (token.getKeyword().keyword.equals(toAdd.getKeyword().keyword)) {
-                throw new DuplicateTokenKeywordException();
-            }
+        if (internalList.contains(toAdd.getKeyword())) {
+            throw new DuplicateTokenKeywordException();
         }
         internalList.add(new AliasToken(toAdd));
     }

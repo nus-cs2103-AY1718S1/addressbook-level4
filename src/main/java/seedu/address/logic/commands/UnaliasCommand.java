@@ -27,7 +27,7 @@ public class UnaliasCommand extends UndoableCommand {
     private ReadOnlyAliasToken toRemove;
 
     /**
-     * Creates an UnaliasCommand to add the specified {@code ReadOnlyAliasToken}
+     * Creates an UnaliasCommand to add the specified {@code Keyword, @ReadOnlyAliasToken}
      */
 
     public UnaliasCommand(Keyword keyword) {
