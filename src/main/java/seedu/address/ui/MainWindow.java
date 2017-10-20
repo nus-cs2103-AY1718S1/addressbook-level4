@@ -91,6 +91,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -200,6 +201,20 @@ public class MainWindow extends UiPart<Region> {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getStylesheets().add(prefs.getTheme());
+    }
+
+    /**
+     * Returns the current theme of the main Window.
+     */
+    String getCurrentTheme() {
+        return getRoot().getStylesheets().get(CURRENT_THEME_INDEX);
     }
 
     /**
