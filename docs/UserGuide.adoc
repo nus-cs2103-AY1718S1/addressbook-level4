@@ -176,7 +176,7 @@ Examples:
 * `deleteTag urgent`
 Deletes the tag "urgent" from each parcel in the address book.
 
-=== Selecting a person : `select`
+=== Selecting a parcel : `select`
 
 Selects the parcel identified by the index number used in the last parcel listing. +
 Format: `select INDEX`
