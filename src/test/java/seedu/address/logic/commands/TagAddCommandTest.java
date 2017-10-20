@@ -106,11 +106,15 @@ public class TagAddCommandTest {
 
         // same values -> returns true
         TagAddDescriptor copyDescriptor = new TagAddDescriptor(DESC_JAMES);
+        TagAddDescriptor copyDescriptor1 = new TagAddDescriptor(DESC_LUCY);
         TagAddCommand commandWithSameValues = new TagAddCommand(singlePersonIndexList1, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
+
+        // same object -> returns true
+        assertTrue(copyDescriptor.equals(copyDescriptor));
 
         // null -> returns false
         assertFalse(standardCommand == null);
@@ -121,8 +125,15 @@ public class TagAddCommandTest {
         // different index -> returns false
         assertFalse(standardCommand.equals(new TagAddCommand(singlePersonIndexList2, DESC_JAMES)));
 
-        // different descriptor -> returns false
+        // different command -> returns false
         assertFalse(standardCommand.equals(new TagAddCommand(singlePersonIndexList1, DESC_LUCY)));
+
+        // different object -> returns false
+        assertFalse(copyDescriptor.equals(standardCommand));
+
+        // different descriptor -> returns false
+        assertFalse(copyDescriptor.equals(copyDescriptor1));
+
     }
 
     /**

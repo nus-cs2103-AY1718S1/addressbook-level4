@@ -9,8 +9,6 @@ import seedu.address.logic.commands.TagRemoveCommand;
 
 public class TagRemoveCommandParserTest {
 
-    private static final String TAGREMOVE_COMMAND = "t-remove";
-    private static final String SPACE = " ";
     private static final String TAG_EMPTY = " ";
 
     private static final String MESSAGE_INVALID_FORMAT =
