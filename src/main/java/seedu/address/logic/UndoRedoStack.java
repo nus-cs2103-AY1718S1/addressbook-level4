@@ -31,7 +31,7 @@ public class UndoRedoStack {
 
         if (!(command instanceof UndoableCommand)) {
 
-            if (!(command instanceof  RedoCommand)) {
+            if (!(command instanceof RedoCommand) && !(command instanceof UndoCommand)) {
                 undoStack.clear();
             }
             return;
