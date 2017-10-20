@@ -428,11 +428,11 @@ Use case resumes at step 1.
 [appendix]
 == Glossary
 
-.*Address Book*: An application to store contacts and details of people.
-.*Command*: Keywords required to use the address book.
-.*GUI*: Graphical User Interface: Use of icons and visual indicators to navigate.
-.*Parameters*: Details of a person to be added.
-.*Tag(s)*: Label(s) given to a person.
+. *Address Book*: An application to store contacts and details of people.
+. *Command*: Keywords required to use the address book.
+. *GUI*: Graphical User Interface: Use of icons and visual indicators to navigate.
+. *Parameters*: Details of a person to be added.
+. *Tag(s)*: Label(s) given to a person.
 
 [appendix]
 == Product Survey
