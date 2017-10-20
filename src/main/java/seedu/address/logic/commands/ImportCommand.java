@@ -40,13 +40,14 @@ public class ImportCommand extends UndoableCommand {
 
         List<ReadOnlyParcel> addedParcels = new ArrayList<>(); // list of added parcels
         List<ReadOnlyParcel> duplicateParcels = new ArrayList<>(); // list of duplicate parcels that are not added
-        model.addAllParcels(parcelsToAdd, addedParcels, duplicateParcels);
+        List<ReadOnlyParcel> storedParcels = model.getAddressBook().getParcelList(); // parcels already stored in Ark
 
         // check if all parcels are duplicates
-        boolean areAllParcelsDuplicates = (duplicateParcels.size() == parcelsToAdd.size());
-        if (areAllParcelsDuplicates) {
+        if (storedParcels.containsAll(parcelsToAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCELS);
         }
+
+        model.addAllParcels(parcelsToAdd, addedParcels, duplicateParcels);
 
         String addedParcelsString = getImportFormattedParcelListString(addedParcels);
         String duplicatedParcelsString = getImportFormattedParcelListString(duplicateParcels);
