@@ -328,6 +328,7 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Music* : `music [MUSIC COMMAND]`
 * *Undo* : `undo`
 * *Unalias* `unalias ALIAS`
 * *Redo* : `redo`
