@@ -7,7 +7,12 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -144,12 +149,14 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(null);
+        ArrayList<String> expectedEmail = new ArrayList();
+        expectedEmail.add(INVALID_EMAIL);
+        ParserUtil.parseEmail(expectedEmail);
     }
 
     @Test
     public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
+        assertFalse(!ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
     }
 
     @Test
