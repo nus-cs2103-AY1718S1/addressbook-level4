@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
@@ -46,6 +48,9 @@ public interface Model {
 
     /** Bookmarks the given lesson into favourite list */
     void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
+
+    /**Booked a location with a given timeslot */
+    void bookTimeSlot(BookedSlot booking) throws DuplicateBookedSlotException;
 
     /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.
