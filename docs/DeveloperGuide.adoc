@@ -303,6 +303,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+[discrete]
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -345,6 +346,28 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+---
+
+Next, we will show specific implementation for each type of command: +
+
+==== Undo an adding command
+We keep the event or the person added by that command.
+
+* To undo it, we delete it from the addressbook.
+* To redo it, we re-add it to the addressbook.
+
+In addition, the person is associated with a list of tags, we need to eliminate them when we undo. +
+
+.The whole process is following:
+.. When we add a person to addressbook:
+1. Extract all tags which are associated with this person but not in the tag list before executing add command. +
+2. Keep the tags extracted in step 1 in another list named `newTags` +
+3. Continue executing add command. +
+.. When we undo this add command:
+1. Delete the person from addressbook. +
+2. Remove 
+
 
 === Logging
 
