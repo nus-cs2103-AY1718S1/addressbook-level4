@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEB_LINK;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -18,6 +19,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,7 +35,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_WEB_LINK);
 
         Index index;
 
@@ -50,6 +53,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseWebLinkForEdit(argMultimap.getAllValues(PREFIX_WEB_LINK)).ifPresent(editPersonDescriptor::setWebLinks);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -74,6 +78,22 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    /**
+     * Parses {@code Collection<String> webLinks} into a {@code Set<weblink>} if {@code webLinks} is non-empty.
+     * If {@code webLinks} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<WebLinks>} containing zero tags.
+     */
+    private Optional<Set<WebLink>> parseWebLinkForEdit(Collection<String> webLinks) throws IllegalValueException {
+        assert webLinks != null;
+
+        if (webLinks.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> webLinkSet = webLinks.size() == 1
+                && webLinks.contains("") ? Collections.emptySet() : webLinks;
+        return Optional.of(ParserUtil.parseWebLink(webLinkSet));
     }
 
 }
