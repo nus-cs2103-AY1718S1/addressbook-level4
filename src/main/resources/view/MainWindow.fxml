@@ -10,61 +10,66 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-  <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
-  </stylesheets>
+    <stylesheets>
+        <URL value="@DarkTheme.css"/>
+        <URL value="@Extensions.css"/>
+    </stylesheets>
 
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-    <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-    </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-    </Menu>
-  </MenuBar>
+    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+        </Menu>
+    </MenuBar>
 
-  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
+    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5"/>
+        </padding>
+    </StackPane>
 
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="155.0" minHeight="78.0" prefHeight="78.0" prefWidth="690.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-    </padding>
-  </StackPane>
-   <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="155.0" minHeight="78.0" prefHeight="78.0" prefWidth="690.0"
+               styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" top="5.0"/>
+        </padding>
+    </StackPane>
+    <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border"/>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4860335195530726, 0.5251396648044693" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" style="-fx-border-color: white; -fx-border-width: 1.70;" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" minWidth="320.0" VBox.vgrow="ALWAYS" />
-    </VBox>
-      <SplitPane fx:id="pinAndTaskPane" dividerPositions="0.02631578947368421, 0.5350877192982456, 0.5614035087719298" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-border-color: white; -fx-border-width: 1.70;">
-        <items>
-            <Label text="Calender" />
-      
-                            <StackPane fx:id="calenderPanelPlaceHolder" alignment="TOP_LEFT" prefHeight="145.0" prefWidth="340">
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4860335195530726, 0.5251396648044693"
+               VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" style="-fx-border-color: white; -fx-border-width: 1.70;"
+              SplitPane.resizableWithParent="false">
             <padding>
-              <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
-          </StackPane>
-            <Label text="Pinned person" />
-            <VBox fx:id="pinList" SplitPane.resizableWithParent="false">
-               <children>
-                  <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" minHeight="350.0" minWidth="320.0" VBox.vgrow="ALWAYS" />
-               </children>
-            </VBox>
-        </items>
-      </SplitPane>
-      <StackPane fx:id="browserPlaceholder" minWidth="850.0" style="-fx-border-color: white; -fx-border-width: 1.70;" />
-  </SplitPane>
+            <StackPane fx:id="personListPanelPlaceholder" minWidth="320.0" VBox.vgrow="ALWAYS"/>
+        </VBox>
+        <SplitPane fx:id="pinAndTaskPane" dividerPositions="0.02631578947368421, 0.5350877192982456, 0.5614035087719298"
+                   orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+                   style="-fx-border-color: white; -fx-border-width: 1.70;">
+            <items>
+                <Label text="Calender"/>
+                <StackPane fx:id="calenderPanelPlaceHolder" alignment="TOP_LEFT" prefHeight="145.0" prefWidth="340">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10"/>
+                    </padding>
+                </StackPane>
+                <Label text="Pinned person"/>
+                <VBox fx:id="pinList" SplitPane.resizableWithParent="false">
+                    <children>
+                        <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" minHeight="350.0" minWidth="320.0"
+                                   VBox.vgrow="ALWAYS"/>
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+        <StackPane fx:id="browserPlaceholder" minWidth="850.0"
+                   style="-fx-border-color: white; -fx-border-width: 1.70;"/>
+    </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
 </VBox>
