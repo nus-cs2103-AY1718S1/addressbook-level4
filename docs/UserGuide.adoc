@@ -84,7 +84,7 @@ You can use the `help` command to access the User Guide from MedNus. +
 You can also click the `Help` at the top left corner of MedNus.
 
 image::helpUI.png[width="790"]
-    Figure 2: Methods access `help` command
+    Figure 2: Methods to access `help` command
 
 === Adding a person: `add`
 
@@ -377,7 +377,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="790"]
-    Figure 3: Methods access `exit` command
+    Figure 3: Methods to access `exit` command
 
 === Saving the data
 
