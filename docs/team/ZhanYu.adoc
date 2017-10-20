@@ -34,7 +34,6 @@ This enhancement allows them to find contacts by close name words or by tags pre
 ---
 
 include::../DeveloperGuide.adoc[leveloffset=2,tag=findClose]
-//TODO: Add findClose section in Developer Guide (Implementation & Design Considerations See undoredo for example)
 
 ---
 
@@ -74,6 +73,7 @@ To allow users to operate on a different data set for different purposes.
 https://ci.appveyor.com/project/ZY-Ang/main[AppVeyor],
 https://coveralls.io/github/CS2103AUG2017-W11-B2/main?branch=master[Coveralls] and
 https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
+* Added a simple navbar to the github pages for ease of navigation.
 
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 
@@ -81,5 +81,5 @@ https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 endif::[]
 
 ifndef::env-github[]
-include::NavigationMenu.adoc[]
+include::../NavigationMenu.adoc[]
 endif::[]
