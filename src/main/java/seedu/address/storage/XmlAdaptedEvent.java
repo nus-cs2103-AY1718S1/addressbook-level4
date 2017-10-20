@@ -44,9 +44,9 @@ public class XmlAdaptedEvent {
      * @param source future changes to this will not affect the created XmlAdaptedEvent
      */
     public XmlAdaptedEvent(ReadOnlyEvent source) {
-        eventName = source.getEName().fullEventName;
-        eventDesc = source.getDesc().EventDesc;
-        eventTime = source.getETime().EventTime;
+        eventName = source.getEventName().fullEventName;
+        eventDesc = source.getDescription().eventDesc;
+        eventTime = source.getEventTime().eventTime;
         participants = new ArrayList<>();
         for (Person participant : source.getParticipants()) {
             participants.add(new XmlAdaptedPerson(participant));

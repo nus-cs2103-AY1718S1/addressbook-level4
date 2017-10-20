@@ -13,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventStorageChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
@@ -64,6 +65,10 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    private void indicateEventListChanged() {
+        raise(new EventStorageChangedEvent(addressBook));
     }
 
     @Override
@@ -132,21 +137,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
         addressBook.removeEvent(target);
-        indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     @Override
     public synchronized void addEvent(int position, ReadOnlyEvent event) {
         addressBook.addEvent(position, event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     @Override
