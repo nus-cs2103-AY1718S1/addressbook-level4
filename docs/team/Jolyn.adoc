@@ -10,8 +10,10 @@ Rolodex is an extension of AddressBook - Level 4, which is a desktop address boo
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-= {empty}
 === Enhancement Added: Keyboard Shortcuts
+
+The table below shows the keyboard shortcuts that are added, with the exception of shortcuts with the behavior `Exit the application`
+and `View help window` which came with the original state of the application.
 
 ==== External behavior
 
@@ -26,26 +28,34 @@ include::../UserGuide.adoc[tag=shortcut]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The main objective of Rolodex is to facilitate an efficient way of managing contacts for users with a preference for typing.
+Having keyboard shortcuts allows the user to navigate around the application with ease and speed.
+This implementation should enable the user to access all parts of the application without using the mouse.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=shortcut]
 
 #End of Extract#
 
 ---
 
-= {empty}
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add Profile Pictures
 
-{Explain similar to the Undo/Redo feature above.}
+---
+#Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=picture]
+
+#End of Extract#
+
+---
 === Other contributions
 
-* Updated the GUI color scheme (Pull request https://github.com[#16])
+* Updated the GUI layout and color scheme (Pull request https://github.com[#16])
+* Added a keyboard icon in the command box which provides visual feedback for some user events (Pull request https://github.com[#28])
 * Added the removeTag method (Pull request https://github.com[#6])
-* Updated the General Documentation (Pull requests https://github.com[#2])
+* Updated the General Documentation (Pull requests https://github.com[#2], https://github.com[#66])

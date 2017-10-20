@@ -3,6 +3,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+ifdef::env-github[]
+https://cs2103aug2017-w11-b2.github.io/main/team/ZhanYu.html[Please click here to view portfolio.]
+endif::[]
+
+ifndef::env-github[]
 == Project: Rolodex
 
 include::../../README.adoc[tag=applicationDescription]
@@ -73,3 +78,8 @@ https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 
 {Optionally (not graded), you may include other projects in your portfolio.}
+endif::[]
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

@@ -1,3 +1,4 @@
+// tag::excludeNavbar[]
 = Rolodex - User Guide
 :toc:
 :toc-title:
@@ -33,7 +34,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Rolodex.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to Rolodex.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -52,11 +53,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help` or `h`
 
-Format: `help` or `h`
+Format: `help` or `h` +
+Keyboard shortcut: kbd:[F1]
 
 === Adding a person: `add` or `a`
 
-Adds a person to the rolodex +
+Adds a person to Rolodex +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
         or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -71,8 +73,9 @@ Examples:
 // tag::list[]
 === Listing all persons : `list` or `l`
 
-Shows a list of all persons in the rolodex, sorted by the specified sort order or default sort order. +
-Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]`
+Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
+Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]` +
+Keyboard shortcut: kbd:[Ctrl+L]
 
 ****
 * `[SORT_ARGUMENTS]` can be none, some, any or all of `n/` `p/` `e/` `a/` `n/desc` `p/desc` `e/desc` `a/desc` `n/asc` `p/asc`
@@ -96,7 +99,7 @@ Examples:
 
 === Editing a person : `edit` or `e`
 
-Edits an existing person in the rolodex. +
+Edits an existing person in Rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
         or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -116,9 +119,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 // tag::find[]
-=== Locating persons in rolodex: `find` or `f` or `search`
 
-Finds persons in the rolodex. +
+=== Locating persons in Rolodex: `find` or `f` or `search`
+
+Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
@@ -177,7 +181,7 @@ Returns an error (do not count as search arguments).
 
 === Deleting a person : `delete` or `d`
 
-Deletes the specified person from the rolodex. +
+Deletes the specified person from Rolodex. +
 Format: `delete INDEX` or `d INDEX`
 
 ****
@@ -190,7 +194,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the rolodex.
+Deletes the 2nd person in Rolodex.
 * `find Betsy` +
 `d 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -201,7 +205,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX` or `s INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and view the complete details of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -210,15 +214,69 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the rolodex.
+Selects the 2nd person in Rolodex.
 * `find Betsy` +
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Adding a note: `note` or `n` _(Coming in V2.0)_
+
+Adds a note to the specified person in Rolodex. +
+Format: `note INDEX [r/NOTE]` or `note INDEX [r/NOTE]`
+
+****
+* Adds a note to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* An existing note will be replaced.
+****
+
+Examples:
+
+* `note 1 r/Likes fishing` +
+Sets the note of the 1st person to `Likes fishing`.
+* `n 1 r/` +
+Removes the note for the 1st person.
+
+// tag::picture[]
+=== Adding a profile picture: `picture` or `pic` _(Coming in V2.0)_
+
+Adds a profile picture to the specified person in Rolodex. +
+Format: `picture INDEX FILE_DIRECTORY` or `pic INDEX FILE_DIRECTORY`
+
+****
+* Adds a profile picture to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The `FILE_DIRECTORY` indicates the location of the profile picture to be added.
+* An existing profile picture will be replaced.
+****
+
+Examples:
+
+* `picture 1 C:\Users\John\Pictures\my_pic.png` +
+Sets the profile picture of the 1st person to `my_pic.png`.
+* `pic 6 C:\Users\Alice\Pictures\Contacts\john.png` +
+Sets the profile picture of the 6th person to `john.png`.
+
+The second example is illustrated in greater detail here:
+
+1. Before the addition of profile pictures, the contact list is loaded with the default avatar image as shown below.
++
+image::profile_pic_before.png[width="500"]
++
+2. `pic 6 C:\Users\Alice\Pictures\Contacts\john.png` is entered in the command box with the valid `FILE_DIRECTORY`.
++
+3. If the command is entered correctly, you should see the updated profile picture as specified in the `FILE_DIRECTORY` of the command.
++
+image::profile_pic_after.png[width="500"]
+// end::picture[]
+
 === Listing entered commands : `history` or `his` or `past`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` or `his` or `past`
+Format: `history` or `his` or `past` +
+Keyboard shortcut: kbd:[Ctrl+H]
 
 [NOTE]
 ====
@@ -228,12 +286,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` or `u`
 
-Restores the rolodex to the state before the previous _undoable_ command was executed. +
-Format: `undo` or `u`
+Restores Rolodex to the state before the previous _undoable_ command was executed. +
+Format: `undo` or `u` +
+Keyboard Shortcut: kbd:[Ctrl+Z]
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the rolodex's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Rolodex's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -255,7 +314,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo` or `r`
+Format: `redo` or `r` +
+Keyboard shortcut: kbd:[Ctrl+Y]
 
 Examples:
 
@@ -277,8 +337,9 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the rolodex. +
-Format: `clear` or `c`
+Clears all entries from Rolodex. +
+Format: `clear` or `c` +
+Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
 === Opening an existing Rolodex storage file: `open` or `o`
 // TODO: add 'ls' and 'cd' abbreviations
@@ -332,19 +393,21 @@ Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downl
 `new data\default.rldx` +
 Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
 
-=== Keyboard Shortcuts
-
-A list of keyboard shortcuts is provided link:#shortcuts[here].
-
 === Exiting the program : `exit` or `quit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Keyboard shortcut: kbd:[Alt+F4]
 
 === Saving the data
 
-Rolodex data are saved in the hard disk automatically after any command that changes the data. +
+Rolodex's data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Keyboard Shortcuts
+
+A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
+
 
 == FAQ
 
@@ -353,51 +416,76 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear` or `c`
-* *Delete* : `delete INDEX` or `d INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
-e.g. `find James Jake Jhon` or `find friends n/desc`
-* *List* : `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]`
-e.g. `list` or `list n/desc`
-* *Help* : `help` or `h`
-* *Select* : `select INDEX` or `s INDEX` +
-e.g.`select 2`
-* *History* : `history` or `his` or `past`
-* *Undo* : `undo` or `u`
-* *Redo* : `redo` or `r`
-* *Open* : `open FILEPATH` or `o FILEPATH` +
-e.g. `open data/default.rldx` or `o D:\someDirectory\some.rldx`
-* *New* : `new FILEPATH` or `n FILEPATH` +
-e.g. `new data/default.rldx` or `n D:\someDirectory\some.rldx`
-* *Exit* : `exit` or `quit`
+[width=90%, cols="1,9"]
+|===
+| Command | Format
+
+.3+| Add | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+         | `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+         | *E.g.* `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+.2+| Clear | `clear`
+           | `c`
+.3+| Delete | `delete INDEX`
+            | `d INDEX`
+            | *E.g.* `delete 3`
+.3+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+          | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+          | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
+.4+| Find | `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+          | *E.g.* `find James Jake Jhon` *or* `find friends n/desc`
+.3+| List | `list [SORT_ARGUMENTS]`
+          | `l [SORT_ARGUMENTS]`
+          | *E.g.* `list` *or* `list n/desc`
+.2+| Help | `help`
+          | `h`
+.3+| Select | `select INDEX`
+            | `s INDEX`
+            | *E.g.* `select 2`
+.3+| History | `history`
+             | `his`
+             | `past`
+.2+| Undo | `undo`
+          | `u`
+.2+| Redo | `redo`
+          | `r`
+|===
 
 // tag::shortcut[]
 == Keyboard Shortcuts
 
 === Command Shortcuts
 
-* `ctrl` + `a` : Add command
-* `ctrl` + `c` : Clear command
-* `ctrl` + `f` : Find command
-* `ctrl` + `l` : List command
-* `ctrl` + `h` : History command
-* `ctrl` + `z` : Undo command
-* `ctrl` + `y` : Redo command
-* `ctrl` + `\#` : Select contact at number `#`
-* `ctrl` + `d` + `\#`: Delete contact at number `#`
-* `ctrl` + `e` + `\#` : Edit contact at number `#`
+[width=50%, cols="2,4"]
+|===
+| Shortcut | Purpose
+
+| kbd:[Ctrl + L] | List all contacts
+| kbd:[Ctrl + H] | View history
+| kbd:[Ctrl + Z] | Undo last command
+| kbd:[Ctrl + Y] | Redo last command
+| kbd:[Ctrl + Shift + D] | Clear contact list
+| kbd:[F1] | View help window
+|===
 
 === Navigation/Selection Shortcuts
 
-* `↑` or `↓` : Scroll the contact list
-* `shift` + `↑` or `shift` + `↓` : Select multiple contacts
-** `ctrl` + `d` : Delete selected contacts
+[width=50%, cols="2,4"]
+|===
+| Shortcut | Purpose
 
-=== Additional Shortcuts
+| kbd:[Enter] | Select the command box
+| kbd:[Esc] | Deselect the command box
+2.+| When the command box is not in selection:
+| kbd:[↑] and kbd:[↓] | Scroll the contact list
+| kbd:[Ctrl + D] | Delete the selected contact _(Coming in V2.0)_
+| kbd:[Alt + F4] | Exit the application
+|===
+// end::shortcut[]
 
-* `esc` : Exit the application
+// end::excludeNavbar[]
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]
