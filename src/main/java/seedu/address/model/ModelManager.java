@@ -282,7 +282,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortBy(String order) throws IllegalValueException {
+    public void sortBy(String order) throws IllegalArgumentException {
         addressBook.sortBy(order);
     }
 

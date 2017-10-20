@@ -29,9 +29,26 @@ public class SortCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.sortBy(order);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalArgumentException ive) {
             throw new CommandException(ive.getMessage());
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, order));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof SortCommand)) {
+            return false;
+        }
+
+        // state check
+        SortCommand s = (SortCommand) other;
+        return order.equals(s.order);
     }
 }

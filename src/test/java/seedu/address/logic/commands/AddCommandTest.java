@@ -189,6 +189,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortBy(String string) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void changeListTo(String string) {
             fail("This method should not be called.");
         }

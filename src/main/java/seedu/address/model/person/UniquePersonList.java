@@ -128,7 +128,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts the unique person list by the specified order.
      * @param order to sort the list by.
      */
-    public void sortBy(String order) throws IllegalValueException {
+    public void sortBy(String order) throws IllegalArgumentException {
         switch (order) {
             case "name":
                 internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
