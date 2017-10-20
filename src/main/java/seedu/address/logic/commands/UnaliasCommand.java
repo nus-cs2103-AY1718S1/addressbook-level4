@@ -7,7 +7,7 @@ import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
 /**
- * Creates an alias for other commands.
+ * Removes a previously defined alias.
  */
 public class UnaliasCommand extends UndoableCommand {
 

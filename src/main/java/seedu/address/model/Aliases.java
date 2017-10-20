@@ -16,7 +16,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
- * Map of aliases to their commands
+ * Contains a mapping of aliases to their commands, which is referred to when parsing commands.
+ * When using the Alias and Unalias commands, key-value pairs are added and removed respectively.
  */
 public class Aliases {
 
@@ -69,8 +70,6 @@ public class Aliases {
         }
         return true;
     }
-
-    //// util methods
 
     @Override
     public String toString() {

@@ -10,7 +10,7 @@ import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ListCommand;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code AliasCommand}.
+ * Contains unit tests for {@code AliasCommandParser}.
  */
 public class AliasCommandParserTest {
 

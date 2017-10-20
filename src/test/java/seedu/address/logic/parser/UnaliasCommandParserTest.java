@@ -9,7 +9,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.UnaliasCommand;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code AliasCommand}.
+ * Contains unit tests for {@code UnaliasCommandParser}.
  */
 public class UnaliasCommandParserTest {
 

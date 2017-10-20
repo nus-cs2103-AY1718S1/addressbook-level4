@@ -6,7 +6,7 @@ import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AliasCommand object
  */
 public class AliasCommandParser implements Parser<AliasCommand> {
 
