@@ -5,10 +5,10 @@ import java.util.regex.PatternSyntaxException;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.tag.Tag;

@@ -7,17 +7,13 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
-import seedu.address.model.property.Name;
-import seedu.address.model.reminder.ReadOnlyReminder;
 
 /**
  * Represents an Reminder in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Reminder implements ReadOnlyReminder {
-    
     private ObjectProperty<DateTime> time;
     private ObjectProperty<String> message;
 
