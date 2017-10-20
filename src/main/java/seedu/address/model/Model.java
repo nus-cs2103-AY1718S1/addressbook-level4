@@ -1,11 +1,13 @@
 package seedu.address.model;
 
+import java.util.Collection;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -26,6 +28,13 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    /** Adds all persons in the given collection */
+    void addPersons(Collection<ReadOnlyPerson> persons);
+
+    /** Favorites or unfavorites the given person */
+    void toggleFavoritePerson(ReadOnlyPerson target, String type)
+            throws DuplicatePersonException, PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -35,6 +44,8 @@ public interface Model {
      */
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
+
+    void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
