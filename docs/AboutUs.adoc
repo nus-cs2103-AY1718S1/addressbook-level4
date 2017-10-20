@@ -14,8 +14,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::keithsoc.jpg[width="150", align="left"]
 {empty}[http://github.com/keithsoc[github]] [<<keithsoc#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Integration, Code Quality, In charge of UI component
+Role: Team Lead + Developer +
+Responsibilities: Integration, Code Quality, In charge of User Interface (UI) component
 
 '''
 
