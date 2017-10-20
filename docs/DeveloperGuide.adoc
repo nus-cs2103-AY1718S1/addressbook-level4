@@ -219,7 +219,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::find[]
-=== Enhanced Find mechanism 
+=== Enhanced Find mechanism
 
 The enhanced version of find mechanism is facilitated by the `AddressBookParser`, which resides inside `LogicManager`. It allows the users to search for person(s) by substrings of multiple different attributes (e.g. `Name`, `Phone`, `Email`, `Address`), which the case is insensitive for `Name`, `Email` and `Address` attributes.
 
@@ -229,7 +229,7 @@ The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-When the users are using the find command, they are required to provided at least one keyword for any available attribute. Keywords of the same attribute need to be grouped together with a prefix (e.g. `n/`, `p/`, `e/`, `a/`). In this case, each prefix is allowed to appear at most once. 
+When the users are using the find command, they are required to provided at least one keyword for any available attribute. Keywords of the same attribute need to be grouped together with a prefix (e.g. `n/`, `p/`, `e/`, `a/`). In this case, each prefix is allowed to appear at most once.
 
 During the implementation, `FindCommandParser` class splits the keywords of different attributes by searching for the location of the prefixes, and store the keywords into separate ArrayLists. As a `NameContainsKeywordsPredicate` needs to be passed to `FindCommand` class, all the keywords from the ArrayLists are added to the predicate in order with each prefix added at front for separation.
 
