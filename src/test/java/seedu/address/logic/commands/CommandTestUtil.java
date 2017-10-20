@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -35,6 +36,9 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
+    public static final String VALID_EVENT_B_NAME = "Finals";
+    public static final String VALID_EVENT_B_DATE = "04/12/2017";
+    public static final String VALID_EVENT_B_ADDRESS = "MPSH 2A, NUS";
     public static final String VALID_HOME_NUM_AMY = "65656511";
     public static final String VALID_HOME_NUM_BOB = "65656522";
     public static final String VALID_SCH_EMAIL_AMY = "amy@u.nus.edu";
@@ -56,6 +60,9 @@ public class CommandTestUtil {
     public static final String HOME_NUM_DESC_BOB = " " + PREFIX_HOME_NUMBER + VALID_HOME_NUM_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
+    public static final String EVENT_NAME_B_DESC = " " + PREFIX_NAME + VALID_EVENT_B_NAME;
+    public static final String EVENT_DATE_B_DESC = " " + PREFIX_DATE + VALID_EVENT_B_DATE;
+    public static final String EVENT_ADDRESS_B_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_B_ADDRESS;
     public static final String SCH_EMAIL_DESC_AMY = " " + PREFIX_SCH_EMAIL + VALID_SCH_EMAIL_AMY;
     public static final String SCH_EMAIL_DESC_BOB = " " + PREFIX_SCH_EMAIL + VALID_SCH_EMAIL_BOB;
     public static final String WEBSITE_DESC_AMY = " " + PREFIX_WEBSITE + VALID_WEBSITE_AMY;
@@ -76,6 +83,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY + "29/january/2012"; //words not allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "21/Decemeber/2017"; //words not allowed
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
