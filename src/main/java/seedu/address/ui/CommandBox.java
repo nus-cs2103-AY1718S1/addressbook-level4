@@ -66,13 +66,12 @@ public class CommandBox extends UiPart<Region> {
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         final String[] allCommandList = {"add", "delete", "edit", "find", "search", "help", "history",
             "list", "select", "redo", "undo", "exit", "clear"};
         TextFields.bindAutoCompletion(commandTextField, allCommandList);
-        //input = commandTextField.getText().trim().toLowerCase();
+
+        // calls #processInput() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> processInput());
-        //commandTextField.textProperty().addListener(((observable, oldValue, newValue) -> autocomplete()));
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -191,7 +190,7 @@ public class CommandBox extends UiPart<Region> {
         input = commandTextField.getText();
         updateKeyboardIconAndStyle();
         autoSelectFirstField();
-        if (input.startsWith("add ") && Arrays.asList(addCommandFieldList).contains(selectedText)) {
+        if (Arrays.asList(addCommandFieldList).contains(selectedText)) {
             updateSelection();
         }
     }

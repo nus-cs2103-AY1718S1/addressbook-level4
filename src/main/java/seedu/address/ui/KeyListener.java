@@ -11,6 +11,7 @@ import static seedu.address.ui.util.KeyListenerUtil.UNDO;
 
 import java.util.logging.Logger;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
@@ -52,9 +53,10 @@ public class KeyListener {
     public void handleKeyPress() {
 
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (commandBox.isFocused()) {
+            if (commandBox.isFocused() || !(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN)) {
                 commandBox.processInput();
             }
+            //commandBox.processInput();
             executeKeyEvent(event);
         });
     }

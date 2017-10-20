@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import seedu.address.ui.CommandBox;
+import systemtests.SystemTestSetupHelper;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
@@ -38,6 +39,16 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         click();
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
+
+        guiRobot.type(KeyCode.ENTER);
+
+        return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    public boolean inputAndEnter(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+        guiRobot.pauseForDropDownList();
 
         guiRobot.type(KeyCode.ENTER);
 
