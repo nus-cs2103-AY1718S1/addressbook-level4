@@ -93,6 +93,5 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Group> groups = new HashSet<>(personGroups);
         return new Person(name, phone, email, address, favourite, tags, groups);
-      
     }
 }

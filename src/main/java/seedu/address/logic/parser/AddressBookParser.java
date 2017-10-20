@@ -112,9 +112,11 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case AddFaveCommand.COMMAND_WORD:
+        case AddFaveCommand.COMMAND_ALT:
             return new AddFaveCommandParser().parse(arguments);
 
         case RemoveFaveCommand.COMMAND_WORD:
+        case RemoveFaveCommand.COMMAND_ALT:
             return new RemoveFaveCommandParser().parse(arguments);
 
         default:

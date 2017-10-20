@@ -25,29 +25,34 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<Favourite> favourite;
     private ObjectProperty<UniqueTagList> tags;
     /**
      *  A Person will have an empty group list by default
      */
     private ObjectProperty<UniqueGroupList> groups = new SimpleObjectProperty<>(new UniqueGroupList());
-
+    /**
+     *  A Person will not be marked as favourite by default
+     */
+    private ObjectProperty<Favourite> favourite = new SimpleObjectProperty<>(new Favourite(false));
 
     /**
      * Every field must be present and not null.
+     * Stamdard Constructor
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        Favourite favourite = new Favourite(false);
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        this.favourite = new SimpleObjectProperty<>(favourite);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
+    /**
+     * Every field must be present and not null.
+     * Constructor for Favourite feature
+     */
     public Person(Name name, Phone phone, Email email, Address address, Favourite favourite, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
@@ -61,6 +66,7 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * Every field must be present and not null.
+     * Constructor for Group feature
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Group> groups) {
         requireAllNonNull(name, phone, email, address, tags, groups);
@@ -75,10 +81,28 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Every field must be present and not null.
+     * Constructor for XMLAdaptedPerson
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Favourite favourite,
+                  Set<Tag> tags, Set<Group> groups) {
+        requireAllNonNull(name, phone, email, address, tags, groups);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.favourite = new SimpleObjectProperty<>(favourite);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal groups from changes in the arg list
+        this.groups = new SimpleObjectProperty<>(new UniqueGroupList(groups));
+    }
+
+    /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavourite(),
                 source.getTags());
     }
 

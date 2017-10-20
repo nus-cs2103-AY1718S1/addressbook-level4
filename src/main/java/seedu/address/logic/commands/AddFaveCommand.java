@@ -26,7 +26,7 @@ import seedu.address.model.tag.Tag;
 public class AddFaveCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addFave";
-
+    public static final String COMMAND_ALT = "af";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the person identified by the index number used in the last person listing as a favourite.\n"
             + "Parameters: INDEX (must be a positive integer)\n"

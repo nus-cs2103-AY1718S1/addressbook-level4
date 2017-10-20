@@ -26,7 +26,7 @@ import seedu.address.model.tag.Tag;
 public class RemoveFaveCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removeFave";
-
+    public static final String COMMAND_ALT = "rf";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes the favourite status from the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
