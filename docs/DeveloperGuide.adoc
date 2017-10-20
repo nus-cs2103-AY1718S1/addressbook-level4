@@ -370,7 +370,7 @@ The remove tag function is done by calling a `removetag` function which resides 
 
 If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
 ----
-@Override
+    @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
 
@@ -410,8 +410,13 @@ For removing tags from a specified Index we use the `getFilteredPersonList` so t
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
 
+==== Design Considerations
 
-=== Sorting Function
+Aspect: Which tags to remove when removing all tags. +
+Alternative 1 (current): Remove all tags from the addressbook regardless of current view. +
+Alternative 2: Remove all tags for the list shown to the user. +
+Pros: Completely removes the specified tag from the whole addressbook +
+Cons: User may want to remove only from list shown instead of the whole list.
 
 == Documentation
 
