@@ -31,6 +31,7 @@ public class TagCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "%d persons successfully tagged with %s:";
     public static final String MESSAGE_PERSONS_ALREADY_HAVE_TAG = "%d persons already have this tag:";
 
+    public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
     public static final String MESSAGE_DUPLICATE_TAG = "One or more persons already have this tag.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";

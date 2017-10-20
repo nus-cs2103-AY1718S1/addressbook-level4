@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.TagCommand.MESSAGE_EMPTY_INDEX_LIST;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,10 +34,12 @@ public class TagCommandParser implements Parser<TagCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
 
-        List<Index> indexList = new ArrayList<>();
         String[] indexArgs = splittedArgs[0].split(",");
-
         Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(indexArgs));
+        if (uniqueIndexes.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_EMPTY_INDEX_LIST, TagCommand.MESSAGE_USAGE));
+        }
+        List<Index> indexList = new ArrayList<>();
         try {
             for (String indexArg : uniqueIndexes) {
                 indexList.add(ParserUtil.parseIndex(indexArg));
