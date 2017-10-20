@@ -29,7 +29,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/bamboo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -56,6 +56,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -131,6 +134,10 @@ public class MainWindow extends UiPart<Region> {
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        GroupListPanel groupListPanel;
+        groupListPanel = new GroupListPanel(logic.getFilteredPersonList()); //logic needs to get groupList instead
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

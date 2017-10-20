@@ -19,13 +19,6 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
-    /**
-     * An enum that contains the different tag colours.
-     */
-    private enum Colours {
-        red, orange, yellow, green, blue, purple, grey
-    }
-
     private static HashMap<String, String> tagColourSet = new HashMap<String, String>();
     private static Random random = new Random();
 
@@ -47,12 +40,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -69,9 +56,6 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -79,12 +63,12 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private static String setTagColour(String tagName) {
+        String[] colours = {"#2ecc71", "#3498db", "#9b59b6", "#f1c40f", "#E67E22", "#27AE60", "#FFC153"};
         if (!tagColourSet.containsKey(tagName)) {
-            tagColourSet.put(tagName, Colours.values()[random.nextInt(Colours.values().length)].toString());
+            tagColourSet.put(tagName, colours[random.nextInt(colours.length)]);
         }
 
         return tagColourSet.get(tagName);
-
     }
 
     /**

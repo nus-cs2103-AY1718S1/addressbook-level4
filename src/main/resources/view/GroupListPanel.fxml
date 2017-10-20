@@ -5,6 +5,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" style="-fx-border-width: 1">
-   <Label text="Contacts" styleClass="panelTitlePadding"/>
-  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
+   <Label text="Groups" styleClass="panelTitlePadding"/>
+  <ListView fx:id="groupListView" VBox.vgrow="ALWAYS" />
 </VBox>
