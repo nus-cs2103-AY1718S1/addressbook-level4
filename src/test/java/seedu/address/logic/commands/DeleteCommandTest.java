@@ -10,6 +10,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -20,15 +22,44 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
 public class DeleteCommandTest {
 
+    private static final ReadOnlyPerson DUPLICATE = new PersonBuilder().withName("Alice Pauline")
+            .withAddress("124, Jurong West Ave 7, #08-112").withEmail("alicee@example.com")
+            .withPhone("85333333")
+            .withTags("workmate").build();
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private ArrayList<Index> personsToDelete1 = new ArrayList<>();
+
+    @Test
+    public void excute_duplicatePerson_sucess() throws Exception {
+
+        String duplicate = "Alice Pauline";
+        model.addPerson(DUPLICATE);
+
+        List<String> duplicatePerson = Arrays.asList(duplicate);
+        NameContainsKeywordsPredicate updatedpredicate = new NameContainsKeywordsPredicate(duplicatePerson);
+
+        DeleteCommand deleteCommand = prepareCommand(duplicate);
+
+        String expectedMessage = "Duplicate persons exist, please choose one to delete.";
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        expectedModel.updateFilteredPersonList(updatedpredicate);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+
+        model.deletePerson(DUPLICATE);
+
+    }
 
 
     @Test
@@ -212,6 +243,7 @@ public class DeleteCommandTest {
         return deleteCommand;
     }
 
+
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
@@ -220,4 +252,5 @@ public class DeleteCommandTest {
 
         assert model.getFilteredPersonList().isEmpty();
     }
+
 }
