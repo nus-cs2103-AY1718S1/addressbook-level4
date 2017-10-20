@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import com.sun.org.apache.regexp.internal.RE;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -26,21 +25,24 @@ public class AddMultipleCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds multiple person to the address book. "
             + "Parameters: "
-            + "FILE_NAME\n"
+            + "FILE_PATH\n"
             + "Example: " + COMMAND_WORD + " "
-            + "personsToAdd.txt";
+            + "./data/personsToAdd.txt";
     
     public static final String MESSAGE_PERSON_FORMAT = "Person format in .txt file: "
+            + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_AVATAR + "AVATAR IMAGE FILE "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_AVATAR + "john_doe.png "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
