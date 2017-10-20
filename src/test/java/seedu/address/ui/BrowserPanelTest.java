@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+//import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -43,9 +43,12 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated web page of a person
         postNow(selectionChangedEventStub);
         URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+                + ALICE.getAddress().toString().replaceAll(" ", "+")
+                .replaceAll(",", "+")
+                .replaceAll("#", "+")
+                .replaceAll("-", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
-        waitUntilBrowserLoaded(browserPanelHandle);
+        //waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 }
