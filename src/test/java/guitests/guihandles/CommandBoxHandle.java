@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import seedu.address.ui.CommandBox;
-import systemtests.SystemTestSetupHelper;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
@@ -45,6 +44,10 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
 
+    /**
+     * Enters the given command in the Command Box, wait for the drop-down list to appear and presses enter.
+     * @return true if the command succeeded, false otherwise.
+     */
     public boolean inputAndEnter(String input) {
         click();
         guiRobot.interact(() -> getRootNode().setText(input));

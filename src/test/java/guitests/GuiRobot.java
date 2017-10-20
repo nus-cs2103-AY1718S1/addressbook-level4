@@ -40,6 +40,11 @@ public class GuiRobot extends FxRobot {
         sleep(PAUSE_FOR_HUMAN_DELAY_MILLISECONDS);
     }
 
+    /**
+     * Pauses execution for {@code PAUSE_FOR_DROP_DOWN_LIST_TO_APPEAR} milliseconds for the auto-completion drop-down
+     * list to appear. This method will be disabled when the GUI tests are executed in headless mode to avoid
+     * unnecessary delays.
+     */
     public void pauseForDropDownList() {
         if (isHeadlessMode) {
             return;

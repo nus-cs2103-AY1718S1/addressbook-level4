@@ -503,6 +503,56 @@ comparator before executing a sort and filter which is handled by the event cons
 **Cons:** The displayed listing will not comply with the model comparator.
 // end::sorting[]
 
+// tag::auto-completion[]
+=== Auto-completion mechanism
+Auto-completion mechanism is implemented in `CommandBox` class under UI component.
+
+Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
+----
+@FXML
+private void handleKeyPress(KeyEvent keyEvent) {
+    switch (keyEvent.getCode()) {
+    case TAB:
+        autocomplete(); //checkes the input and performs actions accordingly
+        break;
+    //other cases
+    }
+----
+
+When `TAB` is pressed, the current input in the command box is checked against the list of commands.
+* If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
+At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
+
+image::AutoCompletionAfterTab.png
+
+* If the input is already in the required format of the add command, the `TAB` is meant to navigate to the next input field (only `add` command require multiple fields).
+The current caret position is checked and used to determine the current field the user is at.
+The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
+
+image::AutoCompletionNextField.png
+
+Below is an activity diagram for `TAB` keypress which activates autocompletion.
+image::AutoCompleteActivityDiagram.png
+
+==== Design Considerations
+
+**Aspect:** text input control +
+**Alternative 1 (current choice):** Continue to use the original TextField +
+**Pros:** External library enables bindAutocompletion for TextField (the drop down list of suggested commands that appears and updates itself as user types). +
+**Pros:** Minimise changes need to be made to the original text input control structure. +
+**Cons:** Text formatting is limited. All text in the TextField must have the same format. +
+**Alternative 2:** Create additional TextField as user request for additional fields +
+**Pros:** Allows for different formatting for different fields (Commands can have a different colour from the fields) +
+**Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
+
+**Aspect:** auto-completion drop-down list +
+**Alternative 1 (current choice):** Continue to use the original TextField and use external library to bind auto-completion +
+**Pros:** Easy to implement +
+**Cons:** User cannot see the full format of the commands in the drop-down list +
+**Alternative 2:** Use ComboBox +
+**Pros:** User can see the required fields for each command in the drop-down box +
+**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

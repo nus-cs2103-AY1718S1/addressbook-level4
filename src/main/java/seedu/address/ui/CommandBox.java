@@ -30,6 +30,8 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
     private static final int TIME_SINCE_TYPING = 300;
+    private static final int START_OF_FIRST_FIELD = 6;
+    private static final int END_OF_FIRST_FIELD = 10;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -79,7 +81,9 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.requestFocus();
     }
 
-    public boolean isFocused() { return commandTextField.isFocused(); }
+    public boolean isFocused() {
+        return commandTextField.isFocused();
+    }
 
     /**
      * Load images for keyboard icons in the command box.
@@ -227,7 +231,7 @@ public class CommandBox extends UiPart<Region> {
         setFocus();
         switch (input) {
         case addCommandFormat:
-            commandTextField.selectRange(6, 10);
+            commandTextField.selectRange(START_OF_FIRST_FIELD, END_OF_FIRST_FIELD);
             break;
         case editCommandFormat:
         case findCommandFormat:
