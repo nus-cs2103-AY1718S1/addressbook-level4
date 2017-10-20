@@ -49,7 +49,35 @@ include::../UserGuide.adoc[tag=commandaliases]
 
 This allows a user to use short form commands rather than the actual full command name.
 
-=== Enhancement Proposed: To be updated
+=== Enhancement Added: Viewing of Address
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewAddress]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=websitebuttonbar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This allows a user view the address of a contact directly within the application.
+
+=== Enhancement Proposed: View social media links of contact
 
 {to be updated}
 
