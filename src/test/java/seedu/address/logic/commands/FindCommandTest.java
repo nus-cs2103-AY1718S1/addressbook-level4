@@ -14,20 +14,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.StringTokenizer;
-import java.util.function.Predicate;
 
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.FieldContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -38,91 +36,86 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
-        TagContainsKeywordsPredicate thirdPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("first"));
-        TagContainsKeywordsPredicate fourthPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("second"));
+        List<String> keywords1 = Arrays.asList("first", "third");
+        List<String> keywords2 = new ArrayList<>();
+        List<String> keywords3 = new ArrayList<>();
+        List<String> keywords4 = new ArrayList<>();
+        List<String> keywords5 = new ArrayList<>();
+        List<List<String>> list1 = new ArrayList<>();
+        list1.add(keywords1);
+        list1.add(keywords2);
+        list1.add(keywords3);
+        list1.add(keywords4);
+        list1.add(keywords5);
+
+        List<String> keywordsA = Arrays.asList("second", "fourth");
+        List<String> keywordsB = new ArrayList<>();
+        List<String> keywordsC = new ArrayList<>();
+        List<String> keywordsD = new ArrayList<>();
+        List<String> keywordsE = new ArrayList<>();
+        List<List<String>> list2 = new ArrayList<>();
+        list2.add(keywordsA);
+        list2.add(keywordsB);
+        list2.add(keywordsC);
+        list2.add(keywordsD);
+        list2.add(keywordsE);
+
+        FieldContainsKeywordsPredicate firstPredicate =
+                new FieldContainsKeywordsPredicate(list1);
+        FieldContainsKeywordsPredicate secondPredicate =
+                new FieldContainsKeywordsPredicate(list2);
+
 
         FindCommand findFirstCommand = new FindCommand(firstPredicate);
         FindCommand findSecondCommand = new FindCommand(secondPredicate);
-        FindCommand findThirdCommand = new FindCommand(thirdPredicate);
-        FindCommand findFourthCommand = new FindCommand(fourthPredicate);
+
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
-        assertTrue(findThirdCommand.equals(findThirdCommand));
+
 
         // same values -> returns true
         FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
-        FindCommand findThirdCommandCopy = new FindCommand(thirdPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
-        assertTrue(findThirdCommand.equals(findThirdCommandCopy));
 
         // different types -> returns false
         assertFalse(findFirstCommand.equals(1));
-        assertFalse(findThirdCommand.equals(1));
 
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
-        assertFalse(findThirdCommand.equals(null));
 
         // different person -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
-        assertFalse(findThirdCommand.equals(findFourthCommand));
-
-        // different field, same input -> returns false
-        assertFalse(findFirstCommand.equals(findThirdCommand));
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void execute_Keyword_noPersonFound() throws Exception{
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommand command = prepareCommand(" ");
+        FindCommand command = prepareCommand(" n/Bob");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void execute_multipleKeywords_multiplePersonsFound() throws Exception{
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("n/ Kurz Elle Kunz");
+        FindCommand command = prepareCommand(" n/Kurz n/Elle n/Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
-    //TODO: find out why typical persons does not reflect accurately no of tags
+
     @Test
-    public void execute_multipleTagKeywords_multiplePersonFound() {
+    public void execute_multipleTagKeywords_multiplePersonFound() throws Exception{
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindCommand command = prepareCommand("t/ owesMoney");
+        FindCommand command = prepareCommand(" t/owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindCommand prepareCommand(String userInput) {
-        ArrayList<String> keywords = new ArrayList<>();
-        Predicate<ReadOnlyPerson> predicate;
-        StringTokenizer st = new StringTokenizer(userInput, " ");
-        Boolean tagExist = false;
-        if (st.hasMoreTokens()) {
-            String prefix = st.nextToken();
-            while (st.hasMoreTokens()) {
-                keywords.add(st.nextToken());
-            }
+    private FindCommand prepareCommand(String userInput) throws Exception{
+        FindCommandParser parser = new FindCommandParser();
 
-            if (prefix.equals("t/")) {
-                tagExist = true;
-            }
-        }
-        if (tagExist) {
-            predicate = new TagContainsKeywordsPredicate(keywords);
-        } else {
-            predicate = new NameContainsKeywordsPredicate(keywords);
-        }
-        FindCommand command = new FindCommand(predicate);
+        FindCommand command = parser.parse(userInput);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
