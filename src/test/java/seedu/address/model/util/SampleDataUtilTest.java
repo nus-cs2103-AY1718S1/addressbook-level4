@@ -42,7 +42,7 @@ public class SampleDataUtilTest {
                     getTagSet("classmates")),
             new Parcel(new TrackingNumber("RR123789456SG"), new Name("Roy Balakrishnan"), new Phone("92624417"),
                     new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31 S389825"),
-                    new DeliveryDate("06-06-2006"), getTagSet("colleagues"))
+                    new DeliveryDate("06-06-2006"), Status.getStatusInstance("PENDING"), getTagSet("colleagues"))
         };
 
         assertEquals(parcels.length, expectedParcels.length);
