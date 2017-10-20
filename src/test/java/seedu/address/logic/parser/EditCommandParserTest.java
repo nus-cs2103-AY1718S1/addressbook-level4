@@ -193,7 +193,7 @@ public class EditCommandParserTest {
 
         EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101)
                 .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
-                .withLecturers(LECTURER_DESC_MA1101R, LECTURER_DESC_CS2101).build();
+                .withLecturers(VALID_LECTURER_CS2101, VALID_LECTURER_MA1101R).build();
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -211,10 +211,10 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + VENUE_DESC_CS2101 + INVALID_CLASSTYPE_DESC + GROUP_DESC_CS2101
+        userInput = targetIndex.getOneBased() + VENUE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + GROUP_DESC_CS2101
                 + CLASSTYPE_DESC_CS2101;
         descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101).withGroup(VALID_GROUP_CS2101)
-                .withTimeSlot(VALID_TIMESLOT_CS2101).build();
+                .withLocation(VALID_VENUE_MA1101R).build();
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -251,17 +251,6 @@ public class EditCommandParserTest {
 
         ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
         EditCommand expectedCommand = new EditCommand(targetIndex, VALID_VENUE_MA1101R);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_editClassType() {
-        Index targetIndex = INDEX_FIRST_LESSON;
-        String userInput = targetIndex.getOneBased()  + " " + CLASSTYPE_DESC_MA1101R;
-
-        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
-        EditCommand expectedCommand = new EditCommand(targetIndex, VALID_CLASSTYPE_CS2101);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
