@@ -114,7 +114,7 @@ The rest of the App consists of five components.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
-* link:#security-component[*`Security`*] : Encrypts and decrypts the address book.
+* link:#security-component[*`Security`*] : Secures the address book.
 
 Each of the five components
 
@@ -451,6 +451,46 @@ Lambda expression is equivalent to overriding the 'compare(T o1, T o2)' method i
 **Pros:** Widely practised, minimise error. +
 **Cons:** Long and unclear, need to manually override 'compare' method.
 // end::sort[]
+
+// tag::lock[]
+=== Lock/Unlock mechanism
+
+The lock/unlock mechanism is based on `SecurityManager`. When lock/unlock command is executed, it gets an singleton instance from `SecurityManager` and calls its security methods. +
+
+Some important methods in `SecurityManager` are as follows:
+[source,java]
+----
+public interface Security extends SecureStorage {
+
+    void raise(BaseEvent event);
+
+    boolean isPermittedCommand(String commandWord);
+
+    // ... other methods
+}
+
+public interface SecureStorage {
+
+    boolean isEncrypted() throws IOException;
+
+    void encryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException;
+
+    void decryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException;
+}
+
+public SecurityManager implements Security {
+    // ... implementations
+}
+
+----
+
+When methods in interface `SecureStorage` are called, `SecurityManager` will not realize them by itself. Instead, it calls the methods in `Storage` which also implements `SecureStorage`, because component `Secure` should not read and save files. +
+
+The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component.
+
+// end::lock[]
 
 === Logging
 
