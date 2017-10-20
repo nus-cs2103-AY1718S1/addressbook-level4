@@ -15,7 +15,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.group.ReadOnlyGroup;
 
 
 /**
@@ -28,15 +28,15 @@ public class GroupListPanel extends UiPart<Region> {
     @FXML
     private ListView<GroupCard> groupListView;
 
-    public GroupListPanel(ObservableList<ReadOnlyPerson> groupList) {
+    public GroupListPanel(ObservableList<ReadOnlyGroup> groupList) {
         super(FXML);
         setConnections(groupList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    private void setConnections(ObservableList<ReadOnlyGroup> groupList) {
         ObservableList<GroupCard> mappedList = EasyBind.map(
-                personList, (person) -> new GroupCard(person, personList.indexOf(person) + 1));
+                groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListViewCell());
         setEventHandlerForSelectionChangeEvent();

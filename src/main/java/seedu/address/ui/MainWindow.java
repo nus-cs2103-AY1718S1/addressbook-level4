@@ -136,7 +136,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         GroupListPanel groupListPanel;
-        groupListPanel = new GroupListPanel(logic.getFilteredPersonList()); //logic needs to get groupList instead
+        groupListPanel = new GroupListPanel(logic.getFilteredGroupList()); //logic needs to get groupList instead
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
