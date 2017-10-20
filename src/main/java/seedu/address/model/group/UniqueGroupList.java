@@ -33,19 +33,6 @@ public class UniqueGroupList implements Iterable<Group> {
     private final ObservableList<ReadOnlyGroup> mappedList = EasyBind.map(internalList, (group) -> group);
 
     /**
-     * Returns true if the list contains an equivalent Group as the given argument.
-     */
-    public boolean contains(ReadOnlyGroup toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Constructs empty GroupList.
-     */
-    public UniqueGroupList() {}
-
-    /**
      * Creates a UniqueGroupList using given Groups.
      * Enforces no nulls.
      */
@@ -57,8 +44,25 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
+     * Constructs empty GroupList.
+     */
+    public UniqueGroupList() {}
+
+    /**
      * Returns all groups in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
+     */
+
+    /**
+     * Returns true if the list contains an equivalent Group as the given argument.
+     */
+    public boolean contains(ReadOnlyGroup toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Returns a set representation of the group.
      */
     public Set<Group> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);

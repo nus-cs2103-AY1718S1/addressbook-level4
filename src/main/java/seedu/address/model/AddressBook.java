@@ -226,6 +226,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// group-level operations
 
+    /**
+     * Adds a group to the address book.
+     *
+     * @throws DuplicateGroupException if an equivalent group already exists.
+     */
+
     public void addGroup(ReadOnlyGroup g) throws DuplicateGroupException {
         Group newGroup = new Group(g);
         groups.add(newGroup);

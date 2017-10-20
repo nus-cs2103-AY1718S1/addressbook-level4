@@ -1,12 +1,8 @@
 package seedu.address.model.group;
 
-import java.util.Set;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.UniquePersonList;
-
 
 /**
  * A read-only immutable interface for a Group in the addressbook.
