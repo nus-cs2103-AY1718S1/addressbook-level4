@@ -57,17 +57,35 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [f/] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [f/] [t/TAG]... [s/SOCIAL_TYPE USERNAME]...`
 
-[TIP]
-A person can have any number of tags (including 0) +
-A person can be favorited just by specifying the prefix `f/` (if unspecified, the person added will not a favorite contact)
+
+****
+* A person can have any number of tags (including 0) +
+* A person can be favorited just by specifying the prefix `f/` (if unspecified, the person added will not a favorite contact)
+* More information about the social platforms supported can be found in the <<social-media-integrations, Social Media Integrations>> section.
+****
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Rob Cross p/92456877 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Ah Beng p/123456 a/Yishun Drive e/ah@beng.com m/facebook ahbeng
+
+==== Adding multiple phone number fields for contacts [Since v1.2]
+
+Adds a contact with multiple phone number fields. +
+Format: `add n/NAME p/PHONE p/87654321 e/EMAIL a/ADDRESS`
+
+****
+* Adds two phone number fields for the person.
+* If there are valid phone numbers as well as invalid phone numbers entered, the valid phone numbers will be added and the invalid phone numbers will not be added to the contact.
+****
+
+Examples:
+
+* `add n/John Doe p/98765432 p/87654321 e/johnd@example.com a/John street, block 123, #01-01`
 
 === Favoriting contacts: `fav`
 
@@ -156,7 +174,7 @@ lists all the contacts that contain the keyword `bob`, sorted based on their tag
 === Editing a person: `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]... [s/SOCIAL_TYPE USERNAME]`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -165,6 +183,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]
 * To change a person's favorite status, you can either specify `f/` or `uf/`.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* More information about the social platforms supported can be found in the <<social-media-integrations, Social Media Integrations>> section.
 ****
 
 Examples:
@@ -177,22 +196,8 @@ Favorites the 2nd person in the address book.
 Unfavorites the 3rd person in the address book.
 * `edit 4 n/Betsy Crower t/` +
 Edits the name of the 4th person to be `Betsy Crower` and clears all existing tags.
-
-=== Adding multiple fields for contacts [Coming in v2.0]
-
-Edits an existing person in the address book. +
-Format: `addf INDEX [p/PHONE]`
-
-****
-* Adds another field for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `addf 1 p/87654321` +
-Adds the phone number 87654321 to the first person.
-
+* `edit 1 s/instagram ahbeng`
+Edits the social media information of the first person to be an Instagram account with the username `ahbeng`.
 
 === Locating contacts: `find`
 
@@ -249,7 +254,7 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-==== To delete multiple persons:
+==== To delete multiple persons [Since v1.1]:
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX...`
@@ -301,40 +306,6 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Adding social media accounts to contacts
-
-==== To add a Facebook account:
-
-Adds a Facebook account with the username provided to the person identified by the index
-Format: `addfacebook INDEX USERNAME`
-
-Examples:
-
-`list` +
-`addfacebook 1 alexyeoh` +
-Adds a Facebook username 'alexyeoh' to the first person in the address book.
-
-==== To add a Instagram account:
-
-Adds an Instagram account with the username provided to the person identified by the index
-Format: `addinstagram INDEX USERNAME`
-
-Examples:
-
-`list` +
-`addinstagram 1 alexyeoh` +
-Adds an Instagram username 'alexyeoh' to the first person in the address book.
-
-==== To add a Twitter account:
-
-Adds a Twitter account with the username provided to the person identified by the index
-Format: `addtwitter INDEX USERNAME`
-
-Examples:
-
-`list` +
-`addfacebook 1 alexyeoh` +
-Adds a Twitter username 'alexyeoh' to the first person in the address book.
 
 === Listing entered commands: `history`
 
@@ -396,7 +367,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Adding display photo for a person: `addphoto` [Coming in v2.0]
+=== Adding display photo for a person [Coming in v2.0]: `addphoto`
 
 Adds a display photo for a person. +
 Format: `addphoto INDEX FILE_PATH`
@@ -424,6 +395,7 @@ Adds the specified display photo for the 1st person in the results of the `find`
 If the person already has an existing display photo, issuing this command will update it to the new photo specified.
 ====
 
+[[export-command]]
 === Exporting contact data: `export`
 
 Exports contact data to an external file. +
@@ -441,6 +413,7 @@ Examples:
 * `export /Users/seedu/Documents/exportData.xml` +
 exports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
+[[import-command]]
 === Importing contact data: `import`
 
 Imports contact data from an external file. +
@@ -458,7 +431,7 @@ Examples:
 * `import /Users/seedu/Documents/exportData.xml` +
 imports contact data to the location `/Users/seedu/Documents/exportData.xml`
 
-=== Changing theme [Coming in v2.0]
+=== Changing themes [Coming in v2.0]: `theme`
 
 Changes the theme of the program for a different look and feel. +
 Format: `theme [OPTION]`
@@ -507,21 +480,97 @@ There is no need to synchronize manually.
 Stops synchronizing of contact information with any previously configured cloud accounts. +
 Format: `unsync`
 
+[[social-media-integrations]]
+== Social Media Integrations [Since v1.2]
+
+=== Representing social media accounts using the command line
+
+Social media accounts are represented in the format `SOCIAL_TYPE USERNAME`.
+
+The social types presently supported are:
+
+* `facebook` (aliases: `fb`)
+* `instagram` (aliases: `ig`)
+
+Example:
+
+* `facebook ah.beng10` represents the Facebook account with the username `ah.beng10`.
+* `ig ahlian123` represents the Instagram account with the username `ahlian123`.
+
+=== Facebook Integration [Since v1.2]:
+
+==== Connecting to Facebook: `facebook connect`
+
+To synchronize your AddressBook with your personal Facebook account. +
+Format: `facebook connect`
+
+****
+* Launches a Facebook authorization page in the browser
+* Key in your credentials
+****
+
+==== Posting to Facebook: `facebook post`
+
+To post a status to your Facebook account. +
+Format: `facebook post STATUS`
+
+****
+* First you need to ensure your account is recognised by Facebook developers account
+* Checks if account has been authenticated
+* Posts to Facebook
+****
+
+Examples:
+
+* `facebook post helloworld` +
+posts 'helloworld' to Facebook account
+
+==== Adding all Facebook Friends [Coming in v2.0]: `facebook addallfriends`
+
+To add all your Facebook friends into your AddressBook. +
+Format: `facebook addallfriends`
+
+****
+* First ensures that Facebook has already been connected
+* Adds all the friends to AddressBook
+****
+
+
+==== Adding a Facebook contact [Coming in v2.0]: `facebook addcontact`
+
+To search for a specific Facebook User and add that User to AddressBook. +
+Format: `facebook addcontact USER_NAME`
+
+****
+* First ensures that Facebook has already been connected
+* Searches Facebook database for User
+* Prompts user to choose which contact to add
+* Adds that contact to AddressBook
+****
+
+Examples:
+
+* `facebook addcontact Barack Obama` +
+adds Facebook User named 'Barack Obama' to AddressBook
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install the application in the other computer, start it up and <<import-command, import>> the data file.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague s/facebook jamesho`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Favorite*: `fav INDEX [ADDITIONAL INDEXES] +
+e.g. `fav 1 2 3`
+* *Unfavorite*: `unfav INDEX [ADDITIONAL INDEXES] +
+e.g. `unfav 1 2 3`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -531,3 +580,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Export*: `export FILE_PATH` +
+e.g. `export /Users/seedu/Documents/exportData.xml`
+* *Import*: `import FILE_PATH` +
+e.g. `import /Users/seedu/Documents/importData.xml`
