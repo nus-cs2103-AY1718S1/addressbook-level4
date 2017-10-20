@@ -87,7 +87,7 @@ public class KeyListener {
             executeCommand(ListCommand.COMMAND_WORD);
 
         } else {
-            // do nothing
+            // no key combination matches, do nothing
         }
     }
 
