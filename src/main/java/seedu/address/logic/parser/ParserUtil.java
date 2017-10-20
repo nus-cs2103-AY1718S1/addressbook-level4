@@ -3,8 +3,11 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,6 +50,22 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code args} into an {@code List<Index>} and returns it.
+     * Used for commands that need to parse multiple indexes
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static List<Index> parseMultipleIndexes(String args) throws IllegalValueException {
+        // Example of proper args: " 1 2 3" (has a space in front) -> Hence apply trim() first then split
+        List<String> argsList = Arrays.asList(args.trim().split("\\s+")); // split by one or more whitespaces
+        List<Index> indexList = new ArrayList<>();
+
+        for (String index : argsList) {
+            indexList.add(parseIndex(index)); // Add each valid index into indexList
+        }
+        return indexList;
     }
 
     /**
