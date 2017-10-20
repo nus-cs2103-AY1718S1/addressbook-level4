@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.fail;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -17,6 +18,11 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class ModelStub implements Model {
     @Override
     public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel> duplicateParcels) {
         fail("This method should not be called.");
     }
 

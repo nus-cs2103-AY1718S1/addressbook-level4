@@ -5,7 +5,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -74,7 +76,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    /** Deletes the tag from every person in the address book */
+    /** Deletes the tag from every parcel in the address book */
     public void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException {
 
         int tagsFound = 0;
@@ -107,6 +109,24 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
         addressBook.addParcel(parcel);
+        updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
+                                           List<ReadOnlyParcel> duplicateParcels) {
+
+        for (ReadOnlyParcel parcel : parcels) {
+            ReadOnlyParcel parcelToAdd = new Parcel(parcel);
+            try {
+                addressBook.addParcel(parcelToAdd);
+                parcelsAdded.add(parcelToAdd);
+            } catch (DuplicateParcelException ive) {
+                duplicateParcels.add(parcelToAdd);
+            }
+        }
+
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         indicateAddressBookChanged();
     }
