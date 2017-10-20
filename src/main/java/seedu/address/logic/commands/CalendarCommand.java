@@ -101,7 +101,8 @@ public class CalendarCommand extends Command {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar
-        getCalendarService() throws IOException {
+
+    getCalendarService() throws IOException {
         Credential credential = authorize();
         return new com.google.api.services.calendar.Calendar.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, credential)
