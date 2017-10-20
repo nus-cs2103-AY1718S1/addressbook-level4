@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,7 +34,8 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
-    public static final String COMMAND_WORD_ABBREV = "e";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "e", "change", "modify"));
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "

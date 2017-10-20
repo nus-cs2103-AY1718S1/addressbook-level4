@@ -41,12 +41,12 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         /* Case: repeat previous find command where person list is displaying the persons we are finding
          * -> 2 persons found
          */
-        command = FindCommand.COMMAND_WORD_ALT + " " + KEYWORD_MATCHING_MEIER;
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + KEYWORD_MATCHING_MEIER;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find person where person list is not displaying the person we are finding -> 1 person found */
-        command = FindCommand.COMMAND_WORD_ABBREV + " Carl";
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " Carl";
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -58,12 +58,12 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in rolodex, 2 keywords in reversed order -> 2 persons found */
-        command = FindCommand.COMMAND_WORD_ALT + " Daniel Benson";
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " Daniel Benson";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in rolodex, 2 keywords with 1 repeat -> 2 persons found */
-        command = FindCommand.COMMAND_WORD_ABBREV + " Daniel Benson Daniel";
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " Daniel Benson Daniel";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -75,12 +75,12 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD_ABBREV;
+        command = UndoCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD_ABBREV;
+        command = RedoCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
@@ -99,7 +99,7 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find person in rolodex, keyword is substring of name -> 1 persons found */
-        command = FindCommand.COMMAND_WORD_ABBREV + " Mei";
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " Mei";
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -111,7 +111,7 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find person not in rolodex -> 0 persons found */
-        command = FindCommand.COMMAND_WORD_ABBREV + " Mark";
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " Mark";
         ModelHelper.setFilteredList(expectedModel, CARL); // Carl is two hops away from Mark
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -123,7 +123,7 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find address of person in rolodex -> 0 persons found */
-        command = FindCommand.COMMAND_WORD_ABBREV + " " + DANIEL.getAddress().value;
+        command = FindCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + DANIEL.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
