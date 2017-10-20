@@ -280,11 +280,63 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the rolodex. +
 Format: `clear` or `c`
 
+=== Opening an existing Rolodex storage file: `open` or `o`
+// TODO: add 'ls' and 'cd' abbreviations
+Reloads the application with data from a rolodex at the specified filepath. +
+Format: `open FILEPATH` or `o FILEPATH`
+
+****
+* Loads the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must be a file with xml formatted data.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be saved.
+* If `FILEPATH` does not exist, use the `new` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+[NOTE]
+====
+Opening a file without a .rldx extension will not save your changes.
+====
+
+Examples:
+
+* `open C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:\Users\Rolodex\downloads\myOwn.rldx` +
+Loads the application with the data at the directory `C:/Users/Rolodex/downloads/myOwn.rldx`.
+* `open data/default.rldx` +
+`open data\default.rldx` +
+Loads the application with the data in `default.rldx` in the folder `data`.
+
+=== Creating a new Rolodex storage file: `new` or `n`
+// TODO: add '>' abbreviation
+Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
+Format: `new FILEPATH` or `n FILEPATH`
+
+****
+* Creates the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be created and saved.
+* If `FILEPATH` already exists, use the `open` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+Examples:
+
+* `new C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:\Users\Rolodex\downloads\myOwn.rldx` +
+Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downloads` and reloads the application with sample data created for the new Rolodex.
+* `new data/default.rldx` +
+`new data\default.rldx` +
+Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
+
 === Keyboard Shortcuts
 
 A list of keyboard shortcuts is provided link:#shortcuts[here].
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` or `quit`
 
 Exits the program. +
 Format: `exit`
@@ -304,7 +356,7 @@ There is no need to save manually.
 * *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` or a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear` or `c`
-* *Delete* : `delete INDEX` or `d INDEX`+
+* *Delete* : `delete INDEX` or `d INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
@@ -318,6 +370,11 @@ e.g.`select 2`
 * *History* : `history` or `his` or `past`
 * *Undo* : `undo` or `u`
 * *Redo* : `redo` or `r`
+* *Open* : `open FILEPATH` or `o FILEPATH` +
+e.g. `open data/default.rldx` or `o D:\someDirectory\some.rldx`
+* *New* : `new FILEPATH` or `n FILEPATH` +
+e.g. `new data/default.rldx` or `n D:\someDirectory\some.rldx`
+* *Exit* : `exit` or `quit`
 
 // tag::shortcut[]
 == Keyboard Shortcuts

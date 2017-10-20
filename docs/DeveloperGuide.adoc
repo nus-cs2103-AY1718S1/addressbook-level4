@@ -72,6 +72,20 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
+==== Configuring Rolodex `.rldx` extensions
+
+Rolodex files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
+
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+. Select `Editor` > `File Types`
+. Under `Recognized File Types`, highlight the `XML` option
+. In the lower tab under registered patterns, click `+` on the side. A new prompt should appear as seen in the picture below
+. Enter `.rldx` and click `ok`, then click `apply`
+
+image::RegisterRldx.png[width="600"]
+
+You are now configured to use `.rldx` files with intellij.
+
 ==== Updating documentation to match your fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
@@ -816,7 +830,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 
 . Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `rolodex.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `default.rldx` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -828,7 +842,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `validRolodex.xml` such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `validRolodex.rldx` such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
