@@ -125,5 +125,7 @@ public class KeyListener {
      * Deletes the selected contact
      * TODO: Implement deletion at selected contact
      */
-    private void deleteSelectedContact() {}
+    private String deleteSelectedContact() {
+        return null;
+    }
 }
