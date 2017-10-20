@@ -69,6 +69,20 @@ Examples:
 * `add n/Rob Cross p/92456877 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding multiple phone number fields for contacts
+
+Adds a contact with multiple phone number fields. +
+Format: `add n/NAME p/PHONE p/87654321 e/EMAIL a/ADDRESS`
+
+****
+* Adds two phone number fields for the person.
+* If there are valid phone numbers as well as invalid phone numbers entered, the valid phone numbers will be added and the invalid phone numbers will not be added to the contact.
+****
+
+Examples:
+
+* `add n/John Doe p/98765432 p/87654321 e/johnd@example.com a/John street, block 123, #01-01`
+
 === Favoriting contacts: `fav`
 
 Adds the specified person(s) into a list of favorite contacts. +
@@ -177,22 +191,6 @@ Favorites the 2nd person in the address book.
 Unfavorites the 3rd person in the address book.
 * `edit 4 n/Betsy Crower t/` +
 Edits the name of the 4th person to be `Betsy Crower` and clears all existing tags.
-
-=== Adding multiple fields for contacts [Coming in v2.0]
-
-Edits an existing person in the address book. +
-Format: `addf INDEX [p/PHONE]`
-
-****
-* Adds another field for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `addf 1 p/87654321` +
-Adds the phone number 87654321 to the first person.
-
 
 === Locating contacts: `find`
 
@@ -507,6 +505,61 @@ There is no need to synchronize manually.
 Stops synchronizing of contact information with any previously configured cloud accounts. +
 Format: `unsync`
 
+== Facebook Integration [Coming in v2.0]:
+
+=== Connecting to Facebook: `facebook connect`
+
+To synchronize your AddressBook with your personal Facebook account. +
+Format: `facebook connect`
+
+****
+* Launches a Facebook authorization page in the browser
+* Key in your credentials
+****
+
+=== Posting to Facebook: `facebook post`
+
+To post a status to your Facebook account. +
+Format: `facebook post STATUS`
+
+****
+* First you need to ensure your account is recognised by Facebook developers account
+* Checks if account has been authenticated
+* Posts to Facebook
+****
+
+Examples:
+
+* `facebook post helloworld` +
+posts 'helloworld' to Facebook account
+
+=== Adding all Facebook Friends: `facebook addallfriends`
+
+To add all your Facebook friends into your AddressBook. +
+Format: `facebook addallfriends`
+
+****
+* First ensures that Facebook has already been connected
+* Adds all the friends to AddressBook
+****
+
+
+=== Adding a Facebook contact: `facebook addcontact`
+
+To search for a specific Facebook User and add that User to AddressBook. +
+Format: `facebook addcontact USER_NAME`
+
+****
+* First ensures that Facebook has already been connected
+* Searches Facebook database for User
+* Prompts user to choose which contact to add
+* Adds that contact to AddressBook
+****
+
+Examples:
+
+* `facebook addcontact Barack Obama` +
+adds Facebook User named 'Barack Obama' to AddressBook
 
 == FAQ
 
