@@ -10,10 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ParticipantList;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.*;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
@@ -28,7 +25,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class AddressBook implements ReadOnlyAddressBook, ReadOnlyEventStorage {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
