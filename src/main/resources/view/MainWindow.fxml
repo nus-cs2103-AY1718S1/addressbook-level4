@@ -39,19 +39,29 @@
   </StackPane>
    <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4860335195530726, 0.5251396648044693" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
-
-    <StackPane fx:id="browserPlaceholder" prefHeight="145.0" prefWidth="340">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-    </StackPane>
+      <SplitPane dividerPositions="0.10176991150442478" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+        <items>
+      
+                            <StackPane prefHeight="145.0" prefWidth="340">
+            <padding>
+              <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+          </StackPane>
+            <VBox fx:id="pinList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+        </items>
+      </SplitPane>
+      <StackPane fx:id="browserPlaceholder" maxHeight="800.0" maxWidth="1250.0" minHeight="800.0" minWidth="1250.0" prefHeight="800.0" prefWidth="471.0" />
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
