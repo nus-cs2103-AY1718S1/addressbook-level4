@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import static seedu.address.commons.util.StringUtil.replaceBackslashes;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -50,5 +52,12 @@ public class TestUtil {
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getRolodex().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns a random file path with supplied extension in the sandbox folder.
+     */
+    public static String generateRandomSandboxDirectory(String extension) {
+        return replaceBackslashes(getFilePathInSandboxFolder(Double.toString(Math.random()).concat(extension)));
     }
 }

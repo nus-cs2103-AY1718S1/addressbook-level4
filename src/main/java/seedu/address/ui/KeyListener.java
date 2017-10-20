@@ -1,36 +1,47 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
+import static seedu.address.ui.util.KeyListenerUtil.CLEAR;
+import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST;
+import static seedu.address.ui.util.KeyListenerUtil.HISTORY;
+import static seedu.address.ui.util.KeyListenerUtil.LIST;
+import static seedu.address.ui.util.KeyListenerUtil.REDO;
+import static seedu.address.ui.util.KeyListenerUtil.UNDO;
+
 import java.util.logging.Logger;
 
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.ui.util.KeyListenerUtil;
 
 /**
  * Listens to key events in the main window.
  */
 public class KeyListener {
-    private static HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Logic logic;
-    private MainWindow mainWindow;
+    private Region mainNode;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
 
-    public KeyListener(Logic logic, MainWindow mainWindow, PersonListPanel personListPanel,
+    public KeyListener(Logic logic, Region mainNode, PersonListPanel personListPanel,
                        CommandBox commandBox) {
         this.logic = logic;
-        this.mainWindow = mainWindow;
+        this.mainNode = mainNode;
         this.personListPanel = personListPanel;
         this.commandBox = commandBox;
     }
@@ -39,7 +50,7 @@ public class KeyListener {
      * Handles key press events
      */
     public void handleKeyPress() {
-        mainWindow.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             commandBox.setStyleToDefault();
             executeKeyEvent(event);
         });
@@ -51,35 +62,32 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        // Execute key events for non-command events
-        if (keys.get("FOCUS_PERSON_LIST").match(keyEvent)) {
+        if (FOCUS_PERSON_LIST.match(keyEvent)) {
             personListPanel.setFocus();
 
-        } else if (keys.get("FOCUS_COMMAND_BOX").match(keyEvent)) {
+        } else if (FOCUS_COMMAND_BOX.match(keyEvent)) {
             commandBox.setFocus();
 
-        } else if (keys.get("DELETE_SELECTION").match(keyEvent)) {
-            // TODO: add support for deletion at selected list
-            // Dummy action
-            personListPanel.setFocus();
+        } else if (DELETE_SELECTION.match(keyEvent)) {
+            deleteSelectedContact();
+
+        } else if (CLEAR.match(keyEvent)) {
+            executeCommand(ClearCommand.COMMAND_WORD);
+
+        } else if (HISTORY.match(keyEvent)) {
+            executeCommand(HistoryCommand.COMMAND_WORD);
+
+        } else if (UNDO.match(keyEvent)) {
+            executeCommand(UndoCommand.COMMAND_WORD);
+
+        } else if (REDO.match(keyEvent)) {
+            executeCommand(RedoCommand.COMMAND_WORD);
+
+        } else if (LIST.match(keyEvent)) {
+            executeCommand(ListCommand.COMMAND_WORD);
 
         } else {
-            // Execute key events for command words
-            executeCommandKeyEvents(keyEvent);
-        }
-    }
-
-    /**
-     * Executes {@code keyEvent} for command words by searching for mapped keys in HashMap {@code keys}
-     */
-    private void executeCommandKeyEvents(KeyEvent keyEvent) {
-        for (HashMap.Entry<String, KeyCombination> key: keys.entrySet()) {
-            KeyCombination keyCombination = key.getValue();
-            String command = key.getKey();
-
-            if (keyCombination.match(keyEvent)) {
-                executeCommand(command);
-            }
+            // no key combination matches, do nothing
         }
     }
 
@@ -111,5 +119,13 @@ public class KeyListener {
      */
     private void raise(BaseEvent event) {
         EventsCenter.getInstance().post(event);
+    }
+
+    /**
+     * Deletes the selected contact
+     * TODO: Implement deletion at selected contact
+     */
+    private String deleteSelectedContact() {
+        return null;
     }
 }

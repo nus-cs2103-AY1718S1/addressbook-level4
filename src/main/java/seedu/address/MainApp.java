@@ -14,6 +14,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.storage.OpenRolodexRequestEvent;
+import seedu.address.commons.events.storage.RolodexChangedDirectoryEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -73,6 +75,25 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+    }
+
+    /**
+     * Reloads the current Rolodex application with new data at the specified filePath.
+     * @param newRolodexPath string path of the new Rolodex to be loaded.
+     * @throws IOException if unable to save the new filePath into the user preferences
+     */
+    public void loadNewRolodexPath(String newRolodexPath) throws IOException {
+        userPrefs.setRolodexFilePath(newRolodexPath);
+        storage.saveUserPrefs(userPrefs);
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        RolodexStorage rolodexStorage = new XmlRolodexStorage(userPrefs.getRolodexFilePath());
+
+        storage.setNewRolodexStorage(rolodexStorage);
+        Model modelToBeLoaded = initModelManager(storage, userPrefs);
+        model.resetData(modelToBeLoaded.getRolodex());
+        EventsCenter.getInstance().post(new RolodexChangedDirectoryEvent(newRolodexPath));
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -198,6 +219,30 @@ public class MainApp extends Application {
         }
         Platform.exit();
         System.exit(0);
+    }
+
+    @Subscribe
+    public void handleOpenNewRolodexRequestEvent(OpenRolodexRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String savedRolodexFilePath = userPrefs.getRolodexFilePath();
+        try {
+            loadNewRolodexPath(event.getFilePath());
+        } catch (IOException e) {
+            logger.severe("Failed to save preferences, reverting to previous Rolodex " + StringUtil.getDetails(e));
+            loadPreviousRolodex(savedRolodexFilePath);
+        }
+    }
+
+    /**
+     * Loads the previous Rolodex into the current application and updates the userprefs.
+     */
+    private void loadPreviousRolodex(String savedFilePath) {
+        try {
+            loadNewRolodexPath(savedFilePath);
+        } catch (Exception e) {
+            logger.severe("Failed to initialize previous Rolodex, stopping program " + StringUtil.getDetails(e));
+            this.stop();
+        }
     }
 
     @Subscribe

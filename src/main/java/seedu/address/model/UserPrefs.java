@@ -10,7 +10,7 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String rolodexFilePath = "data/rolodex.xml";
+    private String rolodexFilePath = "data/default.rldx";
     private String rolodexName = "MyRolodex";
 
     public UserPrefs() {

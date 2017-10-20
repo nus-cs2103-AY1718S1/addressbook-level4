@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -107,6 +110,8 @@ public class RolodexParserTest {
     @Test
     public void parseCommandList() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+        assertTrue(parser.parseCommand(
+                ListCommand.COMMAND_WORD + " " + SORT_ARGUMENT_NAME_DESCENDING) instanceof ListCommand);
     }
 
     @Test
@@ -114,6 +119,22 @@ public class RolodexParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandOpen() throws Exception {
+        String validRolodexFile = "valid/filePath/valid.rldx";
+        OpenCommand command = (OpenCommand) parser.parseCommand(
+                OpenCommand.COMMAND_WORD + " " + validRolodexFile);
+        assertEquals(new OpenCommand(validRolodexFile), command);
+    }
+
+    @Test
+    public void parseCommandNew() throws Exception {
+        String validRolodexFile = "valid/filePath/valid.rldx";
+        NewCommand command = (NewCommand) parser.parseCommand(
+                NewCommand.COMMAND_WORD + " " + validRolodexFile);
+        assertEquals(new NewCommand(validRolodexFile), command);
     }
 
     @Test

@@ -100,4 +100,8 @@ public class StringUtil {
     public static String apppendCrotchets(String s) {
         return "[" + s + "]";
     }
+
+    public static String replaceBackslashes(String s) {
+        return s.replace('\\', '/');
+    }
 }

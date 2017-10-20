@@ -77,6 +77,15 @@ public class StorageManager extends ComponentManager implements Storage {
         rolodexStorage.saveRolodex(rolodex, filePath);
     }
 
+    @Override
+    public RolodexStorage getExistingRolodexStorage() {
+        return rolodexStorage;
+    }
+
+    @Override
+    public void setNewRolodexStorage(RolodexStorage newRolodexStorage) {
+        rolodexStorage = newRolodexStorage;
+    }
 
     @Override
     @Subscribe
@@ -87,6 +96,26 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    //=========== State accessor =============================================================
+
+    @Override
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof StorageManager)) {
+            return false;
+        }
+
+        // state check
+        StorageManager other = (StorageManager) obj;
+        return rolodexStorage.equals(other.rolodexStorage)
+                && userPrefsStorage.equals(other.userPrefsStorage);
     }
 
 }
