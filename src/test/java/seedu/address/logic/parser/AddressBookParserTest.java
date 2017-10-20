@@ -91,8 +91,10 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_ungroup() throws Exception {
-        UngroupCommand command = (UngroupCommand) parser.parseCommand(UngroupCommand.COMMAND_WORD);
-        assertTrue(command instanceof UngroupCommand);
+        final String group = "Some group";
+        UngroupCommand command = (UngroupCommand) parser.parseCommand(UngroupCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + group);
+        assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
     }
 
     @Test

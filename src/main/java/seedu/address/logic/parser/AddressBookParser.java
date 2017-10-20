@@ -65,7 +65,7 @@ public class AddressBookParser {
             return new GroupCommandParser().parse(arguments);
 
         case UngroupCommand.COMMAND_WORD:
-            return new UngroupCommand();
+            return new UngroupCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
