@@ -5,22 +5,12 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-<<<<<<< HEAD
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
-=======
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.predicates.FavourListPredicate;
->>>>>>> master
 
 
 /**
@@ -39,9 +29,6 @@ public interface Model {
     /** Get a predicate for filtering favourList */
     FavouriteListPredicate getFavouriteListPredicate();
 
-    /** Get a predicate for filtering favourList */
-    FavourListPredicate getFavourListPredicate();
-
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -51,16 +38,8 @@ public interface Model {
     /** Deletes the given lesson. */
     void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException;
 
-<<<<<<< HEAD
     /** Deletes the given list of lessons. */
     void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException;
-=======
-    /** Collects the given person. */
-    void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException;
-
-    /** Deletes the given list of person. */
-    void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException;
->>>>>>> master
 
     /** Adds the given lesson */
     void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
@@ -91,8 +70,5 @@ public interface Model {
      * handle different ListingUnit after redo and undo
      */
     void handleListingUnit();
-
-
-
 
 }

@@ -14,4 +14,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_TIME_SLOT = new Prefix("ts/");
     public static final Prefix PREFIX_LECTURER = new Prefix("l/");
     public static final Prefix PREFIX_FONT_SIZE = new Prefix("fs/");
+
 }

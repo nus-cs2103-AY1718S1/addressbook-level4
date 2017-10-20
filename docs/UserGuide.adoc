@@ -54,8 +54,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-image::help.png[width="900"]
-
 === Adding a person: `add`
 
 Adds a lesson to the ModU +
@@ -69,44 +67,13 @@ Examples:
 * `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun`
 * `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong WEng Fa l/Suppiah `
 
-image::add.png[width="900"]
-
 === Listing all persons : `list`
 
 Shows a list of all modules in the ModU. +
 Format: `list module`
 
-<<<<<<< HEAD
 Shows a list of all location in the ModU. +
 Format: `List location`
-=======
-image::list all.png[width="900"]
-
-Shows a list of all distinct addresses of all persons in the address book. +
-Format: `List address`
-
-image::list address.png[width="900"]
-
-Shows a list of all distinct emails of all persons in the address book. +
-Format: `List email`
-
-image::list email.png[width="900"]
-
-Shows a list of all distinct phones of all persons in the address book. +
-Format: `List phone`
->>>>>>> master
-
-image::list phone.png[width="900"]
-
-Shows a list all persons in the favourite list. +
-
-Format: `List collection`
-
-=== Collect a person into favourite list : `collect`
-
-Adds an existing person into the favourite list. +
-Format: `collect 1`
-
 
 === View all persons with the specified attribute: `view`
 
@@ -126,9 +93,6 @@ View the detail information with the second index shown in the module list.
 `view 2` +
 View the detail information with the second index shown in the location list.
 
-image::view 1.png[width="900"]
-
-image::view 2.png[width="900"]
 === Editing a person : `edit`
 
 Edits an existing lesson in the ModU. +
@@ -157,11 +121,8 @@ Edits the module code and location of the 1st lesson to be `CS2101` and `LT19` r
 * `edit 3 LT27` +
 Edits all the lessons with the third location shown in the location list to be `LT27` (Assume user types `list locaiton` first).
 
-image::edit 1.png[width="900"]
+=== Locating persons by name: `find`
 
-image::edit 2.png[width="900"]
-
-<<<<<<< HEAD
 Finds lessons whose code contain the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -171,96 +132,37 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only the code is searched.
 * Only full module code will be matched e.g. `MA1101` will not match `MA1101R`
 * Lessons matching at least one keyword will be returned (i.e. `OR` search). e.g. `MA1101R CS2101` will return `MA1101R`
-=======
-=== Locating persons by attributes: `find`
-
-Finds persons whose names, address, email, phone number contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* All attributes names, address, email and phone number are searched.
-* Attributes name and address only full words will be matched e.g. `Han` will not match `Hans`
-* Attributes phone number and email given part of the full word will be matched e.g. `999` will match `91059999`
-* If list command with a specific attribute was called prior, only the word or sentences of that specific attribute will
-be consider for the find, or else it will take the words or sentences of all attributes for find,
-Please refer below for example.
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
->>>>>>> master
 ****
 
 Examples:
 
-<<<<<<< HEAD
 * `find MA1101R` +
 Returns `MA1101R`
 * `find MA1101R CS2101` +
 Returns module having code `Betsy`, `Tim`, or `John`
-=======
-* `list` +
-`find 999` +
-Return any name or address that contain the full word `999` and return any phone number or email that contain `999` word
-in their email and phone number
-* `list email` +
-`find tianlan` +
-Returns any email contain `tianlan` word in the emails
 
-image::find address 1.png[width="900"]
+=== Locating persons by name: `sort`
 
-image::find address 2.png[width="900"]
+ Sort the existing list. +
+ Format: `sort KEYWORD`
 
-=== Sorting persons by attributes: `sort`
+ ****
+ * The sort command will sort the list according to its current listed attribute
+ * If the list was not listed in any attribute, it will be sorted by name of the person by default
+ ****
 
-Sort the existing list. +
-Format: `sort KEYWORD`
->>>>>>> master
+ Examples:
 
-****
-* The sort command will sort the list according to its current listed attribute
-* If the list was not listed in any attribute, it will be sorted by name of the person by default
-****
+ * `list address` +
+ Returns a list of addresses +
+ `sort` +
+ Return a list of addresses sorted lexicographically
 
-Examples:
+ * `list` +
+ Returns whole list +
+ `sort` +
+ Return a list sorted by name lexicographically
 
-* `list address` +
-Returns a list of addresses +
-`sort` +
-Return a list of addresses sorted lexicographically
-
-* `list` +
-Returns whole list +
-`sort` +
-Return a list sorted by name lexicographically
-
-image::sort 1.png[width="900"]
-
-image::sort 2.png[width="900"]
-
-=== Highlighting keywords: `color`
-
-Highlight the command keywords. +
-Format: `color enable/disable`
-
-****
-* The color command will either enable or disable the coloring of command keywords in the command box.
-****
-
-Examples:
-
-* `color enable` +
-All command keywords will be highlighted +
-
-* `color disable` +
-All command keywords will not be highlighted +
-
-image::color enable 1.png[width="900"]
-
-image::color enable 2.png[width="900"]
-
-image::disable 1.png[width="900"]
-
-image::disable 2.png[width="900"]
 
 === Deleting a person : `delete`
 
@@ -296,9 +198,6 @@ Deletes the 1st person in the results of the `find` command.
 `delete 2` +
 Deletes all the persons who with the second address value shown in the address list.
 
-image::delete 1.png[width="900"]
-
-image::delete 2.png[width="900"]
 
 === Selecting a person : `select`
 
@@ -320,10 +219,6 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-image::select 1.png[width="900"]
-
-image::select 2.png[width="900"]
-
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -333,10 +228,6 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
-
-image::history 1.png[width="900"]
-
-image::history 2.png[width="900"]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -365,10 +256,6 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-image::undo 1.png[width="900"]
-
-image::undo 2.png[width="900"]
-
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
@@ -392,18 +279,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-image::find address 1.png[width="900"]
-
-image::find address 2.png[width="900"]
-
 === Clearing all entries : `clear`
 
 Clears all entries from the ModU. +
 Format: `clear`
-
-image::clear 1.png[width="900"]
-
-image::clear 2.png[width="900"]
 
 === Exiting the program : `exit`
 
@@ -424,7 +303,6 @@ Examples:
 * `customise fs\small`
 * `customise fs\xlarge`
 
-<<<<<<< HEAD
 === Highlighting keywords : `color`
 
 Highlight the command keywords. +
@@ -434,11 +312,6 @@ Examples:
 
 * `color enable`
 * `color disable`
-=======
-image::customise 1.png[width="900"]
-
-image::customise 2.png[width="900"]
->>>>>>> master
 
 === Saving the data
 

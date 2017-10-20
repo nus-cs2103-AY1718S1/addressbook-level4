@@ -17,7 +17,6 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-<<<<<<< HEAD
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.Location;
@@ -25,18 +24,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.*;
-=======
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.predicates.FavourListPredicate;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueEmailPredicate;
-import seedu.address.model.person.predicates.UniquePhonePredicate;
->>>>>>> master
 
 /**
  * Represents the in-memory model of the address book data.
@@ -49,8 +36,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyLesson> filteredLessons;
     private final HashSet<ReadOnlyLesson> favouriteList;
 
-    private final HashSet<ReadOnlyPerson> favourList;
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -61,14 +46,9 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-<<<<<<< HEAD
         filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         favouriteList = new HashSet<ReadOnlyLesson>();
-=======
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        favourList = new HashSet<ReadOnlyPerson>();
->>>>>>> master
     }
 
     public ModelManager() {
@@ -110,11 +90,6 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     @Override
-    public FavourListPredicate getFavourListPredicate() {
-        return new FavourListPredicate(favourList);
-    }
-
-    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         indicateAddressBookChanged();
@@ -137,20 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-<<<<<<< HEAD
     public synchronized void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
-=======
-    public void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException {
-        if (!favourList.contains(target)) {
-            favourList.add(target);
-        } else {
-            throw new DuplicatePersonException();
-        }
-    }
-
-    @Override
-    public synchronized void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException {
->>>>>>> master
 
         for (ReadOnlyLesson lesson : lessonList) {
             addressBook.removeLesson(lesson);

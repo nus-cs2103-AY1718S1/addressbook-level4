@@ -13,7 +13,8 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sort list by given single attribute "
             + "the specified attribute (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Example: " + COMMAND_WORD;
+            + "Parameters: ATTRIBUTE\n"
+            + "Example: " + COMMAND_WORD + " name";
 
     public static final String MESSAGE_SORT_LESSON_SUCCESS = "List sorted successfully";
 

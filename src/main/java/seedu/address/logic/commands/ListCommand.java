@@ -10,18 +10,11 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 
 import seedu.address.model.ListingUnit;
-<<<<<<< HEAD
 import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 
-=======
-import seedu.address.model.person.predicates.FavourListPredicate;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueEmailPredicate;
-import seedu.address.model.person.predicates.UniquePhonePredicate;
->>>>>>> master
 
 
 /**
@@ -33,7 +26,6 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all locations or all module codes and "
             + "displays them as a list with index numbers.\n"
-<<<<<<< HEAD
             + "Parameters: module/location/favouriteList\n"
             + "Example: " + COMMAND_WORD + " module";
 
@@ -44,21 +36,6 @@ public class ListCommand extends Command {
     public static final String FAVOURITE_LIST_KEYWORD = "favouriteList";
 
     private final String parameter;
-=======
-            + "Parameters: address/email/phone/collection\n"
-            + "Example: " + COMMAND_WORD + " address";
-
-    public static final String MESSAGE_SUCCESS = "Listed all %1$s";
-
-    public static final String DEFAULT_LISTING_ELEMENT = "Persons";
-    public static final String ATTRIBUTE_ADDRESS = "address";
-    public static final String ATTRIBUTE_COLLECTION = "collection";
-    public static final String ATTRIBUTE_EMAIL = "email";
-    public static final String ATTRIBUTE_PHONE = "phone";
-
-
-    private final String attName;
->>>>>>> master
 
     public ListCommand(String attributeName) {
         this.parameter = attributeName;
@@ -67,7 +44,6 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
 
-<<<<<<< HEAD
         if (parameter.equals(MODULE_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(MODULE);
             UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
@@ -83,34 +59,6 @@ public class ListCommand extends Command {
         } else {
             assert false : "There cannot be other parameters passed in";
             return null;
-=======
-        switch (attName) {
-
-        case ATTRIBUTE_ADDRESS:
-            ListingUnit.setCurrentListingUnit(ADDRESS);
-            UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-            return executeListByAttribute(addressPredicate);
-
-        case ATTRIBUTE_EMAIL:
-            ListingUnit.setCurrentListingUnit(EMAIL);
-            UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
-            return executeListByAttribute(emailPredicate);
-
-        case ATTRIBUTE_PHONE:
-            ListingUnit.setCurrentListingUnit(PHONE);
-            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
-            return executeListByAttribute(phonePredicate);
-
-        case ATTRIBUTE_COLLECTION:
-            ListingUnit.setCurrentListingUnit(PERSON);
-            FavourListPredicate favourListPredicate = model.getFavourListPredicate();
-            return executeListByAttribute(favourListPredicate);
-
-        default:
-            ListingUnit.setCurrentListingUnit(PERSON);
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
->>>>>>> master
         }
     }
 

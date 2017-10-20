@@ -72,7 +72,6 @@ public class ParserUtil {
         return fontSize.isPresent() ? Optional.of(new FontSize(fontSize.get())) : Optional.empty();
     }
 
-
     /**
      * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

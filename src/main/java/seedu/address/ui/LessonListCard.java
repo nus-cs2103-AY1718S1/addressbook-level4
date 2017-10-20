@@ -61,12 +61,10 @@ public class LessonListCard extends UiPart<Region> {
         initLecturers(lesson);
         bindListeners(lesson);
         registerAsAnEventHandler(this);
-        ListingUnit currentListingUnit = ListingUnit.getCurrentListingUnit();
+        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
         FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
         setFontSizeUnit(currFontSize);
-        setListingUnit(currentListingUnit);
 
-<<<<<<< HEAD:src/main/java/seedu/address/ui/LessonListCard.java
         switch (currentUnit) {
         case LOCATION:
             switchToLocationCard();
@@ -80,8 +78,6 @@ public class LessonListCard extends UiPart<Region> {
             switchToLessonCard();
 
         }
-=======
->>>>>>> master:src/main/java/seedu/address/ui/PersonCard.java
     }
 
     /**
@@ -198,18 +194,11 @@ public class LessonListCard extends UiPart<Region> {
     private void setFontSizeHelper(String fontSize) {
         code.setStyle("-fx-font-size: " + fontSize + ";");
         id.setStyle("-fx-font-size: " + fontSize + ";");
-<<<<<<< HEAD:src/main/java/seedu/address/ui/LessonListCard.java
         venue.setStyle("-fx-font-size: " + fontSize + ";");
         classType.setStyle("-fx-font-size: " + fontSize + ";");
         timeSlot.setStyle("-fx-font-size: " + fontSize + ";");
         group.setStyle("-fx-font-size: " + fontSize + ";");
         lecturers.setStyle("-fx-font-size: " + fontSize + ";");
-=======
-        phone.setStyle("-fx-font-size: " + fontSize + ";");
-        address.setStyle("-fx-font-size: " + fontSize + ";");
-        email.setStyle("-fx-font-size: " + fontSize + ";");
-        tags.getChildren().forEach(node -> node.setStyle("-fx-font-size: " + fontSize + ";"));
->>>>>>> master:src/main/java/seedu/address/ui/PersonCard.java
     }
 
     private void setFontSizeUnit(FontSizeUnit currFontSizeUnit) {
@@ -236,24 +225,6 @@ public class LessonListCard extends UiPart<Region> {
 
         default:
             break;
-        }
-    }
-
-    private void setListingUnit(ListingUnit currentUnit) {
-        switch (currentUnit) {
-        case ADDRESS:
-            switchToAddressCard();
-            break;
-
-        case EMAIL:
-            switchToEmailCard();
-            break;
-
-        case PHONE:
-            switchToPhoneCard();
-            break;
-
-        default:
         }
     }
 
