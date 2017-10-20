@@ -10,9 +10,11 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
-import seedu.address.model.relationship.UniqueRelationshipList;
 import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.UniqueRelationshipList;
+
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
+
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 

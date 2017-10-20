@@ -1,19 +1,24 @@
 package seedu.address.model.relationship;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.person.exceptions.RelationshipNotFoundException;
-import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
+/**
+ * A list of relationships that enforces no nulls and uniqueness between its elements.
+ *
+ * Supports minimal set of list operations for the app's features.
+ *
+ * @see Relationship#equals(Object)
+ */
 public class UniqueRelationshipList implements Iterable<Relationship> {
 
     private final ObservableList<Relationship> internalList = FXCollections.observableArrayList();
@@ -73,19 +78,6 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
     }
 
     /**
-     * If the tag name is valid and the tag present in the list.
-     * @param relationshipID
-     * @return the index of the tag in the list
-     * @throws IllegalValueException
-     */
-
-    public int indexOfRelationshipWithRelationshipID(String relationshipID) throws IllegalValueException {
-        requireNonNull(relationshipID);
-        Relationship temp = new Relationship(relationshipID);
-        return internalList.indexOf(temp);
-    }
-
-    /**
      * Adds a Relationship to the list.
      * @throws DuplicateRelationshipException if the Relationship to add is a duplicate
      * of an existing Relationship in the list.
@@ -98,23 +90,6 @@ public class UniqueRelationshipList implements Iterable<Relationship> {
         internalList.add(toAdd);
 
         assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Remove a Relationship from the list. The Relationship is identified by its ID.
-     *
-     * throws RelationshipNotFoundException if the Relationship to remove is not found in the list.
-     * throws IllegalValueException if the Relationship name input is invalid.
-     */
-    public Relationship removeRelationship(String relationshipGettingRemoved) throws RelationshipNotFoundException,
-            IllegalValueException {
-        requireNonNull(relationshipGettingRemoved);
-        int relationshipIndexInList = indexOfRelationshipWithRelationshipID(relationshipGettingRemoved);
-        if (relationshipIndexInList == -1) {
-            throw new RelationshipNotFoundException("Relationship is not found.");
-        } else {
-            return internalList.remove(relationshipIndexInList);
-        }
     }
 
     /**

@@ -2,13 +2,16 @@ package seedu.address.model.graph;
 
 import static java.util.Objects.requireNonNull;
 
-import javafx.collections.ObservableList;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
+
+import javafx.collections.ObservableList;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 
 
@@ -18,6 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class GraphWrapper {
 
+    public static final String MESSAGE_PERSON_DOESNOT_EXIST = "The person does not exist in this address book.";
+
     private SingleGraph graph;
     private final Model model;
     private final ObservableList<ReadOnlyPerson> filteredPersons;
@@ -25,8 +30,6 @@ public class GraphWrapper {
 
     private final String nodeAttributePersonName = "PersonName";
     private final String nodeAttributePerson = "Person";
-
-    private final String MESSAGE_PERSON_DOESNOT_EXIST = "The person does not exist in this address book.";
 
     public GraphWrapper(Model model) {
         this.graph = new SingleGraph(graphId);
@@ -42,7 +45,7 @@ public class GraphWrapper {
     private SingleGraph initiateGraphNodes() {
         try {
             for (ReadOnlyPerson person : filteredPersons) {
-                SingleNode node = graph.addNode(getNodeIDFromPerson(person));
+                SingleNode node = graph.addNode(getNodeIdFromPerson(person));
                 node.addAttribute(nodeAttributePersonName, person.getName());
                 node.addAttribute(nodeAttributePerson, person);
             }
@@ -53,7 +56,7 @@ public class GraphWrapper {
         return graph;
     }
 
-    private String getNodeIDFromPerson(ReadOnlyPerson person) throws IllegalValueException {
+    private String getNodeIdFromPerson(ReadOnlyPerson person) throws IllegalValueException {
         requireNonNull(person);
         int indexOfThePerson = filteredPersons.indexOf(person);
         if (indexOfThePerson == -1) {
@@ -66,7 +69,7 @@ public class GraphWrapper {
     /**
      * fix the format of edge ID
      */
-    private String computeEdgeID(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+    private String computeEdgeId(ReadOnlyPerson person1, ReadOnlyPerson person2) {
         return  Integer.toString(filteredPersons.indexOf(person1)) + "_"
                 + Integer.toString(filteredPersons.indexOf(person2));
     }
@@ -78,19 +81,19 @@ public class GraphWrapper {
      * @return the directed edge from fromPerson to toPerson
      */
     private Edge addDirectedEdge(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson) {
-        String designatedEdgeID = computeEdgeID(fromPerson, toPerson);
-        Edge previousEdge = graph.getEdge(designatedEdgeID);
+        String designatedEdgeId = computeEdgeId(fromPerson, toPerson);
+        Edge previousEdge = graph.getEdge(designatedEdgeId);
         if (previousEdge != null && !previousEdge.isDirected()) {
             graph.removeEdge(previousEdge);
         }
         try {
-            graph.addEdge(designatedEdgeID, getNodeIDFromPerson(fromPerson),
-                    getNodeIDFromPerson(toPerson), true);
+            graph.addEdge(designatedEdgeId, getNodeIdFromPerson(fromPerson),
+                    getNodeIdFromPerson(toPerson), true);
         } catch (IllegalValueException ive) {
             assert false : "it should not happen.";
         }
 
-        return graph.getEdge(designatedEdgeID);
+        return graph.getEdge(designatedEdgeId);
     }
 
     /**
@@ -99,10 +102,10 @@ public class GraphWrapper {
      * @return the undirected edge between firstPerson and secondPerson
      */
     private Edge addUndirectedEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson) {
-        String designatedEdgeID1 = computeEdgeID(firstPerson, secondPerson);
-        Edge previousEdge1 = graph.getEdge(designatedEdgeID1);
-        String designatedEdgeID2 = computeEdgeID(secondPerson, firstPerson);
-        Edge previousEdge2 = graph.getEdge(designatedEdgeID2);
+        String designatedEdgeId1 = computeEdgeId(firstPerson, secondPerson);
+        Edge previousEdge1 = graph.getEdge(designatedEdgeId1);
+        String designatedEdgeId2 = computeEdgeId(secondPerson, firstPerson);
+        Edge previousEdge2 = graph.getEdge(designatedEdgeId2);
         if (previousEdge1 != null && previousEdge1.isDirected()) {
             graph.removeEdge(previousEdge1);
         }
@@ -110,13 +113,13 @@ public class GraphWrapper {
             graph.removeEdge(previousEdge2);
         }
         try {
-            graph.addEdge(designatedEdgeID1, getNodeIDFromPerson(firstPerson),
-                    getNodeIDFromPerson(secondPerson), false);
+            graph.addEdge(designatedEdgeId1, getNodeIdFromPerson(firstPerson),
+                    getNodeIdFromPerson(secondPerson), false);
         } catch (IllegalValueException ive) {
             assert false : "it should not happen.";
         }
 
-        return graph.getEdge(designatedEdgeID1);
+        return graph.getEdge(designatedEdgeId1);
     }
 
     private SingleGraph initiateGraphEdges() {

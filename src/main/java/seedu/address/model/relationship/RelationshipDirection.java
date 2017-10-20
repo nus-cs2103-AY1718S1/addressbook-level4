@@ -1,11 +1,14 @@
 package seedu.address.model.relationship;
 
+/**
+ * This class defines the direction of relationships for Relationship class
+ */
 public enum RelationshipDirection {
 
     UNDIRECTED("undirected"),
     DIRECTED("directed");
 
-    public final String directed = "directed";
+    private final String directed = "directed";
     private String direction;
 
     RelationshipDirection(String direction) {
@@ -18,9 +21,5 @@ public enum RelationshipDirection {
 
     public boolean isDirected() {
         return this.direction.equals(directed);
-    }
-
-    public boolean equals(RelationshipDirection other) {
-        return this.direction.equals(other.getDirection());
     }
 }
