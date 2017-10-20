@@ -454,11 +454,11 @@ does not have to be aware of new `Predicates` +
 ---
 
 === Playing Music
-Unify have a built-in background music player. Users have the choice of playing some music to relax their mind and reduce their stress.
+Unify has a built-in background music player. Users have the choice of playing some music to relax their mind and reduce their stress.
 
-The `music` command is extended with an additional command behind it. For example, `music play`, has play as the extended command, this will `play` command at the back means that the system will play a music track. While `music pause` will pause the current music track.
+The `music` command is extended with an additional command behind it. For example, `music play`, has play as the extended command. The `play` command at the back means that the system will play a music track. While `music pause` will pause the current music track.
 
-All these different actions are executed in the same `MusicCommand` class. This keep the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
+All these different actions are executed in the same `MusicCommand` class. This makes the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
 
 As shown below, additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
 
@@ -510,7 +510,7 @@ public CommandResult execute() {
 
 ----
 [NOTE]
-The `trackNumber` has to be equal or less than the number of each genre tracks you have in the `audio/music` folder. For example, if `trackNumber` is 2, it is required at least 2 mp3 files of each genre of music.
+The `trackNumber` has to be less than or equal to the number of each genre tracks you have in the `audio/music` folder. For example, if `trackNumber` is 2, it is required at least 2 mp3 files of each genre of music.
 
 image::MusicList.jpg[width="200"]
 
@@ -526,10 +526,10 @@ image::MusicActivityDiagram.png[width="400"]
 
 **Aspect:** Which music file to play first +
 **Alternative 1 (current choice):** Play the music file that starts with 1 then increase from there +
-**Pros:** Easy to implement. Users able to know what song is coming up next in the track list +
+**Pros:** Easy to implement. Users are able to know what song is coming up next in the track list +
 **Cons:** Always start at the same music track first +
 **Alternative 2:** Play a random music file +
-**Pros:** Have a chance to be different the next time when first started playing music. +
+**Pros:** Has a chance to be different the next time the user starts playing music. +
 **Cons:** User does not know which song is going to be played next. +
 
 ---
