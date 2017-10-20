@@ -348,7 +348,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::clearhistory[]
 === `clearhistory` command
 
-The `clearhistory` command was implemented as a regular command that called `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
+The `clearhistory` command is implemented as a regular command that calls `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
 
 ==== Design Considerations
 
@@ -368,7 +368,7 @@ The `clearhistory` command was implemented as a regular command that called `.cl
 **Cons:** May be confusing to declare an empty history cleared. +
 **Alternative 2:** Indicate that history is empty. +
 **Pros:** Clearer messages about the state of the command history. +
-**Cons:** More complex to implement, final intent is command history to be cleared is the same in both alternatives.
+**Cons:** More complex to implement, and the end result of clearing an empty history also results in a cleared history, meaning the user intention of clearing their history is fufilled regardless of which alternative is chosen.
 
 // end::clearhistory[]
 
