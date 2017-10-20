@@ -117,6 +117,21 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the first and second persons
+     * in the {@code model}'s address book.
+     */
+    public static void showFirstAndSecondPersonsOnly(Model model) {
+        ReadOnlyPerson firstPerson = model.getAddressBook().getPersonList().get(0);
+        final String[] splitFirstName = firstPerson.getName().fullName.split("\\s+");
+        ReadOnlyPerson secondPerson = model.getAddressBook().getPersonList().get(1);
+        final String[] splitSecondName = secondPerson.getName().fullName.split("\\s+");
+        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(
+                Arrays.asList(splitFirstName[0], splitSecondName[0])));
+
+        assert model.getFilteredPersonList().size() == 2;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
