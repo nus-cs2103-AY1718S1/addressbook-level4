@@ -81,6 +81,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
