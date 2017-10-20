@@ -42,14 +42,14 @@ public class CalendarCommand extends Command {
             System.getProperty("user.home"), ".credentials/calendar-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory data_store_factory;
 
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
+    private static HttpTransport http_transport;
 
     /** Global instance of the scopes required by this quickstart.
      *
@@ -61,8 +61,8 @@ public class CalendarCommand extends Command {
 
     static {
         try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            http_transport = GoogleNetHttpTransport.newTrustedTransport();
+            data_store_factory = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -84,8 +84,8 @@ public class CalendarCommand extends Command {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
+                        http_transport, JSON_FACTORY, clientSecrets, SCOPES)
+                        .setDataStoreFactory(data_store_factory)
                         .setAccessType("offline")
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
@@ -102,9 +102,9 @@ public class CalendarCommand extends Command {
      */
     public static com.google.api.services.calendar.Calendar
         getCalendarService() throws IOException {
-        Credential credential = authorize();
-        return new com.google.api.services.calendar.Calendar.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, credential)
+            Credential credential = authorize();
+            return new com.google.api.services.calendar.Calendar.Builder(
+                http_transport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
