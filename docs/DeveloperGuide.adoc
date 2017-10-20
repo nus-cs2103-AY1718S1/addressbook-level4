@@ -371,7 +371,7 @@ The delete event command is facilitated by the `LogicManager`. It supports `undo
 The following sequence diagrams below, Figure 3.4.1 and Figure 3.4.2, show how the delete event operation works:
 
 image::DeleteEventSD.png[width="800"]
-_Figure 3.4.1: Logic interactions for "deleteE 1" command_
+_Figure 3.4.1: Logic interactions for `deleteE 1` command_
 
 image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 3.4.2 : Component interactions for `deleteE 1` command_
