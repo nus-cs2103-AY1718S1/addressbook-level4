@@ -231,7 +231,7 @@ public class FindCommandTest {
     private FindCommand prepareGlobalCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
