@@ -30,6 +30,6 @@ public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TagMatchingKeywordPredicate // instanceof handles nulls
-                && this.keyword.equals(((TagMatchingKeywordPredicate) other).keyword)); // state check
+                && this.keyword.equalsIgnoreCase(((TagMatchingKeywordPredicate) other).keyword)); // state check
     }
 }
