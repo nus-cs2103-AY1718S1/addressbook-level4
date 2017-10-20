@@ -351,6 +351,19 @@ _Figure 3.1.3: Flow of activities inside `UndoRedoStack`_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::multiplephonenumbers[]
+=== Multiple phone number fields
+
+When an `AddCommandParser` or `EditCommandParser` is used to parse a command, an `ArgumentMultimap` object is created which contains a hashmap mapping the prefixes to a list of their respective arguments.
+
+The `ArgumentMultimap` class has a `getValue` method and a `getMultipleValues` method. If there are multiple strings passed as arguments to the prefix, the `getValue` method returns only the last string in the list, while the `getMultipleValues` returns a concatenation of all the strings in the list.
+
+The `ParserUtil` class has various parsing methods, such as `parseName` and `parsePhone`. The method `parseName` returns a `Name` object wrapped in the `Optional` class and the method returns a `Phone` object wrapped in the `Optional` class.
+
+The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` method of the `ArgumentMultimap` class instead of the `getValue` method called by the other parsers. This allows multiple phone numbers to be stored in a `Phone` object.
+
+==== Design Considerations
+// end::multiplephonenumbers[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
