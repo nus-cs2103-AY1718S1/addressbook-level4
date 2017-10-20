@@ -215,6 +215,21 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addDebtToPerson(target, amount);
         indicateAddressBookChanged();
     }
+
+    /**
+     * Decrease the debt of a person by the amount indicated
+     * @param target person in the address book who paid back some money
+     * @param amount amount that the person paid back. Must be either a positive integer or positive number with
+     *               two decimal places
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
+     */
+    @Override
+    public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+            IllegalValueException {
+        addressBook.deductDebtFromPerson(target, amount);
+        indicateAddressBookChanged();
+    }
     //@@author
 
     @Override
