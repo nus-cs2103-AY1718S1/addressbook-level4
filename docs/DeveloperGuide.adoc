@@ -512,7 +512,7 @@ public CommandResult execute() {
 [NOTE]
 The `trackNumber` has to be equal or less than the number of each genre tracks you have in the `audio/music` folder. For example, if `trackNumber` is 2, it is required at least 2 mp3 files of each genre of music.
 
-image::MusicList.jpg[width="300"]
+image::MusicList.jpg[width="200"]
 
 The following sequence diagram shows how the music operation works:
 
@@ -537,7 +537,7 @@ image::MusicActivityDiagram.png[width="400"]
 **Aspect:** Extended commands naming convention +
 **Alternative 1 (current choice):** Extended commands are after the `music` command, hence `music play` & `music pause` +
 **Pros:** Easier to remember those extended commands belongs to `music` +
-**Cons:** Grammatically wrong.+
+**Cons:** Grammatically wrong. +
 **Alternative 2:** Have the extended commands come first, hence `play music` & `pause music` +
 **Pros:** Grammatically correct. Sounds nicer verbally. +
 **Cons:** User might not associate those extended commands to `music`. +
