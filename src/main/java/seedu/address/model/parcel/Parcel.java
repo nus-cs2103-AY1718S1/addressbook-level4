@@ -2,6 +2,7 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.parcel.Parcel.Status.PENDING;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,6 +26,7 @@ public class Parcel implements ReadOnlyParcel {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DeliveryDate> deliveryDate;
+    private ObjectProperty<Status> status;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -31,16 +34,25 @@ public class Parcel implements ReadOnlyParcel {
      * Every field must be present and not null.
      */
     public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address,
-                  DeliveryDate deliveryDate, Set<Tag> tags) {
-        requireAllNonNull(trackingNumber, name, phone, email, address, deliveryDate, tags);
+                  DeliveryDate deliveryDate, Status status, Set<Tag> tags) {
+        requireAllNonNull(trackingNumber, name, phone, email, address, deliveryDate, status, tags);
         this.trackingNumber = new SimpleObjectProperty<>(trackingNumber);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.deliveryDate = new SimpleObjectProperty<>(deliveryDate);
+        this.status = new SimpleObjectProperty<>(status);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    /**
+     * New Parcel added without status does has a default status of PENDING.
+     */
+    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address,
+                  DeliveryDate deliveryDate, Set<Tag> tags) {
+        this(trackingNumber, name, phone, email, address, deliveryDate, PENDING, tags);
     }
 
     /**
@@ -121,6 +133,32 @@ public class Parcel implements ReadOnlyParcel {
         return address.get();
     }
 
+    public void setStatus(Status status) {
+        this.status.set(requireNonNull(status));
+    }
+
+    @Override
+    public ObjectProperty<Status> statusProperty() {
+        return status;
+    }
+
+    @Override
+    public Status getStatus() {
+        return status.get();
+    }
+
+    public void setDeliveryDate(DeliveryDate deliveryDate) {
+        this.deliveryDate.set(requireNonNull(deliveryDate));
+    }
+
+    public ObjectProperty<DeliveryDate> deliveryDateProperty() {
+        return deliveryDate;
+    }
+
+    public DeliveryDate getDeliveryDate() {
+        return deliveryDate.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -141,18 +179,6 @@ public class Parcel implements ReadOnlyParcel {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public void setDeliveryDate(DeliveryDate deliveryDate) {
-        this.deliveryDate.set(requireNonNull(deliveryDate));
-    }
-
-    public ObjectProperty<DeliveryDate> deliveryDateProperty() {
-        return deliveryDate;
-    }
-
-    public DeliveryDate getDeliveryDate() {
-        return deliveryDate.get();
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -171,5 +197,45 @@ public class Parcel implements ReadOnlyParcel {
         return getAsText();
     }
 
-}
+    enum Status {
+        PENDING, DELIVERING, DELIVERED;
 
+        public static final String MESSAGE_STATUS_CONSTRAINTS =
+                "Status can only be PENDING, DELIVERED or DELIVERING";
+
+        public static Status getStatusInstance(String status) throws IllegalValueException {
+            String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
+
+            if(!isValidStatus(trimmedAndUpperCasedStatus)) {
+                throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
+            }
+
+            switch (trimmedAndUpperCasedStatus) {
+                case "PENDING":
+                    return PENDING;
+
+                case "DELIVERING":
+                    return DELIVERING;
+
+                case "DELIVERED":
+                    return DELIVERED;
+
+                default:
+                    throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
+            }
+        }
+
+        public static boolean isValidStatus(String status) {
+            switch(status) {
+                case "PENDING":  // fall through
+                case "DELIVERING": // fall through
+                case "DELIVERED":
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    }
+
+}
