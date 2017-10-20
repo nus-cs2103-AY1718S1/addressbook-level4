@@ -7,6 +7,9 @@ import javafx.scene.control.ListView;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.ui.TaskCard;
 
+/**
+ * Provides a handle for {@code TaskListPanel} containing the list of {@code TaskCard}.
+ */
 public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     public static final String TASK_LIST_VIEW_ID = "#taskCardListView";
 

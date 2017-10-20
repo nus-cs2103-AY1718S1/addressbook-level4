@@ -59,22 +59,22 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, AddTaskCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: add a task with all fields same as another task in the address book except description -> added */
-        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL).withStartDate(VALID_STARTDATE_INTERNSHIP)
-                .withDeadline(VALID_DEADLINE_INTERNSHIP).build();
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL)
+                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP).build();
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_GRAD_SCHOOL + STARTDATE_DESC_INTERNSHIP
                 + DEADLINE_DESC_INTERNSHIP;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a task with all fields same as another task in the address book except start date -> added */
-        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate(VALID_STARTDATE_GRAD_SCHOOL)
-                .withDeadline(VALID_DEADLINE_INTERNSHIP).build();
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
+                .withStartDate(VALID_STARTDATE_GRAD_SCHOOL).withDeadline(VALID_DEADLINE_INTERNSHIP).build();
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_GRAD_SCHOOL
                 + DEADLINE_DESC_INTERNSHIP;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a task with all fields same as another task in the address book except deadline -> added */
-        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate(VALID_STARTDATE_INTERNSHIP)
-                .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).build();
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
+                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_GRAD_SCHOOL).build();
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
                 + DEADLINE_DESC_GRAD_SCHOOL;
         assertCommandSuccess(command, toAdd);
@@ -98,16 +98,16 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
     }
 
-        /**
-         * Executes the {@code AddTaskCommand} that adds {@code toAdd} to the model and verifies that the command box displays
-         * an empty string, the result display box displays the success message of executing {@code AddTaskCommand} with the
-         * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
-         * These verifications are done by
-         * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-         * Also verifies that the command box has the default style class, the status bar's sync status changes,
-         * the browser url and selected card remains unchanged.
-         * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-         */
+    /**
+     * Executes the {@code AddTaskCommand} that adds {@code toAdd} to the model and verifies that
+     * the command box displays an empty string, the result display box displays the success message of executing
+     * {@code AddTaskCommand} with the details of {@code toAdd}, and the model related components equal to the
+     * current model added with {@code toAdd}. These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *Also verifies that the command box has the default style class, the status bar's sync status changes,
+     * the browser url and selected card remains unchanged.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
     private void assertCommandSuccess(ReadOnlyTask toAdd) {
         assertCommandSuccess(TaskUtil.getAddTaskCommand(toAdd), toAdd);
     }
