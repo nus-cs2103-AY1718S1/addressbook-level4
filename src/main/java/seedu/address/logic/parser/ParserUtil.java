@@ -7,11 +7,15 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -77,6 +81,35 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Checks if favorite and unfavorite prefixes are present in {@code ArgumentMultimap argMultimap}
+     * Catered for both AddCommandParser and EditCommandParser usage
+     */
+    public static Optional<Favorite> parseFavorite(ArgumentMultimap argMultimap,
+                                         Prefix prefixFav,
+                                         Prefix prefixUnFav) throws ParseException {
+
+        // Disallow both f/ and uf/ to be present in the same instance of user input when editing
+        if (argMultimap.isPrefixPresent(prefixFav) && argMultimap.isPrefixPresent(prefixUnFav)) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCommand.MESSAGE_USAGE));
+        } else if (argMultimap.isPrefixPresent(prefixFav)) { // Allow favoriting simply by supplying prefix
+            if (!argMultimap.getValue(prefixFav).get().isEmpty()) { // Disallow text after prefix
+                throw new ParseException(Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
+            } else {
+                return Optional.of(new Favorite(true));
+            }
+        } else if (argMultimap.isPrefixPresent(prefixUnFav)) { // Allow unfavoriting simply by supplying prefix
+            if (!argMultimap.getValue(prefixUnFav).get().isEmpty()) { // Disallow text after prefix
+                throw new ParseException(Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
+            } else {
+                return Optional.of(new Favorite(false));
+            }
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
