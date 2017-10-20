@@ -1,14 +1,15 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEGE_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+
 import org.junit.Test;
 
 import seedu.address.model.tag.TagMatchingKeywordPredicate;
 import seedu.address.testutil.PersonBuilder;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLLEGE_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 public class TagMatchingKeywordPredicateTest {
 

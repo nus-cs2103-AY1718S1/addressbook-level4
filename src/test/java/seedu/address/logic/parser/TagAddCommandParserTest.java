@@ -39,7 +39,7 @@ public class TagAddCommandParserTest {
     }
 
     @Test
-    public void parseTagAddSuccess() throws Exception{
+    public void parseTagAddSuccess() throws Exception {
         Index targetIndex = INDEX_SECOND_PERSON;
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(targetIndex);
