@@ -38,8 +38,11 @@ public class UndoableCommandTest {
     @Test
     public void redo() {
         showFirstLessonOnly(model);
+        showFirstLessonOnly(expectedModel);
+        for (int i = 0; i < model.getFilteredLessonList().size(); i++) {
+            System.out.println(model.getFilteredLessonList().get(i));
+        }
 
-        // redo() should cause the model's filtered list to show all persons
         dummyCommand.redo();
         deleteFirstLesson(expectedModel);
         assertEquals(expectedModel, model);

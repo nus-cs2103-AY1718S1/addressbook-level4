@@ -205,6 +205,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void handleListingUnit() {
+
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
