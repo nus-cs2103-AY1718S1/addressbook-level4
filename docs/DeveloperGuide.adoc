@@ -494,11 +494,11 @@ Once the required information (name, email, address, phone number) is retrieved 
 **Alternative 2:** Create a `File upload` function. +
 **Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
 **Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
----
 
 // end::ImportCommand[]
-=======
+
 // tag::filtertag[]
+
 === Filter by tag mechanism
 
 The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
