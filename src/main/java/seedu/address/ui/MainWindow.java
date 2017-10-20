@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private EventListPanel eventListPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -50,6 +51,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -128,6 +132,9 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
