@@ -502,7 +502,7 @@ public CommandResult execute() {
 }
 ----
 
-Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `LogicManager` subsequently calls `Model` interface. `Model` uses `ModelManager` class to handle the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. 'ReadOnlyAddressBook` uses `AddressBook` class to handle this request.
+Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `LogicManager` subsequently calls `Model` interface. `Model` uses `ModelManager` class to handle the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `ReadOnlyAddressBook` uses `AddressBook` class to handle this request.
 
 In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `ReadOnlyPerson#getIsBlacklisted()` method, as shown below:
 [source,java]
