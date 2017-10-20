@@ -63,9 +63,6 @@ public class ArgumentMultimap {
                 str += v + "\n";
                 added.add(v);
             }
-
-
-//            str += v + "\n";
         }
         if (!str.isEmpty()) {
             str = str.substring(0, str.length() - 1);
@@ -79,7 +76,6 @@ public class ArgumentMultimap {
     public boolean isPrefixPresent(Prefix prefix) {
         return argMultimap.containsKey(prefix);
     }
-//>>>>>>> eee5caf9473028da0a0f973d90b1403cf5dde0b3
 
 
     /**

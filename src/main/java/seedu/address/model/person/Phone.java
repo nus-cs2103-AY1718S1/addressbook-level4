@@ -33,18 +33,12 @@ public class Phone {
         boolean invalid = false;
         for (String s : phone) {
             String trimmedPhone = s.trim();
-//            if (!isValidPhone(trimmedPhone)) {
-//                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-//            }
             if (isValidPhone(trimmedPhone)) {
                 phones.add(s);
                 phoneStr += s + "\n";
             } else {
                 invalid = true;
             }
-
-//            phones.add(s);
-//            phoneStr += s + "\n";
 
         }
         if (phones.isEmpty() && invalid) {
@@ -54,8 +48,6 @@ public class Phone {
         if (!phoneStr.isEmpty()) {
             phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
         }
-
-//        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
         this.phonelist = phones;
         value = phoneStr;
     }
@@ -65,30 +57,19 @@ public class Phone {
 
         String[] numbers = phone.split("\n");
 
-//        System.out.println("phone: " + phone);
-//        System.out.println("numbers.length: " + numbers.length);
-
         ArrayList<String> phones = new ArrayList<String>();
         boolean invalid = false;
         String phoneStr = "";
 
         for (int i = 0; i < numbers.length; i++) {
             String trimmedPhone = numbers[i].trim();
-//            if (!isValidPhone(trimmedPhone)) {
-//                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-//            }
             if (isValidPhone(trimmedPhone)) {
                 phones.add(numbers[i]);
                 phoneStr += numbers[i] + "\n";
             } else {
                 invalid = true;
             }
-
-//            phones.add(numbers[i]);
         }
-
-//        System.out.println("phones.size(): " + phones.size());
-//        System.out.println("phones.isEmpty(): " + phone.isEmpty());
 
         if (phones.isEmpty() && invalid) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
@@ -98,10 +79,7 @@ public class Phone {
             phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
         }
 
-//        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
-
         this.phonelist = phones;
-//        this.value = phone;
         this.value = phoneStr;
     }
 
