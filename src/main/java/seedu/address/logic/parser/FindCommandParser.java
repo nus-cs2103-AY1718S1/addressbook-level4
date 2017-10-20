@@ -32,15 +32,15 @@ public class FindCommandParser implements Parser<FindCommand> {
         /**
          * Used for initial separation of command word and args.
          */
-        final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\w/)(?<arguments>.*)");
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(args.trim());
+        final Pattern commandFormat = Pattern.compile("(?<commandWord>\\w/)(?<arguments>.*)");
+        final Matcher matcher = commandFormat.matcher(args.trim());
 
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        if (!matcher.matches()){
+        if (!matcher.matches()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
@@ -50,32 +50,32 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] keywords = arguments.split("\\s+");
 
-        switch(commandWord){
+        switch(commandWord) {
 
-            case ("n/"):
-                return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case ("n/"):
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            case ("p/"):
-                return new FindCommand(new NumberContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case ("p/"):
+            return new FindCommand(new NumberContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            case ("e/"):
-                return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case ("e/"):
+            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            case ("t/"):
-                return new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case ("t/"):
+            return new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            case("a/"):
-                return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case("a/"):
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            case("r/"):
-                return new FindCommand(new RemarkContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case("r/"):
+            return new FindCommand(new RemarkContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            case("b/"):
-                return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case("b/"):
+            return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
 
-            default:
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
     }
 }
