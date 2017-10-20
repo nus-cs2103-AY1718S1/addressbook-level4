@@ -19,6 +19,23 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 === Overview
 This developer guide provides general information about how is this application managed explaining both architectural and coding styles.
 
+=== Skills needed to further develop the application
+The following skills and experience are useful in helping to further develop the application. +
+You do not need to have an advanced understanding of the skills to get started but these are the skills you can build over time as you gain experience while working on the application.
+
+* Knowledge of _Object Orientated Programming (OOP)_
+* Basic to Intermediate programming skills (Java), and understanding of its API.
+* Basic understanding of Web development skills (HTML, CSS)
+* Basic understanding and knowledge of XML
+* Understanding the usage of IDEs (IntelliJ)
+* Understanding what is automated testing (gradle)
+
+=== Where to find specific information
+
+* This application uses Java 8. Full set of documentation on Java 8 is available at: https://docs.oracle.com/javase/8/docs/api/ +
+* This application uses CSS for its visual appeal for the interface. For basic usage, https://www.w3schools.com/css/ is a good place to start +
+
+
 == Setting up
 
 === Prerequisites
