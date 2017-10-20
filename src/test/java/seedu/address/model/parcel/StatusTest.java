@@ -12,58 +12,58 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class StatusTest {
 
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
-	@Test
-	public void testToStringTest() {
-		Status delivered = Status.DELIVERED;
-		assertEquals("DELIVERED", delivered.toString());
+    @Test
+    public void testToStringTest() {
+        Status delivered = Status.DELIVERED;
+        assertEquals("DELIVERED", delivered.toString());
 
-		Status delivering = Status.DELIVERING;
-		assertEquals("DELIVERING", delivering.toString());
+        Status delivering = Status.DELIVERING;
+        assertEquals("DELIVERING", delivering.toString());
 
-		Status pending = Status.PENDING;
-		assertEquals("PENDING", pending.toString());
-	}
+        Status pending = Status.PENDING;
+        assertEquals("PENDING", pending.toString());
+    }
 
-	@Test
-	public void getStatusInstanceTest() throws IllegalValueException {
-		// all uppercase
-		Status pending = Status.getStatusInstance("PENDING");
-		assertEquals(Status.PENDING, pending);
+    @Test
+    public void getStatusInstanceTest() throws IllegalValueException {
+        // all uppercase
+        Status pending = Status.getStatusInstance("PENDING");
+        assertEquals(Status.PENDING, pending);
 
-		// all lowercase
-		Status delivering = Status.getStatusInstance("delivering");
-		assertEquals(Status.DELIVERING, delivering);
+        // all lowercase
+        Status delivering = Status.getStatusInstance("delivering");
+        assertEquals(Status.DELIVERING, delivering);
 
-		// mix of uppercase and lowercase characters
-		Status delivered = Status.getStatusInstance("dEliVERed");
-		assertEquals(Status.DELIVERED, delivered);
+        // mix of uppercase and lowercase characters
+        Status delivered = Status.getStatusInstance("dEliVERed");
+        assertEquals(Status.DELIVERED, delivered);
 
-		thrown.expect(IllegalValueException.class);
-		thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
-		Status.getStatusInstance("asd1237fa&(&"); // weird characters
-		Status.getStatusInstance("JUMPING"); // not one of the possible values
-	}
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
+        Status.getStatusInstance("asd1237fa&(&"); // weird characters
+        Status.getStatusInstance("JUMPING"); // not one of the possible values
+    }
 
-	@Test
-	public void isValidStatusTest() {
-		assertFalse(Status.isValidStatus("INVALID"));
+    @Test
+    public void isValidStatusTest() {
+        assertFalse(Status.isValidStatus("INVALID"));
 
-		// uppercase letters
-		assertTrue(Status.isValidStatus("PENDING"));
-		assertTrue(Status.isValidStatus("DELIVERING"));
+        // uppercase letters
+        assertTrue(Status.isValidStatus("PENDING"));
+        assertTrue(Status.isValidStatus("DELIVERING"));
 
-		// lower case letters
-		assertFalse(Status.isValidStatus("pending"));
-		assertFalse(Status.isValidStatus("delivered"));
+        // lower case letters
+        assertFalse(Status.isValidStatus("pending"));
+        assertFalse(Status.isValidStatus("delivered"));
 
-		// mix of upper and lower case
-		assertFalse(Status.isValidStatus("DelIVEred"));
+        // mix of upper and lower case
+        assertFalse(Status.isValidStatus("DelIVEred"));
 
-		// random symbols
-		assertFalse(Status.isValidStatus("$!@HBJ123"));
-	}
+        // random symbols
+        assertFalse(Status.isValidStatus("$!@HBJ123"));
+    }
 
 }

@@ -2,43 +2,52 @@ package seedu.address.model.parcel;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Status represents the delivery status of a parcel
+ * It can only be one of these values: PENDING, DELIVER, DELIVERED
+ */
 public enum Status {
-	PENDING, DELIVERING, DELIVERED;
 
-	public static final String MESSAGE_STATUS_CONSTRAINTS =
-			"Status can only be PENDING, DELIVERED or DELIVERING";
+    PENDING, DELIVERING, DELIVERED;
 
-	public static Status getStatusInstance(String status) throws IllegalValueException {
-		String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
+    public static final String MESSAGE_STATUS_CONSTRAINTS =
+            "Status can only be PENDING, DELIVERED or DELIVERING";
 
-		if(!isValidStatus(trimmedAndUpperCasedStatus)) {
-			throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-		}
+    public static Status getStatusInstance(String status) throws IllegalValueException {
+        String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
 
-		switch (trimmedAndUpperCasedStatus) {
-			case "PENDING":
-				return PENDING;
+        if (!isValidStatus(trimmedAndUpperCasedStatus)) {
+            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
+        }
 
-			case "DELIVERING":
-				return DELIVERING;
+        switch (trimmedAndUpperCasedStatus) {
 
-			case "DELIVERED":
-				return DELIVERED;
+        case "PENDING":
+            return PENDING;
 
-			default:
-				throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-		}
-	}
+        case "DELIVERING":
+            return DELIVERING;
 
-	public static boolean isValidStatus(String status) {
-		switch(status) {
-			case "PENDING":  // fall through
-			case "DELIVERING": // fall through
-			case "DELIVERED":
-				return true;
+        case "DELIVERED":
+            return DELIVERED;
 
-			default:
-				return false;
-		}
-	}
+        default:
+            throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * @return true if status is case-insensitive equal to the value of any enum Status values.
+     */
+    public static boolean isValidStatus(String status) {
+        switch(status) {
+        case "PENDING":  // fallthrough
+        case "DELIVERING": // fallthrough
+        case "DELIVERED": // fallthrough
+            return true;
+
+        default:
+            return false;
+        }
+    }
 }
