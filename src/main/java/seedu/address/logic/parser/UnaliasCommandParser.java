@@ -30,7 +30,7 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
         try {
             Keyword keyword = ParserUtil.parseKeyword(
                     argMultimap.getValue(PREFIX_ALIAS_KEYWORD)).get();
-            return new UnaliasCommand(keyword.keyword);
+            return new UnaliasCommand(keyword);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

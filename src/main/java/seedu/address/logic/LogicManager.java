@@ -75,7 +75,7 @@ public class LogicManager extends ComponentManager implements Logic {
      * Loads existing aliases in model into addressBookParser
      */
     private void loadAllAliasTokens() {
-        ObservableList<ReadOnlyAliasToken> allAliasTokens = model.getFilteredAliasTokenList();
+        ObservableList<ReadOnlyAliasToken> allAliasTokens = model.getAddressBook().getAliasTokenList();
         for (ReadOnlyAliasToken token : allAliasTokens) {
             addressBookParser.addAliasToken(token);
         }

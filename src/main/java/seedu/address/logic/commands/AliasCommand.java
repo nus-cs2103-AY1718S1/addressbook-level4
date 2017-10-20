@@ -21,8 +21,8 @@ public class AliasCommand extends UndoableCommand {
             + PREFIX_ALIAS_KEYWORD + "KEYWORD "
             + PREFIX_ALIAS_REPRESENTATION + "REPRESENTATION "
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_ALIAS_KEYWORD + "TTSH "
-            + PREFIX_ALIAS_REPRESENTATION + " Tan Tock Seng Hospital";
+            + PREFIX_ALIAS_KEYWORD + "ph "
+            + PREFIX_ALIAS_REPRESENTATION + " Public Holiday";
 
     public static final String MESSAGE_SUCCESS = "New alias added: %1$s";
     public static final String MESSAGE_DUPLICATE_ALIAS = "This alias already exists";
@@ -47,6 +47,12 @@ public class AliasCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
+
+        for (ReadOnlyAliasToken token : model.getAddressBook().getAliasTokenList()) {
+            if (token.getKeyword().keyword.equals(toAdd.getKeyword().keyword)) {
+                return new CommandResult(MESSAGE_DUPLICATE_ALIAS);
+            }
+        }
 
         if (logic.isCommandWord(toAdd.getKeyword().keyword)) {
             return new CommandResult(MESSAGE_INVALID_KEYWORD);

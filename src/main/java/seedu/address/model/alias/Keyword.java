@@ -34,7 +34,7 @@ public class Keyword {
      */
     public static boolean isValidKeyword(String test) {
         String trimmedKeyword = test.trim();
-        return ((!test.matches(KEYWORD_INVALIDATION_REGEX)) && (trimmedKeyword.length() >= 2));
+        return ((!test.matches(KEYWORD_INVALIDATION_REGEX)) && (trimmedKeyword.length() > 1));
     }
 
     @Override

@@ -70,7 +70,7 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
 
         final String checkedCommandWord = commandWordCheck(commandWord);
-        final String checkedArguments = argumentsCheck(arguments);
+        final String checkedArguments = argumentsCheck(checkedCommandWord, arguments);
 
 
         switch (checkedCommandWord) {
@@ -148,7 +148,11 @@ public class AddressBookParser {
      * @param arguments - the arguments after the command word
      * @returns a string that contains the arguments with replaced representations if any of them had aliases.
      */
-    private String argumentsCheck(String arguments) {
+    private String argumentsCheck(String checkedCommandWord, String arguments) {
+
+        if (checkedCommandWord.equals("alias") || checkedCommandWord.equals("unalias")) {
+            return arguments;
+        }
         StringBuilder builder = new StringBuilder();
         builder.append(" ");
         Matcher matcher = KEYWORD_PATTERN.matcher(arguments);

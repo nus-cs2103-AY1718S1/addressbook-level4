@@ -76,8 +76,10 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
      */
     public void add(ReadOnlyAliasToken toAdd) throws DuplicateTokenKeywordException {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateTokenKeywordException();
+        for (ReadOnlyAliasToken token : internalList) {
+            if (token.getKeyword().keyword.equals(toAdd.getKeyword().keyword)) {
+                throw new DuplicateTokenKeywordException();
+            }
         }
         internalList.add(new AliasToken(toAdd));
     }
@@ -89,10 +91,10 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
      */
     public boolean remove(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
         requireNonNull(toRemove);
-        final boolean aliasFoundAndDeleted = internalList.remove(toRemove);
-        if (!contains(toRemove)) {
+        if (!internalList.contains(toRemove)) {
             throw new TokenKeywordNotFoundException();
         }
+        final boolean aliasFoundAndDeleted = internalList.remove(toRemove);
         return aliasFoundAndDeleted;
     }
 

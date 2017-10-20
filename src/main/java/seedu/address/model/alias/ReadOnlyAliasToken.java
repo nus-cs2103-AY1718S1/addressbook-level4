@@ -8,8 +8,11 @@ import javafx.beans.property.ObjectProperty;
  */
 public interface ReadOnlyAliasToken {
     ObjectProperty<Keyword> keywordProperty();
+
     Keyword getKeyword();
+
     ObjectProperty<Representation> representationProperty();
+
     Representation getRepresentation();
 
     /**
@@ -28,9 +31,8 @@ public interface ReadOnlyAliasToken {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getKeyword())
-                .append(" Keyword: ")
-                .append(getRepresentation())
-                .append(" Representation: ");
+                .append(" Representation: ")
+                .append(getRepresentation());
         return builder.toString();
     }
 }
