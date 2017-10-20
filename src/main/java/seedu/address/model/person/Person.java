@@ -4,11 +4,15 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
+import seedu.address.model.person.weblink.UniqueWebLinkList;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -25,11 +29,13 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Remark> remark;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueWebLinkList> webLinks;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, ArrayList<Email> email, Address address, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, ArrayList<Email> email, Address address,
+                  Remark remark, Set<Tag> tags, Set<WebLink> webLinks) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -38,6 +44,7 @@ public class Person implements ReadOnlyPerson {
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList(webLinks));
     }
 
     /**
@@ -45,7 +52,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getRemark(), source.getTags());
+                source.getRemark(), source.getTags(), source.getWebLinks());
     }
 
     public void setName(Name name) {
@@ -132,11 +139,49 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Returns an immutable webLink set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<WebLink> getWebLinks() {
+        return webLinks.get().toSet();
+    }
+
+    public ObjectProperty<UniqueWebLinkList> webLinkProperty() {
+        return webLinks;
+    }
+
+    /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
+
+    /**
+     * Replaces this person's web links with the web links in the argument tag set.
+     */
+    public void setWebLinks(Set<WebLink> replacement) {
+        webLinks.set(new UniqueWebLinkList(replacement));
+    }
+
+    /**
+     * returns a ArrayList of string websites for UI usage.
+     * @code WebLinkUtil for the list of webLinkTags can be used as category.
+     */
+    public ArrayList<String> listOfWebLinkByCategory (String category) {
+        ArrayList<String> outputWebLinkList = new ArrayList<String>();
+        for (Iterator<WebLink> iterateWebLinkSet = getWebLinks().iterator(); iterateWebLinkSet.hasNext();) {
+            WebLink checkWebLink = iterateWebLinkSet.next();
+            String webLinkAddedToList = checkWebLink.toStringWebLink();
+            String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
+            if (checkWebLinkTag.equals(category)) {
+                outputWebLinkList.add(webLinkAddedToList);
+            }
+        }
+        return outputWebLinkList;
+    }
+
 
     @Override
     public boolean equals(Object other) {
@@ -148,7 +193,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, emails, address, tags);
+        return Objects.hash(name, phone, emails, address, tags, webLinks);
     }
 
     @Override

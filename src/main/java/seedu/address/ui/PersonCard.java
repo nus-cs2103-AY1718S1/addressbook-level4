@@ -17,7 +17,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black" };
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
 
@@ -44,6 +44,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private FlowPane webLinks;
+    @FXML
     private Label remark;
     @FXML
     private FlowPane tags;
@@ -53,8 +55,10 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initWebLinks(person);
         bindListeners(person);
     }
+
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
@@ -76,6 +80,10 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        person.webLinkProperty().addListener((observable, oldValue, newValue) -> {
+            webLinks.getChildren().clear();
+            initWebLinks(person);
+        });
     }
 
     /**
@@ -87,6 +95,18 @@ public class PersonCard extends UiPart<Region> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /**
+     * Initialize person's webLink and add appropriate background color to it
+     * @param person name
+     */
+    private void initWebLinks(ReadOnlyPerson person) {
+        person.getWebLinks().forEach(webLink -> {
+            Label webLinkLabel = new Label(webLink.webLinkInput);
+            webLinkLabel.setStyle("-fx-background-color: grey");
+            webLinks.getChildren().add(webLinkLabel);
         });
     }
 

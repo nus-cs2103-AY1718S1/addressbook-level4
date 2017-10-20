@@ -11,6 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -25,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_WEB_LINK = "https://www.facebook.com/Phua.Han.Siang";
 
     private Person person;
 
@@ -36,8 +38,9 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Set<WebLink> defaultWebLink = SampleDataUtil.getWebLinkSet(DEFAULT_WEB_LINK);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                                     defaultAddress, defaultRemark, defaultTags);
+                                     defaultAddress, defaultRemark, defaultTags, defaultWebLink);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -70,6 +73,18 @@ public class PersonBuilder {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code webLinks} into a {@code Set<weblink>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withWebLinks(String ... webLinks) {
+        try {
+            this.person.setWebLinks(SampleDataUtil.getWebLinkSet(webLinks));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("web links are expected to be unique.");
         }
         return this;
     }
