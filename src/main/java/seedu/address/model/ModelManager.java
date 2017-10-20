@@ -116,9 +116,12 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    public void sort() {
+        addressBook.sort();
+    }
+
     /**
-     * deletes tag if it is supposed to be deleted
-      * @param str
+     * Delete tag from contact
      */
     public void deleteTag(String str) {
         if (addressBook.removeTag(str)) {

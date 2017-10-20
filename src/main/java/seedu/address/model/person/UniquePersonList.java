@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -126,7 +128,19 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Remove the tag in a personlist, returns true if there were tags removed
+     * Sort based on alphabetical order
+     */
+    public void sort() {
+        Collections.sort(internalList, new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getName().fullName.compareTo(o2.getName().fullName);
+            }
+        });
+    }
+
+    /**
+     * Remove tag from contact
      */
     public boolean removeTag(String str) {
         boolean checker1 = false;
