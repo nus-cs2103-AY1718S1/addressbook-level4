@@ -50,9 +50,6 @@ public class MainWindow extends UiPart<Region> {
     private EmailButton emailButton;
 
     @FXML
-    private VBox vBox;
-
-    @FXML
     private StackPane browserPlaceholder;
 
     @FXML
@@ -84,7 +81,8 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane emailButtonPlaceholder;
-
+    @FXML
+    private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -222,7 +220,6 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
-
     void show() {
         primaryStage.show();
     }
