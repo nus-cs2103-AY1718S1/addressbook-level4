@@ -1,5 +1,7 @@
 package seedu.address.model.graph;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.collections.ObservableList;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -8,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import static java.util.Objects.requireNonNull;
+
 
 /**
  * This class is a wrapper class of SingleGraph class in GraphStream
@@ -19,7 +21,7 @@ public class GraphWrapper {
     private SingleGraph graph;
     private final Model model;
     private final ObservableList<ReadOnlyPerson> filteredPersons;
-    private final String graphID = "ImARandomGraphID";
+    private final String graphId = "ImARandomGraphID";
 
     private final String nodeAttributePersonName = "PersonName";
     private final String nodeAttributePerson = "Person";
@@ -27,7 +29,7 @@ public class GraphWrapper {
     private final String MESSAGE_PERSON_DOESNOT_EXIST = "The person does not exist in this address book.";
 
     public GraphWrapper(Model model) {
-        this.graph = new SingleGraph(graphID);
+        this.graph = new SingleGraph(graphId);
         this.model = model;
         this.filteredPersons = model.getFilteredPersonList();
     }
