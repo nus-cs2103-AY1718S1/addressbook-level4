@@ -1,11 +1,13 @@
 package seedu.address.logic.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -25,6 +27,7 @@ public class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted";
     private boolean allvalid = true;
     private boolean exist = false;
+    private boolean duplicate = false;
 
     private ArrayList<Index> targetIndexs = new ArrayList<>();
     private String target = "";
@@ -44,11 +47,15 @@ public class DeleteCommand extends UndoableCommand {
         ArrayList<ReadOnlyPerson> personstodelete =  new ArrayList<ReadOnlyPerson>();
         if (target != "") {
             for (ReadOnlyPerson p: lastShownList) {
+                if (p.getName().fullName.equals(target) && exist == true) {
+                    personstodelete.add(p);
+                    duplicate = true;
+                }
                 if (p.getName().fullName.equals(target)) {
                     personstodelete.add(p);
                     exist = true;
-                    break;
                 }
+
             }
         } else {
             for (Index s: targetIndexs) {
@@ -60,6 +67,14 @@ public class DeleteCommand extends UndoableCommand {
                 }
             }
         }
+
+        if (exist && duplicate) {
+            List<String> duplicatePerson = Arrays.asList(target);
+            NameContainsKeywordsPredicate updatedpredicate = new NameContainsKeywordsPredicate(duplicatePerson);
+            model.updateFilteredPersonList(updatedpredicate);
+            return new CommandResult("Duplicate persons exist, please choose one to delete.");
+        }
+
         if (allvalid && exist) {
             try {
                 model.deletePerson(personstodelete);
