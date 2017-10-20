@@ -3,7 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,8 +26,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Picture> picture;
     private ObjectProperty<Timestamp> timestamp;
-
     private ObjectProperty<UniqueTagList> tags;
+    private String sortCriteria = "name";
 
     /**
      * Every field must be present and not null.
@@ -166,6 +168,56 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    /**
+     * Sets the field the list should be sorted by
+     */
+    public void setComparator(String field) {
+        Set<String> validFields = new HashSet<String>(Arrays.asList(
+                new String[] {"name", "phone", "email", "address"}
+        ));
+
+        if (validFields.contains(field)) {
+            this.sortCriteria = field;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public int compareTo(Object otherPerson) {
+
+        ReadOnlyPerson person = (ReadOnlyPerson) otherPerson;
+        String firstField = this.getName().toString();
+        String secondField = person.getName().toString();
+
+        if (sortCriteria.equals("email")) {
+            firstField = this.getEmail().toString();
+            secondField = person.getEmail().toString();
+
+        } else if (sortCriteria.equals("phone")) {
+            firstField = this.getPhone().toString();
+            secondField = person.getPhone().toString();
+
+        } else if (sortCriteria.equals("address")) {
+            firstField = this.getAddress().toString();
+            secondField = person.getAddress().toString();
+        } else {
+            return firstField.compareTo(secondField);
+        }
+
+        // If a field is "Not Set" put the corresponding person at the end of the list.
+        if (firstField.equals("Not Set") && secondField.equals("Not Set")) {
+            return 0;
+        } else if (!firstField.equals("Not Set") && secondField.equals("Not Set")) {
+            return -1;
+        } else if (firstField.equals("Not Set") && !secondField.equals("Not Set")) {
+            return 1;
+        } else {
+            return firstField.compareTo(secondField);
+        }
+
     }
 
 }

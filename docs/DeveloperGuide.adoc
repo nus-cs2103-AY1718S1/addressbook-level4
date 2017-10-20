@@ -396,12 +396,40 @@ The temporary contact is implemented this way:
 As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
 minute
 
+
+// tag::import[]
+=== Import mechanism
+
+The import mechanism is essentially adding multiple contacts to the address book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
+
+One consideration of this mechanism is that contacts with identical names will not be added as the current address book is regarded as the most updated version and the import feature aims to only facilitate addition of new contacts.
+
+The Import Command is implemented this way, where user will specify the filePath:
+[source,java]
+----
+public ImportCommand(String filePath) {
+       this.filePath = filePath;
+}
+----
+
+[NOTE]
+If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
+
+The following activity diagram summarize what happens inside the `ImportCommand` when a user executes this command:
+
+image::ImportCommandActivityDiagram.png[width="300"]
+
+Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting. It supports adding of new contacts and will skip known contacts residing in the address book.
+
+
 
 === Editing Documentation
 

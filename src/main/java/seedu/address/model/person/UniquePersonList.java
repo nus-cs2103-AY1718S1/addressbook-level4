@@ -26,6 +26,7 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+    private String currentlySortedBy = "name";
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -46,6 +47,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+        this.sortBy(currentlySortedBy);
     }
 
     /**
@@ -68,6 +70,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, new Person(editedPerson));
+        this.sortBy(currentlySortedBy);
     }
 
     /**
@@ -81,6 +84,7 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
+        this.sortBy(currentlySortedBy);
         return personFoundAndDeleted;
     }
 
@@ -94,12 +98,29 @@ public class UniquePersonList implements Iterable<Person> {
             replacement.add(new Person(person));
         }
         setPersons(replacement);
+        sortBy(currentlySortedBy);
+    }
+
+    /**
+     * Sorts the Person's List by sorting criteria
+     */
+    public void sortBy(String sortCriteria) {
+        this.currentlySortedBy = sortCriteria;
+        for (Person p : internalList) {
+            p.setComparator(sortCriteria);
+        }
+        FXCollections.sort(internalList);
+    }
+
+    public String getCurrentlySortedBy() {
+        return this.currentlySortedBy;
     }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
+        sortBy(currentlySortedBy);
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
