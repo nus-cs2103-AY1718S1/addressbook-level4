@@ -6,6 +6,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -41,11 +42,14 @@ public class PersonCard extends UiPart<Region> {
     private Label id;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView favicon;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        favicon.setVisible(false);
         initTags(person);
         bindListeners(person);
     }
@@ -60,6 +64,8 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             initTags(person);
         });
+        favicon.visibleProperty().bind(Bindings.createBooleanBinding(() -> person.getFavourite().value));
+
     }
 
     private static String setTagColour(String tagName) {

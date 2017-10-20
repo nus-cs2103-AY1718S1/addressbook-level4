@@ -82,7 +82,7 @@ public class BrowserPanel extends UiPart<Region> {
         cir.setStroke(Color.valueOf("#3fc380"));
         cir.setStrokeWidth(5);
         cir.setStrokeDashOffset(20);
-        Image img = new Image("images/noimage.png");
+        Image img = new Image("images/maleIcon.png");
         cir.setFill(new ImagePattern(img));
         contactImagePlaceholder.setCenter(cir);
         easeIn(cir);

@@ -345,6 +345,45 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Sorting
+The sort mechanism is facilitated by `SortCommand`, which extends `UndoableCommand`.
+It supports the sorting of persons in the address book by the `PREFIX` specified.
+If the `r` flag is specified, the list of persons will be sorted in descending order.
+
+The sorting of persons occur in `UniquePersonList`, where a call to `Collections.sort` is
+made with the respective comparator and a `isReverse` boolean flag as parameters.
+
+The sequence diagram below details the flow the execution of a `sort n/r` command.
+
+image::SortSequenceDiagram.png[width="800"]
+
+The execution of `sort` results in the reordering of the in-memory `UniquePersonList`.
+However, the change is transient and the order of the list will return to its
+original starting order as when the App initializes.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `sort` +
+**Alternative 1 (current choice):** Sort persons through `UniquePersonList` +
+**Pros:** Imputes responsibility of sorting to `UniquePersonList`, which is the class person list is declared from. +
+This results in fine-grained, total control over anything to do with a person list and future implementations
+will be easier and more complete. +
+**Cons:** Hard for new developers to understand the flow of sorting execution. +
+**Alternative 2:** Perform `sort` at `ModelManager` or `AddressBook` level +
+**Pros:** New developers will have an easier time tracing the sort execution flow. +
+**Cons:** `ModelManager` or `AddressBook` will be highly coupled with the sort function and
+any future changes to these classes may be more contrived and difficult.
+
+---
+
+**Aspect:** Sort Persistence +
+**Alternative 1 (current choice):** The address book is not saved after sorting. +
+**Pros:** Users may want to sort for their current session only. +
+**Cons:** Sorting order is not retained when the program exits. +
+**Alternative 2:** Save address book after every sort +
+**Pros:** Sorting order is preserved after program exits. +
+**Cons:** The original order of the address book is lost during every sort.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

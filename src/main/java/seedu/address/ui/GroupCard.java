@@ -4,7 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.group.ReadOnlyGroup;
 
 
 /**
@@ -22,26 +22,26 @@ public class GroupCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final ReadOnlyPerson person;
+    public final ReadOnlyGroup group;
 
     @FXML
     private Label groupName;
     @FXML
     private Label groupId;
 
-    public GroupCard(ReadOnlyPerson person, int displayedIndex) {
+    public GroupCard(ReadOnlyGroup group, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.group = group;
         groupId.setText(displayedIndex + ". ");
-        bindListeners(person);
+        bindListeners(group);
     }
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
-    private void bindListeners(ReadOnlyPerson person) {
-        groupName.textProperty().bind(Bindings.convert(person.nameProperty()));
+    private void bindListeners(ReadOnlyGroup group) {
+        groupName.textProperty().bind(Bindings.convert(group.nameProperty()));
     }
 
     @Override
@@ -59,6 +59,6 @@ public class GroupCard extends UiPart<Region> {
         // state check
         GroupCard card = (GroupCard) other;
         return groupId.getText().equals(card.groupId.getText())
-                && person.equals(card.person);
+                && group.equals(card.group);
     }
 }
