@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.control.Button?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -27,9 +26,8 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <ImageView fx:id="picture"/>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-        <Button onAction="#handleAddImage">+</Button>
+        <ImageView fx:id="picture"/>
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
