@@ -27,7 +27,11 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -139,10 +143,15 @@ public class TagAddCommandTest {
 
     @Test
     public void tagAddDescriptorTest()throws Exception {
-        PersonBuilder personBuilder = new PersonBuilder();
-        personBuilder.withName("Name").withAddress("Address").withEmail("Email@email.com")
-                .withPhone("123").withTags("Tags");
-        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor(personBuilder.build());
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("Tags"));
+        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor();
+        tagAddDescriptor.setName(new Name("Name"));
+        tagAddDescriptor.setAddress(new Address("Address"));
+        tagAddDescriptor.setEmail(new Email("Email@email.com"));
+        tagAddDescriptor.setPhone(new Phone("123"));
+        tagAddDescriptor.setTags(tagSet);
+
         TagAddDescriptor toCopy = new TagAddDescriptor(tagAddDescriptor);
 
         assertTrue(tagAddDescriptor.equals(toCopy));
