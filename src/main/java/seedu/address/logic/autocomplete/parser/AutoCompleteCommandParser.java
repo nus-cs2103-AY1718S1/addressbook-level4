@@ -3,7 +3,9 @@ package seedu.address.logic.autocomplete.parser;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.logic.autocomplete.CommandWordUsageTuple;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -53,12 +55,9 @@ public class AutoCompleteCommandParser implements AutoCompleteParser {
     public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleCommands = new LinkedList<String>();
 
-        for (CommandWordUsageTuple commandTuple : COMMAND_WORDS_LIST) {
-            if (AutoCompleteUtils.startWithSameLetters(stub, commandTuple.getCommandWord())) {
-                possibleCommands.add(commandTuple.getCommandUsage());
-            }
-        }
-
+        possibleCommands.addAll(COMMAND_WORDS_LIST.stream()
+                .filter(commandTuple -> AutoCompleteUtils.startWithSameLetters(stub, commandTuple.getCommandWord()))
+                .map(commandTuple -> commandTuple.getCommandUsage()).collect(Collectors.toList()));
         possibleCommands.add(stub);
 
         return possibleCommands;

@@ -1,8 +1,12 @@
 package seedu.address.logic.autocomplete.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.model.Model;
 
 /** Parses the possible names that the user might have been trying to type,
@@ -20,11 +24,14 @@ public class AutoCompleteNameParser implements AutoCompleteParser {
         final LinkedList<String> possibleNames = new LinkedList<String>();
         final List<String> allNames = model.getAllNamesInAddressBook();
 
-        for (String name : allNames) {
-            if (AutoCompleteUtils.startWithSameLetters(stub, name)) {
-                possibleNames.add(name);
-            }
-        }
+        int prefixPosition = AutoCompleteUtils.findPrefixPosition(stub, PREFIX_NAME.toString());
+        String staticStub = stub.substring(0, prefixPosition);
+        String namePart = stub.substring(prefixPosition, stub.length());
+
+        possibleNames.addAll(allNames.stream()
+                .filter(name -> AutoCompleteUtils.startWithSameLetters(namePart, name))
+                .map(filteredName -> staticStub + filteredName).collect(Collectors.toList()));
+        possibleNames.add(stub);
 
         return possibleNames;
     }
