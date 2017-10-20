@@ -20,12 +20,25 @@ public class Picture {
         this.pictureUrl = PLACEHOLDER_IMAGE;
     }
 
+    /**
+     * @return pictureUrl
+     */
     public String getPictureUrl() {
         return pictureUrl;
     }
 
+    /**
+     * @param pictureUrl: Name of image which will be appended to contact_images directory
+     */
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = BASE_URL + pictureUrl;
+    }
+
+    /**
+     * Resets picture of person to original placeholder
+     */
+    public void resetPictureUrl() {
+        this.pictureUrl = PLACEHOLDER_IMAGE;
     }
 
 }
