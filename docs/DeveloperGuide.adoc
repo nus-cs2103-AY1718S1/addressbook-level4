@@ -524,16 +524,16 @@ When `TAB` is pressed, the current input in the command box is checked against t
 * If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
 At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
 
-image::AutoCompletionAfterTab.png
+image::AutoCompletionAfterTab.png[]
 
 * If the input is already in the required format of the add command, the `TAB` is meant to navigate to the next input field (only `add` command require multiple fields).
 The current caret position is checked and used to determine the current field the user is at.
 The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
 
-image::AutoCompletionNextField.png
+image::AutoCompletionNextField.png[]
 
 Below is an activity diagram for `TAB` keypress which activates autocompletion.
-image::AutoCompleteActivityDiagram.png
+image::AutoCompleteActivityDiagram.png[width="800"]
 
 ==== Design Considerations
 
