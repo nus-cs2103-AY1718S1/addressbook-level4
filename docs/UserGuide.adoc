@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= KayPoh! - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -50,37 +50,119 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help: `help`
 
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to the address book. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [f/] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+A person can be favorited just by specifying the prefix `f/` (if unspecified, the person added will not a favorite contact)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Rob Cross p/92456877 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Favoriting contacts: `fav`
 
+Adds the specified person(s) into a list of favorite contacts. +
+Format: `fav INDEX [ADDITIONAL INDEXES]`
+
+****
+* Adds the person(s) as a favorite contact at the specified `INDEX` or `INDEXES`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`fav 2` +
+Adds the 2nd person in the address book as a favorite contact.
+* `list` +
+`fav 1 2 3` +
+Adds the 1st, 2nd and 3rd person in the address book as favorite contacts.
+* `find Betsy` +
+`fav 1` +
+Adds the 1st person in the results of the `find` command as a favorite contact.
+
+=== Unfavoriting contacts: `unfav`
+
+Removes the specified person(s) from the list of favorite contacts. +
+Format: `unfav INDEX [ADDITIONAL INDEXES]`
+
+****
+* Removes the person(s) from the list of favorite contacts at the specified `INDEX` or `INDEXES`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`unfav 2` +
+Removes the 2nd person in the address book from the list of favorite contacts.
+* `list` +
+`unfav 1 2 3` +
+Removes the 1st, 2nd and 3rd person in the address book from the list of favorite contacts.
+* `find Betsy` +
+`unfav 1` +
+Removes the 1st person in the results of the `find` command from the list of favorite contacts.
+
+=== Listing persons: `list`
+
+Shows a specific list of persons in the address book based on user's specified option. +
+Format: `list [OPTION]`
+
+Options: +
+
+* Default (no option specified) +
 Shows a list of all persons in the address book. +
-Format: `list`
+* `fav` [Coming in v2.0] +
+Shows a list of all favorite persons in the address book.
 
-=== Editing a person : `edit`
+Example:
+
+* `list`
+* `list fav` [Coming in v2.0] +
+
+=== Sorting persons [Coming in v2.0]: `sort`
+
+Sorts the list of persons in the last person listing. +
+Format: `sort SORT_CRITERIA`
+****
+* Sorts the list of persons in the last person listing based on the specified `SORT_CRITERIA`.
+* `SORT_CRITERIA` must be one of the following options:
+** `name` - Sorts contacts by their name in alphabetical order.
+** `tag` - Sorts contacts by tags in alphabetical order. Contacts with multiple tags will appear more than once.
+** `recent` - Sorts contacts based on how recently they are selected.
+****
+
+Examples:
+
+* `list` +
+`sort name` +
+lists all contacts in the address book, sorted by name
+* `find bob` +
+`sort tag` +
+lists all the contacts that contain the keyword `bob`, sorted based on their tags.
+
+=== Editing a person: `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* To change a person's favorite status, you can either specify `f/` or `uf/`.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
@@ -89,10 +171,32 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 f/` +
+Favorites the 2nd person in the address book.
+* `edit 3 uf/` +
+Unfavorites the 3rd person in the address book.
+* `edit 4 n/Betsy Crower t/` +
+Edits the name of the 4th person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Adding multiple fields for contacts [Coming in v2.0]
+
+Edits an existing person in the address book. +
+Format: `addf INDEX [p/PHONE]`
+
+****
+* Adds another field for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `addf 1 p/87654321` +
+Adds the phone number 87654321 to the first person.
+
+
+=== Locating contacts: `find`
+
+==== To find a contact by name:
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -112,7 +216,20 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+[[find-by-tag]]
+==== To find a contact by tag [Coming in v2.0]:
+
+Finds persons who are assigned the input tag. +
+Format: `find t/TAG`
+
+Examples:
+
+* `find t/colleagues` +
+Returns all contacts with the tag `colleagues`
+
+=== Deleting contacts: `delete`
+
+==== To delete a single person:
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -132,7 +249,39 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+==== To delete multiple persons:
+
+Deletes the specified person from the address book. +
+Format: `delete INDEX...`
+
+****
+* Deletes the persons at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The indexes *must be listed in descending order* e.g. 8 7 6 ...
+****
+
+Examples:
+
+* `list` +
+`delete 8 7` +
+Deletes the 8th and 7th person in the address book.
+
+==== To delete contacts with a certain tag [Coming in v2.0]:
+
+Deletes all contacts that have a certain tag from the address book. +
+Format: `delete t/TAG`
+
+[NOTE]
+All contacts with the input tag will be deleted.
+Make sure that none of the contacts that you do not intend to delete have the input tag.
+You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
+
+Examples:
+* `delete t/temp`
+Deletes all contacts with the tag `temp`
+
+=== Selecting a person: `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -152,7 +301,42 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Adding social media accounts to contacts
+
+==== To add a Facebook account:
+
+Adds a Facebook account with the username provided to the person identified by the index
+Format: `addfacebook INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addfacebook 1 alexyeoh` +
+Adds a Facebook username 'alexyeoh' to the first person in the address book.
+
+==== To add a Instagram account:
+
+Adds an Instagram account with the username provided to the person identified by the index
+Format: `addinstagram INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addinstagram 1 alexyeoh` +
+Adds an Instagram username 'alexyeoh' to the first person in the address book.
+
+==== To add a Twitter account:
+
+Adds a Twitter account with the username provided to the person identified by the index
+Format: `addtwitter INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addfacebook 1 alexyeoh` +
+Adds a Twitter username 'alexyeoh' to the first person in the address book.
+
+=== Listing entered commands: `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -163,7 +347,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command: `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -189,7 +373,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command: `redo`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -212,12 +396,92 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Adding display photo for a person: `addphoto` [Coming in v2.0]
+
+Adds a display photo for a person. +
+Format: `addphoto INDEX FILE_PATH`
+
+****
+* Adds a display photo for the person at the specified `INDEX`, using the file at the location specified by `FILE_PATH`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The input `FILE_PATH` must be an absolute file path, e.g.
+** `/Users/seedu/Pictures/photo.jpg` for macOS and Linux
+** `c:\Users\seedu\Pictures\photo.jpg` for Windows
+****
+
+Examples:
+
+* `list` +
+`addphoto 2 /Users/seedu/Pictures/photo.jpg` +
+Adds the specified display photo for the 2nd person in the address book.
+* `find Betsy` +
+`addphoto 1 /Users/seedu/Pictures/betsy.jpg` +
+Adds the specified display photo for the 1st person in the results of the `find` command.
+
+[NOTE]
+====
+If the person already has an existing display photo, issuing this command will update it to the new photo specified.
+====
+
+=== Exporting contact data: `export`
+
+Exports contact data to an external file. +
+Format: `export FILE_PATH`
+
+****
+* Exports contact data to the location specified by `FILE_PATH`. The user must have *write access* to the specified file path.
+* The input `FILE_PATH` must be an absolute file path.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+****
+
+Examples:
+
+* `export /Users/seedu/Documents/exportData.xml` +
+exports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+=== Importing contact data: `import`
+
+Imports contact data from an external file. +
+Format: `import FILE_PATH`
+
+****
+* Imports contact data from data file at the location specified by `FILE_PATH`. The user must have *read access* to the specified file path.
+* The input `FILE_PATH` must be an absolute file path, e.g.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+****
+
+Examples:
+
+* `import /Users/seedu/Documents/exportData.xml` +
+imports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+=== Changing theme [Coming in v2.0]
+
+Changes the theme of the program for a different look and feel. +
+Format: `theme [OPTION]`
+
+Options:
+
+* `light` +
+Changes the theme of the program to a light color scheme.
+* `dark` +
+Changes the theme of the program to a dark color scheme.
+
+Example:
+
+* `theme light`
+* `theme dark`
+
+=== Clearing all entries: `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+
+=== Exiting the program: `exit`
 
 Exits the program. +
 Format: `exit`
@@ -226,6 +490,23 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Synchronizing with the cloud [Coming in v2.0]:
+
+==== Configuring your cloud account: `sync`
+
+Configures the addressbook to synchronize with the cloud using the given user credentials. +
+Format: `sync u/USERNAME p/PASSWORD`
+
+==== Synchronizing
+Address book data is automatically synchronized with cloud when an internet connection is available. +
+There is no need to synchronize manually.
+
+==== Removing your cloud account: `unsync`
+
+Stops synchronizing of contact information with any previously configured cloud accounts. +
+Format: `unsync`
+
 
 == FAQ
 
