@@ -10,7 +10,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
@@ -51,12 +50,11 @@
             <children>
                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" StackPane.alignment="TOP_CENTER">
                   <children>
-                     <ImageView fitHeight="120.0" fitWidth="340.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="164.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../images/logo.png" />
+                           <Image url="@../images/logo2.png" />
                         </image>
                      </ImageView>
-                     <Text fx:id="logo" fill="#56f80a" strokeType="OUTSIDE" strokeWidth="0.0" text="ModU" />
                   </children>
                </VBox>
             </children>

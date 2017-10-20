@@ -105,7 +105,7 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #30E3CA;
+    -fx-background-color: #00cc99;
 }
 
 .list-cell:filled:odd {
@@ -115,7 +115,7 @@
 .list-cell:filled:selected {
      -fx-border-color: yellow;
      -fx-border-width: 1;
-    -fx-background-color: #E4F9F5;
+    -fx-background-color: #ffff99;
 }
 
 .list-cell:filled:selected #cardPane {
