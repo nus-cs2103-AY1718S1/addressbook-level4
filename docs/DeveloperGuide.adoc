@@ -347,10 +347,14 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::favourite[]
-=== Favourite a contact
+=== Favourite mechanism
 To favourite a contact is achieved by `FavouriteCommand`, which is a subclass of `UndoableCommand`. It basically changes the value of the `Favourite` field of a `Person`.
 
 In this sense, `Favourite` class need to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is "False".
+
+The following sequence diagram shows how a `FavouriteCommand` is processed:
+
+image::FavouriteSequenceDiagram.png[width="800"]
 
 To make the default status of a `Favourite` field "False", the default constructor of `Favourite` is implemented in this way:
 [source,java]
