@@ -4,7 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.util.DateUtil.checkLeapYear;
+import static seedu.address.model.util.DateUtil.compareDates;
+import static seedu.address.model.util.DateUtil.convertStringToDate;
 import static seedu.address.model.util.DateUtil.formatDate;
+import static seedu.address.model.util.DateUtil.getMonthFromString;
 import static seedu.address.model.util.DateUtil.isValidDateFormat;
 
 import java.util.Date;
@@ -69,5 +72,41 @@ public class DateUtilTest {
         assertTrue(isValidDateFormat(sampleDateInput2));
         assertTrue(isValidDateFormat(sampleDateInput3));
         assertTrue(isValidDateFormat(sampleDateInput4));
+    }
+
+    @Test
+    public void convertStringToDateTest() {
+        assertEquals(convertStringToDate(sampleDate1), sampleDateClass1);
+        assertEquals(convertStringToDate(sampleDate2), sampleDateClass2);
+        assertEquals(convertStringToDate(sampleDate3), sampleDateClass3);
+        assertEquals(convertStringToDate(sampleDate4), sampleDateClass4);
+    }
+
+    @Test
+    public void getMonthFromStringTest() {
+        assertEquals(1, getMonthFromString("Jan"));
+        assertEquals(2, getMonthFromString("Feb"));
+        assertEquals(3, getMonthFromString("Mar"));
+        assertEquals(4, getMonthFromString("Apr"));
+        assertEquals(5, getMonthFromString("May"));
+        assertEquals(6, getMonthFromString("Jun"));
+        assertEquals(7, getMonthFromString("Jul"));
+        assertEquals(8, getMonthFromString("Aug"));
+        assertEquals(9, getMonthFromString("Sep"));
+        assertEquals(10, getMonthFromString("Oct"));
+        assertEquals(11, getMonthFromString("Nov"));
+        assertEquals(12, getMonthFromString("Dec"));
+    }
+
+    @Test
+    public void compareDateTest() {
+        //same date
+        assertTrue(compareDates(new Date(), new Date()));
+        //first date before second one
+        assertTrue(compareDates(sampleDateClass1, sampleDateClass2));
+        assertTrue(compareDates(sampleDateClass3, sampleDateClass4));
+        //second date before first one
+        assertFalse(compareDates(sampleDateClass2, sampleDateClass1));
+        assertFalse(compareDates(sampleDateClass4, sampleDateClass3));
     }
 }

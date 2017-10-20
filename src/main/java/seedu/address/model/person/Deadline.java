@@ -1,8 +1,12 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.util.DateUtil.compareDates;
+import static seedu.address.model.util.DateUtil.convertStringToDate;
 import static seedu.address.model.util.DateUtil.formatDate;
 import static seedu.address.model.util.DateUtil.isValidDateFormat;
+
+import java.util.Date;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -37,6 +41,17 @@ public class Deadline {
             }
             this.value = trimmedDeadline;
             this.valueToDisplay = formatDate(trimmedDeadline);
+        }
+    }
+
+    /**
+     * Validates if deadline created is before date borrowed.
+     */
+    public void checkDateBorrow(Date dateBorrow) throws IllegalValueException {
+        if (valueToDisplay.equals(NO_DEADLINE_SET)) {
+            return;
+        } else if (!compareDates(dateBorrow, convertStringToDate(valueToDisplay))) {
+            throw new IllegalValueException("Deadline cannot be before Date borrowed");
         }
     }
 

@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -58,6 +59,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             Debt debt = ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).get();
             Interest interest = ParserUtil.parseInterest(argMultimap.getValue(PREFIX_INTEREST)).get();
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
+            if (!deadline.value.equals(Deadline.NO_DEADLINE_SET)) {
+                //check if deadline entered is before the date borrowed
+                deadline.checkDateBorrow(new Date());
+            }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             //{@code DateBorrow} and {@code DateRepaid} fields are created within {@code Person} class
