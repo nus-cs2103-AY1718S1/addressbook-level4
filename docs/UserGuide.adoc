@@ -165,7 +165,7 @@ Format: `addFave INDEX` +
 Alias: `af`
 
 ****
-* Marks the contact  at the specified `INDEX` as 'Favourite'.
+* Marks the contact  at the specified `INDEX` as a 'Favourite'.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -173,7 +173,7 @@ Alias: `af`
 Examples:
 
 * `addFave 1`
-Marks the 1st contact as 'Favourite' in the address book.
+Marks the 1st contact as a 'Favourite' in the address book.
 * `af 1`
 
 === Unmarking a person as 'Favourite': `removeFave`
@@ -183,7 +183,7 @@ Format: `removeFave INDEX` +
 Alias: `rf`
 
 ****
-* Unmarks the contact at the specified `INDEX` as 'Favourite'.
+* Unmarks the contact at the specified `INDEX` as a 'Favourite'.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -191,7 +191,7 @@ Alias: `rf`
 Examples:
 
 * `removeFave 1`
-Unmarks the 1st contact as 'Favourite' in the address book.
+Unmarks the 1st contact as a 'Favourite' in the address book.
 * `af 1`
 
 === Creating a group: `gcreate`

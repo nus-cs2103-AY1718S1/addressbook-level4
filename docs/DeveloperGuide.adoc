@@ -383,6 +383,7 @@ The commands related to the Favourite system rely on the "Favourite" attribute c
 
 **List Command:** Favourite contacts will be loaded before all other contacts.
 // end::faveSystem[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
