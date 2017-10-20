@@ -15,7 +15,7 @@ public class TagCommandParserTest {
     private TagCommandParser parser = new TagCommandParser();
 
     @Test
-    public void parse_validArgs_returnsDeleteCommand() {
+    public void parse_validArgs_returnsTagCommand() {
         TagCommand expectedTagCommand =
                 new TagCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "colleagues")));
         assertParseSuccess(parser, "friends colleagues", expectedTagCommand);

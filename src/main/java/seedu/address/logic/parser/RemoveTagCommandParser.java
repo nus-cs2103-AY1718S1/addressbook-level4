@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new RemoveTagCommand object
  */
 public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     private final ArrayList<Tag> tagToRemove = new ArrayList<>();
@@ -28,7 +28,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
         }
 
-        String[] tagKeywords = trimmedArgs.toLowerCase().split("\\s+");
+        String[] tagKeywords = trimmedArgs.split("\\s+");
 
         for (int i = 0; i < tagKeywords.length; i++) {
             try {
@@ -37,7 +37,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
                 throw new ParseException(ive.getMessage(), ive);
             }
         }
-        return new RemoveTagCommand(tagToRemove, tagToRemove.size());
+        return new RemoveTagCommand(tagToRemove);
     }
 
 
