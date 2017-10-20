@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.TEMPORARY_JOE;
 
 import java.util.Arrays;
 
@@ -12,7 +13,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -24,6 +27,22 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    @Test
+    public void deleteTemporaryTest() throws IllegalValueException, PersonNotFoundException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(TEMPORARY_JOE).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+
+        //modelManager has one temporary person inside -> rturns false
+        assertFalse(modelManager.equals(null));
+
+        modelManager.deleteTemporary(addressBook);
+        //deleted temporary person inside modelManager -> returns true
+        assertTrue(modelManager.getAddressBook().getPersonList().size() == 0);
+
     }
 
     @Test

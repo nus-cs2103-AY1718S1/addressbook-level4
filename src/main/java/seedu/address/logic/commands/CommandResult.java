@@ -13,4 +13,7 @@ public class CommandResult {
         this.feedbackToUser = requireNonNull(feedbackToUser);
     }
 
+    public CommandResult(String firstFeedBackToUser, String secondFeedBackToUser) {
+        this.feedbackToUser = requireNonNull(firstFeedBackToUser + "\n" + secondFeedBackToUser);
+    }
 }

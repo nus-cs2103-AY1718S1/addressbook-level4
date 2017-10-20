@@ -1,0 +1,49 @@
+= Glenice Tan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Immunity Book
+Immunity Book is a newly conceptualised contact book that is secure, efficient and handy for users with everchaning contact list.
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Backup Storage
+
+==== External behavior
+
+---
+#Start of Backup [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Backup#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=improving-each-component]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `backup`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

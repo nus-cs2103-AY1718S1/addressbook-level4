@@ -45,6 +45,7 @@ public class ArgumentTokenizer {
 
     /**
      * {@see findAllPrefixPositions}
+     * Retuns an ArrayList of PrefixPosition objects which store the type of prefix and its index of occurence.
      */
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
         List<PrefixPosition> positions = new ArrayList<>();

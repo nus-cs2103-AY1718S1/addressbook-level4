@@ -175,6 +175,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    public UniquePersonList getUniquePersonList() {
+        return persons;
+    }
+
+
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();

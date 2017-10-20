@@ -27,3 +27,14 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+notifications:
+  slack: nus-cs2103:mw31hzN1bQoqoeYxKVNpwQKo
+  webhooks:
+    urls:
+    - 'https://webhook.atomist.com/atomist/travis/teams/T6J2055U1'
+    on_cancel: always
+    on_error: always
+    on_start: always
+    on_failure: always
+    on_success: always
