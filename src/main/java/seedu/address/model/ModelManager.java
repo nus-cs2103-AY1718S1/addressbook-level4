@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AliasTokenChangedEvent;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
 import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
@@ -72,6 +73,14 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    private void indicateAliasTokenAdded(ReadOnlyAliasToken token) {
+        raise(new AliasTokenChangedEvent(token, AliasTokenChangedEvent.Action.Added));
+    }
+
+    private void indicateAliasTokenRemoved(ReadOnlyAliasToken token) {
+        raise(new AliasTokenChangedEvent(token, AliasTokenChangedEvent.Action.Removed));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -98,12 +107,14 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addAliasToken(ReadOnlyAliasToken toAdd) throws DuplicateTokenKeywordException {
         addressBook.addAliasToken(toAdd);
         indicateAddressBookChanged();
+        indicateAliasTokenAdded(toAdd);
     }
 
     @Override
-    public synchronized void removeAliasToken(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
+    public synchronized void deleteAliasToken(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
         addressBook.removeAliasToken(toRemove);
         indicateAddressBookChanged();
+        indicateAliasTokenRemoved(toRemove);
     }
 
     @Override

@@ -2,9 +2,12 @@ package seedu.address.logic;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AliasTokenChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -47,6 +50,7 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
+            command.setLogic(this);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
@@ -71,17 +75,49 @@ public class LogicManager extends ComponentManager implements Logic {
      * Loads existing aliases in model into addressBookParser
      */
     private void loadAllAliasTokens() {
-        ObservableList<ReadOnlyAliasToken> allAliasTokens = model.getAddressBook().getAliasTokenList();
+        ObservableList<ReadOnlyAliasToken> allAliasTokens = model.getFilteredAliasTokenList();
         for (ReadOnlyAliasToken token : allAliasTokens) {
             addressBookParser.addAliasToken(token);
         }
+    }
 
+    @Subscribe
+    public void handleAliasTokenChangedEvent(AliasTokenChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(
+                event, "Alias " + event.getAction().toString().toLowerCase()));
+        if (event.getAction().equals(AliasTokenChangedEvent.Action.Added)) {
+            logAliasChangeForParser(
+                    addressBookParser.addAliasToken(event.getToken()),
+                    event.getToken(),
+                    "Successfully added AliasToken %s to main parser",
+                    "Failed to add AliasToken '%s' to parser");
+        } else if (event.getAction().equals(AliasTokenChangedEvent.Action.Removed)) {
+            logAliasChangeForParser(
+                    addressBookParser.removeAliasToken(event.getToken()),
+                    event.getToken(),
+                    "Successfully removed AliasToken '%s' from parser",
+                    "Failed to removed AliasToken '%s' from parser");
+        }
+    }
 
+    /**
+     * Enter result of changed AliasToken with the logger into the main parser.
+     *
+     * @param messageSuccessful The String to be input if the operation is a success
+     * @param messageFailure    The Stringto be input if the operation is a failure
+     */
+    private void logAliasChangeForParser(boolean isSuccessful, ReadOnlyAliasToken tokenChanged,
+                                         String messageSuccessful, String messageFailure) {
+        if (isSuccessful) {
+            logger.info(String.format(messageSuccessful, tokenChanged));
+        } else {
+            logger.warning(String.format(messageFailure, tokenChanged));
+        }
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public boolean isCommandWord(String keyword) {
+        return addressBookParser.isCommandParserRegistered(keyword);
     }
 
     @Override
@@ -90,8 +126,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public boolean isCommandWord(String keyword) {
-        return addressBookParser.isCommandParserRegistered(keyword);
+    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        return model.getFilteredPersonList();
     }
 
     @Override

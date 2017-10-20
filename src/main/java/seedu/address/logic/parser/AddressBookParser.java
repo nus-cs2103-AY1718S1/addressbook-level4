@@ -150,6 +150,7 @@ public class AddressBookParser {
      */
     private String argumentsCheck(String arguments) {
         StringBuilder builder = new StringBuilder();
+        builder.append(" ");
         Matcher matcher = KEYWORD_PATTERN.matcher(arguments);
 
         while (matcher.find()) {
@@ -199,7 +200,7 @@ public class AddressBookParser {
     public boolean removeAliasToken(ReadOnlyAliasToken toRemove) {
         requireNonNull(toRemove);
 
-        ReadOnlyAliasToken token = aliasedTokens.remove(toRemove);
+        ReadOnlyAliasToken token = aliasedTokens.remove(toRemove.getKeyword().keyword);
         if (token != null) {
             return aliasList.remove(token);
         } else {

@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.alias.AliasToken;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.UniqueAliasTokenList;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
@@ -190,7 +189,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws DuplicateTokenKeywordException if another token with same keyword exists.
      */
     public void addAliasToken(ReadOnlyAliasToken toAdd) throws DuplicateTokenKeywordException {
-        aliasTokens.add(new AliasToken(toAdd));
+        aliasTokens.add(toAdd);
     }
 
     /**
@@ -198,8 +197,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws TokenKeywordNotFoundException if no such tokens exists.
      */
-    public void removeAliasToken(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
-        aliasTokens.remove(toRemove);
+    public boolean removeAliasToken(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
+        if (aliasTokens.remove(toRemove)) {
+            return true;
+        } else {
+            throw new TokenKeywordNotFoundException();
+        }
     }
 
     public int getAliasTokenCount() {

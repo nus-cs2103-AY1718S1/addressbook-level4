@@ -74,16 +74,16 @@ public interface Model {
     /**
      * Removes the given AliasToken.
      */
-    void removeAliasToken(ReadOnlyAliasToken target) throws TokenKeywordNotFoundException;
+    void deleteAliasToken(ReadOnlyAliasToken target) throws TokenKeywordNotFoundException;
 
     /**
      * Returns the number of Aliases
      */
     int getAliasTokenCount();
-    
+
     /**
      * Returns an unmodifiable view of the filtered AliasToken list
      */
     ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList();
-    
+
 }

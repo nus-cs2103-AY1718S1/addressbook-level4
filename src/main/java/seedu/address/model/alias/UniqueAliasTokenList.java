@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
@@ -13,8 +12,6 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.parser.Parser;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
 import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
 
@@ -90,12 +87,13 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
      *
      * @throws TokenKeywordNotFoundException if no such AliasToken could be found in the list.
      */
-    public void remove(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
+    public boolean remove(ReadOnlyAliasToken toRemove) throws TokenKeywordNotFoundException {
         requireNonNull(toRemove);
+        final boolean aliasFoundAndDeleted = internalList.remove(toRemove);
         if (!contains(toRemove)) {
             throw new TokenKeywordNotFoundException();
         }
-        internalList.remove(toRemove);
+        return aliasFoundAndDeleted;
     }
 
     /**

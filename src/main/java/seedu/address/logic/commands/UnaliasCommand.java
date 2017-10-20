@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS_KEYWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS_REPRESENTATION;
 
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
@@ -39,7 +38,7 @@ public class UnaliasCommand extends UndoableCommand {
         requireNonNull(model);
 
         ReadOnlyAliasToken toDelete = null;
-        for (ReadOnlyAliasToken token : model.getAddressBook().getAliasTokenList()) {
+        for (ReadOnlyAliasToken token : model.getFilteredAliasTokenList()) {
             if (token.getKeyword().keyword.equals(this.keyword)) {
                 toDelete = token;
                 break;
@@ -51,7 +50,7 @@ public class UnaliasCommand extends UndoableCommand {
                 return new CommandResult(MESSAGE_UNKNOWN_ALIAS);
             }
             toRemove = toDelete;
-            model.removeAliasToken(toRemove);
+            model.deleteAliasToken(toRemove);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toDelete));
         } catch (TokenKeywordNotFoundException e) {
             return new CommandResult(MESSAGE_UNKNOWN_ALIAS);
