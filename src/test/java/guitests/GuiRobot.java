@@ -46,10 +46,6 @@ public class GuiRobot extends FxRobot {
      * unnecessary delays.
      */
     public void pauseForDropDownList() {
-        if (isHeadlessMode) {
-            return;
-        }
-
         sleep(PAUSE_FOR_DROP_DOWN_LIST_TO_APPEAR);
     }
 
