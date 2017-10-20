@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Favourite> favouriteProperty();
+    Favourite getFavourite();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<UniqueGroupList> groupProperty();
