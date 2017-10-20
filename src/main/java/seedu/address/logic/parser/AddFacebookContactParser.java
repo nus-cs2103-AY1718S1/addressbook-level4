@@ -15,6 +15,7 @@ import seedu.address.logic.commands.AddFacebookContactCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -55,8 +56,10 @@ public class AddFacebookContactParser implements Parser<AddFacebookContactComman
             Set<Tag> taglist = new HashSet<Tag>();
             taglist.add(new Tag("facebookcontact"));
 
+            Favorite fav = new Favorite(false);
+
             Person newPerson = new Person(new Name(user.getName()), new Phone("000"), email,
-                    new Address("-"), taglist);
+                    new Address("-"), fav, taglist);
 
             return new AddFacebookContactCommand(newPerson);
         } catch (FacebookException e) {
