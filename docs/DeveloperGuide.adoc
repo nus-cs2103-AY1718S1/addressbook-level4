@@ -488,7 +488,7 @@ UniquePhoneList is a list of Phone object. It will contain at least one local ph
 
 This primary phone number must not be null, and it will be at the front of the UniquePhoneList.
 
-While other additonal numbers are optional. Note that if the person has more than one local phone numbers, the one added first will be the primary number. 
+While other additonal numbers are optional. Note that if the person has more than one local phone numbers, the one added first will be the primary number.
 
 Likewise for UniqueEmailList and UniqueAddressList. The primary email will be NUS webmail and the primary address will be the local address.
 
