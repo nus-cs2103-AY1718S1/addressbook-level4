@@ -583,6 +583,53 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Improvements on DeleteCommand
+
+We have improved the delete command to let it be able to delete by multiple indexes or a name with prefix. The reason why we do this is to improve the efficiency to delete the contacts.The prefix for deleting by name is `n/`. The prefix for deleting by indexes is `I/`.
+
+The way we implemented this is to change the DeleteCommandParser and DeleteCommand.
+
+As for the DeleteCommandParser, we check whether there is the prefix we want in the userInput. Once the prefix is identified, if it is a `n/`, it will directly return back the parameters to DeleteCommand. If it is a `I/`, the parameters will be parsed by ParserUtil and return back the results to DeleteCommand.
+
+As for the DeleteCommand, it can deal with two kinds of parameters: a list of indexes or a name string. If it is a list of indexes, the DeleteCommand will check whether the indexes are within the size of all persons and assert command failure if there is an illegal index. If it is a name string, the DeleteCommand will assert command failure when there is no such person in the list with name given and when there are multiple persons with the same name given.
+
+[NOTE]
+If the parameter doesn't start with correct prefix, then the command can't identify what kind of input it deals with, and a `ParseException` will be thrown when parsing.
+
+[NOTE]
+If the parameter contains illegal values or nothing after the prefix, the the command can't identify the target person, and a `ParseException` will be thrown when parsing.
+
+[NOTE]
+If the parameter is index and it is out of bound of person list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
+
+[NOTE]
+If the parameter is name and there is no person with such name in the list, then the command can't find the person to delete, and a `CommandException` will be thrown when processsing.
+
+Moreover, if there is more than one person in the list with the name give, then the command don't know which one ot delete. It will show all the person with same name in GUI and remind the user to choose one to delete.
+
+
+==== Design Considerations
+
+**Aspect:**  Implementation of `DeleteCommandParser`+
+**Alternative 1 (current choice):**  Add a prefix after the command word to distinguish between delete by name or indexes. +
+**Pros:**  It is more convenient to identify the type of input to deal with.+
+**Cons:**  It is less convenient for users to type in the prefix. +
+**Alternative 2:** Use the type of first input word after command word to differentiate. +
+**Pros:**  It is more convenient for the users to type.+
+**Cons:** It is harder for the developer to find the type if the users give a name with all numbers to a contact.
+
+---
+
+**Aspect:**  How to deal with multiple persons with same name condition +
+**Alternative 1 (current choice):**  Do not delete the persons and show all the persons with the same target name on the list. Remind the user to decide which one to delete. +
+**Pros:**  It considers more about the users. Try to ensure the target is the person who the users want to delete.+
+**Cons:**  It cost users more time to delete a person if they don't know the index of the target. +
+**Alternative 2:** Delete the first person with the name in the list and show it to user. +
+**Pros:**  It cost users less time to delete a person if they know the sequence of the persons with the same name. +
+**Cons:** It is hard to guarantee the right person is deleted. The user may need to redo to fix it.
+
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -959,6 +1006,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |forgetful user |type in alias of commands |choose not to remember specific commands
 
 |`* * *` |lazy user |delete multiple user by index |perform batch deletion
+
+|`* * *` |lazy user |delete user by name |perform faster deletion without finding the index
 
 |`* * *` |worried user |export my contact list to a backup file (separate from data/addressbook.xml) |restore my contact list in case corruption happens
 

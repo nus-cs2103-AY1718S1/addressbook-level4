@@ -168,12 +168,15 @@ Returns list of persons sorted by time added in descending order
 === Deleting a person : `delete` `remove` `-` _[Since v1.2]_
 
 Deletes a group of people from the address book. +
-Format:`delete INDEX INDEX ...`
-(or)`remove INDEX INDEX ...`
-(or)`- INDEX INDEX ...`
+Format:`delete I/INDEX INDEX ...`
+(or)`remove I/INDEX INDEX ...`
+(or)`- I/INDEX INDEX ...`
+(or)`delete n/Name `
+(or)`remove n/Name`
+(or)`- n/Name`
 
 ****
-* Deletes the people at these given specified `INDEX`.
+* Deletes the people with given name or at these given specified `INDEX`.
 * The indexed refer to the index numbers shown in the most recent listing.
 * The indexed *must be a positive integer* 1, 2, 3, ...
 ****
