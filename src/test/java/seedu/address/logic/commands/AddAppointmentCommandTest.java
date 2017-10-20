@@ -53,15 +53,6 @@ public class AddAppointmentCommandTest {
 
         //Set to valid date
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2019/08/08 10:10"));
-        command = new AddAppointmentCommand(index100, calendar);
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        command.setData(model);
-
-        //Out of bounds index
-        thrown.expect(CommandException.class);
-        command.execute();
-
-
 
         command = new AddAppointmentCommand(index1, calendar);
         command.setData(model);
@@ -71,7 +62,9 @@ public class AddAppointmentCommandTest {
                 calendar);
 
         //Command success
-        assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet " + appointment.toString());
+        assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet "
+                + appointment.getPersonName().toString() + " on "
+                + appointment.getDate().toString());
 
         //No appointment set
         command = new AddAppointmentCommand();
@@ -79,6 +72,16 @@ public class AddAppointmentCommandTest {
         result = command.execute();
         assertEquals(result.feedbackToUser, "Rearranged contacts to show upcoming appointments.");
 
+        //Out of bounds index
+        command = new AddAppointmentCommand(index100, calendar);
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model);
+
+        //Out of bounds index
+        thrown.expect(CommandException.class);
+        command.execute();
     }
+
+
 
 }
