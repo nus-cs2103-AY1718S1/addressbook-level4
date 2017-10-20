@@ -3,6 +3,7 @@ package seedu.address.logic;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ColorKeywordCommand;
@@ -76,6 +77,7 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public HashMap<String, String> getCommandKeywordColorMap() {
         HashMap<String, String> keywordColorMap = new HashMap<>();
+<<<<<<< HEAD
         keywordColorMap.put(AddCommand.COMMAND_WORD, "#66ff00"); //Bright green
         keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#ff2800"); //Ferrari red
         keywordColorMap.put(EditCommand.COMMAND_WORD, "#00ffef"); //Turquoise blue
@@ -88,6 +90,20 @@ public class LogicManager extends ComponentManager implements Logic {
         keywordColorMap.put(ClearCommand.COMMAND_WORD, "#746cc0"); //Toolbox
         keywordColorMap.put(UndoCommand.COMMAND_WORD, "#dbd7d2"); //Timberwolf
         keywordColorMap.put(RedoCommand.COMMAND_WORD, "#0abab5"); //Tiffany blud
+=======
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "#99CC33");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#CCCCCC");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "#FFFF66");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "#0099FF");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "#CCCC33");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "#0099CC");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "#CCFF66");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "#99CCFF");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "#4AFF33");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "#999999");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "#669999");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "#ABCDEF");
+>>>>>>> master
         keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "#ABCDED");
         keywordColorMap.put(HistoryCommand.COMMAND_WORD, "#ffcc00"); //Tangerline yellow
         keywordColorMap.put(ViewCommand.COMMAND_WORD, "#f28500"); //Tangerine

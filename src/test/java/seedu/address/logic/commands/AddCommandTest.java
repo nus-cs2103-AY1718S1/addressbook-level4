@@ -22,6 +22,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+<<<<<<< HEAD
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.Location;
@@ -30,6 +31,17 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.testutil.LessonBuilder;
+=======
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.predicates.FavourListPredicate;
+import seedu.address.testutil.PersonBuilder;
+>>>>>>> master
 
 public class AddCommandTest {
 
@@ -122,6 +134,12 @@ public class AddCommandTest {
 
 
         @Override
+        public FavourListPredicate getFavourListPredicate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -143,7 +161,16 @@ public class AddCommandTest {
         }
 
         @Override
+<<<<<<< HEAD
         public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+=======
+        public void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException {
+
+        }
+
+        @Override
+        public void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException {
+>>>>>>> master
             fail("This method should not be called.");
         }
 

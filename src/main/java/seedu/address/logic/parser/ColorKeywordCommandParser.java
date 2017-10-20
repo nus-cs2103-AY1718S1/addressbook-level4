@@ -1,10 +1,18 @@
 package seedu.address.logic.parser;
 
+<<<<<<< HEAD
 import seedu.address.logic.commands.ColorKeywordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+=======
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.ColorKeywordCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+>>>>>>> master
 /**
  * Parses input arguments and creates a new ColorKeywordCommand object
  */

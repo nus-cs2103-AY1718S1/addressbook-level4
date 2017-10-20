@@ -2,11 +2,20 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_LESSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+<<<<<<< HEAD
 import static seedu.address.testutil.TypicalLessons.CS2101_L1;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.MA1101R_T1;
 import static seedu.address.testutil.TypicalLessons.MA1101R_T2;
+=======
+
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+>>>>>>> master
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +127,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+<<<<<<< HEAD
         /* Case: find address of lesson in address book -> 0 lessons found */
         command = FindCommand.COMMAND_WORD + " " + MA1101R_L1.getClassType().value;
         assertCommandSuccess(command, expectedModel);
@@ -136,6 +146,35 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         /* Case: find tags of lesson in address book -> 0 lessons found */
         List<Lecturer> lecturers = new ArrayList<>(MA1101R_L1.getLecturers());
         command = FindCommand.COMMAND_WORD + " " + lecturers.get(0).lecturerName;
+=======
+        /* Case: find phone number of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book-> 3 persons found
+        *  as all 3 persons have "street" in their address
+        */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, DANIEL, GEORGE, CARL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email of person in address book -> 1 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tags of person in address book -> 0 persons found */
+        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
+        command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setFilteredList(expectedModel);
+>>>>>>> master
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

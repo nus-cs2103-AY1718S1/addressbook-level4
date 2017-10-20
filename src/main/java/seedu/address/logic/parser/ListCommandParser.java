@@ -29,8 +29,13 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
     private boolean isValidAttribute(String args) {
+<<<<<<< HEAD
         return args.equals(ListCommand.LOCATION_KEYWORD) || args.equals(ListCommand.MODULE_KEYWORD)
                 || args.equals(ListCommand.FAVOURITE_LIST_KEYWORD);
+=======
+        return args.equals(ListCommand.ATTRIBUTE_ADDRESS) || args.equals(ListCommand.ATTRIBUTE_EMAIL)
+                || args.equals(ListCommand.ATTRIBUTE_PHONE) || args.equals(ListCommand.ATTRIBUTE_COLLECTION);
+>>>>>>> master
     }
 
 }
