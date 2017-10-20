@@ -30,6 +30,21 @@ public class BanCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
+    public void execute_banPersonTwice_success() throws Exception {
+        ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        String expectedMessage = BanCommand.MESSAGE_BAN_PERSON_FAILURE;
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.addBlacklistedPerson(personToBan);
+
+        prepareCommand(INDEX_FIRST_PERSON).execute();
+        BanCommand banCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         BanCommand banCommand = prepareCommand(INDEX_FIRST_PERSON);

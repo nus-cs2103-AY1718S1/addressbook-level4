@@ -14,6 +14,23 @@ endif::[]
 
 By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
+== About
+
+This user guide will give you an overview of how to use Codii.
+This guide includes step-by-step instructions on how each command work, FAQs and a summary of every command you will learn.
+
+The terms used in this guide are as follows: +
+
+* Blacklist - List of people who are banned +
+* Index - The ordering of a contact in the list
+
+== Introduction
+
+Codii is a free to use address book catered to suit the needs of debt collectors. You can enter debtors into Codii,
+track the amount of debt owed, manage deadlines, ban and unban debtors and even organise them by location.
+
+Codii is available for the Linux, Windows, and Mac OS operating systems.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -24,13 +41,15 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI, as seen in Figure 1.1 below, should appear in a few seconds.
 +
-image::UiStartUp.png[width="790"]
+image::UiStartUp.PNG[width="790"]
+_Figure 1.1 : Codii login page_
 +
-.  Log into the app using the format specified in the welcome screen.
+.  Log into the app using the format specified in the welcome screen. The application should look similar to Figure 1.2 after clicking on a person in the left panel.
 +
 image::Ui.png[width="790"]
+_Figure 1.2 : Full information of the person that is selected in the left panel_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -69,14 +88,14 @@ Examples:
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a debtor: `add`
 
-Adds a person to the address book. Date borrowed for person is automatically +
+Adds a debtor to the address book. Date borrowed for debtor is automatically +
 noted down. As for Deadline, it is optional. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/Debt [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A debtor can have any number of tags (including 0)
 
 Examples:
 
@@ -95,7 +114,7 @@ Format: `blacklist`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...`
 
 ****
@@ -134,13 +153,13 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Increasing the debt of a person: `borrow`
+=== Increasing the debt of a debtor: `borrow`
 
-Increase the debt of a person by the amount entered. +
+Increase the debt of a debtor by the amount entered. +
 Format: `borrow INDEX AMOUNT`
 
 ****
-* Increases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
 * `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
 ****
 
@@ -171,9 +190,9 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Banning a person : `ban`
+=== Banning a debtor : `ban`
 
-Adds the specified person from current records to blacklist. +
+Adds the specified debtor from current records to blacklist. +
 Format: 'ban INDEX'
 
 ****
@@ -191,7 +210,7 @@ Adds the 2nd person in the address book to blacklist.
 `ban 1` +
 Adds the 1st person in the results of the `find` command to blacklist.
 
-=== Unbanning a person : `unban`
+=== Unbanning a blacklisted person : `unban`
 
 Removes the specified person from blacklist. +
 Format: 'unban INDEX'

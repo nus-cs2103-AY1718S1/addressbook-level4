@@ -297,10 +297,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     * @throws IllegalValueException if new {@code Debt} object could not be created.
      */
-    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
-            IllegalValueException {
+    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
         Person editedPerson = new Person(target);
 
         try {
@@ -309,7 +307,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when updating the debt of a person";
-        } catch (IllegalValueException e) {
+        } catch (IllegalValueException ive) {
             assert false : "New debt amount should not be invalid since amount and debt field in target have "
                     + "been validated";
         }

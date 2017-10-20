@@ -16,8 +16,8 @@ public class BlacklistCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.changeListTo(COMMAND_WORD);
         model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        model.changeListTo(COMMAND_WORD);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -21,6 +21,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
+import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -152,6 +153,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addBlacklistedPerson(person);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        changeListTo(BlacklistCommand.COMMAND_WORD);
         indicateAddressBookChanged();
     }
 
@@ -251,11 +253,9 @@ public class ModelManager extends ComponentManager implements Model {
      * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     * @throws IllegalValueException if {@code amount} is invalid.
      */
     @Override
-    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
-            IllegalValueException {
+    public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
         addressBook.addDebtToPerson(target, amount);
         indicateAddressBookChanged();
     }
@@ -313,7 +313,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         syncBlacklist();
-        raise (new ChangeInternalListEvent("blacklist"));
         filteredBlacklistedPersons.setPredicate(predicate);
     }
 

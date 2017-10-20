@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static seedu.address.model.util.DateUtil.convertStringToDate;
 import static seedu.address.model.util.DateUtil.formatDate;
 
 import java.util.Date;
@@ -28,6 +29,9 @@ public class DateBorrow {
         value = date;
     }
 
+    public Date getDate() {
+        return convertStringToDate(value);
+    }
 
     @Override
     public String toString() {

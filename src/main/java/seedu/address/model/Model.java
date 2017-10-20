@@ -121,5 +121,6 @@ public interface Model {
      * Increase the debt of a person by the amount indicated
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
-    void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException;
+    void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException;
+
 }

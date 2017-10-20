@@ -18,6 +18,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -111,7 +112,7 @@ public class EditCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
+                                             EditPersonDescriptor editPersonDescriptor) throws CommandException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -122,6 +123,11 @@ public class EditCommand extends UndoableCommand {
         Debt updatedDebt = editPersonDescriptor.getDebt().orElse(personToEdit.getDebt());
         Interest updatedInterest = editPersonDescriptor.getInterest().orElse(personToEdit.getInterest());
         Deadline updatedDeadline = editPersonDescriptor.getDeadline().orElse(personToEdit.getDeadline());
+        try {
+            updatedDeadline.checkDateBorrow(personToEdit.getDateBorrow().getDate());
+        } catch (IllegalValueException ive) {
+            throw new CommandException("Deadline cannot be before date borrow.");
+        }
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person personCreated = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
