@@ -417,49 +417,22 @@ Use case resumes at step 1.
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  A novice who has never used an Address Book should have no problem using it.
-.  The system should respond under a second.
-.  A user private information should not be seen by others unless they are granted access.
 .  User commands should not be case sensitive.
-.  Should back up data to cloud or have a back up program to recover any loss of data.
 .  Should have a change history up to 100000 changes.
-.  Should work offline most of the time except when accessing services requiring internet (eg. cloud, social networks).
-.  Should restore to operational status under a minute after a failure occur.
-.  Should be able to continue working even after failing to restore.
-.  Should scale to fit regardless of user's screen size.
-.  Any fault or error reported should be fixed in a week.
-.  A user with little knowledge in technology should be able to use the system
 .  Words displayed by the applications should be readable
 .  Proper documentation of existing features should be present
-.  Users should be able to easily navigate through the documentations
+.  Users should be able to easily navigate through documentation
 .  System must ensure that no contacts are lost unless initiated by the user
-
-{More to be added}
 
 [appendix]
 == Glossary
-Address Book: An application to store contacts and details of people.
-Command: Keywords required to use the address book.
-GUI: Graphical User Interface: Use of icons and visual indicators to navigate.
-Parameters: Details of a person to be added.
-Tag(s): Label(s) given to a person.
 
-[[mainstream-os]]
-Mainstream OS
-
-....
-Windows, Linux, Unix, OS-X
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
+.*Address Book*: An application to store contacts and details of people.
+.*Command*: Keywords required to use the address book.
+.*GUI*: Graphical User Interface: Use of icons and visual indicators to navigate.
+.*Parameters*: Details of a person to be added.
+.*Tag(s)*: Label(s) given to a person.
 
 [appendix]
 == Product Survey
@@ -478,7 +451,3 @@ Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
 * Animations are unnecessarily slow
-
-
-[appendix]
-== Implementation of enhancements
