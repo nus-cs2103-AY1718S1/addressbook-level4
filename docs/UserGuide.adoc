@@ -229,7 +229,7 @@ Deletes the tag `class2101` from all contacts in the address book.
 
 === Selecting a person : `select`
 
-Shorthand Alias: `s` +
+Shorthand Alias: `sl` +
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -277,9 +277,15 @@ Format: `backup`
 
 === Restoring a backup : `restore`
 
-Shorthand Alias: `rb`
+Shorthand Alias: `rb` +
 Retrieves data from a backup file and store it in address book. +
 Format: `restore`
+
+=== Synchronising with Google Contacts : `sync`
+
+Shorthand Alias: `sy` +
+Authenticates and communicates with Google Contacts via the People API to synchronise contacts +
+Format: `sync`
 
 === Listing entered commands : `history`
 
@@ -361,13 +367,17 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Since v1.2
+* Adding and deleting of tags
+* Resize window size
+* Restore to a AddressBook backup
+* Synchronise with Google Contacts
+
 === Coming in v2.0
 
 * Add tags cumulatively
 * Add a person without all his/her parameters
-* Restore to a AddressBook backup
 * Hide private contact details
-* Synchronise with Google Contacts
 * Access a contact's Facebook profile
 * Get direction to a contact's address
 * Upload pictures

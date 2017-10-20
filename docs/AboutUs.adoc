@@ -12,8 +12,8 @@ AddressBookX was developed by the team W13B3 from CS2103T AY17/18, National Univ
 image::derrickchua.jpg[width="150", align="left"]
 {empty}[https://github.com/derrickchua[github]]
 
-Role: Project Member, Scheduler and Tracker +
-Responsibilities: UI
+Role: Project Member +
+Responsibilities: UI, Scheduling and Tracking
 
 '''
 
@@ -22,7 +22,7 @@ image::LimYangSheng.jpg[width="150", align="left"]
 {empty}[http://github.com/LimYangSheng[github]]
 
 Role: Project Member +
-Responsibilities: Storage
+Responsibilities: Storage, Documentation
 
 '''
 
