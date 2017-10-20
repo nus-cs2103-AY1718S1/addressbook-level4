@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's mrt station in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidMrt(String)}
  */
 public class Mrt {
 
@@ -32,16 +32,16 @@ public class Mrt {
      */
     public Mrt(String mrt) throws IllegalValueException {
         requireNonNull(mrt);
-        if (!isValidEmail(mrt)) {
+        if (!isValidMrt(mrt)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
         this.value = mrt;
     }
 
     /**
-     * Returns if a given string is a valid person email.
+     * Returns if a given string is a valid Mrt station.
      */
-    public static boolean isValidEmail(String test) {
+    public static boolean isValidMrt(String test) {
         boolean check1 = test.matches(MRT_VALIDATION_REGEX);
         boolean check2 = validMrt.contains(test);
         return check1 && check2;

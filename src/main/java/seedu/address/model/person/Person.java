@@ -44,7 +44,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this = new Person(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getMrt(), source.getTags());
     }
 
@@ -94,10 +94,6 @@ public class Person implements ReadOnlyPerson {
         this.address.set(requireNonNull(address));
     }
 
-    public Mrt getMrt() {
-        return mrt.get();
-    }
-
     @Override
     public ObjectProperty<Address> addressProperty() {
         return address;
@@ -106,6 +102,19 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Address getAddress() {
         return address.get();
+    }
+
+    public void setMrt(Mrt mrt) {
+        this.mrt.set(requireNonNull(mrt));
+    }
+
+    @Override
+    public ObjectProperty<Mrt> mrtProperty() {
+        return mrt;
+    }
+
+    public Mrt getMrt() {
+        return mrt.get();
     }
 
     /**
