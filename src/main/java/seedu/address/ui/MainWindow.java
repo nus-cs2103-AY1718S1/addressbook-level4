@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -70,7 +71,8 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane emailButtonPlaceholder;
-
+    @FXML
+    private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -205,7 +207,6 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
-
     void show() {
         primaryStage.show();
     }
@@ -216,6 +217,46 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    /**
+     * Changes to default dark theme.
+     */
+    @FXML
+    private void handleBlackTheme() {
+        if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
+            vBox.getStylesheets().remove("view/DarkTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
+        vBox.getStylesheets().add("view/DarkTheme.css");
+    }
+
+    /**
+     * Changes to white theme.
+     */
+    @FXML
+    private void handleWhiteTheme() {
+        if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
+            vBox.getStylesheets().remove("view/WhiteTheme.css");
+        }
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
+        vBox.getStylesheets().add("view/WhiteTheme.css");
+    }
+
+
+    /**
+     * Changes to green theme.
+     */
+    @FXML
+    private void handleGreenTheme() {
+        if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
+            vBox.getStylesheets().remove("view/GreenTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().add("view/GreenTheme.css");
     }
 
     public PersonListPanel getPersonListPanel() {
