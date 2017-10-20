@@ -375,6 +375,16 @@ Also, in the `FindRegexCommandParser` which parses the command passed in, we ori
 
 We also originally thought of only trimming the first space. We eventually decided to trim every whitespace though, since we believe that any extra whitespace would be unintentional. For example, it does not make much sense for users to search with a regex that starts with two spaces, say `␣␣John`, as it is very rare for contacts to have two consecutive spaces in their name. Those cases are very likely to be a typo instead.
 
+=== Searching by Tag (Since v1.2)
+
+Searching by tag is implemented by the `FindTagCommand` class. This command allows the user to search through the list of all contacts and output all that are tagged with a certain tag.
+
+The `FindTagCommand` class is implemented by calling `TagContainsKeywordsPredicate` as opposed to `NameContainsKeywordsPredicate`. This class tells us if a certain `person` object has any tag that matches the desired keyword. Implementing it this way allows us to extend functionality that was already implemented with a similar structure. In the future, implementing other search functions could build on these current search options.
+
+Since this search function involves iterating searching through all tags of all `person` objects in the addressbook, it could take up to O(pt) time, where p is the number of `person` objects in the addressbook, and t is the number of tags per person. To ensure that this will not take up too much time, an alternative implementation considered was to maintain a list of all tags, and maintain a list of `person` objects for each tag that is updated whenever a suitable command is inputted. These commands would be any command that could affect the list of `person` objects that have the tag, say `delete`, `add` or `edit`. This would then offset some of the time required for the search onto these other commands.
+
+However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

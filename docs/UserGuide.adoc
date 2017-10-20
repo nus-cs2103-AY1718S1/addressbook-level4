@@ -76,7 +76,7 @@ Format: `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK]
 Alias: `a`
 
 [TIP]
-A person can have any number of tags, phone numbers, emails or addresses (including 0)
+A person can have any number of tags, phone numbers, emails or addresses (including 0) (Coming v2.0)
 
 ****
 * If a person to be added is similar to one of the existing contacts, a prompt will show you that similar contact/s. (Coming in v2.0)
@@ -187,6 +187,16 @@ Examples:
 
 * `findregex ^Joh?n$` +
 Returns `Jon` and `John`
+
+=== Locating persons by tags: `findtag` (Since v1.2)
+
+Finds persons who has has a tag matching any of the search tags. +
+Format: `findtag TAG`
+
+Examples:
+
+* `findtag friends family` +
+Returns all person having tags `friends` or `family`
 
 === Deleting a person : `delete`
 
