@@ -16,7 +16,7 @@ By: `CS2103Aug2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == About
 
-This user guide will give you an overview of how to use the Codii app.
+This user guide will give you an overview of how to use Codii.
 This guide includes step-by-step instructions on how each command work, FAQs and a summary of every command you will learn.
 
 The terms used in this guide are as follows: +
@@ -26,7 +26,7 @@ The terms used in this guide are as follows: +
 
 == Introduction
 
-Codii is a free to use address book catered to suit the needs of debt collectors. You can enter debtors into the Codii app,
+Codii is a free to use address book catered to suit the needs of debt collectors. You can enter debtors into Codii,
 track the amount of debt owed, manage deadlines, ban and unban debtors and even organise them by location.
 
 Codii is available for the Linux, Windows, and Mac OS operating systems.
@@ -102,7 +102,7 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all contacts in the address book. +
+Shows a list of all persons in the address book. +
 Format: `list`
 
 === Listing all blacklisted persons : `blacklist`
@@ -112,7 +112,7 @@ Format: `blacklist`
 
 === Editing a person : `edit`
 
-Edits an existing debtor, black / white listed contact in the address book. +
+Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...`
 
 ****
