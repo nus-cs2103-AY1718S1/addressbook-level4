@@ -82,11 +82,15 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    /**
+     * Sets the image for pinned person
+     */
     private void initPin(ReadOnlyPerson person) {
-        if (person.isPinned())
+        if (person.isPinned()) {
             pinImage.setImage(new Image("/images/pin.png"));
-        else
+        } else {
             pinImage.setImage(null);
+        }
     }
 
     @Override

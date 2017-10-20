@@ -39,9 +39,10 @@ public class PinnedPanel extends UiPart<Region> {
 
     private void setConnections() {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED), (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED), (person) -> new PersonCard(person,
+                        personList.indexOf(person) + 1));
         pinnedListView.setItems(mappedList);
-        pinnedListView.setCellFactory(listView -> new pinnedListViewCell());
+        pinnedListView.setCellFactory(listView -> new PinnedListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -65,7 +66,10 @@ public class PinnedPanel extends UiPart<Region> {
         });
     }
 
-    class pinnedListViewCell extends ListCell<PersonCard> {
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class PinnedListViewCell extends ListCell<PersonCard> {
 
         @Override
         protected void updateItem(PersonCard person, boolean empty) {
@@ -84,8 +88,9 @@ public class PinnedPanel extends UiPart<Region> {
     private void handlePinPersonEvent(PinPersonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED), (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED), (person) -> new PersonCard(person,
+                        personList.indexOf(person) + 1));
         pinnedListView.setItems(mappedList);
-        pinnedListView.setCellFactory(listView -> new pinnedListViewCell());
+        pinnedListView.setCellFactory(listView -> new PinnedListViewCell());
     }
 }
