@@ -66,8 +66,10 @@ public class CommandBox extends UiPart<Region> {
         commandBoxItems.getChildren().add(commandBoxHints.getRoot());
         commandTextField.prefColumnCountProperty().bind(commandTextField.textProperty().length());
 
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        // changes command box style to match validity of the input whenever there is a change
+        // to the text of the command box.
+        commandTextField.textProperty().addListener((observable, oldInput, newInput) ->
+                setStyleByValidityOfInput(newInput));
 
         // posts a CommandInputChangedEvent whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((observable, oldInput, newInput) ->
@@ -163,6 +165,23 @@ public class CommandBox extends UiPart<Region> {
         // add an empty string to represent the most-recent end of historySnapshot, to be shown to
         // the user if she tries to navigate past the most-recent end of the historySnapshot.
         historySnapshot.add("");
+    }
+
+    /**
+     * Sets the command box style to match validity of the input. (valid -> default, invalid -> failed)
+     */
+    private void setStyleByValidityOfInput(String input) {
+        if (input.equals("")) {
+            return;
+        }
+
+        try {
+            logic.parse(input);
+        } catch (ParseException e) {
+            setStyleToIndicateCommandFailure();
+            return;
+        }
+        setStyleToDefault();
     }
 
     /**
