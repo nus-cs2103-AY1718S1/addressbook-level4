@@ -521,43 +521,40 @@ NOTE: Another common method used for capturing key events is `keyOnPressed`.
 In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
 `addEventFilter` captures the key events before they are consumed by the `TextField`.
 
-A `HashMap` is used for mapping actions to key combinations. When the user presses a key combination matching one that is assigned in the
-`HashMap`, the corresponding action will be executed. An example of such an execution is given as shown:
+When the user presses a key combination which matches one that is assigned to the `KeyCombination` attribute in the `KeyListenerUtil` class, the corresponding action will be executed.
+An example of such an execution is given as shown:
 
 [source, java]
 ----
 private void executeKeyEvents(KeyEvent keyEvent) {
-	if (keys.get(“FOCUS_PERSON_LIST”).match(keyEvent)) {
+	if (FOCUS_PERSON_LIST.match(keyEvent)) {
 		// action to focus on person list
 	}
 	// … more cases
 }
 ----
-Where the key combination for the action `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
 
-NOTE: If an action that is not mapped to a key combination is called, a warning message will be displayed in the terminal.
-
-NOTE: If a mapped key combination is invalid, an `IllegalArgumentException` is thrown and the application terminates.
 
 ==== Design Considerations
 
-**Aspect:** Data structure for mapping actions to key combinations +
-**Alternative 1 (current choice):** `HashMap` in a separate utility class +
-**Pros:** Allows easy addition of an action-key combination pair. +
-**Cons:** Keys are re-mapped whenever the `KeyListener` calls for the `HashMap`,
-since the `HashMap` has to be instantiated and mapped at the same time. +
-**Alternative 2:** Constant variables in the same class +
-**Pros:** Constant values are only created once. +
-**Cons:** The `KeyListener` class is less cohesive since it acts as a storage for key mappings in addition to handling key events.
+**Aspect:** The way commands words are executed +
+**Alternative 1 (current choice):** Pressing the shortcut automatically executes the command +
+**Pros:** Execution of command is faster and more convenient for the user. +
+**Cons:** User may want to check what the shortcut does before executing the command. +
+**Alternative 2:** Pressing the shortcut replaces the `TextField` with the command word +
+**Pros:** Allows the user to check the command before executing it. +
+**Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
 
-**Aspect:** Exception handling for missing key mappings +
-**Alternative 1 (current choice):** Catches the `NullPointerException` and display a warning message in the terminal +
-**Pros:**  Does not flood the terminal with exception messages since the exception will be thrown for every key press. +
-**Cons:** More difficult to locate the missing mapping. +
-**Alternative 2:** Throw a `NullPointerException` +
-**Pros:** May be easier to locate the missing mapping using the stack trace from the exception thrown. +
-**Cons:** Less feasible as, since the number of mappings is currently reasonably small,
-it is simpler to look through all the key mappings and locate the missing map. +
+**Aspect:** Scrolling of the contact list +
+**Alternative 1 (current choice):** Pressing the `Esc` key focuses on the person list panel, then scrolling is handled by selecting the next contact with either the up or down arrow key. +
+**Pros:**  User can select contacts quickly. +
+**Cons:** Scrolling is done by selection of contacts one at a time.
+Thus, it may be time consuming for the user to search for a contact by scrolling. +
+**Alternative 2:** Contact list scrolls without triggering selection of a contact in the list +
+**Pros:** Scrolling motion is faster and smoother. +
+**Cons:** An extra step is needed for users who want to select a contact,
+          i.e. scroll the list until the contact is visible, then select the desired contact with a select command/shortcut. +
 // end::shortcut[]
 
 === Logging
