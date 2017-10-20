@@ -170,6 +170,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         lecturers.add(t);
     }
 
+    /**
+     * Sort the filtered lesson/module/location list regarding different listing unit.
+     */
+    public void sortLessons() {
+        lessons.sortLessons();
+    }
+
     //// util methods
 
     @Override
