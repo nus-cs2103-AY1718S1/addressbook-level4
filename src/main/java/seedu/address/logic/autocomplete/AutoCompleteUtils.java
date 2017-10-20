@@ -29,10 +29,22 @@ public class AutoCompleteUtils {
      * However, if {@code argsString} = "e/hi p/900",
      * {@code prefix} = "p/", this method returns 5.
      */
-    public static int findPrefixPosition(String argsString, String prefix) {
+    public static int findFirstPrefixPosition(String argsString, String prefix) {
         int prefixIndex = argsString.indexOf(" " + prefix);
         return prefixIndex == -1 ? -1
-                : prefixIndex + 3; // +1 as offset for whitespace and prefix
+                : prefixIndex + 3; // +3 as offset for whitespace and prefix
+    }
+
+    /**
+     * Returns the index of the last occurrence of {@code prefix} in
+     * {@code argsString}. An occurrence
+     * is valid if there is a whitespace before {@code prefix}. Returns -1 if no
+     * such occurrence can be found.
+     */
+    public static int findLastPrefixPosition(String argsString, String prefix) {
+        int prefixIndex = argsString.lastIndexOf(" " + prefix);
+        return prefixIndex == -1 ? -1
+                : prefixIndex + 3; // +3 as offset for whitespace and prefix
     }
 
 }

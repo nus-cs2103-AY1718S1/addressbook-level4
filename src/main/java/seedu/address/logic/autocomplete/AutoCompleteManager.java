@@ -99,10 +99,22 @@ public class AutoCompleteManager {
             return commandParser;
         } else {
             List<Integer> prefixPositions = allPrefixes.stream()
-                    .map(i -> AutoCompleteUtils.findPrefixPosition(stub, i.toString()))
+                    .map(i -> AutoCompleteUtils.findFirstPrefixPosition(stub, i.toString()))
                     .collect(Collectors.toList());
-            Prefix closestPrefix = allPrefixes.get(prefixPositions.indexOf(
-                    prefixPositions.stream().max((a, b) -> Integer.compare(a, b)).get()));
+            int maxPrefixPosition = prefixPositions.stream().max((a, b) -> Integer.compare(a, b)).get();
+            // no prefixes are found,
+            // not yet conceived a good default autocomplete parser, so identity parser is used
+            if (maxPrefixPosition == -1) {
+                return identity;
+            }
+            Prefix closestPrefix = allPrefixes.get(prefixPositions.indexOf(maxPrefixPosition));
+
+            // check for any subsequent PREFIX_TAG,
+            // since it is the only prefix that can occur multiple times normally
+            if (AutoCompleteUtils.findLastPrefixPosition(stub, PREFIX_TAG.toString()) > maxPrefixPosition) {
+                closestPrefix = PREFIX_TAG;
+            }
+
             modelParser.setPrefix(closestPrefix);
             return modelParser;
         }

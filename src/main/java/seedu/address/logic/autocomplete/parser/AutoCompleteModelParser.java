@@ -31,8 +31,15 @@ public class AutoCompleteModelParser implements AutoCompleteParser {
     @Override
     public List<String> parseForPossibilities(String stub) {
         final LinkedList<String> possibleMatches = new LinkedList<String>();
+        int prefixPosition;
 
-        int prefixPosition = AutoCompleteUtils.findPrefixPosition(stub, currentPrefix.toString());
+        // if trying to match a tag, do further check that it is the furthest occurence of PREFIX_TAG
+        if (currentPrefix.equals(PREFIX_TAG)) {
+            prefixPosition = AutoCompleteUtils.findLastPrefixPosition(stub, currentPrefix.toString());
+        } else {
+            prefixPosition = AutoCompleteUtils.findFirstPrefixPosition(stub, currentPrefix.toString());
+        }
+
         String staticSection = stub.substring(0, prefixPosition);
         String autoCompleteSection = stub.substring(prefixPosition, stub.length());
 
