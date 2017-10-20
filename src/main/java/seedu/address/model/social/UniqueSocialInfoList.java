@@ -19,8 +19,15 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
 
     private final ObservableList<SocialInfo> internalList = FXCollections.observableArrayList();
 
+    /**
+     * Constructs empty SocialInfoList.
+     */
     public UniqueSocialInfoList() {}
 
+    /**
+     * Creates a UniqueSocialInfoList using given socialInfos.
+     * Enforces no nulls.
+     */
     public UniqueSocialInfoList(Set<SocialInfo> socialInfos) {
         requireAllNonNull(socialInfos);
         internalList.addAll(socialInfos);
@@ -66,7 +73,9 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
     }
 
     /**
-     * Adds a SocialInfo to the list,
+     * Adds a SocialInfo to the list
+     * @throws DuplicateSocialTypeException if the SocialInfo to add is a duplicate of an existing
+     * SocialInfo in the list.
      */
     public void add(SocialInfo toAdd) throws DuplicateSocialTypeException {
         requireNonNull(toAdd);

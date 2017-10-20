@@ -7,8 +7,6 @@ import seedu.address.model.social.SocialInfo;
  * Handles mappings of social related identifiers when parsing SocialInfo
  */
 public class SocialInfoMapping {
-    private static final String INVALID_SYNTAX_EXCEPTION_MESSAGE = "Invalid syntax for social info";
-    private static final String UNRECOGNIZED_SOCIAL_TYPE_MESSAGE = "Unrecognized social type";
 
     private static final int SOCIAL_TYPE_INDEX = 0;
     private static final int SOCIAL_USERNAME_INDEX = 1;
@@ -18,13 +16,20 @@ public class SocialInfoMapping {
     private static final String INSTAGRAM_IDENTIFIER = "instagram";
     private static final String INSTAGRAM_IDENTIFIER_ALIAS = "ig";
 
+    private static final String INVALID_SYNTAX_EXCEPTION_MESSAGE = "Invalid syntax for social info";
+    private static final String UNRECOGNIZED_SOCIAL_TYPE_MESSAGE = "Unrecognized social type.\n"
+        + "Currently supported platforms: "
+        + FACEBOOK_IDENTIFIER + "(aliases: " + FACEBOOK_IDENTIFIER_ALIAS + "), "
+        + INSTAGRAM_IDENTIFIER + "(aliases: " + INSTAGRAM_IDENTIFIER_ALIAS + ")\n";
+
+
     /**
      * Returns the SocialInfo object represented by the input String.
-     * If the input does not represent a valid SocialInfo recognized by
-     * the defined mappings, throw IllegalValueException.
+     * @throws IllegalValueException if the input does not represent a valid SocialInfo recognized
+     * by the defined mappings
      */
     public static SocialInfo parseSocialInfo(String rawSocialInfo) throws IllegalValueException {
-        String[] splitRawSocialInfo = rawSocialInfo.split(" ");
+        String[] splitRawSocialInfo = rawSocialInfo.split(" ", 2);
         if (splitRawSocialInfo.length != 2) {
             throw new IllegalValueException(INVALID_SYNTAX_EXCEPTION_MESSAGE);
         }
