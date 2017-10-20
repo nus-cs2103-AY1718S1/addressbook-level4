@@ -35,6 +35,7 @@ public class EditParcelDescriptorBuilder {
         descriptor.setEmail(parcel.getEmail());
         descriptor.setAddress(parcel.getAddress());
         descriptor.setDeliveryDate(parcel.getDeliveryDate());
+        descriptor.setStatus(parcel.getStatus());
         descriptor.setTags(parcel.getTags());
     }
 
