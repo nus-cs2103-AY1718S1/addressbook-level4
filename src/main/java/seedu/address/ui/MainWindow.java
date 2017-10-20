@@ -26,6 +26,7 @@ import seedu.address.commons.events.ui.ShowThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AccessCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.UserPrefs;
 
 /*import seedu.address.model.person.ReadOnlyPerson;
@@ -56,8 +57,6 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-
-    private static String currentPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -275,12 +274,13 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handlePanelSwitchEvent(PanelSwitchRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.wantedPanel.toString().equals(AccessCommand.COMMAND_WORD)){
-            detailsPanelPlaceholder.getChildren().remove(detailsPanel.getRoot());
+        if (event.wantedPanel.toString().equals(AccessCommand.COMMAND_WORD)) {
+            detailsPanelPlaceholder.getChildren().clear();
+            browserPlaceholder.getChildren().clear();
             browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        }
-        else {
-            browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+        } else if (event.wantedPanel.toString().equals(SelectCommand.COMMAND_WORD)) {
+            browserPlaceholder.getChildren().clear();
+            detailsPanelPlaceholder.getChildren().clear();
             detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
         }
     }
