@@ -19,6 +19,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
+import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
 
 /**
@@ -130,5 +131,14 @@ public class ParserUtil {
     public static Deadline parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
         return date.isPresent() ? new Deadline(date.get()) : new Deadline("");
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code SingleEventDate} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static SingleEventDate parseSingleEventDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? new SingleEventDate(date.get()) : new SingleEventDate("");
     }
 }

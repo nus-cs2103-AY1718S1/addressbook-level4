@@ -25,6 +25,10 @@ public class StartDate extends TaskDates {
         }
         this.date = trimmedDate;
     }
+    
+    public boolean isEmpty() {
+        return date.isEmpty();
+    }
 
     @Override
     public String toString() {

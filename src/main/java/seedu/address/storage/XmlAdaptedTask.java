@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 
@@ -15,10 +16,13 @@ import seedu.address.model.task.Task;
 public class XmlAdaptedTask {
     @XmlElement(required = true)
     private String description;
-    @XmlElement(required = true)
+    @XmlElement
     private String startDate;
-    @XmlElement(required = true)
+    @XmlElement
     private String deadline;
+    @XmlElement
+    private String singleEventDate;
+
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -36,6 +40,7 @@ public class XmlAdaptedTask {
         description = source.getDescription().taskDescription;
         startDate = source.getStartDate().date;
         deadline = source.getDeadline().date;
+        singleEventDate = source.getSingleEventDate().date;
     }
 
     /**
@@ -47,6 +52,7 @@ public class XmlAdaptedTask {
         final Description description = new Description(this.description);
         final StartDate startDate = new StartDate(this.startDate);
         final Deadline deadline = new Deadline(this.deadline);
-        return new Task(description, startDate, deadline);
+        final SingleEventDate singleEventDate = new SingleEventDate(this.singleEventDate);
+        return new Task(description, startDate, deadline, singleEventDate);
     }
 }

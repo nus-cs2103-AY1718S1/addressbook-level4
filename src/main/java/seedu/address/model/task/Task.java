@@ -17,22 +17,25 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<Description> description;
     private ObjectProperty<StartDate> startDate;
     private ObjectProperty<Deadline> deadline;
+    private ObjectProperty<SingleEventDate> singleEventDate;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Description description, StartDate startDate, Deadline deadline) {
+    public Task(Description description, StartDate startDate, Deadline deadline, SingleEventDate singleEventDate) {
         requireAllNonNull(description, startDate, deadline);
         this.description = new SimpleObjectProperty<>(description);
         this.startDate = new SimpleObjectProperty<>(startDate);
         this.deadline = new SimpleObjectProperty<>(deadline);
+        this.singleEventDate = new SimpleObjectProperty<>(singleEventDate);
     }
 
     /**
      * Creates a copy of the given ReadOnlyTask.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getDescription(), source.getStartDate(), source.getDeadline());
+        this(source.getDescription(), source.getStartDate(), source.getDeadline(),
+                source.getSingleEventDate());
     }
 
     public void setDescription(Description description) {
@@ -64,7 +67,6 @@ public class Task implements ReadOnlyTask {
     }
 
     public void setDeadline(Deadline deadline) {
-
         this.deadline.set(requireNonNull(deadline));
     }
 
@@ -76,6 +78,20 @@ public class Task implements ReadOnlyTask {
     @Override
     public Deadline getDeadline() {
         return deadline.get();
+    }
+
+    public void setSingleEventDate(SingleEventDate singleEventDate) {
+        this.singleEventDate.set(requireNonNull(singleEventDate));
+    }
+
+    @Override
+    public ObjectProperty<SingleEventDate> singleEventDateProperty() {
+        return singleEventDate;
+    }
+
+    @Override
+    public SingleEventDate getSingleEventDate() {
+        return singleEventDate.get();
     }
 
     @Override

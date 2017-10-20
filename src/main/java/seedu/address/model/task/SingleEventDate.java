@@ -26,6 +26,10 @@ public class SingleEventDate extends TaskDates {
         this.date = trimmedDate;
     }
 
+    public boolean isEmpty() {
+        return date.isEmpty();
+    }
+
     @Override
     public String toString() {
         return date;
@@ -34,8 +38,8 @@ public class SingleEventDate extends TaskDates {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof StartDate // instanceof handles nulls
-                && this.date.equals(((StartDate) other).date)); // state check
+                || (other instanceof SingleEventDate // instanceof handles nulls
+                && this.date.equals(((SingleEventDate) other).date)); // state check
     }
 
     @Override

@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SINGLE_EVENT_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -10,6 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 
@@ -25,7 +27,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     public AddTaskCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_DEADLINE);
+                ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_DEADLINE, PREFIX_SINGLE_EVENT_DATE);
 
         if (!isDescriptionPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
@@ -35,8 +37,9 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
             StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE));
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-
-            ReadOnlyTask task = new Task(description, startDate, deadline);
+            SingleEventDate singleEventDate = 
+                    ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE));
+            ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate);
 
             return new AddTaskCommand(task);
         } catch (IllegalValueException ive) {

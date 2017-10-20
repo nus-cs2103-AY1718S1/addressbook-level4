@@ -26,6 +26,10 @@ public class Deadline extends TaskDates {
         this.date = trimmedDate;
     }
 
+    public boolean isEmpty() {
+        return date.isEmpty();
+    }
+
     @Override
     public String toString() {
         return date;

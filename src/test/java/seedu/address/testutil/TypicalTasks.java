@@ -32,6 +32,10 @@ public class TypicalTasks {
     public static final ReadOnlyTask SUBMISSION = new TaskBuilder().withDescription("Self evaluation submission due")
             .withDeadline("30-11-2017").build();
     public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece").build();
+    public static final ReadOnlyTask GROCERY = new TaskBuilder().withDescription("Go grocery shopping")
+            .withSingleEventDate("15-08-2018").build();
+    public static final ReadOnlyTask MEETUP = new TaskBuilder().withDescription("Meet friends")
+            .withSingleEventDate("18-10-2018").build();
 
     // Manually added
     public static final ReadOnlyTask SCHOOL = new TaskBuilder().withDescription("Semester two starts")
