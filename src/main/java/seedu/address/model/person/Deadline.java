@@ -48,7 +48,9 @@ public class Deadline {
      * Validates if deadline created is before date borrowed.
      */
     public void checkDateBorrow(Date dateBorrow) throws IllegalValueException {
-        if (!compareDates(dateBorrow, convertStringToDate(valueToDisplay))) {
+        if (valueToDisplay.equals(NO_DEADLINE_SET)) {
+            return;
+        } else if (!compareDates(dateBorrow, convertStringToDate(valueToDisplay))) {
             throw new IllegalValueException("Deadline cannot be before Date borrowed");
         }
     }
