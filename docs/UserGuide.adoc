@@ -1,7 +1,7 @@
 
 = MedNus - User Guide
 :toc:
-:toc-title: Table of Contents
+:toc-title: *Table of Contents*
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -358,14 +358,12 @@ The index *must be a positive integer* `1, 2, 3, ...`
 === Deleting all persons with a particular tag : [Since v1.2]
 
 You can delete multiple contacts by tags +
+*Format:* `batch TAG` +
+*Shorthand format:* `b TAG`
 
-*Format:*
-****
-* Delete all contacts with a particular tag
-* Basic Error catching: Throws error when tag is not present
-* Potential Upgrades:
-1. Input many tags & delete all persons with that tag
-****
+[WARNING]
+Command can only delete one tag at a time
+
 
 === KeyBoard Shortcuts [Since v1.2]
 
@@ -385,14 +383,6 @@ image::exitUI.png[width="790"]
 
 MedNus data are saved in the hard disk automatically after any command that changes the data. +
 You do not need to save manually.
-
-=== Deleting all persons with a particular tag : [In Progress]
-****
-* Delete all contacts with a particular tag
-* Basic Error catching: Throws error when tag is not present
-* Potential Upgrades:
-1. Input many tags & delete all persons with that tag
-****
 
 === Setting Appointments : [Coming in v2.0]
 ****
