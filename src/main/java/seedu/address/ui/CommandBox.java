@@ -59,7 +59,7 @@ public class CommandBox extends UiPart<Region> {
     private ImageView keyboardIcon;
 
 
-    private CommandBox(Logic logic) {
+    public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         loadKeyboardIcons();
@@ -75,7 +75,7 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot = logic.getHistorySnapshot();
     }
 
-    private void setFocus() {
+    public void setFocus() {
         commandTextField.requestFocus();
     }
 
@@ -184,7 +184,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * process input as user is typing
      */
-    private void processInput() {
+    public void processInput() {
         input = commandTextField.getText();
         updateKeyboardIconAndStyle();
         autoSelectFirstField();
@@ -315,7 +315,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Sets the command box style to indicate a failed command.
      */
-    private void setStyleToIndicateCommandFailure() {
+    public void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {

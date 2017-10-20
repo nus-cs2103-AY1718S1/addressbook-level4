@@ -40,7 +40,7 @@ public class KeyListener {
      */
     public void handleKeyPress() {
         mainWindow.getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            commandBox.setStyleToDefault();
+            commandBox.processInput();
             executeKeyEvent(event);
         });
     }
