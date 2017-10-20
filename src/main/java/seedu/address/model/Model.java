@@ -101,7 +101,7 @@ public interface Model {
     /**
      * Sorts the master list by specified order.
      */
-    void sortBy(String order);
+    void sortBy(String order) throws IllegalValueException;
 
     /**
      * Increase the debt of a person by the amount indicated

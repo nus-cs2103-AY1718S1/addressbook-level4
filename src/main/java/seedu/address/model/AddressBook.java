@@ -243,7 +243,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Sorts the address book by given order
      */
-    public void sortBy(String order) {
+    public void sortBy(String order) throws IllegalValueException {
         persons.sortBy(order);
     }
 

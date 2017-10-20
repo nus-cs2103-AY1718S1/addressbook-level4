@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
+
 //@@author khooroko
 /**
  * Sorts the masterlist by the input argument (i.e. "name" or "debt").
@@ -22,9 +25,13 @@ public class SortCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        model.sortBy(order);
+        try {
+            model.sortBy(order);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, order));
     }
 }

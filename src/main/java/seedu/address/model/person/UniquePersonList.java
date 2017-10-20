@@ -9,6 +9,7 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -127,7 +128,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts the unique person list by the specified order.
      * @param order to sort the list by.
      */
-    public void sortBy(String order) {
+    public void sortBy(String order) throws IllegalValueException {
         switch (order) {
             case "name":
                 internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
@@ -135,6 +136,8 @@ public class UniquePersonList implements Iterable<Person> {
             case "debt":
                 internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
                 break;
+            default:
+                throw new IllegalArgumentException("Invalid sort ordering");
         }
     }
 
