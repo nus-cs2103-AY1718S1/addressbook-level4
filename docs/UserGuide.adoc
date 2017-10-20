@@ -23,7 +23,7 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `rolodex.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Rolodex.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -119,6 +119,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 // tag::find[]
+
 === Locating persons in Rolodex: `find` or `f` or `search`
 
 Finds persons in Rolodex. +
@@ -340,7 +341,59 @@ Clears all entries from Rolodex. +
 Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
-=== Exiting the program : `exit`
+=== Opening an existing Rolodex storage file: `open` or `o`
+// TODO: add 'ls' and 'cd' abbreviations
+Reloads the application with data from a rolodex at the specified filepath. +
+Format: `open FILEPATH` or `o FILEPATH`
+
+****
+* Loads the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must be a file with xml formatted data.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be saved.
+* If `FILEPATH` does not exist, use the `new` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+[NOTE]
+====
+Opening a file without a .rldx extension will not save your changes.
+====
+
+Examples:
+
+* `open C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:/Users/Rolodex/downloads/myOwn.rldx` +
+`o C:\Users\Rolodex\downloads\myOwn.rldx` +
+Loads the application with the data at the directory `C:/Users/Rolodex/downloads/myOwn.rldx`.
+* `open data/default.rldx` +
+`open data\default.rldx` +
+Loads the application with the data in `default.rldx` in the folder `data`.
+
+=== Creating a new Rolodex storage file: `new` or `n`
+// TODO: add '>' abbreviation
+Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
+Format: `new FILEPATH` or `n FILEPATH`
+
+****
+* Creates the rolodex at the specified `FILEPATH`.
+* The `FILEPATH` can be project-relative or any directory on the system.
+* The `FILEPATH` must end with a file extension .rldx in order for data to be created and saved.
+* If `FILEPATH` already exists, use the `open` command instead.
+* The command recognizes directories in formats kbd:[/] or kbd:[{backslash} ] as valid filepaths
+****
+
+Examples:
+
+* `new C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:/Users/Rolodex/downloads/myOwn.rldx` +
+`n C:\Users\Rolodex\downloads\myOwn.rldx` +
+Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downloads` and reloads the application with sample data created for the new Rolodex.
+* `new data/default.rldx` +
+`new data\default.rldx` +
+Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
+
+=== Exiting the program : `exit` or `quit`
 
 Exits the program. +
 Format: `exit` +

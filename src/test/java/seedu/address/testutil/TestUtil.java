@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import static seedu.address.commons.util.StringUtil.replaceBackslashes;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -35,20 +37,27 @@ public class TestUtil {
      * Returns the middle index of the person in the {@code model}'s person list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getPersonList().size() / 2);
+        return Index.fromOneBased(model.getRolodex().getPersonList().size() / 2);
     }
 
     /**
      * Returns the last index of the person in the {@code model}'s person list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getAddressBook().getPersonList().size());
+        return Index.fromOneBased(model.getRolodex().getPersonList().size());
     }
 
     /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
-        return model.getAddressBook().getPersonList().get(index.getZeroBased());
+        return model.getRolodex().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns a random file path with supplied extension in the sandbox folder.
+     */
+    public static String generateRandomSandboxDirectory(String extension) {
+        return replaceBackslashes(getFilePathInSandboxFolder(Double.toString(Math.random()).concat(extension)));
     }
 }

@@ -15,7 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_ASCENDING;
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DEFAULT;
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DESCENDING;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalRolodex;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,8 +52,8 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalRolodex(), new UserPrefs());
+        expectedModel = new ModelManager(model.getRolodex(), new UserPrefs());
 
         listCommand = new ListCommand(new ArrayList<>());
         listCommand.setData(model, new CommandHistory(), new UndoRedoStack());

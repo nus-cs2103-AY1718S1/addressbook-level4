@@ -37,13 +37,15 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
 import seedu.address.ui.CommandBox;
 
 /**
- * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
+ * A system test class for Rolodex, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class AddressBookSystemTest {
+public abstract class RolodexSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -116,11 +118,11 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all persons in the address book.
+     * Displays all persons in the rolodex.
      */
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == getModel().getLatestPersonList().size();
+        assert getModel().getRolodex().getPersonList().size() == getModel().getLatestPersonList().size();
     }
 
     /**
@@ -128,7 +130,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getLatestPersonList().size() < getModel().getAddressBook().getPersonList().size();
+        assert getModel().getLatestPersonList().size() < getModel().getRolodex().getPersonList().size();
     }
 
     /**
@@ -145,12 +147,25 @@ public abstract class AddressBookSystemTest {
      * and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-            Model expectedModel) {
+                                                     Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        assertEquals(expectedModel.getRolodex(), testApp.readStorageRolodex());
         assertListMatching(getPersonListPanel(), expectedModel.getLatestPersonList());
+    }
+
+    /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the storage contains the same person objects as {@code expectedStorage},
+     * the person list panel displays the persons in the model correctly and the storage is equal to the supplied
+     * {@code expectedStorage}.
+     */
+    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                                     Storage expectedStorage) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(expectedStorage, getStorage());
     }
 
     /**
@@ -229,6 +244,14 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the status bar directory has changed to {@code expectedSaveLocation}
+     */
+    protected void assertStatusBarDirectoryChanged(String expectedSaveLocation) {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        assertEquals(handle.getSaveLocation(), expectedSaveLocation);
+    }
+
+    /**
      * Asserts that only the sync status in the status bar was changed to the timing of
      * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
      */
@@ -261,5 +284,19 @@ public abstract class AddressBookSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Returns a defensive copy of the current storage.
+     */
+    protected Storage getStorage() {
+        return testApp.getStorage();
+    }
+
+    /**
+     * Returns a defensive copy of the current userPrefs.
+     */
+    protected UserPrefs getUserPrefs() {
+        return testApp.getUserPrefs();
     }
 }
