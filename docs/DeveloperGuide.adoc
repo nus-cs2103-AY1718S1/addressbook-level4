@@ -1,7 +1,7 @@
-= AddressBook Level 4 - Developer Guide
+﻿= Augustine - Developer Guide
 :toc:
-:toc-title:
-:toc-placement: preamble
+:toc-title: Content Page
+:toc-placement: macro
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -10,10 +10,13 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W14-B2`      Since: `Oct 2017`      Licence: `MIT`
 
+<<<
+toc::[]
+<<<
 == Setting up
 
 === Prerequisites
@@ -363,6 +366,49 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::optionalfields[]
+=== Optional Fields in Contact
+The ability to have unfilled fields within a Contact enables the User to add a contact into Augustine without having to know all the particulars of a Contact.
+
+The User only needs to know the name and email address of the Contact to add it into Augustine.
+
+The optional fields mechanism is facilitated by `ParserUtil`, which is used by `AddCommandParser` to parse argument entered by the User into data of the
+different fields of a Contact. When the relevant methods in `ParserUtil` is being called in `AddCommandParser`, it will check if the input field is empty.
+If there is no value, it will give a value, '-' instead to the relevant field.
+
+The code snippet below shows you how a method in `ParserUtil` detects whether is there a value in the `ArgumentMultiMap` of the associated field and if there is no value, it will return a '-' to AddCommandParser
+instead.
+
+[NOTE] `Field` in the snippet refers to a field in the contact.
+
+[source,java]
+----
+public static Optional<Address> parseField(Optional<String> field) throws IllegalValueException {
+         return field.isPresent() ? Optional.of(new Field(field.get())) : Optional.of(new Field("-"));
+     }
+----
+
+==== Design Considerations
+
+**Aspect:** Detecting of unfilled fields. +
+**Alternative 1 (current choice):** Check if value is present, if value is not present, return a - as value instead. +
+**Pros:** Simple for developers to understand the inner working of the enhancement. +
+**Cons:** All fields are still stored in AddressBook, leading to wastage of space as fields that are not used by the User for each contact are still being stored. +
+**Alternative 2:** Detect if the field exist in AddressBook.xml, if the field does not exist for a particular contact, display the field in the PersonCard as unfilled. +
+**Pros:** Save space and readability of +
+**Cons:** Harder for developers to understand the inner working of the enhancement.
+
+---
+
+**Aspect:** Storing of Contact's Display Picture. +
+**Alternative 1 (current choice):** Store file path that was entered by user into AddressBook.xml and try to render the image from there +
+**Pros:** Simple for developers to understand. +
+**Cons:** Changing of file path or removal of image will lead to rendering error. +
+**Alternative 2:** Create a copy of the image that is in the path entered by user into a folder in Augustine. Store the file path of the copied image into AddressBook.xml and render image from there +
+**Pros:** Changing of file path or removal of the original image by user will not lead to any rendering error. +
+**Cons:** Harder to implement and for developers to understand. Additional file space is needed to store the copied image.
+// end::optionalfields[]
 
 == Documentation
 
@@ -723,15 +769,56 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |populate the App
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |import users from an Excel file |easily restore a backup or add new contacts in bulk
+
+|`* * *` |user |see a sorted contact list after sorting |save time from not needing to enter another list command
+
+|`* * *` |user |export all persons in the App out |create a backup of all existing persons in the App
+
+|`* * *`|user |add a person without filling all the fields |add even with missing information
+
+|`* * *`|user |tag my contacts |I can categorise my contacts into groups
+
+|`* * *`|user |edit my contacts |I can update my contacts details
+
+|`* * *`|group member |filter contact list by tags |see only my group mates
+
+|`* *`|user |copy listed emails into my clipboard |convenient when emailing to a batch of contacts
+
+|`* *`|user |add optional fields for contact details |add different means of communication with a particular contact
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |new user |have a simple walkthrough |quickly learn how the user interface works
+
+|`* *` |new user |have all the possible commands listed out on first start |I can learn how to use the application immediately
+
+|`* *` |user |be able to add remarks to my contacts |I can add a note if there is something important about the contact
+
+|`* *` |user |choose where to save my file |I can have control over where my files are stored
+
+|`* *` |user |be able to email my contacts |I send an email to my contacts easily
+
+|`* *` |user |add multiple address book |I can have a merge copy of my contacts from different platform
+
+|`* *` |user |add a display photo to an existing person |remember how a particular person looks like
+
+|`* *` |user with many persons in the address book |merge two persons into one |merge duplicated entries of the same person in the list
+
+|`* *` |user |add a new person in any order |so that I can have an easier time adding a person into the App without having to follow a fixed format
+
+|`* *` |user |have a built in browser |I can view my contacts on their linkedin, facebook or instagram profile
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |lazy user |want to have customizable shortcuts |execute commands easily
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +854,139 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Show walkthrough
+
+*MSS*
+
+1.  User requests to list commands.
+2.  AddressBook shows a list of commands and their input requirements.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export AddressBook
+
+*MSS*
+
+1.  User requests to create a backup
+2.  AddressBook writes existing persons in the AddressBook into a file determined by the user
+
+[none]
+* 2a. Destination file already exist.
++
+[none]
+** 2a1. AddressBook overwrites the existing file.
++
+Use case ends.
+
+[discrete]
+=== Use case: Copy emails from list to clipboard
+
+*MSS*
+
+1. User request to list persons
+2. AddressBook shows a list of persons
+3. User requests to copy all or selected person's email in the list
+4. Emails are copied to clipboard
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  AddressBook parses person's particulars into a fixed format
+3.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User enter person's particulars in different format than stored.
++
+[none]
+** 2a1. AddressBook parses person's particulars into a fixed format.
+** 2a2. AddressBook adds the person.
++
+Use case ends.
+
+* 2b. User enter person's particulars with missing fields.
++
+[none]
+** 2b1. AddressBook treats missing fields as empty strings.
+** 2b2. AddressBook parses person's particulars into a fixed format.
+** 2b3. AddressBook adds the person.
++
+Use case ends.
+
+[none]
+* 3a. User already exist.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit Person
+
+*MSS*
+
+1.  User requests to edit person
+2.  AddressBook parses person's particulars into a fixed format
+3.  AddressBook edit the person's particulars
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User does not exists.
+
+[none]
+* 2a. User enter person's particulars in different format than stored.
++
+[none]
+** 2a1. AddressBook parses person's particulars into a fixed format.
+** 2a2. AddressBook edit the person's particulars.
++
+Use case ends.
+
+* 2b. User enter person's particulars with missing fields.
++
+[none]
+** 2b1. AddressBook treats missing fields as empty strings.
+** 2b2. AddressBook parses person's particulars into a fixed format.
+** 2b3. AddressBook adds the person.
++
+Use case ends.
+
+[none]
+* 3a. User already exist.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +995,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with a passable understanding of technology and the English language should be able to operate the application without significant problems.
+.  Should favour DOS style commands over Unix-style commands.
+.  Should come with automated JUnit tests and source code for modifications and resolving of bugs.
+.  The data should be stored locally and be human editable.
+.  The data should be accurate.
+.  Should be able to work with the defualt email of mainstream-os.
 
 {More to be added}
 

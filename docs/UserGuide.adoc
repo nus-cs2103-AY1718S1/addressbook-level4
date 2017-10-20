@@ -1,8 +1,10 @@
-= AddressBook Level 4 - User Guide
+= Augustine - User Guide
+
 :toc:
-:toc-title:
-:toc-placement: preamble
+:toc-title: Content Page
+:toc-placement: macro
 :sectnums:
+:pagenums:
 :imagesDir: images
 :stylesDir: stylesheets
 :experimental:
@@ -10,11 +12,31 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W14-B2`      Since: `Oct 2017`     Licence: `MIT` +
+Credits: `Team SE-EDU` https://github.com/se-edu/addressbook-level4
 
-== Quick Start
+<<<
+toc::[]
+<<<
+
+== Product Overview
+
+Every year, a new chapter of your school life begins in August. You will meet new friends and
+establish new connections in school. However, it will be difficult to keep track of all the
+contacts of your newly made friends. Let Augustine help you to keep track of your friend's
+contact number, address, time table and social media account.
+
+Augustine allows you to add your friend's details...
+
+== About
+
+This user guide provides a overview on the features available in Augustine
+and how to use each feature.
+
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -50,177 +72,579 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : [fuchsia]`help`
 
-Format: `help`
+==== Format
 
-=== Adding a person: `add`
+The format of the [fuchsia]`help` comamnd is as follow:
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+====
+[fuchsia]#help#
+====
+
+'''
+
+=== Adding a person: [fuchsia]`add`
+
+The [fuchsia]`add` command will enable you to populate Augustine.
+
+==== Format
+The format of the [fuchsia]`add` command is as follow:
+
+====
+[fuchsia]#add [n/NAME] [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]...#
+====
+****
+* `NAME` of the Contact can only contain alphabets
+* `PHONE_NUMBER` of the Contact must contain only *8 numbers* and start with either '6','8' or '9'
+****
 
 [TIP]
-A person can have any number of tags (including 0)
+You can use the alias `a` instead of typing out `add`
+[WARNING]
+Augustine only allow one contact with the same details to reside in it
 
-Examples:
+==== Examples
+Here are some examples to guide you with adding contacts into Augustine:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+. [red]*Adding users with all fields filled*
++
+--
+You can add a new user using the command below. Figure 4.2.2.1 illustrates the
+result after the command below is entered.
 
-=== Listing all persons : `list`
+[horizontal]
+*Command:* :: [fuchsia]`add n/John Wick p/97488235 e/johnw@example.com +
+a/John street, block 123, #01-01`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+[caption="Figure 2.2.2.1 "]
+.After executing the add command above
+image::addAll.png[width="940px"]
+--
 
-=== Editing a person : `edit`
+. [red]*Adding users with some optional fields unfilled*
++
+--
+You can add a new user without entering all the fields. Figure 4.4.2.2 illustrates
+the result after the command below is entered.
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+[NOTE]
+Note that the fields that are unfilled are represented with a - instead
 
+[horizontal]
+*Command:* :: [fuchsia]`add n/Sally Ong e/sally@example.com`
+
+[caption="Figure 2.4.2.2 "]
+.After executing the add command above
+image::addSome.png[width="940px"]
+--
+
+. [red]*Adding an user that already exists in Augustine*
++
+--
+You cannot add a user that already exists in Augustine. Figure 4.4.2.3 illustrates the
+error prompt when the command below is entered.
+
+[horizontal]
+*Command:* :: [fuchsia]`add n/John Wick p/97488235 e/johnw@example.com a/John street, block 123, #01-01`
+
+[caption="Figure 2.4.2.3 "]
+.After executing the add command above
+image::addFail.png[width="940px"]
+
+--
+
+'''
+
+=== Listing all persons : [fuchsia]`list`
+
+The [fuchsia]`list` command will show a list of all persons in the address book. +
+
+==== Format
+The format of the [fuchsia]`list` command is as follow:
+
+====
+[fuchsia]#list#
+====
+
+[TIP]
+You can use the alias `l` instead of typing out `list`
+
+'''
+
+=== Editing a person : [fuchsia]`edit`
+
+The [fuchsia]`edit` command will help you to modify contacts in Augustine.
+
+==== Format
+The format of the [fuchsia]`edit` command is as follow:
+====
+[fuchsia]#edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...#
+====
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index whole number 1, 2, 3, ...
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* Apart from tags, existing values will be updated with the new values, replacing them.
+* When editing tags, new tags will be added and existing tags will be removed.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* `NAME` and `TAG` must be alphanumeric
+* `PHONE_NUMBER` of the Contact must contain only *8 numbers* and start with either '6','8' or '9'
 ****
 
-Examples:
+[TIP]
+You can use the alias `e` instead of typing out `edit`
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+[WARNING]
+You cannot edit someone to have the exactly the same details as another contact
 
-=== Locating persons by name: `find`
+==== Examples
+Here are some examples to guide you with editing contacts in Augustine:
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+. [red]*Adding and removing tags*
++
+--
+You can add or remove the tags of a particular user using the [fuchsia]`edit` command below.
+Figure 4.4.2.1 illustrates the details of the user "bernice" before the command is executed and
+Figure 4.4.2.2 illustrates the changes to the details of the user "bernice" after the command
+is executed.
+
+[horizontal]
+*Command:* :: [fuchsia]`edit 2 t/colleagues t/friends`
+
+[caption="Figure 4.4.2.1 "]
+.Before command is run
+image::editChangeTagBefore.png[width="940px"]
+
+* In _Figure 4.4.2.1_ Bernice has a "colleagues" tag and the command is typed without pressing enter.
+* As both Bernice and the command contains the "colleagues" tag, Augustine will remove the tag.
+* As the command contains a "friends" tag, but Bernice do not currently have it, the tag is added.
+* _Figure 4.4.2.2_ shows the result after the command is ran.
+
+[caption="Figure 4.4.2.2 "]
+.After command is run
+image::editChangeTagAfter.png[width="940px"]
+
+--
+
+. [red]*Changing phone number and email*
++
+--
+You can change the phone number and email of a particular user using [fuchsia]`edit` command below.
+Figure 4.4.2.3 illustrates the details of the user "bernice" before the command is executed and
+Figure 4.4.2.4 illustrates the changes to the details of the user "bernice" after the command
+is executed.
+
+[horizontal]
+*Command:* :: [fuchsia]`edit 2 p/87921929 e/bernice@example.com`
+
+[caption="Figure 4.4.2.3 "]
+.Before command is run
+image::editChangePhoneBefore.png[width="940px"]
+
+* In _Figure 2.4.2.4_ Bernice phone number is 99272758, and her email is "berniceyu@example.com
+* The command will change the phone number to 87921929 and email to bernice@example.com
+* _Figure 2.4.2.4_ shows the result after the command is ran.
+
+[caption="Figure 4.4.2.4 "]
+.After command is run
+image::editChangePhoneAfter.png[width="940px"]
+
+--
+
+'''
+
+=== Locating persons by name: [fuchsia]`find`
+
+The [fuchsia]`find` command helps you find contacts in Augustine using name or tags as keywords.
+
+==== Format
+The format of the [fuchsia]`find` command is as follow:
+====
+[fuchsia]#find [ n/KEYWORD [MORE_KEYWORDS] ] [ t/KEYWORD [MORE_KEYWORDS] ] [ s/[name|tag] ]#
+====
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The find command requires either *tag* keyword or *name* keword or both.
+** Find by **tag**: [fuchsia]`find t/tag1 tag2`
+** Find by **name**: [fuchsia]`find n/adam eunice`
+** Find by *name* and **tag**: [fuchsia]`find n/adam eunice t/tag1 tag2`
+* The keywords find is **case insensitive**. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The find command results can be be *sorted by name* or *tag*
+** Find with *sort by tag*: [fuchsia]`find n/adam eunice s/tag`
+** Find with *sort by name*: [fuchsia]`find n/adam eunice s/name`
+* The sort options [name|tag] are *case sensitive*
 ****
 
-Examples:
+[TIP]
+You can use the alias `f` instead of typing out `find`
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+[WARNING]
+You cannot find without typing any keyword.
 
-=== Deleting a person : `delete`
+==== Example
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Here are some examples to guide you with finding contacts in Augustine.
 
+. [red]*Find by Name*
++
+--
+You can find contacts by their name. Figure 4.5.2.1 below illustrates the list of
+names returned after the command below is entered.
+
+[horizontal]
+*Command:* :: [fuchsia]`find n/adam janice`
+
+[caption="Figure 4.5.2.1 "]
+Result of find by name command.
+image::findByName.png[]
+
+--
+
+. [red]*Find by Tag*
++
+--
+You can find contacts by their tags. Figure 4.5.2.2 below illustrates the list of
+names returned after the command below is entered.
+
+[horizontal]
+*Command:* :: [fuchsia]`find t/Colleague soc`
+
+[caption="Figure 4.5.2.2 "]
+.Result of find by tag command.
+image::findByTag.png[]
+--
+
+. [red]*Find By Name and Tag*
++
+--
+You can find contacts filtered by their names and tags. Figure 4.5.2.3 below illustrates
+the list of names returned after the command below is entered.
+
+[horizontal]
+*Command:* :: [fuchsia]`find n/adam t/Colleague`
+
+[caption="Figure 4.5.2.3 "]
+.Result of find by name and tag command.
+image::findByNameTag.png[]
+--
+
+. [red]*Find By Name with Sort option*
++
+--
+You can sort the find results by name or tag. Figure 4.5.2.4 below illustrates
+the list of names sorted by tag after the command below is entered.
+
+[NOTE]
+Note that the sort option "name" and "tag" are *case-sensitive*
+
+[horizontal]
+*Command:* :: [fuchsia]`find n/adam zachary janice s/tag`
+
+[caption="Figure 4.5.2.4 "]
+.Result of find by name with sort option command.
+image::findByNameSorted.png[]
+--
+
+'''
+
+=== Deleting a person : [fuchsia]`delete`
+
+The [fuchsia]`delete` command helps you delete specified person
+from Augustine.
+
+==== Format
+The format of the [fuchsia]`delete` command is as follow:
+====
+[fuchsia]#delete INDEX#
+====
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
+==== Example
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Here are some examples on you can delete users:
 
-=== Selecting a person : `select`
+. [red]*Delete user from list*
++
+--
+You can list all the users in Augustine and delete the user by the user's index.
+The command below deletes the 2nd person in address book.
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+[horizontal]
+*Command:* ::
+`list` +
+[fuchsia]`delete 2`
 
+--
+
+. [red]*Delete user from find results*
++
+--
+You can use the `find` command to get a list of filtered users and delete the
+user by the user's index. THe command below deletes the 1st person in the results
+of the `find` command.
+
+[horizontal]
+*Command:* ::
+`find Betsy` +
+[fuchsia]`delete 1`
+--
+
+'''
+
+=== Selecting a person : [fuchsia]`select`
+
+The [fuchsia]`select` command selects the person identified by the index
+number used in the last person listing.
+
+==== Format
+The format of the [fuchsia]`select` command is as follow:
+====
+[fuchsia]#select INDEX#
+====
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-Examples:
+==== Example
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+Here are some examples on you can delete users:
 
-=== Listing entered commands : `history`
+. [red]*Select user from list results*
++
+--
+You can list all the users in Augustine and delete the user by the user's index.
+The command below deletes the 2nd person in address book.
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+[horizontal]
+*Command:* ::
+`list` +
+[fuchsia]`select 2`
+
+--
+
+. [red]*Select user from find results*
++
+--
+You can use the `find` command to get a list of filtered users and delete the
+user by the user's index. THe command below deletes the 1st person in the results
+of the `find` command.
+
+[horizontal]
+*Command:* ::
+`find Betsy` +
+[fuchsia]`select 1`
+--
+
+'''
+
+=== Listing entered commands : [fuchsia]`history`
+
+The [fuchsia]`history` command lists all the commands that you have entered in
+reverse chronological order.
+
+==== Format
+The format of the [fuchsia]`history` command is as follow:
+====
+[fuchsia]#history#
+====
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+'''
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+// tag::undoredo[]
+=== Undoing previous command : [fuchsia]`undo`
+
+The [fuchsia]`undo` command restores the address book to the state before the previous _undoable_ command was executed.
+
+==== Format
+The format of the [fuchsia]`undo` command is as follow:
+====
+[fuchsia]#undo#
+====
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+==== Example
 
-* `delete 1` +
+Here are some examples to guide you with undo-ing commands in Augustine:
+
+. [red]*Undo delete command*
++
+--
+You can use the [fuchsia]`undo` command to reverse the `delete 1` command.
+
+[horizontal]
+*Command:* ::
+`delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+[fuchsia]`undo` (reverse the `delete 1` command)
+--
 
-* `select 1` +
+. [red]*Invalid Undo command*
++
+--
+You cannot use the [fuchsia]`undo` command if there are no undoable commands executed previously.
+The following`undo` command will fail.
+
+[horizontal]
+*Command:* ::
+`select 1` +
 `list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+[fuchsia]`undo` (fails)
 
-* `delete 1` +
+--
+
+. [red]*Undo more than 1 command*
++
+--
+You can use the [fuchsia]`undo` command to undo more than 1 command.
+
+[horizontal]
+*Command:* ::
+`delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+[fuchsia]`undo` (reverses the `clear` command) +
+[fuchsia]`undo` (reverse the `delete 1` command)
 
-=== Redoing the previously undone command : `redo`
+--
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+'''
 
-Examples:
+=== Redoing the previously undone command : [fuchsia]`redo`
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+The [fuchsia]`redo` command reverses the most recent `undo` command.
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+==== Format
+The format of the [fuchsia]`redo` command is as follow:
+====
+[fuchsia]#redo#
+====
 
-* `delete 1` +
+==== Example
+
+. [red]*Redo the last Undo command*
++
+--
+You can use the [fuchsia]`redo` command to reverse the `undo` command.
+
+[horizontal]
+*Command:* ::
+`delete 1` +
+`undo` (reverse the `delete 1` command) +
+[fuchsia]`redo` (reapplies the `delete 1` command)
+--
+
+. [red]*Invalid Redo command*
++
+--
+You cannot use the [fuchsia]`redo` command to reverse the `undo` command
+there are no `undo` commands executed previously.
+
+[horizontal]
+*Command:* ::
+`delete 1` +
+[fuchsia]`redo` (fails)
+--
+
+. [red]*Multiple Redo command*
++
+--
+You can use the [fuchsia]`redo` command to reverse multiple `undo` command.
+
+[horizontal]
+*Command:* ::
+`delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+`undo` (reverse the `clear` command) +
+`undo` (reverse the `delete 1` command) +
+[fuchsia]`redo` (reapplies the `delete 1` command) +
+[fuchsia]`redo` (reapplies the `clear command)
+--
 
-=== Clearing all entries : `clear`
+'''
 
-Clears all entries from the address book. +
-Format: `clear`
+=== Clearing all entries : [fuchsia]`clear`
 
-=== Exiting the program : `exit`
+The [fuchsia]`clear` command clears all entries from Augustine.
 
-Exits the program. +
-Format: `exit`
+==== Format
+The format of the [fuchsia]`clear` command is as follow:
+====
+[fuchsia]#clear#
+====
+
+=== Exiting the program : [fuchsia]`exit`
+
+The [fuchsia]`exit` command exits Augustine.
+
+==== Format
+The format of the [fuchsia]`exit` command is as follow:
+====
+[fuchsia]#exit#
+====
+
+=== Filtering the listed entries : [fuchsia]`filter`
+
+The [fuchsia]`filter` command Filters the displayed list to only include entries that fulfill certain conditions.
+
+==== Format
+The format of the [fuchsia]`filter` command is as follow:
+====
+[fuchsia]#filter [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]#
+====
+****
+* Parameters are optional, input at least one
+****
+
+==== Example
+
+. [red]*Filter by Name*
++
+--
+You can [fuchsia]`filter` users by name. The command below will display only the
+entries with name "John"
+
+[horizontal]
+*Command:* :: [fuchsia]`filter n/John`
+--
+
+. [red]*Filter by Multiple Names*
++
+--
+You can [fuchsia]`filter` users by multiple name. The command below will display only the
+entries with name "John" AND entries with name "Sally".
+
+[horizontal]
+*Command:* :: [fuchsia]`filter n/John n/Sally`
+--
+
+. [red]*Filter by Tags*
++
+--
+You can [fuchsia]`filter` users by multiple name. The command below will display only the
+entries tagged under "Owes money"
+
+[horizontal]
+*Command:* :: [fuchsia]`filter t/Owes money`
+--
+
+'''
 
 === Saving the data
 
@@ -234,19 +658,20 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+
+|===
+|Feature|Command|Alias|Example
+|*Add*|`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +|a|`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+|*Clear*|`clear`|c|`clear` +
+|*Delete*|`delete INDEX` +|d|`delete 3` +
+|*Edit*|`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +|e|`edit 2 n/James Lee e/jameslee@example.com` +
+|*Find*|`find KEYWORD n/[MORE_KEYWORDS] t/[MORE_KEYWORDS] s/[name\|tag]` +|f|`find n/James Jake` +
+|*List*|`list` +|l|`list` +
+|*Help*|`help` +|h|`help` +
+|*Select*|`select INDEX` +|s|`select 2` +
+|*History*|`history`|h|`history` +
+|*Undo*|`undo`|u|`undo` +
+|*Redo*|`redo`|r|`redo` +
+|===
+
+== Glossary

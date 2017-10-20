@@ -32,11 +32,13 @@ public class ParserUtilTest {
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PHONE = "87123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+
+    private static final String NOT_FILLED = "-";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -76,8 +78,11 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
+    public void parseName_unfilledName_returnsUnfilledName() throws Exception {
+        Name expectedName = new Name(NOT_FILLED);
+        Optional<Name> actualName = ParserUtil.parseName(Optional.of("-"));
+
+        assertEquals(expectedName, actualName.get());
     }
 
     @Test
@@ -101,8 +106,11 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parsePhone_unfilledPhone_returnsUnfilledPhone() throws Exception {
+        Phone expectedPhone = new Phone(NOT_FILLED);
+        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of("-"));
+
+        assertEquals(expectedPhone, actualPhone.get());
     }
 
     @Test
@@ -126,8 +134,11 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+    public void parseAddress_unfilledAddress_returnsUnfilledAddress() throws Exception {
+        Address expectedAddress = new Address(NOT_FILLED);
+        Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of("-"));
+
+        assertEquals(expectedAddress, actualAddress.get());
     }
 
     @Test

@@ -1,12 +1,20 @@
 package seedu.address.ui;
 
+import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringExpression;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -14,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -38,7 +47,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label birthdate;
+    @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView photo;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -57,14 +70,58 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        birthdate.textProperty().bind(Bindings.convert(person.birthdateProperty()));
+
+        try {
+            StringExpression test = Bindings.convert(person.photoProperty());
+            Image image = new Image(new FileInputStream(test.getValue()), 100, 200, true, true);
+            photo.setImage(image);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Initializes all the Tags for a given person
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private static String getColorForTag(String tagName) {
+        if (!tagColors.containsKey(tagName)) {
+            tagColors.put(tagName, getRandomDarkColor());
+        }
+
+        return tagColors.get(tagName);
+    }
+
+
+    private static String getRandomDarkColor() {
+        Random random = new Random();
+
+        int red;
+        int green;
+        int blue;
+
+        // Do while too luminous
+        do {
+            red = random.nextInt(255);
+            green = random.nextInt(255);
+            blue = random.nextInt(255);
+        } while ((red * 0.299) + (green * 0.587) + (blue * 0.114) > 186);
+
+        return "rgb(" + red + "," + green + "," + blue + ")";
     }
 
     @Override

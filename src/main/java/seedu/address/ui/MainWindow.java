@@ -18,9 +18,13 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -53,6 +57,18 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private MenuItem shortcutMenuUndo;
+
+    @FXML
+    private MenuItem shortcutMenuRedo;
+
+    @FXML
+    private MenuItem shortcutMenuScrollDown;
+
+    @FXML
+    private MenuItem shortcutMenuScrollUp;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -90,6 +106,10 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(shortcutMenuUndo, KeyCombination.valueOf("Ctrl+z"));
+        setAccelerator(shortcutMenuRedo, KeyCombination.valueOf("Ctrl+y"));
+        setAccelerator(shortcutMenuScrollUp, KeyCombination.valueOf("Page Up"));
+        setAccelerator(shortcutMenuScrollDown, KeyCombination.valueOf("Page Down"));
     }
 
     /**
@@ -135,7 +155,8 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -181,6 +202,54 @@ public class MainWindow extends UiPart<Region> {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    /**
+     * Calls PersonListPanel to scrolls up personListView
+     */
+    @FXML
+    private void handleScrollDown() {
+        personListPanel.scrollDown();
+    }
+
+    /**
+     * Calls PersonListPanel to scroll up personListView
+     */
+    @FXML
+    private void handleScrollUp() {
+        personListPanel.scrollUp();
+    }
+
+    /**
+     * Calls Logic to execute "redo"
+     */
+    @FXML
+    private void handleRedo() {
+        try {
+            CommandResult commandResult = logic.execute("redo");
+
+            // process result of the command
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+        } catch (CommandException | ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+
+    /**
+     * Calls Logic to execute "undo"
+     */
+    @FXML
+    private void handleUndo() {
+        try {
+            CommandResult commandResult = logic.execute("undo");
+
+            // process result of the command
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+        } catch (CommandException | ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
     }
 
     /**

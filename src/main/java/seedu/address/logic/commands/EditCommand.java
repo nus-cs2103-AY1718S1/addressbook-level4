@@ -2,12 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,10 +20,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthdate;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,15 +37,20 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
+            + "by the index number used in the last person listing.\n"
+            + "Apart from tags, existing values will be overwritten by the input values.\n"
+            + "Tags will be added if person does not have the tag and deleted otherwise.\n"
+            + "You can remove all the person's tags by typing `t/` without specifying any tags after it.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_PHOTO + "PHOTO] "
+            + "[" + PREFIX_BIRTHDATE + "BIRTHDATE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -88,6 +98,38 @@ public class EditCommand extends UndoableCommand {
     }
 
     /**
+     * Creates new list of tags by taking tags in personToEdit,
+     * removing duplicated tags in editPersonDescriptor,
+     * and adding in all other tags from editPersonDescriptor
+     *
+     * @param personToEdit
+     * @param editPersonDescriptor
+     */
+    private static Set<Tag> processTags(ReadOnlyPerson personToEdit,
+                                    EditPersonDescriptor editPersonDescriptor) {
+        Set<Tag> updatedTags = personToEdit.getTags();
+
+        if (editPersonDescriptor.getTags().isPresent()) {
+            Set<Tag> tagsToToggle = new HashSet<Tag>(editPersonDescriptor.getTags().get());
+
+            if (tagsToToggle.isEmpty()) {
+                return tagsToToggle;
+            } else {
+                for (Tag tag : updatedTags) {
+                    if (!tagsToToggle.remove(tag)) {
+                        tagsToToggle.add(tag);
+                    }
+                }
+            }
+
+            return tagsToToggle;
+        } else {
+            return updatedTags;
+        }
+
+    }
+
+    /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
@@ -99,9 +141,16 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit.getPhoto());
+        Set<Tag> updatedTags = processTags(personToEdit, editPersonDescriptor);
+        Birthdate updatedBirthdate = editPersonDescriptor.getBirthdate().orElse(personToEdit.getBirthdate());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+
+
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPhoto, updatedTags,
+                updatedBirthdate);
+
     }
 
     @Override
@@ -131,7 +180,9 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Photo photo;
         private Set<Tag> tags;
+        private Birthdate birthdate;
 
         public EditPersonDescriptor() {}
 
@@ -140,14 +191,17 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.photo = toCopy.photo;
             this.tags = toCopy.tags;
+            this.birthdate = toCopy.birthdate;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.photo, this.tags,
+                    this.birthdate);
         }
 
         public void setName(Name name) {
@@ -174,12 +228,28 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(email);
         }
 
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Optional<Photo> getPhoto() {
+            return Optional.ofNullable(photo);
+        }
+
         public void setAddress(Address address) {
             this.address = address;
         }
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public Optional<Birthdate> getBirthdate() {
+            return Optional.ofNullable(birthdate);
+        }
+
+        public void setBirthdate(Birthdate birthdate) {
+            this.birthdate = birthdate;
         }
 
         public void setTags(Set<Tag> tags) {
@@ -209,7 +279,9 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getPhoto().equals(e.getPhoto())
+                    && getTags().equals(e.getTags())
+                    && getBirthdate().equals(e.getBirthdate());
         }
     }
 }

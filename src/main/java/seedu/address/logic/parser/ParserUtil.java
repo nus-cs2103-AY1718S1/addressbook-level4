@@ -11,9 +11,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthdate;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -44,37 +46,92 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>}
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
+        return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(new Name("-"));
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Name> parseNameForEdit(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>}
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
+        requireNonNull(phone);
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(new Phone("-"));
     }
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
+    public static Optional<Phone> parsePhoneForEdit(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>}
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
+        requireNonNull(address);
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(new Address("-"));
     }
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
+    public static Optional<Address> parseAddressForEdit(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>}
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Photo> parsePhoto(Optional<String> photo) throws IllegalValueException {
+        requireNonNull(photo);
+        return photo.isPresent() ? Optional.of(new Photo(photo.get())) : Optional.of(new Photo("default.jpeg"));
+    }
+
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Photo> parsePhotoForEdit(Optional<String> photo) throws IllegalValueException {
+        requireNonNull(photo);
+        return photo.isPresent() ? Optional.of(new Photo(photo.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> email} into an {@code Optional<Email>}
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
+        requireNonNull(email);
+        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
+    public static Optional<Email> parseEmailForEdit(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
@@ -89,5 +146,48 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    public static Optional<Birthdate> parseBirthdate(Optional<String> birthdate) throws IllegalValueException {
+        requireNonNull(birthdate);
+        return birthdate.isPresent() ? Optional.of(new Birthdate(birthdate.get())) : Optional.of(new Birthdate("-"));
+    }
+
+    public static Optional<Birthdate> parseBirthdateForEdit(Optional<String> birthdate) throws IllegalValueException {
+        requireNonNull(birthdate);
+        return birthdate.isPresent() ? Optional.of(new Birthdate(birthdate.get())) : Optional.empty();
+    }
+
+    /**
+     *  Parse {@code Optional<String> keywords} into a {@code String}
+     */
+    public static Optional<String> parseKeywords(Optional<String> keywords) throws IllegalValueException {
+        requireNonNull(keywords);
+        return keywords.isPresent() ? Optional.of(keywords.get()) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code String sort} into an {@code int} and returns it.
+     * @throws IllegalValueException if the specified sort is invalid
+     */
+    public static int parseSortOrder(Optional<String> sort) throws IllegalValueException {
+        requireNonNull(sort);
+        int sortOrder = 0;
+        if (sort.isPresent()) {
+            switch(sort.get().trim()) {
+            case "name":
+                sortOrder = 0;
+                break;
+            case "tag":
+                sortOrder = 1;
+                break;
+            default:
+                sortOrder = -1;
+                break;
+            }
+        } else {
+            sortOrder = -1;
+        }
+        return sortOrder;
     }
 }

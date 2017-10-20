@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -9,8 +10,11 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -22,15 +26,72 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
+    private static final int SCROLL_INCREMENT = 11;
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
     private ListView<PersonCard> personListView;
 
+    @FXML
+    private ScrollBar personListViewScrollBar;
+
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+
+        setPersonListViewScrollBar();
         setConnections(personList);
         registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Scrolls one page down
+     */
+    public void scrollDown() {
+        Platform.runLater(() -> {
+            if (personListViewScrollBar == null) {
+                setPersonListViewScrollBar();
+            }
+
+            /*
+             * Changing unit increment with setUnitIncrement() does not effect amount scrolled with increment()
+             * Using loop as a workaround.
+             */
+            for (int i = 0; i < SCROLL_INCREMENT; i++) {
+                personListViewScrollBar.increment();
+            }
+        });
+    }
+
+    /**
+     * Scrolls one page up
+     */
+    public void scrollUp() {
+        Platform.runLater(() -> {
+            if (personListViewScrollBar == null) {
+                setPersonListViewScrollBar();
+            }
+
+            /*
+             * Changing unit increment with setUnitIncrement() does not effect amount scrolled with increment()
+             * Using loop as a workaround.
+             */
+            for (int i = 0; i < SCROLL_INCREMENT; i++) {
+                personListViewScrollBar.decrement();
+            }
+        });
+    }
+
+    /**
+     * Initializes personListViewScrollBar and assigns personListView's scrollbar to it
+     */
+    private void setPersonListViewScrollBar() {
+        Set<Node> set = personListView.lookupAll(".scroll-bar");
+        for (Node node: set) {
+            ScrollBar bar = (ScrollBar) node;
+            if (bar.getOrientation() == Orientation.VERTICAL) {
+                personListViewScrollBar = bar;
+            }
+        }
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {

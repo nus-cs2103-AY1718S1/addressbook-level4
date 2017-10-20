@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -32,7 +33,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setPhoto(person.getPhoto());
+        descriptor.setBirthdate(person.getBirthdate());
+        descriptor.setTags(new HashSet<>(person.getTags()));
     }
 
     /**
@@ -79,6 +82,18 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Photo} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPhoto(String photo) {
+        try {
+            ParserUtil.parsePhoto(Optional.of(photo)).ifPresent(descriptor::setPhoto);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("photo is expected to be unique.");
         }
         return this;
     }
