@@ -4,10 +4,14 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SINGLE_EVENT_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
@@ -27,7 +31,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     public AddTaskCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_DEADLINE, PREFIX_SINGLE_EVENT_DATE);
+                ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_DEADLINE, PREFIX_SINGLE_EVENT_DATE, PREFIX_TAG);
 
         if (!isDescriptionPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
@@ -39,7 +43,8 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
             SingleEventDate singleEventDate = 
                     ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE));
-            ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate);
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate, tagList);
 
             return new AddTaskCommand(task);
         } catch (IllegalValueException ive) {

@@ -20,8 +20,8 @@ public class AddTaskCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
             + "DESCRIPTION "
-            + PREFIX_START_DATE + "START DATE(dd-MM-yy) "
-            + PREFIX_DEADLINE + "DEADLINE DATE(dd-MM-yy) ";
+            + PREFIX_START_DATE + " START DATE(dd-MM-yy) "
+            + PREFIX_DEADLINE + " DEADLINE DATE(dd-MM-yy) ";
 
     public static final String MESSAGE_SUCCESS = "Task has been added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book";

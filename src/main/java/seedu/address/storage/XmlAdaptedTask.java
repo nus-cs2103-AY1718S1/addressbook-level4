@@ -1,8 +1,14 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
@@ -23,6 +29,9 @@ public class XmlAdaptedTask {
     @XmlElement
     private String singleEventDate;
 
+    @XmlElement
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
 
     /**
      * Constructs an XmlAdaptedTask.
@@ -41,6 +50,10 @@ public class XmlAdaptedTask {
         startDate = source.getStartDate().date;
         deadline = source.getDeadline().date;
         singleEventDate = source.getSingleEventDate().date;
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
     }
 
     /**
@@ -49,10 +62,15 @@ public class XmlAdaptedTask {
      * @throws IllegalValueException if there were any data constraints violated in the adapted task
      */
     public Task toModelType() throws IllegalValueException {
+        final List<Tag> taskTags = new ArrayList<>();
+        for (XmlAdaptedTag tag : tagged) {
+            taskTags.add(tag.toModelType());
+        }
         final Description description = new Description(this.description);
         final StartDate startDate = new StartDate(this.startDate);
         final Deadline deadline = new Deadline(this.deadline);
         final SingleEventDate singleEventDate = new SingleEventDate(this.singleEventDate);
-        return new Task(description, startDate, deadline, singleEventDate);
+        final Set<Tag> tags = new HashSet<>(taskTags);
+        return new Task(description, startDate, deadline, singleEventDate, tags);
     }
 }
