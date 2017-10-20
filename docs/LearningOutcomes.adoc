@@ -264,3 +264,7 @@ Note how this project uses the http://checkstyle.sourceforge.net/[CheckStyle] st
 === Exercise: Review a PR
 
 * Review PRs created by team members.
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]
