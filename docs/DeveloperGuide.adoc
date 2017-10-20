@@ -544,6 +544,43 @@ image::MusicActivityDiagram.png[width="400"]
 
 ---
 
+=== Aliases
+
+Users can specify aliases that map to other commands, which helps them reduce the amount of typing required,
+and also the cognitive load of memorising exact commands.
+For example, `alias show list` will map `show` to the `list` command. When the user types `show` in the
+command box, the result will be the same as when he types `list`.
+
+To remove an alias, users can use the
+`unalias` command. For example, `unalias show` will remove the mapping for `show`.
+`unalias`,
+
+We implement this feature by adding a new `Aliases` class to the `UserPrefs` model. Since `UserPrefs` is saved
+to file, aliases will persist through application restarts.
+
+`Aliases` contains a `HashMap<String, String>` which maps `alias -> command`. This allows us to find the
+matching command in amortized O(1) time. By default, `Aliases` contains a map of short-forms for frequently
+used commands. For example, `a -> add`, `d -> delete`, `l -> list`, etc.
+
+We added a new parser, `parseCommandAndArguments` in `ParserUtil` that parses user input into a `commandWord` and `arguments`, which
+`AddressBookParser`, uses. To allow access to the `UserPrefs` instance in `ParserUtil`, we changed `UserPrefs`
+into a link:#singleton[Singleton]. `parseCommandAndArguments` refers to the `Aliases` instance inside `UserPrefs`
+and returns the mapped command.
+
+This sequence diagram shows how `parseCommandAndArguments` work:
+
+image::AliasSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Accessing `UserPrefs` from `ParserUtil` and other classes +
+**Alternative 1 (current choice):** Turn `UserPrefs` into a Singleton +
+**Pros:** Easy to implement. Minimise code change across code base. +
+**Cons:** Increases coupling. Difficult to stub in testing. Does not reset between tests. +
+**Alternative 2:** Pass the `UserPrefs` instance down to the parser +
+**Pros:** Less coupling. Follows Law of Demeter. +
+**Cons:** Heavy changes to code base to pass the instance downstream. +
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
@@ -1119,6 +1156,13 @@ link:https://www.nngroup.com/articles/response-times-3-important-limits/[Respons
 Respond time of greater than 1 second upon user input
 ....
 
+[[singleton]]
+Singleton
+ +
+link:https://en.wikipedia.org/wiki/Singleton_pattern[Wikipedia Article]
+....
+A class which has only one instance
+....
 
 
 
