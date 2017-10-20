@@ -3,6 +3,8 @@ package seedu.address.ui;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +21,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import org.controlsfx.control.textfield.TextFields;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -38,19 +39,17 @@ public class CommandBox extends UiPart<Region> {
     private Image keyboardError;
     private PauseTransition pause;
     private int anchorPosition;
-    private int caretPosition;
     private String selectedText = "";
     private String input;
-    final String ADD_COMMAND_FORMAT = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
-    final String EDIT_COMMAND_FORMAT = "edit INDEX [Field(s) you want to change]";
-    final String FIND_COMMAND_FORMAT = "find KEYWORD(S)";
-    final String SELECT_COMMAND_FORMAT = "select INDEX";
-    final String DELETE_COMMAND_FORMAT = "delete INDEX";
-    final String[] AUTOCOMPLETE_COMMAND_LIST = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
+    private final String addCommandFormat = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
+    private final String editCommandFormat = "edit INDEX [Field(s) you want to change]";
+    private final String findCommandFormat = "find KEYWORD(S)";
+    private final String selectCommandFormat = "select INDEX";
+    private final String deleteCommandFormat = "delete INDEX";
+    private final String[] autocompleteCommandList = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
             "list", "l", "select", "s"};
-    final String[] ADD_COMMAND_FIELD_LIST = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX", "KEYWORD"};
-    final String[] ALL_COMMAND_LIST = {"add", "a", "delete", "edit", "find", "search",
-            "list", "l", "select", "s"};
+    private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX", "KEYWORD"};
+
 
 
     @FXML
@@ -60,21 +59,23 @@ public class CommandBox extends UiPart<Region> {
     private ImageView keyboardIcon;
 
 
-    public CommandBox(Logic logic) {
+    private CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        TextFields.bindAutoCompletion(commandTextField, ALL_COMMAND_LIST);
+        final String[] allCommandList = {"add", "delete", "edit", "find", "search", "help", "history",
+                "list", "select", "redo", "undo", "exit", "clear"};
+        TextFields.bindAutoCompletion(commandTextField, allCommandList);
         //input = commandTextField.getText().trim().toLowerCase();
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> processInput());
         //commandTextField.textProperty().addListener(((observable, oldValue, newValue) -> autocomplete()));
         historySnapshot = logic.getHistorySnapshot();
     }
 
-    public void setFocus() {
+    private void setFocus() {
         commandTextField.requestFocus();
     }
 
@@ -106,6 +107,7 @@ public class CommandBox extends UiPart<Region> {
             break;
         case TAB:
             autocomplete();
+            break;
         default:
             // let JavaFx handle the keypress
         }
@@ -180,24 +182,30 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Sets the command box style to use the default style.
-     * {@code keyboardTyping} icon changes to {@code keyboardIdle} when there is no change
-     * to text field after some time.
+     * process input as user is typing
      */
-    protected void setStyleToDefault() {
+    private void processInput() {
         input = commandTextField.getText();
         updateKeyboardIconAndStyle();
         autoSelectFirstField();
-        if (input.startsWith("add ") && Arrays.asList(ADD_COMMAND_FIELD_LIST).contains(selectedText)) {
+        if (input.startsWith("add ") && Arrays.asList(addCommandFieldList).contains(selectedText)) {
             updateSelection();
         }
     }
 
+    /**
+     * if the command is add, and the next field is selected from pressing tab key, update the field selection
+     */
     private void updateSelection() {
         commandTextField.selectRange(anchorPosition, anchorPosition + selectedText.length());
         selectedText = "";
     }
 
+    /**
+     * Sets the command box style to use the default style.
+     * {@code keyboardTyping} icon changes to {@code keyboardIdle} when there is no change
+     * to text field after some time.
+     */
     private void updateKeyboardIconAndStyle() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
         keyboardIcon.setImage(keyboardTyping);
@@ -210,44 +218,50 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
+    /**
+     * if the input matches the command format, automatically selects the first field that the user need to key in
+     */
     private void autoSelectFirstField() {
         setFocus();
         switch (input) {
-            case ADD_COMMAND_FORMAT:
+            case addCommandFormat:
                 commandTextField.selectRange(6, 10);
                 break;
-            case EDIT_COMMAND_FORMAT:
-            case FIND_COMMAND_FORMAT:
-            case SELECT_COMMAND_FORMAT:
-            case DELETE_COMMAND_FORMAT:
+            case editCommandFormat:
+            case findCommandFormat:
+            case selectCommandFormat:
+            case deleteCommandFormat:
                 int indexOfFirstSpace = input.indexOf(" ");
                 commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
                 break;
+            default:
         }
     }
 
-    protected boolean isAutoCompleteCommand(String command) {
-        return Arrays.asList(AUTOCOMPLETE_COMMAND_LIST).contains(command);
+    private boolean isAutoCompleteCommand(String command) {
+        return Arrays.asList(autocompleteCommandList).contains(command);
     }
 
-    protected boolean isAddCommandFormat(String input) {
+    private boolean isAddCommandFormat(String input) {
         return input.startsWith("add") &&
                 input.contains("n/") && input.contains("p/") && input.contains("e/") && input.contains("a/");
     }
 
-    protected void changeSelectionToNextField() {
+    private void changeSelectionToNextField() {
         commandTextField.selectNextWord();
         anchorPosition = commandTextField.getAnchor();
-        caretPosition = commandTextField.getCaretPosition();
-        selectedText = commandTextField.getSelectedText().toString().trim();
+        selectedText = commandTextField.getSelectedText().trim();
     }
 
-
-    protected void autocomplete() {
+    /**
+     * if the current input is a valid command, auto complete the full format
+     * in the case of add command, if the user is trying to navigate to the next field, auto select the next field
+     */
+    private void autocomplete() {
         input = commandTextField.getText().trim().toLowerCase();
         if (isAutoCompleteCommand(input)) {
             displayFullFormat(input);
-        } else if (isAddCommandFormat(input)){
+        } else if (isAddCommandFormat(input)) {
             int positionOfNameField = input.indexOf("n/");
             int positionOfPhoneField = input.indexOf("p/");
             int positionOfEmailField = input.indexOf("e/");
@@ -262,34 +276,37 @@ public class CommandBox extends UiPart<Region> {
             } else if (currentPosition > positionOfEmailField && currentPosition < positionOfAddressField) {
                 commandTextField.positionCaret(positionOfAddressField + 2);
                 changeSelectionToNextField();
-            } else {
-
             }
         }
     }
 
+    /**
+     * if the command input is a valid command that requires additional field(s), display the full
+     * format in the textfield
+     * @param command: the command input by the user
+     */
     private void displayFullFormat(String command) {
         switch (command) {
             case "add":
             case "a":
-                replaceText(ADD_COMMAND_FORMAT);
+                replaceText(addCommandFormat);
                 break;
             case "edit":
             case "e":
-                replaceText(EDIT_COMMAND_FORMAT);
+                replaceText(editCommandFormat);
                 break;
             case "find":
             case "f":
             case "search":
-                replaceText(FIND_COMMAND_FORMAT);
+                replaceText(findCommandFormat);
                 break;
             case "select":
             case "s":
-                replaceText(SELECT_COMMAND_FORMAT);
+                replaceText(selectCommandFormat);
                 break;
             case "delete":
             case "d":
-                replaceText(DELETE_COMMAND_FORMAT);
+                replaceText(deleteCommandFormat);
                 break;
             default:
         }
@@ -298,7 +315,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Sets the command box style to indicate a failed command.
      */
-    protected void setStyleToIndicateCommandFailure() {
+    private void setStyleToIndicateCommandFailure() {
         ObservableList<String> styleClass = commandTextField.getStyleClass();
 
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
