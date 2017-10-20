@@ -1,24 +1,37 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import java.util.function.Predicate;
+
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in address book whose details contain any of the argument keywords.
  * Keyword matching is case sensitive.
+ *
+ * If a prefix is specified, finds and lists all persons in address book whose detail corresponding to the prefix
+ * matches the argument keywords.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose details contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "A prefix can also be specified to narrow the search to persons whose particular detail contains any of "
+            + "the keywords (case-sensitive).\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]... or KEYWORD [PREFIX]/[MORE_KEYWORDS]...\n"
+            + "Examples:\n"
+            + COMMAND_WORD + " alice Serangoon\n"
+            + COMMAND_WORD + " n/alice bob\n"
+            + COMMAND_WORD + " a/Serangoon\n"
+            + COMMAND_WORD + " e/bob@example.com\n"
+            + COMMAND_WORD + " p/96779802\n"
+            + COMMAND_WORD + " t/friends";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final Predicate<ReadOnlyPerson> predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindCommand(Predicate<ReadOnlyPerson> predicate) {
         this.predicate = predicate;
     }
 
