@@ -49,6 +49,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+    Figure 1: Successful start up UI Sample
 +
 .  You can type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -365,6 +366,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="790"]
+
 
 === Saving the data
 
