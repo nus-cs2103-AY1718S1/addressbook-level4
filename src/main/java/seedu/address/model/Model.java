@@ -31,6 +31,10 @@ public interface Model {
     /** Adds all persons in the given collection */
     void addPersons(Collection<ReadOnlyPerson> persons);
 
+    /** Favorites or unfavorites the given person */
+    void toggleFavoritePerson(ReadOnlyPerson target, String type)
+            throws DuplicatePersonException, PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

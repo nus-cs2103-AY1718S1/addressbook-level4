@@ -111,6 +111,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void toggleFavoritePerson(ReadOnlyPerson target, String type)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, type);
+        addressBook.toggleFavoritePerson(target, type);
+        indicateAddressBookChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
