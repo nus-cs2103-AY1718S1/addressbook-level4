@@ -38,7 +38,7 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 
 == *GETTING STARTED*
 
-.  Make sure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Make sure you have link:https://java.com/en/download/[Java] version `1.8.0_60` or later installed in your Computer.
 +
 [WARNING]
 Having any Java 8 version is not enough. +
@@ -354,6 +354,18 @@ Existing remarks of the person will be removed
 [NOTE]
 The index refers to the index number shown in the last person listing +
 The index *must be a positive integer* `1, 2, 3, ...`
+
+=== Deleting all persons with a particular tag : [Since v1.2]
+
+You can delete multiple contacts by tags +
+
+*Format:*
+****
+* Delete all contacts with a particular tag
+* Basic Error catching: Throws error when tag is not present
+* Potential Upgrades:
+1. Input many tags & delete all persons with that tag
+****
 
 === KeyBoard Shortcuts [Since v1.2]
 
