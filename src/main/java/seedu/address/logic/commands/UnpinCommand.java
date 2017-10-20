@@ -44,6 +44,10 @@ public class UnpinCommand extends Command {
 
         ReadOnlyPerson personToUnpin = pinnedList.get(targetIndex.getZeroBased());
 
+        if (!personToUnpin.isPinned()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
+        }
+
         try {
             model.unpinPerson(personToUnpin);
         } catch (PersonNotFoundException pnfe) {
