@@ -29,8 +29,8 @@
         <Label fx:id="name" styleClass="cell_big_label" text="\$name" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$description" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$time" />
+      <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
+      <Label fx:id="time" styleClass="cell_small_label" text="\$time" />
     </VBox>
       <rowConstraints>
          <RowConstraints />
