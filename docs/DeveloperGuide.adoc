@@ -587,6 +587,99 @@ Additional space required to support storing the HashSets in memory. +
 In comparison, the startup delay may be more significant when a large number of contacts are present in the address book. Thus the first
 alternative was selected to provide a more pleasant user experience.
 
+=== Favorite Contacts
+
+The favorite status of each contact is stored as a `boolean`, encapsulated within the `Favorite` class. +
+There are several ways to toggle this boolean to change the favorite status of a contact.
+
+==== Toggle favorites using `add` and/or `edit` command +
+For user's convenience, we are allowing just the input of prefixes i.e. `f/` in `add` command and either `f/` or `uf/` in `edit` command to make a change to a contact's favorite status.
+
+As such, at `Parser` level in both `AddCommandParser` and `EditCommandParser`, we simply need to know whether the prefixes are present in the user input. Prefixes in user input can be found in `ArgumentMultimap argMultimap`. Hence, we can utilise the following helper-method by passing in `PREFIX_FAV` or `PREFIX_UNFAV` to return true if the prefix is contained within the user input, false otherwise:
+[usage,java]
+----
+public boolean isPrefixPresent(Prefix prefix) {
+    return argMultimap.containsKey(prefix);
+}
+----
+
+The helper-method above is called within a common method `parseFavorite` (shown below), used by both `AddCommandParser` and `EditCommandParser` classes. The difference in utilisation of the following method by both classes is in the parameters that are passed in. As `AddCommandParser` only needs to check whether `PREFIX_FAV` exists, it will pass in `parseFavorite(argMultimap, PREFIX_FAV, null)` while `EditCommandParser` will pass in `parseFavorite(argMultimap, PREFIX_FAV, PREFIX_UNFAV)` to check for both prefixes.
+[usage,java]
+----
+public static Optional<Favorite> parseFavorite(ArgumentMultimap argMultimap,
+                                     Prefix prefixFav,
+                                     Prefix prefixUnFav) throws ParseException {
+    // ... parser logic ...
+}
+----
+
+For editing person, after obtaining the presence of prefix in user input, we need to perform some input validation by disallowing both `f/` and `uf/` prefixes to be present at the same time. We can check this by using the he:
+[usage,java]
+----
+    // Disallow both f/ and uf/ to be present in the same instance of user input when editing
+    if (argMultimap.isPrefixPresent(prefixFav) && argMultimap.isPrefixPresent(prefixUnFav)) {
+        throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                            EditCommand.MESSAGE_USAGE));
+    }
+----
+
+For both adding and editing person, there is a similar validation for disallowing text after prefix e.g. `f/this is a text`. This is achieved by checking whether the any additional `String` exists after prefix.
+[usage,java]
+----
+    if (argMultimap.isPrefixPresent(prefixFav)) {
+        if (!argMultimap.getValue(prefixFav).get().isEmpty()) { // Disallow text after prefix
+            throw new ParseException(Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
+        } else {
+            return Optional.of(new Favorite(true));
+        }
+    }
+----
+
+==== Toggle favorites using `fav` and/or `unfav` command
+
+To enhance contact management, we implemented these commands to perform batch favoriting or unfavoriting of multiple contacts. They are also capable of performing the operations on a single contact. The implementation involves two major steps.
+
+The first step to doing so is to allow parsing of multiple indexes so that a user could specify which contacts they would like to favorite or unfavorite i.e. `fav 1 2 3`. In this case, we use `List` to parse and store every index.
+[usage,java]
+----
+public static List<Index> parseMultipleIndexes(String args) throws IllegalValueException {
+    List<String> argsList = Arrays.asList(args.trim().split("\\s+"));
+    List<Index> indexList = new ArrayList<>();
+    for (String index : argsList) {
+        indexList.add(parseIndex(index));
+    }
+    return indexList;
+}
+----
+Note that trimming `args.trim()` is required since the args passed will usually contain a leading whitespace. The regex `args.trim().split("\\s+")` is used as a form of validation to ignore multiple trailing whitespaces and still allowing such user input to be parsed, preventing an `exception`.
+
+The last step is to create a copy of the person we are favoriting or unfavoriting and simply change its favorite status via the aforementioned `boolean`. Since the `Person` class takes two constructors, the following constructor allows creating a copy of a given `ReadOnlyPerson`.
+[usage,java]
+----
+public Person(ReadOnlyPerson source) {
+    // ... create copy of all fields ...
+}
+----
+After getting the copy of the person e.g. `personToFavorite`, it is easy to call `personToFavorite.setFavorite(new Favorite(true))` and that sets the person as a favorite. Batch operation of favoriting or unfavoriting multiple contacts simply loops this last step for the amount of indexes specified by the user.
+
+==== Design Considerations
+
+**Aspect:** Storing of favorite status +
+**Alternative 1 (current choice):** Store it as a `boolean` +
+**Pros:** Saves memory, more efficient to call `isFavorite()` to check whether a person is a favorite contact +
+**Cons:** Unable to check for `null` or use any other values apart from `true` or `false` +
+**Alternative 2:** Store it as a `String` +
+**Pros:** Easier for printing its values +
+**Cons:** Requires input validation for `String`, less efficient in checking whether a person is a favorite contact (`O(N)` in the worse case scenario)
+
+**Aspect:** Ways to change the favorite status of a person +
+**Alternative 1 (current choice):** Allowing favoriting and unfavoriting of contacts through adding and editing persons as well as through `fav` and `unfav` commands +
+**Pros:** Creates a more consistent workflow for our user that ties in with other fields, a more straight-foward approach to indicate which are the favorite contacts upon adding a person +
+**Cons:** More tedious implementation +
+**Alternative 2:** Just rely on `fav` and `unfav` commands +
+**Pros:** Easier implementation +
+**Cons:** User would have to remember more commands and their usages
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
