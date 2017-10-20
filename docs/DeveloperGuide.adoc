@@ -364,6 +364,25 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::faveSystem[]
+=== Favourite Contact System
+
+The commands related to the Favourite system rely on the "Favourite" attribute class found in the Person class. name, email & address are some other attribute classes in a Person class.
+
+==== Add & Remove contact from Favourites (Since V1.2)
+
+**addFave:** This command's class accepts the parsed index of the contact from the current list of contacts displayed on the GUI. The contact's Person class is then retrieved and modified to have it's Favourite attribute marked as true and the in-memory model of the addressbook is updated with the modified Person.
+
+**removeFave:** This command's class accepts the parsed index of the contact from the current list of contacts displayed on the GUI. The contact's Person class is then retrieved and modified to have it's Favourite attribute marked as false and the in-memory model of the addressbook is updated with the modified Person.
+
+==== Listing of Favourite contacts (Coming in V1.3)
+
+**listFave:** This command will list all contacts who have their Favourite attribute marked as "true".
+
+==== Modifications to existing commands in regards to Favourite system (Coming in V1.4)
+
+**List Command:** Favourite contacts will be loaded before all other contacts.
+// end::faveSystem[]
 == Documentation
 
 We use asciidoc for writing documentation.
