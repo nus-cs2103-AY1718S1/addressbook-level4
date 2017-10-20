@@ -7,16 +7,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -32,7 +28,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Comment;
 import seedu.address.model.person.Appoint;
 import seedu.address.model.tag.Tag;
-import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new AddMultipleCommand object
