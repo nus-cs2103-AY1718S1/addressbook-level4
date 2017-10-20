@@ -47,8 +47,9 @@ public class CommandBox extends UiPart<Region> {
     private final String selectCommandFormat = "select INDEX";
     private final String deleteCommandFormat = "delete INDEX";
     private final String[] autocompleteCommandList = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
-            "list", "l", "select", "s"};
-    private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX", "KEYWORD"};
+        "list", "l", "select", "s"};
+    private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX",
+        "KEYWORD"};
 
 
 
@@ -67,7 +68,7 @@ public class CommandBox extends UiPart<Region> {
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         final String[] allCommandList = {"add", "delete", "edit", "find", "search", "help", "history",
-                "list", "select", "redo", "undo", "exit", "clear"};
+            "list", "select", "redo", "undo", "exit", "clear"};
         TextFields.bindAutoCompletion(commandTextField, allCommandList);
         //input = commandTextField.getText().trim().toLowerCase();
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> processInput());
@@ -224,17 +225,17 @@ public class CommandBox extends UiPart<Region> {
     private void autoSelectFirstField() {
         setFocus();
         switch (input) {
-            case addCommandFormat:
-                commandTextField.selectRange(6, 10);
-                break;
-            case editCommandFormat:
-            case findCommandFormat:
-            case selectCommandFormat:
-            case deleteCommandFormat:
-                int indexOfFirstSpace = input.indexOf(" ");
-                commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
-                break;
-            default:
+        case addCommandFormat:
+            commandTextField.selectRange(6, 10);
+            break;
+        case editCommandFormat:
+        case findCommandFormat:
+        case selectCommandFormat:
+        case deleteCommandFormat:
+            int indexOfFirstSpace = input.indexOf(" ");
+            commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
+            break;
+        default:
         }
     }
 
@@ -243,8 +244,8 @@ public class CommandBox extends UiPart<Region> {
     }
 
     private boolean isAddCommandFormat(String input) {
-        return input.startsWith("add") &&
-                input.contains("n/") && input.contains("p/") && input.contains("e/") && input.contains("a/");
+        return input.startsWith("add")
+                && input.contains("n/") && input.contains("p/") && input.contains("e/") && input.contains("a/");
     }
 
     private void changeSelectionToNextField() {
@@ -283,32 +284,32 @@ public class CommandBox extends UiPart<Region> {
     /**
      * if the command input is a valid command that requires additional field(s), display the full
      * format in the textfield
-     * @param command: the command input by the user
+     * @param command input by the user
      */
     private void displayFullFormat(String command) {
         switch (command) {
-            case "add":
-            case "a":
-                replaceText(addCommandFormat);
-                break;
-            case "edit":
-            case "e":
-                replaceText(editCommandFormat);
-                break;
-            case "find":
-            case "f":
-            case "search":
-                replaceText(findCommandFormat);
-                break;
-            case "select":
-            case "s":
-                replaceText(selectCommandFormat);
-                break;
-            case "delete":
-            case "d":
-                replaceText(deleteCommandFormat);
-                break;
-            default:
+        case "add":
+        case "a":
+            replaceText(addCommandFormat);
+            break;
+        case "edit":
+        case "e":
+            replaceText(editCommandFormat);
+            break;
+        case "find":
+        case "f":
+        case "search":
+            replaceText(findCommandFormat);
+            break;
+        case "select":
+        case "s":
+            replaceText(selectCommandFormat);
+            break;
+        case "delete":
+        case "d":
+            replaceText(deleteCommandFormat);
+            break;
+        default:
         }
     }
 
