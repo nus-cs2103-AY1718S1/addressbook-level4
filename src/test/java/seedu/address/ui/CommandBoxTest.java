@@ -173,6 +173,10 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
 
+    /**
+     * Types in {@code input} and presses enter to select the first option from the drop-down list,
+     * then checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
+     */
     private void assertAutoComplete(String input, String expectedCommand) {
         commandBoxHandle.inputAndEnter(input);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
