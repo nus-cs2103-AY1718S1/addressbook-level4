@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.regex.Pattern;
 
 /**
  * Writes and reads files
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
+    private static final Pattern XML_FILE_FORMAT = Pattern.compile(".*\\.xml$");
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
@@ -88,6 +90,13 @@ public class FileUtil {
     public static String getPath(String pathWithForwardSlash) {
         checkArgument(pathWithForwardSlash.contains("/"));
         return pathWithForwardSlash.replace("/", File.separator);
+    }
+
+    /**
+     * Checks whether the file specified in the {@code filePath} is a valid XML file
+     */
+    public static boolean isValidXmlFile(String filePath) {
+        return XML_FILE_FORMAT.matcher(filePath.toLowerCase()).matches();
     }
 
 }
