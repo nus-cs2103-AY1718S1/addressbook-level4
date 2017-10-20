@@ -122,6 +122,36 @@ public class AddCommandTest {
         }
 
         @Override
+        public List<String> getAllPhonesInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllEmailsInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllAddressesInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllTagsInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllRemarksInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -149,7 +179,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public  void removeTag(Index index, Tag tag) {
+        public void removeTag(Index index, Tag tag) {
             fail("This method should not be called");
         }
     }

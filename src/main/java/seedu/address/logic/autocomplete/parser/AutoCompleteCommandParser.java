@@ -57,7 +57,8 @@ public class AutoCompleteCommandParser implements AutoCompleteParser {
 
         possibleCommands.addAll(COMMAND_WORDS_LIST.stream()
                 .filter(commandTuple -> AutoCompleteUtils.startWithSameLetters(stub, commandTuple.getCommandWord()))
-                .map(commandTuple -> commandTuple.getCommandUsage()).collect(Collectors.toList()));
+                .map(commandTuple -> commandTuple.getCommandUsage())
+                .collect(Collectors.toList()));
         possibleCommands.add(stub);
 
         return possibleCommands;

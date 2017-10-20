@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.autocomplete.parser.AutoCompleteCommandParser;
-import seedu.address.logic.autocomplete.parser.AutoCompleteNameParser;
+import seedu.address.logic.autocomplete.parser.AutoCompleteModelParser;
 import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
 import seedu.address.logic.autocomplete.parser.IdentityParser;
 import seedu.address.logic.parser.Prefix;
@@ -40,13 +40,13 @@ public class AutoCompleteManager {
     private final Model model;
     private final IdentityParser identity = new IdentityParser();
     private final AutoCompleteCommandParser commandParser = new AutoCompleteCommandParser();
-    private final AutoCompleteNameParser nameParser;
+    private final AutoCompleteModelParser modelParser;
     private final LinkedList<AutoCompletePossibilities> cache = new LinkedList<AutoCompletePossibilities>();
     private final int maxSize;
 
     public AutoCompleteManager(Model model, int size) {
         this.model = model;
-        nameParser = new AutoCompleteNameParser(model);
+        modelParser = new AutoCompleteModelParser(model);
         maxSize = size;
     }
 
@@ -99,21 +99,12 @@ public class AutoCompleteManager {
             return commandParser;
         } else {
             List<Integer> prefixPositions = allPrefixes.stream()
-                    .map(i -> AutoCompleteUtils.findPrefixPosition(stub, i.toString())).collect(Collectors.toList());
-            int closestPrefixIndex = prefixPositions.indexOf(
-                    prefixPositions.stream().max((a, b) -> Integer.compare(a, b)).get());
-            // return appropriate parser based on closest prefix
-            switch (closestPrefixIndex) {
-
-            //PREFIX_NAME
-            case 0:
-                return nameParser;
-
-            default:
-                // if the right parser can't be found, return an identity function parser
-                return identity;
-
-            }
+                    .map(i -> AutoCompleteUtils.findPrefixPosition(stub, i.toString()))
+                    .collect(Collectors.toList());
+            Prefix closestPrefix = allPrefixes.get(prefixPositions.indexOf(
+                    prefixPositions.stream().max((a, b) -> Integer.compare(a, b)).get()));
+            modelParser.setPrefix(closestPrefix);
+            return modelParser;
         }
 
     }
