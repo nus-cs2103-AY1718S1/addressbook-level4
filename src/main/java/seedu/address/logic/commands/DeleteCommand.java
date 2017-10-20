@@ -4,7 +4,11 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -40,8 +44,10 @@ public class DeleteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
+
         try {
             model.deletePerson(personToDelete);
+            queue.offer(personToDelete);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -54,5 +60,11 @@ public class DeleteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+    }
+
+    @Override
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+        this.model = model;
+        this.queue = queue;
     }
 }

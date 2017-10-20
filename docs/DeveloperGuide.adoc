@@ -402,6 +402,16 @@ We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` t
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
 
+=== Recently Deleted List
+
+Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
+
+By keying in the command word "recentlyDel", the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
+
+We will now create a 'LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();' to store the recently deleted contacts for up to the past 30 contacts.
+
+In the 'RecentlyDeletedCommand' class, the commandResult method is used which will show the deleted contacts.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
