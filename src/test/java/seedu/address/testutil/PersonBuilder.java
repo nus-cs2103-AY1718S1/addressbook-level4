@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -83,6 +84,21 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Removes the {@code tags} from a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withOutTag(String tag) {
+
+        Set<Tag> newTags = new HashSet<>();
+        for (Tag current :  this.person.getTags()) {
+            if (!tag.equals(current.tagName)) {
+                newTags.add(current);
+            }
+        }
+        this.person.setTags(newTags);
         return this;
     }
 

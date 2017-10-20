@@ -13,28 +13,30 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.TagAddCommand;
-import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
+import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
+import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new TagAddCommand object
+ * Parses input arguments and creates a new TagRemoveCommand object
  */
-public class TagAddCommandParser implements Parser<TagAddCommand> {
+public class TagRemoveCommandParser implements Parser<TagRemoveCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the TagAddCommand
-     * and returns an TagAddCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the TagRemoveCommand
+     * and returns an TagRemoveCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public TagAddCommand parse(String args) throws ParseException {
+    public TagRemoveCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String newTag;
         int lastIndex = 0;
         String[] argsArray;
-        if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        if (args.trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagRemoveCommand.MESSAGE_USAGE));
         }
+        argsArray = args.trim().split(" ");
         newTag = argsArray[0];
         for (int i = 1; i < argsArray.length; i++) {
             if (!argsArray[i].matches("\\d?")) {
@@ -46,30 +48,28 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
         tagSet.add(newTag);
         ArrayList<Index> index = new ArrayList<>();
 
-        if (lastIndex == argsArray.length - 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
-        }
-
-        try {
-            for (int i = lastIndex + 1; i < argsArray.length; i++) {
-                index.add(ParserUtil.parseIndex(argsArray[i]));
+        if (lastIndex != argsArray.length) {
+            try {
+                for (int i = lastIndex + 1; i < argsArray.length; i++) {
+                    index.add(ParserUtil.parseIndex(argsArray[i]));
+                }
+            } catch (IllegalValueException ive) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
             }
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
         }
 
-        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor();
+        TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         try {
-            parseTagsForEdit(tagSet).ifPresent(tagAddDescriptor::setTags);
+            parseTagsForEdit(tagSet).ifPresent(tagRemoveDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!tagAddDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(TagAddCommand.MESSAGE_NOT_EDITED);
+        if (!tagRemoveDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(TagRemoveCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new TagAddCommand(index, tagAddDescriptor);
+        return new TagRemoveCommand(index, tagRemoveDescriptor);
     }
 
     /**

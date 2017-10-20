@@ -27,7 +27,11 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -106,11 +110,15 @@ public class TagAddCommandTest {
 
         // same values -> returns true
         TagAddDescriptor copyDescriptor = new TagAddDescriptor(DESC_JAMES);
+        TagAddDescriptor copyDescriptor1 = new TagAddDescriptor(DESC_LUCY);
         TagAddCommand commandWithSameValues = new TagAddCommand(singlePersonIndexList1, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
+
+        // same object -> returns true
+        assertTrue(copyDescriptor.equals(copyDescriptor));
 
         // null -> returns false
         assertFalse(standardCommand == null);
@@ -121,12 +129,46 @@ public class TagAddCommandTest {
         // different index -> returns false
         assertFalse(standardCommand.equals(new TagAddCommand(singlePersonIndexList2, DESC_JAMES)));
 
-        // different descriptor -> returns false
+        // different command -> returns false
         assertFalse(standardCommand.equals(new TagAddCommand(singlePersonIndexList1, DESC_LUCY)));
+
+        // different object -> returns false
+        assertFalse(copyDescriptor.equals(standardCommand));
+
+        // different descriptor -> returns false
+        assertFalse(copyDescriptor.equals(copyDescriptor1));
+
+    }
+
+
+    @Test
+    public void tagAddDescriptorTest()throws Exception {
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("Tags"));
+        TagAddDescriptor tagAddDescriptor = new TagAddDescriptor();
+        tagAddDescriptor.setName(new Name("Name"));
+        tagAddDescriptor.setAddress(new Address("Address"));
+        tagAddDescriptor.setEmail(new Email("Email@email.com"));
+        tagAddDescriptor.setPhone(new Phone("123"));
+        tagAddDescriptor.setTags(tagSet);
+
+        TagAddDescriptor toCopy = new TagAddDescriptor(tagAddDescriptor);
+
+        assertTrue(tagAddDescriptor.equals(toCopy));
+
+        assertTrue(tagAddDescriptor.getName().equals(toCopy.getName()));
+
+        assertTrue(tagAddDescriptor.getPhone().equals(toCopy.getPhone()));
+
+        assertTrue(tagAddDescriptor.getAddress().equals(toCopy.getAddress()));
+
+        assertTrue(tagAddDescriptor.getEmail().equals(toCopy.getEmail()));
+
+        assertTrue(tagAddDescriptor.getTags().equals(toCopy.getTags()));
     }
 
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
      */
     private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
         TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);

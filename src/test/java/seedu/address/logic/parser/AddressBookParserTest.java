@@ -9,7 +9,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -29,10 +31,15 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.TagAddCommand;
+import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
+import seedu.address.logic.commands.TagRemoveCommand;
+import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -122,6 +129,36 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD_2 + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_tAdd() throws Exception {
+        Person person = new PersonBuilder().build();
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(INDEX_FIRST_PERSON);
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("friend"));
+
+        TagAddDescriptor descriptor = new TagAddDescriptor(person);
+        descriptor.setTags(tagSet);
+        TagAddCommand command = (TagAddCommand) parser.parseCommand(TagAddCommand.COMMAND_WORD + " "
+                + "friend " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new TagAddCommand(singlePersonIndexList, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_tRemove() throws Exception {
+        Person person = new PersonBuilder().build();
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(INDEX_FIRST_PERSON);
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("friend"));
+
+        TagRemoveDescriptor descriptor = new TagRemoveDescriptor(person);
+        descriptor.setTags(tagSet);
+        TagRemoveCommand command = (TagRemoveCommand) parser.parseCommand(TagRemoveCommand.COMMAND_WORD + " "
+                + "friend " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new TagRemoveCommand(singlePersonIndexList, descriptor), command);
     }
 
     @Test
