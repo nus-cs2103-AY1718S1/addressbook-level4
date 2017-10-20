@@ -74,9 +74,11 @@ public class ViewCommand extends Command {
             break;
 
         default:
-            predicate = new ShowSpecifiedLessonPredicate(toView);
+            predicate = new ShowSpecifiedLessonPredicate(toView.hashCode());
             result = String.format(MESSAGE_VIEW_LESSON_SUCCESS, toView);
         }
+
+        ListingUnit.setCurrentPredicate(predicate);
         model.updateFilteredLessonList(predicate);
         return result;
     }
