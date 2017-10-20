@@ -10,9 +10,10 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F10-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT` +
+Updated by: `CS2103-F10-B1`
 
 == Quick Start
 
@@ -132,6 +133,21 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Removing a tag: `removeTag`
+
+Removes the specific tag from the address book. +
+Format: `removeTag TAG`
+
+****
+* Removes the tag `TAG`.
+* `TAG` *must be alphanumeric* `a-z, A-Z, 0-9`
+****
+
+Example:
+
+* `removeTag friend` +
+Removes the tag `friend` from all the persons in the address book.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -217,6 +233,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Clearing command history : `clearhistory`
+
+Clears the command history. +
+Format: `clearhistory`
+
+[WARNING]
+====
+After the command history is cleared, you will not be able to undo any previous commands.
+====
 
 === Exiting the program : `exit`
 
@@ -323,6 +349,27 @@ Example:
 `deleteConfidenceEstimate 2 Address` +
 Deletes a confidence estimate from the `Address` of the 2nd person in the list.
 
+=== User login
+
+Enters a password to check if user is authorised to access information in Intelli. +
+Any data (i.e. the person list and the graph) will only be displayed after successful login. +
+Format: `login PASSWORD`
+
+=== Set a password
+
+Sets a password to protect Intelli from other users. +
+Format: `set PASSWORD`
+
+[NOTE]
+====
+To set a new password, a user must first be logged into Intelli with the previous password.
+====
+
+[NOTE]
+====
+The default password is `i<3Intelli`.
+====
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -337,6 +384,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *RemoveTag* : `removeTag TAG` +
+e.g. `removeTag friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
