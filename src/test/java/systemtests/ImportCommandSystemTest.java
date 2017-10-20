@@ -36,14 +36,14 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
     private static final String STORAGE_FILE = "testAddressBookForImportSystem.xml";
 
     @Before
-    public void setup() throws Exception {
+    public void start() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
         new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
     }
 
     @Test
-    public void importCommand() throws Exception {
+    public void importTest() throws Exception {
         Model model = getModel();
 
         /* Case: import parcels without tags to a non-empty address book, command with leading spaces and trailing
