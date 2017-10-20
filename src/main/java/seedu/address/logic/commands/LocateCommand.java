@@ -44,4 +44,11 @@ public class LocateCommand extends Command {
         EventsCenter.getInstance().post(new LocateCommandEvent(personToSearchAddress));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, personToSearchAddress));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LocateCommand // instanceof handles nulls
+                && this.targetIndex.equals(((LocateCommand) other).targetIndex)); // state check
+    }
 }
