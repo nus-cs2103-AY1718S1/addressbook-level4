@@ -17,8 +17,11 @@ public class MeetingContainsKeywordsPredicate implements Predicate<ReadOnlyMeeti
 
     @Override
     public boolean test(ReadOnlyMeeting meeting) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(meeting.getName().fullName, keyword));
+        return (keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(meeting.getName().fullName, keyword))
+                || keywords.stream()
+                        .anyMatch(keyword ->
+                                StringUtil.containsWordIgnoreCase(meeting.getPersonName().fullName, keyword)));
     }
 
     @Override
