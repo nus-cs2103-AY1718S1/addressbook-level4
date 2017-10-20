@@ -30,15 +30,28 @@ public class Phone {
         requireNonNull(phone);
         String phoneStr = "";
         ArrayList<String> phones = new ArrayList<String>();
+        boolean invalid = false;
         for (String s : phone) {
             String trimmedPhone = s.trim();
-            if (!isValidPhone(trimmedPhone)) {
-                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+//            if (!isValidPhone(trimmedPhone)) {
+//                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+//            }
+            if (isValidPhone(trimmedPhone)) {
+                phones.add(s);
+                phoneStr += s + "\n";
+            } else {
+                invalid = true;
             }
-            phones.add(s);
-            phoneStr += s + "\n";
+
+//            phones.add(s);
+//            phoneStr += s + "\n";
 
         }
+        if (phone.isEmpty() && invalid) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+
+
         phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
         this.phonelist = phones;
         value = phoneStr;
@@ -50,16 +63,33 @@ public class Phone {
         String[] numbers = phone.split("\n");
 
         ArrayList<String> phones = new ArrayList<String>();
+        boolean invalid = false;
+        String phoneStr = "";
 
         for (int i = 0; i < numbers.length; i++) {
             String trimmedPhone = numbers[i].trim();
-            if (!isValidPhone(trimmedPhone)) {
-                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+//            if (!isValidPhone(trimmedPhone)) {
+//                throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+//            }
+            if (isValidPhone(trimmedPhone)) {
+                phones.add(numbers[i]);
+                phoneStr += numbers[i] + "\n";
+            } else {
+                invalid = true;
             }
-            phones.add(numbers[i]);
+
+//            phones.add(numbers[i]);
         }
+
+        if (phone.isEmpty() && invalid) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+
+        phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
+
         this.phonelist = phones;
-        this.value = phone;
+//        this.value = phone;
+        this.value = phoneStr;
     }
 
     /**
