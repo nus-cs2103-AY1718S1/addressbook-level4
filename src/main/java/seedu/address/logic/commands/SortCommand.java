@@ -24,7 +24,7 @@ public class SortCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        //TODO: implement sorting in model
+        model.sortBy(order);
         return new CommandResult(String.format(MESSAGE_SUCCESS, order));
     }
 }

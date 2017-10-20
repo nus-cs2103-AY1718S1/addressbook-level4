@@ -94,9 +94,14 @@ public interface Model {
     void changeListTo(String listName);
 
     /**
-     * Retrieves the full list of persons
+     * Retrieves the full list of persons.
      */
     ObservableList<ReadOnlyPerson> getAllPersons();
+
+    /**
+     * Sorts the master list by specified order.
+     */
+    void sortBy(String order);
 
     /**
      * Increase the debt of a person by the amount indicated

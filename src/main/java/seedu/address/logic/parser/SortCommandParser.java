@@ -18,7 +18,7 @@ public class SortCommandParser {
     */
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        String trimmedArgs = args.trim();
+        String trimmedArgs = args.trim().toLowerCase();
         switch (trimmedArgs) {
         case "name":
         case "debt":

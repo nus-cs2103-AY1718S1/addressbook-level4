@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import javax.print.attribute.standard.MediaSize;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -53,6 +55,10 @@ public class Name {
         return other == this // short circuit if same object
                 || (other instanceof Name // instanceof handles nulls
                 && this.fullName.equals(((Name) other).fullName)); // state check
+    }
+
+    public int compareTo(Name other) {
+        return this.toString().compareToIgnoreCase(other.toString());
     }
 
     @Override
