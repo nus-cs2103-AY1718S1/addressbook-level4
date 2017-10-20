@@ -45,6 +45,20 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Enters the given command in the Command Box, wait for the drop-down list to appear and presses enter.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean inputAndEnter(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+        guiRobot.pauseForDropDownList();
+
+        guiRobot.type(KeyCode.ENTER);
+
+        return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    /**
      * Returns the list of style classes present in the command box.
      */
     public ObservableList<String> getStyleClass() {
