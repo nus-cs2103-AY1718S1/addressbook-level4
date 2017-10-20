@@ -441,8 +441,8 @@ The case for a list command:
 
 1. A user executes a `list` command with sort arguments.
 2. The application checks for invalid sort arguments.
-4. The application model creates a comparator using the sort arguments, in order.
-5. The application displays the results in the specified sort order.
+3. The application model creates a comparator using the sort arguments, in order.
+4. The application displays the results in the specified sort order.
 
 The case for a find command:
 
@@ -508,6 +508,7 @@ comparator before executing a sort and filter which is handled by the event cons
 Auto-completion mechanism is implemented in `CommandBox` class under UI component.
 
 Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
+[source,java]
 ----
 @FXML
 private void handleKeyPress(KeyEvent keyEvent) {
@@ -552,6 +553,75 @@ image::AutoCompleteActivityDiagram.png
 **Alternative 2:** Use ComboBox +
 **Pros:** User can see the required fields for each command in the drop-down box +
 **Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
+// end::auto-completion[]
+
+// tag::shortcut[]
+=== Keyboard Shortcuts Mechanism
+The keyboard shortcuts mechanism is implemented in the `KeyListener` class under the `UI` component of the application.
+It listens for key presses done by the user and executes actions mapped to these key presses, or key events.
+The mapping of actions to key events are found in the `KeyListenerUtil` class.
+
+The following class diagram shows the relationship between classes concerning the keyboard shortcuts mechanism.
+
+image::KeyListenerDiagram.png[width="800"]
+
+The `KeyListener` requires access to the `CommandBox`, `PersonListPanel` and `Logic` components for key event executions,
+such as changing the focus node and executing word commands.
+
+When the user launches the application, the `UiManager` calls `mainWindow.setKeyListeners()`
+which creates the `KeyListener` class to handle the key events.
+In `KeyListener`, the main method for handling the key events has the following code:
+
+[source,java]
+----
+public void handleKeyPress() {
+    mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        // actions to execute key event
+    });
+}
+----
+The `mainNode` refers to the node containing the all UI components in the application,
+and `addEventFilter` captures key events received by that node.
+
+NOTE: Another common method used for capturing key events is `keyOnPressed`.
+In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
+`addEventFilter` captures the key events before they are consumed by the `TextField`.
+
+When the user presses a key combination which matches one that is assigned to the `KeyCombination` attribute in the `KeyListenerUtil` class, the corresponding action will be executed.
+An example of such an execution is given as shown:
+
+[source, java]
+----
+private void executeKeyEvents(KeyEvent keyEvent) {
+	if (FOCUS_PERSON_LIST.match(keyEvent)) {
+		// action to focus on person list
+	}
+	// … more cases
+}
+----
+Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+
+
+==== Design Considerations
+
+**Aspect:** The way commands words are executed +
+**Alternative 1 (current choice):** Pressing the shortcut automatically executes the command +
+**Pros:** Execution of command is faster and more convenient for the user. +
+**Cons:** User may want to check what the shortcut does before executing the command. +
+**Alternative 2:** Pressing the shortcut replaces the `TextField` with the command word +
+**Pros:** Allows the user to check the command before executing it. +
+**Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
+
+**Aspect:** Scrolling of the contact list +
+**Alternative 1 (current choice):** Pressing the `Esc` key focuses on the person list panel, then scrolling is handled by selecting the next contact with either the up or down arrow key. +
+**Pros:**  User can select contacts quickly. +
+**Cons:** Scrolling is done by selection of contacts one at a time.
+Thus, it may be time consuming for the user to search for a contact by scrolling. +
+**Alternative 2:** Contact list scrolls without triggering selection of a contact in the list +
+**Pros:** Scrolling motion is faster and smoother. +
+**Cons:** An extra step is needed for users who want to select a contact,
+          i.e. scroll the list until the contact is visible, then select the desired contact with a select command/shortcut. +
+// end::shortcut[]
 
 === Logging
 
@@ -941,21 +1011,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
-|`* * *` |advanced user |perform actions with hotkeys |increase productivity
+|`* * *` |efficient user |perform actions with hotkeys |increase productivity
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |private user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |delete a specific tag |remove tags that I no longer need
+|`* *` |organized user |delete a specific tag |remove tags that I no longer need
 
-|`* *`|user |store notes about a contact|remember things pertaining to the contact
+|`* *`|forgetful user |store notes about a contact|remember things pertaining to the contact
 
-|`* *` |user |use abbreviation when typing commands |type commands faster
+|`* *` |lazy user |use abbreviation when typing commands |type commands faster
 
-|`* *` |user |be prompted for confirmation when clearing the rolodex |avoid accidentally clearing the rolodex
+|`* *` |careless user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
 
 |`*` |user with many persons in the rolodex |sort persons by name |locate a person easily
 
-|`*` |user with many persons in the rolodex |delete a person using their name |remove a contact without having to find their index
+|`*` |lazy user |delete a person using their name |remove a contact without having to find their index
 
 |`*` |advanced user |amend the storage file manually |import and export data easily
 
@@ -1226,14 +1296,15 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Every command should respond within two seconds.
-.  Features of the product should be added incrementally.
+.  Navigation through the application without a mouse should be easy.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
-.  Should be usable by a novice who has never used a command prompt before
-.  Data should be encrypted when application is not running
-.  A computing professional should be able to manage his/her Rolodex contacts in a fast and efficient manner
-
+.  Should be usable by a human who has never seen a command line interface before.
+.  Should be usable by a human who has never used a command line interface before.
+.  Data should be encrypted when application is not running.
+.  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
+.  Commands should be intuitive and easy to learn.
 
 
 [appendix]
@@ -1269,3 +1340,7 @@ Cons:
 
 * ...
 * ...
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]
