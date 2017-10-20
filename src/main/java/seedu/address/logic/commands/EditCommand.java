@@ -185,7 +185,7 @@ public class EditCommand extends UndoableCommand {
             model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedCode));
         } catch (IllegalValueException ive) {
-            model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+            model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");

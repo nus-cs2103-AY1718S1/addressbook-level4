@@ -5,7 +5,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 
+import java.sql.Time;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 

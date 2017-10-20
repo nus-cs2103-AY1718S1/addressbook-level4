@@ -548,7 +548,7 @@ public class CommandBox extends UiPart<Region> {
 
         case FONT_SIZE_XLARGE:
             commandTextField.setStyle("-fx-font-size: xx-large;");
-            userPrefFontSize = "-fx-font-size: xx-small;";
+            userPrefFontSize = "-fx-font-size: xx-large;";
             fontIndex = 5;
             break;
 
