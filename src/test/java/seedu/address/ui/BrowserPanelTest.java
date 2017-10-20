@@ -43,7 +43,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated web page of a person's address
         postNow(selectionChangedEventStub);
         URL expectedAddressUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + ALICE.getAddress().toString().replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+                + ALICE.getAddress().getStreetName().replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedAddressUrl, browserPanelHandle.getLoadedUrl());

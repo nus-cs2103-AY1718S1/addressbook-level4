@@ -1,16 +1,12 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import org.fxmisc.easybind.EasyBind;
 
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**
@@ -18,7 +14,6 @@ import seedu.address.model.task.ReadOnlyTask;
  */
 public class TaskListPanel extends UiPart<Region> {
     private static final String FXML = "TaskListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(TaskListPanel.class);
 
     @FXML
     private ListView<TaskCard> taskCardListView;
@@ -34,16 +29,6 @@ public class TaskListPanel extends UiPart<Region> {
             taskList, (task) -> new TaskCard(task, taskList.indexOf(task) + 1));
         taskCardListView.setItems(mappedList);
         taskCardListView.setCellFactory(listView -> new TaskListViewCell());
-    }
-
-    /**
-     * Scrolls to the {@code TaskCard} at the {@code index} and selects it.
-     */
-    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            taskCardListView.scrollTo(index);
-            taskCardListView.getSelectionModel().clearAndSelect(index);
-        });
     }
 
     /**
