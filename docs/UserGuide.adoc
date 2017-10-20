@@ -64,7 +64,7 @@ Format: `help command`
  * `help list` +
 Shows the usage of command `list`
 
-=== Adding a person: `add` `create` `put`
+=== Adding a person: `add` `create` `put` _[Since v1.1]_
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -81,12 +81,12 @@ Examples:
 * `creat n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `put n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 
-=== Listing all persons : `list` `show` `all`
+=== Listing all persons : `list` `show` `all` _[Since v1.1]_
 
 Shows a list of all persons in the address book. +
 Format: `list` or `show` or `all`
 
-=== Editing a person : `edit` `update` `modify`
+=== Editing a person : `edit` `update` `modify` _[Since v1.1]_
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -112,7 +112,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `modify 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 
-=== Locating persons by different attributes: `find` `search` `get`
+=== Locating persons by different attributes: `find` `search` `get` _[Since v1.2]_
 
 Finds persons whose specified attributes contain any of the given keywords. +
 Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
@@ -141,7 +141,7 @@ Returns the person having email `johndoe@gmail.com`
 * `find n/Betsy Tim John a/clementi street` +
 Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi Street`
 
-=== Sorting list of persons: `sort`
+=== Sorting list of persons: `sort` _[Since v1.2]_
 
 Sorts the full list of persons based on the specified attribute +
 Format: `sort [n/(ASC OR DSC)]`
@@ -165,7 +165,7 @@ Returns list of persons sorted by phone in ascending order
 * `sort t/DSC` +
 Returns list of persons sorted by time added in descending order
 
-=== Deleting a person : `delete` `remove` `-`
+=== Deleting a person : `delete` `remove` `-` _[Since v1.2]_
 
 Deletes a group of people from the address book. +
 Format:`delete INDEX INDEX ...`
@@ -193,7 +193,7 @@ Deletes the 2nd and 3rd person in the address book
 `delete 1` +
 Deletes the 1st person in the results of the `find` command
 
-=== Adding a tag to a person(s) : `t-add`
+=== Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
 Adds tag to specified person(s) from the address book. +
 Format: `t-add [TAG] INDEX`
@@ -210,7 +210,7 @@ Examples:
 `t-add friends 2 3` +
 Adds the tag friends to the 2nd and 3rd person in the address book
 
-=== Removing a tag to a person(s) : `t-remove` _[Coming in v2.0]_
+=== Removing a tag to a person(s) : `t-remove` _[Since v1.2]_
 
 Removes a tag from specified person(s) from the address book. +
 Format: `t-remove [TAG] INDEX`
@@ -280,7 +280,7 @@ Format: `export PATH`
 * Export all the information of contacts to the given local address.
 ****
 
-=== Selecting a person : `select` `choose`
+=== Selecting a person : `select` `choose` _[Since v1.1]_
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
@@ -301,7 +301,7 @@ Selects the 2nd person in the address book
 `choose 1` +
 Selects the 1st person in the results of the `find` command
 
-=== Listing entered commands : `history` `record`
+=== Listing entered commands : `history` `record` _[Since v1.1]_
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `record`
