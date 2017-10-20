@@ -133,7 +133,7 @@ public class DateUtil {
     }
 
     public static int getMonthFromString(String month) {
-        int monthToReturn = 0;
+        int monthToReturn;
         switch(month) {
         case "Jan":
             monthToReturn = 1;
@@ -172,6 +172,7 @@ public class DateUtil {
             monthToReturn = 12;
             break;
         default:
+            monthToReturn = 0;
             break;
         }
         return monthToReturn;

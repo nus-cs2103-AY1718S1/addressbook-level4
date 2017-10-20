@@ -59,8 +59,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Debt debt = ParserUtil.parseDebt(argMultimap.getValue(PREFIX_DEBT)).get();
             Interest interest = ParserUtil.parseInterest(argMultimap.getValue(PREFIX_INTEREST)).get();
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE)).get();
-            //check if deadline entered is before the date borrowed
             if (!deadline.value.equals(Deadline.NO_DEADLINE_SET)) {
+                //check if deadline entered is before the date borrowed
                 deadline.checkDateBorrow(new Date());
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
