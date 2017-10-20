@@ -1,9 +1,16 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
+import static seedu.address.ui.util.KeyListenerUtil.CLEAR;
+import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST;
+import static seedu.address.ui.util.KeyListenerUtil.HISTORY;
+import static seedu.address.ui.util.KeyListenerUtil.LIST;
+import static seedu.address.ui.util.KeyListenerUtil.REDO;
+import static seedu.address.ui.util.KeyListenerUtil.UNDO;
+
 import java.util.logging.Logger;
 
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.EventsCenter;
@@ -11,18 +18,19 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.ui.util.KeyListenerUtil;
 
 /**
  * Listens to key events in the main window.
  */
 public class KeyListener {
-    public static final String MESSAGE_MISSING_MAPPING = "Missing mapping for key event."
-                                                         + " Some key listeners may be disabled.";
-    private static HashMap<String, KeyCombination> keys = KeyListenerUtil.getKeys();
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Logic logic;
@@ -54,37 +62,32 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        try {
-            // Execute key events for non-command events
-            if (keys.get("FOCUS_PERSON_LIST").match(keyEvent)) {
-                personListPanel.setFocus();
+        if (FOCUS_PERSON_LIST.match(keyEvent)) {
+            personListPanel.setFocus();
 
-            } else if (keys.get("FOCUS_COMMAND_BOX").match(keyEvent)) {
-                commandBox.setFocus();
+        } else if (FOCUS_COMMAND_BOX.match(keyEvent)) {
+            commandBox.setFocus();
 
-            } else if (keys.get("DELETE_SELECTION").match(keyEvent)) {
-                // TODO: add support for deletion at selected list
+        } else if (DELETE_SELECTION.match(keyEvent)) {
+            // TODO: add support for deletion at selected list
 
-            } else {
-                // Execute key events for command words
-                executeCommandKeyEvents(keyEvent);
-            }
-        } catch (NullPointerException e) {
-            logger.warning(MESSAGE_MISSING_MAPPING);
-        }
-    }
+        } else if (CLEAR.match(keyEvent)) {
+            executeCommand(ClearCommand.COMMAND_WORD);
 
-    /**
-     * Executes {@code keyEvent} for command words by searching for mapped keys in HashMap {@code keys}
-     */
-    private void executeCommandKeyEvents(KeyEvent keyEvent) {
-        for (HashMap.Entry<String, KeyCombination> key: keys.entrySet()) {
-            KeyCombination keyCombination = key.getValue();
-            String command = key.getKey();
+        } else if (HISTORY.match(keyEvent)) {
+            executeCommand(HistoryCommand.COMMAND_WORD);
 
-            if (keyCombination.match(keyEvent)) {
-                executeCommand(command);
-            }
+        } else if (UNDO.match(keyEvent)) {
+            executeCommand(UndoCommand.COMMAND_WORD);
+
+        } else if (REDO.match(keyEvent)) {
+            executeCommand(RedoCommand.COMMAND_WORD);
+
+        } else if (LIST.match(keyEvent)) {
+            executeCommand(ListCommand.COMMAND_WORD);
+
+        } else {
+            // do nothing
         }
     }
 
