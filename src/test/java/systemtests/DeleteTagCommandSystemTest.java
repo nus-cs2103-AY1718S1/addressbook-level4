@@ -25,9 +25,6 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
 
-    private static final String MESSAGE_INVALID_DELETE_TAG_COMMAND_FORMAT =
-            String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE);
-
     @Test
     public void deleteTag() throws IllegalValueException {
         /* ---------------- Performing deleteTag operation while an unfiltered list is being shown ---------------- */
