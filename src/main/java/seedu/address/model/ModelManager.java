@@ -137,21 +137,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
         addressBook.removeEvent(target);
-        indicateEventListChanged();
+        indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateEventListChanged();
+        indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addEvent(int position, ReadOnlyEvent event) {
         addressBook.addEvent(position, event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateEventListChanged();
+        indicateAddressBookChanged();
     }
 
     @Override

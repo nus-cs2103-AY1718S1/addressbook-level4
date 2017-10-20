@@ -74,8 +74,11 @@ public class AddressBook implements ReadOnlyAddressBook, ReadOnlyEventStorage {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setEvents(newData.getEventList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
