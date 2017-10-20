@@ -42,7 +42,7 @@ public abstract class Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
     }
-    
+
     /**
      * Provides any logic related dependencies to the command.
      * Commands making use of any of these should override this method to gain
