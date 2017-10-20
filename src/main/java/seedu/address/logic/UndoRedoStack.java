@@ -30,7 +30,10 @@ public class UndoRedoStack {
         }
 
         if (!(command instanceof UndoableCommand)) {
-            undoStack.clear();
+
+            if (!(command instanceof  RedoCommand)) {
+                undoStack.clear();
+            }
             return;
         }
 

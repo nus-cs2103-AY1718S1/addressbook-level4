@@ -171,6 +171,11 @@ public class AddCommandTest {
         public void handleListingUnit() {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void sortLessons() {
+            fail("This method should not be called.");
+        }
     }
 
     /**
