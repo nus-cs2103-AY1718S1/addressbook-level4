@@ -170,8 +170,11 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseStatus_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseStatus(Optional.empty()).isPresent());
+    public void parseStatus_optionalEmpty_returnsPendingStatus() throws Exception {
+        Status expectedStatus = Status.getStatusInstance("PENDING");
+        Optional<Status> actualStatus = ParserUtil.parseStatus(Optional.empty());
+
+        assertEquals(expectedStatus, actualStatus.get());
     }
 
     @Test
