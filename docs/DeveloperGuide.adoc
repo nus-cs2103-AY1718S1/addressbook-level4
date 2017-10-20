@@ -376,6 +376,74 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Autocomplete
+
+The autocomplete functionality is accomplished by using a character trie to store all possible commands. The trie has a very simple set of commands, shown below.
+
+----
+public interface Trie {
+    String attemptAutoComplete (String input);
+    void insert (String input);
+    Set<String> getCommandSet();
+}
+----
+
+The trie is made up of node classes which only have three fields. The next field represents a character on the same level as the current one. The child represents a next possible letter. For example in the words edit and exit the node for 'd' would have a child 'i' and a next 'x'. 'x' would have a child 'i'.
+
+----
+public class Node {
+
+    private Node next;
+    private Node child;
+    private char key;
+    ...
+}
+
+----
+Upon the pressing of the tab key, the command box calls attemptAutoComplete, in the commandTrie class. This method will traverse the trie using the content of the command box. If the input has a character not present in the trie, then the attempt fails. If the trie parses through the input but reaches a node with a next option, it also fails. If the trie parses the input and reaches a node with only children, it will autocomplete the input to a valid command. If the autocomplete fails, the text is turned red.
+
+An added functionality is that if the user presses tab again, the command will add a usage framework for the command, i.e. find will be autocompleted to find [names]. This helps the user to understand command usage. If tab is pressed again, the input simply reverts back to the command.
+
+One class, command collection, is used to hold the set of commands and a map from each command word to the command usage. This is used by the trie to both construct the command trie and autocomplete from a command word to a command word and its usage. This static class simply contains a set of each command's command word that is statically initialized and used by the commandTrie class.
+
+
+=== Expiry date
+
+Expiry date indicates the date that information about a person is no longer useful. It is one of the fields of a person alongside name, email, etc.
+An `ExpiryDate` class contains a `Date` Value.
+
+Date validation is implemented in two steps:
+
+. Validating the date format with regular expression +
+Where the date format is "YYYY-MM-DD"
+
+. Validating the date value with `SimpleDateFormat` object +
+`DATE_FORMATTER`, a `SimpleDateFormat` object, is created and used for:
+
+Parsing String (from user input) to Date
+----
+ParsePosition parsePos = new ParsePosition(0);
+this.value = DATE_FORMATTER.parse(date, parsePos);
+----
+
+Formatting Date to String (for printing)
+----
+public String toString() {
+    return DATE_FORMATTER.format(value);
+}
+----
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of ExpiryDate +
+**Alternative 1 (current choice):** Store value as Date object +
+**Pros:** Methods in Date class can be utilized in implementation of other functions involving `ExpiryDate`. Date formats doesn't matter in most methods (eg: comparisons). +
+**Cons:** Need to put more work into parsing (from String to Date) and formatting (Date to String). +
+**Alternative 2:** Store value as String +
+**Pros:** Easy to implement. Easy to print. +
+**Cons:** Validation of date as String is complicated. Need to implement all ExpiryDate methods from scratch.
+
 == Testing
 
 Tests can be found in the `./src/test/java` folder.
