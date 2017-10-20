@@ -1,4 +1,4 @@
-//@@author: giang
+//@@author A0143832J
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -29,3 +29,4 @@ public class FavoriteCommandParser implements Parser<FavoriteCommand> {
     }
 
 }
+//@@author

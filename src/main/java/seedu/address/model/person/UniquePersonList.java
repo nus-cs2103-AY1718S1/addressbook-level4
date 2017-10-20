@@ -87,7 +87,7 @@ public class UniquePersonList implements Iterable<Person> {
         sort();
         return personFoundAndDeleted;
     }
-
+    //@@author A0143832J
     /**
      * Favorites the equivalent person in the list.
      *
@@ -102,11 +102,12 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         Person newPerson = new Person(toFavorite);
-        newPerson.getFavorite().toggleFavorite();
+        newPerson.setFavorite(new Favorite(!toFavorite.getFavorite().favorite));
 
         internalList.set(index, newPerson);
         sort();
     }
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
@@ -145,7 +146,7 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-    //@@author: giang
+    //@@author A0143832J
     /**
      * sort the list in default sorting order: Favorite > non-Favorite; then alphabetical order
      */
@@ -158,4 +159,5 @@ public class UniquePersonList implements Iterable<Person> {
             }
         });
     }
+    //@@author
 }

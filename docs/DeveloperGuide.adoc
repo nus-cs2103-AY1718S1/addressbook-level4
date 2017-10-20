@@ -442,22 +442,12 @@ In order to implement such feature, two things need to be implemented:
 
 ==== Favorite class
 A favorite class is implemented and used by Person class. A person object does not construct with a favorite object but it is
-able to setFavorite a new favorite object (Since when a new person is created, there's no reason to instantly 'favorite' the person).
-A favorite object is different from other attribute object is that it just contains a simple boolean property. Hence, there's no need to
-construct new object each time the value changes. Hence, the boolean is stored as a normal boolean and a simple toggleFavorite
-method is constructed:
-[source,java]
-----
-private boolean favorite; //Not final
-
-public void toggleFavorite() {
-        this.favorite = !this.favorite;
-}
-----
-
+able to setFavorite a new favorite object.
+A favorite object is different from other attribute object is that it just contains a simple boolean property.
 
 To favorite a person in the list, a favorite command is implemented. The favorite command follows the same parser logic
-as `delete` command, which is to parse the index of the person to favorite. Hence, the favoriteCommand also extends UndoableCommand and overrides the methods in UndoableCommand.
+as `delete` command, which is to parse the index of the person to favorite. Hence, the favoriteCommand also extends
+UndoableCommand and overrides the methods in UndoableCommand.
 
 Model and UI components also have to be updated. For model, a method toggle favorite is implemented to favorite or "defavorite"
 a person at specified index:
@@ -474,7 +464,7 @@ public void favorite(ReadOnlyPerson toFavorite)
         }
 
         Person newPerson = new Person(toFavorite);
-        newPerson.getFavorite().toggleFavorite();
+        newPerson.setFavorite(new Favorite(!toFavorite.getFavorite().favorite));
 
         internalList.set(index, newPerson);
         sort();
@@ -510,26 +500,15 @@ Finally, this method needs to be called whenever an event that causes changes to
 Edit a person, Add a person or Favorite a person.
 
 
-
 ==== Design Considerations
-
-**Aspect:** Implementation of `Favorite` +
-**Alternative 1 (current choice):** Use a non-final boolean value and implement `toggleFavorite()` +
-**Pros:** Easy to implement and there's no need to construct new Object each time the value changes +
-**Cons:** Different structures from other details components ie `Name`, `Phone`, etc +
-**Alternative 2:** Create a final boolean value and just create new object when the value changes +
-**Pros:** Conform with other classes +
-**Cons:** Could hurt memory if the action is spammed too many times.
-
----
 
 **Aspect:** Where sorting should occurs +
 **Alternative 1 (current choice):** On the lowest layer of `Model`, which is `UniquePersonList` +
 **Pros:** No need to have sorting in upper layer. +
 **Cons:** Permanently mutate the data list. +
-**Alternative 2:** Only sorting on the surface of  `UI` component +
+**Alternative 2:** Only sorting on the surface of `UI` component +
 **Pros:** No mutation of data list. +
-**Cons:** Difficult to implement system tests.
+**Cons:** Difficult to implement system tests. +
 // end::favorite[]
 
 == Documentation

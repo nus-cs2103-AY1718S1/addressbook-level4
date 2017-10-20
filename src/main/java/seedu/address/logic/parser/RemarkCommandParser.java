@@ -1,4 +1,4 @@
-//@@author Giang
+//@@author A0143832J
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
@@ -42,4 +42,4 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         return new RemarkCommand(index, new Remark(remark));
     }
 }
-
+//@@author

@@ -53,6 +53,7 @@ public class RemarkCommand extends UndoableCommand {
 
         ReadOnlyPerson personToRemark = lastShownList.get(targetIndex.getZeroBased());
         Person remarkedPerson = addOrChangeRemark(personToRemark, this.remark);
+        remarkedPerson.setFavorite(personToRemark.getFavorite());
 
         try {
             model.updatePerson(personToRemark, remarkedPerson);

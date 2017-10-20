@@ -1,11 +1,11 @@
-//@@author: Giang
+//@@author A0143832J
 package seedu.address.model.person;
 
 /**
  * Represents whether a Person is favorited in the address book.
  */
 public class Favorite {
-    private boolean favorite;
+    public final boolean favorite;
 
     public Favorite() {
         this.favorite = false;
@@ -13,14 +13,6 @@ public class Favorite {
 
     public Favorite(boolean favorite) {
         this.favorite = favorite;
-    }
-
-    public void toggleFavorite() {
-        this.favorite = !this.favorite;
-    }
-
-    public boolean getFavorite() {
-        return this.favorite;
     }
 
     public int getValue() {
@@ -38,3 +30,4 @@ public class Favorite {
                 && this.favorite == (((Favorite) other).favorite)); // state check
     }
 }
+//@@author

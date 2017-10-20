@@ -84,7 +84,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-
+    //@@author A0143832J
     /**
      * Prepare a HashMap of some default colors to link {@code tagName} with a color
      */
@@ -119,7 +119,7 @@ public class PersonCard extends UiPart<Region> {
         image.setFitHeight(25);
         image.setFitWidth(25);
         favorite.setGraphic(image);
-        favorite.setVisible(person.getFavorite().getFavorite());
+        favorite.setVisible(person.getFavorite().favorite);
     }
 
 
@@ -141,6 +141,7 @@ public class PersonCard extends UiPart<Region> {
             return labelColor.get(tagName);
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
