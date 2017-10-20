@@ -362,6 +362,16 @@ image::RemarkModelDiagram[width="200"]
 **Alternative 2:** Add in remarks together with the rest of the detail such as address, phone, email, etc +
 **Pros:** Easy to implement(Don't need to create a new command class, just modify existing add command) +
 **Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
+
+---
+
+**Aspect:** Modify tag to accept sentences which can act as a remark +
+**Alternative 1 (current choice):** Create a new seperate remark command +
+**Pros:** Able to provide a cleaner user interface and experience and reduces complications  work in modifying existing working tag system. +
+**Cons:** More work has to be done in testing and creating a new command line. +
+**Alternative 2:** update the tag to accepts sentences for remarks +
+**Pros:** Easy to implement as we do not need to add a new command line. +
+**Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Plus the user interface of tag command also needs to change to accommodate long tags. +
 // end::RemarkCommand[]
 
 === Logging
