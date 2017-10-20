@@ -31,12 +31,12 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private ArrayList<Index> personsToDelete1 = new ArrayList<>();
     private static final ReadOnlyPerson DUPLICATE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("124, Jurong West Ave 7, #08-112").withEmail("alicee@example.com")
             .withPhone("85333333")
             .withTags("workmate").build();
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private ArrayList<Index> personsToDelete1 = new ArrayList<>();
 
     @Test
     public void excute_duplicatePerson_sucess() throws Exception {
