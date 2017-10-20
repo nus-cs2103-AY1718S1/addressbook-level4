@@ -351,15 +351,39 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ---
 
-Next, we will show specific implementations for each type of command.
+Next, we will show specific implementation for each type of command: +
 
-==== Undo add command
+==== Undo an adding command
+We keep the person added by that command.
 
-==== Undo delete command
+* To undo it, we delete it from the address book.
+* To redo it, we re-add it to the address book.
 
-==== Undo edit command
+In addition, the person is associated with a list of tags, we need to eliminate them when we undo. +
 
-==== Undo clear command
+.The whole process is following:
+.. When we add a person to addressbook:
+1. Extract all tags which are associated with this person but not in the tag list before executing add command. +
+2. Keep the tags extracted in step 1 in another list named `newTags` +
+3. Continue executing add command. +
+.. When we undo this add command:
+1. Delete the person from address book. +
+2. Remove all tags which are in `newTags` from the tag list in the address book. +
+.. When we redo this add command:
+1. Add this person into address book (Since newTags has already existed).
+
+[discrete]
+==== Design Considerations
+**Aspect:** How to deal with tags when we undo add command. +
+**Alternative 1 (current choice):** Remove all tags which only exists in this person. +
+**Pros:** This allows to undo add command completely. +
+**Cons:** Need to ensure each tag to be removed does not exist in any other person. +
+**Alternative 2:** Do not remove any tag. +
+**Pros:** Easy to implement. +
+**Cons:** Tag list is not revert to the state before add command executing.
+
+==== Undo an delete command
+
 
 === Logging
 
