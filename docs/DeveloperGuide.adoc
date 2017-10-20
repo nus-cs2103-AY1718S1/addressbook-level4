@@ -409,6 +409,7 @@ At the moment command skeletons are hardcoded and every command can only have on
 **Pros:** Easier to just add another constant on top of current `COMMAND_ALIAS` constant. +
 **Cons:** Code gets messy in the long term if old features are not depreciated and removed, more constants to declare for every subsequent command added.
 // end::autocomplete[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
