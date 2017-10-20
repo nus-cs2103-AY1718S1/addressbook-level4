@@ -520,7 +520,7 @@ image::MusicSequenceDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `MusicCommand` when a user executes a new command:
 
-image::MusicActivityDiagram.png[width="200"]
+image::MusicActivityDiagram.png[width="400"]
 
 ==== Design Considerations
 
@@ -534,8 +534,8 @@ image::MusicActivityDiagram.png[width="200"]
 
 ---
 
-**Aspect:** Extended commands naming convention+
-**Alternative 1 (current choice):** Extended commands are after the `music` command, hence `music play` & `music pause`+
+**Aspect:** Extended commands naming convention +
+**Alternative 1 (current choice):** Extended commands are after the `music` command, hence `music play` & `music pause` +
 **Pros:** Easier to remember those extended commands belongs to `music` +
 **Cons:** Grammatically wrong.+
 **Alternative 2:** Have the extended commands come first, hence `play music` & `pause music` +
