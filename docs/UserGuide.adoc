@@ -113,6 +113,22 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Adding multiple fields for contacts [Coming in v2.0]
+
+Edits an existing person in the address book. +
+Format: `addf INDEX [p/PHONE]`
+
+****
+* Adds another field for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `addf 1 p/87654321` +
+Adds the phone number 87654321 to the first person.
+
+
 === Locating contacts: `find`
 
 ==== To find a contact by name:
@@ -168,6 +184,24 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+==== To delete multiple persons:
+
+Deletes the specified person from the address book. +
+Format: `delete INDEX...`
+
+****
+* Deletes the persons at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The indexes *must be listed in descending order* e.g. 8 7 6 ...
+****
+
+Examples:
+
+* `list` +
+`delete 8 7` +
+Deletes the 8th and 7th person in the address book.
+
 ==== To delete contacts with a certain tag [Coming in v2.0]:
 
 Deletes all contacts that have a certain tag from the address book. +
@@ -201,6 +235,41 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Adding social media accounts to contacts
+
+==== To add a Facebook account:
+
+Adds a Facebook account with the username provided to the person identified by the index
+Format: `addfacebook INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addfacebook 1 alexyeoh` +
+Adds a Facebook username 'alexyeoh' to the first person in the address book.
+
+==== To add a Instagram account:
+
+Adds an Instagram account with the username provided to the person identified by the index
+Format: `addinstagram INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addinstagram 1 alexyeoh` +
+Adds an Instagram username 'alexyeoh' to the first person in the address book.
+
+==== To add a Twitter account:
+
+Adds a Twitter account with the username provided to the person identified by the index
+Format: `addtwitter INDEX USERNAME`
+
+Examples:
+
+`list` +
+`addfacebook 1 alexyeoh` +
+Adds a Twitter username 'alexyeoh' to the first person in the address book.
 
 === Listing entered commands: `history`
 
