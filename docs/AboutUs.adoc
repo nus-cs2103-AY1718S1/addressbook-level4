@@ -15,7 +15,7 @@ http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[F
 image::sri-vatsa.jpg[width="150", align="left"]
 {empty}[https://github.com/Sri-vatsa[github]] [<<srivatsa#, portfolio>>]
 
-Role : Developer +
+Role : Developer + Project Manager
 Responsibilities :
 
 a) Technical :
@@ -29,6 +29,7 @@ b) Project management :
 
 ** Ensure that the technical environment is in place and operational throughout the project
 ** Ensure team follows workflow
+** Create Milestone, create issues to ensure project is managed
 
 '''
 

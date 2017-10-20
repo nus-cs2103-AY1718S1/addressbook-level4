@@ -37,30 +37,56 @@ Allows users to list contacts based on people they often connect with.
 
 #Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
 
-Each successful `Find` command execution, activates an update of search count for everyone in search results.+
+Each successful `Find` command execution with non-zero search results, activates an update of search count for everyone in search results.+
+[source,java]
+----
+if (searchResultsCount != NO_RESULTS) {
+    model.recordSearchHistory();
+}
+
+----
 This equates to an update of the search count variable within the `SearchData` class within every `Person` class.
+[source,java]
+----
+public void incrementSearchCount()
+----
 
 When the `ListByMostSearched` is executed, `UniquePersonList` is sorted based on descending search count. +
-This updates the address book storage file. When model calls for `filteredPersons` list, all persons are read from +
+[source,java]
+----
+public void sortBySearchCount () {
+    internalList.sort(new ReadOnlyPersonComparator());
+}
+----
+The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.+
+When model calls for `filteredPersons` list, all persons are read from +
 the address book storage and then displayed on `PersonListPanel` on the GUI.
 
 //image:: Implementation Diagram.png[width="800"]
 
-#End of Extract#
+=== Design Considerations
 
-
-Discarded Alternative(s):
-
-** Implement a separate storage for search data, to minimise changes to addressbook storage.
-[none]
-*** *Reason against:* A lot of unnecessary repetitions in code
-** Create a temporary list that sorts and displays persons, instead of modifying the addressbook.
-[none]
-*** *Reason against:* It is better to permanently change the addressbook, to optimise 'find' command & +
-build foundation for a potential `favourites` list;
+**Aspect:** Implementation of storage for `SearchData` +
+**Alternative 1 (current choice):** Add `SearchData` as a class in `Person` +
+**Pros:** Increase storage efficiency +
+**Cons:** `Addressbook.xml` is more complicated
+**Alternative 2:** Add `SearchData` to a separate storage file +
+**Pros:** Minimal changes to `Addressbook.xml` +
+**Cons:** Unnecessary repetition in storage; replication of `Person` details +
 
 ---
 
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting & speed up `find` command +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+---
+
+#End of Extract#
 
 === Enhancement Proposed: Find LinkedIn Contact
 
