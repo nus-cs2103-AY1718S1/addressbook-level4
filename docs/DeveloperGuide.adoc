@@ -351,6 +351,7 @@ _Figure 3.1.3: Flow of activities inside `UndoRedoStack`_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+
 // tag::facebook[]
 === Facebook Post mechanism
 
@@ -435,6 +436,111 @@ _Figure 3.2.1: Interactions for the `facebook post` Command_
 
 ---
 // end::facebook[]
+
+=== Social Info
+
+Information about contact's social media accounts are encapsulated by the `SocialInfo` class. The list of `SocialInfo` associated
+with a `Person` is handled by the `UniqueSocialInfoList`, which guarantees that at most one of each type of social media type is
+associated with the contact.
+
+The following class diagram represents the relationship between the `Person`, `UniqueSocialInfoList` and `SocialInfo` classes:
+
+image::SocialInfoClassDiagram.png[width="800"]
+
+==== Parsing
+
+The form `SOCIAL_TYPE_IDENTIFIER USERNAME` is used to represent a `SocialInfo` as a CLI parametr for a command,
+A Collection of these raw social info parameters can then be passed to the `parseSocialInfo` method in the `SocialInfoMapping` class for parsing.
+
+The following sequence diagram shows how the `parseSocialInfo` method handles the parsing of the raw social info parameters:
+
+image::ParseSocialInfoSequenceDiagram.png[width="800"]
+
+[NOTE]
+As far as possible instantiation of new `SocialInfo` classes should be handled by the `SocialInfoMapping` class.
+The url structures for social media platforms are an external dependency that we do not have control over, thus it is
+inevitable that some issues will inevitably arise due to changes in these external dependencies.
+It is hence essential to isolate the logic pertaining to the generation of these urls so that any issues can easily be identified and resolved.
+
+==== Adding new social platforms
+
+Handling for parsing inputs for new social platforms should be done by adding the following methods to the `SocialInfoMapping` class.
+
+[source,java]
+----
+// The input parameter has been split into two parts - the socialType and the username
+
+// Method to identify if the parameter is for this social platofrm
+private static boolean isPlatformInfo(String[] splitRawSocialInfo) {
+        String trimmedSocialType = splitRawSocialInfo[SOCIAL_TYPE_INDEX].trim();
+        return trimmedSocialType.equals(PLATFORM_IDENTIFIER)
+            || trimmedSocialType.equals(PLATFORM_IDENTIFIER_ALIAS);
+    }
+
+// Method to instantiate the SocialInfo representing this socialPlatform
+private static SocialInfo buildPlatformInfo(String[] splitRawSocialInfo) {
+    String trimmedSocialUsername = splitRawSocialInfo[SOCIAL_USERNAME_INDEX].trim();
+    String socialUrl = PLATFORM_URL_PREFIX + trimmedSocialUsername;
+    return new SocialInfo(PLATFORM_PREFIX, trimmedSocialUsername, socialUrl);
+}
+----
+
+and then adding the following logic to the `parseSocialInfos` method:
+
+[source,java]
+----
+public static SocialInfo parseSocialInfo(String rawSocialInfo) throws IllegalValueException {
+    String[] splitRawSocialInfo = rawSocialInfo.split(" ");
+    if (splitRawSocialInfo.length != 2) {
+        throw new IllegalValueException(INVALID_SYNTAX_EXCEPTION_MESSAGE);
+    }
+
+    if (isFacebookInfo(splitRawSocialInfo)) {
+        return buildFacebookInfo(splitRawSocialInfo);
+    }
+    // ... other social platforms here
+    } else if (isPlatformInfo(splitRawSocialInfo)) {
+        return buildPlatformInfo(splitRawSocialInfo);
+    }
+    // ... other social platforms here
+    } else {
+        throw new IllegalValueException(UNRECOGNIZED_SOCIAL_TYPE_MESSAGE);
+    }
+
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SocialInfo` class +
+**Alternative 1 (current choice):**  Have a class that handles information for all social media platforms. +
+**Pros:** Simple schema that is easily marshalled/unmarshalled by the JAXB library used by the storage component. +
+**Cons:** Assumes that all social media platforms can be represented by the username and the url to the user's page.
+Can be difficult to extend to contain more attributes for social platforms that may need them. +
+**Alternative 2:** Have an abstract class that handles must-have information for all social media platforms,
+which classes designed for each social platform will extend. +
+**Pros:** More flexibility in extending the class to suit the needs of social media types. +
+**Cons:** Difficult to handle marshalling/unmarshalling to XML format using the JAXB library.
+Adds significant complexity to the codebase when number of supported platforms grow. +
+**Additional Info:** An assessment of the major social media platforms shows that the username is sufficient to identify
+users on all the major platforms at present.
+
+---
+
+**Aspect:** Detection of duplicate social types in `UniqueSocialInfoList` +
+**Alternative 1 (current choice):**  Upon every addition of a `SocialInfo` to the list, iterate through each element in the
+existing list to ensure that there are no duplicates. +
+**Pros:** No delay on startup. Computation is performed only on demand. +
+**Cons:** Slight delay may occur upon every operation that involves addition of a `SocialInfo` to a `UniqueSocialInfoList`
+if the number of social platforms supported is high. +
+**Alternative 2:** Precompute the HashSet for every `UniqueSocialInfoList` which contains the social types of each `SocialInfo` in the list
+upon loading from data file. +
+**Pros:** No delay on addition of a `SocialInfo` to a `UniqueSocialInfoList`. +
+**Cons:** Possible delay when starting up the application if number of contacts or number of social platforms supported is high.
+Additional space required to support storing the HashSets in memory. +
+**Additional Info:** Number of social platforms is expected to be a reasonable amount, and thus should not cause much noticable delay.
+In comparison, the startup delay may be more significant when a large number of contacts are present in the address book. Thus the first
+alternative was selected to provide a more pleasant user experience.
 
 === Logging
 

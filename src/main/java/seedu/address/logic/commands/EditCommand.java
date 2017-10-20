@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FAV;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SOCIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNFAV;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -27,6 +28,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -47,7 +49,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_FAV + " OR " + PREFIX_UNFAV + "] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_SOCIAL + "SOCIAL_TYPE USERNAME" + "]... \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -107,8 +110,11 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Favorite updatedFavorite = editPersonDescriptor.getFavorite().orElse(personToEdit.getFavorite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<SocialInfo> updatedSocialInfos =
+                editPersonDescriptor.getSocialInfos().orElse(personToEdit.getSocialInfos());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavorite, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavorite,
+                updatedTags, updatedSocialInfos);
     }
 
     @Override
@@ -140,6 +146,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Favorite favorite;
         private Set<Tag> tags;
+        private Set<SocialInfo> socialInfos;
 
         public EditPersonDescriptor() {}
 
@@ -150,6 +157,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.favorite = toCopy.favorite;
             this.tags = toCopy.tags;
+            this.socialInfos = toCopy.socialInfos;
         }
 
         /**
@@ -157,7 +165,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.favorite, this.tags);
+                    this.favorite, this.tags, this.socialInfos);
         }
 
         public void setName(Name name) {
@@ -204,6 +212,14 @@ public class EditCommand extends UndoableCommand {
             this.tags = tags;
         }
 
+        public Optional<Set<SocialInfo>> getSocialInfos() {
+            return Optional.ofNullable(socialInfos);
+        }
+
+        public void setSocialInfos(Set<SocialInfo> socialInfos) {
+            this.socialInfos = socialInfos;
+        }
+
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
         }
@@ -228,7 +244,8 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getFavorite().equals(e.getFavorite())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getSocialInfos().equals(e.getSocialInfos());
         }
     }
 }

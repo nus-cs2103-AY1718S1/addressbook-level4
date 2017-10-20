@@ -35,6 +35,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setFavorite(person.getFavorite());
         descriptor.setTags(person.getTags());
+        descriptor.setSocialInfos(person.getSocialInfos());
     }
 
     /**

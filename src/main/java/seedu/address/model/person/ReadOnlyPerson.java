@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,6 +26,8 @@ public interface ReadOnlyPerson {
     Favorite getFavorite();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<UniqueSocialInfoList> socialInfoProperty();
+    Set<SocialInfo> getSocialInfos();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -53,6 +57,8 @@ public interface ReadOnlyPerson {
                 .append(getFavorite())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Social Infos: ");
+        getSocialInfos().forEach(builder::append);
         return builder.toString();
     }
 

@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.SocialInfoMapping.parseSocialInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -141,5 +143,19 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code Collection<String> rawSocialInfos} into {@code Set<SocialInfo}.
+     * @param rawSocialInfos
+     * @return
+     */
+    public static Set<SocialInfo> parseSocialInfos(Collection<String> rawSocialInfos) throws IllegalValueException {
+        requireNonNull(rawSocialInfos);
+        final Set<SocialInfo> socialInfoSet = new HashSet<>();
+        for (String rawSocialInfo : rawSocialInfos) {
+            socialInfoSet.add(parseSocialInfo(rawSocialInfo));
+        }
+        return socialInfoSet;
     }
 }
