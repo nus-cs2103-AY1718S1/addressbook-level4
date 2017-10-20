@@ -41,7 +41,9 @@ public class UndoRedoStack {
      */
     public UndoableCommand popUndo() {
         UndoableCommand toUndo = undoStack.pop();
-        redoStack.push(toUndo);
+        if (toUndo.canRedo()) {
+            redoStack.push(toUndo);
+        }
         return toUndo;
     }
 
