@@ -13,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
 
 /**
  * The main LogicManager of the app.
@@ -21,12 +22,14 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
+    private final Storage storage;
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
 
-    public LogicManager(Model model) {
+    public LogicManager(Model model, Storage storage) {
         this.model = model;
+        this.storage = storage;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
@@ -38,6 +41,7 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
+            command.setStorage(storage);
             command.setCommandText(commandText);
             CommandResult result = command.execute();
             undoRedoStack.push(command);

@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFileExtensionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
 
@@ -56,7 +57,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFileExtensionException {
         saveAddressBook(addressBook, filePath);
     }
 
@@ -64,9 +65,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException,
+            InvalidFileExtensionException {
         requireNonNull(addressBook);
         requireNonNull(filePath);
+
+        if (!FileUtil.isValidXmlFile(filePath)) {
+            throw new InvalidFileExtensionException();
+        }
 
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
@@ -77,7 +83,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * Makes a local backup of the addressBook storage file by appending the filename with {@code backup}.
      */
     @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFileExtensionException {
         String newFilePath = removeFileExtension(filePath) + "-backup.xml";
         saveAddressBook(addressBook, newFilePath);
     }
