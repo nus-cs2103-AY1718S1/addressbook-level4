@@ -44,13 +44,13 @@ public class AddressBookParser {
     private static final Pattern KEYWORD_PATTERN =
             Pattern.compile("([^\\s/]+)([\\s/]+|$)");
 
-    private final Map<String, Parser<? extends Command>> commandParsers;
-    private final Map<String, ReadOnlyAliasToken> aliasedTokens;
+    private final Map<String, Parser<? extends Command>> commandMap;
+    private final Map<String, ReadOnlyAliasToken> aliasMap;
     private final ObservableList<ReadOnlyAliasToken> aliasList = FXCollections.observableArrayList();
 
     public AddressBookParser() {
-        this.commandParsers = new HashMap<String, Parser<? extends Command>>();
-        this.aliasedTokens = new HashMap<String, ReadOnlyAliasToken>();
+        this.commandMap = new HashMap<String, Parser<? extends Command>>();
+        this.aliasMap = new HashMap<String, ReadOnlyAliasToken>();
     }
 
     /**
@@ -135,7 +135,7 @@ public class AddressBookParser {
     private String commandWordCheck(String commandWord) {
         String checkedCommandWord = commandWord;
 
-        ReadOnlyAliasToken token = aliasedTokens.get(commandWord);
+        ReadOnlyAliasToken token = aliasMap.get(commandWord);
         if (token != null) {
             checkedCommandWord = token.getRepresentation().representation;
         }
@@ -160,7 +160,7 @@ public class AddressBookParser {
         while (matcher.find()) {
             String keyword = matcher.group(1);
             String spaces = matcher.group(2); // The amount of spaces entered is kept the same
-            ReadOnlyAliasToken token = aliasedTokens.get(keyword);
+            ReadOnlyAliasToken token = aliasMap.get(keyword);
             if (token != null) {
                 keyword = token.getRepresentation().representation;
             }
@@ -181,16 +181,16 @@ public class AddressBookParser {
     public boolean addAliasToken(ReadOnlyAliasToken toAdd) {
         requireNonNull(toAdd);
 
-        if (aliasedTokens.containsKey(toAdd.getKeyword().keyword)) {
+        if (aliasMap.containsKey(toAdd.getKeyword().keyword)) {
             return false;
         }
 
-        if (isCommandParserRegistered(toAdd.getKeyword().keyword)) {
+        if (isCommandRegistered(toAdd.getKeyword().keyword)) {
             return false;
         }
 
         aliasList.add(toAdd);
-        aliasedTokens.put(toAdd.getKeyword().keyword, toAdd);
+        aliasMap.put(toAdd.getKeyword().keyword, toAdd);
         return true;
     }
 
@@ -204,7 +204,7 @@ public class AddressBookParser {
     public boolean removeAliasToken(ReadOnlyAliasToken toRemove) {
         requireNonNull(toRemove);
 
-        ReadOnlyAliasToken token = aliasedTokens.remove(toRemove.getKeyword().keyword);
+        ReadOnlyAliasToken token = aliasMap.remove(toRemove.getKeyword().keyword);
         if (token != null) {
             return aliasList.remove(token);
         } else {
@@ -214,7 +214,7 @@ public class AddressBookParser {
 
 
     /**
-     * Registers a command parser into the commandParsers map.
+     * Registers a command parser into the commandMap
      *
      * @param commandParser the map of command parsers
      * @return true if successfully registered, false if parser with same command word
@@ -223,23 +223,37 @@ public class AddressBookParser {
     public boolean registerCommandParser(Parser<? extends Command> commandParser) {
         requireNonNull(commandParser);
 
-        if (commandParsers.containsKey(commandParser.getCommandWord())) {
+        if (commandMap.containsKey(commandParser.getCommandWord())) {
             return false;
         }
-        if (aliasedTokens.containsKey(commandParser.getCommandWord())) {
+        if (aliasMap.containsKey(commandParser.getCommandWord())) {
             return false;
         }
 
-        commandParsers.put(commandParser.getCommandWord(), commandParser);
+        commandMap.put(commandParser.getCommandWord(), commandParser);
         return true;
     }
 
-    public boolean isCommandParserRegistered(String header) {
-        return commandParsers.containsKey(header);
+    /**
+     * Registers the command words of commands that do not have a parser into the commandMap
+     */
+    public void registerOtherCommands() {
+        commandMap.put("clear", null);
+        commandMap.put("exit", null);
+        commandMap.put("help", null);
+        commandMap.put("history", null);
+        commandMap.put("list", null);
+        commandMap.put("redo", null);
+        commandMap.put("select", null);
+        commandMap.put("undo", null);
+    }
+
+    public boolean isCommandRegistered(String header) {
+        return commandMap.containsKey(header);
     }
 
     public Parser<? extends Command> unregisterCommandParser(String header) {
-        return commandParsers.remove(header);
+        return commandMap.remove(header);
     }
 
     public ObservableList<ReadOnlyAliasToken> getAliasTokenList() {

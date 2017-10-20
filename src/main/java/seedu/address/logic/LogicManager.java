@@ -43,6 +43,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
 
         registerAllDefaultCommandParsers();
+        registerAllOtherCommands();
         loadAllAliasTokens();
     }
 
@@ -73,6 +74,13 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser.registerCommandParser(new SortCommandParser());
         addressBookParser.registerCommandParser(new RemarkCommandParser());
         addressBookParser.registerCommandParser(new UnaliasCommandParser());
+    }
+
+    /**
+     * Registers all other commands without parsers into addressBookParser
+     */
+    private void registerAllOtherCommands() {
+        addressBookParser.registerOtherCommands();
     }
 
     /**
@@ -121,7 +129,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public boolean isCommandWord(String keyword) {
-        return addressBookParser.isCommandParserRegistered(keyword);
+        return addressBookParser.isCommandRegistered(keyword);
     }
 
     @Override
