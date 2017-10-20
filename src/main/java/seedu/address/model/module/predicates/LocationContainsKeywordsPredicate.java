@@ -1,9 +1,8 @@
 package seedu.address.model.module.predicates;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -12,6 +11,7 @@ import java.util.function.Predicate;
  */
 public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
     private final List<String> keywords;
+    private ArrayList<String> duplicateLocation = new ArrayList<String>();
 
     public LocationContainsKeywordsPredicate(List<String> keywords) {
 
@@ -22,10 +22,16 @@ public class LocationContainsKeywordsPredicate implements Predicate<ReadOnlyLess
     @Override
     public boolean test(ReadOnlyLesson lesson) {
 
-        for(int i=0;i<keywords.size();i++){
-            if(lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase())){
-                keywords.set(i,"xxxxxx");
-                return true;
+        for (int i = 0; i < keywords.size(); i++) {
+            if (lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase())) {
+
+                if (duplicateLocation.contains(lesson.getLocation().value)) {
+                    return false;
+                } else {
+                    duplicateLocation.add(lesson.getLocation().value);
+                    return true;
+                }
+
             }
         }
         return false;
