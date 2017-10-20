@@ -22,7 +22,7 @@ public class PostfixTest {
 
     @Test
     public void assertEqualsSameStringValueDifferentInstanceReturnsTrue() {
-        assertTrue(new Postfix(new String("abcd")).equals(new Postfix(new String("abcd"))));
+        assertTrue(new Postfix("abcd").equals(new Postfix("abcd")));
     }
 
     @Test
@@ -32,6 +32,6 @@ public class PostfixTest {
 
     @Test
     public void assertHashCodeSameStringValueDifferentInstanceReturnsTrue() {
-        assertTrue(new Postfix(new String("abcd")).hashCode() == new Postfix(new String("abcd")).hashCode());
+        assertTrue(new Postfix("abcd").hashCode() == new Postfix("abcd").hashCode());
     }
 }
