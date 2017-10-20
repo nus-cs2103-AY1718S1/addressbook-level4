@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import static seedu.address.logic.parser.ParserUtil.generateHint;
+import static seedu.address.logic.parser.HintParser.generateHint;
 
 import com.google.common.eventbus.Subscribe;
 

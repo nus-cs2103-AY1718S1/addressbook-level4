@@ -1,5 +1,8 @@
 package seedu.address.logic.parser;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
  */
@@ -22,4 +25,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix(PREFIX_ADDRESS_STRING);
     public static final Prefix PREFIX_TAG = new Prefix(PREFIX_TAG_STRING);
     public static final Prefix PREFIX_REMARK = new Prefix(PREFIX_REMARK_STRING);
+
+    public static final List<Prefix> LIST_OF_PREFIXES =
+            Arrays.asList(
+                    PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                    PREFIX_TAG, PREFIX_REMARK, PREFIX_EMPTY);
 }
