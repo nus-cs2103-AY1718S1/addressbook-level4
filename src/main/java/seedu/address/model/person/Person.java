@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
     private boolean isPrivate = false;
+    private ObjectProperty<Boolean> isPinned;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -31,7 +32,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags,
-                  boolean isPrivate) {
+                  boolean isPrivate, boolean isPinned) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -41,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.isPrivate = isPrivate;
+        this.isPinned = new SimpleObjectProperty<>(isPinned);
     }
 
     /**
@@ -48,7 +50,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags(), source.isPrivate());
+                source.getTags(), source.isPrivate(), source.isPinned());
     }
 
     public void setName(Name name) {
@@ -76,6 +78,20 @@ public class Person implements ReadOnlyPerson {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    @Override
+    public ObjectProperty<Boolean> pinProperty() {
+        return isPinned;
+    }
+
+    public boolean isPinned() {
+        return isPinned.get();
+    }
+
+    public boolean setPinned(boolean isPinned) {
+        this.isPinned.set(isPinned);
+        return true;
     }
 
     @Override

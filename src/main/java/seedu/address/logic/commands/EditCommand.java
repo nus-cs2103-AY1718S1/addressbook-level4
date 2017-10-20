@@ -102,11 +102,12 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         boolean isPrivate = personToEdit.isPrivate();
+        boolean isPinned = personToEdit.isPinned();
 
         Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
-                updatedTags, isPrivate);
+                updatedTags, isPrivate, isPinned);
     }
 
     @Override
