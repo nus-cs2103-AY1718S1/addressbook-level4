@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.module.ReadOnlyLesson;
 
@@ -44,8 +44,9 @@ public class Timetable extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleLessonPanelSelectionChangedEvent(LessonPanelSelectionChangedEvent event) {
+    private void handleViewedLessonEvent(ViewedLessonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
     }
 
 

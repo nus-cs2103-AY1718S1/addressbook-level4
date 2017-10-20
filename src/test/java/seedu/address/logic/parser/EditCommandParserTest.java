@@ -188,9 +188,9 @@ public class EditCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_LESSON;
         String userInput = targetIndex.getOneBased()  + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
-                + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
-                + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R
-                + CLASSTYPE_DESC_CS2101 + VENUE_DESC_CS2101 + GROUP_DESC_CS2101 + LECTURER_DESC_CS2101;
+                + GROUP_DESC_MA1101R  + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R
+                + CLASSTYPE_DESC_CS2101 + VENUE_DESC_CS2101 + GROUP_DESC_CS2101 + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101;
 
         EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder().withClassType(VALID_CLASSTYPE_CS2101)
                 .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
