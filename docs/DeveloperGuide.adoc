@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team PIMP`      Since: `Sep 2017`      Licence: `MIT`
+By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -374,6 +374,18 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Add/Remove Tags mechanism
+
+The `EditCommand` currently allows the user to edit all the fields of a contact, including tags. However, the tags entered with this command will completely override all the tags existing in that contact.
+
+The `AddRemoveTagsCommand` was added to allow users to add or remove only certain tags without compromising the entire tags list of the contact.
+
+In the backend, `AddRemoveTagsCommand` actually uses the same mechanics as `EditCommand`, where the person is updated as a whole. What it means is the `Person` to be targeted is firstly duplicated, then the tags list is being changed to add/remove certain tags, and the new `Person` object is used to update in the addressbook.
+
+For `AddRemoveTagsParser`, the first whitespace in the argument is removed, then being split with the regex " " to remove all whitespaces. The split array now has the individual arguments. The first argument is the TYPE, which can be either "add" or "remove". The second argument is the INDEX, and the third onwards are the tags to be added or removed.
+
+After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsCommand` constructor. Using the `Set<Tag>` that the user entered, we can easily use `addAll()` or `removeAll()` to create the `Person` object with the tags we want.
 
 == Documentation
 

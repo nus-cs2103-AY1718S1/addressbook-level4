@@ -12,7 +12,15 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team PIMP (W10-B1)`      Since: `Sep 2016`      Licence: `MIT`
+
+== Introduction
+
+To be filled.
+
+== About
+
+To be filled.
 
 == Quick Start
 
@@ -56,7 +64,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 Format: `help` +
 Alias: `h`
 
-=== Viewing quick help : `quickhelp` (Since v1.2)
+=== Viewing quick help : `quickhelp` (Coming v2.0)
 
 Format: `quickhelp` +
 Alias: `qh`
@@ -170,9 +178,9 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Locating persons by name: `findregex`
+=== Locating persons by name: `findregex` (Since v1.2)
 
-Finds persons whose names match the regex given. Note that only the name is searched. (Since v1.2) +
+Finds persons whose names match the regex given. Note that only the name is searched.  +
 Format: `findregex REGEX`
 
 Examples:
@@ -363,7 +371,7 @@ Clears all entries from the address book. +
 Format: `clear` +
 Alias: `c`
 
-=== Access a person's social media : `socialmedia`
+=== Access a person's social media : `socialmedia` (Coming v2.0)
 
 Access a person's social media profile on the browser. +
 Format: `socialmedia INDEX TYPE` +
