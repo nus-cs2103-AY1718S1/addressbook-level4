@@ -4,8 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-Peersonal AddressBook was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The Peersonal AddressBook aims to fulfill a role of being a simple personal contact list - able to store personal data
+PEERSONAL AddressBook was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+The PEERSONAL AddressBook aims to fulfill a role of being a simple personal contact list - able to store personal data
 and other relevant information. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].

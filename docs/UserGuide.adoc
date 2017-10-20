@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= PEERSONAL - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -95,40 +95,32 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find [PREFIX][KEYWORD]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The prefixes are `n/`, `p/`, `e/`, `a/`, `t/`, `r/`, `b/`
+* Only full words and numbers will be matched e.g. `Han` will not match `Hans`, `999` will not match `99987343`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `find n/alice` will return `Alice Lim`
+and `Alice Tan`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Locating persons by phone number: `findphone` (Since v1.2)
-
-Finds persons whose names contain any of the given keywords. +
-Format: `findphone KEYWORD [MORE_KEYWORDS]`
-
-****
-* Only the phone number is searched.
-* Only full phone number will be matched.
-* Persons matching at least one keyword will be returned.
-****
-
-Examples:
-
-* `findphone 98765432` +
-Returns contact with phone number `9876432`.
-* `findphone 98765432 91234567` +
-Returns contacts with phone number `98765432` and `91234567`.
+* `find p/98765432` +
+Returns any person having the phone number `98765432`
+* `find a/138 Clementi Road` +
+Returns any person having the address `138 Clementi Road`
+* `find e/john@example.com` +
+Returns any person having the email `john@example.com`
+* `find t/[friend]` +
+Returns any person having the tag `[friend]`
+* `find r/[Likes coffee]` +
+Returns any person having the remarks `[Likes coffee]`
+* `find b/10-October-1995` +
+Returns any person with birthday on `10-October-1995`
 
 === Deleting a person : `delete`
 

@@ -1,4 +1,4 @@
-﻿= AddressBook Level 4 - Developer Guide
+﻿= PEERSONAL - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -371,31 +371,29 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== FindPhoneNumberCommand mechanism
+=== Enhancing FindCommand mechanism
 
-The `FindPhoneNumberCommand` class is added along with the `FindPhoneNumberCommandParser` class and `NumberContainsKeywordsPredicate` class.
-The `FindPhoneNumberCommand` class extends from the `Command` class and hence cannot be undone or redone using the `Undo` or `Redo` commands. +
+Before any enhancement, the `FindCommand` class can only search the Address Book by the names of the contacts.
+With this enhancement, it is now able to search through the Address Book for all the parameters tied to a contact. +
 
-In the `NumberContainsKeywordsPredicate` class, it implements the `Predicate` class. The purpose of this class is to match
-the keyword input from the user with the `Phone` value (phone number of contacts) and the `FindPhoneNumberCommandParser` would return the matched contact
-details to the user in the GUI. +
+The first change is for the `FindCommand` class to accept all `Predicate` and not only the `NameContainsKeywordsPredicate`.
+In addition, six more classes were created for the rest of the parameters, e.g. `AddressContainsKeywordsPredicate`,
+`EmailContainsKeywordsPredicate` etc. +
 
-The `AddressBookParser` has to be updated to be able to recognise the new `COMMAND_WORD` for `FindPhoneNumberCommand`. In addition,
-we need to create a new `FindPhoneNumberCommandParser` class as well. This parser class implements the `Parser` class and its main function
-is to take the input commands and would return a `FindPhoneNumberCommand` object for execution. It would return
-an invalid error message if the input is correct and return a successful message  if the inputs  are correct.
+The `FindCommandParser` has to be updated to be able to accept all these new parameters. The user input would be separated into two variables using
+the regex: `"(?<commandWord>\\w/)(?<arguments>.*)"`. The `commandWord` refers to either `n/`, `p/`, `e/` etc. and the `arguments` refers to the rest
+of the user input. The `FindCommandParser` would use the `commandWord` and return the correct `Predicate`. If the user input is invalid, a `ParseException`
+would be thrown.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `FindPhoneNumberCommand`. +
-**Alternative 1 (current choice):** Using a separate command using the command word `findphone` +
-**Pros:** Easy to debug and implement. +
-**Cons:** Inconvenient for users as they have to use another command. +
-**Alternative 2:** Enhancing the current `FindCommand` to allow it to accept phone numbers. +
-**Pros:** More convenient for users as they can just a single command word, `find`, to search through the Address Book
-with different parameters. +
-**Cons:** More difficult to implement and maintain. Testing can be more tedious as well.
-//end::findphonenumber[]
+**Aspect:** Accepting different types of user input. +
+**Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
+**Pros:** It is easy to add new parameters and debug. +
+**Cons:** Only able to find one contact at a time e.g. `find n/Alice Bob` does not work.  +
+**Alternative 2:** Accept any type of user input after `find`. +
+**Pros:** More user-friendly as there are fewer requirements for user input. +
+**Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
 
 ---
 === BirthdayCommand mechanism
