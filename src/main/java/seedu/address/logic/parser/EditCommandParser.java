@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FAV;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SOCIAL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_UNFAV;
 
@@ -20,6 +21,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,9 +36,8 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_FAV, PREFIX_UNFAV, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ADDRESS, PREFIX_FAV, PREFIX_UNFAV, PREFIX_TAG, PREFIX_SOCIAL);
 
         Index index;
 
@@ -56,6 +57,9 @@ public class EditCommandParser implements Parser<EditCommand> {
                     PREFIX_FAV,
                     PREFIX_UNFAV).ifPresent(editPersonDescriptor::setFavorite);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseSocialInfosForEdit(argMultimap.getAllValues(PREFIX_SOCIAL))
+                    .ifPresent(editPersonDescriptor::setSocialInfos);
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -78,8 +82,31 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (tags.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
+        return Optional.of(ParserUtil.parseTags(getCollectionToParse(tags)));
+    }
+
+    /**
+     * Parses {@code Collection<String> socialInfos} into a {@code Set<SocialInfo>} if {@code tags} is non-empty.
+     * If {@code socialInfos} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<SocialInfo>} containing zero elements.
+     */
+    private Optional<Set<SocialInfo>> parseSocialInfosForEdit(Collection<String> socialInfos)
+            throws IllegalValueException {
+        assert socialInfos != null;
+
+        if (socialInfos.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(ParserUtil.parseSocialInfos(getCollectionToParse(socialInfos)));
+    }
+
+    /**
+     * Checks if the input collection represents an empty collection. Returns an empty collection if it is.
+     */
+    private Collection<String> getCollectionToParse(Collection<String> collection) {
+        return collection.size() == 1 && collection.contains("")
+                ? Collections.emptySet()
+                : collection;
     }
 
 }
