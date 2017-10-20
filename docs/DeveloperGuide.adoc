@@ -63,6 +63,7 @@ Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingT
 === Architecture
 
 _Figure 2.1.1 : The Architecture Diagram below explains the high-level design of the App._
+
 image::Architecture.png[width="600"]
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
@@ -90,6 +91,7 @@ Keep in mind that each of the four components:
 === UI component
 
 _Figure 2.2.1 : UML diagram of the UI Component showing how it is structured_
+
 image::UiClassDiagram.png[width="800"]
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
@@ -103,11 +105,13 @@ The `UI` component,
 === Logic component
 
 _Figure 2.3.1 : Structure of the Logic Component_
+
 image::LogicClassDiagram.png[width="800"]
 
 Note the `XYZCommand` class on the right of the diagram. Its structure is detailde in the next figure.
 
 _Figure 2.3.2 : Structure of Commands in the Logic Component_
+
 image::LogicCommandClassDiagram.png[width="800"]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
@@ -118,16 +122,20 @@ image::LogicCommandClassDiagram.png[width="800"]
 Events-driven nature of the design
 
 _Figure 2.1.3a : Interactions *between components* for a `delete 1` command_
+
 image::SDforDeletePerson.png[width="800"]
 
 _Figure 2.3.1 : Interactions *within the Logic Component* for the `delete 1` Command_
+
 image::DeletePersonSdForLogic.png[width="800"]
 
 
 === Model component
 
 _Figure 2.4.1 : Structure of the Model Component_
+
 image::ModelClassDiagram.png[width="800"]
+
 
 The `Model`:
 
