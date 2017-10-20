@@ -475,7 +475,7 @@ is rather high. Implementing alternative 2 would be more tedious on the user's s
 // tag::list[]
 === List (Mainlist, Blacklist etc) mechanism
 
-Having multiple lists is useful for debt collectors to view debtors of different categories. Currently these different lists include masterlist and blacklist.
+Having multiple lists is useful for debt collectors to view debtors of different categories. Currently, these different lists include masterlist and blacklist.
 
 These lists could be viewed with the respective commands that will update the panel that is currently displayed. The commands to display these lists are named after the lists themselves. For example, to view the `blacklist`, the command typed is "blacklist" or "bl'.
 
@@ -487,11 +487,11 @@ _Figure 3.5.1 : Sequence Diagram of How the Blacklist Command Works_
 The following sequence diagram, Figure 3.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
 
 image::BlacklistCommandSequenceDiagram2.png[width="800"]
-_Figure 3.5.2 : Sequence Diagram of Model and Addressbook Interacts To Generate The Blacklist From All Persons_
+_Figure 3.5.2 : Sequence Diagram of How ModelManager Interacts With ReadOnlyAddressBook To Generate Blacklist From All Persons_
 
 The List mechanism is facilitated by commands which use `Logic` interface to obtain the copy of the list that is required. As seen from Figure 3.5.1 and Figure 3.5.2 above, to obtain the current blacklist of the addressbook, "blacklist" `String` is first captured by the `CommandBox` class. The `CommandBox` class then passes this `String` to the `Logic` interface for execution.
 
-`Logic` interface uses `LogicManager` class to firstly validate the written command and package it as a `Command` object. The respective command is then executed in `LogicManager` class. These are the instructions that are executed for this command:
+`Logic` interface uses `LogicManager` class to validate the written command and package it as a `Command` object. The respective command is then executed in `LogicManager` class. These are the instructions that are executed for this command:
 
 [source,java]
 ----
@@ -504,7 +504,7 @@ public CommandResult execute() {
 
 Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `LogicManager` subsequently calls `Model` interface. `Model` uses `ModelManager` class to handle the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. 'ReadOnlyAddressBook` uses `AddressBook` class to handle this request.
 
-In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `getIsBlacklisted()` method that resides in the `ReadOnlyPerson` class. This is shown by the following code below:
+In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `ReadOnlyPerson#getIsBlacklisted()` method, as shown below:
 [source,java]
 ----
 public UniquePersonList getBlacklistedPersons() {
