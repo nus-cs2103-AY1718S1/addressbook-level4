@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,13 +24,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
-
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Date> createdAt;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark,
+                  Set<Tag> tags, Date createdAt) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -38,6 +40,8 @@ public class Person implements ReadOnlyPerson {
         this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+
+        this.createdAt = new SimpleObjectProperty<>(createdAt);
     }
 
     /**
@@ -45,7 +49,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getRemark(), source.getTags());
+                source.getRemark(), source.getTags(), source.getCreatedAt());
     }
 
     public void setName(Name name) {
@@ -136,6 +140,20 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt.set(requireNonNull(createdAt));
+    }
+
+    @Override
+    public ObjectProperty<Date> createdAtProperty() {
+        return createdAt;
+    }
+
+    @Override
+    public Date getCreatedAt() {
+        return createdAt.get();
     }
 
     @Override

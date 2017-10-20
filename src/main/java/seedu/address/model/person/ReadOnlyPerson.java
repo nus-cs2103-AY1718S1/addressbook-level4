@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Date;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -24,6 +25,8 @@ public interface ReadOnlyPerson {
     Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Date> createdAtProperty();
+    Date getCreatedAt();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

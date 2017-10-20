@@ -230,7 +230,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Changing a person's remark : `remark`
+=== Changing a person's remark : `remark` (Since v1.2)
 
 Changes the remark of an existing person in the address book. +
 Format: `remark INDEX r/[Remark]` +
@@ -252,11 +252,6 @@ Changes the remark of the 1st person in the address book to "Loves beer".
 * `find Tony` +
 `remark 2 r/Going overseas` +
 Changes the remark of the 2nd person returned by the `find` command to "Going overseas".
-
-=== Viewing statistics : `statistics`
-View a monthly breakdown on the number of persons added to the address book. +
-Format: `statistics` +
-Alias: `st`
 
 === Viewing contacts with birthday in current month : `birthday`
 View a list of persons with birthdays in the current month +
@@ -403,6 +398,18 @@ Examples:
 Exits the program. +
 Format: `exit` +
 Alias: `ex`
+
+=== Viewing total number of persons stored
+
+The column titled "Total: " at the bottom of the screen contains a numerical value
+representing the total number of persons in the last person listing.
+
+=== Viewing newly added persons (Since v1.2)
+
+The column titled "New: " at the bottom of the screen contains a numerical value
+representing the total number of newly added persons in the last person listing.
+A newly added person is defined as a person that was added in the current month.
+
 
 === Saving the data
 

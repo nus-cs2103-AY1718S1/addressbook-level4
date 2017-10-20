@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,9 +33,10 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String remark;
-
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private Date createdAt;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -58,6 +60,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        createdAt = source.getCreatedAt();
     }
 
     /**
@@ -76,6 +79,15 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, tags);
+        final Date createdAt;
+
+        if (this.createdAt == null) {
+            // In the event that there is no createdAt attribute for that person
+            createdAt = new Date();
+        } else {
+            createdAt = new Date(this.createdAt.getTime());
+        }
+
+        return new Person(name, phone, email, address, remark, tags, createdAt);
     }
 }

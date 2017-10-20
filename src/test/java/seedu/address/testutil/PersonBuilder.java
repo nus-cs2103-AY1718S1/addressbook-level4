@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.Date;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -35,8 +36,9 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Date createdAt = new Date();
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultRemark,
-                    defaultTags);
+                    defaultTags, createdAt);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
