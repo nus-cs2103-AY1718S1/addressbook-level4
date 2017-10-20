@@ -74,10 +74,6 @@ public class AddCommandParserTest {
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
 
         // multiple phones - all phones accepted
-        //assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-        //        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedMultiplePhonePerson));
-
-        // multiple phones - last phone accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD
                         + NAME_DESC_BOB
                         + PHONE_DESC_AMY

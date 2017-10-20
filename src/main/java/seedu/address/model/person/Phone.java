@@ -25,7 +25,6 @@ public class Phone {
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-
     public Phone(List<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         String phoneStr = "";
@@ -39,7 +38,6 @@ public class Phone {
             } else {
                 invalid = true;
             }
-
         }
         if (phones.isEmpty() && invalid) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
@@ -54,7 +52,6 @@ public class Phone {
 
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
-
         String[] numbers = phone.split("\n");
 
         ArrayList<String> phones = new ArrayList<String>();
