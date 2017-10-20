@@ -19,8 +19,9 @@ public class FavoriteCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Favorites the person(s) identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) or INDEXES\n"
-            + "Example: " + COMMAND_WORD + " 1 OR " + COMMAND_WORD + " 1 2 3";
+            + "Parameters: INDEX [ADDITIONAL INDEXES] (INDEX must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "Example: " + COMMAND_WORD + " 1 2 3";
 
     public static final String MESSAGE_FAVORITE_PERSON_SUCCESS = "Added as favorite contact(s): %1$s";
 
