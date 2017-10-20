@@ -3,14 +3,21 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagAddCommand;
+import seedu.address.model.tag.Tag;
 
 public class TagAddCommandParserTest {
 
-    private static final String TAGADD_COMMAND = "t-add";
     private static final String SPACE = " ";
     private static final String TAG_EMPTY = " ";
 
@@ -22,16 +29,15 @@ public class TagAddCommandParserTest {
     @Test
     public void parseMissingPartsFailure() {
         // no index specified
-        assertParseFailure(parser, TAGADD_COMMAND + SPACE + VALID_TAG_FRIEND, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_TAG_FRIEND, MESSAGE_INVALID_FORMAT);
 
         // no tag specified
-        assertParseFailure(parser, TAGADD_COMMAND + SPACE + TAG_EMPTY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, TAG_EMPTY, MESSAGE_INVALID_FORMAT);
 
         // no user input
-        assertParseFailure(parser, TAGADD_COMMAND, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, SPACE, MESSAGE_INVALID_FORMAT);
     }
 
-    /*
     @Test
     public void parseTagAddSuccess() throws Exception{
         Index targetIndex = INDEX_SECOND_PERSON;
@@ -41,14 +47,15 @@ public class TagAddCommandParserTest {
         Set<Tag> tagSet = new HashSet<Tag>();
         tagSet.add(new Tag(VALID_TAG_FRIEND));
 
-        String userInput = TAGADD_COMMAND + SPACE + VALID_TAG_FRIEND + SPACE + targetIndex.getOneBased();
-        TagAddDescriptor descriptor = new TagAddDescriptor();
+        String userInput = VALID_TAG_FRIEND + SPACE + targetIndex.getOneBased();
+        TagAddCommand.TagAddDescriptor descriptor = new TagAddCommand.TagAddDescriptor();
         descriptor.setTags(tagSet);
         TagAddCommand expectedCommand = new TagAddCommand(singlePersonIndexList, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    /*
     @Test
     public void parse_resetTags_success() {
         Index targetIndex = INDEX_THIRD_PERSON;
