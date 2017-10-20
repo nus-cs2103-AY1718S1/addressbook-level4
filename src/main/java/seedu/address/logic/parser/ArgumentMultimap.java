@@ -74,8 +74,18 @@ public class ArgumentMultimap {
     }
 
     /**
+     * Returns a boolean value that indicates whether a prefix is present in user input
+     */
+    public boolean isPrefixPresent(Prefix prefix) {
+        return argMultimap.containsKey(prefix);
+    }
+//>>>>>>> eee5caf9473028da0a0f973d90b1403cf5dde0b3
+
+
+    /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
+
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
