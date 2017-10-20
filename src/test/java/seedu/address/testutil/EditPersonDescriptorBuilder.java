@@ -33,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setGroups(person.getGroups());
     }
 
     /**
@@ -92,6 +93,19 @@ public class EditPersonDescriptorBuilder {
             descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withGroups(String... groups) {
+        try {
+            descriptor.setGroups(ParserUtil.parseGroups(Arrays.asList(groups)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("groups are expected to be unique.");
         }
         return this;
     }

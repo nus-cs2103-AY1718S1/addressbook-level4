@@ -12,4 +12,7 @@
     <tags>
         <name>Friends</name>
     </tags>
+    <groups>
+        <name>Bamboo</name>
+    </groups>
 </addressbook>
