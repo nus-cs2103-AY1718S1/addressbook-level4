@@ -14,7 +14,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing], http
 image::yunpengn.jpg[width="150", align="left"]
 {empty}[https://yunpengn.github.io/[homepage]] [https://github.com/yunpengn[github]]
 
-Role: Developer
+Role: Team Lead +
+Responsibility: UI component
 
 '''
 
@@ -22,7 +23,8 @@ Role: Developer
 image::junyango.jpg[width= "150", align="left"]
 {empty}[https://github.com/junyango[github]]
 
-Role: Developer
+Role: Test Engineer +
+Responsibility: Model component
 
 '''
 
@@ -30,7 +32,8 @@ Role: Developer
 image::low5545.jpeg[width="150", align="left"]
 {empty}[https://github.com/low5545[github]]
 
-Role: Developer
+Role: Back-end Developer +
+Responsibility: Logic component
 
 '''
 
@@ -38,6 +41,7 @@ Role: Developer
 image::dennaloh.jpg[width="150", align="left"]
 {empty}[https://github.com/dennaloh[github]]
 
-Role: Developer
+Role: Quality Assurance Engineer +
+Responsibility: Storage component
 
 '''
