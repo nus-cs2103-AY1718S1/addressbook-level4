@@ -351,6 +351,51 @@ _Figure 3.1.3: Flow of activities inside `UndoRedoStack`_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::multiplephonenumbers[]
+=== Multiple phone number fields
+
+When an `AddCommandParser` or `EditCommandParser` is used to parse a command, an `ArgumentMultimap` object is created which contains a hashmap mapping the prefixes to a list of their respective arguments.
+
+The `ArgumentMultimap` class has a `getValue` method and a `getMultipleValues` method. If there are multiple strings passed as arguments to the prefix, the `getValue` method returns only the last string in the list, while the `getMultipleValues` returns a concatenation of all the strings in the list.
+
+The `ParserUtil` class has various parsing methods, such as `parseName` and `parsePhone`. The method `parseName` returns a `Name` object wrapped in the `Optional` class and the method returns a `Phone` object wrapped in the `Optional` class.
+
+The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` method of the `ArgumentMultimap` class instead of the `getValue` method called by the other parsers. This allows multiple phone numbers to be stored in a `Phone` object.
+
+==== Design Considerations
+
+**Aspect:** Display of the multiple phone numbers +
+**Alternative 1 (current choice):** Insert a newline character ("\n") between different phone numbers. +
+**Pros:** Easier to see the different phone numbers. +
+**Cons:** Less flexibility in adding multiple phone numbers (cannot type `p/12345 56789`). +
+**Alternative 2:** Insert a space character (" ") between different phone numbers. +
+**Pros:** More flexibility in adding multiple phone numbers. Can type type `p/12345 56789` to add the two phone numbers with only one "p/" prefix. +
+**Cons:** Harder to see the different phone numbers, makes the display more cluttered. +
+
+**Aspect:** Initialising of `Phone` object +
+**Alternative 1 (current choice):** Constructor of `Phone` takes in a String as parameter, modify current constructor. +
+**Pros:** No need to create a new method. +
+**Cons:** Not so easy to manipulate the string and split the multiple phone numbers. +
+**Alternative 2:** Create a new constructor for `Phone` that takes in a List<String> as parameter. +
+**Pros:** Easier to manipulate the multiple phone numbers in the list. +
+**Cons:** Can cause problems during testing as there are two constructors. +
+
+**Aspect:** Allowing duplicate phone numbers for a contact +
+**Alternative 1 (current choice):** Do not allow duplicate phone numbers. +
+**Pros:** Makes the address book more usable. +
+**Cons:** Need to implement checking of the arguments. +
+**Alternative 2:** Allow duplicate phone numbers. +
+**Pros:** No need to check whether the arguments have been entered already. +
+**Cons:** May cause the address book to be messy if adding duplicate phone numbers was not the user's intention. +
+
+**Aspect:** Dealing with invalid values as well as valid values +
+**Alternative 1 (current choice):** Accept valid values and ignore invalid values. +
+**Pros:** Makes it easier for the user as the invalid value may have been an accident and the valid value may actually be correct. +
+**Cons:** Both values may have been incorrect and an incorrect phone number would have been added. +
+**Alternative 2:** Ignore all values as long as there is one invalid value. +
+**Pros:** No need to continue checking the rest of the arguments once there is one invalid value. +
+**Cons:** The incorrect value may have been an accident and the user may want the valid value to be added as a phone number to the contact. +
+// end::multiplephonenumbers[]
 
 // tag::facebook[]
 === Facebook Post mechanism
