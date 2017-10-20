@@ -28,6 +28,7 @@ public class ParcelTest {
                 new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
                 new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
                 new DeliveryDate(DEFAULT_DELIVERYDATE),
+                Status.getStatusInstance(DEFAULT_STATUS),
                 SampleDataUtil.getTagSet(DEFAULT_TAGS));
         Parcel differentParcel = new Parcel(parcel);
 
@@ -64,6 +65,11 @@ public class ParcelTest {
         assertEquals(differentParcel.deliveryDateProperty().get(),
                 new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
 
+        differentParcel.setStatus(Status.getStatusInstance("Delivered"));
+        assertEquals(differentParcel.getStatus(), Status.getStatusInstance("Delivered"));
+        assertEquals(differentParcel.statusProperty().get(),
+                new SimpleObjectProperty<>(Status.getStatusInstance("Delivered")).get());
+
         differentParcel.setTags(SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.tagProperty().get(), new SimpleObjectProperty<>(
@@ -75,6 +81,7 @@ public class ParcelTest {
         assertEquals(parcel.getPhone(), new Phone(DEFAULT_PHONE));
         assertEquals(parcel.getEmail(), new Email(DEFAULT_EMAIL));
         assertEquals(parcel.getAddress(), new Address(DEFAULT_ADDRESS));
+        assertEquals(parcel.getStatus(), Status.getStatusInstance(DEFAULT_STATUS));
         assertEquals(parcel.getTags(), SampleDataUtil.getTagSet(DEFAULT_TAGS));
 
         // toString() equality
@@ -85,4 +92,5 @@ public class ParcelTest {
                 + " Tags: ["  + DEFAULT_TAGS + "]");
 
     }
+
 }
