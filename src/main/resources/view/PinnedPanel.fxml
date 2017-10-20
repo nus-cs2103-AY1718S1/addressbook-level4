@@ -3,7 +3,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="347.0" maxWidth="300.0" minHeight="298.0" minWidth="300.0" prefHeight="347.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="pinnedListView" VBox.vgrow="ALWAYS" />
    </children>

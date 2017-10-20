@@ -2,6 +2,7 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -40,28 +41,30 @@
    <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4860335195530726, 0.5251396648044693" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+    <VBox fx:id="personList" style="-fx-border-color: white; -fx-border-width: 2;" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" minWidth="320.0" VBox.vgrow="ALWAYS" />
     </VBox>
-      <SplitPane dividerPositions="0.10176991150442478" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+      <SplitPane fx:id="pinAndTaskPane" dividerPositions="0.02631578947368421, 0.5350877192982456, 0.5614035087719298" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-border-color: white; -fx-border-width: 2;">
         <items>
+            <Label text="Calender" />
       
-                            <StackPane prefHeight="145.0" prefWidth="340">
+                            <StackPane alignment="TOP_LEFT" prefHeight="145.0" prefWidth="340">
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
           </StackPane>
-            <VBox fx:id="pinList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0" SplitPane.resizableWithParent="false">
+            <Label text="Pinned person" />
+            <VBox fx:id="pinList" SplitPane.resizableWithParent="false">
                <children>
-                  <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" />
+                  <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" minHeight="350.0" minWidth="320.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
         </items>
       </SplitPane>
-      <StackPane fx:id="browserPlaceholder" maxHeight="800.0" maxWidth="1250.0" minHeight="800.0" minWidth="1250.0" prefHeight="800.0" prefWidth="471.0" />
+      <StackPane fx:id="browserPlaceholder" minWidth="850.0" style="-fx-border-color: white; -fx-border-width: 2;" />
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
