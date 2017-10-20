@@ -95,7 +95,7 @@ public class TypicalLessons {
     }
 
     public static List<ReadOnlyLesson> getTypicalLessons() {
-        return new ArrayList<>(Arrays.asList(GEQ_T66, MA1101R_L1, MA1101R_L2, MA1101R_T1, MA1101R_T2, CS2101_L1, CS2101_L2));
+        return new ArrayList<>(Arrays.asList(MA1101R_L1, MA1101R_L2, GEQ_T66, MA1101R_T1, MA1101R_T2, CS2101_L1, CS2101_L2));
     }
 
     public static HashSet<Code> getTypicalModuleCodeSet() {

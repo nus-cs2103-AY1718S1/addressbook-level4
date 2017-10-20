@@ -5,12 +5,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -60,12 +58,12 @@ public class CommandTestUtil {
 
 
 
-    public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA1101&"; // '&' not allowed in code
+    public static final String INVALID_CODE_DESC = " " + PREFIX_MODULE_CODE + "MA*"; //code format is not correct
     public static final String INVALID_CLASSTYPE_DESC = " " + PREFIX_CLASS_TYPE + "1a"; // 'a' not allowed in class type
     public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed for venue
     public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
     public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
-    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + "Ma *"; // '*' not allowed in tags
+    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
     public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
             + "small!"; // '!' not allowed in font size
 
@@ -125,7 +123,7 @@ public class CommandTestUtil {
      */
     public static void showFirstLessonOnly(Model model) {
         ReadOnlyLesson lesson = model.getAddressBook().getLessonList().get(0);
-        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson));
+        model.updateFilteredLessonList(new ShowSpecifiedLessonPredicate(lesson.hashCode()));
 
         assert model.getFilteredLessonList().size() == 1;
     }
