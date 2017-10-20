@@ -4,6 +4,9 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -15,6 +18,9 @@ import seedu.address.model.tag.Tag;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -60,4 +66,37 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /** Deletes the given event. */
+    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+
+    /** Adds the given event */
+    void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
+
+    /**
+     * Adds a event to the specific position in list.
+     * Only used to undo deletion
+     */
+    void addEvent(int position, ReadOnlyEvent event);
+
+    /** Sorts the event list */
+    void sortEvents();
+
+    /**
+     * Replaces the given event {@code target} with {@code editedEvent}.
+     *
+     * @throws DuplicateEventException if updating the person's details causes the event to be equivalent to
+     *      another existing event in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException;
+
+    /** Returns an unmodifiable view of the filtered event list */
+    ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 }
