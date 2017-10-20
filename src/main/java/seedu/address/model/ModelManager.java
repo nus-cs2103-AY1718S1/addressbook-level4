@@ -35,7 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
     private final HashSet<ReadOnlyLesson> favouriteList;
-    private final HashSet<BookedSlot> bookedList;
+    private HashSet<BookedSlot> bookedList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.

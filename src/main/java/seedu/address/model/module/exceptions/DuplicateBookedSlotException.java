@@ -6,8 +6,10 @@ package seedu.address.model.module.exceptions;
 import seedu.address.commons.exceptions.DuplicateDataException;
 
 public class DuplicateBookedSlotException extends DuplicateDataException {
+
     public DuplicateBookedSlotException() {
         super("Operation would result in duplicate BookedSlot");
     }
+
 }
 

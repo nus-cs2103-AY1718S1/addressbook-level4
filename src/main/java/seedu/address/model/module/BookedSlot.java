@@ -21,9 +21,8 @@ public class BookedSlot {
     }
 
     public boolean isSameStateAs(BookedSlot other) {
-        return other == this
-                || (other != null && other.getLocation() == this.location
-                && other.getTimeSlot() == this.timeSlot);
+        return other == this || (other != null && other.getLocation().equals(this.location)
+                && other.getTimeSlot().equals(this.timeSlot));
     }
 
     @Override
