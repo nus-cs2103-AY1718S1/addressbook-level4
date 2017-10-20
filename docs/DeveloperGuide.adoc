@@ -473,21 +473,21 @@ is rather high. Implementing alternative 2 would be more tedious on the user's s
 // end::datestoring[]
 
 // tag::list[]
-=== List (Mainlist, Blacklist etc) mechanism
+=== List (Masterlist, Blacklist etc) mechanism
 
 Having multiple lists is useful for debt collectors to view debtors of different categories. Currently, these different lists include masterlist and blacklist.
 
-These lists could be viewed with the respective commands that will update the panel that is currently displayed. The commands to display these lists are named after the lists themselves. For example, to view the `blacklist`, the command typed is "blacklist" or "bl'.
+These lists could be viewed with the respective commands that will update the panel that is currently displayed. The commands to display these lists are named after the lists themselves. For example, to view the `blacklist`, the command typed is "blacklist" or "bl".
 
 The following sequence diagram, Figure 3.5.1, shows further details of the interaction between the user and various application components as a whole, when the blacklist command is executed:
 
 image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
-_Figure 3.5.1 : Sequence Diagram of How the Blacklist Command Works_
+_Figure 3.5.1 : Sequence diagram of how the `blacklist` command works_
 
 The following sequence diagram, Figure 3.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
 
 image::BlacklistCommandSequenceDiagram2.png[width="800"]
-_Figure 3.5.2 : Sequence Diagram of How ModelManager Interacts With ReadOnlyAddressBook To Generate Blacklist From All Persons_
+_Figure 3.5.2 : Sequence diagram of how `ModelManager` interacts with `ReadOnlyAddressBook` To generate blacklist From all persons_
 
 The List mechanism is facilitated by commands which use `Logic` interface to obtain the copy of the list that is required. As seen from Figure 3.5.1 and Figure 3.5.2 above, to obtain the current blacklist of the addressbook, "blacklist" `String` is first captured by the `CommandBox` class. The `CommandBox` class then passes this `String` to the `Logic` interface for execution.
 
