@@ -123,7 +123,7 @@ public class EditEventCommand extends UndoableCommand {
         EventName updatedName = editEventDescriptor.getEventName().orElse(eventToEdit.getEventName());
         EventDescription updatedDescription = editEventDescriptor.getEventDescription().orElse(
                 eventToEdit.getDescription());
-        EventTime updatedTime = editEventDescriptor.getEventTime().orElse(eventToEdit.getTime());
+        EventTime updatedTime = editEventDescriptor.getEventTime().orElse(eventToEdit.getEventTime());
 
         return new Event(updatedName, updatedDescription, updatedTime);
     }
