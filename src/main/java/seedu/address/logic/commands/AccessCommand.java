@@ -6,6 +6,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
+import seedu.address.commons.events.ui.PanelSwitchRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -38,6 +39,7 @@ public class AccessCommand extends Command {
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
 
+        EventsCenter.getInstance().post(new PanelSwitchRequestEvent(COMMAND_WORD));
         EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
         return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased()));
     }

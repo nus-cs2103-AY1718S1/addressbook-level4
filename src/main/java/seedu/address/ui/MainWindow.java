@@ -19,11 +19,13 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PanelSwitchRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 
 import seedu.address.commons.events.ui.ShowThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AccessCommand;
 import seedu.address.model.UserPrefs;
 
 /*import seedu.address.model.person.ReadOnlyPerson;
@@ -43,7 +45,6 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_WIDTH = 450;
     private static final int CURRENT_THEME_INDEX = 1;
 
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
@@ -55,6 +56,8 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private static String currentPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -267,5 +270,18 @@ public class MainWindow extends UiPart<Region> {
     private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleChangeTheme(event.theme);
+    }
+
+    @Subscribe
+    private void handlePanelSwitchEvent(PanelSwitchRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.wantedPanel.toString().equals(AccessCommand.COMMAND_WORD)){
+            detailsPanelPlaceholder.getChildren().remove(detailsPanel.getRoot());
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        }
+        else {
+            browserPlaceholder.getChildren().remove(browserPanel.getRoot());
+            detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+        }
     }
 }
