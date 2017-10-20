@@ -2,7 +2,7 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.parcel.Parcel.Status.PENDING;
+import static seedu.address.model.parcel.Status.PENDING;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -10,7 +10,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -195,47 +194,6 @@ public class Parcel implements ReadOnlyParcel {
     @Override
     public String toString() {
         return getAsText();
-    }
-
-    enum Status {
-        PENDING, DELIVERING, DELIVERED;
-
-        public static final String MESSAGE_STATUS_CONSTRAINTS =
-                "Status can only be PENDING, DELIVERED or DELIVERING";
-
-        public static Status getStatusInstance(String status) throws IllegalValueException {
-            String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
-
-            if(!isValidStatus(trimmedAndUpperCasedStatus)) {
-                throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-            }
-
-            switch (trimmedAndUpperCasedStatus) {
-                case "PENDING":
-                    return PENDING;
-
-                case "DELIVERING":
-                    return DELIVERING;
-
-                case "DELIVERED":
-                    return DELIVERED;
-
-                default:
-                    throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
-            }
-        }
-
-        public static boolean isValidStatus(String status) {
-            switch(status) {
-                case "PENDING":  // fall through
-                case "DELIVERING": // fall through
-                case "DELIVERED":
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
     }
 
 }

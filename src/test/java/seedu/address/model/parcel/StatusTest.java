@@ -17,53 +17,53 @@ public class StatusTest {
 
 	@Test
 	public void testToStringTest() {
-		Parcel.Status delivered = Parcel.Status.DELIVERED;
+		Status delivered = Status.DELIVERED;
 		assertEquals("DELIVERED", delivered.toString());
 
-		Parcel.Status delivering = Parcel.Status.DELIVERING;
+		Status delivering = Status.DELIVERING;
 		assertEquals("DELIVERING", delivering.toString());
 
-		Parcel.Status pending = Parcel.Status.PENDING;
+		Status pending = Status.PENDING;
 		assertEquals("PENDING", pending.toString());
 	}
 
 	@Test
 	public void getStatusInstanceTest() throws IllegalValueException {
 		// all uppercase
-		Parcel.Status pending = Parcel.Status.getStatusInstance("PENDING");
-		assertEquals(Parcel.Status.PENDING, pending);
+		Status pending = Status.getStatusInstance("PENDING");
+		assertEquals(Status.PENDING, pending);
 
 		// all lowercase
-		Parcel.Status delivering = Parcel.Status.getStatusInstance("delivering");
-		assertEquals(Parcel.Status.DELIVERING, delivering);
+		Status delivering = Status.getStatusInstance("delivering");
+		assertEquals(Status.DELIVERING, delivering);
 
 		// mix of uppercase and lowercase characters
-		Parcel.Status delivered = Parcel.Status.getStatusInstance("dEliVERed");
-		assertEquals(Parcel.Status.DELIVERED, delivered);
+		Status delivered = Status.getStatusInstance("dEliVERed");
+		assertEquals(Status.DELIVERED, delivered);
 
 		thrown.expect(IllegalValueException.class);
-		thrown.expectMessage(Parcel.Status.MESSAGE_STATUS_CONSTRAINTS);
-		Parcel.Status.getStatusInstance("asd1237fa&(&"); // weird characters
-		Parcel.Status.getStatusInstance("JUMPING"); // not one of the possible values
+		thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
+		Status.getStatusInstance("asd1237fa&(&"); // weird characters
+		Status.getStatusInstance("JUMPING"); // not one of the possible values
 	}
 
 	@Test
 	public void isValidStatusTest() {
-		assertFalse(Parcel.Status.isValidStatus("INVALID"));
+		assertFalse(Status.isValidStatus("INVALID"));
 
 		// uppercase letters
-		assertTrue(Parcel.Status.isValidStatus("PENDING"));
-		assertTrue(Parcel.Status.isValidStatus("DELIVERING"));
+		assertTrue(Status.isValidStatus("PENDING"));
+		assertTrue(Status.isValidStatus("DELIVERING"));
 
 		// lower case letters
-		assertFalse(Parcel.Status.isValidStatus("pending"));
-		assertFalse(Parcel.Status.isValidStatus("delivered"));
+		assertFalse(Status.isValidStatus("pending"));
+		assertFalse(Status.isValidStatus("delivered"));
 
 		// mix of upper and lower case
-		assertFalse(Parcel.Status.isValidStatus("DelIVEred"));
+		assertFalse(Status.isValidStatus("DelIVEred"));
 
 		// random symbols
-		assertFalse(Parcel.Status.isValidStatus("$!@HBJ123"));
+		assertFalse(Status.isValidStatus("$!@HBJ123"));
 	}
 
 }

@@ -24,8 +24,8 @@ public interface ReadOnlyParcel {
     Address getAddress();
     ObjectProperty<DeliveryDate> deliveryDateProperty();
     DeliveryDate getDeliveryDate();
-    ObjectProperty<Parcel.Status> statusProperty();
-    Parcel.Status getStatus();
+    ObjectProperty<Status> statusProperty();
+    Status getStatus();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
