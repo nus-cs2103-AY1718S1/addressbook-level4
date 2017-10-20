@@ -27,7 +27,7 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("Student: 97272031")); // must have at least parent number
         assertFalse(Phone.isValidPhone("Parent: 97979797 "
                 + "Student: 97272031")); // parent number should be entered after student number if both have number.
-        assertTrue(Phone.isValidPhone("Parent: 972701")); // have at least parent number, but not exactly 8 digits.
+        assertFalse(Phone.isValidPhone("Parent: 972701")); // have at least parent number, but not exactly 8 digits.
 
 
         // valid phone numbers
