@@ -10,6 +10,7 @@ import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -38,9 +39,10 @@ public class ParcelBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             DeliveryDate defaultDeliveryDate = new DeliveryDate(DEFAULT_DELIVERYDATE);
+            Status defaultStatus = Status.getStatusInstance(DEFAULT_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultDeliveryDate, defaultTags);
+                    defaultDeliveryDate, defaultStatus, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default parcel's values are invalid.");
         }
@@ -134,6 +136,19 @@ public class ParcelBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("delivery date is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code Parcel} that we are building.
+     */
+    public ParcelBuilder withStatus(String status) {
+        try {
+            this.parcel.setStatus(Status.getStatusInstance(status));
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
         return this;
     }
 
