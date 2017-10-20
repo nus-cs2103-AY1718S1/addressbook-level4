@@ -25,31 +25,6 @@ public class Phone {
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public Phone(List<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String phoneStr = "";
-        ArrayList<String> phones = new ArrayList<String>();
-        boolean invalid = false;
-        for (String s : phone) {
-            String trimmedPhone = s.trim();
-            if (isValidPhone(trimmedPhone)) {
-                phones.add(s);
-                phoneStr += s + "\n";
-            } else {
-                invalid = true;
-            }
-        }
-        if (phones.isEmpty() && invalid) {
-            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
-        }
-
-        if (!phoneStr.isEmpty()) {
-            phoneStr = phoneStr.substring(0, phoneStr.length() - 1);
-        }
-        this.phonelist = phones;
-        value = phoneStr;
-    }
-
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String[] numbers = phone.split("\n");

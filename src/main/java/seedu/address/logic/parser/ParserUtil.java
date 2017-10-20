@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -55,15 +56,6 @@ public class ParserUtil {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
-
-    /**
-     * Parses a {@code List<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    //public static Optional<Phone> parsePhone(List<String> phone) throws IllegalValueException {
-    //    requireNonNull(phone);
-    //    return !phone.isEmpty() ? Optional.of(new Phone(phone)) : Optional.empty();
-    //}
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.

@@ -97,10 +97,6 @@ public class EditCommandParserTest {
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
 
-        // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
-        // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        // assertParseFailure(parser, "1" + PHONE_DESC_BOB + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
-
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
@@ -184,17 +180,8 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_multipleRepeatedFields_acceptsLast() {
+    public void parse_multipleRepeatedFields_acceptsMultipleUnrepeated() {
         Index targetIndex = INDEX_FIRST_PERSON;
-
-        //String userInput = targetIndex.getOneBased()  + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-        //        + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
-        //        + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
-
-        //EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
-        // .withPhone(VALID_PHONE_AMY + "\n" + VALID_PHONE_BOB)
-        //        .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-        // .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
 
         String userInput = targetIndex.getOneBased()
                 + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + FAVORITE_DESC_YES + TAG_DESC_FRIEND
@@ -251,7 +238,7 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // other valid values specified
+        // valid value followed by invalid value specified
         userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + PHONE_DESC_BOB + ADDRESS_DESC_BOB
                 + INVALID_PHONE_DESC;
         descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
