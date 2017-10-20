@@ -345,6 +345,17 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Searching by Regex
+Searching contacts using regex is implemented with the `FindRegexCommand` class. It is very similar to the normal find command, which is `FindCommand`; the main difference is that, instead of a predicate which is an instance of `NameContainsKeywordPredicate`, the newly created predicate `NameMatchesRegexPredicate` is used.
+
+This `NameMatchesRegexPredicate`, which is a subclass of `Predicate`, is constructed by passing a string `regex`, which is going to be compiled into a `Pattern`. The `test` method uses the `Pattern` object formed by testing it with the person's full name. Here, the testing is done with the `find` method, and not `matches` method. `find` is preferred as `find` just needs to match a substring of the string passed.
+
+We felt that this makes more sense; for example, if someone wants to find the contact with name "John" or "Jon", passing `Joh?n` will be matched with `John Doe` and `Jon Doe`, since the `find` method is used. If the `matches` method is used instead, it will only exactly match `John` or `Jon`, which is less useful (searching for only part of the full name allows users to still find someone if the user only remembers a part of the full name; even if the user remembers the full name, only matching a substring allows the user to type a shorter regex).
+
+Also, in the `FindRegexCommandParser` which parses the command passed in, we originally decided to not trim the string passed. However, this meant that the space separating the command keyword and the arguments are also included in the regex. This is probably not the user wanted; for example, the command `findregex John` will not match `John` since the regex formed is `␣John` (here ␣ is a space).
+
+We also originally thought of only trimming the first space. We eventually decided to trim every whitespace though, since we believe that any extra whitespace would be unintentional. For example, it does not make much sense for users to search with a regex that starts with two spaces, say `␣␣John`, as it is very rare for contacts to have two consecutive spaces in their name. Those cases are very likely to be a typo instead.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
