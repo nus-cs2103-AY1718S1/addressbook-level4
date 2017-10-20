@@ -450,20 +450,20 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Sorting Mechanism
 The sorting mechanism is facilitated by `SortCommandParser` and `SortCommand`, with both classes residing in the `Logic` component of the address book. Since the address book state will be modified during the sorting process, the `sort` has to be undoable.
 
-`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify the given prefix or order for how the `UniquePersonList` should be sorted. A `SortCommand` object is then created with the identified sort type and sort order.
+`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify the sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
 
 The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/` for sorting persons by phone number, `e/` for sorting persons by email, `a/` for sorting persons by address and `t/` for sorting persons by the time they was first added into the address book. The `ORDER` can be either `asc` for sorting in ascending order or `dsc` for sorting in descending order. Suppose both `PREFIX` and `ORDER` are not specified, the argument will be defaulted to name in ascending order. Alternatively, suppose the `ORDER` is not specified, it will be defaulted to ascending.
 
 Upon execution of `SortCommand`, a `Comparator<ReadOnlyPerson>` will be initialised based on the sort type and sort order it receives. A `sortPerson` function call will be made to `Model`, which propagates down to `UniquePersonList`, where the sorting of the `internalList` occurs. Since sorting of `internalList` results in the change of state to address book, `SortCommand` is to be implemented as an `UndoableCommand`.
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::LogicCommandClassDiagram_Sort.png[width="800"]
 
 [NOTE]
 Implementation of Sorting Mechanism requires both the manipulation of `Logic` and `Model` component of address book.
 
 The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
 
-image::DeletePersonSdForLogic.png[width="800"]
+image::SortPersonSdForLogic.png[width="800"]
 
 [NOTE]
 If the list is found to be empty, an `EmptyListException` will be thrown from `UniquePersonList`. The command should be terminated without any state change, keeping the redoStack clean of changes.
@@ -488,6 +488,7 @@ If the list is found to be empty, an `EmptyListException` will be thrown from `U
 **Pros:** Enables fine grain control of how list should appear. +
 **Cons:** Not necessary as effect is only obvious when contact list is long and has multiple common names. As target audience for iConnect are students, contact list will not be more than few thousand contacts long. +
 
+---
 
 **Aspect:** Justification for sorting contacts by time added +
 **Alternative 1 (current choice):** Allows sorting by time added +
