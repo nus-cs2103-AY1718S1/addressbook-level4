@@ -39,6 +39,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Scene scene;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -49,10 +50,22 @@ public class MainWindow extends UiPart<Region> {
     private EmailButton emailButton;
 
     @FXML
+    private VBox vBox;
+
+    @FXML
     private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private MenuItem blackMenuItem;
+
+    @FXML
+    private MenuItem whiteMenuItem;
+
+    @FXML
+    private MenuItem greenMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -88,6 +101,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        this.scene = scene;
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -104,6 +118,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -168,6 +183,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {

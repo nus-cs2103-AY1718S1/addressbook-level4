@@ -18,10 +18,17 @@
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
+<<<<<<< HEAD
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
          <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme" />
          <MenuItem mnemonicParsing="false" onAction="#handleWhiteTheme" text="White Theme" />
          <MenuItem mnemonicParsing="false" onAction="#handleGreenTheme" text="Green Theme" />
+=======
+      <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleWhiteTheme" text="White Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleGreenTheme" text="Green Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+>>>>>>> origin/v1.2-Implementing-Google-maps-+-extra-UI-elements
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
@@ -60,7 +67,29 @@
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
-  </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100"
+               styleClass="pane-with-border" VBox.vgrow="NEVER">
+        <padding>
+            <Insets bottom="5" left="10" right="10" top="5"/>
+        </padding>
+    </StackPane>
+
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+        <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="deleteButtonPlaceholder" prefHeight="48.0" prefWidth="322.0"/>
+        </VBox>
+
+        <StackPane fx:id="browserPlaceholder" prefWidth="340">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+        </StackPane>
+    </SplitPane>
+
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
 </VBox>
