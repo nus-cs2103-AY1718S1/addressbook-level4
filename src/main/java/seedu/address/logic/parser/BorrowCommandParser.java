@@ -9,12 +9,13 @@ import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Debt;
 
+//@@author jelneo
 /**
  * Parses input arguments and creates a new BorrowCommand object
  */
 public class BorrowCommandParser implements Parser<BorrowCommand> {
 
-    // index and debt amount borrowed
+    // arguments: index and debt amount borrowed
     private static final int ARGS_LENGTH = 2;
 
     @Override
