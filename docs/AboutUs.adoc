@@ -14,6 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 === Adeeb Ashraf
 
 image::Adeebpic.jpg[https://github.com/chilipadiboy[github]]
+{empty}[https://github.com/chilipadiboy[github]] [<<Adeebashraf#, portfolio>>]
 
 Role: Documentation, Testing, Integration +
 Responsibilities: Storage Component
@@ -22,7 +23,7 @@ Responsibilities: Storage Component
 
 === Boo Kai Hsien
 image::kaihsien.jpg[width="150", align="left"]
-{empty}[https://github.com/chrisboo[github]] [<<chrisboo#, portfolio>>]
+{empty}[https://github.com/chrisboo[github]] [<<bookaihsien#, portfolio>>]
 
 Role: Code quality, Deliverables and Deadlines +
 Responsibilities: Model Component, Logic Component
@@ -31,7 +32,7 @@ Responsibilities: Model Component, Logic Component
 
 === Jeremy Chan
 image::jeremy.png[width="150", align="left"]
-{empty}[https://github.com/Jemereny[github]]
+{empty}[https://github.com/Jemereny[github]] [<<jeremychan#, portfolio>>]
 
 Role: Team Lead, Scheduling and Tracking +
 Responsibilities: UI Component
