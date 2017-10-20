@@ -7,7 +7,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * 1. Adds a person identified using it's last displayed index into the whitelist.
@@ -23,6 +22,7 @@ public class RepaidCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_WHITELIST_PERSON_SUCCESS = "Added person to whitelist: %1$s";
+    public static final String MESSAGE_WHITELIST_PERSON_FAILURE = "Person has already repaid debt!";
 
     private final Index targetIndex;
 
@@ -33,6 +33,7 @@ public class RepaidCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
+        String messagetoDisplay = MESSAGE_WHITELIST_PERSON_SUCCESS;
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -42,12 +43,16 @@ public class RepaidCommand extends UndoableCommand {
         ReadOnlyPerson personToWhitelist = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.addWhitelistedPerson(personToWhitelist);
+            if (personToWhitelist.getIsWhitelisted()) {
+                messagetoDisplay = MESSAGE_WHITELIST_PERSON_FAILURE;
+            } else {
+                model.addWhitelistedPerson(personToWhitelist);
+            }
         } catch (DuplicatePersonException e) {
             assert false : "The target person is already in whitelist";
         }
 
-        return new CommandResult(String.format(MESSAGE_WHITELIST_PERSON_SUCCESS, personToWhitelist));
+        return new CommandResult(String.format(messagetoDisplay, personToWhitelist));
     }
 
     @Override

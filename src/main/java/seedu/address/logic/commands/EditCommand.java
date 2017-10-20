@@ -93,8 +93,7 @@ public class EditCommand extends UndoableCommand {
         try {
             if (personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
                 editedPerson.setIsWhitelisted(false);
-            }
-            else if (!personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() == 0) {
+            } else if (!personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() == 0) {
                 editedPerson.setIsWhitelisted(true);
             }
             model.updatePerson(personToEdit, editedPerson);
