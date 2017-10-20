@@ -453,6 +453,97 @@ does not have to be aware of new `Predicates` +
 
 ---
 
+=== Playing Music
+Unify have a built-in background music player. Users have the choice of playing some music to relax their mind and reduce their stress.
+
+The `music` command is extended with an additional command behind it. For example, `music play`, has play as the extended command, this will `play` command at the back means that the system will play a music track. While `music pause` will pause the current music track.
+
+All these different actions are executed in the same `MusicCommand` class. This keep the commands easier to remember for the user as well, as anything related to `music` will start with `music` as a command.
+
+As shown below, additional extended commands can be added by having an additional case in the switch statement, as the extended commands are handled in a switch statement.
+
+[source,java]
+----
+public CommandResult execute() {
+        boolean genreExist = Arrays.asList(genreList).contains(genre);
+        switch (command) {
+        case "play":
+            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+                mediaPlayer.play();
+                return new CommandResult(MESSAGE_SUCCESS);
+            }
+            if (genreExist) {
+                String musicFile = "audio/music/" + genre + trackNumber + ".mp3";
+                MESSAGE_SUCCESS = genre.toUpperCase() + " Music Playing";
+                if (trackNumber < 2) {
+                    trackNumber++;
+                } else {
+                    trackNumber = 1;
+                }
+                if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                    mediaPlayer.stop();
+                }
+                Media sound = new Media(new File(musicFile).toURI().toString());
+                mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setVolume(2.0);
+                mediaPlayer.play();
+                return new CommandResult(MESSAGE_SUCCESS);
+            } else {
+                return new CommandResult(MESSAGE_USAGE);
+            }
+        case "stop":
+            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayer.stop();
+            }
+            return new CommandResult(MESSAGE_MUSICSTOP);
+        case "pause":
+            if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                mediaPlayer.pause();
+            }
+            MESSAGE_MUSICPAUSE = genre.toUpperCase() + " Music Paused";
+            return new CommandResult(MESSAGE_MUSICPAUSE);
+        default:
+            return new CommandResult(MESSAGE_USAGE);
+        }
+    }
+
+----
+[NOTE]
+The `trackNumber` has to be equal or less than the number of each genre tracks you have in the `audio/music` folder. For example, if `trackNumber` is 2, it is required at least 2 mp3 files of each genre of music.
+
+image::MusicList.jpg[width="300"]
+
+The following sequence diagram shows how the music operation works:
+
+image::MusicSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `MusicCommand` when a user executes a new command:
+
+image::MusicActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Which music file to play first +
+**Alternative 1 (current choice):** Play the music file that starts with 1 then increase from there +
+**Pros:** Easy to implement. Users able to know what song is coming up next in the track list +
+**Cons:** Always start at the same music track first +
+**Alternative 2:** Play a random music file +
+**Pros:** Have a chance to be different the next time when first started playing music. +
+**Cons:** User does not know which song is going to be played next. +
+
+---
+
+**Aspect:** Extended commands naming convention+
+**Alternative 1 (current choice):** Extended commands are after the `music` command, hence `music play` & `music pause`+
+**Pros:** Easier to remember those extended commands belongs to `music` +
+**Cons:** Grammatically wrong.+
+**Alternative 2:** Have the extended commands come first, hence `play music` & `pause music` +
+**Pros:** Grammatically correct. Sounds nicer verbally. +
+**Cons:** User might not associate those extended commands to `music`. +
+
+---
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
