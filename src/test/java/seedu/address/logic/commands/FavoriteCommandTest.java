@@ -54,6 +54,8 @@ public class FavoriteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
+        showFirstPersonOnly(model);
+
         ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         FavoriteCommand favoriteCommand = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON));
 
@@ -62,6 +64,7 @@ public class FavoriteCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.toggleFavoritePerson(personToFavorite, FavoriteCommand.COMMAND_WORD);
+        model.updateFilteredPersonList(p -> true);
 
         assertCommandSuccess(favoriteCommand, model, expectedMessage, expectedModel);
     }

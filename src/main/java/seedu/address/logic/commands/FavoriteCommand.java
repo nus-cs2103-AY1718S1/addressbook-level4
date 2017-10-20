@@ -58,10 +58,10 @@ public class FavoriteCommand extends UndoableCommand {
          */
         for (Index targetIndex : targetIndexList) {
             ReadOnlyPerson personToFavorite = lastShownList.get(targetIndex.getZeroBased());
-            names += "\n★ " + personToFavorite.getName().toString();
 
             try {
                 model.toggleFavoritePerson(personToFavorite, COMMAND_WORD);
+                names += "\n★ " + personToFavorite.getName().toString();
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(EditCommand.MESSAGE_DUPLICATE_PERSON);
             } catch (PersonNotFoundException pnfe) {
