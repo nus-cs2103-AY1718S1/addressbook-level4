@@ -367,7 +367,8 @@ Unify offers users the option to find people by their details. To implement the 
 `key` contains the detail's prefix and `value` contains the keywords that succeed that prefix.
 
 For each detail, there are specific `Predicates` that are defined. They are `AddressContainsKeywordPredicate`, `EmailContainsKeywordPredicate`,
-`NameContainsKeywordPredicate`, `PhoneContainsKeywordPredicate` and `TagsContainKeywordPredicate`. The implementation for `Predicate#test` is as follows:
+`NameContainsKeywordPredicate`, `PhoneContainsKeywordPredicate` and `TagsContainKeywordPredicate`, `RemarkContainsKeywordPredicate`. The implementation is as follows:
+
 [source,java]
 ----
 public class DetailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> {
@@ -386,12 +387,14 @@ public class DetailContainsKeywordPredicate implements Predicate<ReadOnlyPerson>
 
 ----
 [NOTE]
-For Tags, we test for all tags and check for at least one `String#contains` match.
+For Tags, we test for all tags and check for at least one `String#contains` match. For Remark, we check using `StringUtil#containsWordIgnoreCase`.
+
 
 However, just having a specific `Predicate` for each detail is insufficient as `ModelManager#updateFilteredPersonList()`
 only takes only a single `Predicate` as an argument.
 As such, to accept multiple details in one query, we need to encapsulate multiple `Predicates` into one `Predicate`.
 This is encapsulated by `PersonContainsFieldsPredicate` which takes in a list of `Predicates` as an argument.
+
 Internally, the `Predicates` are stored in a `HashSet`.
 
 [source,java]

@@ -185,14 +185,17 @@ image:UG_FindByNameOutput.png[width="300"] +
 * Words will be matched if the keyword is contained by the peron's details e.g. `n/Han` will identify `Hans`, `n/Gabrielle` will not identify `Gabriel`.
 ****
 
+[NOTE]
+For Remark, we test with `StringUtil#containsWordIgnoreCase` which is case-insensitive but a full match is required
+
 Examples:
 
 * `find n/John` +
 Returns `john` and `John Doe`
 * `find n/John t/friend p/123` +
-Returns any person who's name contains `john`, has a tag which contains `friend` and who's phone contains `123`.
+Returns any person whose name contains `john`, has a tag which contains `friend` and whose phone contains `123`.
 * `find a/Blk 100 Street` +
-Returns any person who's address contains `Blk 100 Street` (case-insensitive). Does not return person who's address is `Street Blk 100`.
+Returns any person whose address contains `Blk 100 Street` (case-insensitive). Does not return person whose address is `Street Blk 100`.
 
 TIP: You may also click on tags to do a search for that tag. (ie. find t/CLICKED_TAG); +
 Clicking on a tag, image:UG_ClickTagInput.png[width="300"] +
