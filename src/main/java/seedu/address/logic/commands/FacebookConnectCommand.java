@@ -21,10 +21,10 @@ public class FacebookConnectCommand extends Command {
     public static final String COMMAND_ALIAS = "fbconnect";
     public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
 
-    private static boolean authenticated = false;
-    private static String domain = "https://www.facebook.com/";
-    private static String appID = "131555220900267";
-    private static String commaSeparetedPermissions = "user_about_me,email,publish_actions,user_birthday,"
+    private static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
+    private static final String FACEBOOK_APP_ID = "131555220900267";
+    // TODO(Alex): Do we really need all of these permissions?
+    private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
             + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
             + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
             + "user_religion_politics,user_status,user_tagged_places,user_videos,user_website,user_work_history,"
@@ -34,8 +34,11 @@ public class FacebookConnectCommand extends Command {
             + "user_actions.news,read_page_mailboxes,rsvp_event,user_events,user_managed_groups,"
             + "pages_manage_instant_articles,user_actions.video,instagram_basic,instagram_manage_comments,"
             + "instagram_manage_insights,read_audience_network_insights,read_insights";
-    private static String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appID
-            + "&redirect_uri=" + domain + "&scope=" + commaSeparetedPermissions;
+    private static final String FACEBOOK_AUTH_URL =
+            "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+                    + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope=" + FACEBOOK_PERMISSIONS;
+
+    private static boolean authenticated = false;
     private static String welcomeUser;
     private static Facebook facebookInstance;
     private String accessToken;
@@ -54,19 +57,14 @@ public class FacebookConnectCommand extends Command {
         return authenticated;
     }
 
-    /*
-    public static String getAuthUrl() {
-        return authUrl;
-    }
-    */
-
     @Override
     public CommandResult execute() throws CommandException {
-
+        // TODO(Alex): Can we not use chromedriver? It feels kinda hacky to use a web browser from a test suite.
+        // Can we either use the exiting BrowserPanel or use the user's default browser?
         System.setProperty("webdriver.chrome.driver", "chromedriver");
 
         WebDriver driver = new ChromeDriver();
-        driver.get(authUrl);
+        driver.get(FACEBOOK_AUTH_URL);
         while (true) {
             if (driver.getCurrentUrl().contains("access_token")) {
                 Pattern p = Pattern.compile("access_token=(.*?)\\&");
@@ -78,11 +76,12 @@ public class FacebookConnectCommand extends Command {
                 driver.quit();
 
                 facebookInstance = new FacebookFactory().getInstance();
-                facebookInstance.setOAuthPermissions(commaSeparetedPermissions);
+                facebookInstance.setOAuthPermissions(FACEBOOK_PERMISSIONS);
                 facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
                 try {
                     welcomeUser = facebookInstance.getName();
                 } catch (FacebookException e) {
+                    //TODO(Alex): Properly handle the error
                     e.printStackTrace();
                 }
                 break;

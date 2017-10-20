@@ -19,6 +19,7 @@ import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.social.SocialInfo;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -50,19 +51,33 @@ public class AddFacebookContactParser implements Parser<AddFacebookContactComman
             if (user.getEmail() != null) {
                 email = new Email(user.getEmail());
             } else {
-                email = new Email("a@b.c");
+                // Placeholder for users without username
+                email = new Email("placeholder@example.com");
             }
 
-            Set<Tag> taglist = new HashSet<Tag>();
-            taglist.add(new Tag("facebookcontact"));
+            Set<Tag> tags = new HashSet<>();
+            tags.add(new Tag("facebookcontact"));
 
-            Favorite fav = new Favorite(false);
+            Favorite favorite = new Favorite(false);
 
-            Person newPerson = new Person(new Name(user.getName()), new Phone("000"), email,
-                    new Address("-"), fav, taglist);
+            Set<SocialInfo> socialInfos = new HashSet<>();
+            // TODO(Marvin): Make social media identifiers public
+            SocialInfo facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + user.getUsername());
+            socialInfos.add(facebookInfo);
+
+
+            Person newPerson = new Person(
+                    new Name(user.getName()),
+                    new Phone("000"), // Placeholder phone number
+                    email,
+                    new Address("Placeholder Address"), // Placeholder address
+                    favorite,
+                    tags,
+                    socialInfos);
 
             return new AddFacebookContactCommand(newPerson);
         } catch (FacebookException e) {
+            // TODO(Alex): Properly handle exceptions here
             e.printStackTrace();
         } catch (IllegalValueException e) {
             e.printStackTrace();
