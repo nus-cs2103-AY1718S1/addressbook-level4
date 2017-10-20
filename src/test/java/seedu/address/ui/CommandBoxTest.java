@@ -64,9 +64,6 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
         guiRobot.push(KeyCode.ESCAPE);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
-
-        guiRobot.push(KeyCode.A);
-        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
     @Test
@@ -123,6 +120,24 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
+    }
+
+    /**
+     * Types a command that is invalid, then verifies that <br>
+     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
+     */
+    private void assertBehaviorForInvalidCommand() {
+        commandBoxHandle.type(COMMAND_THAT_FAILS);
+        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+
+    /**
+     * Types a command that is valid, then verifies that <br>
+     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     */
+    private void assertBehaviorForValidCommand() {
+        commandBoxHandle.type(COMMAND_THAT_SUCCEEDS);
+        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
     /**

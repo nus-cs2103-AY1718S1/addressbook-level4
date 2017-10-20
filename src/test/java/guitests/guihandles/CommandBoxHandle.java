@@ -24,13 +24,20 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Types the given command in the Command Box.
+     */
+    public void type(String command) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+        guiRobot.pauseForHuman();
+    }
+
+    /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */
     public boolean run(String command) {
-        click();
-        guiRobot.interact(() -> getRootNode().setText(command));
-        guiRobot.pauseForHuman();
+        type(command);
 
         guiRobot.type(KeyCode.ENTER);
 
