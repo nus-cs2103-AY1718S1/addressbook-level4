@@ -32,9 +32,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -196,12 +196,12 @@ public class TagRemoveCommandTest {
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
         TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
-        ArrayList<Index> IndexList = tagRemoveCommand.makeFullIndexList(personList);
-        assertTrue(IndexList.size() == personList.size());
+        ArrayList<Index> indexList = tagRemoveCommand.makeFullIndexList(personList);
+        assertTrue(indexList.size() == personList.size());
     }
-        /**
-         * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
-         */
+    /**
+     * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
+     */
     private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
         TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);
         tagAddCommand.setData(model, new CommandHistory(), new UndoRedoStack());
