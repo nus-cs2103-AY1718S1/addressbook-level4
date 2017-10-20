@@ -1,8 +1,6 @@
 package seedu.address.ui;
 
 import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -23,6 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
     public static final String SYNC_TOTAL_PERSONS = "%d person(s) total";
+    public static final String SYNC_TOTAL_EVENTS = "%d event(s) total";
 
     /**
      * Used to generate time stamps.
@@ -43,18 +42,18 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar totalPersons;
     @FXML
-    private StatusBar saveLocationStatus;
+    private StatusBar totalEvents;
     @FXML
-    private StatusBar staticClock;
+    private StatusBar saveLocationStatus;
 
 
-    public StatusBarFooter(String saveLocation, int totalPersons) {
+    public StatusBarFooter(String saveLocation, int totalPersons, int totalEvents) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
         setTotalPersons(totalPersons);
-        setClockLabel();
+        setTotalEvents(totalEvents);
     }
 
     /**
@@ -82,6 +81,9 @@ public class StatusBarFooter extends UiPart<Region> {
     private void setTotalPersons(int num) {
         Platform.runLater(() -> this.totalPersons.setText(String.format(SYNC_TOTAL_PERSONS, num)));
     }
+    private void setTotalEvents(int num) {
+        Platform.runLater(() -> this.totalEvents.setText(String.format(SYNC_TOTAL_EVENTS, num)));
+    }
 
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
@@ -89,11 +91,6 @@ public class StatusBarFooter extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
         setTotalPersons(event.data.getPersonList().size());
-    }
-    private void setClockLabel() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String formatDateTime = now.format(sdf);
-        this.staticClock.setText(formatDateTime);
+        setTotalEvents(event.data.getEventList().size());
     }
 }
