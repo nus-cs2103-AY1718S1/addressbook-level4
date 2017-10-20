@@ -79,7 +79,7 @@ public class RemarkCommand extends UndoableCommand {
      * @param remark new Remark object to be insert
      * @return a new Readonly person with the remark object
      */
-    private Person addOrChangeRemark(ReadOnlyPerson person, Remark remark) {
+    public static Person addOrChangeRemark(ReadOnlyPerson person, Remark remark) {
         Name updatedName = person.getName();
         Phone updatedPhone = person.getPhone();
         Email updatedEmail = person.getEmail();

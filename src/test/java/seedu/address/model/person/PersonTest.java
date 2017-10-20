@@ -19,7 +19,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 public class PersonTest {
-    public static final UniqueTagList tagList = new UniqueTagList();
+    public static final UniqueTagList TAG_LIST = new UniqueTagList();
     private Person person = new Person(AMY);
 
     @Test(expected = IllegalValueException.class)
@@ -114,8 +114,8 @@ public class PersonTest {
 
     @Test
     public void getTags() throws Exception {
-        tagList.add(new Tag("friend"));
-        assertEquals(person.getTags(), tagList.toSet());
+        TAG_LIST.add(new Tag("friend"));
+        assertEquals(person.getTags(), TAG_LIST.toSet());
     }
 
     @Test
@@ -125,7 +125,7 @@ public class PersonTest {
 
     @Test
     public void tagProperty() throws Exception {
-        assertEquals(person.tagProperty().get(), tagList);
+        assertEquals(person.tagProperty().get(), TAG_LIST);
     }
 
     @Test(expected = NullPointerException.class)

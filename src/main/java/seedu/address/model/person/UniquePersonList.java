@@ -150,7 +150,7 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * sort the list in default sorting order: Favorite > non-Favorite; then alphabetical order
      */
-    private void sort() {
+    public void sort() {
         internalList.sort((ReadOnlyPerson p1, ReadOnlyPerson p2) -> {
             if (!p1.getFavorite().equals(p2.getFavorite())) {
                 return p2.getFavorite().getValue() - p1.getFavorite().getValue();

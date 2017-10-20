@@ -19,6 +19,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -31,9 +33,12 @@ public class FavoriteCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person favoritedPerson = new Person(personToFavorite);
+        favoritedPerson.setFavorite(new Favorite(!personToFavorite.getFavorite().favorite));
+
         FavoriteCommand favoriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, personToFavorite);
+        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.favoritePerson(personToFavorite);
@@ -54,9 +59,12 @@ public class FavoriteCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personToFavorite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person favoritedPerson = new Person(personToFavorite);
+        favoritedPerson.setFavorite(new Favorite(!personToFavorite.getFavorite().favorite));
+
         FavoriteCommand favoriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, personToFavorite);
+        String expectedMessage = String.format(FavoriteCommand.MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.favoritePerson(personToFavorite);

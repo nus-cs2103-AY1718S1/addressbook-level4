@@ -1,4 +1,4 @@
-//@@author: giang
+//@@author A0143832J
 package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
@@ -19,3 +19,4 @@ public class FavoriteTest {
         assertFalse(new Favorite(false).equals(new Favorite(true)));
     }
 }
+//@@author

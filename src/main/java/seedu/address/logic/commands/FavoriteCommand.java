@@ -6,6 +6,8 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -40,14 +42,16 @@ public class FavoriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToFavorite = lastShownList.get(targetIndex.getZeroBased());
-
         try {
             model.favoritePerson(personToFavorite);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
+        Person favoritedPerson = new Person(personToFavorite);
+        favoritedPerson.setFavorite(
+                new Favorite(!personToFavorite.getFavorite().favorite));
 
-        return new CommandResult(String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, personToFavorite));
+        return new CommandResult(String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, favoritedPerson));
     }
 
     @Override
