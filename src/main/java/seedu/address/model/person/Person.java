@@ -4,12 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.relationship.DuplicateRelationshipException;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 import seedu.address.model.relationship.UniqueRelationshipList;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
@@ -32,7 +33,8 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Relationship> relationships) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  Set<Relationship> relationships) {
         requireAllNonNull(name, phone, email, address, tags, relationships);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -41,7 +43,14 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         // protected internal relationships from changes in the arg list
-        this.relationships = new SimpleObjectProperty<>(new UniqueRelationshipList());
+        this.relationships = new SimpleObjectProperty<>(new UniqueRelationshipList(relationships));
+    }
+
+    /**
+     * For initial construction of a Person.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        this(name, phone, email, address, tags, new HashSet<>());
     }
 
     /**

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.RelationshipNotFoundException;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 import java.util.HashSet;
 import java.util.Iterator;
