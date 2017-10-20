@@ -36,7 +36,7 @@ public class AddCommandIntegrationTest {
 
         String successMessage = String.format(AddCommand.MESSAGE_SUCCESS, validPerson);
         assertCommandSuccess(prepareCommand(validPerson, model), model,
-                successMessage + "\n" +  AddCommand.MESSAGE_TEMPORARY_PERSON, expectedModel);
+                successMessage, expectedModel);
     }
 
     @Test
