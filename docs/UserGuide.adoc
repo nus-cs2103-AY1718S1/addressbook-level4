@@ -1,7 +1,7 @@
 
 = MedNus - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -13,21 +13,34 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T17-B2/main.git
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
-==Introduction
+By: `MedNus`      Since: `OCT 2017`      Licence: `MIT`
 
-MedNus is a custom address book made for doctors. You can find many different features available in MedNus that are +
-useful for doctors. You can record appointments you have with patients, take note of the blood type of your patients +
-by using MedNus as a reference and more. MedNus also comes with unique UI theme and tag colors. You can make use +
-of keyboard shortcuts to make use of MedNus more efficiently as well.
+== *INTRODUCTION*
 
+MedNus is a custom address book made for medical professionals. +
+ +
+You can find many different features available in MedNus that are useful for medical professionals such as +
+recording appointments, listing your patients based on blood type and even saving a canvas drawing of your +
+patient's injury. +
+ +
+With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
+and productively. +
+ +
 This user guide comes with instructions and examples to help you get used to using MedNus.
 
-== Quick Start
+== *ABOUT*
+This user guide shows you how to get started using MedNus +
+ +
+This user guide introduces you to the features MedNus have and leads you through with examples. +
+ +
+You are required to know how to use Java to run a Graphical User Interface (GUI) application. +
+
+
+== *GETTING STARTED*
 
 .  Make sure you have Java version `1.8.0_60` or later installed in your Computer.
 +
-[NOTE]
+[WARNING]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
@@ -48,33 +61,39 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  You can refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== *FEATURES*
 
-====
-*Command Format*
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Command Format |Meaning |Example |Remark
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+|Upper Case |Parameters supplied by User |`add n/NAME` |`NAME` is a parameter which can be used as `add n/John Doe`
+
+|Square Brackets |Optional inputs |`n/NAME [t/TAG]` |`[t/TAG]` is an optional field
+
+|`…`​ |Can be used multiple times |`[t/TAG]...` |Can have multiple tags: `[t/TAG1] [t/TAG2] [t/TAG3]`
+
+|=======================================================================
+
+[NOTE]
+Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 === Viewing help : `help`
 You can use the `help` command to access the User Guide from MedNus. +
-You can also click the `Help` at the top left corner of MedNus. +
-The User Guide will show you how to use MedNus. +
-Format: `help`
+You can also click the `Help` at the top left corner of MedNus.
+
+image::helpUI.png[width="790"]
 
 === Adding a person: `add`
 
 You can add a person to the address book by following the format below. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-Shorthand Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
+*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
+*Shorthand Format:* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
 
 [TIP]
 You can add any number of tags for a person or none at all.
 
-Examples:
+*Examples:*
 
 * `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB t/criminal`
@@ -84,70 +103,89 @@ Examples:
 
 * *Listing all persons* +
 You can use `list` to show a list of all persons in the address book. +
-Format: `list` +
-Shorthand Format: `l`
+*Format:* `list` +
+*Shorthand Format:* `l`
 
 * *Listing persons by tag* +
-You can show a list of people with specific tag(s) by following the format below. +
-Format: `list TAG1 TAG2...` +
+MedNus can list selected contacts with specific tag(s). +
+*Format:* `list TAG1 TAG2...` +
  +
-Examples: +
-`list colleagues friends` +
-This will list all contacts with the tag `colleagues`, `friends` or both.
+*Example:* `list colleagues friends` +
+This shows you all contacts with the tag `colleagues`, `friends` or both.
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
-You can show a list of people in the address book with a specific the blood type. +
-Format: `bloodtype BLOODTYPE` +
-Shorthand Format: `bt BLOODTYPE`
-+
-Examples: +
+You can use `bloodtype` to show a list of people with that specific blood type. +
+*Format:* `bloodtype BLOODTYPE` +
+*Shorthand Format:* `bt BLOODTYPE`
+
+*Examples:* +
 `bloodtype A` +
 List people with blood type A. +
 `bt ab+` +
 List people with  blood type AB+. +
-Take note that BLOODTYPE is case insensitive.
+
+[NOTE]
+BLOODTYPE is case insensitive.
 
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-Shorthand Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
+*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
+*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
 
-****
-* The `edit` command edits the person at the specified `INDEX`.
-* The index refers to the index number shown in the last person listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-* You can check the index using the `list` command.
-* At least one of the optional fields must be provided.
-* The current information will be replaced with the new information added during editing.
-* When editing tags, the existing tags of the person will be removed i.e you have to add all tags again when editing.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+[width="59%",cols="22%,<30%",options="header",]
+|=======================================================================
+|Word |Remarks
 
-Examples:
+|`edit` |Keyword to call the edit command
+
+|`INDEX` |Index number shown in the last person listing
+
+|`INDEX` |Must be a positive integer
+
+|=======================================================================
+
+*Examples:*
 
 * `e 1 p/91234567 e/johndoe@example.com` +
 The phone number and email address of the 1st person are changed to `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 The name of the 2nd person is changed to `Betsy Crower` and all existing tags are removed.
 
+[WARNING]
+At least one of the optional fields must be provided. +
+Current Information will be replaced with new information +
+Existing tags will be removed and have to be respecified when editing.
+
+[TIP]
+You can check the index using the `list` command. +
+You can remove all the person's tags by typing `t/` without specifying any tags after it.
+
 === Locating persons by name: `find`
 
 You can find people whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]` +
-Shorthand Format: `f KEYWORD [MORE_KEYWORDS]`
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
+*Shorthand Format:* `f KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* You can only search for names.
-* Only full words will be matched. e.g. You cannot type `Han` to search for names with keyword `Hans`.
-* People matching at least one keyword will be returned (i.e. `OR` search). +
-e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+[width="59%",cols="22%,<30%",options="header",]
+|=======================================================================
+|Remarks |Example
 
-Examples:
+|The search is case insensitive |`hans` will match `Hans`
+
+|The order of the keywords does not matter |`Hans Bo` will match `Bo Hans`
+
+|You can only search for names |`Hans Bo` (Name) is valid `Colleague` (Tag)  is not
+
+|Only full words will be matched | You cannot type `Han` to search for names with keyword `Hans`
+
+|People matching at least one keyword will be returned |`Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+|=======================================================================
+
+
+*Examples:*
 
 * `f John` +
 Returns any `john` and `John Doe`
@@ -156,18 +194,11 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-You can delete a specific person from the address book. +
-Format: `delete INDEX` +
-Shorthand Format: `d INDEX`
+You can delete a specific person from the address book at a specified `INDEX`. +
+*Format:* `delete INDEX` +
+*Shorthand Format:* `d INDEX`
 
-****
-* The person at the specified `INDEX` is deleted.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-* You can check the index using the `list` command.
-****
-
-Examples:
+*Examples:*
 
 * `list` +
 `d 2` +
@@ -176,20 +207,20 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+[WARNING]
+The index *must be a positive integer* `1, 2, 3, ...`
+
+[TIP]
+You can check the index using the `list` command
+
+
 === Selecting a person : `select`
 
-You can select a person based on their index number. +
+You can select a person based on their `INDEX` number. +
 Format: `select INDEX` +
 Shorthand Format: `s INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-* You can check the index using the `list` command.
-****
-
-Examples:
+*Examples:*
 
 * `list` +
 `s 2` +
@@ -198,30 +229,32 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+[WARNING]
+The index *must be a positive integer* `1, 2, 3, ...`
+
+[NOTE]
+The index refers to the index number shown in the most recent listing
+
 === Listing entered commands : `history`
 
 You can list all the commands that you have entered in reverse chronological order. +
-Format: `history` +
-Shorthand Format: `h`
+*Format:* `history` +
+*Shorthand Format:* `h`
 
 [NOTE]
-====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Shorthand Format: `u`
+*Format:* `undo` +
+*Shorthand Format:* `u`
 
 [NOTE]
-====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
 
-Examples:
+*Examples:*
 
 * `delete 1` +
 `list` +
@@ -240,10 +273,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 You can reverse the most recent `undo` command. +
-Format: `redo` +
-Shorthand Format: `r`
+*Format:* `redo` +
+*Shorthand Format:* `r`
 
-Examples:
+*Examples:*
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -264,87 +297,79 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 You can clear all entries in the address book. +
-Format: `clear` +
-Shorthand Format: `c`
+*Format:* `clear` +
+*Shorthand Format:* `c`
 
 === Set Tag Color Mode : `tagcolor`
 
 You can set random colors to all tags OR remove colors. +
-Format: `tagcolor random/off` +
-Shorthand Format: `tc random/off`
+*Format:* `tagcolor random/off` +
+*Shorthand Format:* `tc random/off`
 
 You can set a color to a specific tag type. +
-Format: `tagcolor TAGNAME COLOR` +
-Shorthand Format: `tc TAGNAME COLOR`
+*Format:* `tagcolor TAGNAME COLOR` +
+*Shorthand Format:* `tc TAGNAME COLOR`
 
 [NOTE]
-====
-Only certain colors can be specified.  +
-You can see all the colors that can be specified in the following link +
-https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor +
-and input the color name in english or in hexadecimal form.
-====
+You can see all available colors in the following https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
+Color name input can be in english or hexadecimal form.
 
 === Set appointment: `appointment`
 
 You can set an appointment to a specific contact. +
-Format: `appointment n/NAME d/YYYY/MM/DD HH:MM` +
-Shorthand format: `apt n/NAME d/YYYY/MM/DD HH:MM`
+*Format:* `appointment n/NAME d/YYYY/MM/DD HH:MM` +
+*Shorthand format:* `apt n/NAME d/YYYY/MM/DD HH:MM`
 
 You can sort list by appointment dates. +
-Format: `appointment` +
-Shorthand format: `appointment`
+*Format:* `appointment` +
+*Shorthand format:* `apt`
 
 [NOTE]
-====
-You can only set dates that are after current time. (i.e. you can set a time to yesterday)
+You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
+Input is case-sensitive. e.g. `hans` will not match `Hans`.
 
-The name entered is case-sensitive. e.g. `hans` will match `Hans`.
-
-====
 
 === Adding/Removing Remarks to a person : `remark`
 
 You can add or remove a remark from an existing person in the address book. +
-Format: `remark INDEX [r/REMARK]`
 
-Adding a Remark: You can add a remark by typing 'r/' followed by the remarks
-Removing a Remark: You can remove a remark by typing 'r/' without specifying anything after it.
+Adding a Remark: You can add a remark by typing 'r/' followed by the remarks +
+*Format:* `remark INDEX r/REMARK` +
+ +
+Removing a Remark: You can remove a remark by typing 'r/' without specifying anything after it. +
+*Format:* `remark INDEX r/` +
 
-****
-* Adds/Delete the remark of the person at the specified `INDEX`.
-* The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Existing values will be updated to the input values.
-* When editing remarks, the existing remarks of the person will be removed i.e adding of remarks is not cumulative.
-****
-
-Examples:
+*Examples:*
 
 * `remark 1 r/Loves coffee` +
 Adds a remark 'Loves coffee' to the 1st person in the list.
 * `remark 1 r/` +
 Clears the existing remark for the 1st person in the list.
 
+[WARNING]
+Existing remarks of the person will be removed
+
+[NOTE]
+The index refers to the index number shown in the last person listing +
+The index *must be a positive integer* `1, 2, 3, ...`
+
 === KeyBoard Shortcuts [Since v1.2]
 
-You can use keyboard shortcuts to use the address book more efficiently.
-When typing in the command bar, various key bindings consists of different functions.
+You can use keyboard shortcuts in the command box to use the address book more efficiently.
+You can refer to the <<Keyboard Shortcut, summary>> for a table of the shortcuts available.
 
-****
-* Escape: Clears entire command box text field
-* Alt: Shifts text cursor to the left of an existing word/previous word
-* Control: Shifts text cursor to the right of an existing word/previous word
-* Shift-Alt: Shifts text cursor all the way to the left
-* Shift-Control: Shifts text cursor all the way to the right
-* Right: Activate Add Command shortcut if conditions are right +
-Condition 1: Add Command shortcut will trigger only if the caret is at the end of the line +
-Condition 2: "Add" or "A" must be the first word & character respectively at the start of the line
-* Shift-Delete : Deletes a chunk of word/blank space (For Mac Users)
-* Shift-Backspace : Deletes a chunk of word/blank space (For Windows Users)
-****
+=== Exiting the program : `exit`
 
+You can exit MedNus by using the `exit` command. +
+You can also exit MedNus by clicking on `File` in the top left corner +
+and clicking on `Exit`.
 
+image::exitUI.png[width="790"]
 
+=== Saving the data
+
+MedNus data are saved in the hard disk automatically after any command that changes the data. +
+You do not need to save manually.
 
 === Deleting all persons with a particular tag : [In Progress]
 ****
@@ -413,71 +438,90 @@ The index *must be a positive integer* 1, 2, 3, ...
 described condition
 ****
 
-=== Exiting the program : `exit`
 
-You can exit MedNus by using the `exit` command. +
-You can also exit MedNus by clicking on `File` in the top left corner +
-and clicking on `Exit`. +
-Format: `exit`
 
-=== Saving the data
-
-MedNus data are saved in the hard disk automatically after any command that changes the data. +
-You do not need to save manually.
-
-== FAQ
+== *FAQ*
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== *COMMAND SUMMARY*
 
 === MedNus Features
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
-* *Add Shorthand Form* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
-* *Clear* : `clear`
-* *Clear Shorthand Form* : `c`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Delete Shorthand Form* : `d INDEX` +
-e.g. `d 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit Shorthand Form* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-e.g. `e 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *Find Shorthand Form* : `f KEYWORD [MORE_KEYWORDS]` +
-e.g. `f James Jake`
-* *List* : `list`
-* *List Shorthand Form* : `l`
-* *Help* : `help`
-* *Help Shorthand Form* : `h`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *Select Shorthand Form* : `s INDEX` +
-e.g.`s 2`
-* *History* : `history`
-* *History Shorthand Form* : `h`
-* *Undo* : `undo`
-* *Undo Shorthand Form* : `u`
-* *Redo* : `redo`
-* *Redo Shorthand Form* : `r`
-* *Adding/Deleting a Remark* : `remark`
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Command |Purpose |Format |Example
+
+|*Add* |Adds a contact |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+
+|*Add Shorthand* |Adds a contact |`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+
+|*Clear* |Clears all contacts |`clear` |`clear`
+
+|*Clear Shorthand* |Clears all contacts |`c` |`c`
+
+|*Delete* |Delete a contact |`delete INDEX` |`delete 3`
+
+|*Delete Shorthand* |Delete a contact |`d INDEX` |`d 3`
+
+|*Edit* |Edits a contact's details |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+
+|*Edit Shorthand* |Edits a contact's details |`e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` |`e 2 n/James Lee e/jameslee@example.com`
+
+|*Find* |Finds a contact based on keyword |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+
+|*Find Shorthand* |Finds a contact based on keyword |`f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
+
+|*List* |Lists all existing contacts |`list` |`list`
+
+|*Help* |Shows you the user guide |`help` |`help`
+
+|*Help Shorthand* |Shows you the user guide |`h` |`h`
+
+|*Select* |Selects a contact at the specified `INDEX` |`select INDEX` |`select 2`
+
+|*Select Shorthand* |Selects a contact at the specified `INDEX` |`s INDEX` |`s 2`
+
+|*History* |Shows you a history of all used commands |`history` |`history`
+
+|*History Shorthand* |Shows you a history of all used commands |`h` |`h`
+
+|*Undo* |Undo your previous command |`undo` |`undo`
+
+|*Undo Shorthand* |Undo your previous command |`u` |`u`
+
+|*Redo* |Redo your undo |`redo` |`redo`
+
+|*Redo Shorthand* |Redo your undo |`r` |`r`
+
+|*Adding a Remark* |Adds a remark to a contact |`remark INDEX r/REMARK` |`remark 1 r/Likes coffee`
+
+|*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
+
+|=======================================================================
 
 === Keyboard Shortcut
-* *Escape* : Clears entire command box text field
-* *Alt* : Shifts text cursor to the
-- Start of the word if cursor is in a word or
-- Start of previous word if cursor is not in a word
-* *Control* : Shifts text cursor to the
-- End of the word if cursor is in a word or
-- End of the next word if cursor is not in a word
-* *Shift-Alt* : Shifts text cursor all the way to the left
-* *Shift-Control* : Shifts text cursor all the way to the right
-* *Shift-Delete* : Deletes a chunk of word/blank space (For Mac Users)
-* *Shift-Backspace* : Deletes a chunk of word/blank space (For Windows Users)
-* *Right* : Add Command Shortcut will trigger if the caret is at the end of the line +
-or "Add" or "A" is present at the start of the line.
+
+[width="59%",cols="22%,<40%,<40%",options="header",]
+|=======================================================================
+|Shortcut |Purpose |Remarks
+
+|*Escape* |Clears entire command box text field |-
+
+|*Alt* |Shifts text cursor to the start of the previous word |-
+
+|*Control* |Shifts text cursor to the end of the next word |-
+
+|*Shift-Alt* |Shifts text cursor all the way to the left |-
+
+|*Shift-Control* |Shifts text cursor all the way to the right |-
+
+|*Shift-Delete* |Deletes a chunk of word/blank space |For Mac Users
+
+|*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
+
+|*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+|=======================================================================
+
+

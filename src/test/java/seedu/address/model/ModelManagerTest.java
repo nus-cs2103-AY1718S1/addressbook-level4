@@ -1,12 +1,16 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,7 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
@@ -28,6 +32,37 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
+    }
+
+    @Test
+    public void testDeletePersonsWithTag() {
+        // Setup for testing
+        ModelManager modelManagerUnderTest = new ModelManager();
+        try {
+            modelManagerUnderTest.addPerson(ALICE);
+            modelManagerUnderTest.addPerson(BENSON);
+            modelManagerUnderTest.addPerson(CARL);
+        } catch (DuplicatePersonException dpe) {
+            System.out.println(dpe.getMessage());
+        }
+        Set<Tag> tagSet = new HashSet<>();
+        try {
+            tagSet.add(new Tag("friends", Tag.DEFAULT_COLOR));
+            modelManagerUnderTest.deletePersonsByTags(tagSet);
+        } catch (IllegalValueException | PersonNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Setup expected outcome
+        ModelManager expectedModelManager = new ModelManager();
+        try {
+            expectedModelManager.addPerson(CARL);
+        } catch (DuplicatePersonException dpe) {
+            System.out.println(dpe.getMessage());
+        }
+
+        // Test equality
+        assertEquals(modelManagerUnderTest, expectedModelManager);
     }
 
     @Test
@@ -65,38 +100,5 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
-    }
-
-    @Test
-    public void deleteTag() throws IllegalValueException, PersonNotFoundException {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        UserPrefs userPrefs = new UserPrefs();
-        Tag tag = new Tag("friends", "");
-
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-
-        //person not found, empty AddressBook
-        AddressBook emptyAddressBook = new AddressBookBuilder().build();
-        ModelManager emptyModelManager = new ModelManager(emptyAddressBook, userPrefs);
-        AddressBook expectedAddressBook = new AddressBookBuilder().build();
-        emptyModelManager.deleteTag(tag);
-        assertTrue(emptyAddressBook.equals(expectedAddressBook));
-
-        //person not found, no such tag
-        Tag noSuchTag = new Tag("nosuchtag", "");
-        modelManager.deleteTag(noSuchTag);
-        expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        assertTrue(addressBook.equals(expectedAddressBook));
-
-        //deletes a tag
-        modelManager.deleteTag(tag);
-        AddressBook originalAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        for (ReadOnlyPerson person : originalAddressBook.getPersonList()) {
-            for (ReadOnlyPerson personCopy : modelManager.getAddressBook().getPersonList()) {
-                if (person.getName().equals(personCopy.getName())) {
-                    assertFalse(person.getTags().equals(personCopy.getTags()));
-                }
-            }
-        }
     }
 }

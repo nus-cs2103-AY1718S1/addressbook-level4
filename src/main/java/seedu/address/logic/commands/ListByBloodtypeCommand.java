@@ -13,7 +13,8 @@ public class ListByBloodtypeCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons of a blood type "
             + " and displays them as a list with index numbers.\n"
-            + "Example: " + COMMAND_WORD + " AB+";
+            + "Example: " + COMMAND_WORD + " AB+\n"
+            + "Example: " + COMMAND_ALIAS + " O";
 
     private final BloodtypeContainsKeywordPredicate predicate;
 
