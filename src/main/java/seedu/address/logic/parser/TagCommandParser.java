@@ -34,8 +34,7 @@ public class TagCommandParser implements Parser<TagCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
 
-        String[] indexArgs = splittedArgs[0].split(",");
-        Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(indexArgs));
+        Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(splittedArgs[0].split(",")));
         if (uniqueIndexes.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_EMPTY_INDEX_LIST, TagCommand.MESSAGE_USAGE));
         }
