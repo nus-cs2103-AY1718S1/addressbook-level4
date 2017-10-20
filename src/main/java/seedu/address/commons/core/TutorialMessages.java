@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class TutorialMessages {
 
-    public static final int TOTAL_NUM_STEPS = 11;
+    public static final int TOTAL_NUM_STEPS = 13;
     public static final int PROMPT_NUM_STEPS = 3;
     /* Introductory Messages */
     public static final String INTRO_BEGIN = "Welcome to Bluebird! Would you like to go through the tutorial?";
@@ -24,19 +24,24 @@ public class TutorialMessages {
     public static final String INTRO_FIVE = "This is the search box, where "
             + "you are able to search for the person you want.";
     public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
+    public static final String INTRO_SEVEN = "This is the calender panel, which will help you manage your schedule";
+    public static final String INTRO_EIGHT = "This is the pinned person panel, where you can see your list of pinned contacts";
     public static final String INTRO_END = "Features of Bluebird:\n"
             + "1. Add a contact\n"
             + "2. Delete a contact\n"
             + "3. Edit a contact\n"
             + "4. Find a contact\n"
             + "5. Select a contact\n"
-            + "6. Clear all contacts\n"
-            + "7. List all contacts\n"
-            + "8. Sort list of contacts\n"
-            + "9. Help window\n"
-            + "10. History of command inputs\n"
-            + "11. Undo a command\n"
-            + "12. Redo a command\n";
+            + "6. Pin a contact\n"
+            + "7. Unpin a contact\n"
+            + "8. Hide a contact\n"
+            + "9. Clear all contacts\n"
+            + "10. List all contacts\n"
+            + "11. Sort list of contacts\n"
+            + "12. Help window\n"
+            + "13. History of command inputs\n"
+            + "14. Undo a command\n"
+            + "15. Redo a command\n";
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Follow the format in "
@@ -82,6 +87,8 @@ public class TutorialMessages {
             add(INTRO_FOUR);
             add(INTRO_FIVE);
             add(INTRO_SIX);
+            add(INTRO_SEVEN);
+            add(INTRO_EIGHT);
             add(INTRO_END);
             add(USAGE_BEGIN);
         }

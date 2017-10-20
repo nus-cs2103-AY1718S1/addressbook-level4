@@ -48,6 +48,7 @@ public class MainWindow extends UiPart<Region> {
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private SortFindPanel sortFindPanel;
+    private PinnedPanel pinnedPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -56,6 +57,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane pinListPlaceHolder;
+
+    @FXML
+    private StackPane calenderPanelPlaceHolder;
 
     @FXML
     private HBox sortFindPanelPlaceholder;
@@ -139,7 +143,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        PinnedPanel pinnedPanel = new PinnedPanel(logic.getFilteredPersonList());
+        pinnedPanel = new PinnedPanel(logic.getFilteredPersonList());
         pinListPlaceHolder.getChildren().add(pinnedPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -262,6 +266,8 @@ public class MainWindow extends UiPart<Region> {
         commandBox.unhighlight();
         resultDisplay.unhighlight();
         sortFindPanel.unhighlight();
+        pinnedPanel.unhighlight();
+        calenderPanelPlaceHolder.setStyle("");
     }
 
     public void highlightCommandBox() {
@@ -282,6 +288,14 @@ public class MainWindow extends UiPart<Region> {
 
     public void highlightPersonListPanel() {
         personListPanel.highlight();
+    }
+
+    public void highlightPinnedPanel() {
+        pinnedPanel.highlight();
+    }
+
+    public void highlightCalenderPanel() {
+        calenderPanelPlaceHolder.setStyle("-fx-border-color: lightgreen; -fx-border-width: 4");
     }
 
     public void setCommandPrompt(String toPrompt) {

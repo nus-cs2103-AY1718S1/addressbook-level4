@@ -88,4 +88,12 @@ public class PinnedPanel extends UiPart<Region> {
         pinnedListView.setItems(mappedList);
         pinnedListView.setCellFactory(listView -> new pinnedListViewCell());
     }
+
+    public void highlight() {
+        this.pinnedListView.setStyle("-fx-border-color: lightgreen; -fx-border-width: 4");
+    }
+
+    public void unhighlight() {
+        this.pinnedListView.setStyle("");
+    }
 }
