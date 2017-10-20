@@ -50,9 +50,6 @@ public class MainWindow extends UiPart<Region> {
     private EmailButton emailButton;
 
     @FXML
-    private VBox vBox;
-
-    @FXML
     private StackPane browserPlaceholder;
 
     @FXML
