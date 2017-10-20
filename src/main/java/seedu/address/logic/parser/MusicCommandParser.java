@@ -11,7 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class MusicCommandParser {
     /**
      * Parses the given {@code String} of arguments in the context of the String of words
-     * and returns an TextToSpeech object for execution.
+     * and returns an MusicCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public MusicCommand parse(String arguments) throws ParseException {
