@@ -343,6 +343,16 @@ There is no need to save manually.
 
 == Features (Coming in v2.0)
 
+=== List all related persons : `listrelated`
+
+Shows a list of all persons in the address book related to a given person. +
+Format: `listrelated INDEX`
+
+=== View shortest relationship path between two persons : `viewpath`
+
+Shows the shortest path of people to contact in order to reach a destination person . +
+Format: `viewpath START_INDEX END_INDEX`
+
 === User login
 
 Enters a password to check if user is authorised to access information in Intelli. +
