@@ -60,7 +60,7 @@ public class ImportCommand extends UndoableCommand {
      * @return formatted list of parcels added/not added for ImportCommand execution feedback
      */
     public static String getImportFormattedParcelListString(List<ReadOnlyParcel> parcels) {
-        if(parcels.size() == 0) {
+        if (parcels.size() == 0) {
             return "\n  (none)";
         }
 

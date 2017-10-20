@@ -33,13 +33,13 @@ import seedu.address.testutil.ParcelBuilder;
 
 public class ImportCommandSystemTest extends AddressBookSystemTest {
 
-    public static final String storageFile = "testAddressBookForImportSystem.xml";
+    private static final String STORAGE_FILE = "testAddressBookForImportSystem.xml";
 
     @Before
     public void setup() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
-        new XmlAddressBookStorage("./data/import/" + storageFile).saveAddressBook(addressBook);
+        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
     }
 
     @Test
@@ -51,14 +51,14 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
          */
         AddressBook addressBook = new AddressBookBuilder().withParcel(AMY).withParcel(BOB).build();
         XmlAddressBookStorage storage = new XmlAddressBookStorage(
-                "./data/import/" + storageFile) ;
+                "./data/import/" + STORAGE_FILE);
         storage.saveAddressBook(addressBook);
 
         List<ReadOnlyParcel> parcelsAdded;
         List<ReadOnlyParcel> duplicateParcels = new ArrayList<>();
         List<ReadOnlyParcel> parcels = addressBook.getParcelList();
 
-        String command = "   " + ImportCommand.COMMAND_WORD + "  " + storageFile + "   ";
+        String command = "   " + ImportCommand.COMMAND_WORD + "  " + STORAGE_FILE + "   ";
         assertCommandSuccess(command, parcels, parcels, new ArrayList<>());
 
         /* Case: undo importing testAddressBookForImportSystem.xml data to the list -> Amy and Bob deleted */
@@ -73,18 +73,18 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a duplicate parcel -> rejected */
-        command = ImportCommand.COMMAND_WORD + " " + storageFile;
+        command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
         assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
 
-         /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
+        /* Case: import an addressbook xml file containing duplicate parcels except with different tags -> rejected */
         // AddressBook#addAllParcels(List<ReadOnlyParcel>)
         addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withTags("DURABLE").build())
                 .withParcel(new ParcelBuilder(BOB).withTags("FRAGILE").build()).build();
         storage.saveAddressBook(addressBook);
-        command = ImportCommand.COMMAND_WORD + " " + storageFile;
+        command = ImportCommand.COMMAND_WORD + " " + STORAGE_FILE;
         assertCommandFailure(command, ImportCommand.MESSAGE_DUPLICATE_PARCELS);
 
-         /* Case: imports parcels with all fields same as other parcels in the address book except name -> imported */
+        /* Case: imports parcels with all fields same as other parcels in the address book except name -> imported */
         addressBook = new AddressBookBuilder().withParcel(new ParcelBuilder(AMY).withName("Kyle").build())
                 .withParcel(new ParcelBuilder(BOB).withName("John").build()).build();
         storage.saveAddressBook(addressBook);
@@ -154,7 +154,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, parcelsAdded, parcelsAdded, duplicateParcels);
 
         /* Case: invalid keyword -> rejected */
-        command = "imports " + storageFile;
+        command = "imports " + STORAGE_FILE;
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: missing file -> rejected */
@@ -174,7 +174,7 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
     public void clear() throws Exception {
         // reset the storage file used in ImportCommandSystemTest
         AddressBook addressBook = new AddressBookBuilder().build();
-        new XmlAddressBookStorage("./data/import/" + storageFile).saveAddressBook(addressBook);
+        new XmlAddressBookStorage("./data/import/" + STORAGE_FILE).saveAddressBook(addressBook);
     }
 
     /**
