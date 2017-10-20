@@ -360,6 +360,71 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== Adding a tag to multiple people
+
+Adding a tag to multiple people is facilitated by `TagAddCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
+
+TagAddCommand is implemented in this way:
+[source,java]
+----
+public class TagAddCommand extends UndoableCommand {
+@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... TagAddCommand logic ...
+    }
+}
+----
+
+For example, the user input might be `t-add college friend 1 2 3`.
+After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(tag to add, indices in the list), in the example `college friend 1 2 3`, will be passed to and parsed by `TagAddCommandParser`.
+Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
+The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
+The key is to differentiate between command words and the indices to follow. The parser algorithm would first split the input string into parts by space as delimiter.
+It would then determine whether a part is a word or a number, the parser keeps track of the last recognized word. After processing the entire user input, the parser would treat all parts after the last recognized word as indices and those before it as `tagName`.
+In this case, as `friend` is the last part that is not numeric, `college friend` is treated as `tagName`; `1 2 3` is treated as indices.
+The `TagAddCommandParser` returns `TagAddCommand` after execution, which will be further processed by `logic` component.
+
+TagAddCommandParser is implemented in this way:
+[source,java]
+----
+public class TagAddCommandParser implements Parser<TagAddCommand> {
+
+    public TagAddCommand parse(String args) throws ParseException {
+        // ... TagAddCommandParser logic ...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of adding a tag to person(s) by indices +
+**Alternative 1 (current choice):** Add a new Command class `TagAddCommand` +
+**Pros:** Having a separate command for adding a tag is consistent with a series of tag related operations we designed to have. We can implements `UndoableCommand` Abstract Class, so that we have undo/redo functionality +
+**Cons:** Have to add in a new Command class and the corresponding parser class +
+**Alternative 2:** Rewrite EditCommand class +
+**Pros:** We only need to change a small part of code and the undo/redo functionality can be preserved +
+**Cons:** The current `EditCommand` only enables the user to edit one person at a time, which makes adding a tag to multiple contacts tedious.
+
+---
+
+**Aspect:** Implementation of parsing a TagAddCommand +
+**Alternative 1 (current choice):** Add a new Parser class `TagAddCommandParser` +
+**Pros:** We can design the input format for TagAddCommand and customize the parser +
+**Cons:** Have to add in a new Parser class +
+**Alternative 2:** Rewrite EditCommandParser class +
+**Pros:** We only need to change a small part of code +
+**Cons:** User input is restricted by the EditCommand input format.
+
+---
+
+**Aspect:** Whether to accept user input that has partially invalid indices +
+**Alternative 1 (current choice):** Do not accept +
+**Pros:** Easy to implement +
+**Cons:** User have to type in the valid indices again +
+**Alternative 2:** Ignore the invalid indices +
+**Pros:** It is efficient for the user +
+**Cons:** Difficult to implement.
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
