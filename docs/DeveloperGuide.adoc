@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Weaver - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W13-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -344,6 +344,346 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+<<<<<<< HEAD
+// tag::deletepersontag[]
+=== Deleting a Person's Tag mechanism
+
+The Deleting a Person's Tag mechanism consists of `DeleteTagCommand` and `DeleteTagCommandParser` classes.
+
+The `DeleteTagCommandParser` resides inside `LogicManager`.
+
+`DeleteTagCommandParser` only deals with `Parser`. It is created from `AddressBookParser`. The following diagram shows the flow for parser:
+
+image::LogicClassDiagram.png[width="800"]
+
+As you can see from the diagram, `XYZCommand Parser` inherits from the `Parser` interface and is created by the AddressBook Parser as the `DeleteTagCommandParser`. Note that the tags are parsed under `parseTagsForDelete`, while the person index is parsed under `parse` before execution. The tags are identified by the prefix `t/` to be parsed for deletion, and it must be fully matched.
+
+The `DeleteTagCommand` resides inside `LogicManager`. It supports undoing and redoing of that modifies the state of Weaver. Such commands will inherit from `UndoableCommand`.
+
+`DeleteTagCommand` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteTagCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteTagCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+Inside the `DeleteTagCommand` class, a `DeleteTagDescriptor` identifying the tags to be deleted will be created from `DeleteTagCommandParser`, which will create and update a new `createTagDeletedPerson` accordingly. This will overwrite the existing `ReadOnlyPerson` Person's Tags while retaining the rest of its attributes as seen from the Model diagram below.
+
+image::ModelClassDiagram.png[width="800"]
+
+As you can see from the `Model` diagram, the `Person` retains the attributes that inherit it except for its own `UniqueTagList`, which is modified only for that particular `Person`.
+
+Suppose that the user has just launched the application.
+
+The user executes a new `DeleteTagCommand`, `delete/t 5 t/friends`, to delete the tag `friends` of the 5th person in the address book. The tags and the index are parsed into `DeleteTagCommandParser` before the `delete/t` command executes.
+
+As the user continues to use the program, he might decide to delete more than one tags. For example, the user may execute `delete/t 2 t/colleagues t/friends` to delete multiple tags.
+
+[NOTE]
+If the tags are not fully matched, it will throw an `Exception`.
+
+The user now decides that deleting the tags was a mistake, and decides to undo that action using `undo`.
+
+Using the `Undo/Redo` stack, we will restore the address book to the state before the `delete/t` command is executed.
+
+[NOTE]
+If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `DeleteTagCommand` +
+**Alternative 1 (current choice):** Access the `Person` and overwrite a new `Person` to it. +
+**Pros:** We will not lose the same tags for other `Person` it is now part of the default behaviour. Classes that deal with `Tags` like `UniqueTagsList` do not have to be deleted. +
+**Cons:** Hard for new developers to understand the `UniqueTagsList`. +
+**Alternative 2:** Just delete the `Tag` in the `UniqueTagsList` +
+**Pros:** Does not involve `Person` model, easier for new developers to understand with less coupling. +
+**Cons:** It will defeat the purpose of deleting a tag solely of the specific `Person`. Might take more effort to organise tags for users.
+
+---
+
+**Aspect:** Implementation of `DeleteTagCommandParser` +
+**Alternative 1 (current choice):** Able to utilise `Index` and tag prefix `t/`. +
+**Pros:** Able to delete multiple tags, easy to implement. +
+**Cons:** User will have to type additional prefixes to delete. +
+**Alternative 2:** Not utilising prefix `t/`. +
+**Pros:** Easier and faster to delete with no prefix identifier. +
+**Cons:** Difficult to implement, as it is harder to tokenize the arguments to differentiate between index and tag.
+
+---
+
+**Aspect:** Deleting only a `Person` Tags +
+**Alternative 1 (current choice):** If there are no tags for any `Person`, the `UniqueTagsList` will still contain that tag. +
+**Pros:** Easy to implement. +
+**Cons:** May have performance issues in terms of memory usage. +
+**Alternative 2:** Clean up the `UniqueTagsList` after deleting its last tag. +
+**Pros:** Will use less memory (e.g. for `UniqueTagsList`, will not contain tags that are not present in any `Person`). +
+**Cons:** We must ensure that the implementation for discovering the last tags of the list is correct. May be harder to implement for new developers.
+
+// end::deletepersontag[]
+
+=== Login / Logout mechanism
+
+The login / logout mechanism is a page which requires user to key in his username and password before he can use the addressbook. And Once he is logged in, there will be a automatically generated file named as "username + addressbook.xml" storing the information about his own addressbook.
+
+. It uses files whloginich stores the information of legal username and password pair to check whether the username and password key in by users are valid.
+
+image::login.png[width="800"]
+
+With the extra layer, the UiManager is calling login page before it calls the MainWindow:
+[source,java]
+----
+
+loginPage = new LoginPage(primaryStage, config, storage, prefs, logic, accPrefs);
+loginPage.show();
+//mainWindow = new MainWindow(primaryStage, config, storage, prefs, logic, accPrefs);
+//mainWindow.show(); //This should be called before creating other UI parts
+
+----
+
+The check mechanism is implemented in this way:
+[source,java]
+----
+private boolean checkValid(String username, String password) {
+        return accPrefs.getHm().get(username).equals(password);
+}
+----
+[NOTE]
+If user key in wrong user name or password, he will stuck at login page until he manages to get in.
+
+
+Read the account information from file and save them into a hashmap.
+[source,java]
+----
+public AccountsStorage setAccountMsg() throws DataConversionException, IOException {
+        String accountMsg = this.readAccountsPrefs(this.accountsPath).toString();
+        this.hm = makeMap(accountMsg);
+        return this;
+}
+
+----
+
+Logout is implemented using JavaFX.
+[source,java]
+----
+@FXML
+private void handleLogoutEvent() {
+    logger.info("Trying to logout");
+    this.hide();
+    this.releaseResources();
+    LoginPage loginPage = new LoginPage(primaryStage, config, storage, prefs, logic, accPrefs);
+    loginPage.show();
+}
+
+----
+
+image::logout.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `login / logout` feature +
+**Alternative 1 (current choice):** `login` is compulsory. User must login before he can use the addressbook  +
+**Pros:** Faster to implement. Not changing the structure of code. +
+**Cons:** Previous test cases need to be rewrote to get use to this new page. +
+**Alternative 2:** `login` is  optional. User can still use this addressbook without login. +
+**Pros:** Previous test cases can still be used. +
+**Cons:** Need to invoke `login page` from command level, which is very hard to implement. It changes a considerable
+part of structure of the whole code.
+
+---
+
+**Aspect:** User experiences  +
+**Alternative 1 (current choice):** `login` is compulsory. User must login before he can use the addressbook +
+**Pros:** Level of security is increased. Each user has a separate file to store addressbook. This software now support
+multiple users. +
+**Cons:** User needs an account to use this addressbook. Operation become one layer more complex. +
+**Alternative 2:** `login` is  optional. User can still use this addressbook without login.  +
+**Pros:** Multiple choices for users. More flexible. +
+**Cons:** The default page becomes public, anyone can read and modify it. +
+// end::undoredo[]
+
+---
+
+// tag::customizetagcolor[]
+=== Customize tag color mechanism
+Tag color can be changed by typing a `ChangeTagColorCommand` in the command line.
+[NOTE]
+User can change one or more than one tag to a different color in one command.
+
+The diagram below shows the hierarchy of ChangeTagColorCommand.
+
+image::ChangeTagColorCommandClassDiagram.png[width="600"]
+
+We use a new class `TagColor` to represent a color of a tag. For every `Tag` object, it has a new field `tagColor` of `TagColor` class which stores its associate tag color.
+
+[NOTE]
+When the tag color of a tag has not specified by the user yet, it is in default color blue. +
+Tags with the same tag name are of the same color.
+
+The diagram below shows the hierarchy of TagColor class.
+
+image::TagColorClassDiagram.png[width="400"]
+
+After every `ChangeTagColorCommand`, the tag and tag color pair will be stored in the storage file. The tag color in the UI is also updated accordingly. +
+
+The sequence diagram below shows how the `ChangeTagColorCommand` works.
+
+image::ChangeTagColorSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** How to associate each tag with a tag color? +
+**Alternative 1 (current choice):** Create a new class `TagColor` and add a new field to `Tag` class. +
+**Pros:** The associate tag color is easy to get from a given tag. It is also very intuitive for each tag to have its tag color. +
+**Cons:** It is complicated to implement. +
+**Alternative 2:** Create a static hash map of all tag names(String) and their associate tag color(String) inside `Tag` class. +
+**Pros:** It is easy to implement. +
+**Cons:** Storing tag and tag color pairs inside `Tag` class violates the single responsibility principle of classes.
+
+---
+
+**Aspect:** Colors supported of `TagColor` +
+**Alternative 1 (current choice):** Developers specify a list of available colors for users. +
+**Pros:** It is easy to check whether the tag color name user typed in is valid. +
+**Cons:** The choices of color is limited. +
+**Alternative 2:** User can type in Hex Color Code as the color for tags. +
+**Pros:** User may not know what is Hex Color Code. +
+**Cons:** The colors available are various.
+// end::customizetagcolor[]
+
+// tag::deletepersontag[]
+=== Deleting a person's tag mechanism
+
+The Deleting a person's tag mechanism consists of `DeleteTagCommand` and `DeleteTagCommandParser` classes.
+
+The `DeleteTagCommandParser` resides inside `LogicManager`.
+
+`DeleteTagCommandParser` only deals with `Parser`. It is created from `AddressBookParser`. The following diagram shows the flow for parser:
+
+image::LogicClassDiagram.png[width="800"]
+
+As you can see from the diagram, `XYZCommand Parser` inherits from the `Parser` interface and is created by the AddressBook Parser as the `DeleteTagCommandParser`. Note that the tags are parsed under `parseTagsForDelete`, while the person index is parsed under `parse` before execution. The tags are identified by the prefix `t/` to be parsed for deletion, and it must be fully matched.
+
+The `DeleteTagCommand` resides inside `LogicManager`. It supports undoing and redoing of that modifies the state of Weaver. Such commands will inherit from `UndoableCommand`.
+
+`DeleteTagCommand` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteTagCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteTagCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+Inside the `DeleteTagCommand` class, a `DeleteTagDescriptor` identifying the tags to be deleted will be created from `DeleteTagCommandParser`, which will create and update a new `createTagDeletedPerson` accordingly. This will overwrite the existing `ReadOnlyPerson` Person's Tags while retaining the rest of its attributes as seen from the Model diagram below.
+
+image::ModelClassDiagram.png[width="800"]
+
+As you can see from the `Model` diagram, the `Person` retains the attributes that inherit it except for its own `UniqueTagList`, which is modified only for that particular `Person`.
+
+Suppose that the user has just launched the application.
+
+The user executes a new `DeleteTagCommand`, `delete/t 5 t/friends`, to delete the tag `friends` of the 5th person in the address book. The tags and the index are parsed into `DeleteTagCommandParser` before the `delete/t` command executes.
+
+As the user continues to use the program, he might decide to delete more than one tags. For example, the user may execute `delete/t 2 t/colleagues t/friends` to delete multiple tags.
+
+[NOTE]
+If the tags are not fully matched, it will throw an `Exception`.
+
+The user now decides that deleting the tags was a mistake, and decides to undo that action using `undo`.
+
+Using the `Undo/Redo` stack, we will restore the address book to the state before the `delete/t` command is executed.
+
+[NOTE]
+If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `DeleteTagCommand` +
+**Alternative 1 (current choice):** Access the `Person` and overwrite a new `Person` to it. +
+**Pros:** We will not lose the same tags for other `Person` it is now part of the default behaviour. Classes that deal with `Tags` like `UniqueTagsList` do not have to be deleted. +
+**Cons:** Hard for new developers to understand the `UniqueTagsList`. +
+**Alternative 2:** Just delete the `Tag` in the `UniqueTagsList` +
+**Pros:** Does not involve `Person` model, easier for new developers to understand with less coupling. +
+**Cons:** It will defeat the purpose of deleting a tag solely of the specific `Person`. Might take more effort to organise tags for users.
+
+---
+
+**Aspect:** Implementation of `DeleteTagCommandParser` +
+**Alternative 1 (current choice):** Able to utilise `Index` and tag prefix `t/`. +
+**Pros:** Able to delete multiple tags, easy to implement. +
+**Cons:** User will have to type additional prefixes to delete. +
+**Alternative 2:** Not utilising prefix `t/`. +
+**Pros:** Easier and faster to delete with no prefix identifier. +
+**Cons:** Difficult to implement, as it is harder to tokenize the arguments to differentiate between index and tag.
+
+---
+
+**Aspect:** Deleting only a `Person` Tags +
+**Alternative 1 (current choice):** If there are no tags for any `Person`, the `UniqueTagsList` will still contain that tag. +
+**Pros:** Easy to implement. +
+**Cons:** May have performance issues in terms of memory usage. +
+**Alternative 2:** Clean up the `UniqueTagsList` after deleting its last tag. +
+**Pros:** Will use less memory (e.g. for `UniqueTagsList`, will not contain tags that are not present in any `Person`). +
+**Cons:** We must ensure that the implementation for discovering the last tags of the list is correct. May be harder to implement for new developers.
+
+// end::deletepersontag[]
 
 === Logging
 
@@ -721,20 +1061,86 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |edit the existing information stored in the database|the information can be up-to-date
 
-|`* * *` |user |add a new person |
+|`* * *` |user |undo a command | correct the mistake I made accidentally
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |import information from FaceBook |save me the effort to add friends' information
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add date of birth of a person |remember the birthday of my friends
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |see person's social media page in AddressBook|check persons's social media page easily and directly in one app
+
+|`* * *` |user added many tags to persons|customize tag colour|visualize different tag by its color
+
+|`* * *` |user added many tags to persons|customize tag colour|visualize different tag by its color
+
+|`* * *` |user |be able to view photos of my contacts in the address book | recognize contacts more easily
+
+|`* * *` |user |be able to find persons based on name and Date of Birth | we can narrow the scope when users have same names
+
+|`* * *` |user |add a remark for somebody | customize the descriptions
+
+|`* * *` |user |directly contact a person by email, by clicking on email button | have instant access to communication
+
+|`* * *`|user |confirm before clearing |not clear the contents accidentally
+
+|`* * *`|user |edit a person |modify an address conveniently
+
+|`* *` |user |view a more attractive icon for the AddressBook | the AddressBook has a better appeal
+
+|`* *` |user |view the details of a person on Facebook by clicking on the name | get more information of the person
+
+|`* *` |user |want a better name for my Application | have a more appealing name for my application
+
+|`* *` |user |want to get notifications about birthdays/events coming up | be aware of important events in the coming week
+
+|`* *` |users with many person in address book |view all the tags by a single command| have an idea of the different associations I have with my contacts
+
+|`* *` |user |share the contact information in my addressbook to others' |share contact infomation conveniently
+
+|`* *` |user |have shortcuts for each command |don't have to type the whole command each time
+
+|`* *` |user |have a copy button for each category of information |copy and paste information easily
+
+|`* *` |user |be able to customize the color set of user interface|customize the display as I like
+
+|`* *` |user |be able to display person according to frequency I access their contacts|access the contacts that are more possible for me to access easily
+
+|`* *` |user |be able to delete tags|delete wrong tags
+
+|`* *` |user |be able to move the windows and tables in the user interface around|choose the combination of positions of windows as I like
+
+|`* *` |user |be able to click on contact to open windows to display and modify their information|look through and modify their information easily
+
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *`|user |see a history bar |keep track of my previous searches
+
+|`* *`|user |see random people on the front page |get in touch with old friends
+
+|`* *`|user with frequent contacts |have a favourites list |find them easily
+
+|`*` |user |sort persons by date of birth |see a list of people from youngest to oldest or oldest to youngest
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |find all the friends or other relationships I have | have a good idea of the type of relationships I have with the contacts of my address book
+
+|`*` |user |be able to move the windows and tables in the user interface around|choose the combination of positions of windows as I like
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`|user |be notified of birthdays |send them well wishes
+
+|`*`|user |delete people with a specific tag |clean up my list
+
+|`*`|user |log in |access privately
+
+|`*`|user |customise the display |view the list to my preference
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,7 +1173,207 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+
+=== Use case: Email Intents
+
+*MSS*
+
+1. User clicks on email button.
+2. AddressBook opens up the Gmail webpage.
+3. The email address of the person to be contacted is already filled in.
+4. User types in the message and sends the email.
++
+Use case ends.
+
+=== Use case: Social Integration
+
+*MSS*
+
+1. User clicks on the button, 'Social Media'.
+2. AddressBook sends an intent to FaceBook where the homepage of the person's account is displayed.
+3. User gets all the required information
++
+Use case ends.
+
+*EXTENSIONS*
+
+[none]
+* 2a. The person does not have a FaceBook account.
++
+Use case ends.
+=======
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit information of a specific person in the list
+4.  AddressBook edits the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Remark person
+
+*MSS*
+
+1.  User requests the list of person.
+2.  AddressBook shows the list of person.
+3.  User requests to remark persons by specifying index and remark
+4.  AddressBook remarks the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The index is illegal.
++
+Use case ends. AddressBook shows an error message.
+
+[discrete]
+=== Use case: Change color of a tag
+
+*MSS*
+
+1.  User requests to change a tag to another color
+2.  AddressBook changes the color of the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given tag does not exist.
+
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The given color is not available.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show the list of persons by frequency
+*MSS*
+
+1.  User requests to show a list of person that is mostly accessed by keying in "list freq" keyword
+2.  AddressBook shows this list of person in descending frequency order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete a tag
+*MSS*
+
+1.  User requests to show one of a person using find command
+2.  AddressBook shows this person
+3.  User requests to delete one of this person's tag by specifying a index of tag
+4.  AddressBook deletes the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Confirmation before clearing
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to clear the list
+4.  AddressBook shows a message for confirmation
+5.  User confirms clearing the list
+6.  AddressBook clears the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 5a. User chooses to cancel.
++
+Use case ends.
+
+* 5b. The given input is invalid.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+[discrete]
+=== Use case: Random person at front page
+
+*MSS*
+
+1.  AddressBook shows a random person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows a message to prompt adding new contacts.
++
+Use case ends.
+
+=======
 
 [appendix]
 == Non Functional Requirements
@@ -775,6 +1381,15 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on both 32-bit and 64-bit environment.
+.  Should have enough security features to protect data of a user.
+.  The user guide should be clear and easy to understand by new users.
+.  The system should be usable by a novice.
+.  The project is open-source and available on GitHub.
+.  Should secure contact information safely.
+.  Should be able to open the application in 2 seconds.
+.  The application should provide several aesthetic designed color sets.
+.  Should respond within two seconds.
 
 {More to be added}
 
@@ -795,6 +1410,12 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[Environment-bit]]
+Environment Bit
+
+....
+32/64 bits refer to the number of bits that compose a data element
+....
 [appendix]
 == Product Survey
 

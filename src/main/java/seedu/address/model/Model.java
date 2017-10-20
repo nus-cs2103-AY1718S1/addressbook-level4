@@ -1,11 +1,18 @@
 package seedu.address.model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagColor;
 
 /**
  * The API of the Model component.
@@ -26,6 +33,11 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
+    /** Adds photo to person */
+    void addPhotoPerson(ReadOnlyPerson person, String FilePath, Index targetIndex)
+            throws PersonNotFoundException, FileNotFoundException,
+            IOException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -44,5 +56,14 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Update color of tags
+     * @param tagList
+     * @param color
+     */
+    void updateTagColorPair(Set<Tag> tagList, TagColor color) throws IllegalValueException;
+
+
 
 }

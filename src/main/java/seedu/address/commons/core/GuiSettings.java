@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.Objects;
 
+import seedu.address.model.font.FontSize;
 /**
  * A Serializable class that contains the GUI settings.
  */
@@ -11,21 +12,32 @@ public class GuiSettings implements Serializable {
 
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
+    private static final String DEFAULT_FONT_SIZE = FontSize.FONT_SIZE_M_LABEL;
 
     private Double windowWidth;
     private Double windowHeight;
     private Point windowCoordinates;
+    private String fontSize;
 
     public GuiSettings() {
         this.windowWidth = DEFAULT_WIDTH;
         this.windowHeight = DEFAULT_HEIGHT;
         this.windowCoordinates = null; // null represent no coordinates
+        this.fontSize = DEFAULT_FONT_SIZE;
+    }
+
+    public GuiSettings(Double windowWidth, Double windowHeight, int xPosition, int yPosition, String fontSize) {
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
+        this.windowCoordinates = new Point(xPosition, yPosition);
+        this.fontSize = fontSize;
     }
 
     public GuiSettings(Double windowWidth, Double windowHeight, int xPosition, int yPosition) {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         this.windowCoordinates = new Point(xPosition, yPosition);
+        this.fontSize = DEFAULT_FONT_SIZE;
     }
 
     public Double getWindowWidth() {
@@ -38,6 +50,10 @@ public class GuiSettings implements Serializable {
 
     public Point getWindowCoordinates() {
         return windowCoordinates;
+    }
+
+    public String getFontSize() {
+        return fontSize;
     }
 
     @Override
@@ -54,12 +70,13 @@ public class GuiSettings implements Serializable {
         return Objects.equals(windowWidth, o.windowWidth)
                 && Objects.equals(windowHeight, o.windowHeight)
                 && Objects.equals(windowCoordinates.x, o.windowCoordinates.x)
-                && Objects.equals(windowCoordinates.y, o.windowCoordinates.y);
+                && Objects.equals(windowCoordinates.y, o.windowCoordinates.y)
+                && Objects.equals(fontSize, o.fontSize);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(windowWidth, windowHeight, windowCoordinates);
+        return Objects.hash(windowWidth, windowHeight, windowCoordinates, fontSize);
     }
 
     @Override
@@ -67,7 +84,8 @@ public class GuiSettings implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Width : " + windowWidth + "\n");
         sb.append("Height : " + windowHeight + "\n");
-        sb.append("Position : " + windowCoordinates);
+        sb.append("Position : " + windowCoordinates + "\n");
+        sb.append("Font size: " + fontSize);
         return sb.toString();
     }
 }
