@@ -41,7 +41,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         String command = "   " + AddTaskCommand.COMMAND_WORD + "  " + VALID_DESCRIPTION_INTERNSHIP + "  "
                 + STARTDATE_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP + " ";
         assertCommandSuccess(command, toAdd);
-        
+
         /* Case: undo adding Internship to the list -> Internship deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
@@ -52,52 +52,52 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         model.addTask(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
-        
+
         /* Case: add a duplicate task -> rejected */
         command = "   " + AddTaskCommand.COMMAND_WORD + "  " + VALID_DESCRIPTION_INTERNSHIP + "  "
                 + STARTDATE_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP + " ";
         assertCommandFailure(command, AddTaskCommand.MESSAGE_DUPLICATE_TASK);
-        
+
         /* Case: add a task with all fields same as another task in the address book except description -> added */
         toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL).withStartDate(VALID_STARTDATE_INTERNSHIP)
                 .withDeadline(VALID_DEADLINE_INTERNSHIP).build();
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_GRAD_SCHOOL + STARTDATE_DESC_INTERNSHIP
                 + DEADLINE_DESC_INTERNSHIP;
         assertCommandSuccess(command, toAdd);
-        
+
         /* Case: add a task with all fields same as another task in the address book except start date -> added */
         toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate(VALID_STARTDATE_GRAD_SCHOOL)
                 .withDeadline(VALID_DEADLINE_INTERNSHIP).build();
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_GRAD_SCHOOL
                 + DEADLINE_DESC_INTERNSHIP;
         assertCommandSuccess(command, toAdd);
-        
+
         /* Case: add a task with all fields same as another task in the address book except deadline -> added */
         toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate(VALID_STARTDATE_INTERNSHIP)
                 .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).build();
         command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
                 + DEADLINE_DESC_GRAD_SCHOOL;
         assertCommandSuccess(command, toAdd);
-        
+
         /* Case: add to empty address book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == 0;
         assertCommandSuccess(GRAD_SCHOOL);
-        
+
         /* Case: add a task, missing task dates -> added */
         assertCommandSuccess(BUY_PRESENTS);
-        
+
         /* Case: add a task, missing start date -> added */
         assertCommandSuccess(SUBMISSION);
-        
+
         /* Case: add a task, missing deadline -> added */
         assertCommandSuccess(GYM);
-        
+
         /* Case: missing description -> rejected */
         command = AddTaskCommand.COMMAND_WORD + " " + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
     }
-    
+
         /**
          * Executes the {@code AddTaskCommand} that adds {@code toAdd} to the model and verifies that the command box displays
          * an empty string, the result display box displays the success message of executing {@code AddTaskCommand} with the

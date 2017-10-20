@@ -50,7 +50,7 @@ public class MainWindowHandle extends StageHandle {
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
     }
-    
+
     public TaskListPanelHandle getTaskListPanelHandle() {
         return taskListPanelHandle;
     }

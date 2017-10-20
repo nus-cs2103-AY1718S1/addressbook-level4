@@ -101,7 +101,7 @@ public abstract class AddressBookSystemTest {
     public ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
     }
-    
+
     public TaskListPanelHandle getTaskListPanel() {
         return mainWindowHandle.getTaskListPanelHandle();
     }
