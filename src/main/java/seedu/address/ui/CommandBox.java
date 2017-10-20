@@ -80,6 +80,8 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.requestFocus();
     }
 
+    public boolean isFocused() { return commandTextField.isFocused(); }
+
     /**
      * Load images for keyboard icons in the command box.
      */

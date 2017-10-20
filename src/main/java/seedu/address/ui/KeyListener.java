@@ -50,8 +50,11 @@ public class KeyListener {
      * Handles key press events
      */
     public void handleKeyPress() {
+
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            commandBox.processInput();
+            if (commandBox.isFocused()) {
+                commandBox.processInput();
+            }
             executeKeyEvent(event);
         });
     }
