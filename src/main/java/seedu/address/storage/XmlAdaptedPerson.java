@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -32,6 +34,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedGroup> grouped = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -54,6 +58,11 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+
+        grouped = new ArrayList<>();
+        for (ReadOnlyGroup group: source.getGroups()) {
+            grouped.add(new XmlAdaptedGroup(group));
+        }
     }
 
     /**
@@ -66,11 +75,18 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+
+        final List<Group> personGroups = new ArrayList<>();
+        for (XmlAdaptedGroup group: grouped) {
+            personGroups.add(group.toModelType());
+        }
+
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<Group> groups = new HashSet<>(personGroups);
+        return new Person(name, phone, email, address, tags, groups);
     }
 }

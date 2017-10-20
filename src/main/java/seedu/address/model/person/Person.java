@@ -9,8 +9,11 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
 
 /**
  * Represents a Person in the address book.
@@ -22,8 +25,12 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    /**
+     *  A Person will have an empty group list by default
+     */
+    private ObjectProperty<UniqueGroupList> groups = new SimpleObjectProperty<>(new UniqueGroupList());
+
 
     /**
      * Every field must be present and not null.
@@ -36,6 +43,21 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Group> groups) {
+        requireAllNonNull(name, phone, email, address, tags, groups);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal groups from changes in the arg list
+        this.groups = new SimpleObjectProperty<>(new UniqueGroupList(groups));
     }
 
     /**
@@ -111,8 +133,19 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
+    @Override
+    public Set<Group> getGroups() {
+        return groups.get().toSet();
+    }
+
+    @Override
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
+    }
+
+    @Override
+    public ObjectProperty<UniqueGroupList> groupProperty() {
+        return groups;
     }
 
     /**
@@ -120,6 +153,13 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    /**
+     * Replaces this person's groups with the groups in the argument group set.
+     */
+    public void setGroups(Set<Group> replacement) {
+        groups.set(new UniqueGroupList(replacement));
     }
 
     @Override
@@ -132,7 +172,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, groups);
     }
 
     @Override
