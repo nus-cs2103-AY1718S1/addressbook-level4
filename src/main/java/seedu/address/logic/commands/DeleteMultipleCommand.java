@@ -35,7 +35,6 @@ public class DeleteMultipleCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         String listOfDeletedContacts = "";
-
         for (int n = 0; n < arrayOfIndex.size(); n++) {
 
             Index targetIndex = arrayOfIndex.get(n);
@@ -47,7 +46,6 @@ public class DeleteMultipleCommand extends UndoableCommand {
 
             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
             listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
-            queue.offer(personToDelete);
 
             try {
                 model.deletePerson(personToDelete);
