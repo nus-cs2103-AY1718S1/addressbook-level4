@@ -6,16 +6,16 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.model.tag.Tag;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class TagRemoveCommandParserTest {
 
@@ -34,7 +34,7 @@ public class TagRemoveCommandParserTest {
     }
 
     @Test
-    public void parseTagRemoveSuccess() throws Exception{
+    public void parseTagRemoveSuccess() throws Exception {
         Index targetIndex = INDEX_SECOND_PERSON;
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(targetIndex);
