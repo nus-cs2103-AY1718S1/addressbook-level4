@@ -14,6 +14,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017 T17-B1`      Since: `Sep 2017`      Licence: `MIT`
 
+= Introduction
+Codii is an address book application specifically designed for debt collectors to manage debts and debtors efficiently. It provides the necessary tools to keep track of interests, debts and important dates such as repayment deadlines.
+This developer guide provides detailed information for future contributors to improve on the current code base, testing and documentation.
+
 == Setting up
 
 === Prerequisites
