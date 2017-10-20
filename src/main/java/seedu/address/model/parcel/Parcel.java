@@ -47,19 +47,11 @@ public class Parcel implements ReadOnlyParcel {
     }
 
     /**
-     * New Parcel added without status does has a default status of PENDING.
-     */
-    public Parcel(TrackingNumber trackingNumber, Name name, Phone phone, Email email, Address address,
-                  DeliveryDate deliveryDate, Set<Tag> tags) {
-        this(trackingNumber, name, phone, email, address, deliveryDate, PENDING, tags);
-    }
-
-    /**
      * Creates a copy of the given ReadOnlyParcel.
      */
     public Parcel(ReadOnlyParcel source) {
         this(source.getTrackingNumber(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getDeliveryDate(), source.getTags());
+                source.getDeliveryDate(), source.getStatus(), source.getTags());
     }
 
     public void setTrackingNumber(TrackingNumber trackingNumber) {
