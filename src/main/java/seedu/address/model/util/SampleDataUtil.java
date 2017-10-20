@@ -74,7 +74,7 @@ public class SampleDataUtil {
      * @return a email set containing the list of strings given
      * @throws IllegalValueException
      * */
-    public static ArrayList<Email> getEmailSet(String... emails) throws IllegalValueException{
+    public static ArrayList<Email> getEmailSet(String... emails) throws IllegalValueException {
         ArrayList<Email> emailList = new ArrayList();
         for (String e : emails) {
             emailList.add(new Email(e));
