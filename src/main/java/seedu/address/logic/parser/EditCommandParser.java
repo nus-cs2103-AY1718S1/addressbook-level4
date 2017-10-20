@@ -89,7 +89,13 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (emails.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> emailSet = emails.size() == 1 && emails.contains("") ? Collections.emptySet() : emails;
-        return Optional.of(ParserUtil.parseEmail(emailSet));
+        Collection<String> emailSet = emails.size() == 1 && emails.contains("") ? Collections.emptySet() :  emails;
+        Collection<String> emailSetToParse = new ArrayList<>();
+        for (String email : emailSet) {
+            if (!emailSetToParse.contains(email)) {
+                emailSetToParse.add(email);
+            }
+        }
+        return Optional.of(ParserUtil.parseEmail(emailSetToParse));
     }
 }
