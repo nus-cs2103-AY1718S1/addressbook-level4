@@ -12,7 +12,7 @@
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="timeBox" prefHeight="600.0" prefWidth="800.0">
+      <HBox fx:id="timeBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0">
          <children>
             <VBox alignment="TOP_CENTER" prefWidth="150.0" spacing="50.0">
                <children>
