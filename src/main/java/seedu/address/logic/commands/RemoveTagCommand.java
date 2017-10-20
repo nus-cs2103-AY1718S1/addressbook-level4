@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -26,12 +27,10 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_TAG_NOT_REMOVED = "Tag(s) not removed";
 
     private final ArrayList<Tag> tagsToRemove;
-    private final int noTagsToRemove;
 
-    public RemoveTagCommand(ArrayList<Tag> tagsToRemove, int noTagsToRemove) {
+    public RemoveTagCommand(ArrayList<Tag> tagsToRemove) {
 
         this.tagsToRemove = tagsToRemove;
-        this.noTagsToRemove = noTagsToRemove;
 
     }
 
@@ -47,6 +46,10 @@ public class RemoveTagCommand extends UndoableCommand {
             assert false : "The target person cannot be missing";
         }
 
+        if (!isTagsExist(tagsToRemove)) {
+            return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
+        }
+
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
     }
 
@@ -55,5 +58,15 @@ public class RemoveTagCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof RemoveTagCommand // instanceof handles nulls
                 && tagsToRemove.equals(((RemoveTagCommand) other).tagsToRemove));
+    }
+
+    /**
+     * @param tagKeywords
+     * @return true if keywords exist in current tag list
+     */
+    public boolean isTagsExist(ArrayList<Tag> tagKeywords) {
+        List<Tag> tagList = model.getAddressBook().getTagList();
+        return tagKeywords.stream()
+                .anyMatch(keyword -> tagList.contains(keyword));
     }
 }
