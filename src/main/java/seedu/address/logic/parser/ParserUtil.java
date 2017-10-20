@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Timestamp;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -75,6 +76,12 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
+
+
+    public static Optional<Timestamp> parseTimestamp(Optional<String> timestamp) throws IllegalValueException {
+        return timestamp.isPresent() ? Optional.of(new Timestamp(Long.parseLong(timestamp.get()))) : Optional.empty();
+    }
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

@@ -24,6 +24,8 @@ public interface ReadOnlyPerson extends Comparable {
     Picture getPicture();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Timestamp> timestampProperty();
+    Timestamp getTimestamp();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -49,6 +51,8 @@ public interface ReadOnlyPerson extends Comparable {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Time-of-expiry: ")
+                .append(getTimestamp().getExpiryTime())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

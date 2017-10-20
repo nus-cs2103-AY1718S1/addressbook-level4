@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TEMPORARY;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,8 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_TIMESTAMP_AMY = "0";
+    public static final String VALID_TIMESTAMP_BOB = "0";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String DEFAULT_NOT_SET = "Not Set";
@@ -47,6 +50,8 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String TIMESTAMP_DESC_AMY = " " + PREFIX_TEMPORARY + VALID_TIMESTAMP_AMY;
+    public static final String TIMESTAMP_DESC_BOB = " " + PREFIX_TEMPORARY + VALID_TIMESTAMP_BOB;
     public static final String EMAIL_DEFAULT_UNSET = " " + PREFIX_EMAIL + DEFAULT_NOT_SET;
     public static final String PHONE_DEFAULT_UNSET = " " + PREFIX_PHONE + DEFAULT_NOT_SET;
     public static final String ADDRESS_DEFAULT_UNSET = " " + PREFIX_ADDRESS + DEFAULT_NOT_SET;
