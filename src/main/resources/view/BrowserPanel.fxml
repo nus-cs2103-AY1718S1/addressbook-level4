@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
+<?import javafx.scene.layout.BorderPane?>
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <GridPane fx:id="mainDetailsPane" gridLinesVisible="false">
      <columnConstraints>
@@ -18,7 +19,7 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-        <StackPane fx:id="contactImagePlaceholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" />
+        <BorderPane fx:id="contactImagePlaceholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" />
         <WebView fx:id="browser" disable="true" visible="false" />
          <GridPane fx:id="socialIconsPane" gridLinesVisible="false" GridPane.rowIndex="1">
            <columnConstraints>
@@ -30,10 +31,10 @@
              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
-              <StackPane fx:id="socialIcon1Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.halignment="CENTER" />
-              <StackPane fx:id="socialIcon2Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.columnIndex="1" />
-              <StackPane fx:id="socialIcon3Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.rowIndex="1" />
-              <StackPane fx:id="socialIcon4Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+              <BorderPane fx:id="socialIcon1Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.halignment="CENTER" />
+              <BorderPane fx:id="socialIcon2Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.columnIndex="1" />
+              <BorderPane fx:id="socialIcon3Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.rowIndex="1" />
+              <BorderPane fx:id="socialIcon4Placeholder" prefHeight="150.0" prefWidth="200.0" styleClass="centerImagesInStackPane" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
          </GridPane>
          <VBox fx:id="contactDetailsVBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />

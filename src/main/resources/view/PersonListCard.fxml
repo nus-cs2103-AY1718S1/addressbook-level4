@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -27,15 +28,16 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+        <Label fx:id="name" contentDisplay="RIGHT" styleClass="cell_big_label" text="\$first">
                <graphic>
-                  <ImageView fitHeight="106.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="favicon" fitHeight="106.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/starHollow.png" />
                      </image>
                   </ImageView>
                </graphic></Label>
       </HBox>
+      <FlowPane fx:id="tags" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

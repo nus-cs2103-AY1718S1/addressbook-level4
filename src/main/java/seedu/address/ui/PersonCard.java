@@ -6,6 +6,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -17,13 +18,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-
-    /**
-     * An enum that contains the different tag colours.
-     */
-    private enum Colours {
-        red, orange, yellow, green, blue, purple, grey
-    }
 
     private static HashMap<String, String> tagColourSet = new HashMap<String, String>();
     private static Random random = new Random();
@@ -45,6 +39,8 @@ public class PersonCard extends UiPart<Region> {
     private Label name;
     @FXML
     private Label id;
+    @FXML
+    private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -61,13 +57,15 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
             initTags(person);
         });
     }
 
     private static String setTagColour(String tagName) {
+        String[] colours = {"#2ecc71", "#3498db", "#9b59b6", "#f1c40f", "#E67E22", "#27AE60", "#FFC153"};
         if (!tagColourSet.containsKey(tagName)) {
-            tagColourSet.put(tagName, Colours.values()[random.nextInt(Colours.values().length)].toString());
+            tagColourSet.put(tagName, colours[random.nextInt(colours.length)]);
         }
 
         return tagColourSet.get(tagName);
@@ -81,6 +79,7 @@ public class PersonCard extends UiPart<Region> {
             tag -> {
                 Label tagLabel = new Label(tag.tagName);
                 tagLabel.setStyle("-fx-background-color: " + setTagColour(tag.tagName));
+                tags.getChildren().add(tagLabel);
             });
     }
 
