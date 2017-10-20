@@ -20,6 +20,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
@@ -113,6 +114,15 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
+
+        taskBook.updateTask(target, editedTask);
         indicateAddressBookChanged();
     }
 
