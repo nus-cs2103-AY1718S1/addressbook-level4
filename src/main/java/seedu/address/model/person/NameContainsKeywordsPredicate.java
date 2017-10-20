@@ -29,8 +29,4 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     }
 
 
-    public boolean empty() {
-        return this.keywords.isEmpty();
-    }
-
 }
