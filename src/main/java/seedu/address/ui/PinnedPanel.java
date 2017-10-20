@@ -38,9 +38,10 @@ public class PinnedPanel extends UiPart<Region> {
     }
 
     private void setConnections() {
+        ObservableList<ReadOnlyPerson> pinnedList = personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED);
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED), (person) -> new PersonCard(person,
-                        personList.indexOf(person) + 1));
+                pinnedList, (person) -> new PersonCard(person,
+                        pinnedList.indexOf(person) + 1));
         pinnedListView.setItems(mappedList);
         pinnedListView.setCellFactory(listView -> new PinnedListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -87,9 +88,10 @@ public class PinnedPanel extends UiPart<Region> {
     @Subscribe
     private void handlePinPersonEvent(PinPersonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ObservableList<ReadOnlyPerson> pinnedList = personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED);
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList.filtered(Model.PREDICATE_SHOW_ONLY_PINNED), (person) -> new PersonCard(person,
-                        personList.indexOf(person) + 1));
+                pinnedList, (person) -> new PersonCard(person,
+                        pinnedList.indexOf(person) + 1));
         pinnedListView.setItems(mappedList);
         pinnedListView.setCellFactory(listView -> new PinnedListViewCell());
     }
