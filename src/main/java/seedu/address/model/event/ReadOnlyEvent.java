@@ -1,28 +1,32 @@
 package seedu.address.model.event;
 
+import java.util.Set;
+
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.Person;
 
-import java.util.Set;
 
+/**
+ * Represents an interface for event in the address book.
+ */
 public interface ReadOnlyEvent {
-    ObjectProperty<EventName> EnameProperty();
-    EventName getEName();
-    ObjectProperty<EventDescription> descProperty();
-    EventDescription getDesc();
+    ObjectProperty<EventName> eventNameProperty();
+    EventName getEventName();
+    ObjectProperty<EventDescription> descriptionProperty();
+    EventDescription getDescription();
     ObjectProperty<EventTime> timeProperty();
-    EventTime getETime();
+    EventTime getEventTime();
     ObjectProperty<ParticipantList> participantProperty();
     Set<Person> getParticipants();
 
     /**
      * returns true if both event has the same state
      */
-    default boolean EventIsSameStateAs(ReadOnlyEvent other) {
+    default boolean eventIsSameStateAs(ReadOnlyEvent other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getEName().equals(this.getEName()) // state checks here onwards
-                && other.getETime().equals(this.getETime())
+                && other.getEventName().equals(this.getEventName()) // state checks here onwards
+                && other.getEventTime().equals(this.getEventTime()));
     }
 
     /**
@@ -30,11 +34,11 @@ public interface ReadOnlyEvent {
      */
     default String getEventAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getEName())
+        builder.append(getEventName())
                 .append(" Description: ")
-                .append(getDesc())
+                .append(getDescription())
                 .append(" Time: ")
-                .append(getETime())
+                .append(getEventTime())
                 .append(" Participants: ");
         getParticipants().forEach(builder::append);
         return builder.toString();

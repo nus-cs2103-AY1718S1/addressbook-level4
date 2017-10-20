@@ -1,22 +1,28 @@
 package seedu.address.model.event;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.DuplicateDataException;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import seedu.address.commons.exceptions.DuplicateDataException;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.person.Person;
+
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+/**
+ * Represents a Event's participant list in the address book.
+ */
 
 public class ParticipantList implements Iterable<Person> {
-    ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private ObservableList<Person> internalList = FXCollections.observableArrayList();
 
     /**
      * construct empty participant list
@@ -27,7 +33,7 @@ public class ParticipantList implements Iterable<Person> {
      * Construct participant list using given participants
      * Enforces no nulss
      */
-    public ParticipantList(Set<Person> participants){
+    public ParticipantList(Set<Person> participants) {
         requireNonNull(participants);
         internalList.addAll(participants);
 

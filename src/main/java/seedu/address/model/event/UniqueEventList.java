@@ -1,18 +1,23 @@
 package seedu.address.model.event;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
-import seedu.address.model.person.ReadOnlyPerson;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import org.fxmisc.easybind.EasyBind;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+
+/**
+ * Represents a unique event list in the address book.
+ */
 
 public class UniqueEventList implements Iterable<Event> {
 
@@ -56,7 +61,7 @@ public class UniqueEventList implements Iterable<Event> {
     public void sort() {
         Collections.sort(internalList, new Comparator<Event>() {
             public int compare (Event p1, Event p2) {
-                return p1.getEName().toString().compareTo(p2.getEName().toString()); } });
+                return p1.getEventName().toString().compareTo(p2.getEventName().toString()); } });
     }
 
     /**
@@ -88,11 +93,11 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
-        final boolean EventFoundAndDeleted = internalList.remove(toRemove);
-        if (!EventFoundAndDeleted) {
+        final boolean eventFoundAndDeleted = internalList.remove(toRemove);
+        if (!eventFoundAndDeleted) {
             throw new EventNotFoundException();
         }
-        return EventFoundAndDeleted;
+        return eventFoundAndDeleted;
     }
 
     public void setEvents(UniqueEventList replacement) {

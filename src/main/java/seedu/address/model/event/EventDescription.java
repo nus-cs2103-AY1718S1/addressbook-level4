@@ -1,8 +1,12 @@
 package seedu.address.model.event;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import static java.util.Objects.requireNonNull;
+/**
+ * Represents a Event's description in the address book.
+ */
 
 public class EventDescription {
 
@@ -14,9 +18,9 @@ public class EventDescription {
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String NAME_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String EventDesc;
+    public final String eventDesc;
 
     /**
      * Validates given name.
@@ -29,7 +33,7 @@ public class EventDescription {
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_EVENT_DESCRIPTION_CONSTRAINTS);
         }
-        this.EventDesc = trimmedName;
+        this.eventDesc = trimmedName;
     }
 
     /**
@@ -42,19 +46,19 @@ public class EventDescription {
 
     @Override
     public String toString() {
-        return EventDesc;
+        return eventDesc;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EventDescription // instanceof handles nulls
-                && this.EventDesc.equals(((EventDescription) other).EventDesc)); // state check
+                && this.eventDesc.equals(((EventDescription) other).eventDesc)); // state check
     }
 
     @Override
     public int hashCode() {
-        return EventDesc.hashCode();
+        return eventDesc.hashCode();
     }
 
 }

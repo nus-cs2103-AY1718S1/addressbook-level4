@@ -329,7 +329,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getEventList() { return events.asObservableList(); }
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
+    }
 
     @Override
     public ObservableList<Tag> getTagList() {

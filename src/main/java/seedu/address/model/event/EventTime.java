@@ -1,8 +1,12 @@
 package seedu.address.model.event;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import static java.util.Objects.requireNonNull;
+/**
+ * Represents a Event's time in the address book.
+ */
 
 public class EventTime {
 
@@ -17,7 +21,7 @@ public class EventTime {
     public static final String EVNET_TIME_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[///./-]"
             + "(0[1-9]|1[012]|[1-9])[///./-](19|20)\\d\\d$";
 
-    public final String EventTime;
+    public final String eventTime;
 
     /**
      * Validates given name.
@@ -30,32 +34,32 @@ public class EventTime {
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_EVENT_TIME_CONSTRAINTS);
         }
-        this.EventTime = trimmedName;
+        this.eventTime = trimmedName;
     }
 
     /**
      * Returns true if a given string is a valid event description.
      */
     public static boolean isValidName(String test) {
-        return test.matches(MESSAGE_EVENT_TIME_CONSTRAINTS);
+        return test.matches(EVNET_TIME_VALIDATION_REGEX);
     }
 
 
     @Override
     public String toString() {
-        return EventTime;
+        return eventTime;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof seedu.address.model.event.EventTime // instanceof handles nulls
-                && this.EventTime.equals(((seedu.address.model.event.EventTime) other).EventTime)); // state check
+                && this.eventTime.equals(((seedu.address.model.event.EventTime) other).eventTime)); // state check
     }
 
     @Override
     public int hashCode() {
-        return EventTime.hashCode();
+        return eventTime.hashCode();
     }
 
 }
