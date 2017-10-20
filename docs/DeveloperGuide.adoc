@@ -415,6 +415,79 @@ Once the required information (name, email, address, phone number) is retrieved 
 ---
 
 // end::ImportCommand[]
+=======
+// tag::filtertag[]
+=== Filter by tag mechanism
+
+The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
+then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
+that has the tags similar to the keywords. +
+After which, the predicate returned by `TagContainsKeywordsPredicate` will then update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
+The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
+The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
+The tag command is not undoable so it will just override execute().
+
+==== Design Considerations
+**Aspect:** Implementation logic of `TagCommand` +
+**Alternative 1 (current choice):** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
+**Pros:** Easy and convenient for users to search for specific tags. +
+**Cons:** If the user only type a common letter or substring found in all tag names, more persons will be returned which makes it difficult to search for the specific tag. +
+**Alternative 2:** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
+**Pros:** Results in an accurate filtered list  +
+**Cons:** Requires user to type the exact tag name which makes it inconvenient. As convenience is more important, Alternative 1 is chosen. +
+
+// tag::removetag[]
+=== Remove tag mechanism
+
+The remove tag mechanism is implemented by `Logic` and `Model`. When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
+The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
+In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
+`ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
+The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
+and then removes the `Tag` that is parsed into the method. The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
+`RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
+[NOTE]
+If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
+
+The remove tag command is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
+
+The following sequence diagram shows how the remove tag operation works:
+
+image::removeTag_sequenceDiagram.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Implementation logic of `RemoveTagCommand` +
+**Alternative 1 (current choice):** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
+**Pros:** Ensures that only the tag specified by the user gets deleted.  +
+**Cons:** Requires user to type the exact tag name which makes it inconvenient. +
+**Alternative 2 (current choice):** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
+**Pros:** More convenient for users to type. +
+**Cons:** If the user only type a common letter or substring found in all tag names, some tags which may not be what the user wanted may get deleted.
+ Even though the command can be undone, it is undesirable to have this logic when deleting. +
+
+---
+
+**Aspect:** Data structure to support the `RemoveTagCommand` +
+**Alternative 1 (current choice):** Use an ArrayList<Tag> to store the keywords +
+**Pros:** Compares between the same object Tag which can ensure that only the tag specified by the user gets deleted.  +
+**Cons:** Requires more overhead at creating the object Tag for each keyword +
+**Alternative 2 (current choice):** Use an ArrayList<String> to store the keywords +
+**Pros:** Less overhead as can compare between keyword strings and tag name strings +
+**Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
+
+=== Change colour theme mechanism
+The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
+on the `MainWindow` MenuBar as MenuItems. +
+When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
+will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
+that belongs to other colours. +
+The diagrams shows the UI of the additional colour themes:
+
+image::whiteThemeUI.png[width="800"]
+_Figure 3.6.1 : White Theme_
+
+image::greenThemeUI.png[width="800"]
+_Figure 3.6.2 : Green Theme_
 
 == Documentation
 
@@ -829,7 +902,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all link:#use-case[use cases] below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all link:#use-case[use cases] below, the *System* is the `ConnectUs` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -837,9 +910,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConnectUs shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ConnectUs deletes the person
 +
 Use case ends.
 
@@ -853,7 +926,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
@@ -862,7 +935,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add person
-2.  AddressBook adds the person
+2.  ConnectUs adds the person
 +
 Use case ends.
 
@@ -870,14 +943,12 @@ Use case ends.
 
 [none]
 * 1a. The given command is invalid.
-** 1a1. AddressBook shows an error message.
+** 1a1. ConnectUs shows an error message.
 +
 Use case resumes at step 1.
 
-* 1b. The given person is a duplicate.
-+
-[none]
-** 1b1. AddressBook shows an error message.
+* 1b. The given person is a duplicate of an existing person.
+** 1b1. ConnectUs shows an error message.
 +
 Use case resumes at step 1.
 
@@ -886,9 +957,9 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConnectUs shows a list of persons
 3.  User requests to edit a specific person in the list
-4.  AddressBook edits the person
+4.  ConnectUs edits the person
 +
 Use case ends.
 
@@ -902,19 +973,19 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. The given changes are a duplicate of an existing person.
 +
-** 3b1. AddressBook shows an error message.
+** 3b1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
 * 3c. The given command is invalid.
 +
-** 3c1. AddressBook shows an error message.
+** 3c1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
@@ -923,7 +994,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to redo command
-2.  AddressBook redoes the command
+2.  ConnectUs redoes the command
 +
 Use case ends.
 
@@ -932,7 +1003,7 @@ Use case ends.
 [none]
 * 1a. There is no command to redo.
 +
-** 1a1. AddressBook shows an error message.
+** 1a1. ConnectUs shows an error message.
 +
 Use case ends.
 
@@ -941,7 +1012,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to undo command
-2.  AddressBook undoes the command
+2.  ConnectUs undoes the command
 +
 Use case ends.
 
@@ -950,7 +1021,7 @@ Use case ends.
 [none]
 * 1a. There is no command to undo.
 +
-** 1a1. AddressBook shows an error message.
+** 1a1. ConnectUs shows an error message.
 +
 Use case ends.
 
@@ -959,9 +1030,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConnectUs shows a list of persons
 3.  User requests to select a specific person in the list
-4.  AddressBook selects the person
+4.  ConnectUs selects the person
 +
 Use case ends.
 
@@ -975,17 +1046,16 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
-=== Use case: Finds person
+=== Use case: Find person
 
 *MSS*
 
 1.  User requests to find person by name
-2.  AddressBook finds the person
-3.  AddressBook displays the list of person(s) with the keywords
+2.  ConnectUs finds and displays the list of person(s) with their names similar to the keywords
 +
 Use case ends.
 
@@ -994,7 +1064,7 @@ Use case ends.
 * 1a. The given command is invalid.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
