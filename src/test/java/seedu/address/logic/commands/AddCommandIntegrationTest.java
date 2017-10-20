@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.StorageUtil.getNullStorage;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class AddCommandIntegrationTest {
      */
     private AddCommand prepareCommand(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, getNullStorage(), new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

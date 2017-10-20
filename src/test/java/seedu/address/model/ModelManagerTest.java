@@ -1,10 +1,13 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
 
 import java.util.Arrays;
 
@@ -13,11 +16,47 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void addPersons_noDuplicates_success() throws DuplicatePersonException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+
+        UniquePersonList personsToAdd = new UniquePersonList();
+        personsToAdd.add(CARL);
+        personsToAdd.add(DANIEL);
+
+        AddressBook expectedAddressBook = new AddressBookBuilder()
+                .withPerson(ALICE).withPerson(BENSON).withPerson(CARL).withPerson(DANIEL).build();
+
+        modelManager.addPersons(personsToAdd.asObservableList());
+        assertEquals(expectedAddressBook, modelManager.getAddressBook());
+    }
+
+    @Test
+    public void addPersons_withDuplicates_success() throws DuplicatePersonException {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+
+        UniquePersonList personsToAdd = new UniquePersonList();
+        personsToAdd.add(ALICE);
+        personsToAdd.add(DANIEL);
+
+        AddressBook expectedAddressBook = new AddressBookBuilder()
+                .withPerson(ALICE).withPerson(BENSON).withPerson(DANIEL).build();
+
+        modelManager.addPersons(personsToAdd.asObservableList());
+        assertEquals(expectedAddressBook, modelManager.getAddressBook());
+    }
 
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
