@@ -16,6 +16,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 public class ImportCommandParser implements Parser<ImportCommand> {
 
     public static final String FILE_NAME_VALIDATION_REGEX = "^([A-z0-9])\\w+[.][x][m][l]";
+    public static final String MESSAGE_FILE_NAME_INVALID = "File name should be an xml file that only contains "
+            + "alphanumeric characters";
 
     /**
      * Parses the given {@code String} of arguments in the context of the ImportCommand
@@ -28,7 +30,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
         // preventing directory traversal attack
         if(!isValidFileName(trimmedArgument)) {
-            throw new ParseException("File name should be an xml file that only contains alphanumeric characters");
+            throw new ParseException(MESSAGE_FILE_NAME_INVALID);
         }
 
         try {
