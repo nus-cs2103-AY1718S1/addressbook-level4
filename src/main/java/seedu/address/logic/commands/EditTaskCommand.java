@@ -1,39 +1,28 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.StartDate;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
-public class EditTaskCommand {
+
+public class EditTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edittask";
 
@@ -49,7 +38,7 @@ public class EditTaskCommand {
             + PREFIX_START_DATE + "20-10-2017 "
             + PREFIX_DEADLINE + "25-10-2017";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Task: %1$s";
+    public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the address book.";
 
@@ -60,52 +49,49 @@ public class EditTaskCommand {
      * @param index of the task in the filtered task list to edit
      * @param editTaskDescriptor details to edit the task with
      */
-    public EditTaskCommand(Index index, EditCommand.EditTaskDescriptor editTaskDescriptor) {
+    public EditTaskCommand(Index index, EditTaskCommand.EditTaskDescriptor editTaskDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editTaskDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditCommand.EditPersonDescriptor(editPersonDescriptor);
+        this.editTaskDescriptor = new EditTaskCommand.EditTaskDescriptor(editTaskDescriptor);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
+        Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
 
         try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
+            model.updateTask(taskToEdit, editedTask);
+        } catch (DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (TaskNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Task} with the details of {@code taskToEdit}
+     * edited with {@code editTaskDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditCommand.EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Task createEditedTask(ReadOnlyTask taskToEdit,
+                                             EditTaskCommand.EditTaskDescriptor editTaskDescriptor) {
+        assert taskToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
+        StartDate updatedStartDate = editTaskDescriptor.getStartDate().orElse(taskToEdit.getStartDate());
+        Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBirthday, updatedTags);
+        return new Task(updatedDescription, updatedStartDate, updatedDeadline);
     }
 
     @Override
@@ -116,14 +102,14 @@ public class EditTaskCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof EditTaskCommand)) {
             return false;
         }
 
         // state check
-        EditCommand e = (EditCommand) other;
+        EditTaskCommand e = (EditTaskCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+                && editTaskDescriptor.equals(e.editTaskDescriptor);
     }
 
     /**
@@ -138,68 +124,40 @@ public class EditTaskCommand {
         public EditTaskDescriptor() {}
 
         public EditTaskDescriptor(EditTaskCommand.EditTaskDescriptor toCopy) {
-            this.name = toCopy.name;
-            this.phone = toCopy.phone;
-            this.email = toCopy.email;
-            this.address = toCopy.address;
-            this.birthday = toCopy.birthday;
-            this.tags = toCopy.tags;
+            this.description = toCopy.description;
+            this.startDate = toCopy.startDate;
+            this.deadline = toCopy.deadline;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.birthday,
-                    this.tags);
+            return CollectionUtil.isAnyNonNull(this.description, this.startDate, this.deadline);
         }
 
-        public void setName(Name name) {
-            this.name = name;
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setStartDate(StartDate startDate) {
+            this.startDate = startDate;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<StartDate> getStartDate() {
+            return Optional.ofNullable(startDate);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setDeadline(Deadline deadline) {
+            this.deadline = deadline;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
-        public void setBirthday(Birthday birthday) {
-            this.birthday = birthday;
-        }
-
-        public Optional<Birthday> getBirthday() {
-            return Optional.ofNullable(birthday);
-        }
-
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
-        }
-
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
+        public Optional<Deadline> getDeadline() {
+            return Optional.ofNullable(deadline);
         }
 
         @Override
@@ -210,19 +168,16 @@ public class EditTaskCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditCommand.EditPersonDescriptor)) {
+            if (!(other instanceof EditTaskCommand.EditTaskDescriptor)) {
                 return false;
             }
 
             // state check
-            EditCommand.EditPersonDescriptor e = (EditCommand.EditPersonDescriptor) other;
+            EditTaskCommand.EditTaskDescriptor e = (EditTaskCommand.EditTaskDescriptor) other;
 
-            return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getBirthday().equals(e.getBirthday())
-                    && getTags().equals(e.getTags());
+            return getDescription().equals(e.getDescription())
+                    && getStartDate().equals(e.getStartDate())
+                    && getDeadline().equals(e.getDeadline());
         }
     }
 }

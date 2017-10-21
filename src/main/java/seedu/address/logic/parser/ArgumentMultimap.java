@@ -57,4 +57,17 @@ public class ArgumentMultimap {
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
+    
+    public String getIndex() {
+        String preamble = getPreamble();
+        String trimmedPreamble = preamble.trim();
+        return trimmedPreamble.substring(0, trimmedPreamble.indexOf(' '));
+    }
+    
+    public String getDescription() {
+        String preamble = getPreamble().trim();
+        int indexLength = getIndex().length();
+        return (indexLength == preamble.length()) ? "" : 
+                preamble.substring(indexLength, preamble.length());
+    }
 }
