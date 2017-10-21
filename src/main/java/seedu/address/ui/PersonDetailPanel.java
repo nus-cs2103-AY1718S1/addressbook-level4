@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.HashMap;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,16 +15,13 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.ui.util.ColorsUtil;
+import seedu.address.ui.util.TagColors;
 
 /**
  * The Person Detail Panel of the App.
  */
 public class PersonDetailPanel extends UiPart<Region> {
     private static final String FXML = "PersonDetailPanel.fxml";
-    private static String[] colors = ColorsUtil.getTagColors();
-    private static HashMap<String, String> tagColors = new HashMap<> ();
-    private static Random random = new Random();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -70,6 +65,7 @@ public class PersonDetailPanel extends UiPart<Region> {
         phone.setText("");
         email.setText("");
         address.setText("");
+
         avatarImage = new Image(getClass().getResourceAsStream("/images/avatarGray.png"));
         avatar.fitWidthProperty().bind(personDetailPanel.widthProperty());
     }
@@ -85,18 +81,15 @@ public class PersonDetailPanel extends UiPart<Region> {
         address.setText(person.getAddress().toString());
         email.setText(person.getEmail().toString());
         tags.getChildren().clear();
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getTagColor(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
+        initTags(person);
     }
 
-    private String getTagColor(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
-        }
-        return tagColors.get(tagValue);
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + TagColors.getTagColor(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     /**
