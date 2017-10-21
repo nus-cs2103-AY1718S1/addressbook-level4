@@ -15,6 +15,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameIsPrivatePredicate); // instanceof handles nulls
+                || (other instanceof PersonIsPinnedPredicate); // instanceof handles nulls
     }
 }
