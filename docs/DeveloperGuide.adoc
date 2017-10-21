@@ -590,7 +590,7 @@ alternative was selected to provide a more pleasant user experience.
 === Favorite Contacts
 
 The favorite status of each contact is stored as a `boolean`, encapsulated within the `Favorite` class. +
-There are several ways to toggle this boolean to change the favorite status of a contact.
+There are several ways to toggle this `boolean` to change the favorite status of a contact.
 
 ==== Toggle favorites using `add` and/or `edit` command +
 For user's convenience, we are allowing just the input of prefixes i.e. `f/` in `add` command and either `f/` or `uf/` in `edit` command to make a change to a contact's favorite status.
@@ -653,7 +653,7 @@ public static List<Index> parseMultipleIndexes(String args) throws IllegalValueE
 ----
 Note that trimming `args.trim()` is required since the args passed will usually contain a leading whitespace. The regex `args.trim().split("\\s+")` is used as a form of validation to ignore multiple trailing whitespaces and still allowing such user input to be parsed, preventing an `exception`.
 
-The last step is to create a copy of the person we are favoriting or unfavoriting and simply change its favorite status via the aforementioned `boolean`. Since the `Person` class takes two constructors, the following constructor allows creating a copy of a given `ReadOnlyPerson`.
+The last step is to create a copy of the person we are favoriting or unfavoriting and change its favorite status via the aforementioned `boolean`. Since the `Person` class takes two constructors, the following constructor allows creating a copy of a given `ReadOnlyPerson`.
 [usage,java]
 ----
 public Person(ReadOnlyPerson source) {
