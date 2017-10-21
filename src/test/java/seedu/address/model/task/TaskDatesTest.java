@@ -26,7 +26,7 @@ public class TaskDatesTest {
         assertFalse(TaskDates.isDateValid("2nd January 2020"));
         
         // wrong dates
-        assertFalse(TaskDates.isDateValid("30-02-2019"));
+        assertFalse(TaskDates.isDateValid("32-03-2019"));
         assertFalse(TaskDates.isDateValid("12-13-2019"));
 
         // valid date
