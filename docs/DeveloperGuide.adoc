@@ -390,6 +390,27 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Delete Event
+
+The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
+
+The following sequence diagrams below, Figure 3.4.1 and Figure 3.4.2, show how the delete event operation works:
+
+image::DeleteEventSD.png[width="800"]
+_Figure 3.4.1: Logic interactions for `deleteE 1` command_
+
+image::SDforDeletePersonEventHandling.png[width="800"]
+_Figure 3.4.2 : Component interactions for `deleteE 1` command_
+
+. The user enters a delete event command which is parsed from the `UI` to `Logic` by `CommandBox`.
+. `Logic` has `LogicManager` use `AddressBookParser` to parse the user command.
+. This results in a `Command` object which is executed by the `LogicManager`.
+. The execution will affect the `Model` by deleting an event.
+. `ModelManager` will raise an `AddressBookChangedEvent` to `EventsCenter`.
+. `EventsCenter` will handle the changes to `Storage` and `UI` using the `handleAddressBookChangedEvent` method.
+. The `Command` will be added to the `undoStack`.
+. The result of the command execution is encapsulated as a `CommandResult` which is passed back to `CommandBox` in `UI`.
+
 == Documentation
 
 We use asciidoc for writing documentation.
