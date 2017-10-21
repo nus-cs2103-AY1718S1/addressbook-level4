@@ -34,7 +34,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void favorite() {
-        /* ---------------- Performing favorite operation while an unfiltered list is being shown ------------------- */
+        /* -------------- Performing favorite operation while an unfiltered list is being shown ----------------- */
 
         /*
          * Case: favorites the third, fourth and fifth person in the list,
@@ -75,7 +75,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* ----------------- Performing favorite operation while a filtered list is being shown --------------------- */
+        /* --------------- Performing favorite operation while a filtered list is being shown ------------------- */
 
         /* Case: filtered person list, favorite index within bounds of address book and person list -> favorited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -96,7 +96,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         command = FavoriteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* -------------------- Performing favorite operation while a person card is selected ----------------------- */
+        /* ------------------ Performing favorite operation while a person card is selected --------------------- */
 
         /* Case: favorite the selected person -> person list panel selects the person before the favorited person */
         showAllPersons();
@@ -110,7 +110,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_FAVORITE_PERSON_SUCCESS, "\n★ " + favoritedPerson.getName().toString());
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
-        /* -------------------------------- Performing invalid favorite operation ----------------------------------- */
+        /* ------------------------------ Performing invalid favorite operation --------------------------------- */
 
         /* Case: multiple invalid indexes (0 0 0) -> rejected */
         command = FavoriteCommand.COMMAND_WORD + " 0 0 0";
@@ -127,10 +127,12 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " abc",
+                MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (multiple valid indexes but contained alphabets) -> rejected */
-        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 2 3 abc", MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 2 3 abc",
+                MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("FaV 1", MESSAGE_UNKNOWN_COMMAND);
@@ -169,8 +171,9 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
-     * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the
+     * browser url and selected card are expected to update accordingly depending on the card
+     * at {@code expectedSelectedCardIndex}.
      * @see FavoriteCommandSystemTest#assertCommandSuccess(String, Model, String)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
