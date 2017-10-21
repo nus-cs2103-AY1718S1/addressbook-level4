@@ -274,8 +274,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `removeTag +
-` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `removeTag` +
+and `clear`).
 ====
 
 Examples:
@@ -347,17 +347,16 @@ There is no need to save manually.
 === Add a relationship
 
 Adds a relationship between two persons. +
-Format: `addRelationship INDEXOFSOURCE INDEXOFDESTINATION DIRECTION`
+Format: `addRelationship SOURCE_INDEX DESTINATION_INDEX DIRECTION`
 
 ****
-* Add a relationship between the person with `INDEXOFSOURCE` and `INDEXOFDESTINATION`, +
-with the direction of the relationship specified.
-* `INDEXOFSOURCE` refers to the index of the person from whom the relationship is +
-initiated as shown in the most recent listing.
-* `INDEXOFDESTINATION` refers to the index of the person to whom the relationship is directed.
-* `DIRECTION` referring to the direction of this relationship, can only be String input of `directed` or `undirected`.
-* If the `DIRECTION` is `directed`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` matters.
-* If the `DIRECTION` is `undirected`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` does not matter.
+* Add a relationship between the person with `SOURCE_INDEX` and `DESTINATION_INDEX`, with the direction of the relationship specified.
+* All indexes refer to the indexes shown in the most recent listing.
+* `SOURCE_INDEX` refers to the index of the person from whom the relationship is initiated.
+* `DESTINATION_INDEX` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` which refers to the direction of this relationship, can only be `directed` or `undirected`.
+* If the `DIRECTION` is `directed`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` matters.
+* If the `DIRECTION` is `undirected`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` does not matter.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -373,18 +372,17 @@ Adds an undirected relationship between the 2nd person and the 3rd person in the
 === Add a named relationship
 
 Adds a relationship between two persons and gives this relationship a name. +
-Format: `addNamedRelationship INDEXOFTHESOURCE INDEXOFTHEDESTINATION DIRECTION NAME`
+Format: `addNamedRelationship SOURCE_INDEX DESTINATION_INDEX DIRECTION NAME`
 
 ****
-* Adds a relationship between `INDEXOFTHESOURCE` and `INDEXOFTHEDESTINATION` +
-with the direction of the relationship specified and name of the relationship given.
-* `INDEXOFSOURCE` refers to the index of the person from whom the relationship is +
-initiated as shown in the most recent listing.
-* `INDEXOFDESTINATION` refers to the index of the person to whom the relationship is directed.
-* `DIRECTION` referring to the direction of this relationship, can only be String input of `directed` or `undirected`.
+* Adds a relationship between `SOURCE_INDEX` and `DESTINATION_INDEX` with the direction of the relationship specified and name of the relationship given.
+* All indexes refer to the indexes shown in the most recent listing.
+* `SOURCE_INDEX` refers to the index of the person from whom the relationship is initiated.
+* `DESTINATION_INDEX` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` which refers to the direction of this relationship, can only be `directed` or `undirected`.
 * `NAME` referring to the name of the relationship *can only be alphanumeric*.
-* If the `DIRECTION` is `directed`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` matters.
-* If the `DIRECTION` is `undirected`, the order of `INDEXOFSOURCE` and `INDEXOFDESTINATION` does not matter.
+* If the `DIRECTION` is `directed`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` matters.
+* If the `DIRECTION` is `undirected`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` does not matter.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -392,23 +390,19 @@ Examples:
 
 * `list` +
 `addRelationship 2 3 directed knows` +
-Adds a directed relationship starting from the 2nd person to the 3rd person in the list. +
-The relationship is named as `knows`.
+Adds a directed relationship named `knows` starting from the 2nd person to the 3rd person in the list.
 * `list` +
 `addRelationship 2 3 undirected cousins` +
-Adds an undirected relationship between the 2nd person and the 3rd person in the list. +
-The relationship is named as `cousins`.
+Adds an undirected relationship named `cousins` between the 2nd person and the 3rd person in the list.
 
 === Add a confidence estimate
 
 Adds a confidence estimate for an attribute of a person. +
-Format: `addConfidenceEstimate INDEX TYPEOFATTRIBUTE ESTIMATE`
+Format: `addConfidenceEstimate INDEX ATTRIBUTE_TYPE ESTIMATE`
 
 ****
-* `INDEX` refers to the index of the person whose attribute the user wants to add a confidence estimate to +
-as shown in the most recent listing.
-* `TYPEOFATTRIBUTE` refers to the `type` of the attribute that the confidence estimate is added to.
-* The `type` of the attribute refers to `Address`, `Email`, `Name`, `Phone`, `Tags`, `Relationships`.
+* `INDEX` refers to the index of the person whose attribute the user wants to add a confidence estimate to as shown in the most recent listing.
+* `ATTRIBUTE_TYPE` refers to the type of attribute that the confidence estimate is added to (e.g. Address, Email, Name, Phone, Tags, Relationships).
 * `ESTIMATE` refers to the estimate the user gives to the attribute.
 * The estimate *has to be non-negative and smaller or equal to 1*.
 ****
@@ -422,13 +416,11 @@ Adds a confidence estimate of 0.8 to the `Address` of the 2nd person in the list
 === Delete a confidence estimate
 
 Deletes a confidence estimate for an attribute of a person. +
-Format: `deleteConfidenceEstimate INDEX TYPEOFATTRIBUTE`
+Format: `deleteConfidenceEstimate INDEX ATTRIBUTE_TYPE`
 
 ****
-* `INDEX` refers to the index of the person whose attribute the user wants to delete the confidence estimate to +
-as shown in the most recent listing.
-* `TYPEOFATTRIBUTE` refers to the `type` of the attribute that the confidence estimate is deleted from.
-* The `type` of the attribute refers to `Address`, `Email`, `Name`, `Phone`, `Tags`, `Relationships`.
+* `INDEX` refers to the index of the person whose attribute the user wants to delete the confidence estimate to as shown in the most recent listing.
+* `ATTRIBUTE_TYPE` refers to the type of attribute that the confidence estimate is added to (e.g. Address, Email, Name, Phone, Tags, Relationships).
 ****
 
 Example:
