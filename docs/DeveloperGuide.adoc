@@ -680,7 +680,7 @@ The following class diagram shows the relationship between classes concerning th
 
 image::KeyListenerDiagram.png[width="800"]
 
-The `KeyListener` requires access to the `CommandBox`, `PersonListPanel` and `Logic` components for key event executions,
+The `KeyListener` requires access to the `CommandBox` and `PersonListPanel` for key event executions,
 such as changing the focus node and executing word commands.
 
 When the user launches the application, the `UiManager` calls `mainWindow.setKeyListeners()`
