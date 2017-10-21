@@ -2,10 +2,8 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.FindLessonRequestEvent;
-import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 /**
