@@ -379,11 +379,6 @@ and clicking on `Exit`.
 image::exitUI.png[width="500"]
     Figure 3: Methods to access `exit` command
 
-=== Saving the data
-
-MedNus data are saved in the hard disk automatically after any command that changes the data. +
-You do not need to save manually.
-
 === Displaying Appointments : [Coming in v2.0]
 ****
 * Displays a list of appointments the Medical Professional has that are upcoming
@@ -404,16 +399,6 @@ The index *must be a positive integer* 1, 2, 3, ...
 2. Customising colors while adding tags
 ****
 
-=== Replace Browser Pane : [Coming in v2.0]
-****
-* Replace Browser Pane to an application that is more fitting for a Medical Professional
-* Potential Replacements:
-1. Calendar to mark out all appointments
-2. A View which shows a patient's summarised medical records when looking them up. +
- Impementation: Use External Medical APIs +
- https://www.programmableweb.com/category/medical/apis?category=19994
-****
-
 
 
 
@@ -421,6 +406,10 @@ The index *must be a positive integer* 1, 2, 3, ...
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+*Q*: How do I save my data? +
+*A*: Data are saved in the hard disk automatically after any running any command that changes it. +
+You do not need to save data manually.
 
 == *COMMAND SUMMARY*
 
