@@ -36,7 +36,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.AliasToken;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonHasKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.AliasTokenBuilder;
 import seedu.address.testutil.AliasTokenUtil;

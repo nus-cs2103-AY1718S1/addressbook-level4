@@ -146,6 +146,11 @@ public class AliasCommandTest {
         }
 
         @Override
+        public void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void addAliasToken(ReadOnlyAliasToken target) throws DuplicateTokenKeywordException {
             fail("This method should not be called.");
         }
