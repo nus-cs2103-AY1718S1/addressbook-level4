@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import static java.util.Arrays.asList;
+
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -9,9 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
-import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -24,7 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_DATE = "15-01-1997";
+    public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
     public static final String DEFAULT_ACTIVITY = "Play basketball";
     public static final String DEFAULT_TAGS = "friends";
 
@@ -36,7 +36,8 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            Schedule defaultSchedule = new Schedule(new ScheduleDate(DEFAULT_DATE), new Activity(DEFAULT_ACTIVITY));
+            Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
+                    asList(DEFAULT_ACTIVITY));
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultSchedule,
                     defaultTags);
