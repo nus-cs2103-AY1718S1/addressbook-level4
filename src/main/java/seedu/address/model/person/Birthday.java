@@ -33,8 +33,11 @@ public class Birthday {
         this.value = birthday;
     }
 
+    /**
+     * Returns true if a given string is a valid birthday.
+     */
     public static boolean isValidBirthday(String birthday) {
-        if(birthday.matches(BIRTHDAY_VALIDATION_REGEX) || birthday.matches("")) {
+        if (birthday.matches(BIRTHDAY_VALIDATION_REGEX) || birthday.matches("")) {
             return true;
         }
         return false;
