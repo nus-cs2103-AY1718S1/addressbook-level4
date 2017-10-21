@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.storage.PasswordSecurity.getSha512SecurePassword;
 
 import java.util.Set;
 import java.util.function.Predicate;
@@ -188,8 +189,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void authenticateUser(Username username, Password password) throws UserNotFoundException,
             IllegalValueException {
         Username fileUsername = new Username(getUsernameFromUserPref());
-        Password filePassword = new Password(getPasswordFromUserPref());
-        if (fileUsername.equals(username) && filePassword.equals(password)) {
+        if (fileUsername.equals(username) && checkAgainstPasswordFromUserPref(password.toString(),
+                userPrefs.getPasswordSalt())) {
             raise(new LoginAppRequestEvent(true));
         } else {
             raise(new LoginAppRequestEvent(false));
@@ -203,6 +204,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     public String getPasswordFromUserPref() {
         return userPrefs.getAdminPassword();
+    }
+
+    /**
+     * Checks the entered password against the password stored in {@code UserPrefs} class
+     * @param currPassword password entered by user
+     * @return true if the hash generated from the entered password matches the hashed password stored
+     * in {@code UserPrefs}
+     */
+    public boolean checkAgainstPasswordFromUserPref(String currPassword, byte[] salt) {
+        String hashedPassword = getSha512SecurePassword(currPassword, salt);
+        return hashedPassword.equals(userPrefs.getAdminPassword());
     }
 
     /**

@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_ACKNOWLEDGEMENT;
 import static seedu.address.logic.commands.LoginCommand.MESSAGE_LOGIN_UNSUCCESSFUL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -58,6 +60,37 @@ public class LoginCommandTest {
             ive.printStackTrace();
         } catch (CommandException ce) {
             ce.printStackTrace();
+        }
+    }
+
+    @Test
+    public void equals() {
+        try {
+            Username usernameOne = new Username("hellonihao123");
+            Username usernameTwo = new Username("nihaohello123");
+            Password passwordOne = new Password("idontcare!?");
+            Password passwordTwo = new Password("careidont!?");
+
+            LoginCommand loginFirstCommand = new LoginCommand(usernameOne, passwordOne);
+            LoginCommand loginSecondCommand = new LoginCommand(usernameTwo, passwordTwo);
+
+            // same object -> returns true
+            assertTrue(loginFirstCommand.equals(loginFirstCommand));
+
+            // same values -> returns true
+            LoginCommand loginFirstCommandCopy = new LoginCommand(usernameOne, passwordOne);
+            assertTrue(loginFirstCommand.equals(loginFirstCommandCopy));
+
+            // different types -> returns false
+            assertFalse(loginFirstCommand.equals(1));
+
+            // null -> returns false
+            assertFalse(loginFirstCommand.equals(null));
+
+            // different login details -> returns false
+            assertFalse(loginFirstCommand.equals(loginSecondCommand));
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
         }
     }
 }
