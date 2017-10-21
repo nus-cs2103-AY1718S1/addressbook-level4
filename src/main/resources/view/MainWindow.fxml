@@ -43,7 +43,16 @@
         </children>
     </StackPane>
 
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+      <VBox maxWidth="38.0" minWidth="38.0" prefWidth="38.0">
+         <children>
+            <StackPane fx:id="browserSelectorPlaceholder" maxWidth="38.0" minWidth="38.0" prefWidth="38.0">
+               <padding>
+                  <Insets top="3.0" />
+               </padding>
+            </StackPane>
+         </children>
+      </VBox>
         <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />

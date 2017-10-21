@@ -60,6 +60,9 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane browserSelectorPlaceholder;
+
+    @FXML
     private VBox personListBox;
 
     @FXML
@@ -153,9 +156,8 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        //CommandBoxHelper commandBoxHelper = new CommandBoxHelper();
-        //commandBoxHelperPlaceholder.getChildren().add(commandBoxHelper.getRoot());
-
+        BrowserSelector browserSelector = new BrowserSelector();
+        browserSelectorPlaceholder.getChildren().add(browserSelector.getRoot());
     }
 
     void hide() {
