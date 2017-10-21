@@ -12,7 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ButtonSelectionPressedEvent;
+import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -84,12 +84,12 @@ public class BrowserPanel extends UiPart<Region> {
      * Called when the user clicks on the button bar buttons.
      */
     @Subscribe
-    private void handleButtonPressedEvent(ButtonSelectionPressedEvent event) {
-        switch (event.getButtonPressed()) {
-        case "mapsButton":
+    private void handleButtonPressedEvent(WebsiteSelectionRequestEvent event) {
+        switch (event.getWebsiteRequested()) {
+        case "mapsView":
             loadPersonAddress(selectedPerson);
             break;
-        case "searchButton":
+        case "searchView":
             loadPersonPage(selectedPerson);
             break;
         default:
