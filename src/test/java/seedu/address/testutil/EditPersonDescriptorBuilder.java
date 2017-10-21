@@ -33,6 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setWebLinks(person.getWebLinks());
     }
 
     /**
@@ -92,6 +93,19 @@ public class EditPersonDescriptorBuilder {
             descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code webLinks} into a {@code Set<weblink>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withWebLinks(String... webLinks) {
+        try {
+            descriptor.setWebLinks(ParserUtil.parseWebLink(Arrays.asList(webLinks)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("webLinks are expected to be unique.");
         }
         return this;
     }

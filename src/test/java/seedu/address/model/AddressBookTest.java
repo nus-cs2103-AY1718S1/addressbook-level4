@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -54,7 +55,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<WebLink> newWebLinks = new ArrayList<>(ALICE.getWebLinks());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newWebLinks);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -91,10 +93,13 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<WebLink> webLinks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends WebLink> webLinks) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.webLinks.setAll(webLinks);
         }
 
         @Override
