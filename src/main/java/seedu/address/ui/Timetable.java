@@ -25,6 +25,8 @@ public class Timetable extends UiPart<Region> {
 
     private static final String FXML = "Timetable.fxml";
 
+    private static final String LESSON_NODE = "lessonNode";
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private final Logic logic;
@@ -74,11 +76,7 @@ public class Timetable extends UiPart<Region> {
                 if( i == weekDayRow &&  j == startHourCol ){
                     TextArea lbl = new TextArea(text);
                     lbl.setWrapText(true);
-                    lbl.setStyle("-fx-control-inner-background:black;" +
-                            " -fx-background-color: #383838; " +
-                            " -fx-padding: 5 5 5 5; " +
-                            " -fx-font-family: Consolas; " +
-                            "-fx-text-fill: #00ff00;");
+                    lbl.setId(LESSON_NODE);
                     timetableGrid.setGridLinesVisible(true);
                     timetableGrid.add(lbl, j, i, endHourSpan, 1);
                 }

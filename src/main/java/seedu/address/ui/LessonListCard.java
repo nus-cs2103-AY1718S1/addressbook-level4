@@ -56,7 +56,7 @@ public class LessonListCard extends UiPart<Region> {
     public LessonListCard(ReadOnlyLesson lesson, int displayedIndex) {
         super(FXML);
         this.lesson = lesson;
-        id.setText("( " + displayedIndex + " ) ");
+        id.setText(displayedIndex + ". ");
         initLecturers(lesson);
         bindListeners(lesson);
         registerAsAnEventHandler(this);
@@ -111,7 +111,6 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(false);
         classType.setVisible(false);
         lecturers.setVisible(false);
-        code.setStyle("-fx-font: 24 arial;");
     }
 
     /**
@@ -124,7 +123,6 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(false);
         classType.setVisible(false);
         lecturers.setVisible(false);
-        venue.setStyle("-fx-font: 24 arial;");
 
     }
 

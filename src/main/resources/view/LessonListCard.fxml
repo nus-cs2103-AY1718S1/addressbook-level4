@@ -21,13 +21,13 @@
       </padding>
          <FlowPane>
             <children>
-           <Label fx:id="id" styleClass="cell_big_label">
+           <Label fx:id="id" styleClass="cell_big_label" stylesheets="@DarkTheme.css" text="\$id">
              <minWidth>
                <!-- Ensures that the label text is never truncated -->
                <Region fx:constant="USE_PREF_SIZE" />
              </minWidth>
            </Label>
-           <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" styleClass="cell_big_label" text="\$code">
+           <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" styleClass="cell_big_label" stylesheets="@DarkTheme.css" text="\$code">
                   <padding>
                      <Insets left="45.0" />
                   </padding></Label>
@@ -36,15 +36,15 @@
       <FlowPane fx:id="lecturers" alignment="CENTER" />
          <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="2.0">
             <children>
-            <Label fx:id="classType" styleClass="cell_small_label" text="\$classType" />
-               <Label fx:id="group" text="\$group" />
+            <Label fx:id="classType" styleClass="cell_small_label" stylesheets="@DarkTheme.css" text="\$classType" />
+               <Label fx:id="group" stylesheets="@DarkTheme.css" text="\$group" />
             </children>
             <VBox.margin>
                <Insets />
             </VBox.margin>
          </HBox>
-      <Label fx:id="venue" styleClass="cell_small_label" text="\$venue" />
-      <Label fx:id="timeSlot" styleClass="cell_small_label" text="\$timeSlot" />
+      <Label fx:id="venue" styleClass="cell_small_label" stylesheets="@DarkTheme.css" text="\$venue" />
+      <Label fx:id="timeSlot" styleClass="cell_small_label" stylesheets="@DarkTheme.css" text="\$timeSlot" />
     </VBox>
       <rowConstraints>
          <RowConstraints />
