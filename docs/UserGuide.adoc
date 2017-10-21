@@ -279,6 +279,22 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+=== Sorting all contacts : `sort`
+
+Sorts all the contacts in the address book in specified order. If no order is specified, the contacts are sorted in ascending lexographical order. +
+Format: `sort ORDERING`
+
+****
+* Valid orderings are: `name`, `cluster`, `deadline`, `dateborrow`, and `debt`.
+****
+
+Examples:
+
+* `sort` +
+Sorts the contacts in the address book by name.
+* `sort cluster` +
+Sorts the contacts in the address book by their postal districts.
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -404,6 +420,8 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *History* : `history`
 * *Nearby* : `nearby`
+* *Sort* : `sort ORDERING` +
+e.g. `sort debt`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
@@ -435,13 +453,14 @@ e.g.`select 2`
 * Display nearby contacts (since v1.2)
 * Interest field (since v1.2)
 
+* Sort by various fields (since v1.3)
+
 == Features to be included by `V2.0`
 
 //[V1.3]
 * List of people who have cleared their debts.
 * A `Repaid` command to fully pay off a person's debt.
 * List of people who have overdue debts.
-* A command to `Sort` the list of person's by name.
 * A person's debts are automatically incremented according to the interest rate of their loan.
 * Group debtors by location.
 //[end of V1.3]
