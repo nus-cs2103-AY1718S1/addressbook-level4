@@ -32,6 +32,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.NearbyCommand;
+import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -102,6 +103,16 @@ public class AddressBookParserTest {
         BorrowCommand borrowCommand = (BorrowCommand) parser.parseCommand(BorrowCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + toBorrow);
         assertEquals(expectedBorrowCommand, borrowCommand);
+    }
+
+    @Test
+    public void parseCommand_payback() throws Exception {
+        String toPayback = "500";
+        Debt debtAmount = new Debt(toPayback);
+        PaybackCommand expectedPaybackCommand = new PaybackCommand(INDEX_FIRST_PERSON, debtAmount);
+        PaybackCommand paybackCommand = (PaybackCommand) parser.parseCommand(PaybackCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + toPayback);
+        assertEquals(expectedPaybackCommand, paybackCommand);
     }
 
     @Test
