@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.BaseEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -15,8 +17,11 @@ public abstract class Command {
     protected Storage storage;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
+    protected EventsCenter eventsCenter = EventsCenter.getInstance();
 
     private String commandText;
+
+
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -63,5 +68,13 @@ public abstract class Command {
      */
     public final void setCommandText(String commandText) {
         this.commandText = commandText;
+    }
+
+    /**
+     * Raises the event to link with commands
+     * @param event
+     */
+    protected void raise(BaseEvent event) {
+        eventsCenter.post(event);
     }
 }

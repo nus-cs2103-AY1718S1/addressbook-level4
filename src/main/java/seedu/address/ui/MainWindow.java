@@ -19,6 +19,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchListContacts;
+import seedu.address.commons.events.ui.SwitchListEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -139,7 +141,8 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                                                              logic.getFilteredPersonList().size());
+                                                              logic.getFilteredPersonList().size(),
+                                                              logic.getFilteredEventList().size());
         statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
 
@@ -225,8 +228,20 @@ public class MainWindow extends UiPart<Region> {
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
+    @Subscribe
+    public void handleSwitchToContacts(SwitchListContacts event) {
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
     @FXML
     private void handleSwitchToEvents() {
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+    }
+
+    @Subscribe
+    public void handleSwitchToEvents(SwitchListEvent event) {
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
