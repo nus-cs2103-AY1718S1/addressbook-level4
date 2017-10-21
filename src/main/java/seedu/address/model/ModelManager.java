@@ -86,6 +86,29 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
+    @Override
+    public void deleteTag(Tag tag)
+            throws PersonNotFoundException, DuplicatePersonException {
+        boolean isAddressBookChanged = false;
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson originalPerson = addressBook.getPersonList().get(i);
+            Set<Tag> tagList = originalPerson.getTags();
+            tagList.remove(tag);
+            Person newPerson = new Person(originalPerson.getName(), originalPerson.getPhone(),
+                    originalPerson.getEmail(), originalPerson.getAddress(), originalPerson.getBirthday(),
+                    originalPerson.getRemark(), tagList);
+            if (!newPerson.equals(originalPerson)) {
+                addressBook.updatePerson(originalPerson, newPerson);
+                isAddressBookChanged = true;
+            }
+        }
+        if (isAddressBookChanged) {
+            indicateAddressBookChanged();
+        }
+    }
+
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

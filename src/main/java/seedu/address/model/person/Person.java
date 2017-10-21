@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Favorite> favorite;
 
@@ -32,12 +33,13 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Remark remark, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+                  Birthday birthday, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.remark = new SimpleObjectProperty<>(remark);
         this.favorite = new SimpleObjectProperty<>(new Favorite());
         // protect internal tags from changes in the arg list
@@ -49,8 +51,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
+                source.getRemark(), source.getTags());
         this.setFavorite(source.getFavorite());
     }
 
@@ -106,9 +108,15 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Address getAddress() {
-        return address.get();
-    }
+    public Address getAddress() { return address.get(); }
+
+    public void setBirthday(Birthday birthday){ this.birthday.set(requireNonNull(birthday)); }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() { return birthday; }
+
+    @Override
+    public Birthday getBirthday() { return birthday.get(); }
 
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
@@ -178,7 +186,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, birthday, tags);
     }
 
     @Override
@@ -195,6 +203,7 @@ public class Person implements ReadOnlyPerson {
         this.setPhone(replacement.getPhone());
         this.setEmail(replacement.getEmail());
         this.setAddress(replacement.getAddress());
+        this.setBirthday(replacement.getBirthday());
         this.setRemark(replacement.getRemark());
         this.setFavorite(replacement.getFavorite());
         this.setTags(replacement.getTags());

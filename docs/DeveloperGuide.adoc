@@ -511,6 +511,20 @@ Edit a person, Add a person or Favorite a person.
 **Cons:** Difficult to implement system tests. +
 // end::favorite[]
 
+
+== Birthday Detail
+
+A birthday detail is implemented under the Person class as Birthday. Users will add the birthday in along with the add command.
+
+==== Description
+
+Format: b/[dd/mm/yyyy]
+
+==== Full solution
+
+See this http://github.com/NgSuli/main[PR] for the full solution.
+
+
 == Documentation
 
 We use asciidoc for writing documentation.

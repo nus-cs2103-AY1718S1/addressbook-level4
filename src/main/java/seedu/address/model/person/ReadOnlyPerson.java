@@ -21,6 +21,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
     ObjectProperty<Favorite> favoriteProperty();
@@ -39,6 +41,7 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
+                && other.getBirthday().equals(this.getBirthday())
                 && other.getRemark().equals(this.getRemark())
                 && other.getFavorite().equals(this.getFavorite());
     }
@@ -55,6 +58,8 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Birthday: ")
+                .append(getBirthday())
                 .append(" Remark: ")
                 .append(getRemark())
                 .append(" Favorite: ")
