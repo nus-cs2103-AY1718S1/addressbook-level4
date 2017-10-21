@@ -74,6 +74,27 @@ public class Deadline {
                 && this.value.equals(((Deadline) other).value)); // state check
     }
 
+    /**
+     * Compares two {@code Deadline} objects and returns 1 if second date is earlier, -1 if later.
+     * No deadline set will default to be later than any given deadline.
+     * @param other the {@code Deadline} object to compare to.
+     * @return an integer value of 1 if second date is earlier, -1 if second date is later.
+     */
+    public int compareTo(Deadline other) {
+        if (this.valueToDisplay.equals(NO_DEADLINE_SET)) {
+            if (other.valueToDisplay.equals(NO_DEADLINE_SET)) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } else if (other.valueToDisplay.equals(NO_DEADLINE_SET)
+                || compareDates(convertStringToDate(this.valueToDisplay), convertStringToDate(other.valueToDisplay))) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
     @Override
     public int hashCode() {
         return value.hashCode();

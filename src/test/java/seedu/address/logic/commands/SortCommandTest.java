@@ -23,6 +23,7 @@ public class SortCommandTest {
     private static final String ORDERING_DEBT = "debt";
     private static final String ORDERING_CLUSTER = "cluster";
     private static final String ORDERING_DATEBORROW = "dateborrow";
+    private static final String ORDERING_DEADLINE = "deadline";
     private static final String INVALID_ORDERING = "height";
 
     @Rule
@@ -55,6 +56,11 @@ public class SortCommandTest {
         expectedModel.sortBy(ORDERING_DATEBORROW);
         sortCommand = prepareCommand(ORDERING_DATEBORROW);
         expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DATEBORROW);
+        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+
+        expectedModel.sortBy(ORDERING_DEADLINE);
+        sortCommand = prepareCommand(ORDERING_DEADLINE);
+        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEADLINE);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
 

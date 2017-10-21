@@ -141,6 +141,9 @@ public class UniquePersonList implements Iterable<Person> {
         case "dateborrow":
             internalList.sort((Person p1, Person p2) -> p1.getDateBorrow().compareTo(p2.getDateBorrow()));
             break;
+        case "deadline":
+            internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
+            break;
         default:
             throw new IllegalArgumentException("Invalid sort ordering");
         }

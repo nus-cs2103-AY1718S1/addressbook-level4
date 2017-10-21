@@ -143,6 +143,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " debt") instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " cluster") instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " dateborrow") instanceof SortCommand);
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " deadline") instanceof SortCommand);
     }
 
     @Test
