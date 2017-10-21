@@ -13,8 +13,8 @@ import seedu.address.commons.events.model.EventStorageChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.ReadOnlyEventStorage;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -27,7 +27,8 @@ public class StorageManager extends ComponentManager implements Storage {
     private EventStorage eventStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage, EventStorage eventStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          EventStorage eventStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
@@ -101,23 +102,23 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyEventStorage> readEventStorage() throws DataConversionException, IOException {
+    public Optional<ReadOnlyEventList> readEventStorage() throws DataConversionException, IOException {
         return readEventStorage(eventStorage.getEventStorageFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyEventStorage> readEventStorage(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyEventList> readEventStorage(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return eventStorage.readEventStorage(filePath);
     }
 
     @Override
-    public void saveEventStorage(ReadOnlyEventStorage eventStore) throws IOException {
+    public void saveEventStorage(ReadOnlyEventList eventStore) throws IOException {
         saveEventStorage(eventStore, eventStorage.getEventStorageFilePath());
     }
 
     @Override
-    public void saveEventStorage(ReadOnlyEventStorage eventStore, String filePath) throws IOException {
+    public void saveEventStorage(ReadOnlyEventList eventStore, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         eventStorage.saveEventStorage(eventStore, filePath);
     }

@@ -21,6 +21,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventList;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -109,13 +113,18 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyEventList newEventList) {
             fail("This method should not be called.");
         }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyEventList getEventList() {
             return null;
         }
 
@@ -144,6 +153,42 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+
+        }
+
+        @Override
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+
+        }
+
+        @Override
+        public void addEvent(int position, ReadOnlyEvent event) {
+
+        }
+
+        @Override
+        public void sortEvents() {
+
+        }
+
+        @Override
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+                throws DuplicateEventException, EventNotFoundException {
+
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+
         }
 
         @Override

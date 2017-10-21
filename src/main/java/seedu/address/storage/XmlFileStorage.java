@@ -51,8 +51,8 @@ public class XmlFileStorage {
     /**
      * Returns event storage in the file or an empty event storage
      */
-    public static XmlSerializableEventStorage loadDataFromSaveFileEventStorage(File file) throws DataConversionException,
-            FileNotFoundException {
+    public static XmlSerializableEventStorage loadDataFromSaveFileEventStorage(File file)
+            throws DataConversionException, FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableEventStorage.class);
         } catch (JAXBException e) {
