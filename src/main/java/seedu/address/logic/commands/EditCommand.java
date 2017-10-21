@@ -1,7 +1,27 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.*;
+import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLASS_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
@@ -9,33 +29,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MODULE_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_SLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VENUE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import javafx.collections.ObservableList;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.CollectionUtil;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-
-import seedu.address.model.ListingUnit;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.TimeSlot;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 
 /**
@@ -64,6 +57,7 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_MODULE_SUCCESS = "Edited Location: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_BOOKEDSLOT = "This time slot have already been booked in this location";
 
     private final Index index;
     private final EditLessonDescriptor editLessonDescriptor;
@@ -122,14 +116,21 @@ public class EditCommand extends UndoableCommand {
      */
     private CommandResult executeEditLesson(ReadOnlyLesson lessonToEdit) throws CommandException {
         Lesson editedLesson = createEditedLesson(lessonToEdit, editLessonDescriptor);
+        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(),lessonToEdit.getTimeSlot());
+        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(),editedLesson.getTimeSlot());
+
         try {
+            model.updateBookedSlot(bookedSlotToEdit,editedBookedSlot);
             model.updateLesson(lessonToEdit, editedLesson);
         } catch (DuplicateLessonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);
         } catch (LessonNotFoundException pnfe) {
             throw new AssertionError("The target lesson cannot be missing");
+        } catch (DuplicateBookedSlotException s){
+            throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         }
 
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_EDIT_LESSON_SUCCESS, editedLesson));
     }
 
@@ -141,6 +142,9 @@ public class EditCommand extends UndoableCommand {
         model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
         ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
         Location editedAddress = null;
+        BookedSlot bookedSlotToEdit;
+        BookedSlot editedBookedSlot;
+
         try {
             editedAddress = new Location(attributeValue);
             for (ReadOnlyLesson p : lessonList) {
@@ -149,13 +153,18 @@ public class EditCommand extends UndoableCommand {
                 if (p.getLocation().equals(addressToEdit)) {
                     curEditedLesson = new Lesson(p.getClassType(), editedAddress, p.getGroup(),
                             p.getTimeSlot(), p.getCode(), p.getLecturers());
+                    bookedSlotToEdit = new BookedSlot(p.getLocation(),p.getTimeSlot());
+                    editedBookedSlot = new BookedSlot(editedAddress,p.getTimeSlot());
+                    model.updateBookedSlot(bookedSlotToEdit,editedBookedSlot);
                     model.updateLesson(p, curEditedLesson);
 
                 }
             }
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             return new CommandResult(String.format(MESSAGE_EDIT_LOCATION_SUCCESS, editedAddress));
-        } catch (IllegalValueException ive) {
+        } catch (DuplicateBookedSlotException s){
+            throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
+        }catch (IllegalValueException ive) {
             model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
             throw new CommandException(ive.getMessage());
         } catch (LessonNotFoundException pnfe) {

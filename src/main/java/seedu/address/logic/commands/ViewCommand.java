@@ -1,20 +1,21 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.ListingUnit.LESSON;
-
-import java.util.List;
-import java.util.function.Predicate;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.FixedLocationPredicate;
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import static seedu.address.model.ListingUnit.LESSON;
 
 
 /**
@@ -53,6 +54,7 @@ public class ViewCommand extends Command {
 
         ListingUnit.setCurrentListingUnit(LESSON);
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(resultMessage);
     }
 

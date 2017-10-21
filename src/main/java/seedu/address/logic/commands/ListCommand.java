@@ -1,18 +1,18 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
-
-import java.util.function.Predicate;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
-
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+
+import java.util.function.Predicate;
+
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 
 
@@ -48,16 +48,19 @@ public class ListCommand extends Command {
             ListingUnit.setCurrentListingUnit(MODULE);
             UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
             ListingUnit.setCurrentPredicate(codePredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(codePredicate);
         } else if (parameter.equals(LOCATION_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LOCATION);
             UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
             ListingUnit.setCurrentPredicate(locationPredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(locationPredicate);
         } else if (parameter.equals(FAVOURITE_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
             FavouriteListPredicate favouriteListPredicate = model.getFavouriteListPredicate();
             ListingUnit.setCurrentPredicate(favouriteListPredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(favouriteListPredicate);
         } else {
             assert false : "There cannot be other parameters passed in";
