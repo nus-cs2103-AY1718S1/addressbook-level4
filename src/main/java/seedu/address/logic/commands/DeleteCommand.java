@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
+import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
@@ -68,6 +69,7 @@ public class DeleteCommand extends UndoableCommand {
         default:
             ReadOnlyLesson lessonToDelete = lastShownList.get(targetIndex.getZeroBased());
             try {
+                model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(),lessonToDelete.getTimeSlot()));
                 model.deleteLesson(lessonToDelete);
             } catch (LessonNotFoundException pnfe) {
                 assert false : "The target lesson cannot be missing";
@@ -88,6 +90,7 @@ public class DeleteCommand extends UndoableCommand {
             for (int i = 0; i < lessonList.size(); i++) {
                 ReadOnlyLesson l = lessonList.get(i);
                 if (l.getLocation().equals(location)) {
+                    model.unbookBookedSlot(new BookedSlot(l.getLocation(),l.getTimeSlot()));
                     model.deleteLesson(l);
                     i--;
                 }
@@ -113,6 +116,7 @@ public class DeleteCommand extends UndoableCommand {
             for (int i = 0; i < lessonList.size(); i++) {
                 ReadOnlyLesson lesson = lessonList.get(i);
                 if (lesson.getCode().equals(code)) {
+                    model.unbookBookedSlot(new BookedSlot(lesson.getLocation(),lesson.getTimeSlot()));
                     model.deleteLesson(lesson);
                     i--;
                 }
@@ -120,7 +124,6 @@ public class DeleteCommand extends UndoableCommand {
         } catch (LessonNotFoundException e) {
             assert false: "The target lesson cannot be missing";
         }
-
         model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, code));
