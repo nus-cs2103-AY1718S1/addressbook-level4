@@ -222,9 +222,9 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Pins the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
+     * Unpins the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
      *
-     * @return the pinned person
+     * @return the unpinned person
      */
     private ReadOnlyPerson unpinPerson(Model model, Index index) {
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_PINNED);
@@ -238,10 +238,10 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Pins the person at {@code toPin} by creating a default {@code PinCommand} using {@code toPin} and
-     * performs the same verification as {@code assertPinCommandSuccess(String, Model, String)}.
+     * Unpins the person at {@code toUnpin} by creating a default {@code UnpinCommand} using {@code toUnpin} and
+     * performs the same verification as {@code assertUnpinCommandSuccess(String, Model, String)}.
      *
-     * @see PinUnpinCommandSystemTest#assertPinCommandSuccess(String, Model, String)
+     * @see PinUnpinCommandSystemTest#assertUnpinCommandSuccess(String, Model, String)
      */
     private void assertUnpinCommandSuccess(Index toUnpin) {
         Model expectedModel = getModel();
@@ -270,11 +270,11 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertPinCommandSuccess(String, Model, String)}
+     * Performs the same verification as {@code assertUnpinCommandSuccess(String, Model, String)}
      * except that the browser url and selected card are expected to update accordingly depending
      * on the card at {@code expectedSelectedCardIndex}.
      *
-     * @see PinUnpinCommandSystemTest#assertPinCommandSuccess(String, Model, String)
+     * @see PinUnpinCommandSystemTest#assertUnpinCommandSuccess(String, Model, String)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertUnpinCommandSuccess(String command, Model expectedModel, String expectedResultMessage,

@@ -20,7 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 
 /**
- * Controller for a help page
+ * The pinned person panel for the App.
  */
 public class PinnedPanel extends UiPart<Region> {
     private static final String FXML = "PinnedPanel.fxml";

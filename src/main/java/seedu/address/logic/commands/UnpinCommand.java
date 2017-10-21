@@ -13,7 +13,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Unpins a person identified using it's last displayed index from the address book.
+ * Unpins a person identified using the list of pinned person from the address book.
  */
 public class UnpinCommand extends Command {
 

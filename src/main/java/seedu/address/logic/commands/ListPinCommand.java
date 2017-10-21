@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.model.person.PersonIsPinnedPredicate;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all pinned persons in the address book to the user.
  */
 public class ListPinCommand extends Command {
 

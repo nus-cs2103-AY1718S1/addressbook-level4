@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code ReadOnlyPerson} {@code Name} is pinned.
+ * Tests that a {@code ReadOnlyPerson} is pinned.
  */
 public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 
@@ -15,6 +15,6 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameIsPrivatePredicate); // instanceof handles nulls
+                || (other instanceof PersonIsPinnedPredicate); // instanceof handles nulls
     }
 }
