@@ -111,6 +111,19 @@ image::add_person2.png[width="400"]
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorting the Address Book: `sort`
+
+Sorts the address book +
+Format: `sort `sorting-criteria``
+
+
+Examples:
+
+* `sort name`
+* `sort address`
+* `sort phone`
+* `sort email`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
