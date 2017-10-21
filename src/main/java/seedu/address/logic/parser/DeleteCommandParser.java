@@ -29,6 +29,18 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
             }
+        } else if (args.contains("-")) {
+            String[] indices = args.trim().split("-");
+            List<Index> indexes = new ArrayList<>();
+            for (int i = Integer.parseInt(indices[0]); i <= Integer.parseInt(indices[1]); i++) {
+                try {
+                    indexes.add(ParserUtil.parseIndex(Integer.toString(i)));
+                } catch (IllegalValueException ive) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                }
+            }
+            return new DeleteCommand(indexes);
         } else {
             String[] tokens = args.trim().split(" ");
             List<Index> indexes = new ArrayList<>();
