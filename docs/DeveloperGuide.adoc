@@ -487,13 +487,6 @@ A loop is then used to iterate through the list to delete the persons requested 
 **Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
 **Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
 
-===== Since v1.3
-
-=== Quick Tutorial for first time users
-
-
-
-
 
 == Documentation
 
