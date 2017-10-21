@@ -33,7 +33,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/block 123, john street, #01-01, Singapore 407989` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -81,10 +81,13 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 [TIP]
 A person can have any number of tags (including 0).
 
+[NOTE]
+ADDRESS needs to follow the format:"`BLOCK`, `STREET`, [`UNIT`,] `POSTAL CODE`" with UNIT being an optional parameter.
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
@@ -152,10 +155,10 @@ Returns person with phone of `98989898`
 Returns person with phone of `98989898` and `99997888`
 
 
-* `find a/Geyalng` +
-Returns person with address `BLK 30 Geylang Street 29 , #10-08`
+* `find a/Geylang` +
+Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
 * `find a/#10-08` +
-Returns person with address `BLK 30 Geylang Street 29 , #10-08`
+Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
 
 
 * `find t/friends` +
