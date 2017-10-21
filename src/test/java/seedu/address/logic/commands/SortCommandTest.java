@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -70,6 +72,28 @@ public class SortCommandTest {
 
         thrown.expect(IllegalArgumentException.class);
         expectedModel.sortBy(INVALID_ORDERING);
+    }
+
+    @Test
+    public void equals() {
+        SortCommand sortFirstCommand = new SortCommand(ORDERING_NAME);
+        SortCommand sortSecondCommand = new SortCommand(ORDERING_DEBT);
+
+        // same object -> returns true
+        assertTrue(sortFirstCommand.equals(sortFirstCommand));
+
+        // same values -> returns true
+        SortCommand sortFirstCommandCopy = new SortCommand(ORDERING_NAME);
+        assertTrue(sortFirstCommand.equals(sortFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(sortFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(sortFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(sortFirstCommand.equals(sortSecondCommand));
     }
 
     private SortCommand prepareCommand(String order) {

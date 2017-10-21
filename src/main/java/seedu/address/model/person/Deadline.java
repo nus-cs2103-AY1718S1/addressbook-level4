@@ -75,10 +75,11 @@ public class Deadline {
     }
 
     /**
-     * Compares two {@code Deadline} objects and returns 1 if second date is earlier, -1 if later.
+     * Compares two {@code Deadline} objects and returns 1 if second date is earlier, -1 if later or same.
      * No deadline set will default to be later than any given deadline.
      * @param other the {@code Deadline} object to compare to.
-     * @return an integer value of 1 if second date is earlier, -1 if second date is later.
+     * @return an integer value of 1 if second date is earlier, -1 if second date is later or same, 0 if both deadlines
+     * have not been set.
      */
     public int compareTo(Deadline other) {
         if (this.valueToDisplay.equals(NO_DEADLINE_SET)) {
