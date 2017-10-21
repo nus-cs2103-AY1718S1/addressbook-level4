@@ -12,6 +12,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FacebookCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -66,7 +67,11 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_2)) {
             return new SelectCommandParser().parse(arguments);
 
-        } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
+        } else if (commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_2)) {
+            return new FacebookCommand();
+
+        }else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
             return new DeleteCommandParser().parse(arguments);
 

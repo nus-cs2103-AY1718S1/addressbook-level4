@@ -129,7 +129,6 @@ public class SelectCommandTest {
             assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
         }
     }
-
     /**
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */

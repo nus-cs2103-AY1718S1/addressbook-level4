@@ -1,4 +1,15 @@
 package seedu.address.commons.events.ui;
 
-public class ShowFacebookRequestEvent {
+import seedu.address.commons.events.BaseEvent;
+
+/**
+ * An event requesting to view the help page.
+ */
+public class ShowFacebookRequestEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
 }
