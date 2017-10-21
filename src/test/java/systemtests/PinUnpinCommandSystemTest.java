@@ -92,7 +92,7 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         command = UnpinCommand.COMMAND_WORD + " " + invalidIndex;
         assertUnpinCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* --------------------------------- Performing invalid pin and unpin operation ------------------------------------ */
+        /* ---------------------------- Performing invalid pin and unpin operation ------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
         command = PinCommand.COMMAND_WORD + " 0";
