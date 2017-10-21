@@ -134,80 +134,55 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_CS2101 + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
-//
-//        /* Case: filters the lesson list before adding -> added */
-//        executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MA1101R);
-//        assert getModel().getFilteredLessonList().size()
-//                < getModel().getAddressBook().getLessonList().size();
-//        assertCommandSuccess(CS2103_L1);
-//
-//        /* Case: add to empty address book -> added */
-//        executeCommand(ClearCommand.COMMAND_WORD);
-//        assert getModel().getAddressBook().getLessonList().size() == 0;
-//        assertCommandSuccess(MA1101R_L1);
-//
-//        /* Case: add a lesson with tags, command with parameters in random order -> added */
-//        toAdd = TYPICAL_MA1101R;
-//        command = AddCommand.COMMAND_WORD + LECTURER_DESC_MA1101R + GROUP_DESC_MA1101R
-//                + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R  ;
-//        assertCommandSuccess(command, toAdd);
-//
-//        /* Case: selects first card in the lesson list, add a lesson -> added, card selection remains unchanged */
-//        executeCommand(SelectCommand.COMMAND_WORD + " 1");
-//        assert getLessonListPanel().isAnyCardSelected();
-//        assertCommandSuccess(GEQ_T66);
-//
-//        /* Case: add a lesson, missing tags -> added */
-//        assertCommandSuccess(CS2103T_L1);
-//
-//        /* Case: missing code -> rejected */
-//        command = AddCommand.COMMAND_WORD + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-//
-//        /* Case: missing class type -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-//
-//        /* Case: missing venue -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-//
-//        /* Case: missing group -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-//
-//        /* Case: missing time slot -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R;
-//        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-//
-//        /* Case: invalid keyword -> rejected */
-//        command = "adds " + LessonUtil.getLessonDetails(toAdd);
-//        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
-//
-//        /* Case: invalid code -> rejected */
-//        command = AddCommand.COMMAND_WORD + INVALID_CODE_DESC + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, Code.MESSAGE_CODE_CONSTRAINTS);
-//
-//        /* Case: invalid class type -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
-//
-//        /* Case: invalid venue -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + INVALID_VENUE_DESC + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
-//
-//        /* Case: invalid group -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + INVALID_GROUP_DESC + TIMESLOT_DESC_MA1101R;
-//        assertCommandFailure(command, Group.MESSAGE_GROUP_CONSTRAINTS);
-//
-//        /* Case: invalid time slot -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + INVALID_TIMESLOT_DESC;
-//        assertCommandFailure(command, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
-//
-//        /* Case: invalid lecturers -> rejected */
-//        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
-//                + INVALID_LECTURER_DESC;
-//        assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+
+        /* Case: missing code -> rejected */
+        command = AddCommand.COMMAND_WORD + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing class type -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing venue -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing group -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing time slot -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: invalid keyword -> rejected */
+        command = "adds " + LessonUtil.getLessonDetails(toAdd);
+        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case: invalid code -> rejected */
+        command = AddCommand.COMMAND_WORD + INVALID_CODE_DESC + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, Code.MESSAGE_CODE_CONSTRAINTS);
+
+        /* Case: invalid class type -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
+
+        /* Case: invalid venue -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + INVALID_VENUE_DESC + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
+
+        /* Case: invalid group -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + INVALID_GROUP_DESC + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, Group.MESSAGE_GROUP_CONSTRAINTS);
+
+        /* Case: invalid time slot -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + INVALID_TIMESLOT_DESC;
+        assertCommandFailure(command, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
+
+        /* Case: invalid lecturers -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + INVALID_LECTURER_DESC;
+        assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
     }
 
     /**

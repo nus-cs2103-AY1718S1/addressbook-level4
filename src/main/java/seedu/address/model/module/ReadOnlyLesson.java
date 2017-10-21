@@ -38,8 +38,7 @@ public interface ReadOnlyLesson {
                 && other.getTimeSlot().equals(this.getTimeSlot())
                 && other.getClassType().equals(this.getClassType())
                 && other.getGroup().equals(this.getGroup())
-                && other.getCode().equals(this.getCode())
-                && other.getLecturers().equals(this.getLecturers()));
+                && other.getCode().equals(this.getCode()));
     }
 
     /**
