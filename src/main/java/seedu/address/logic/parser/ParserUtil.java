@@ -17,6 +17,7 @@ import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAddressBookStorage;
@@ -123,6 +124,24 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code Optional<String>} into an {@code Optional<DeliveryDate>} and returns it. Leading and trailing
+     * whitespaces will be trimmed.
+     */
+    public static Optional<DeliveryDate> parseDeliveryDate(Optional<String> deliveryDate) throws IllegalValueException {
+        requireNonNull(deliveryDate);
+        return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code Optional<String>} into an {@code Optional<Status>} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     */
+    public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
+        requireNonNull(status);
+        return status.isPresent() ? Optional.of(Status.getStatusInstance(status.get())) : Optional.empty();
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
@@ -132,16 +151,6 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
-    }
-
-    /**
-     * Parses {@code deliveryDate} into an {@code deliveryDate} and returns it. Leading and trailing whitespaces will be
-     * trimmed.
-     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
-     */
-    public static Optional<DeliveryDate> parseDeliveryDate(Optional<String> deliveryDate) throws IllegalValueException {
-        requireNonNull(deliveryDate);
-        return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
     }
 
 }

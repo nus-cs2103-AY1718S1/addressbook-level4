@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 
@@ -29,6 +30,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_DELIVERYDATE + "DELIVERYDATE "
+            + "[" + PREFIX_STATUS + "STATUS]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TRACKING_NUMBER + "RR999999999SG "
@@ -37,6 +39,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 S123123 "
             + PREFIX_DELIVERYDATE + "25-12-2000 "
+            + PREFIX_STATUS + "PENDING"
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

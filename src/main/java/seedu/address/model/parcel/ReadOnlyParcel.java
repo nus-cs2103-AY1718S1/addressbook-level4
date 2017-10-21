@@ -22,10 +22,12 @@ public interface ReadOnlyParcel {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
-    ObjectProperty<UniqueTagList> tagProperty();
-    Set<Tag> getTags();
     ObjectProperty<DeliveryDate> deliveryDateProperty();
     DeliveryDate getDeliveryDate();
+    ObjectProperty<Status> statusProperty();
+    Status getStatus();
+    ObjectProperty<UniqueTagList> tagProperty();
+    Set<Tag> getTags();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -38,7 +40,8 @@ public interface ReadOnlyParcel {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
-                && other.getDeliveryDate().equals(this.getDeliveryDate());
+                && other.getDeliveryDate().equals(this.getDeliveryDate())
+                && other.getStatus().equals(this.getStatus());
     }
 
     /**
@@ -58,6 +61,8 @@ public interface ReadOnlyParcel {
                 .append(getAddress())
                 .append(" Delivery Date: ")
                 .append(getDeliveryDate())
+                .append(" Status: ")
+                .append(getStatus())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

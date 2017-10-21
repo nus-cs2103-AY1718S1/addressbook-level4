@@ -7,6 +7,7 @@ import static seedu.address.testutil.ParcelBuilder.DEFAULT_DELIVERYDATE;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_EMAIL;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_NAME;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_PHONE;
+import static seedu.address.testutil.ParcelBuilder.DEFAULT_STATUS;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_TAGS;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_TRACKING_NUMBER;
 
@@ -27,6 +28,7 @@ public class ParcelTest {
                 new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
                 new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
                 new DeliveryDate(DEFAULT_DELIVERYDATE),
+                Status.getStatusInstance(DEFAULT_STATUS),
                 SampleDataUtil.getTagSet(DEFAULT_TAGS));
         Parcel differentParcel = new Parcel(parcel);
 
@@ -63,6 +65,11 @@ public class ParcelTest {
         assertEquals(differentParcel.deliveryDateProperty().get(),
                 new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
 
+        differentParcel.setStatus(Status.getStatusInstance("Delivered"));
+        assertEquals(differentParcel.getStatus(), Status.getStatusInstance("Delivered"));
+        assertEquals(differentParcel.statusProperty().get(),
+                new SimpleObjectProperty<>(Status.getStatusInstance("Delivered")).get());
+
         differentParcel.setTags(SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.tagProperty().get(), new SimpleObjectProperty<>(
@@ -74,13 +81,16 @@ public class ParcelTest {
         assertEquals(parcel.getPhone(), new Phone(DEFAULT_PHONE));
         assertEquals(parcel.getEmail(), new Email(DEFAULT_EMAIL));
         assertEquals(parcel.getAddress(), new Address(DEFAULT_ADDRESS));
+        assertEquals(parcel.getStatus(), Status.getStatusInstance(DEFAULT_STATUS));
         assertEquals(parcel.getTags(), SampleDataUtil.getTagSet(DEFAULT_TAGS));
 
         // toString() equality
         assertEquals(parcel.toString(), sameParcel.toString());
         assertEquals(parcel.toString(), "Tracking No.: " + DEFAULT_TRACKING_NUMBER + " Recipient Name: "
                 + DEFAULT_NAME + " Phone: " + DEFAULT_PHONE  + " Email: " + DEFAULT_EMAIL + " Address: "
-                + DEFAULT_ADDRESS + " Delivery Date: " + DEFAULT_DELIVERYDATE + " Tags: ["  + DEFAULT_TAGS + "]");
+                + DEFAULT_ADDRESS + " Delivery Date: " + DEFAULT_DELIVERYDATE + " Status: " + DEFAULT_STATUS
+                + " Tags: ["  + DEFAULT_TAGS + "]");
 
     }
+
 }
