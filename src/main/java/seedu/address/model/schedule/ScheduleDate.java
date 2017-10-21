@@ -25,7 +25,7 @@ public class ScheduleDate {
     public ScheduleDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        if (!isValidScheduleDate(trimmedDate) && !trimmedDate.equals("")) {
+        if (!isValidScheduleDate(trimmedDate)) {
             throw new IllegalValueException(MESSAGE_SCHEDULE_DATE_CONSTRAINTS);
         }
         this.value = trimmedDate;

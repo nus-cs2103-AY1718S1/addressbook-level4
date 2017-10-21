@@ -2,6 +2,8 @@ package seedu.address.model.schedule;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Schedule's activity description in the address book.
  * Guarantees: immutable; is always valid
@@ -15,9 +17,19 @@ public class Activity {
 
     public final String value;
 
-    public Activity(String activity) {
+    public Activity(String activity) throws IllegalValueException {
         requireNonNull(activity);
+        if (!isValidActivity(activity)) {
+            throw new IllegalValueException(MESSAGE_ACTIVITY_CONSTRAINTS);
+        }
         this.value = activity;
+    }
+
+    /**
+     * Returns true if a given string is a valid activity
+     */
+    private boolean isValidActivity(String test) {
+        return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
     @Override

@@ -1,52 +1,32 @@
 package seedu.address.model.schedule;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
-
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * Represents a Schedule in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Schedule {
-    private ObjectProperty<ScheduleDate> date;
-    private ObjectProperty<Activity> activity;
+    public final ScheduleDate scheduleDate;
+    public final Activity activity;
 
     /**
      * Every field must be present and not null.
      */
     public Schedule(ScheduleDate date, Activity activity) {
         requireAllNonNull(date, activity);
-        this.date = new SimpleObjectProperty<>(date);
-        this.activity = new SimpleObjectProperty<>(activity);
-    }
-
-    public void setScheduleDate(ScheduleDate date) {
-        this.date.set(requireNonNull(date));
-    }
-
-    public ObjectProperty<ScheduleDate> dateProperty() {
-        return date;
+        this.scheduleDate = date;
+        this.activity = activity;
     }
 
     public ScheduleDate getScheduleDate() {
-        return date.get();
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity.set(requireNonNull(activity));
-    }
-
-    public ObjectProperty<Activity> activityProperty() {
-        return activity;
+        return scheduleDate;
     }
 
     public Activity getActivity() {
-        return activity.get();
+        return activity;
     }
 
     @Override
@@ -69,7 +49,7 @@ public class Schedule {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(date, activity);
+        return Objects.hash(scheduleDate, activity);
     }
 
     @Override
