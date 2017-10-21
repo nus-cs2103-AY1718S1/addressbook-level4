@@ -86,7 +86,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_birthday() throws Exception {
-        final Birthday birthday = new Birthday("05/JAN/1995");
+        final Birthday birthday = new Birthday("05-01-1995");
         BirthdayCommand command = (BirthdayCommand) parser.parseCommand(BirthdayCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_BIRTHDAY + " " + birthday.value);
         assertTrue(command instanceof BirthdayCommand);

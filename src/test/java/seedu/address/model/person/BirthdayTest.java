@@ -9,13 +9,13 @@ public class BirthdayTest {
 
     @Test
     public void equals() {
-        Birthday birthday = new Birthday("07/01/1995");
+        Birthday birthday = new Birthday("07-01-1995");
 
         //same object -> returns true
         assertTrue(birthday.equals(birthday));
 
         //same value -> returns true
-        Birthday birthdayCopy = new Birthday("07/01/1995");
+        Birthday birthdayCopy = new Birthday("07-01-1995");
         assertTrue(birthday.equals(birthdayCopy));
 
         //different types -> returns false
@@ -25,7 +25,7 @@ public class BirthdayTest {
         assertFalse(birthday.equals(null));
 
         //different person -> returns false
-        Birthday differentBirthday = new Birthday("08/01/1995");
+        Birthday differentBirthday = new Birthday("08-01-1995");
         assertFalse(birthday.equals(differentBirthday));
     }
 }
