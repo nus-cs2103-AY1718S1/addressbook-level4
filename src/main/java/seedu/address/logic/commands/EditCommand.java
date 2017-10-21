@@ -101,7 +101,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Schedule updatedSchedule = personToEdit.getSchedule(); //ScheduleCommand does not allow editing schedule
+        Set<Schedule> updatedSchedule = personToEdit.getSchedules(); //ScheduleCommand does not allow editing schedule
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedSchedule, updatedTags);
