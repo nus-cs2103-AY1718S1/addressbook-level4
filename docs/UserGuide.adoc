@@ -1,7 +1,7 @@
 
 = MedNus - User Guide
 :toc:
-:toc-title: *Table of Contents*
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -35,7 +35,6 @@ This user guide introduces you to the features MedNus have and leads you through
  +
 You are required to know how to use Java to run a Graphical User Interface (GUI) application. +
 
-
 == *GETTING STARTED*
 
 .  Make sure you have link:https://java.com/en/download/[Java] version `1.8.0_60` or later installed in your Computer.
@@ -48,7 +47,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="500"]
     Figure 1: Successful start up UI Sample
 +
 .  You can type the command in the command box and press kbd:[Enter] to execute it. +
@@ -60,7 +59,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  You can refer to the link:#features[Features] section below for details of each command.
+.  You can refer to the link:#features[Features] section below for details of each command. +
+
+<<<
 
 == *FEATURES*
 
@@ -79,11 +80,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [NOTE]
 Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
+<<<
+
 === Viewing help : `help`
 You can use the `help` command to access the User Guide from MedNus. +
 You can also click the `Help` at the top left corner of MedNus.
 
-image::helpUI.png[width="790"]
+image::helpUI.png[width="500"]
     Figure 2: Methods to access `help` command
 
 === Adding a person: `add`
@@ -100,6 +103,7 @@ You can add any number of tags for a person or none at all.
 * `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB t/criminal`
 
+<<<
 
 === Listing persons - All / By tag : `list`
 
@@ -215,6 +219,7 @@ The index *must be a positive integer* `1, 2, 3, ...`
 [TIP]
 You can check the index using the `list` command
 
+<<<
 
 === Selecting a person : `select`
 
@@ -302,6 +307,8 @@ You can clear all entries in the address book. +
 *Format:* `clear` +
 *Shorthand Format:* `c`
 
+<<<
+
 === Set Tag Color Mode : `tagcolor`
 
 You can set random colors to all tags OR remove colors. +
@@ -376,23 +383,8 @@ You can exit MedNus by using the `exit` command. +
 You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
-image::exitUI.png[width="790"]
+image::exitUI.png[width="500"]
     Figure 3: Methods to access `exit` command
-
-=== Saving the data
-
-MedNus data are saved in the hard disk automatically after any command that changes the data. +
-You do not need to save manually.
-
-=== Setting Appointments : [Coming in v2.0]
-****
-* Adds/Removes an appointment a person has with the user of MedNus
-* The index refers to the index number shown in the last person listing. +
-The index *must be a positive integer* 1, 2, 3, ...
-* Basic Error catching: When adding appointment, any existing appointments will output an error, +
-prompting the user to remove the appointment first
-* Potential Upgrades: Setting multiple appointments is possible
-****
 
 === Displaying Appointments : [Coming in v2.0]
 ****
@@ -403,36 +395,15 @@ prompting the user to remove the appointment first
 3. Highlights the list if appointments are lesser than x days away
 ****
 
-=== Adding a Tag to a Person : [Coming in v2.0]
+=== Adding/Deleting a Tag to a Person : [Coming in v2.0]
 ****
-* Allows the user to add a tag to a person
+* Allows the user to add/delete a tag to a person
 * The index refers to the index number shown in the last person listing. +
 The index *must be a positive integer* 1, 2, 3, ...
 * Basic Error catching: Throws error when Person is not present
 * Potential Upgrades:
 1. Adding multiple tags
 2. Customising colors while adding tags
-****
-
-=== Deleting a Person's Tag : [Coming in v2.0]
-****
-* Allows the user to delete a person's Tag
-* The index refers to the index number shown in the last person listing. +
-The index *must be a positive integer* 1, 2, 3, ...
-* Basic Error catching: Throws error when tag is not present
-* Potential Upgrades:
-1. Mass delete tag instead of just a single person
-2. Input many tags & delete all tags with that name
-****
-
-=== Replace Browser Pane : [Coming in v2.0]
-****
-* Replace Browser Pane to an application that is more fitting for a Medical Professional
-* Potential Replacements:
-1. Calendar to mark out all appointments
-2. A View which shows a patient's summarised medical records when looking them up. +
- Impementation: Use External Medical APIs +
- https://www.programmableweb.com/category/medical/apis?category=19994
 ****
 
 === Patient's Condition Tag: [Coming in v2.0]
@@ -444,11 +415,16 @@ described condition
 ****
 
 
-
 == *FAQ*
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+*Q*: How do I save my data? +
+*A*: Data are saved in the hard disk automatically after any running any command that changes it. +
+You do not need to save data manually.
+
+<<<
 
 == *COMMAND SUMMARY*
 
@@ -505,6 +481,8 @@ described condition
 |*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
 
 |=======================================================================
+
+<<<
 
 === Keyboard Shortcut
 
