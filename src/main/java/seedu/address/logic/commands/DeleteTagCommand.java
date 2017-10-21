@@ -77,14 +77,13 @@ public class DeleteTagCommand extends Command {
                     originalPerson.getRemark(), tagList);
             try {
                 model.updatePerson(originalPerson, newPerson);
-            }
-            catch (DuplicatePersonException dpe) {
+            } catch (DuplicatePersonException dpe) {
                 throw new CommandException("duplicate person found in addressbook");
-            }
-            catch (PersonNotFoundException pnfe) {
+            } catch (PersonNotFoundException pnfe) {
                 throw new CommandException("person not found exception");
             }
         }
         return isTagDeleted;
     }
 }
+//@@author

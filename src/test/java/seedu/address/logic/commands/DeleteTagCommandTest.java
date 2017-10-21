@@ -29,8 +29,8 @@ public class DeleteTagCommandTest {
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteTagCommand DeleteFirstCommandCopy = new DeleteTagCommand(firstArg);
-        assertTrue(deleteFirstCommand.equals(DeleteFirstCommandCopy));
+        DeleteTagCommand deleteFirstCommandCopy = new DeleteTagCommand(firstArg);
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
         assertFalse(deleteFirstCommand.equals(1));

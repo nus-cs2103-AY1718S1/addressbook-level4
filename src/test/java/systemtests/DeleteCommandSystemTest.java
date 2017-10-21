@@ -7,7 +7,11 @@ import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -33,12 +37,11 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        StringBuilder sb = new StringBuilder();
-        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
-        sb.append("1. ");
-        sb.append(deletedPerson);
-        sb.append("\n");
-        String expectedResultMessage = sb.toString();
+
+        ArrayList<ReadOnlyPerson> personsToDelete = new ArrayList<>();
+        personsToDelete.add(deletedPerson);
+        String expectedResultMessage = DeleteCommand.getSb(personsToDelete);
+
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the last person in the list -> deleted */
@@ -60,6 +63,25 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the middle person in the list -> deleted */
         Index middlePersonIndex = getMidIndex(getModel());
         assertCommandSuccess(middlePersonIndex);
+
+        /* Case: delete multiple persons in the list -> deleted */
+        expectedModel = getModel();
+        String multipleCommands = "     " + DeleteCommand.COMMAND_WORD + "      "
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " "
+                + INDEX_THIRD_PERSON.getOneBased()
+                + "       ";
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        ReadOnlyPerson deletedPerson2 = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        ReadOnlyPerson deletedPerson3 = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        personsToDelete.clear();
+        personsToDelete.add(deletedPerson);
+        personsToDelete.add(deletedPerson2);
+        personsToDelete.add(deletedPerson3);
+        expectedResultMessage = DeleteCommand.getSb(personsToDelete);
+        assertCommandSuccess(multipleCommands, expectedModel, expectedResultMessage);
+        executeCommand(UndoCommand.COMMAND_WORD);
+
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
@@ -88,12 +110,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
 
-        sb = new StringBuilder();
-        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
-        sb.append("1. ");
-        sb.append(deletedPerson);
-        sb.append("\n");
-        expectedResultMessage = sb.toString();
+        personsToDelete.clear();
+        personsToDelete.add(deletedPerson);
+        expectedResultMessage = DeleteCommand.getSb(personsToDelete);
+
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */

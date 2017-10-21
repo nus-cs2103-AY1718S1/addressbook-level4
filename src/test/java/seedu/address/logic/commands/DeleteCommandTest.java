@@ -34,22 +34,17 @@ public class DeleteCommandTest {
     @Test
     public void execute_validIndexUnfilteredListSinglePerson_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
         testIndexes.clear();
         testIndexes.add(INDEX_FIRST_PERSON);
         DeleteCommand deleteCommand = prepareCommand(testIndexes);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
-        sb.append("1. ");
-        sb.append(personToDelete);
-        sb.append("\n");
-        String expectedMessage = sb.toString();
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-
         expectedModel.deletePerson(personToDelete);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        ArrayList<ReadOnlyPerson> personsToDelete = new ArrayList<>();
+        personsToDelete.add(personToDelete);
+
+        assertCommandSuccess(deleteCommand, model,
+                DeleteCommand.getSb(personsToDelete), expectedModel);
     }
 
     @Test
@@ -73,19 +68,16 @@ public class DeleteCommandTest {
         testIndexes.add(INDEX_FIRST_PERSON);
         DeleteCommand deleteCommand = prepareCommand(testIndexes);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
-        sb.append("1. ");
-        sb.append(personToDelete);
-        sb.append("\n");
-        String expectedMessage = sb.toString();
+        ArrayList<ReadOnlyPerson> personsToDelete = new ArrayList<>();
+        personsToDelete.add(personToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteCommand, model,
+                DeleteCommand.getSb(personsToDelete), expectedModel);
     }
 
     @Test

@@ -32,13 +32,10 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
         ArrayList<Integer> executableIdx = new ArrayList<>();
         ArrayList<Integer> unExeIdx = new ArrayList<>();
         Boolean hasExecutableIdx = false;
-
         for (Index idx : targetIdxs) {
             int intIdx = idx.getZeroBased();
             if (intIdx < lastShownList.size()) {
@@ -48,17 +45,13 @@ public class DeleteCommand extends UndoableCommand {
                 unExeIdx.add(intIdx);
             }
         }
-
         if (!hasExecutableIdx) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INDEX_ALL);
         }
-
         ArrayList<ReadOnlyPerson> toDeletePerson = new ArrayList<>();
-
         for (int idx : executableIdx) {
             toDeletePerson.add(lastShownList.get(idx));
         }
-
         for (int i = 0; i < executableIdx.size(); i++) {
             try {
                 model.deletePerson(toDeletePerson.get(i));
@@ -67,17 +60,7 @@ public class DeleteCommand extends UndoableCommand {
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(MESSAGE_DELETE_PERSON_SUCCESS);
-
-        for (int i = 0; i < toDeletePerson.size(); i++) {
-            sb.append(i + 1);
-            sb.append(". ");
-            sb.append(toDeletePerson.get(i));
-            sb.append("\n");
-        }
-
-        return new CommandResult(sb.toString());
+        return new CommandResult(getSb(toDeletePerson));
     }
 
     @Override
@@ -85,5 +68,23 @@ public class DeleteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIdxs.equals(((DeleteCommand) other).targetIdxs)); // state check
+    }
+
+    /**
+     * Return a String
+     * @param persons to be deleted
+     * @return a String with all details listed
+     */
+    public static String getSb(ArrayList<ReadOnlyPerson> persons) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(MESSAGE_DELETE_PERSON_SUCCESS);
+
+        for (int i = 0; i < persons.size(); i++) {
+            sb.append(i + 1);
+            sb.append(". ");
+            sb.append(persons.get(i));
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }

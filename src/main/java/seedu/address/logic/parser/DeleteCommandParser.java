@@ -37,17 +37,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
             }
         }
-
         List<Integer> indexInts = new ArrayList<>(indexIntsSet);
-
         Collections.sort(indexInts);
-
         ArrayList<Index> indexes = new ArrayList<>();
-
         for (int i = 0; i < indexInts.size(); i++) {
             indexes.add(Index.fromOneBased(indexInts.get(i)));
         }
-
         return new DeleteCommand(indexes);
     }
 
