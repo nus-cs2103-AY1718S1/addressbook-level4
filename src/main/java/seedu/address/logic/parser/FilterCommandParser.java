@@ -14,8 +14,8 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
 public class FilterCommandParser implements Parser<FilterCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FilterCommand
+     * and returns an FilterCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public FilterCommand parse(String args) throws ParseException {

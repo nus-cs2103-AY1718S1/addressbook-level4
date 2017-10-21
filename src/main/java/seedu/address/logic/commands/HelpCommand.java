@@ -8,6 +8,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
  */
 public class HelpCommand extends Command {
 
+
     public static final String COMMAND_WORD = "help";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD

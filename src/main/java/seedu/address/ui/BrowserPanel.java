@@ -21,8 +21,15 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+
+    //different search pages for different commands
+
+    //GoogleCommand
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    //FacebookCommand
+    public static final String FACEBOOK_URL = "https://www.facebook.com";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -43,12 +50,21 @@ public class BrowserPanel extends UiPart<Region> {
 
     private void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+                    + GOOGLE_SEARCH_URL_SUFFIX);
+    }
+
+    public void loadFacebookPage(){
+        loadPage(FACEBOOK_URL);
     }
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
+
+    /**
+     * reset SelectCommand.isInvoked to allow any subsequent web commands to be executed
+     */
+
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
