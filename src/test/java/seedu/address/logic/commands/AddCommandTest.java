@@ -1,9 +1,25 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import javafx.collections.ObservableList;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.BookedSlot;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FavouriteListPredicate;
+import seedu.address.testutil.LessonBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,25 +27,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import javafx.collections.ObservableList;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
-import seedu.address.testutil.LessonBuilder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AddCommandTest {
 
@@ -148,6 +149,21 @@ public class AddCommandTest {
 
         @Override
         public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unbookBookedSlot(BookedSlot booking) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateBookedSlot(BookedSlot target, BookedSlot newBookingSlot) throws DuplicateBookedSlotException {
             fail("This method should not be called.");
         }
 
