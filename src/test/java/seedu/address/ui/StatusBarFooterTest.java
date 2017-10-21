@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.StatusBarFooter.SYNC_TOTAL_PERSONS;
+import static seedu.address.ui.StatusBarFooter.SYNC_TOTAL;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -59,13 +59,13 @@ public class StatusBarFooterTest extends GuiUnitTest {
     public void display() {
         // initial state
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(SYNC_TOTAL_PERSONS, STUB_INITIAL_TOTAL_PERSONS),
+                String.format(SYNC_TOTAL, STUB_INITIAL_TOTAL_PERSONS, STUB_INITIAL_TOTAL_EVENTS),
                 SYNC_STATUS_INITIAL);
 
         // after address book is updated
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(SYNC_TOTAL_PERSONS, STUB_INITIAL_TOTAL_PERSONS),
+                String.format(SYNC_TOTAL, STUB_INITIAL_TOTAL_PERSONS, STUB_INITIAL_TOTAL_EVENTS),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
 
@@ -73,12 +73,11 @@ public class StatusBarFooterTest extends GuiUnitTest {
      * Asserts that the save location matches that of {@code expectedSaveLocation}, the person count matches that
      * of {@code expectedTotalPersons} and the sync status matches that of {@code expectedSyncStatus}.
      */
-    private void assertStatusBarContent(String expectedSaveLocation, String expectedTotalPersons,
+    private void assertStatusBarContent(String expectedSaveLocation, String expectedTotalCount,
                                         String expectedSyncStatus) {
         assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
-        assertEquals(expectedTotalPersons, statusBarFooterHandle.getTotalPersons());
+        assertEquals(expectedTotalCount, statusBarFooterHandle.getTotalCount());
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
         guiRobot.pauseForHuman();
     }
-
 }

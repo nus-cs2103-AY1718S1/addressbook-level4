@@ -21,8 +21,6 @@ public abstract class Command {
 
     private String commandText;
 
-
-
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -70,10 +68,6 @@ public abstract class Command {
         this.commandText = commandText;
     }
 
-    /**
-     * Raises the event to link with commands
-     * @param event
-     */
     protected void raise(BaseEvent event) {
         eventsCenter.post(event);
     }
