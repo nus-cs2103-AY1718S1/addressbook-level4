@@ -17,12 +17,12 @@ import seedu.address.MainApp;
 import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
+    private static final String ALICE_WEBSITE = "https://twitter.com/alice";
+
     private AccessWebsiteRequestEvent accessWebsiteEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
-
-    private static final String ALICE_WEBSITE = "https://twitter.com/alice";
 
     @Before
     public void setUp() {
