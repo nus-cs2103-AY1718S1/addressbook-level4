@@ -47,7 +47,7 @@ public class RepaidCommandTest {
         ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         RepaidCommand repaidCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(RepaidCommand.MESSAGE_WHITELIST_PERSON_SUCCESS, repaidPerson);
+        String expectedMessage = String.format(RepaidCommand.MESSAGE_WHITELIST_PERSON_SUCCESS, repaidPerson.getName());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addWhitelistedPerson(repaidPerson);

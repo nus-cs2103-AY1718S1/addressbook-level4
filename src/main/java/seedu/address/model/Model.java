@@ -43,7 +43,7 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Deletes the given person from blacklist. */
-    void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Removes the given person from whitelist. */
     ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -52,10 +52,10 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given person into blacklist */
-    void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given person into whitelist */
-    void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

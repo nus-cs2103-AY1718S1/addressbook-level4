@@ -138,7 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addBlacklistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+    public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         int index;
         index = persons.getIndexOf(p);
 
@@ -151,6 +151,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         newBlacklistedPerson.setIsWhitelisted(false);
         persons.add(index, newBlacklistedPerson);
+
+        return persons.getReadOnlyPerson(index);
+
     }
 
     /**
@@ -158,7 +161,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addWhitelistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+    public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         int index;
         index = persons.getIndexOf(p);
 
@@ -170,6 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "This is not possible as prior checks have been done";
         }
         persons.add(index, newWhitelistedPerson);
+        return persons.getReadOnlyPerson(index);
     }
 
     /**
@@ -236,7 +240,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public void removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
+    public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         int index;
         index = persons.getIndexOf(key);
 
@@ -254,6 +258,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "This is not possible as prior checks have been done";
         }
+
+        return persons.getReadOnlyPerson(index);
     }
 
     /**

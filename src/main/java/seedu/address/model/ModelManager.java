@@ -119,11 +119,12 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws PersonNotFoundException if no person is found.
      */
     @Override
-    public synchronized void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removeBlacklistedPerson(target);
+    public synchronized ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ReadOnlyPerson removedBlacklistedPerson = addressBook.removeBlacklistedPerson(target);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         changeListTo(BlacklistCommand.COMMAND_WORD);
         indicateAddressBookChanged();
+        return removedBlacklistedPerson;
     }
 
     /**
@@ -152,11 +153,12 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
      */
     @Override
-    public synchronized void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addBlacklistedPerson(person);
+    public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        ReadOnlyPerson newBlacklistPerson = addressBook.addBlacklistedPerson(person);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         changeListTo(BlacklistCommand.COMMAND_WORD);
         indicateAddressBookChanged();
+        return newBlacklistPerson;
     }
 
     /**
@@ -165,7 +167,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
      */
     @Override
-    public synchronized void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+    public synchronized ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         ReadOnlyPerson whitelistedPerson = person;
 
         try {
@@ -176,11 +178,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         if (!whitelistedPerson.getIsBlacklisted()) {
-            addressBook.addWhitelistedPerson(whitelistedPerson);
-            updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
+            whitelistedPerson = addressBook.addWhitelistedPerson(whitelistedPerson);
         }
-
+        updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
         indicateAddressBookChanged();
+        return whitelistedPerson;
     }
 
     @Override

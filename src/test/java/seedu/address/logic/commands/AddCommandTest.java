@@ -107,13 +107,15 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
-        public void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -144,8 +146,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -241,7 +244,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
         }
 
