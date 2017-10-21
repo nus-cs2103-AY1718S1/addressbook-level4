@@ -146,23 +146,23 @@ public class ParserUtilTest {
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
+        ParserUtil.parseEmails(null);
     }
 
     @Test
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Arrays.asList(INVALID_EMAIL));
+        ParserUtil.parseEmails(Arrays.asList(INVALID_EMAIL));
     }
 
     @Test
     public void parseEmail_emptyCollection_returnsEmptySet() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Collections.emptyList()).isEmpty());
+        assertFalse(ParserUtil.parseEmails(Collections.emptyList()).isEmpty());
     }
 
     @Test
     public void parseEmail_collectionWithValidEmails_returnsEmailSet() throws Exception {
-        Set<Email> actualEmailSet = ParserUtil.parseEmail(Arrays.asList(VALID_EMAIL_1, VALID_EMAIL_2));
+        Set<Email> actualEmailSet = ParserUtil.parseEmails(Arrays.asList(VALID_EMAIL_1, VALID_EMAIL_2));
         Set<Email> expectedEmailSet = new HashSet<>(Arrays.asList(new Email(VALID_EMAIL_1), new Email(VALID_EMAIL_2)));
 
         assertEquals(expectedEmailSet, actualEmailSet);

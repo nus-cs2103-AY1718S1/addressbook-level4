@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.tag.Tag;
 
 
@@ -71,6 +72,16 @@ public class StringUtilTest {
         assertExceptionThrown(NullPointerException.class, "typical sentence", null, Optional.empty());
     }
 
+    @Test
+    public void containsEmailIgnoreCase_nullWord_throwsNullPointerException() {
+        Set<Email> emailSet = new HashSet<>();
+        try {
+            emailSet.add(new Email("dumb@gmail.com"));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("emailSet should contain emails.");
+        }
+        assertExceptionThrownEmail(NullPointerException.class, emailSet, null, Optional.empty());
+    }
 
     @Test
     public void containsTagIgnoreCase_nullWord_throwsNullPointerException() {
@@ -91,9 +102,15 @@ public class StringUtilTest {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
         StringUtil.containsNameIgnoreCase(sentence, word);
-        StringUtil.containsEmailIgnoreCase(sentence, word);
         StringUtil.containsPhoneIgnoreCase(sentence, word);
         StringUtil.containsAddressIgnoreCase(sentence, word);
+    }
+
+    private void assertExceptionThrownEmail(Class<? extends Throwable> exceptionClass, Set<Email> emailSet, String word,
+                                          Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsEmailIgnoreCase(emailSet, word);
     }
 
     private void assertExceptionThrownTag(Class<? extends Throwable> exceptionClass, Set<Tag> tagSet, String word,
@@ -171,23 +188,30 @@ public class StringUtilTest {
 
     @Test
     public void containsEmailIgnoreCase_validInputs_correctResult() {
-
+        Set<Email> emailSet = new HashSet<>();
+        try {
+            emailSet.add(new Email("abc@example.com"));
+            emailSet.add(new Email("abc@123.com"));
+            emailSet.add(new Email("abc@example.com.sg"));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("emailSet should contain emails.");
+        }
 
         //Matches word in the sentence, different upper/lower case letters
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com", "ExaMPLE")); // Case insensitive
+        assertTrue(StringUtil.containsEmailIgnoreCase(emailSet, "ExaMPLE")); // Case insensitive
 
         //Matches email of numeric domain
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@123.com", "123")); // number email domain
+        assertTrue(StringUtil.containsEmailIgnoreCase(emailSet, "123")); // number email domain
 
         //Match email with multiple domain
-        assertTrue(StringUtil.containsEmailIgnoreCase("abc@example.com.sg", "example")); // number email domain
+        assertTrue(StringUtil.containsEmailIgnoreCase(emailSet, "example")); // number email domain
 
         //Match for non exact word
-        assertFalse(StringUtil.containsEmailIgnoreCase("abc@example.com", "example.com")); //email end with .com domain
-        assertFalse(StringUtil.containsEmailIgnoreCase("abc@example.com", "exam")); // Match partial word
+        assertFalse(StringUtil.containsEmailIgnoreCase(emailSet, "example.com")); //email end with .com domain
+        assertFalse(StringUtil.containsEmailIgnoreCase(emailSet, "exam")); // Match partial word
 
         //Match for email with no '@"
-        assertFalse(StringUtil.containsEmailIgnoreCase("abcgmail.com", "gmail")); //email without @
+        assertFalse(StringUtil.containsEmailIgnoreCase(emailSet, "gmail")); //email without @
     }
 
 

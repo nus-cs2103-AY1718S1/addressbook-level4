@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -42,7 +43,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
-    private Label email;
+    private VBox emails;
     @FXML
     private FlowPane tags;
 
@@ -50,6 +51,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initEmails(person);
         initTags(person);
         bindListeners(person);
     }
@@ -70,7 +72,10 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        person.emailProperty().addListener((observable, oldValue, newValue) -> {
+            emails.getChildren().clear();
+            initEmails(person);
+        });
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -78,7 +83,17 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Sets the color for each tag upon startup.
+     * Sets the person's emails to the respective UI labels upon startup.
+     */
+    private void initEmails(ReadOnlyPerson person) {
+        person.getEmails().forEach(email -> {
+            Label emailLabel = new Label(email.value);
+            emails.getChildren().add(emailLabel);
+        });
+    }
+
+    /**
+     * Sets the color and content for each tag upon startup.
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {

@@ -75,7 +75,7 @@ public class ParserUtil {
      * * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Set<Email> parseEmail(Collection<String> emails) throws IllegalValueException {
+    public static Set<Email> parseEmails(Collection<String> emails) throws IllegalValueException {
         requireNonNull(emails);
         final Set<Email> emailSet = new HashSet<>();
         for (String emailName : emails) {
