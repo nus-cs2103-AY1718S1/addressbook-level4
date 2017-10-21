@@ -20,6 +20,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.alias.ReadOnlyAliasToken;
+import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
+import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -137,6 +140,28 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void addAliasToken(ReadOnlyAliasToken target) throws DuplicateTokenKeywordException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAliasToken(ReadOnlyAliasToken target) throws TokenKeywordNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public int getAliasTokenCount() {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList() {
+            fail("This method should not be called.");
+            return null;
         }
     }
 
