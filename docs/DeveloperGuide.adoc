@@ -345,6 +345,41 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::websitebuttonbar[]
+=== Button Bar for Social Links
+
+The button bar implemented within the UI is operated by the use of an event trigger `ButtonSelectionPressedEvent`, which resides inside the commons classes. The actual implementation of the web page loading is done within the `BrowserPanel` class.
+
+The buttons residing within the button bar raises `ButtonSelectionPressedEvent` that parses its own button FX.id to the `BrowserPanel`, which then triggers the internal functions that calls the URL to be loaded.
+
+image::UiClassDiagram.png[width="800"]
+
+As you can see from the diagram, `WebsiteButtonBar` resides within the `MainWindow`, despite not having any interactions with the BrowserPanel directly.
+
+
+Suppose that the user has just launched the application. The `BrowserPanel` not be loaded.
+
+Once the User selects a person from the `PersonListPanel`, which is a `PersonCard`, the `SelectedPerson` is updated through the use of an event trigger. The `BrowserPanel` then stores this `SelectedPerson` until it is updated through listening for the event trigger.
+
+The User then clicks on a button within the `WebsiteButtonBar`. The buttons that exist within the `ButtonBar` is dynamically created through the list of websites that exists within the `Person` object `coming in v1.3`.
+
+
+[NOTE]
+If a button is pressed before the selection of a `PersonCard`, the event trigger would simply load a default page.
+
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of URL loadings +
+**Alternative 1 (current choice):** Implement URL loadings within the `BrowserPanel` +
+**Pros:** We will not have a seperation of classes, or the need to update any data values within any dynamically generated objects. `BrowserPanel` handles all URLs, URL parsings, and had the necessary information to process or execute these commands. +
+**Cons:** `BrowserPanel` has to be pre-loaded with website URLs, if not the `Websites` within the `Person` class has to be a full URL +
+**Alternative 2:** Create different `BrowserPanel` s for each new Website +
+**Pros:** Swaps each Panel using tabs and allows for various design elements to be made for each URL loaded +
+**Cons:** Increases the number of `Tabs` to be created with each person website, and increases the complexities at the UI level.
+// end::websitebuttonbar[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
