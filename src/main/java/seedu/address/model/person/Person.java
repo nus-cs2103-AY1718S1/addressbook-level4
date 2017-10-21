@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.person.email.Email;
+import seedu.address.model.person.email.UniqueEmailList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,7 +22,7 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
-    private ObjectProperty<Email> email;
+    private ObjectProperty<UniqueEmailList> emails;
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -28,11 +30,11 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Set<Email> emails, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, emails, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
+        this.emails = new SimpleObjectProperty<>(new UniqueEmailList(emails));
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -42,7 +44,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmails(), source.getAddress(),
                 source.getTags());
     }
 
@@ -74,18 +76,25 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+    /**
+     * Replaces this person's emails with the emails in the argument tag set.
+     */
+    public void setEmails(Set<Email> replacement) {
+        emails.set(new UniqueEmailList(replacement));
     }
 
     @Override
-    public ObjectProperty<Email> emailProperty() {
-        return email;
+    public ObjectProperty<UniqueEmailList> emailProperty() {
+        return emails;
     }
 
+    /**
+     * Returns an immutable email set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     @Override
-    public Email getEmail() {
-        return email.get();
+    public Set<Email> getEmails() {
+        return Collections.unmodifiableSet(emails.get().toSet());
     }
 
     public void setAddress(Address address) {
@@ -132,7 +141,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, emails, address, tags);
     }
 
     @Override

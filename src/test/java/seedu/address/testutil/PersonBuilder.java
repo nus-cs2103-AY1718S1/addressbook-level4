@@ -4,11 +4,11 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -29,7 +29,7 @@ public class PersonBuilder {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
-            Email defaultEmail = new Email(DEFAULT_EMAIL);
+            Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
@@ -94,13 +94,13 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Parses the {@code emails} into a {@code Set<Email>} and sets it to the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
+    public PersonBuilder withEmail(String ... emails) {
         try {
-            this.person.setEmail(new Email(email));
+            this.person.setEmails(SampleDataUtil.getEmailSet(emails));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
+            throw new IllegalArgumentException("emails are expected to be unique.");
         }
         return this;
     }

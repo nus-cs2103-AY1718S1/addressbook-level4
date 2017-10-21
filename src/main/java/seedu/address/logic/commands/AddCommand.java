@@ -27,6 +27,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
+            + "[" + PREFIX_EMAIL + "OTHER EMAIL]..."
             + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + MESSAGE_GET_MORE_HELP;
