@@ -90,6 +90,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Removes a tag with the tagGettingRemoved string
+     * @param tagGettingRemoved
+     * @throws TagNotFoundException
+     * @throws IllegalValueException
+     */
     public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
         addressBook.removeTag(tagGettingRemoved);
     }
