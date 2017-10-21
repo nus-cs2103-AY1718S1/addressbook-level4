@@ -422,6 +422,57 @@ image::ImportCommandActivityDiagram.png[width="300"]
 Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
 
 
+=== Sort Command
+
+The sort command is implemented to sort the current Address book according to the following possible criteria:
+* name
+* phone
+* address
+* email
+
+It is important to note that after every other command such as `add`, `edit` or `delete`, the sort is run again to maintain the order of the list.
+
+If the list is already sorted by a particular field, trying to sort it by the same field will raise an exception:
+[source,java]
+----
+public void sortBy(String sortCriteria) throws AlreadySortedException {
+
+    if (persons.getCurrentlySortedBy().equals(sortCriteria)) {
+        throw new AlreadySortedException("List already sorted by: " + sortCriteria);
+    } else {
+        persons.sortBy(sortCriteria);
+    }
+}
+----
+
+This exception is later caught higher up the execution stack and the user receives a message that the list is already sorted by the field.
+
+To enable the sorting, standard `FXCollections.sort` is used. To enable this, ReadOnlyPerson interface extends Comparable.
+The person Class which implements this interface defines compareTo to compare two fields. The following is a snippet from the compareTo method:
+[source,java]
+----
+public int compareTo(Object otherPerson) {
+
+    ReadOnlyPerson person = (ReadOnlyPerson) otherPerson;
+
+    // If a field is "Not Set" put the corresponding person at the end of the list.
+    if (firstField.equals("Not Set") && secondField.equals("Not Set")) {
+        return 0;
+    } else if (!firstField.equals("Not Set") && secondField.equals("Not Set")) {
+        return -1;
+    } else if (firstField.equals("Not Set") && !secondField.equals("Not Set")) {
+        return 1;
+    } else {
+        return firstField.compareTo(secondField);
+    }
+
+}
+----
+
+The main things to note in this method is that the value "Not Set" will always be sorted away to the bottom of the list.
+Also, by default, the list is sorted by name.
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
