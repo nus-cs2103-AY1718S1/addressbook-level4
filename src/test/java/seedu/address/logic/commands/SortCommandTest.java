@@ -22,14 +22,14 @@ public class SortCommandTest {
 
     private Model model;
     private Model expectedModel;
-    private Model unexpectedModel;
+    private Model unsortedModel;
     private SortCommand sortCommand;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        unexpectedModel = new ModelManager(getUnTypicalAddressBook(), new UserPrefs());
+        unsortedModel = new ModelManager(getUnTypicalAddressBook(), new UserPrefs());
 
         sortCommand = new SortCommand();
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -48,9 +48,9 @@ public class SortCommandTest {
 
     @Test
     public void equals() {
-        unexpectedModel.sortPersons();
+        unsortedModel.sortPersons();
 
         // sort success -> returns true
-        assertTrue(expectedModel.equals(unexpectedModel));
+        assertTrue(expectedModel.equals(unsortedModel));
     }
 }
