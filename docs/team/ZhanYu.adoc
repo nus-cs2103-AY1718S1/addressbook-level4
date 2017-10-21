@@ -86,6 +86,23 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=openNew]
 
 ---
 
+=== Enhancement Improved: `java.util.Set` implementation for command abbreviations
+
+==== Justification
+
+Using constants to manually check if a command word belongs to a particular command is extremely tedious for both
+developers and users. In addition, using constants forces the program to have to check through all possible command
+abbreviations belonging to a command word in the worst case. A java `HashSet` takes care of these problems by improving
+access time and improves manageability of the codebase.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=commandAbbreviations]
+
+---
+
 === Enhancement Proposed: Markdown/HTML parser
 
 To replace the content field of the note/remark command with 'rich-text', to be displayed on the browser panel.
