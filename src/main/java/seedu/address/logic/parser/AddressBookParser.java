@@ -78,7 +78,7 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_2)) {
             return new FacebookCommand();
 
-        }else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
+        } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
             return new DeleteCommandParser().parse(arguments);
 
