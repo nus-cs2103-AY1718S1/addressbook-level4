@@ -17,9 +17,9 @@ public class UserPrefs {
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "Codii";
     private String adminUsername = "loanShark97";
-    private String adminPassword = "5a33f99182bf5f6e5f0e67266cdbc5361e27e3af983d9a7d021ed02d28ea40fa6cecee41c26a6073c6c"
-            + "ba4b5b7d84a4471ed585b569e0423588fce73c4ce5ef0";
-    private String passwordSaltInString = "oif984r44";
+    private String adminPassword = "89a6a0f1d74b471f96018a84ab9b5562a39e0d09e3f48872a5fca8fb8b01c404a993e47ce384495196d"
+            + "f6eba140af5e83eb98d20b7e3dbb361a94bfe8827a695";
+    private String passwordSaltInString = "KeAnoJrBdpqc0AnhiZDSPw==";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
