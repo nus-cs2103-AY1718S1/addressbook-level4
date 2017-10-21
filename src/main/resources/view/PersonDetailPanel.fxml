@@ -10,10 +10,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane fx:id="personDetailPanel" styleClass="person-detail-panel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="cardPane" prefHeight="300.0" prefWidth="400.0">
+      <HBox fx:id="cardPane">
          <children>
             <GridPane HBox.hgrow="ALWAYS">
               <columnConstraints>
@@ -30,8 +29,12 @@
                      <children>
                         <HBox>
                            <children>
-                              <ImageView id="avatarImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+                              <ImageView fx:id="avatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
                            </children>
                         </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" />
