@@ -346,6 +346,111 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::favourite[]
+=== Favourite a contact
+To favourite a contact is achieved by `FavouriteCommand`, which is a subclass of `UndoableCommand`. It basically changes the value of the `Favourite` field of a `Person`.
+
+In this sense, `Favourite` class need to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is "False".
+
+To make the default status of a `Favourite` field "False", the default constructor of `Favourite` is implemented in this way:
+[source,java]
+----
+public class Favourite {
+
+    private String status;
+
+    public Favourite() {
+        this.status = "False";
+    }
+}
+----
+
+In addition, the utility class `PersonBuilder` sets the default value of `Favourite` to each newly created object in this way:
+[source,java]
+----
+public class PersonBuilder {
+    // ... other default values ...
+    public static final Favourite DEFAULT_FAVOURITE = new Favourite();
+
+    private Person person;
+
+    public PersonBuilder() {
+           try {
+               // ... set other fields to their default states ...
+               Favourite defaultFavourite = DEFAULT_FAVOURITE;
+
+               this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                       defaultFavourite, defaultTags);
+           } catch (IllegalValueException ive) {
+               // ... catch statement ...
+           }
+       }
+}
+----
+
+After the default status is set, `FavouriteCommand` changes it either from "True" to "False" or "False" to "True". `FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`. Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
+[source,java]
+----
+public class FavouriteCommandParser implements Parser<FavouriteCommand> {
+    public FavouriteCommand parse(String args) throws ParseException {
+        try {
+            // ... parse index and pass it to `FavouriteCommand`...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+To update the `Favourite` field of a `Person`, the other information of the specific `Person` is copied into a newly created `Person` instance. The new `Favourite` value will be set to be opposite of the original one. This is implemented in the following way:
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+    // ... variables, constructor and other overrided methods ...
+    Boolean changedToFav;
+
+    @Override
+        protected CommandResult executeUndoableCommand() throws CommandException {
+            // ... fetch personToEdit ...
+
+            Favourite favourite = personToEdit.getFavourite();
+            favourite.setFavourite();
+            if (favourite.getStatus().equals("True")) {
+                changedToFav = true;
+            } else {
+                changedToFav = false;
+            }
+            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), favourite, personToEdit.getTags());
+
+            // ... try replace personToEdit with editedPerson ...
+        }
+}
+----
+
+It is important to display `Favourite` in the user interface. Thus a few changes on UI is needed. `PersonCard` class and `PersonCardHandle` class are modified to include `Favourite` label in the UI. `PersonListCard.fxml` is also modified to reserve space for the `Favourite` label.
+
+==== Design Considerations
+
+**Aspect:** Store `Favourite` values +
+**Alternative 1 (current choice):** Add a new `Favourite` class +
+**Pros:** Follows how `Address`, `EMAIL` and all other personal information are stored. It also follows the open-close principle and exercises cohesion, where all matters related to `Favourite` field is dealt in its own class. +
+**Cons:** Need to change a lot of code because adding a new class will affect UI, Logic, Model and Storage. +
+**Alternative 2:** Keep it as a `Boolean` value +
+**Pros:** Does not need to create another class. Easier to implement. +
+**Cons:** Potentially catastrophic because some Boolean methods need to be overwritten. It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes.
+
+---
+
+**Aspect:** Change the `Favourite` value of the selected `Person` +
+**Alternative 1 (current choice):** Copy values from other fields to a newly created `Person` instance. Then add an opposite value of the old `Favourite` to the instance. +
+**Pros:** Easy to understand for new Computer Science student undergraduates. Also by using `ReadOnlyPerson` for the person being selected, we can ensure its original value will be intact. This is crucial if updating person failed in the later stage. +
+**Cons:** Additional space consumed to store a new `Person` instance. +
+**Alternative 2:** Edit `Favourite` field on the spot +
+**Pros:** No additional new instance needs to be instantiated. Even easier to understand. +
+**Cons:** Modifying original values directly can be potentially dangerous. The safer alternative is to create a duplicate, and perform operations on it. +
+// end::favourite[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -364,6 +469,135 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Filter mechanism
+
+The filter mechanism is facilitated by `FilterCommandParser`, which resides inside the parser folder of the logic component.
+
+Similar to how the find mechanism searches for names of the contacts, the filter mechanism supports the search for specific tags (e.g. `friend`, `professor`).
+
+The `FilterCommand` will inherit from `Command`.
+
+When the command word `filter` is typed into UniCity, `AddressBookParser` will call `FilterCommandParser`.
+
+`FilterCommandParser` then takes in the command argument(s), delimits the arguments if there are more than one keyword separated by spaces, wraps them with
+the `TagContainsKeywordsPredicate` class before parsing them into the FilterCommand constructor.
+
+The figure below shows the sequence diagram when `LogicManager` executes the filter command.
+
+image::filtercommandsequencediagram.png[width="800"]
+
+Upon execution, the `FilterCommand` filters the list of contacts whose tags contains the tag words in the predicates. This is achieved with the help of the `updateFilteredPersonList(predicate)`
+method from the `ModelManager` class.
+
+The test to check for tag compatibility between the searched word and each person's tag(s) are implemented as follows:
+[source,java]
+----
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsTag(person.getTags(), keyword));
+    }
+
+----
+
+Naturally, a person may contain a set of tags so the `containsTag` method from `StringUtil` class iterates through the persons tag list and checks for any tag words contained in the searched keyword(s).
+
+[source,java]
+----
+public static boolean containsTag(Set<Tag> tagList, String word) {
+
+
+    //...word is groomed to become preppedWord..
+    //check if there is more than one tag searched.
+    //more than 1 tag searched. split into a list of searches.
+    if (preppedWord.contains(space)) {
+        String[] separateTags = word.split(" ");
+        List<String> tagFilters = Arrays.asList(separateTags);
+        for (Tag tag : tagList) {
+            if (haveMatchedTags(tagFilters, tag)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //only 1 tag searched. Check if tagList contains word as a tag
+    try {
+        Tag checkTag = new Tag(preppedWord);
+        return tagList.contains(checkTag);
+    //..exceptions caught..
+----
+
+The user has to key in keywords after the filter command word. The filtering process is case-sensitive; it will only match keywords with tags of the exact same case and letters.
+
+[NOTE]
+A contact will be filtered once any of its tag(s) matches the keyword(s), it need match all of the keywords stated.
+
+Should the user decide to be more specific in his tag filtering, he would have to narrow his search to fewer keyword(s).
+
+A successful filter request will show the list of filtered persons under the contact column.
+
+Should there be no contacts whose tags matches the keywords, UniCity will reply with a `0 persons listed!`
+
+==== Design Considerations
+
+**Aspect:** Case and letter tolerance of `containsTag()` method in `StringUtil` +
+**Alternative 1 (current choice):** check for exact keywords, case-sensitive and letter-specific, using the method `List.contains(Object E)` +
+**Pros:** Implementation is easier on the developers' side. Users can avoid unnecessary filtered contacts when a longer tag word containing the keyword exists in another contact. Yet that might not be his desired filter.
+ User may introduce more combinations of tags, possibly the same word but with different cases, that serves different purposes. +
+**Cons:** Users might neglect the discrepancies between words, eg (`friend` versus `friends`). In the situation where the user forgets which tags he stored his contacts under, or
+some of his contacts may have tags that serve the same purpose but spelt differently (as shown in the previous example), he will struggle to filter them. +
+**Alternative 2:** Account for case-insensitive and incomplete words in `containsTag()` method +
+**Pros:** Easier for users to filter tags. Accounts for any minor spelling or case discrepancies and still provides relatively accurate filters for the users. +
+**Cons:** May involve additional code for developers to consider. Users may filter unnecessary contacts that contain some of the keywords.
+
+---
+
+**Aspect:** Filter criteria: Match tolerance between the typed keywords and a person's tags +
+**Alternative 1 (current choice):** A contact will be filtered as long as any of its tag(s) matches any of the keyword(s) stated by the user. +
+**Pros:** User can widen his filter search on his list of contacts regardless of the combination of tags so the user may be able to find his contacts more easily.  +
+**Cons:** The filter command may include unnecessary filtered contacts when the user specifies more than one keyword and expects only the contacts with ALL such tags. Eg. A user may
+ indicate that he wants to filter contacts that has both `tutor` AND `professor` tags instead of contacts with either tutor` OR `professor` tags; the latter will result in more contacts
+  showing, some which may deem unnecessary to the user +
+**Alternative 2:** A contact will be filtered only if all its tags meet the required keyword(s). +
+**Pros:** The user is able to narrow down his filter to specific and more accurate contacts +
+**Cons:** The user might prefer a wider filter for either-or keywords as he might have forgotten which tag a particular contact was saved under. Narrowing down his filter may cause him some difficulties.
+
+---
+
+=== Facebook mechanism
+
+The facebook mechanism is facilitated by `FacebookCommandParser`, which resides inside the parser folder of the logic component.
+
+The facebook mechanism searches a contact's email on Facebook as specified by the contact's index number, according to the last ordering of the contact list.
+
+The `FacebookCommand` will inherit from `Command`.
+
+When the command word `facebook` is typed into UniCity, `AddressBookParser` will call `FacebookCommandParser`.
+
+`FacebookCommandParser` then takes in the command argument (index of the contact), wraps it as an `Index` class to be parsed into the `FacebookCommand` constructor.
+
+Upon execution, the `FacebookCommand` posts an event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load the search page.
+
+The `BrowserPanel` has `loadPersonPage` and `loadPage` to load the url that holds the search page. The url consists of 2 parts: the first part is a constant url string that
+exhibits the search behaviour on facebook while the second part will be the contact's email address to search on facebook.
+
+[NOTE]
+The user may be required to log in to Facebook in the browser panel of UniCity if that is his first Facebook command.
+
+[NOTE]
+This command may not work for some contacts as the specified contact may either not have a Facebook account or has not registered an account with the given email.
+
+==== Design Considerations
+
+**Aspect:** Facebook search by contact's name or email address +
+**Alternative 1 (current choice):** The url in `loadPersonPage` to contain email address search +
+**Pros:** Reduces ambiguity in comparison to searching by names as the chances of Facebook users sharing the same names or part of their names are higher compared to their email addresses. +
+**Cons:** The users' contacts might not have registered a Facebook account under their specified email. In which case, the users will be unable to search for their desired contacts on Facebook. +
+**Alternative 2:** The url in `loadPersonPage` to contain the contact's name search  +
+**Pros:** With the contact's full name, there is a chance of finding the contact on Facebook. Accounts for contacts who do not have an account with the same email address. +
+**Cons:** Facebook search by name may return a broader result as there are more Facebook users who share similar names. This contributes to an inaccurate result.
+
+---
 
 == Documentation
 

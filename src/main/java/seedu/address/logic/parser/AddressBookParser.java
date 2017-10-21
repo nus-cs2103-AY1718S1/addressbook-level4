@@ -7,12 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FacebookCommand;
+import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -21,6 +23,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ShowFavouriteCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -58,6 +61,10 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(RemoveTagCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(RemoveTagCommand.COMMAND_WORDVAR_2)) {
             return new RemoveTagCommandParser().parse(arguments);
+
+        } else if (commandWord.equalsIgnoreCase(AddTagCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(AddTagCommand.COMMAND_WORDVAR_2)) {
+            return new AddTagCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(EditCommand.COMMAND_WORDVAR_2)) {
@@ -107,6 +114,14 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
             return new RedoCommand();
+
+        } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
+                || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
+            return new FavouriteCommandParser().parse(arguments);
+
+        } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1)
+                || commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_2)) {
+            return new ShowFavouriteCommand();
 
         } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {

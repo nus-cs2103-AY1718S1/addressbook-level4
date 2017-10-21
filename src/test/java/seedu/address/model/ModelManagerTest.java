@@ -92,7 +92,6 @@ public class ModelManagerTest {
         AddressBook oldAddressBook = new AddressBook();
         oldAddressBook.setPersons(oldPersonList);
 
-
         ArrayList<Index> indexes = new ArrayList<Index>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
@@ -110,7 +109,43 @@ public class ModelManagerTest {
         newAddressBook.setPersons(newPersonList);
         ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
 
-        assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
+        assertEquals(expectedModel.getAddressBook().getPersonList().toString(),
+                actualModel.getAddressBook().getPersonList().toString());
+    }
+
+    /*
+     * Tests if the actual output of addTag is equals to the expected
+     * output when given valid target indexes and a valid tag to add.
+     */
+    @Test
+    public void addTag_validIndexesAndTag_success() throws Exception {
+        Person oldPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends").build();
+        Person oldPerson2 = new PersonBuilder().withTags("classmate").build();
+        List<ReadOnlyPerson> oldPersonList = new ArrayList<ReadOnlyPerson>();
+        oldPersonList.add(oldPerson1);
+        oldPersonList.add(oldPerson2);
+        AddressBook oldAddressBook = new AddressBook();
+        oldAddressBook.setPersons(oldPersonList);
+
+        ArrayList<Index> indexes = new ArrayList<Index>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        Tag toAdd = new Tag("rich");
+
+        ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
+        expectedModel.addTag(indexes, toAdd);
+
+        Person newPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends", "rich").build();
+        Person newPerson2 = new PersonBuilder().withTags("classmate", "rich").build();
+        List<ReadOnlyPerson> newPersonList = new ArrayList<ReadOnlyPerson>();
+        newPersonList.add(newPerson1);
+        newPersonList.add(newPerson2);
+        AddressBook newAddressBook = new AddressBook();
+        newAddressBook.setPersons(newPersonList);
+        ModelManager actualModel = new ModelManager(newAddressBook, new UserPrefs());
+
+        assertEquals(expectedModel.getAddressBook().getPersonList().toString(),
+                actualModel.getAddressBook().getPersonList().toString());
     }
 
     @Test

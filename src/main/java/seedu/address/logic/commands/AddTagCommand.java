@@ -15,17 +15,17 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Removes a tag from identified persons using the last displayed indexes from the address book.
+ * Adds a tag to the identified persons using the last displayed indexes from the address book.
  */
-public class RemoveTagCommand extends UndoableCommand {
+public class AddTagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORDVAR_1 = "removetag";
-    public static final String COMMAND_WORDVAR_2 = "rt";
+    public static final String COMMAND_WORDVAR_1 = "addtag";
+    public static final String COMMAND_WORDVAR_2 = "at";
 
     public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
             + " OR "
             + COMMAND_WORDVAR_2
-            + ": Removes the given tag from identified person by the list of index numbers used in the last person "
+            + ": Adds the given tag to the persons identified by the list of index numbers used in the last person "
             + "listing."
             + " Command is case-sensitive. \n"
             + "Parameters: "
@@ -34,35 +34,35 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Example 1: " + COMMAND_WORDVAR_1 + " 1 2 3 t/friends \n"
             + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " 2 5 t/classmate \n";
 
-    public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
+    public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Tag: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_NO_SUCH_TAG = "This tag does not exist in any of the given persons.";
+    public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists in all of the given persons.";
 
     private final ArrayList<Index> targetIndexes;
-    private final Tag toRemove;
+    private final Tag toAdd;
 
     /**
      * @param targetIndexes of the persons in the filtered person list to edit
-     * @param toRemove tag to remove from given target indexes
+     * @param toAdd tag to add to given target indexes
      */
-    public RemoveTagCommand(ArrayList<Index> targetIndexes, Tag toRemove) {
+    public AddTagCommand(ArrayList<Index> targetIndexes, Tag toAdd) {
 
         requireNonNull(targetIndexes);
-        requireNonNull(toRemove);
+        requireNonNull(toAdd);
 
         this.targetIndexes = targetIndexes;
-        this.toRemove = toRemove;
+        this.toAdd = toAdd;
     }
 
     /**
-     * First checks if all target indexes are not out of bounds and then checks if the tag exists among
-     * the given target indexes of person and then removes tag from each target person that has the given tag.
+     * First checks if all target indexes are not out of bounds and then checks if the tag exists in all of
+     * the given target indexes of person. If not, add the tag to each target person that doesn't have the given tag.
      */
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        boolean noPersonContainsTagToRemove = true;
+        boolean allPersonsContainsTagToAdd = true;
 
         for (Index targetIndex : targetIndexes) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -73,24 +73,24 @@ public class RemoveTagCommand extends UndoableCommand {
         for (int i = 0; i < targetIndexes.size(); i++) {
             int targetIndex = targetIndexes.get(i).getZeroBased();
             ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex);
-            if (readOnlyPerson.getTags().contains(toRemove)) {
-                noPersonContainsTagToRemove = false;
+            if (!readOnlyPerson.getTags().contains(toAdd)) {
+                allPersonsContainsTagToAdd = false;
             }
         }
 
-        if (noPersonContainsTagToRemove) {
-            throw  new CommandException(MESSAGE_NO_SUCH_TAG);
+        if (allPersonsContainsTagToAdd) {
+            throw  new CommandException(MESSAGE_DUPLICATE_TAG);
         }
 
         try {
-            model.removeTag(this.targetIndexes, this.toRemove);
+            model.addTag(this.targetIndexes, this.toAdd);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, toRemove));
+        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, toAdd));
     }
 
     @Override
@@ -101,13 +101,13 @@ public class RemoveTagCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RemoveTagCommand)) {
+        if (!(other instanceof AddTagCommand)) {
             return false;
         }
 
         // state check
-        RemoveTagCommand e = (RemoveTagCommand) other;
+        AddTagCommand e = (AddTagCommand) other;
         return targetIndexes.equals(e.targetIndexes)
-                && toRemove.equals(e.toRemove);
+                && toAdd.equals(e.toAdd);
     }
 }
