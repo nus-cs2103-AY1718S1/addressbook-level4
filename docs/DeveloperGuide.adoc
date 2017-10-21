@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Rubrika - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B1/Main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W15-B1`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -433,7 +433,7 @@ The remove tag function is done by calling a `removetag` function which resides 
 
 If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
 ----
-@Override
+    @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
 
@@ -473,8 +473,13 @@ For removing tags from a specified Index we use the `getFilteredPersonList` so t
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
 
+==== Design Considerations
 
-=== Sorting Function
+Aspect: Which tags to remove when removing all tags. +
+Alternative 1 (current): Remove all tags from the addressbook regardless of current view. +
+Alternative 2: Remove all tags for the list shown to the user. +
+Pros: Completely removes the specified tag from the whole addressbook +
+Cons: User may want to remove only from list shown instead of the whole list.
 
 == Documentation
 
