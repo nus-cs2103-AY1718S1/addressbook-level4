@@ -149,7 +149,7 @@ public class CommandBox extends UiPart<Region> {
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
      */
-    private void replaceText(String text) {
+    protected void replaceText(String text) {
         commandTextField.setText(text);
         //commandTextField.positionCaret(commandTextField.getText().length());
     }
@@ -158,7 +158,7 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    protected void handleCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
