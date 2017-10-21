@@ -1,23 +1,30 @@
 package systemtests;
 
+import javafx.collections.ObservableList;
 import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS;
-import static seedu.address.testutil.TestUtil.getLastIndex;
-import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getLesson;
+import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS;
+import static seedu.address.testutil.TestUtil.getLastModuleIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalLessonComponents.CS2101;
+import static seedu.address.testutil.TypicalLessonComponents.GEQ1000;
+import static seedu.address.testutil.TypicalLessonComponents.MA1101R;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
@@ -29,34 +36,47 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: delete the first lesson in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: delete the first module in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_LESSON.getOneBased() + "       ";
-        ReadOnlyLesson deletedLesson = removeLesson(expectedModel, INDEX_FIRST_LESSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
+        ArrayList<ReadOnlyLesson> lessonList = removeModule(expectedModel, MA1101R);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, MA1101R.fullCodeName);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last lesson in the list -> deleted */
+
+        /* Case: delete the last module in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        Index lastLessonIndex = getLastIndex(modelBeforeDeletingLast);
-        assertCommandSuccess(lastLessonIndex);
+        Model modelNotDeleteYet = getModel(); //noDelete is for Undo
+        ReadOnlyAddressBook addressBook = getModel().getAddressBook();
+        command = DeleteCommand.COMMAND_WORD + " " + getLastModuleIndex(modelBeforeDeletingLast).getOneBased();
+        lessonList = removeModule(modelBeforeDeletingLast, CS2101);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, CS2101.fullCodeName);
+        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+
 
         /* Case: undo deleting the last lesson in the list -> last lesson restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
-        /* Case: redo deleting the last lesson in the list -> last lesson deleted again */
-        command = RedoCommand.COMMAND_WORD;
-        removeLesson(modelBeforeDeletingLast, lastLessonIndex);
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+//        /* Case: redo deleting the last lesson in the list -> last lesson deleted again */
+//        command = RedoCommand.COMMAND_WORD;
+//        lessonList = removeModule(modelNotDeleteYet, CS2101);
+//        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+//        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
         /* Case: delete the middle lesson in the list -> deleted */
-        Index middleLessonIndex = getMidIndex(getModel());
-        assertCommandSuccess(middleLessonIndex);
+        addressBook = getModel().getAddressBook();
+        command = DeleteCommand.COMMAND_WORD + " " + getLastModuleIndex(modelBeforeDeletingLast).getOneBased();
+        lessonList = removeModule(modelNotDeleteYet, GEQ1000);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, GEQ1000.fullCodeName);
+        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
-        /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
+
+          /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
+
+        executeCommand("undo");
+        executeCommand("undo");
 
         /* Case: filtered lesson list, delete index within bounds of address book and lesson list -> deleted */
         showLessonsWithName(KEYWORD_MATCHING_MA1101R);
@@ -76,14 +96,17 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the selected lesson -> lesson list panel selects the lesson before the deleted lesson */
         showAllLessons();
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         expectedModel = getModel();
-        Index selectedIndex = getLastIndex(expectedModel);
+        Index selectedIndex = getLastModuleIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectLesson(selectedIndex);
+        //selectLesson(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedLesson = removeLesson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
+        lessonList = removeModule(expectedModel, CS2101);
+        expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, CS2101.fullCodeName);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+
+
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
@@ -109,17 +132,46 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+        
     }
+
+
+    /**
+     * Removes the {@code ReadOnlyLesson} at the specified {@code index} in {@code model}'s address book.
+     * @return the removed lesson
+     */
+    private ArrayList<ReadOnlyLesson> removeModule(Model model, Code code) {
+        ArrayList<ReadOnlyLesson> targetLessons = new ArrayList<ReadOnlyLesson>();
+        ObservableList<ReadOnlyLesson> lessonList = model.getAddressBook().getLessonList();
+        for (int i = 0; i < lessonList.size(); i++) {
+            ReadOnlyLesson lesson = lessonList.get(i);
+            if (lesson.getCode().equals(code)) {
+                try {
+                    targetLessons.add(lesson);
+                    model.deleteLesson(lesson);
+                } catch (LessonNotFoundException e) {
+                    e.printStackTrace();
+                    throw new AssertionError("targetModule is retrieved from model.");
+                }
+                i--;
+            }
+        }
+        return targetLessons;
+    }
+
 
     /**
      * Removes the {@code ReadOnlyLesson} at the specified {@code index} in {@code model}'s address book.
      * @return the removed lesson
      */
     private ReadOnlyLesson removeLesson(Model model, Index index) {
-        ReadOnlyLesson targetLesson = getLesson(model, index);
+        ObservableList<ReadOnlyLesson> lessonList = model.getAddressBook().getLessonList();
+        ReadOnlyLesson targetLesson = lessonList.get(index.getZeroBased());
+
         try {
             model.deleteLesson(targetLesson);
-        } catch (LessonNotFoundException pnfe) {
+        } catch (LessonNotFoundException e) {
+            e.printStackTrace();
             throw new AssertionError("targetLesson is retrieved from model.");
         }
         return targetLesson;
@@ -132,6 +184,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         ReadOnlyLesson deletedLesson = removeLesson(expectedModel, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DELETE_LESSON_SUCCESS, deletedLesson);
 

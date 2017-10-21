@@ -26,7 +26,6 @@ public class LessonListPanelHandle extends NodeHandle<ListView<LessonListCard>> 
      */
     public LessonCardHandle getHandleToSelectedCard() {
         List<LessonListCard> lessonList = getRootNode().getSelectionModel().getSelectedItems();
-
         if (lessonList.size() != 1) {
             throw new AssertionError("Lesson list size expected 1.");
         }
