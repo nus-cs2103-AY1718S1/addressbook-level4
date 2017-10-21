@@ -10,6 +10,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_WEBSITE = "https://github.com/AlicePauline";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
 
@@ -33,9 +35,10 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Website defaultWebsite = new Website(DEFAULT_WEBSITE);
             Remark defaultremark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultremark,
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultremark, defaultWebsite,
                     defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
@@ -117,8 +120,21 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     *  Sets the {@code Remark} of the {@code Preson} that we are building.
+     */
+    public PersonBuilder withWebsite(String website) {
+        try {
+            this.person.setWebsite(new Website(website));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("website is expected to be unique");
+        }
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }
+
 
 }

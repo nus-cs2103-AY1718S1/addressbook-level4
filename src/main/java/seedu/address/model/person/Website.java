@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.util.Objects.requireNonNull;
@@ -9,8 +10,7 @@ import static java.util.Objects.requireNonNull;
 public class Website {
 
     public static final String MESSAGE_WEBSITE_CONSTRAINTS =
-            "Person's website should be 2 alphanumeric/period strings separated by '@'";
-    public static final String WEBSITE_VALIDATION_REGEX = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+            "Person's website should start with \"https://\" and end with a top-level domain ";
 
     public final String value;
 
@@ -32,7 +32,10 @@ public class Website {
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidWebsite(String test) {
-        return test.matches(WEBSITE_VALIDATION_REGEX);
+        Pattern p = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(https://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
+
+        Matcher m = p.matcher(test);
+        return m.matches();
     }
 
     @Override
