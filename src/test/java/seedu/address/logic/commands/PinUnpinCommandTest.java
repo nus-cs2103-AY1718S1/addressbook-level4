@@ -130,22 +130,30 @@ public class PinUnpinCommandTest {
     public void equals() {
         PinCommand pinFirstCommand = new PinCommand(INDEX_FIRST_PERSON);
         PinCommand pinSecondCommand = new PinCommand(INDEX_SECOND_PERSON);
+        UnpinCommand unpinFirstCommand = new UnpinCommand(INDEX_FIRST_PERSON);
+        UnpinCommand unpinSecondCommand = new UnpinCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
         assertTrue(pinFirstCommand.equals(pinFirstCommand));
+        assertTrue(unpinFirstCommand.equals(unpinFirstCommand));
 
         // same values -> returns true
-        PinCommand deleteFirstCommandCopy = new PinCommand(INDEX_FIRST_PERSON);
-        assertTrue(pinFirstCommand.equals(deleteFirstCommandCopy));
+        PinCommand pinFirstCommandCopy = new PinCommand(INDEX_FIRST_PERSON);
+        assertTrue(pinFirstCommand.equals(pinFirstCommandCopy));
+        UnpinCommand unpinFirstCommandCopy = new UnpinCommand(INDEX_FIRST_PERSON);
+        assertTrue(unpinFirstCommand.equals(unpinFirstCommandCopy));
 
         // different types -> returns false
         assertFalse(pinFirstCommand.equals(1));
+        assertFalse(unpinFirstCommand.equals(1));
 
         // null -> returns false
         assertFalse(pinFirstCommand.equals(null));
+        assertFalse(unpinFirstCommand.equals(null));
 
         // different person -> returns false
         assertFalse(pinFirstCommand.equals(pinSecondCommand));
+        assertFalse(unpinFirstCommand.equals(unpinSecondCommand));
     }
 
     /**
@@ -158,7 +166,7 @@ public class PinUnpinCommandTest {
     }
 
     /**
-     * Returns a {@code PinCommand} with the parameter {@code index}.
+     * Returns a {@code UnpinCommand} with the parameter {@code index}.
      */
     private UnpinCommand prepareUnpinCommand(Index index) {
         UnpinCommand unpinCommand = new UnpinCommand(index);
