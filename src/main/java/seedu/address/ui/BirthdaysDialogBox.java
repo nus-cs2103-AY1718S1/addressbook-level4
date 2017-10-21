@@ -1,4 +1,4 @@
-package seedu.address.ui;
+/*package seedu.address.ui;
 
 import java.util.logging.Logger;
 
@@ -48,3 +48,4 @@ public class BirthdaysDialogBox extends UiPart<Region> {
     }
 
 }
+*/
