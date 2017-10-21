@@ -83,7 +83,9 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-
+    /**
+     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     */
     public EditPersonDescriptorBuilder withBirthday(String birthday) {
         try {
             ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);

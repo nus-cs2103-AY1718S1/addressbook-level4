@@ -6,17 +6,18 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class BirthdayTest {
-
     @Test
     public void isValidEmail() {
-        // blank email
         assertFalse(Birthday.isValidBirthday("")); // empty string
-        assertFalse(Birthday.isValidBirthday(" ")); // spaces only
-
+        // spaces only
+        assertFalse(Birthday.isValidBirthday(" "));
         // missing parts
-        assertFalse(Birthday.isValidBirthday("11/11")); // missing local part
-        assertFalse(Birthday.isValidBirthday("11")); // missing '@' symbol
-        assertFalse(Birthday.isValidBirthday("19/10/")); // missing domain name
+        // missing local part
+        assertFalse(Birthday.isValidBirthday("11/11"));
+        // missing '@' symbol
+        assertFalse(Birthday.isValidBirthday("11"));
+        // missing domain name
+        assertFalse(Birthday.isValidBirthday("19/10/"));
 
         // invalid parts
         assertFalse(Birthday.isValidBirthday("-11/23/2332")); // using illegal characters
@@ -28,7 +29,7 @@ public class BirthdayTest {
         // valid email
         assertTrue(Birthday.isValidBirthday("11/12/1099"));
         assertTrue(Birthday.isValidBirthday("09/03/2010"));
-        assertTrue(Birthday.isValidBirthday("12/13/1009"));   // also accepts months which don't exists
+        assertTrue(Birthday.isValidBirthday("12/13/1009")); // also accepts months which don't exists
         assertTrue(Birthday.isValidBirthday("00/00/2011"));
-        }
- }
+    }
+}

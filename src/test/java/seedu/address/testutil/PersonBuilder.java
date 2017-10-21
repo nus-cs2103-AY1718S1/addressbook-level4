@@ -4,11 +4,11 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -35,7 +35,8 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultBirthday, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone,
+                    defaultBirthday, defaultEmail, defaultAddress, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -107,14 +108,17 @@ public class PersonBuilder {
         }
         return this;
     }
+    /**
+     * Sets the {@code Email} of the {@code Person} that we are building.
+     */
     public PersonBuilder withBirthday(String birthday) {
         try {
             this.person.setBirthday(new Birthday(birthday));
-            } catch (IllegalValueException ive) {
+        } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("birthday is expected to be unique.");
-            }
-        return this;
         }
+        return this;
+    }
 
     public Person build() {
         return this.person;

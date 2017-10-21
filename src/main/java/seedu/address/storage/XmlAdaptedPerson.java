@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -27,11 +27,12 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
+    private String birthday;
+    @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
     private String address;
-    @XmlElement(required = true)
-    private String birthday;
+
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
