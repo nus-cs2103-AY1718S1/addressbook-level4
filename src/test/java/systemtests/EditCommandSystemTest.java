@@ -100,8 +100,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: edit a parcel with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB + STATUS_DESC_BOB +
-                TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB + STATUS_DESC_BOB
+                + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
         /* Case: edit some fields -> edited */
