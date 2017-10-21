@@ -19,8 +19,8 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
-    ObjectProperty<Email> emailProperty();
-    Email getEmail();
+    ObjectProperty<ArrayList<Email>> emailProperty();
+    ArrayList<Email> getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
     ObjectProperty<Remark> remarkProperty();

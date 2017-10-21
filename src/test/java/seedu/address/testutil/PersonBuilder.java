@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -33,7 +34,7 @@ public class PersonBuilder {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
-            Email defaultEmail = new Email(DEFAULT_EMAIL);
+            ArrayList<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
@@ -115,9 +116,9 @@ public class PersonBuilder {
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
+    public PersonBuilder withEmail(String... email) {
         try {
-            this.person.setEmail(new Email(email));
+            this.person.setEmail(SampleDataUtil.getEmailSet(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
