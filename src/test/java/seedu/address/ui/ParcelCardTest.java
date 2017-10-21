@@ -31,11 +31,14 @@ public class ParcelCardTest extends GuiUnitTest {
 
         // changes made to Parcel reflects on card
         guiRobot.interact(() -> {
+            parcelWithTags.setTrackingNumber(ALICE.getTrackingNumber());
             parcelWithTags.setName(ALICE.getName());
             parcelWithTags.setAddress(ALICE.getAddress());
             parcelWithTags.setEmail(ALICE.getEmail());
             parcelWithTags.setPhone(ALICE.getPhone());
             parcelWithTags.setTags(ALICE.getTags());
+            parcelWithTags.setDeliveryDate(ALICE.getDeliveryDate());
+            parcelWithTags.setStatus(ALICE.getStatus());
         });
         assertCardDisplay(parcelCard, parcelWithTags, 2);
     }
@@ -81,4 +84,5 @@ public class ParcelCardTest extends GuiUnitTest {
         // verify parcel details are displayed correctly
         assertCardDisplaysParcel(expectedParcel, parcelCardHandle);
     }
+
 }

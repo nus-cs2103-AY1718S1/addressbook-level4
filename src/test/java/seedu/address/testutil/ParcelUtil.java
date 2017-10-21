@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 
@@ -34,6 +35,7 @@ public class ParcelUtil {
         sb.append(PREFIX_EMAIL + parcel.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + parcel.getAddress().toString() + " ");
         sb.append(PREFIX_DELIVERYDATE + parcel.getDeliveryDate().toString() + " ");
+        sb.append(PREFIX_STATUS + parcel.getStatus().toString() + " ");
         parcel.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

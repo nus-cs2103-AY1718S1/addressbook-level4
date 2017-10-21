@@ -35,6 +35,7 @@ public class EditParcelDescriptorBuilder {
         descriptor.setEmail(parcel.getEmail());
         descriptor.setAddress(parcel.getAddress());
         descriptor.setDeliveryDate(parcel.getDeliveryDate());
+        descriptor.setStatus(parcel.getStatus());
         descriptor.setTags(parcel.getTags());
     }
 
@@ -104,6 +105,18 @@ public class EditParcelDescriptorBuilder {
     public EditParcelDescriptorBuilder withDeliveryDate(String deliveryDate) {
         try {
             ParserUtil.parseDeliveryDate(Optional.of(deliveryDate)).ifPresent(descriptor::setDeliveryDate);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code EditParcelDescriptor} that we are building.
+     */
+    public EditParcelDescriptorBuilder withStatus(String status) {
+        try {
+            ParserUtil.parseStatus(Optional.of(status)).ifPresent(descriptor::setStatus);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
         }

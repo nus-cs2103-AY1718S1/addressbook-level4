@@ -17,6 +17,7 @@ import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAddressBookStorage;
@@ -120,6 +121,24 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code Optional<String>} into an {@code Optional<DeliveryDate>} and returns it. Leading and trailing
+     * whitespaces will be trimmed.
+     */
+    public static Optional<DeliveryDate> parseDeliveryDate(Optional<String> deliveryDate) throws IllegalValueException {
+        requireNonNull(deliveryDate);
+        return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code Optional<String>} into an {@code Optional<Status>} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     */
+    public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
+        requireNonNull(status);
+        return status.isPresent() ? Optional.of(Status.getStatusInstance(status.get())) : Optional.empty();
     }
 
     /**

@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERYDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
@@ -25,6 +26,7 @@ import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -47,6 +49,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DELIVERYDATE + "DELIVERY DATE] "
+            + "[" + PREFIX_STATUS + "STATUS]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -109,10 +112,11 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editParcelDescriptor.getAddress().orElse(parcelToEdit.getAddress());
         DeliveryDate updatedDeliveryDate = editParcelDescriptor.getDeliveryDate()
                                            .orElse(parcelToEdit.getDeliveryDate());
+        Status updatedStatus = editParcelDescriptor.getStatus().orElse(parcelToEdit.getStatus());
         Set<Tag> updatedTags = editParcelDescriptor.getTags().orElse(parcelToEdit.getTags());
 
         return new Parcel(updatedTrackingNumber, updatedName, updatedPhone, updatedEmail, updatedAddress,
-                          updatedDeliveryDate, updatedTags);
+                          updatedDeliveryDate, updatedStatus, updatedTags);
     }
 
     @Override
@@ -144,6 +148,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private DeliveryDate deliveryDate;
+        private Status status;
         private Set<Tag> tags;
 
         public EditParcelDescriptor() {}
@@ -155,6 +160,7 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.deliveryDate = toCopy.deliveryDate;
+            this.status = toCopy.status;
             this.tags = toCopy.tags;
         }
 
@@ -163,7 +169,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.trackingNumber, this.name, this.phone, this.email, this.address,
-                    this.deliveryDate, this.tags);
+                    this.deliveryDate, this.status, this.tags);
         }
 
         public void setTrackingNumber(TrackingNumber trackingNumber) {
@@ -214,6 +220,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(deliveryDate);
         }
 
+        public void setStatus (Status status) {
+            this.status = status;
+        }
+
+        public Optional<Status> getStatus() {
+            return Optional.ofNullable(status);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -243,6 +257,7 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getDeliveryDate().equals(e.getDeliveryDate())
+                    && getStatus().equals(e.getStatus())
                     && getTags().equals(e.getTags());
         }
     }
