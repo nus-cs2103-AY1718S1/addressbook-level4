@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowParcelListEvent;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 
 /**
  * Lists all parcels in the address book to the user.
